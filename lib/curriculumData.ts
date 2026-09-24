@@ -8,6 +8,9 @@ import { JHS1_SCIENCE_QUIZZES } from './curriculumJhs1ScienceQuizzes';
 import { JHS1_ENGLISH_TOPICS } from './curriculumJhs1English';
 import { JHS1_ENGLISH_DETAILED_NOTES } from './curriculumDetailedNotesEnglish';
 import { JHS1_ENGLISH_QUIZZES } from './curriculumJhs1EnglishQuizzes';
+import { JHS1_SOCIAL_TOPICS } from './curriculumJhs1Social';
+import { JHS1_SOCIAL_DETAILED_NOTES } from './curriculumDetailedNotesSocial';
+import { JHS1_SOCIAL_QUIZZES } from './curriculumJhs1SocialQuizzes';
 
 export const CURRICULUM_SUBJECTS: CurriculumSubject[] = [
   {
@@ -393,46 +396,9 @@ const BASE_JHS_TOPICS: CurriculumTopic[] = [
   ...JHS1_ENGLISH_TOPICS,
 
   // ==========================================
-  // JHS 1 - SOCIAL STUDIES
+  // JHS 1 - SOCIAL STUDIES (All 15 GES Topics)
   // ==========================================
-  {
-    id: 'jhs1-soc-t1-environment',
-    subjectId: 'social',
-    level: 'JHS 1',
-    term: 1,
-    orderIndex: 1,
-    title: 'Our Environment & Environmental Degradation',
-    description: 'Physical and social environment, pollution, galamsey, deforestation, and preservation.',
-    isFreeTrial: true,
-    keyNotes: `Environment refers to all external conditions and surroundings in which living organisms exist.
-• Components:
-  - Physical Environment: Land, water bodies, air, plants, animals.
-  - Social Environment: Cultural, political, religious, and economic institutions.
-• Environmental Problems in Ghana:
-  - Illegal mining (Galamsey): Destroys water bodies (Pra, Birim, Ankobra) and farmlands.
-  - Deforestation: Indiscriminate tree felling for timber and charcoal.
-  - Plastic Pollution: Blocked gutters leading to urban flooding.`,
-    quiz: {
-      id: 'quiz-jhs1-soc-env',
-      topicId: 'jhs1-soc-t1-environment',
-      title: 'Environment & Conservation Quiz',
-      timeLimitMinutes: 10,
-      passScorePercentage: 60,
-      questions: [
-        {
-          id: 'q-soc-1',
-          quizId: 'quiz-jhs1-soc-env',
-          questionText: 'Which of the following is a major cause of water pollution in Ghanaian mining communities?',
-          optionA: 'Afforestation',
-          optionB: 'Illegal small-scale mining (Galamsey)',
-          optionC: 'Crop rotation',
-          optionD: 'Contour plowing',
-          correctOption: 'B',
-          explanation: 'Galamsey releases toxic heavy metals (mercury, lead) into major rivers, rendering them unsafe.',
-        },
-      ],
-    },
-  },
+  ...JHS1_SOCIAL_TOPICS,
 
   // ==========================================
   // JHS 1 - RELIGIOUS & MORAL EDUCATION (RME)
@@ -479,11 +445,13 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
     TOPIC_DETAILED_NOTES[topic.id] ||
     JHS1_SCIENCE_DETAILED_NOTES[topic.id] ||
     JHS1_ENGLISH_DETAILED_NOTES[topic.id] ||
+    JHS1_SOCIAL_DETAILED_NOTES[topic.id] ||
     topic.detailedNotes,
   quiz:
     JHS1_MATH_QUIZZES[topic.id] ||
     JHS1_SCIENCE_QUIZZES[topic.id] ||
     JHS1_ENGLISH_QUIZZES[topic.id] ||
+    JHS1_SOCIAL_QUIZZES[topic.id] ||
     topic.quiz,
 }));
 
