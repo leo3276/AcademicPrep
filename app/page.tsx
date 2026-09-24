@@ -1,69 +1,312 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import React from 'react';
+import Link from 'next/link';
+import { useAuth } from '@/lib/authContext';
+import { 
+  BookOpenCheck, 
+  Sparkles, 
+  ArrowRight, 
+  CheckCircle2, 
+  Users, 
+  Clock, 
+  Lock, 
+  FileText,
+  KeyRound,
+  GraduationCap
+} from 'lucide-react';
+
+export default function HomePage() {
+  const { student } = useAuth();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="space-y-16 pb-20">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-blue-900 via-indigo-900 to-slate-900 text-white pt-16 pb-20 sm:pb-28">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-3xl mx-auto space-y-6">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-400/30 text-blue-200 text-xs font-semibold backdrop-blur-sm">
+              <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Built for 41,000+ Online Students • AcademicPrep Portal
+            </div>
+
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-white">
+              Master Your Curriculum, <br />
+              <span className="bg-gradient-to-r from-blue-300 via-indigo-200 to-teal-300 bg-clip-text text-transparent">
+                Topic by Topic, Week by Week.
+              </span>
+            </h1>
+
+            <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+              Transition from WhatsApp messages to a structured learning portal. Full JHS 1, 2, and 3 curriculum topics, instant quizzes with step-by-step explanations, and personalized weekly exams.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+              <Link
+                href="/jhs"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 group"
+              >
+                <span>Launch JHS Study Portal</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              
+              {!student && (
+                <Link
+                  href="/login"
+                  className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 font-semibold text-sm transition-all border border-slate-700 flex items-center justify-center gap-2"
+                >
+                  <KeyRound className="w-4 h-4 text-emerald-400" />
+                  <span>Student Login (Phone + PIN)</span>
+                </Link>
+              )}
+            </div>
+
+            {/* Quick Demo Info Box */}
+            <div className="pt-4 max-w-md mx-auto">
+              <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/10 text-left text-xs text-slate-300 flex items-center justify-between">
+                <div>
+                  <span className="font-bold text-white block">Try Demo Account:</span>
+                  <span>Phone: <b className="text-emerald-300">0241234567</b> • PIN: <b className="text-emerald-300">1234</b></span>
+                </div>
+                <Link 
+                  href="/login"
+                  className="px-2.5 py-1 rounded bg-white text-slate-900 font-bold text-[11px] hover:bg-slate-100"
+                >
+                  Quick Fill
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Live Counters */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+            <div className="text-center p-3">
+              <div className="text-2xl sm:text-3xl font-extrabold text-white">41,000+</div>
+              <div className="text-xs text-slate-400 font-medium mt-1">Community Students</div>
+            </div>
+            <div className="text-center p-3">
+              <div className="text-2xl sm:text-3xl font-extrabold text-emerald-400">JHS 1, 2, 3</div>
+              <div className="text-xs text-slate-400 font-medium mt-1">Full Curriculum Live</div>
+            </div>
+            <div className="text-center p-3">
+              <div className="text-2xl sm:text-3xl font-extrabold text-blue-400">100%</div>
+              <div className="text-xs text-slate-400 font-medium mt-1">Instant Auto-Grading</div>
+            </div>
+            <div className="text-center p-3">
+              <div className="text-2xl sm:text-3xl font-extrabold text-purple-400">Dynamic</div>
+              <div className="text-xs text-slate-400 font-medium mt-1">Weekly Exams by Progress</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Sections Architecture (JHS, SHS, University) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <h2 className="text-xs font-bold uppercase tracking-widest text-blue-600 mb-2">Platform Structure</h2>
+          <p className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+            Academic Portals Designed for Every Stage
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Card 1: JHS (ACTIVE) */}
+          <div className="relative rounded-2xl bg-white border-2 border-blue-600 p-6 shadow-xl shadow-blue-500/5 flex flex-col justify-between overflow-hidden">
+            <div className="absolute top-0 right-0 bg-blue-600 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-1 rounded-bl-xl">
+              Active & Live Now
+            </div>
+
+            <div className="space-y-4">
+              <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
+                <GraduationCap className="w-6 h-6" />
+              </div>
+
+              <div>
+                <h3 className="text-xl font-bold text-slate-900">Junior High School (JHS)</h3>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">JHS 1, JHS 2 & JHS 3 • BECE Candidates</p>
+              </div>
+
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Complete NaCCA / GES aligned curriculum across 6 core subjects. Topic quizzes after each chapter and custom weekly exams based on your actual study history.
+              </p>
+
+              <div className="space-y-2 pt-2 border-t border-slate-100">
+                <div className="flex items-center gap-2 text-xs text-slate-700 font-medium">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  <span>JHS 1, 2 & 3 Topics & Notes</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-slate-700 font-medium">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  <span>Topic Quizzes with Explanations</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-slate-700 font-medium">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  <span>Adaptive Dynamic Weekly Exams</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-6">
+              <Link
+                href="/jhs"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors shadow-md shadow-blue-500/20"
+              >
+                <span>Enter JHS Section</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Card 2: SHS (Coming Soon) */}
+          <div className="rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between opacity-85">
+            <div className="space-y-4">
+              <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
+                <BookOpenCheck className="w-6 h-6" />
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-bold text-slate-900">Senior High School (SHS)</h3>
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
+                    Phase 2
+                  </span>
+                </div>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">SHS 1, 2 & 3 • WASSCE Prep</p>
+              </div>
+
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Core subjects (Core Math, English, Integrated Science, Social Studies) plus elective clusters (General Science, Business, General Arts, Home Economics).
+              </p>
+
+              <div className="space-y-2 pt-2 border-t border-slate-100 text-slate-500">
+                <div className="flex items-center gap-2 text-xs">
+                  <Lock className="w-3.5 h-3.5" />
+                  <span>WASSCE Topic Banks</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs">
+                  <Lock className="w-3.5 h-3.5" />
+                  <span>Paper 1 & 2 Exam Simulations</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-6">
+              <button
+                disabled
+                className="w-full py-2.5 px-4 rounded-xl bg-slate-100 text-slate-400 font-bold text-xs cursor-not-allowed text-center"
+              >
+                Available in Phase 2
+              </button>
+            </div>
+          </div>
+
+          {/* Card 3: University (Coming Soon) */}
+          <div className="rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between opacity-85">
+            <div className="space-y-4">
+              <div className="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold">
+                <Users className="w-6 h-6" />
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-bold text-slate-900">University & Tertiary</h3>
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
+                    Phase 3
+                  </span>
+                </div>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">Undergraduate & Foundations</p>
+              </div>
+
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Foundational tertiary courses, professional certifications, and aptitude tests for university entrance and career readiness.
+              </p>
+
+              <div className="space-y-2 pt-2 border-t border-slate-100 text-slate-500">
+                <div className="flex items-center gap-2 text-xs">
+                  <Lock className="w-3.5 h-3.5" />
+                  <span>Aptitude & Entry Quizzes</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs">
+                  <Lock className="w-3.5 h-3.5" />
+                  <span>Tertiary Modules</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-6">
+              <button
+                disabled
+                className="w-full py-2.5 px-4 rounded-xl bg-slate-100 text-slate-400 font-bold text-xs cursor-not-allowed text-center"
+              >
+                Available in Phase 3
+              </button>
+            </div>
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* Key Innovation: Dynamic Weekly Exam */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="rounded-3xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
+          <div className="max-w-2xl space-y-4 relative z-10">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-white font-bold text-xs backdrop-blur-sm">
+              <Sparkles className="w-3.5 h-3.5" />
+              Progress-Adaptive Testing Engine
+            </div>
+
+            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
+              A Weekly Exam That Only Tests What You Have Actually Studied
+            </h2>
+
+            <p className="text-sm sm:text-base text-amber-50 leading-relaxed">
+              No generic test papers. The AcademicPrep engine queries your completed chapter quizzes and dynamically generates a personalized 15-minute weekly test. Finish more topics during the week, unlock richer tests on the weekend.
+            </p>
+
+            <div className="pt-2 flex flex-wrap gap-4">
+              <Link
+                href="/jhs/weekly-exam"
+                className="px-6 py-3 rounded-xl bg-white text-amber-900 font-bold text-xs hover:bg-amber-50 transition-colors shadow-lg"
+              >
+                Try Dynamic Weekly Exam
+              </Link>
+              <Link
+                href="/jhs"
+                className="px-6 py-3 rounded-xl bg-amber-700/50 hover:bg-amber-700 text-white font-semibold text-xs transition-colors border border-white/20"
+              >
+                Study Topics First
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Admin Feature Banner */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-purple-600"></span>
+              <span className="text-xs font-bold uppercase tracking-wider text-purple-700">Client Admin Control</span>
+            </div>
+            <h3 className="text-lg sm:text-xl font-bold text-slate-900">
+              Real-time Student Entries, Cash Flow Tracking & PIN Generation
+            </h3>
+            <p className="text-xs text-slate-600 max-w-xl">
+              Monitor 41,000+ student activities, track revenues from Mobile Money & voucher PIN sales, and upload custom tests directly from the admin panel.
+            </p>
+          </div>
+          <Link
+            href="/admin"
+            className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shrink-0 transition-colors shadow-md shadow-purple-500/20"
+          >
+            Access Admin Dashboard
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
