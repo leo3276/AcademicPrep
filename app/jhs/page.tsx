@@ -31,10 +31,32 @@ export default function JhsPortalPage() {
 
   useEffect(() => {
     setMounted(true);
-    if (student?.currentLevel) {
-      setSelectedLevel(student.currentLevel);
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlLevel = urlParams.get('level') as EducationLevel | null;
+      const savedLevel = localStorage.getItem('academicprep_jhs_level') as EducationLevel | null;
+      const validLevels: EducationLevel[] = ['JHS 1', 'JHS 2', 'JHS 3'];
+
+      if (urlLevel && validLevels.includes(urlLevel)) {
+        setSelectedLevel(urlLevel);
+        localStorage.setItem('academicprep_jhs_level', urlLevel);
+      } else if (savedLevel && validLevels.includes(savedLevel)) {
+        setSelectedLevel(savedLevel);
+      } else if (student?.currentLevel && validLevels.includes(student.currentLevel)) {
+        setSelectedLevel(student.currentLevel);
+      }
     }
   }, [student]);
+
+  const handleLevelSelect = (lvl: EducationLevel) => {
+    setSelectedLevel(lvl);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('academicprep_jhs_level', lvl);
+      const url = new URL(window.location.href);
+      url.searchParams.set('level', lvl);
+      window.history.replaceState({}, '', url.toString());
+    }
+  };
 
   // Filter topics for the selected JHS level
   const levelTopics = JHS_CURRICULUM_TOPICS.filter((t) => t.level === selectedLevel);
@@ -71,7 +93,7 @@ export default function JhsPortalPage() {
           {(['JHS 1', 'JHS 2', 'JHS 3'] as EducationLevel[]).map((lvl) => (
             <button
               key={lvl}
-              onClick={() => setSelectedLevel(lvl)}
+              onClick={() => handleLevelSelect(lvl)}
               className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                 selectedLevel === lvl
                   ? 'bg-blue-600 text-white shadow-sm'

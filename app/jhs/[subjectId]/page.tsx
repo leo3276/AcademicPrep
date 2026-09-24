@@ -36,14 +36,36 @@ export default function SubjectDetailPage() {
 
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const subjectId = params.subjectId as string;
   const initialLevel = (searchParams.get('level') as EducationLevel) || student?.currentLevel || 'JHS 1';
 
   const [currentLevel, setCurrentLevel] = useState<EducationLevel>(initialLevel);
+
+  useEffect(() => {
+    setMounted(true);
+    if (typeof window !== 'undefined') {
+      const urlLevel = searchParams.get('level') as EducationLevel | null;
+      const savedLevel = localStorage.getItem('academicprep_jhs_level') as EducationLevel | null;
+      const validLevels: EducationLevel[] = ['JHS 1', 'JHS 2', 'JHS 3'];
+
+      if (urlLevel && validLevels.includes(urlLevel)) {
+        setCurrentLevel(urlLevel);
+        localStorage.setItem('academicprep_jhs_level', urlLevel);
+      } else if (savedLevel && validLevels.includes(savedLevel)) {
+        setCurrentLevel(savedLevel);
+      }
+    }
+  }, [searchParams]);
+
+  const handleLevelChange = (lvl: EducationLevel) => {
+    setCurrentLevel(lvl);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('academicprep_jhs_level', lvl);
+      const url = new URL(window.location.href);
+      url.searchParams.set('level', lvl);
+      window.history.replaceState({}, '', url.toString());
+    }
+  };
 
   // VIP PIN Modal state
   const [pinModalOpen, setPinModalOpen] = useState(false);
@@ -84,7 +106,7 @@ export default function SubjectDetailPage() {
       <div className="max-w-4xl mx-auto py-16 px-4 text-center">
         <h2 className="text-xl font-bold text-slate-800">Subject Not Found</h2>
         <p className="text-xs text-slate-500 mt-2">The requested curriculum subject does not exist.</p>
-        <Link href="/jhs" className="mt-4 inline-block text-xs font-bold text-blue-600">
+        <Link href={`/jhs?level=${encodeURIComponent(currentLevel)}`} className="mt-4 inline-block text-xs font-bold text-blue-600">
           ← Back to JHS Portal
         </Link>
       </div>
@@ -95,7 +117,7 @@ export default function SubjectDetailPage() {
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       {/* Breadcrumb & Navigation */}
       <div className="flex items-center gap-2 text-xs text-slate-500">
-        <Link href="/jhs" className="hover:text-slate-800 flex items-center gap-1 font-medium">
+        <Link href={`/jhs?level=${encodeURIComponent(currentLevel)}`} className="hover:text-slate-800 flex items-center gap-1 font-medium">
           <ArrowLeft className="w-3.5 h-3.5" />
           JHS Portal
         </Link>
@@ -130,7 +152,7 @@ export default function SubjectDetailPage() {
           {(['JHS 1', 'JHS 2', 'JHS 3'] as EducationLevel[]).map((lvl) => (
             <button
               key={lvl}
-              onClick={() => setCurrentLevel(lvl)}
+              onClick={() => handleLevelChange(lvl)}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
                 currentLevel === lvl
                   ? 'bg-blue-600 text-white shadow-sm'
@@ -232,7 +254,7 @@ export default function SubjectDetailPage() {
                       </div>
 
                       <Link
-                        href={`/jhs/${subjectId}/${topic.id}`}
+                        href={`/jhs/${subjectId}/${topic.id}?level=${encodeURIComponent(currentLevel)}`}
                         className="group inline-flex items-center gap-1.5 hover:text-blue-600 transition-colors"
                       >
                         <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
@@ -266,7 +288,7 @@ export default function SubjectDetailPage() {
                     {/* Action Buttons: Open Full Lesson & Quiz / VIP */}
                     <div className="flex items-center gap-2 flex-wrap shrink-0">
                       <Link
-                        href={`/jhs/${subjectId}/${topic.id}`}
+                        href={`/jhs/${subjectId}/${topic.id}?level=${encodeURIComponent(currentLevel)}`}
                         className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-sm shadow-blue-500/20 flex items-center gap-1.5"
                       >
                         <BookOpen className="w-3.5 h-3.5" />

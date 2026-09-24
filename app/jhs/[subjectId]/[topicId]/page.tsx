@@ -40,10 +40,6 @@ export default function DetailedTopicLessonPage() {
   const [pinLoading, setPinLoading] = useState(false);
   const [pinFeedback, setPinFeedback] = useState<{ success?: boolean; text?: string } | null>(null);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const subjectId = params.subjectId as string;
   const topicId = params.topicId as string;
 
@@ -51,10 +47,20 @@ export default function DetailedTopicLessonPage() {
   const subjectTopics = JHS_CURRICULUM_TOPICS.filter((t) => t.subjectId === subjectId);
   const topic = subjectTopics.find((t) => t.id === topicId);
 
-  // Find index and previous / next topics in the curriculum
-  const currentTopicIndex = subjectTopics.findIndex((t) => t.id === topicId);
-  const prevTopic = currentTopicIndex > 0 ? subjectTopics[currentTopicIndex - 1] : null;
-  const nextTopic = currentTopicIndex < subjectTopics.length - 1 ? subjectTopics[currentTopicIndex + 1] : null;
+  useEffect(() => {
+    setMounted(true);
+    if (typeof window !== 'undefined' && topic?.level) {
+      localStorage.setItem('academicprep_jhs_level', topic.level);
+    }
+  }, [topic?.level]);
+
+  // Find index and previous / next topics scoped to the same level in the curriculum
+  const levelTopics = topic 
+    ? subjectTopics.filter((t) => t.level === topic.level) 
+    : subjectTopics;
+  const currentTopicIndex = levelTopics.findIndex((t) => t.id === topicId);
+  const prevTopic = currentTopicIndex > 0 ? levelTopics[currentTopicIndex - 1] : null;
+  const nextTopic = currentTopicIndex < levelTopics.length - 1 ? levelTopics[currentTopicIndex + 1] : null;
 
   const handleRedeemPin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,7 +93,7 @@ export default function DetailedTopicLessonPage() {
           The requested topic lesson could not be loaded. Please return to the curriculum portal.
         </p>
         <Link
-          href={`/jhs/${subjectId || ''}`}
+          href={`/jhs/${subjectId || ''}?level=${encodeURIComponent(topic?.level || 'JHS 1')}`}
           className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -108,11 +114,11 @@ export default function DetailedTopicLessonPage() {
       {/* 1. Breadcrumb Navigation */}
       <div className="flex items-center justify-between text-xs text-slate-500">
         <div className="flex items-center gap-2 flex-wrap">
-          <Link href="/jhs" className="hover:text-slate-800 font-medium">
+          <Link href={`/jhs?level=${encodeURIComponent(topic.level)}`} className="hover:text-slate-800 font-medium">
             JHS Portal
           </Link>
           <span>/</span>
-          <Link href={`/jhs/${subject.id}`} className="hover:text-slate-800 font-medium">
+          <Link href={`/jhs/${subject.id}?level=${encodeURIComponent(topic.level)}`} className="hover:text-slate-800 font-medium">
             {subject.name}
           </Link>
           <span>/</span>
@@ -122,7 +128,7 @@ export default function DetailedTopicLessonPage() {
         </div>
 
         <Link
-          href={`/jhs/${subject.id}`}
+          href={`/jhs/${subject.id}?level=${encodeURIComponent(topic.level)}`}
           className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 shrink-0"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
@@ -686,7 +692,7 @@ export default function DetailedTopicLessonPage() {
       <div className="flex items-center justify-between gap-4 pt-4 border-t border-slate-200">
         {prevTopic ? (
           <Link
-            href={`/jhs/${subject.id}/${prevTopic.id}`}
+            href={`/jhs/${subject.id}/${prevTopic.id}?level=${encodeURIComponent(prevTopic.level)}`}
             className="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-blue-600 transition-colors p-3 rounded-xl hover:bg-slate-100 max-w-[45%]"
           >
             <ArrowLeft className="w-4 h-4 shrink-0" />
@@ -701,7 +707,7 @@ export default function DetailedTopicLessonPage() {
 
         {nextTopic ? (
           <Link
-            href={`/jhs/${subject.id}/${nextTopic.id}`}
+            href={`/jhs/${subject.id}/${nextTopic.id}?level=${encodeURIComponent(nextTopic.level)}`}
             className="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-blue-600 transition-colors p-3 rounded-xl hover:bg-slate-100 max-w-[45%] text-right ml-auto"
           >
             <div className="text-right truncate">

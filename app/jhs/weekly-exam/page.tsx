@@ -23,12 +23,24 @@ import confetti from 'canvas-confetti';
 export default function WeeklyExamPage() {
   const { student, topicProgress, recordWeeklyExamAttempt, weeklyExamAttempts } = useAuth();
   const [mounted, setMounted] = useState(false);
+  const [currentLevel, setCurrentLevel] = useState<EducationLevel>(student?.currentLevel || 'JHS 1');
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlLevel = urlParams.get('level') as EducationLevel | null;
+      const savedLevel = localStorage.getItem('academicprep_jhs_level') as EducationLevel | null;
+      const validLevels: EducationLevel[] = ['JHS 1', 'JHS 2', 'JHS 3'];
 
-  const currentLevel: EducationLevel = student?.currentLevel || 'JHS 1';
+      if (urlLevel && validLevels.includes(urlLevel)) {
+        setCurrentLevel(urlLevel);
+        localStorage.setItem('academicprep_jhs_level', urlLevel);
+      } else if (savedLevel && validLevels.includes(savedLevel)) {
+        setCurrentLevel(savedLevel);
+      }
+    }
+  }, []);
 
   // Find all topics that the student has completed (guarded by mounted)
   const completedTopicIds = mounted
@@ -159,7 +171,7 @@ export default function WeeklyExamPage() {
       {/* Top Banner */}
       <div className="flex items-center justify-between">
         <Link
-          href="/jhs"
+          href={`/jhs?level=${encodeURIComponent(currentLevel)}`}
           className="text-xs font-semibold text-slate-500 hover:text-slate-800 flex items-center gap-1.5"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -369,7 +381,7 @@ export default function WeeklyExamPage() {
               Retake Another Exam
             </button>
             <Link
-              href="/jhs"
+              href={`/jhs?level=${encodeURIComponent(currentLevel)}`}
               className="w-full sm:w-auto py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5"
             >
               Study More Topics

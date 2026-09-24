@@ -46,12 +46,18 @@ export default function TopicQuizPage() {
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    if (typeof window !== 'undefined' && topic?.level) {
+      localStorage.setItem('academicprep_jhs_level', topic.level);
+    }
+  }, [topic?.level]);
 
-  // Find next topic if available
-  const currentTopicIdx = topic ? JHS_CURRICULUM_TOPICS.findIndex((t) => t.id === topic.id) : -1;
-  const nextTopic = currentTopicIdx >= 0 && currentTopicIdx < JHS_CURRICULUM_TOPICS.length - 1
-    ? JHS_CURRICULUM_TOPICS[currentTopicIdx + 1]
+  // Find next topic if available (scoped to same subject and level)
+  const levelTopics = topic
+    ? JHS_CURRICULUM_TOPICS.filter((t) => t.subjectId === topic.subjectId && t.level === topic.level)
+    : [];
+  const currentTopicIdx = topic ? levelTopics.findIndex((t) => t.id === topic.id) : -1;
+  const nextTopic = currentTopicIdx >= 0 && currentTopicIdx < levelTopics.length - 1
+    ? levelTopics[currentTopicIdx + 1]
     : null;
 
   const handleRedeemPin = async (e: React.FormEvent) => {
@@ -97,7 +103,7 @@ export default function TopicQuizPage() {
         <p className="text-xs text-slate-500">
           This topic does not currently have practice questions configured.
         </p>
-        <Link href="/jhs" className="text-xs font-bold text-blue-600 inline-block">
+        <Link href={`/jhs?level=${encodeURIComponent(topic?.level || 'JHS 1')}`} className="text-xs font-bold text-blue-600 inline-block">
           ← Return to JHS Portal
         </Link>
       </div>
@@ -198,7 +204,7 @@ export default function TopicQuizPage() {
 
           <div className="pt-2 border-t border-slate-100 flex items-center justify-center gap-4 text-xs font-semibold">
             <Link
-              href={`/jhs/${topic.subjectId}`}
+              href={`/jhs/${topic.subjectId}?level=${encodeURIComponent(topic.level)}`}
               className="text-slate-600 hover:text-slate-900 flex items-center gap-1"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
@@ -206,7 +212,7 @@ export default function TopicQuizPage() {
             </Link>
             <span className="text-slate-300">•</span>
             <Link
-              href="/jhs"
+              href={`/jhs?level=${encodeURIComponent(topic.level)}`}
               className="text-blue-600 hover:text-blue-700"
             >
               Browse Free Curriculum
@@ -663,7 +669,7 @@ export default function TopicQuizPage() {
               </button>
 
               <Link
-                href={`/jhs/${topic.subjectId}/${topic.id}`}
+                href={`/jhs/${topic.subjectId}/${topic.id}?level=${encodeURIComponent(topic.level)}`}
                 className="w-full sm:w-auto py-2.5 px-4 rounded-xl border border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 font-bold text-xs transition-colors flex items-center justify-center gap-1.5"
               >
                 <BookOpen className="w-3.5 h-3.5" />
@@ -672,7 +678,7 @@ export default function TopicQuizPage() {
 
               {nextTopic && hasPassed ? (
                 <Link
-                  href={`/jhs/${nextTopic.subjectId}/${nextTopic.id}`}
+                  href={`/jhs/${nextTopic.subjectId}/${nextTopic.id}?level=${encodeURIComponent(nextTopic.level)}`}
                   className="w-full sm:w-auto py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1.5 ml-auto shadow-sm"
                 >
                   <span>Next: {nextTopic.title}</span>
@@ -680,7 +686,7 @@ export default function TopicQuizPage() {
                 </Link>
               ) : (
                 <Link
-                  href="/jhs/weekly-exam"
+                  href={`/jhs/weekly-exam?level=${encodeURIComponent(topic.level)}`}
                   className="w-full sm:w-auto py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1.5 ml-auto shadow-sm"
                 >
                   <Sparkles className="w-3.5 h-3.5" />
