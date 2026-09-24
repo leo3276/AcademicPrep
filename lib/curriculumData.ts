@@ -1,4 +1,5 @@
 import { CurriculumSubject, CurriculumTopic } from './types';
+import { TOPIC_DETAILED_NOTES } from './curriculumDetailedNotes';
 
 export const CURRICULUM_SUBJECTS: CurriculumSubject[] = [
   {
@@ -51,7 +52,7 @@ export const CURRICULUM_SUBJECTS: CurriculumSubject[] = [
   },
 ];
 
-export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = [
+const BASE_JHS_TOPICS: CurriculumTopic[] = [
   // ==========================================
   // JHS 1 - MATHEMATICS
   // ==========================================
@@ -1133,3 +1134,9 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = [
     },
   },
 ];
+
+export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((topic) => ({
+  ...topic,
+  detailedNotes: TOPIC_DETAILED_NOTES[topic.id] || topic.detailedNotes,
+}));
+

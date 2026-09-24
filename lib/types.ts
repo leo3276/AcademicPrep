@@ -49,6 +49,21 @@ export interface CurriculumSubject {
   displayOrder: number;
 }
 
+export interface DetailedSection {
+  title: string;
+  content: string;
+  bulletPoints?: string[];
+}
+
+export interface DetailedNotes {
+  introduction: string;
+  objectives: string[];
+  sections: DetailedSection[];
+  commonMistakes?: string[];
+  beceExamTips?: string[];
+  summaryChecklist: string[];
+}
+
 export interface WorkedExample {
   id: string;
   title: string;
@@ -66,6 +81,7 @@ export interface CurriculumTopic {
   title: string;
   description: string;
   keyNotes: string;
+  detailedNotes?: DetailedNotes;
   isFreeTrial: boolean;
   isVip?: boolean;
   youtubeUrl?: string;

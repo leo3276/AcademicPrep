@@ -8,6 +8,8 @@ import { CURRICULUM_SUBJECTS, JHS_CURRICULUM_TOPICS } from '@/lib/curriculumData
 import { EducationLevel } from '@/lib/types';
 import { 
   ArrowLeft, 
+  ArrowRight,
+  ChevronRight,
   BookOpen, 
   HelpCircle, 
   CheckCircle2, 
@@ -41,8 +43,6 @@ export default function SubjectDetailPage() {
   const initialLevel = (searchParams.get('level') as EducationLevel) || student?.currentLevel || 'JHS 1';
 
   const [currentLevel, setCurrentLevel] = useState<EducationLevel>(initialLevel);
-  // Track open tab for each topic: 'notes' | 'examples' | 'video' | null
-  const [activeTabByTopic, setActiveTabByTopic] = useState<Record<string, 'notes' | 'examples' | 'video' | null>>({});
 
   // VIP PIN Modal state
   const [pinModalOpen, setPinModalOpen] = useState(false);
@@ -54,13 +54,6 @@ export default function SubjectDetailPage() {
   const topics = JHS_CURRICULUM_TOPICS.filter(
     (t) => t.subjectId === subjectId && t.level === currentLevel
   );
-
-  const toggleTab = (topicId: string, tab: 'notes' | 'examples' | 'video') => {
-    setActiveTabByTopic((prev) => ({
-      ...prev,
-      [topicId]: prev[topicId] === tab ? null : tab,
-    }));
-  };
 
   const handleRedeemPin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -191,7 +184,6 @@ export default function SubjectDetailPage() {
               const progress = topicProgress[topic.id];
               const isCompleted = progress?.completed;
               const isLocked = mounted && !student?.hasFullAccess && (topic.isVip || !topic.isFreeTrial);
-              const activeTab = activeTabByTopic[topic.id];
 
               return (
                 <div
@@ -231,60 +223,54 @@ export default function SubjectDetailPage() {
                         )}
                       </div>
 
-                      <h3 className="text-base font-bold text-slate-900">{topic.title}</h3>
+                      <Link
+                        href={`/jhs/${subjectId}/${topic.id}`}
+                        className="group inline-flex items-center gap-1.5 hover:text-blue-600 transition-colors"
+                      >
+                        <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                          {topic.title}
+                        </h3>
+                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all" />
+                      </Link>
                       <p className="text-xs text-slate-600 leading-relaxed">{topic.description}</p>
+
+                      {/* Content Feature Badges */}
+                      <div className="flex items-center gap-2 pt-1 flex-wrap">
+                        <span className="text-[10px] font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-lg flex items-center gap-1">
+                          <BookOpen className="w-3 h-3 text-blue-600" />
+                          Detailed Study Notes
+                        </span>
+                        {topic.examples && topic.examples.length > 0 && (
+                          <span className="text-[10px] font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-lg flex items-center gap-1">
+                            <Lightbulb className="w-3 h-3 text-amber-500" />
+                            {topic.examples.length} Worked Examples
+                          </span>
+                        )}
+                        {topic.youtubeUrl && (
+                          <span className="text-[10px] font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-lg flex items-center gap-1">
+                            <Video className="w-3 h-3 text-red-500" />
+                            Video Lesson
+                          </span>
+                        )}
+                      </div>
                     </div>
 
-                    {/* Action Buttons: Notes, Examples, Video, Quiz */}
+                    {/* Action Buttons: Open Full Lesson & Quiz / VIP */}
                     <div className="flex items-center gap-2 flex-wrap shrink-0">
-                      {/* Notes Button */}
-                      <button
-                        onClick={() => toggleTab(topic.id, 'notes')}
-                        className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-colors flex items-center gap-1.5 ${
-                          activeTab === 'notes'
-                            ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
-                            : 'bg-white text-slate-700 hover:bg-slate-50 border-slate-200'
-                        }`}
+                      <Link
+                        href={`/jhs/${subjectId}/${topic.id}`}
+                        className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-sm shadow-blue-500/20 flex items-center gap-1.5"
                       >
-                        <FileText className="w-3.5 h-3.5" />
-                        <span>Notes</span>
-                      </button>
-
-                      {/* Worked Examples Button */}
-                      {topic.examples && topic.examples.length > 0 && (
-                        <button
-                          onClick={() => toggleTab(topic.id, 'examples')}
-                          className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-colors flex items-center gap-1.5 ${
-                            activeTab === 'examples'
-                              ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                              : 'bg-white text-slate-700 hover:bg-slate-50 border-slate-200'
-                          }`}
-                        >
-                          <Lightbulb className="w-3.5 h-3.5 text-amber-500" />
-                          <span>Examples ({topic.examples.length})</span>
-                        </button>
-                      )}
-
-                      {/* YouTube Video Button */}
-                      {topic.youtubeUrl && (
-                        <button
-                          onClick={() => toggleTab(topic.id, 'video')}
-                          className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-colors flex items-center gap-1.5 ${
-                            activeTab === 'video'
-                              ? 'bg-red-600 text-white border-red-600 shadow-xs'
-                              : 'bg-white text-slate-700 hover:bg-slate-50 border-slate-200'
-                          }`}
-                        >
-                          <Video className="w-3.5 h-3.5 text-red-500" />
-                          <span>Video Lesson</span>
-                        </button>
-                      )}
+                        <BookOpen className="w-3.5 h-3.5" />
+                        <span>Study Lesson</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
 
                       {/* Quiz Button / Locked Indicator */}
                       {isLocked ? (
                         <button
                           onClick={() => setPinModalOpen(true)}
-                          className="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 text-xs font-bold flex items-center gap-1.5 transition-colors shadow-xs"
+                          className="px-3.5 py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 text-xs font-bold flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer"
                           title="VIP Pass Required"
                         >
                           <Crown className="w-3.5 h-3.5 text-amber-600" />
@@ -293,10 +279,10 @@ export default function SubjectDetailPage() {
                       ) : (
                         <Link
                           href={`/jhs/quiz/${topic.id}`}
-                          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 ${
+                          className={`px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all border flex items-center gap-1.5 ${
                             isCompleted
-                              ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
-                              : 'bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/20'
+                              ? 'bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100'
+                              : 'bg-white text-slate-700 hover:bg-slate-50 border-slate-200'
                           }`}
                         >
                           <HelpCircle className="w-3.5 h-3.5" />
@@ -305,138 +291,6 @@ export default function SubjectDetailPage() {
                       )}
                     </div>
                   </div>
-
-                  {/* TAB 1: Key Study Notes */}
-                  {activeTab === 'notes' && (
-                    <div className="mt-4 pt-4 border-t border-slate-100 bg-slate-50/80 p-4 sm:p-5 rounded-xl text-xs text-slate-800 leading-relaxed font-sans whitespace-pre-line border border-slate-200/80 animate-in fade-in duration-200">
-                      <div className="font-bold text-slate-900 mb-2 flex items-center gap-1.5 text-sm">
-                        <BookOpen className="w-4 h-4 text-blue-600" />
-                        Summary Study Notes & Formulas
-                      </div>
-                      {topic.keyNotes}
-                    </div>
-                  )}
-
-                  {/* TAB 2: Step-by-Step Worked Examples */}
-                  {activeTab === 'examples' && topic.examples && (
-                    <div className="mt-4 pt-4 border-t border-slate-100 space-y-4 animate-in fade-in duration-200">
-                      <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-700">
-                        <Lightbulb className="w-4 h-4 text-amber-500" />
-                        Step-by-Step Worked Examples
-                      </div>
-
-                      {topic.examples.map((ex, exIdx) => {
-                        if (isLocked && exIdx > 0) {
-                          return (
-                            <div
-                              key={ex.id}
-                              className="rounded-xl border border-amber-200/80 bg-amber-50/40 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
-                            >
-                              <div className="flex items-center gap-2.5">
-                                <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
-                                  <Crown className="w-4 h-4" />
-                                </div>
-                                <div>
-                                  <h4 className="text-xs font-bold text-amber-950">
-                                    Example {exIdx + 1}: {ex.title}
-                                  </h4>
-                                  <p className="text-[11px] text-amber-800">
-                                    Advanced step-by-step BECE worked solution reserved for VIP Pass members.
-                                  </p>
-                                </div>
-                              </div>
-                              <button
-                                onClick={() => setPinModalOpen(true)}
-                                className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-xs shadow-xs self-start sm:self-auto flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
-                              >
-                                <KeyRound className="w-3 h-3" />
-                                <span>Unlock VIP</span>
-                              </button>
-                            </div>
-                          );
-                        }
-
-                        return (
-                          <div
-                            key={ex.id}
-                            className="rounded-xl border border-slate-200 bg-slate-50/60 p-4 space-y-3"
-                          >
-                            <div className="flex items-center justify-between">
-                              <span className="text-xs font-bold text-indigo-700">
-                                Example {exIdx + 1}: {ex.title}
-                              </span>
-                              {isLocked && exIdx === 0 && (
-                                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-700">
-                                  Free Preview
-                                </span>
-                              )}
-                            </div>
-
-                            <div className="p-3 rounded-lg bg-white border border-slate-200 text-xs font-semibold text-slate-900">
-                              <b>Problem: </b> {ex.problem}
-                            </div>
-
-                            <div className="space-y-1.5 text-xs text-slate-700 pl-2 border-l-2 border-indigo-400">
-                              {ex.stepByStepSolution.map((step, stepIdx) => (
-                                <p key={stepIdx} className="leading-relaxed">
-                                  {step}
-                                </p>
-                              ))}
-                            </div>
-
-                            <div className="p-2.5 rounded-lg bg-amber-50 border border-amber-200/80 text-[11px] text-amber-900 font-medium">
-                              💡 <b>Key Rule: </b> {ex.keyTakeaway}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-
-                  {/* TAB 3: Curated YouTube Video Lesson */}
-                  {activeTab === 'video' && topic.youtubeUrl && (
-                    <div className="mt-4 pt-4 border-t border-slate-100 space-y-3 animate-in fade-in duration-200">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-700">
-                          <PlayCircle className="w-4 h-4 text-red-600" />
-                          Curated Video Lesson for {topic.title}
-                        </div>
-                        <a
-                          href={topic.youtubeUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[11px] font-bold text-red-600 hover:text-red-700 flex items-center gap-1"
-                        >
-                          <span>Open on YouTube</span>
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      </div>
-
-                      {topic.youtubeId ? (
-                        <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-md border border-slate-200 bg-black">
-                          <iframe
-                            src={`https://www.youtube.com/embed/${topic.youtubeId}`}
-                            title={topic.title}
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                            className="absolute inset-0 w-full h-full border-0"
-                          />
-                        </div>
-                      ) : (
-                        <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 flex items-center justify-between">
-                          <span>Video available on YouTube for this lesson.</span>
-                          <a
-                            href={topic.youtubeUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="px-3 py-1.5 rounded-lg bg-red-600 text-white font-bold text-xs flex items-center gap-1"
-                          >
-                            Watch Tutorial
-                          </a>
-                        </div>
-                      )}
-                    </div>
-                  )}
                 </div>
               );
             })}
