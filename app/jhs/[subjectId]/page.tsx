@@ -27,6 +27,7 @@ import {
   Award,
   X
 } from 'lucide-react';
+import SubjectIcon from '@/components/SubjectIcon';
 
 export default function SubjectDetailPage() {
   const params = useParams();
@@ -104,17 +105,24 @@ export default function SubjectDetailPage() {
 
       {/* Header Banner */}
       <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800 uppercase font-mono">
-              {subject.code}
-            </span>
-            <span className="text-xs text-slate-500 font-medium">NaCCA Curriculum</span>
+        <div className="flex items-start gap-4">
+          <div
+            className={`w-14 h-14 rounded-2xl bg-gradient-to-tr ${subject.color} text-white flex items-center justify-center shadow-md shrink-0 mt-0.5`}
+          >
+            <SubjectIcon subjectId={subject.id} className="w-7 h-7" />
           </div>
-          <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">{subject.name}</h1>
-          <p className="text-xs text-slate-600 mt-0.5">
-            Structured topics, video tutorials, worked examples, and mastery quizzes for {currentLevel}.
-          </p>
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800 uppercase font-mono">
+                {subject.code}
+              </span>
+              <span className="text-xs text-slate-500 font-medium">NaCCA Curriculum</span>
+            </div>
+            <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">{subject.name}</h1>
+            <p className="text-xs text-slate-600 mt-0.5">
+              Structured topics, video tutorials, worked examples, and mastery quizzes for {currentLevel}.
+            </p>
+          </div>
         </div>
 
         {/* Level Switcher */}

@@ -22,18 +22,7 @@ import {
   Trophy,
   GraduationCap
 } from 'lucide-react';
-
-const SUBJECT_ICONS: Record<string, React.ReactNode> = {
-  math: <Calculator className="w-6 h-6" />,
-  science: <FlaskConical className="w-6 h-6" />,
-  english: <BookOpen className="w-6 h-6" />,
-  social: <Globe2 className="w-6 h-6" />,
-  ict: <Cpu className="w-6 h-6" />,
-  rme: <HeartHandshake className="w-6 h-6" />,
-  french: <Languages className="w-6 h-6" />,
-  twi: <BookA className="w-6 h-6" />,
-  'career-tech': <Wrench className="w-6 h-6" />,
-};
+import SubjectIcon from '@/components/SubjectIcon';
 
 export default function JhsPortalPage() {
   const { student, topicProgress } = useAuth();
@@ -179,7 +168,7 @@ export default function JhsPortalPage() {
                     <div
                       className={`w-12 h-12 rounded-xl bg-gradient-to-tr ${subject.color} text-white flex items-center justify-center shadow-md`}
                     >
-                      {SUBJECT_ICONS[subject.id]}
+                      <SubjectIcon subjectId={subject.id} className="w-6 h-6" />
                     </div>
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 uppercase font-mono">
                       {subject.code}
