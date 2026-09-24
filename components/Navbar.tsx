@@ -116,17 +116,9 @@ export default function Navbar() {
                 <span>Weekly Exam</span>
               </Link>
 
-              <button
-                onClick={() => setPinModalOpen(true)}
-                className="text-xs font-bold px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-colors flex items-center gap-1.5 border border-emerald-200 whitespace-nowrap"
-              >
-                <KeyRound className="w-3.5 h-3.5" />
-                <span>Redeem PIN</span>
-              </button>
-
               <div className="h-5 w-px bg-slate-200 shrink-0 mx-1" />
 
-              {/* Student Profile Pill - Fixed wrapping issue */}
+              {/* Student Profile Pill */}
               {student ? (
                 <div className="flex items-center gap-2.5 pl-2 pr-1.5 py-1 rounded-xl bg-slate-50 border border-slate-200 shrink-0">
                   <div className="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-xs">
@@ -146,9 +138,13 @@ export default function Navbar() {
                           <CheckCircle2 className="w-2.5 h-2.5" /> Pass
                         </span>
                       ) : (
-                        <span className="text-[9px] font-bold text-amber-800 bg-amber-100/90 px-1.5 py-0.2 rounded-full whitespace-nowrap">
+                        <button
+                          onClick={() => setPinModalOpen(true)}
+                          title="Click to Redeem PIN & Upgrade"
+                          className="text-[9px] font-bold text-amber-800 bg-amber-100/90 hover:bg-amber-200 px-1.5 py-0.2 rounded-full whitespace-nowrap cursor-pointer transition-colors"
+                        >
                           Free Mode
-                        </span>
+                        </button>
                       )}
                     </div>
                   </div>
@@ -170,17 +166,18 @@ export default function Navbar() {
                 </Link>
               )}
 
+              {/* Admin Button - Formatted cleanly with icon and label */}
               <Link
                 href="/admin"
-                className={`p-2 rounded-xl text-xs font-bold transition-colors flex items-center gap-1 whitespace-nowrap ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border shrink-0 ${
                   isAdmin 
-                    ? 'bg-purple-100 text-purple-700' 
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    ? 'bg-purple-600 text-white border-purple-600 shadow-sm shadow-purple-500/20' 
+                    : 'text-purple-700 bg-purple-50 hover:bg-purple-100 border-purple-200'
                 }`}
                 title="Admin Control Center"
               >
-                <ShieldCheck className="w-4 h-4 text-purple-600" />
-                <span className="hidden xl:inline">Admin</span>
+                <ShieldCheck className="w-4 h-4 shrink-0" />
+                <span>Admin</span>
               </Link>
             </div>
 
