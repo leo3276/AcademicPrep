@@ -5,6 +5,9 @@ import { JHS1_MATH_QUIZZES } from './curriculumJhs1MathQuizzes';
 import { JHS1_SCIENCE_TOPICS } from './curriculumJhs1Science';
 import { JHS1_SCIENCE_DETAILED_NOTES } from './curriculumDetailedNotesScience';
 import { JHS1_SCIENCE_QUIZZES } from './curriculumJhs1ScienceQuizzes';
+import { JHS1_ENGLISH_TOPICS } from './curriculumJhs1English';
+import { JHS1_ENGLISH_DETAILED_NOTES } from './curriculumDetailedNotesEnglish';
+import { JHS1_ENGLISH_QUIZZES } from './curriculumJhs1EnglishQuizzes';
 
 export const CURRICULUM_SUBJECTS: CurriculumSubject[] = [
   {
@@ -385,46 +388,9 @@ const BASE_JHS_TOPICS: CurriculumTopic[] = [
   },
 
   // ==========================================
-  // JHS 1 - ENGLISH LANGUAGE
+  // JHS 1 - ENGLISH LANGUAGE (All 15 GES Topics)
   // ==========================================
-  {
-    id: 'jhs1-eng-t1-partsofspeech',
-    subjectId: 'english',
-    level: 'JHS 1',
-    term: 1,
-    orderIndex: 1,
-    title: 'Parts of Speech & Sentence Construction',
-    description: 'Nouns, pronouns, verbs, adverbs, adjectives, conjunctions, and prepositions.',
-    isFreeTrial: true,
-    keyNotes: `Every English word belongs to one of eight parts of speech:
-• Noun: Name of a person, animal, place, or thing.
-• Pronoun: Replaces a noun (he, she, they, it).
-• Verb: An action or state-of-being word.
-• Adjective: Describes or qualifies a noun.
-• Adverb: Modifies a verb, adjective, or another adverb.
-• Preposition: Shows relationship of place, direction, or time (in, on, under).
-• Conjunction: Connects clauses or words (and, but, although).`,
-    quiz: {
-      id: 'quiz-jhs1-eng-speech',
-      topicId: 'jhs1-eng-t1-partsofspeech',
-      title: 'Parts of Speech Diagnostic Quiz',
-      timeLimitMinutes: 10,
-      passScorePercentage: 60,
-      questions: [
-        {
-          id: 'q-eng-1',
-          quizId: 'quiz-jhs1-eng-speech',
-          questionText: 'Identify the adverb in the sentence: "The student answered the questions quickly and correctly."',
-          optionA: 'student',
-          optionB: 'questions',
-          optionC: 'quickly',
-          optionD: 'answered',
-          correctOption: 'C',
-          explanation: '"Quickly" describes how the action was performed, making it an adverb of manner.',
-        },
-      ],
-    },
-  },
+  ...JHS1_ENGLISH_TOPICS,
 
   // ==========================================
   // JHS 1 - SOCIAL STUDIES
@@ -512,10 +478,12 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
   detailedNotes:
     TOPIC_DETAILED_NOTES[topic.id] ||
     JHS1_SCIENCE_DETAILED_NOTES[topic.id] ||
+    JHS1_ENGLISH_DETAILED_NOTES[topic.id] ||
     topic.detailedNotes,
   quiz:
     JHS1_MATH_QUIZZES[topic.id] ||
     JHS1_SCIENCE_QUIZZES[topic.id] ||
+    JHS1_ENGLISH_QUIZZES[topic.id] ||
     topic.quiz,
 }));
 
