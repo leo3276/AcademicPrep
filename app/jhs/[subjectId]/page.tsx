@@ -325,34 +325,71 @@ export default function SubjectDetailPage() {
                         Step-by-Step Worked Examples
                       </div>
 
-                      {topic.examples.map((ex, exIdx) => (
-                        <div
-                          key={ex.id}
-                          className="rounded-xl border border-slate-200 bg-slate-50/60 p-4 space-y-3"
-                        >
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-bold text-indigo-700">
-                              Example {exIdx + 1}: {ex.title}
-                            </span>
-                          </div>
+                      {topic.examples.map((ex, exIdx) => {
+                        if (isLocked && exIdx > 0) {
+                          return (
+                            <div
+                              key={ex.id}
+                              className="rounded-xl border border-amber-200/80 bg-amber-50/40 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                            >
+                              <div className="flex items-center gap-2.5">
+                                <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+                                  <Crown className="w-4 h-4" />
+                                </div>
+                                <div>
+                                  <h4 className="text-xs font-bold text-amber-950">
+                                    Example {exIdx + 1}: {ex.title}
+                                  </h4>
+                                  <p className="text-[11px] text-amber-800">
+                                    Advanced step-by-step BECE worked solution reserved for VIP Pass members.
+                                  </p>
+                                </div>
+                              </div>
+                              <button
+                                onClick={() => setPinModalOpen(true)}
+                                className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-xs shadow-xs self-start sm:self-auto flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
+                              >
+                                <KeyRound className="w-3 h-3" />
+                                <span>Unlock VIP</span>
+                              </button>
+                            </div>
+                          );
+                        }
 
-                          <div className="p-3 rounded-lg bg-white border border-slate-200 text-xs font-semibold text-slate-900">
-                            <b>Problem: </b> {ex.problem}
-                          </div>
+                        return (
+                          <div
+                            key={ex.id}
+                            className="rounded-xl border border-slate-200 bg-slate-50/60 p-4 space-y-3"
+                          >
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs font-bold text-indigo-700">
+                                Example {exIdx + 1}: {ex.title}
+                              </span>
+                              {isLocked && exIdx === 0 && (
+                                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-700">
+                                  Free Preview
+                                </span>
+                              )}
+                            </div>
 
-                          <div className="space-y-1.5 text-xs text-slate-700 pl-2 border-l-2 border-indigo-400">
-                            {ex.stepByStepSolution.map((step, stepIdx) => (
-                              <p key={stepIdx} className="leading-relaxed">
-                                {step}
-                              </p>
-                            ))}
-                          </div>
+                            <div className="p-3 rounded-lg bg-white border border-slate-200 text-xs font-semibold text-slate-900">
+                              <b>Problem: </b> {ex.problem}
+                            </div>
 
-                          <div className="p-2.5 rounded-lg bg-amber-50 border border-amber-200/80 text-[11px] text-amber-900 font-medium">
-                            💡 <b>Key Rule: </b> {ex.keyTakeaway}
+                            <div className="space-y-1.5 text-xs text-slate-700 pl-2 border-l-2 border-indigo-400">
+                              {ex.stepByStepSolution.map((step, stepIdx) => (
+                                <p key={stepIdx} className="leading-relaxed">
+                                  {step}
+                                </p>
+                              ))}
+                            </div>
+
+                            <div className="p-2.5 rounded-lg bg-amber-50 border border-amber-200/80 text-[11px] text-amber-900 font-medium">
+                              💡 <b>Key Rule: </b> {ex.keyTakeaway}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   )}
 
@@ -444,9 +481,16 @@ export default function SubjectDetailPage() {
                   className="w-full px-4 py-2.5 rounded-xl border border-slate-300 font-mono text-center tracking-widest text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 uppercase text-sm"
                   autoFocus
                 />
-                <p className="text-[11px] text-slate-500 mt-1">
-                  💡 Active VIP Demo PIN: <span className="font-mono font-bold text-amber-700">PREP-8842-9901</span>
-                </p>
+                <div className="flex items-center justify-between text-[11px] text-slate-500 mt-1.5">
+                  <span>💡 Active VIP Demo PIN: <span className="font-mono font-bold text-amber-700">PREP-8842-9901</span></span>
+                  <button
+                    type="button"
+                    onClick={() => setPinInput('PREP-8842-9901')}
+                    className="text-amber-700 font-bold hover:underline cursor-pointer"
+                  >
+                    Autofill
+                  </button>
+                </div>
               </div>
 
               {pinFeedback && (

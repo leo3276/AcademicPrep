@@ -239,6 +239,20 @@ export default function Navbar() {
                 <Sparkles className="w-4 h-4 text-amber-600" />
                 Adaptive Weekly Exam
               </Link>
+
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setPinModalOpen(true);
+                }}
+                className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold text-xs flex items-center justify-between shadow-xs mt-1"
+              >
+                <div className="flex items-center gap-2">
+                  <KeyRound className="w-4 h-4" />
+                  <span>Redeem Access PIN</span>
+                </div>
+                <span className="text-[10px] bg-black/20 px-1.5 py-0.5 rounded font-black tracking-wider uppercase">VIP PASS</span>
+              </button>
             </div>
 
             <div className="pt-2 border-t border-slate-100">
@@ -318,9 +332,16 @@ export default function Navbar() {
                   className="w-full px-4 py-2.5 rounded-xl border border-slate-300 font-mono text-center tracking-widest text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 uppercase text-sm"
                   autoFocus
                 />
-                <p className="text-[11px] text-slate-500 mt-1">
-                  💡 Active Demo PIN: <span className="font-mono font-bold text-emerald-700">PREP-8842-9901</span>
-                </p>
+                <div className="flex items-center justify-between text-[11px] text-slate-500 mt-1.5">
+                  <span>💡 Active Demo PIN: <span className="font-mono font-bold text-emerald-700">PREP-8842-9901</span></span>
+                  <button
+                    type="button"
+                    onClick={() => setPinInput('PREP-8842-9901')}
+                    className="text-emerald-700 font-bold hover:underline cursor-pointer"
+                  >
+                    Autofill
+                  </button>
+                </div>
               </div>
 
               {pinFeedback && (
