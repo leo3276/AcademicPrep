@@ -11,6 +11,9 @@ import { JHS1_ENGLISH_QUIZZES } from './curriculumJhs1EnglishQuizzes';
 import { JHS1_SOCIAL_TOPICS } from './curriculumJhs1Social';
 import { JHS1_SOCIAL_DETAILED_NOTES } from './curriculumDetailedNotesSocial';
 import { JHS1_SOCIAL_QUIZZES } from './curriculumJhs1SocialQuizzes';
+import { JHS1_COMPUTING_TOPICS } from './curriculumJhs1Computing';
+import { JHS1_COMPUTING_DETAILED_NOTES } from './curriculumDetailedNotesComputing';
+import { JHS1_COMPUTING_QUIZZES } from './curriculumJhs1ComputingQuizzes';
 
 export const CURRICULUM_SUBJECTS: CurriculumSubject[] = [
   {
@@ -352,43 +355,9 @@ const BASE_JHS_TOPICS: CurriculumTopic[] = [
   },
 
   // ==========================================
-  // JHS 1 - COMPUTING / ICT
+  // JHS 1 - COMPUTING / ICT (All 15 GES Topics)
   // ==========================================
-  {
-    id: 'jhs1-ict-t1-hardware',
-    subjectId: 'ict',
-    level: 'JHS 1',
-    term: 1,
-    orderIndex: 1,
-    title: 'Introduction to Computer Systems & Hardware',
-    description: 'Input, processing, output, and secondary storage devices.',
-    isFreeTrial: true,
-    keyNotes: `A computer is an electronic device that accepts data as input, processes it, and produces information as output.
-• Input Devices: Keyboard, Mouse, Scanner, Microphone.
-• Central Processing Unit (CPU): The brain of the computer (ALU + Control Unit).
-• Output Devices: Monitor (VDU), Printer, Speakers, Projector.
-• Storage Devices: RAM (volatile/temporary), ROM (non-volatile/permanent), SSD, Flash drive.`,
-    quiz: {
-      id: 'quiz-jhs1-ict-hardware',
-      topicId: 'jhs1-ict-t1-hardware',
-      title: 'Computer Hardware Fundamentals Quiz',
-      timeLimitMinutes: 10,
-      passScorePercentage: 60,
-      questions: [
-        {
-          id: 'q-ict-1',
-          quizId: 'quiz-jhs1-ict-hardware',
-          questionText: 'Which unit inside the CPU performs arithmetic and logical decisions?',
-          optionA: 'Control Unit (CU)',
-          optionB: 'Arithmetic and Logic Unit (ALU)',
-          optionC: 'Cache Memory',
-          optionD: 'Hard Disk',
-          correctOption: 'B',
-          explanation: 'The ALU (Arithmetic Logic Unit) executes all mathematical calculations and comparisons.',
-        },
-      ],
-    },
-  },
+  ...JHS1_COMPUTING_TOPICS,
 
   // ==========================================
   // JHS 1 - ENGLISH LANGUAGE (All 15 GES Topics)
@@ -446,12 +415,14 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
     JHS1_SCIENCE_DETAILED_NOTES[topic.id] ||
     JHS1_ENGLISH_DETAILED_NOTES[topic.id] ||
     JHS1_SOCIAL_DETAILED_NOTES[topic.id] ||
+    JHS1_COMPUTING_DETAILED_NOTES[topic.id] ||
     topic.detailedNotes,
   quiz:
     JHS1_MATH_QUIZZES[topic.id] ||
     JHS1_SCIENCE_QUIZZES[topic.id] ||
     JHS1_ENGLISH_QUIZZES[topic.id] ||
     JHS1_SOCIAL_QUIZZES[topic.id] ||
+    JHS1_COMPUTING_QUIZZES[topic.id] ||
     topic.quiz,
 }));
 
