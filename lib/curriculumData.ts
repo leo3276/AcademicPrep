@@ -1,6 +1,7 @@
 import { CurriculumSubject, CurriculumTopic } from './types';
 import { TOPIC_DETAILED_NOTES } from './curriculumDetailedNotes';
 import { JHS1_MATH_TOPICS } from './curriculumJhs1Math';
+import { JHS1_MATH_QUIZZES } from './curriculumJhs1MathQuizzes';
 
 export const CURRICULUM_SUBJECTS: CurriculumSubject[] = [
   {
@@ -607,5 +608,6 @@ const BASE_JHS_TOPICS: CurriculumTopic[] = [
 export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((topic) => ({
   ...topic,
   detailedNotes: TOPIC_DETAILED_NOTES[topic.id] || topic.detailedNotes,
+  quiz: JHS1_MATH_QUIZZES[topic.id] || topic.quiz,
 }));
 

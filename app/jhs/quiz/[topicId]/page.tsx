@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/authContext';
@@ -18,7 +18,9 @@ import {
   Crown,
   KeyRound,
   Award,
-  Lock
+  BookOpen,
+  Lightbulb,
+  Target
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -32,10 +34,6 @@ export default function TopicQuizPage() {
   const [pinLoading, setPinLoading] = useState(false);
   const [pinFeedback, setPinFeedback] = useState<{ success?: boolean; text?: string } | null>(null);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const topicId = params.topicId as string;
   const topic = JHS_CURRICULUM_TOPICS.find((t) => t.id === topicId);
   const quiz = topic?.quiz;
@@ -43,7 +41,18 @@ export default function TopicQuizPage() {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, 'A' | 'B' | 'C' | 'D'>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [timeLeftSeconds, setTimeLeftSeconds] = useState((quiz?.timeLimitMinutes || 10) * 60);
+  const [timeLeftSeconds, setTimeLeftSeconds] = useState((quiz?.timeLimitMinutes || 12) * 60);
+  const [reviewFilter, setReviewFilter] = useState<'all' | 'mistakes' | 'correct'>('all');
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Find next topic if available
+  const currentTopicIdx = topic ? JHS_CURRICULUM_TOPICS.findIndex((t) => t.id === topic.id) : -1;
+  const nextTopic = currentTopicIdx >= 0 && currentTopicIdx < JHS_CURRICULUM_TOPICS.length - 1
+    ? JHS_CURRICULUM_TOPICS[currentTopicIdx + 1]
+    : null;
 
   const handleRedeemPin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -124,10 +133,10 @@ export default function TopicQuizPage() {
               What VIP Pass Includes:
             </p>
             <ul className="text-xs text-amber-900 space-y-1 pl-5 list-disc">
-              <li>All JHS 1, 2, and 3 curriculum topics & worked solutions</li>
-              <li>Unlimited diagnostic quiz attempts with instant step-by-step rationales</li>
+              <li>All 15 JHS 1 Mathematics topics, worked solutions & diagnostic quizzes</li>
+              <li>10 BECE-standard questions per topic with personalized weakness analysis</li>
               <li>Adaptive Weekly Exams tailored to your personal study progress</li>
-              <li>30 days of full, uninterrupted access</li>
+              <li>Full uninterrupted access across all devices</li>
             </ul>
           </div>
 
@@ -164,7 +173,7 @@ export default function TopicQuizPage() {
             </div>
 
             <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1">
-              <span>Need a PIN? Contact your teacher or agent.</span>
+              <span>Need a PIN? Contact your teacher or school administrator.</span>
               <button
                 type="button"
                 onClick={() => setPinInput('PREP-8842-9901')}
@@ -200,7 +209,7 @@ export default function TopicQuizPage() {
               href="/jhs"
               className="text-blue-600 hover:text-blue-700"
             >
-              Browse Free Trial Topics
+              Browse Free Curriculum
             </Link>
           </div>
         </div>
@@ -254,7 +263,8 @@ export default function TopicQuizPage() {
     setSelectedAnswers({});
     setIsSubmitted(false);
     setCurrentIdx(0);
-    setTimeLeftSeconds((quiz.timeLimitMinutes || 10) * 60);
+    setReviewFilter('all');
+    setTimeLeftSeconds((quiz.timeLimitMinutes || 12) * 60);
   };
 
   const minutes = Math.floor(timeLeftSeconds / 60);
@@ -264,13 +274,82 @@ export default function TopicQuizPage() {
   const { correct, percentage } = calculateScore();
   const hasPassed = percentage >= quiz.passScorePercentage;
 
+  // Grade categorization based on WAEC / BECE Stanine standards
+  const getGradeInfo = (pct: number) => {
+    if (pct >= 80) {
+      return {
+        label: 'Grade 1 (Distinction)',
+        badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+        summary: 'Outstanding mastery! You demonstrated comprehensive command over all tested syllabus concepts.',
+      };
+    } else if (pct >= 70) {
+      return {
+        label: 'Grade 2 (Credit)',
+        badgeColor: 'bg-blue-100 text-blue-800 border-blue-300',
+        summary: 'Solid performance! Review the few missed sub-concepts below to turn this into a Grade 1 Distinction.',
+      };
+    } else if (pct >= 60) {
+      return {
+        label: 'Grade 3 (Pass)',
+        badgeColor: 'bg-amber-100 text-amber-800 border-amber-300',
+        summary: 'You passed, but several fundamental concepts need strengthening before the BECE exam.',
+      };
+    } else {
+      return {
+        label: 'Needs Practice (Below Pass)',
+        badgeColor: 'bg-rose-100 text-rose-800 border-rose-300',
+        summary: 'Do not be discouraged! Carefully read the personalized improvement recommendations below, review the lesson notes, and retake the quiz.',
+      };
+    }
+  };
+
+  const gradeInfo = getGradeInfo(percentage);
+
+  // Group missed questions by sub-concept to give diagnostic improvement recommendations
+  const incorrectQuestions = useMemo(() => {
+    return quiz.questions.filter((q) => selectedAnswers[q.id] !== q.correctOption);
+  }, [quiz.questions, selectedAnswers]);
+
+  const correctQuestions = useMemo(() => {
+    return quiz.questions.filter((q) => selectedAnswers[q.id] === q.correctOption);
+  }, [quiz.questions, selectedAnswers]);
+
+  const weakSubConcepts = useMemo(() => {
+    const map = new Map<string, { count: number; tip?: string; questions: string[] }>();
+    incorrectQuestions.forEach((q) => {
+      const concept = q.subConcept || 'Core Concepts';
+      const existing = map.get(concept) || { count: 0, tip: q.remediationTip, questions: [] };
+      existing.count += 1;
+      if (!existing.tip && q.remediationTip) existing.tip = q.remediationTip;
+      existing.questions.push(q.questionText);
+      map.set(concept, existing);
+    });
+    return Array.from(map.entries()).map(([concept, data]) => ({
+      concept,
+      count: data.count,
+      tip: data.tip,
+      questions: data.questions,
+    }));
+  }, [incorrectQuestions]);
+
+  // Filtered questions for review
+  const displayedQuestions = useMemo(() => {
+    if (reviewFilter === 'mistakes') {
+      return quiz.questions.filter((q) => selectedAnswers[q.id] !== q.correctOption);
+    }
+    if (reviewFilter === 'correct') {
+      return quiz.questions.filter((q) => selectedAnswers[q.id] === q.correctOption);
+    }
+    return quiz.questions;
+  }, [quiz.questions, reviewFilter, selectedAnswers]);
+
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-6">
       {/* Top Header */}
       <div className="flex items-center justify-between">
         <Link
           href={`/jhs/${topic.subjectId}?level=${encodeURIComponent(topic.level)}`}
-          className="text-xs font-medium text-slate-500 hover:text-slate-800 flex items-center gap-1"
+          className="text-xs font-medium text-slate-500 hover:text-slate-800 flex items-center gap-1 transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           Back to Topics
@@ -288,11 +367,14 @@ export default function TopicQuizPage() {
       {/* Quiz Card */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
         <div>
-          <div className="flex items-center gap-2 mb-1">
+          <div className="flex flex-wrap items-center gap-2 mb-1">
             <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 uppercase">
-              {topic.level} Practice Quiz
+              {topic.level} • 10 Questions
             </span>
             <span className="text-xs text-slate-500">Pass Mark: {quiz.passScorePercentage}%</span>
+            <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+              GES / NaCCA Standard
+            </span>
           </div>
           <h1 className="text-xl font-bold text-slate-900">{quiz.title}</h1>
           <p className="text-xs text-slate-500 mt-0.5">{topic.title}</p>
@@ -301,14 +383,15 @@ export default function TopicQuizPage() {
         {/* Result Screen if Submitted */}
         {isSubmitted ? (
           <div className="space-y-6">
+            {/* Primary Score Banner */}
             <div
-              className={`p-6 rounded-2xl text-center space-y-3 ${
+              className={`p-6 sm:p-8 rounded-3xl text-center space-y-4 border ${
                 hasPassed
-                  ? 'bg-emerald-50 border border-emerald-200 text-emerald-950'
-                  : 'bg-amber-50 border border-amber-200 text-amber-950'
+                  ? 'bg-gradient-to-b from-emerald-50/80 to-teal-50/40 border-emerald-200 text-emerald-950'
+                  : 'bg-gradient-to-b from-amber-50/80 to-orange-50/40 border-amber-200 text-amber-950'
               }`}
             >
-              <div className="w-12 h-12 rounded-full mx-auto flex items-center justify-center font-bold">
+              <div className="w-14 h-14 rounded-2xl mx-auto flex items-center justify-center font-bold shadow-md bg-white">
                 {hasPassed ? (
                   <Trophy className="w-8 h-8 text-emerald-600" />
                 ) : (
@@ -316,81 +399,261 @@ export default function TopicQuizPage() {
                 )}
               </div>
 
-              <h2 className="text-2xl font-black">
-                {hasPassed ? 'Congratulations! You Passed!' : 'Nice Effort! Needs More Practice'}
-              </h2>
+              <div className="space-y-1">
+                <span className={`inline-block text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full border ${gradeInfo.badgeColor}`}>
+                  {gradeInfo.label}
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-black tracking-tight">
+                  {hasPassed ? 'Congratulations! Quiz Passed' : 'Keep Going! Practice Makes Perfect'}
+                </h2>
+                <p className="text-xs max-w-md mx-auto leading-relaxed pt-1">
+                  {gradeInfo.summary}
+                </p>
+              </div>
 
-              <p className="text-xs">
-                You scored <b>{correct}</b> out of <b>{totalQuestions}</b> questions (<b>{percentage}%</b>).
-              </p>
+              {/* Numerical Score Display */}
+              <div className="flex items-center justify-center gap-6 pt-2">
+                <div className="p-3 bg-white/90 rounded-2xl border border-slate-200/80 text-center min-w-[100px]">
+                  <span className="block text-2xl font-black text-slate-900">{correct} / {totalQuestions}</span>
+                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Correct Answers</span>
+                </div>
+                <div className="p-3 bg-white/90 rounded-2xl border border-slate-200/80 text-center min-w-[100px]">
+                  <span className={`block text-2xl font-black ${hasPassed ? 'text-emerald-600' : 'text-amber-600'}`}>
+                    {percentage}%
+                  </span>
+                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Percentage</span>
+                </div>
+              </div>
 
               {hasPassed ? (
-                <div className="text-[11px] text-emerald-800 bg-white/70 py-1.5 px-3 rounded-lg inline-block font-medium">
-                  ✓ This topic is now marked COMPLETED and will appear in your Dynamic Weekly Exam!
+                <div className="text-[11px] text-emerald-800 bg-white/80 py-2 px-4 rounded-xl inline-block font-semibold border border-emerald-200/80">
+                  ✓ This topic is marked completed and incorporated into your Weekly Exam diagnostic pool!
                 </div>
               ) : (
-                <div className="text-[11px] text-amber-800 bg-white/70 py-1.5 px-3 rounded-lg inline-block font-medium">
-                  Review the explanations below and retake the quiz to unlock this topic in your Weekly Exam.
+                <div className="text-[11px] text-amber-800 bg-white/80 py-2 px-4 rounded-xl inline-block font-semibold border border-amber-200/80">
+                  ⚠️ Review your personalized improvement plan below and retake the quiz to reach the 60% pass mark.
                 </div>
               )}
             </div>
 
-            {/* Explanations Review */}
-            <div className="space-y-4 pt-4 border-t border-slate-100">
-              <h3 className="text-sm font-bold text-slate-900">Detailed Answer Explanations</h3>
-
-              {quiz.questions.map((q, idx) => {
-                const userChoice = selectedAnswers[q.id];
-                const isCorrect = userChoice === q.correctOption;
-
-                return (
-                  <div
-                    key={q.id}
-                    className={`p-4 rounded-xl border text-xs space-y-2 ${
-                      isCorrect ? 'border-emerald-200 bg-emerald-50/30' : 'border-red-200 bg-red-50/30'
-                    }`}
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <span className="font-bold text-slate-800">
-                        {idx + 1}. {q.questionText}
-                      </span>
-                      {isCorrect ? (
-                        <span className="flex items-center gap-1 text-[11px] font-bold text-emerald-600 shrink-0">
-                          <CheckCircle2 className="w-3.5 h-3.5" /> Correct
-                        </span>
-                      ) : (
-                        <span className="flex items-center gap-1 text-[11px] font-bold text-red-600 shrink-0">
-                          <XCircle className="w-3.5 h-3.5" /> Incorrect
-                        </span>
-                      )}
+            {/* DIAGNOSTIC ENGINE: WHAT TO IMPROVE ON */}
+            {weakSubConcepts.length > 0 ? (
+              <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-indigo-50/70 via-blue-50/50 to-slate-50 border border-indigo-100 space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-sm">
+                      <Target className="w-4 h-4" />
                     </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-slate-600 pt-1">
-                      <div className={q.correctOption === 'A' ? 'font-bold text-emerald-700' : ''}>
-                        A: {q.optionA}
-                      </div>
-                      <div className={q.correctOption === 'B' ? 'font-bold text-emerald-700' : ''}>
-                        B: {q.optionB}
-                      </div>
-                      <div className={q.correctOption === 'C' ? 'font-bold text-emerald-700' : ''}>
-                        C: {q.optionC}
-                      </div>
-                      <div className={q.correctOption === 'D' ? 'font-bold text-emerald-700' : ''}>
-                        D: {q.optionD}
-                      </div>
-                    </div>
-
-                    <div className="pt-2 text-slate-700 bg-white p-2.5 rounded-lg border border-slate-200/60 text-[11px] leading-relaxed">
-                      <span className="font-bold text-blue-700 block">Explanation:</span>
-                      {q.explanation}
+                    <div>
+                      <h3 className="text-sm font-bold text-slate-900">Personalized Improvement Plan</h3>
+                      <p className="text-[11px] text-slate-500">Targeted sub-concepts to revise based on your test answers</p>
                     </div>
                   </div>
-                );
-              })}
+                  <span className="text-[11px] font-bold text-indigo-700 bg-indigo-100/80 border border-indigo-200 px-2.5 py-1 rounded-full shrink-0">
+                    {weakSubConcepts.length} {weakSubConcepts.length === 1 ? 'Area' : 'Areas'} to Polish
+                  </span>
+                </div>
+
+                <div className="space-y-3 pt-1">
+                  {weakSubConcepts.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="p-3.5 sm:p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs space-y-2 hover:border-indigo-200 transition-colors"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-xs font-bold text-slate-900 flex items-center gap-2">
+                          <span className="w-5 h-5 rounded-md bg-amber-100 text-amber-900 text-[10px] font-black flex items-center justify-center shrink-0">
+                            {idx + 1}
+                          </span>
+                          {item.concept}
+                        </span>
+                        <span className="text-[10px] font-bold text-red-600 bg-red-50 border border-red-200 px-2 py-0.5 rounded-md shrink-0">
+                          {item.count} {item.count === 1 ? 'question missed' : 'questions missed'}
+                        </span>
+                      </div>
+
+                      {item.tip && (
+                        <div className="flex items-start gap-2 pl-7 pt-1 text-[11px] text-slate-700 leading-relaxed bg-amber-50/60 p-2.5 rounded-lg border border-amber-100">
+                          <Lightbulb className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                          <div>
+                            <span className="font-bold text-amber-950">Actionable Rule to Remember: </span>
+                            {item.tip}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-indigo-100/80">
+                  <span className="text-[11px] text-slate-600 text-center sm:text-left">
+                    Detailed step-by-step notes and worked examples for all these concepts are in the lesson page.
+                  </span>
+                  <Link
+                    href={`/jhs/${topic.subjectId}/${topic.id}`}
+                    className="w-full sm:w-auto px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm shadow-indigo-500/20 whitespace-nowrap transition-all"
+                  >
+                    <BookOpen className="w-3.5 h-3.5" />
+                    Study {topic.title} Notes
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-2">
+                <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
+                  <Award className="w-5 h-5" />
+                </div>
+                <h3 className="text-sm font-bold text-emerald-950">Complete 100% Concept Mastery!</h3>
+                <p className="text-xs text-emerald-800 max-w-lg mx-auto leading-relaxed">
+                  You answered all 10 questions correctly with zero mistakes. You have demonstrated comprehensive command over every sub-concept in <b>{topic.title}</b> according to the Ghanaian NaCCA standard!
+                </p>
+              </div>
+            )}
+
+            {/* Answer Explanations Review Filter */}
+            <div className="space-y-4 pt-4 border-t border-slate-100">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <h3 className="text-sm font-bold text-slate-900">Detailed Question-by-Question Review</h3>
+                
+                {/* Filter Tabs */}
+                <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl text-xs font-semibold">
+                  <button
+                    type="button"
+                    onClick={() => setReviewFilter('all')}
+                    className={`px-3 py-1 rounded-lg transition-all ${
+                      reviewFilter === 'all'
+                        ? 'bg-white text-slate-900 shadow-xs font-bold'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    All ({totalQuestions})
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setReviewFilter('mistakes')}
+                    className={`px-3 py-1 rounded-lg transition-all flex items-center gap-1 ${
+                      reviewFilter === 'mistakes'
+                        ? 'bg-white text-red-700 shadow-xs font-bold'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    Mistakes ({incorrectQuestions.length})
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setReviewFilter('correct')}
+                    className={`px-3 py-1 rounded-lg transition-all flex items-center gap-1 ${
+                      reviewFilter === 'correct'
+                        ? 'bg-white text-emerald-700 shadow-xs font-bold'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    Correct ({correctQuestions.length})
+                  </button>
+                </div>
+              </div>
+
+              {/* Question list */}
+              <div className="space-y-4">
+                {displayedQuestions.map((q) => {
+                  const originalIndex = quiz.questions.findIndex((item) => item.id === q.id);
+                  const userChoice = selectedAnswers[q.id];
+                  const isCorrect = userChoice === q.correctOption;
+
+                  return (
+                    <div
+                      key={q.id}
+                      className={`p-4 sm:p-5 rounded-2xl border text-xs space-y-3 transition-all ${
+                        isCorrect ? 'border-emerald-200 bg-emerald-50/20' : 'border-red-200 bg-red-50/20'
+                      }`}
+                    >
+                      {/* Question Header & Sub-concept Badge */}
+                      <div className="space-y-1.5">
+                        <div className="flex items-start justify-between gap-3">
+                          <span className="font-bold text-slate-900 text-sm leading-snug">
+                            Question {originalIndex + 1}: {q.questionText}
+                          </span>
+                          {isCorrect ? (
+                            <span className="flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded-full shrink-0 border border-emerald-200">
+                              <CheckCircle2 className="w-3.5 h-3.5" /> Correct
+                            </span>
+                          ) : (
+                            <span className="flex items-center gap-1 text-[11px] font-bold text-red-700 bg-red-100/80 px-2 py-0.5 rounded-full shrink-0 border border-red-200">
+                              <XCircle className="w-3.5 h-3.5" /> Incorrect
+                            </span>
+                          )}
+                        </div>
+
+                        {q.subConcept && (
+                          <span className="inline-block text-[10px] font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-md">
+                            Sub-Concept: {q.subConcept}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Options Review */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-700 pt-1">
+                        {(['A', 'B', 'C', 'D'] as const).map((optKey) => {
+                          const optText = q[`option${optKey}` as keyof typeof q];
+                          const isUserPicked = userChoice === optKey;
+                          const isRightAnswer = q.correctOption === optKey;
+
+                          let optionStyles = 'border-slate-200 bg-white text-slate-700';
+                          if (isRightAnswer) {
+                            optionStyles = 'border-emerald-300 bg-emerald-50 text-emerald-950 font-semibold ring-1 ring-emerald-400';
+                          } else if (isUserPicked && !isRightAnswer) {
+                            optionStyles = 'border-red-300 bg-red-50 text-red-950 font-semibold line-through';
+                          }
+
+                          return (
+                            <div
+                              key={optKey}
+                              className={`p-2.5 rounded-xl border flex items-center justify-between text-xs ${optionStyles}`}
+                            >
+                              <div className="flex items-center gap-2">
+                                <span className={`w-5 h-5 rounded-md flex items-center justify-center font-bold text-[10px] ${
+                                  isRightAnswer ? 'bg-emerald-600 text-white' : isUserPicked ? 'bg-red-500 text-white' : 'bg-slate-100 text-slate-600'
+                                }`}>
+                                  {optKey}
+                                </span>
+                                <span>{optText}</span>
+                              </div>
+
+                              {isRightAnswer && (
+                                <span className="text-[10px] font-bold text-emerald-700">✓ Correct</span>
+                              )}
+                              {isUserPicked && !isRightAnswer && (
+                                <span className="text-[10px] font-bold text-red-600">Your choice</span>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Step-by-Step Explanation */}
+                      <div className="pt-2 text-slate-800 bg-white p-3 rounded-xl border border-slate-200/70 text-[11px] leading-relaxed space-y-1">
+                        <span className="font-bold text-blue-700 block">Teacher's Step-by-Step Solution:</span>
+                        <p>{q.explanation}</p>
+                      </div>
+
+                      {/* Remediation Tip Callout */}
+                      {q.remediationTip && (
+                        <div className="p-2.5 rounded-xl bg-amber-50/70 border border-amber-200/70 text-[11px] text-amber-900 flex items-start gap-2">
+                          <Lightbulb className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                          <div>
+                            <span className="font-bold">Exam Pro-Tip: </span>
+                            {q.remediationTip}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-slate-100">
+            {/* Bottom Actions & Navigation */}
+            <div className="flex flex-col sm:flex-row items-center gap-3 pt-6 border-t border-slate-100">
               <button
                 onClick={handleRetake}
                 className="w-full sm:w-auto py-2.5 px-4 rounded-xl border border-slate-300 text-slate-700 font-bold text-xs hover:bg-slate-50 transition-colors flex items-center justify-center gap-1.5"
@@ -400,20 +663,31 @@ export default function TopicQuizPage() {
               </button>
 
               <Link
-                href={`/jhs/${topic.subjectId}?level=${encodeURIComponent(topic.level)}`}
-                className="w-full sm:w-auto py-2.5 px-4 rounded-xl bg-slate-900 text-white font-bold text-xs hover:bg-slate-800 transition-colors flex items-center justify-center"
+                href={`/jhs/${topic.subjectId}/${topic.id}`}
+                className="w-full sm:w-auto py-2.5 px-4 rounded-xl border border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 font-bold text-xs transition-colors flex items-center justify-center gap-1.5"
               >
-                Back to Topics
+                <BookOpen className="w-3.5 h-3.5" />
+                Review Full Notes
               </Link>
 
-              <Link
-                href="/jhs/weekly-exam"
-                className="w-full sm:w-auto py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1.5 ml-auto"
-              >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Go to Weekly Exam</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+              {nextTopic && hasPassed ? (
+                <Link
+                  href={`/jhs/${nextTopic.subjectId}/${nextTopic.id}`}
+                  className="w-full sm:w-auto py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1.5 ml-auto shadow-sm"
+                >
+                  <span>Next: {nextTopic.title}</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              ) : (
+                <Link
+                  href="/jhs/weekly-exam"
+                  className="w-full sm:w-auto py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1.5 ml-auto shadow-sm"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Go to Weekly Exam</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              )}
             </div>
           </div>
         ) : (
@@ -426,19 +700,49 @@ export default function TopicQuizPage() {
                   Question {currentIdx + 1} of {totalQuestions}
                 </span>
                 <span>
-                  {Object.keys(selectedAnswers).length} answered
+                  {Object.keys(selectedAnswers).length} of {totalQuestions} answered
                 </span>
               </div>
-              <div className="w-full bg-slate-100 rounded-full h-2">
+              <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                 <div
-                  className="bg-blue-600 h-full rounded-full transition-all"
+                  className="bg-blue-600 h-full rounded-full transition-all duration-300"
                   style={{ width: `${((currentIdx + 1) / totalQuestions) * 100}%` }}
                 />
               </div>
             </div>
 
-            {/* Question Text */}
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            {/* Question Quick Jump Badges */}
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {quiz.questions.map((q, idx) => {
+                const isAnswered = selectedAnswers[q.id] !== undefined;
+                const isCurrent = idx === currentIdx;
+
+                return (
+                  <button
+                    key={q.id}
+                    type="button"
+                    onClick={() => setCurrentIdx(idx)}
+                    className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${
+                      isCurrent
+                        ? 'bg-blue-600 text-white ring-2 ring-blue-500/30'
+                        : isAnswered
+                        ? 'bg-blue-50 text-blue-800 border border-blue-200'
+                        : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                    }`}
+                  >
+                    {idx + 1}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Question Card */}
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              {currentQ.subConcept && (
+                <span className="inline-block text-[10px] font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-md">
+                  {currentQ.subConcept}
+                </span>
+              )}
               <h3 className="text-base font-semibold text-slate-900 leading-snug">
                 {currentQ.questionText}
               </h3>
@@ -468,41 +772,44 @@ export default function TopicQuizPage() {
                     >
                       {optKey}
                     </span>
-                    <span className="flex-1">{optText}</span>
+                    <span className="flex-1 leading-relaxed">{optText}</span>
                   </button>
                 );
               })}
             </div>
 
-            {/* Controls */}
+            {/* Navigation & Controls */}
             <div className="flex items-center justify-between pt-4 border-t border-slate-100">
               <button
                 type="button"
                 disabled={currentIdx === 0}
                 onClick={() => setCurrentIdx((i) => Math.max(0, i - 1))}
-                className="py-2 px-3.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 disabled:opacity-40 hover:bg-slate-50"
+                className="py-2 px-3.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 disabled:opacity-40 hover:bg-slate-50 transition-colors"
               >
                 Previous
               </button>
 
-              {currentIdx < totalQuestions - 1 ? (
-                <button
-                  type="button"
-                  onClick={() => setCurrentIdx((i) => Math.min(totalQuestions - 1, i + 1))}
-                  className="py-2 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-sm shadow-blue-500/20"
-                >
-                  Next Question
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={handleSubmit}
-                  className="py-2.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md shadow-emerald-500/20 flex items-center gap-1.5"
-                >
-                  <CheckCircle2 className="w-4 h-4" />
-                  Submit Quiz
-                </button>
-              )}
+              <div className="flex items-center gap-2">
+                {currentIdx < totalQuestions - 1 ? (
+                  <button
+                    type="button"
+                    onClick={() => setCurrentIdx((i) => Math.min(totalQuestions - 1, i + 1))}
+                    className="py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-sm shadow-blue-500/20 transition-all flex items-center gap-1.5"
+                  >
+                    <span>Next Question</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleSubmit}
+                    className="py-2.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md shadow-emerald-500/20 flex items-center gap-1.5 transition-all"
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                    Submit 10 Questions
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         )}

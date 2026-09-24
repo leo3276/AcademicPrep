@@ -100,6 +100,8 @@ export interface QuizQuestion {
   optionD: string;
   correctOption: 'A' | 'B' | 'C' | 'D';
   explanation: string;
+  subConcept?: string;
+  remediationTip?: string;
 }
 
 export interface TopicQuiz {
