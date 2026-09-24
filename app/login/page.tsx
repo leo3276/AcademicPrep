@@ -190,19 +190,10 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="pt-4 border-t border-slate-100 text-center space-y-2">
+        <div className="pt-4 border-t border-slate-100 text-center">
           <p className="text-xs text-slate-500">
-            Have an access card? You can redeem your 30-day pass anytime using the top navigation.
+            Have an access card? You can redeem your 30-day pass anytime using your student profile.
           </p>
-          <div>
-            <Link
-              href="/admin"
-              className="inline-flex items-center gap-1 text-[11px] font-semibold text-purple-600 hover:underline"
-            >
-              <ShieldCheck className="w-3.5 h-3.5" />
-              Switch to Client Admin Portal
-            </Link>
-          </div>
         </div>
       </div>
     </div>

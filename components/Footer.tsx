@@ -55,7 +55,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-3">Community & Admin</h4>
+            <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-3">Student Community</h4>
             <div className="space-y-3">
               <div className="p-3 rounded-xl bg-slate-800 border border-slate-700 flex items-center gap-2.5">
                 <MessageCircle className="w-5 h-5 text-emerald-400 shrink-0" />
@@ -64,13 +64,9 @@ export default function Footer() {
                   <p className="text-[10px] text-slate-300 font-medium">8,000+ Active Students</p>
                 </div>
               </div>
-              <Link 
-                href="/admin" 
-                className="inline-flex items-center gap-1.5 text-[11px] text-purple-300 hover:text-purple-200 transition-colors font-semibold"
-              >
-                <ShieldCheck className="w-3.5 h-3.5" />
-                Admin Dashboard & Cash Flows
-              </Link>
+              <p className="text-[11px] text-slate-400">
+                Daily study reminders, homework help, and weekly exam announcements delivered on WhatsApp.
+              </p>
             </div>
           </div>
         </div>

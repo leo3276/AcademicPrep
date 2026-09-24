@@ -286,29 +286,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Admin Feature Banner */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-purple-600"></span>
-              <span className="text-xs font-bold uppercase tracking-wider text-purple-700">Client Admin Control</span>
-            </div>
-            <h3 className="text-lg sm:text-xl font-bold text-slate-900">
-              Real-time Student Entries, Cash Flow Tracking & PIN Generation
-            </h3>
-            <p className="text-xs text-slate-600 max-w-xl">
-              Monitor 8,000+ student activities, track revenues from Mobile Money & voucher PIN sales, and upload custom tests directly from the admin panel.
-            </p>
-          </div>
-          <Link
-            href="/admin"
-            className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shrink-0 transition-colors shadow-md shadow-purple-500/20"
-          >
-            Access Admin Dashboard
-          </Link>
-        </div>
-      </section>
+      {/* Bottom Spacer */}
     </div>
   );
 }
