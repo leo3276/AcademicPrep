@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'AcademicPrep | Smart JHS, SHS & University Learning Portal',
-  description: 'Online curriculum topics, topic quizzes, and adaptive weekly examinations for 41,000+ students.',
+  description: 'Online curriculum topics, topic quizzes, and adaptive weekly examinations for 8,000+ students.',
 };
 
 export default function RootLayout({

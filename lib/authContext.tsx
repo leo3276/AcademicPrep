@@ -327,8 +327,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     return {
-      totalStudents: 41280, // Representative of the 41k WhatsApp student base
-      activeToday: 1420,
+      totalStudents: 8250, // Representative of the 8,000+ WhatsApp student base
+      activeToday: 640,
       totalCashFlowGhs: totalCash,
       activePinsCount: activePins,
       totalQuizzesTaken: totalQuizzes,

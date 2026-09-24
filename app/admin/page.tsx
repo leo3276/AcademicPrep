@@ -69,7 +69,7 @@ export default function AdminDashboardPage() {
   // Student Search Filter
   const [studentSearch, setStudentSearch] = useState('');
 
-  // Sample Live Student Entries (Simulated representation of 41k WhatsApp base)
+  // Sample Live Student Entries (Simulated representation of 8,000+ WhatsApp base)
   const sampleStudents = [
     {
       id: 'st-01',
