@@ -172,20 +172,6 @@ export default function Navbar() {
                   Student Login
                 </Link>
               )}
-
-              {/* Admin Button - Formatted cleanly with icon and label */}
-              <Link
-                href="/admin"
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border shrink-0 ${
-                  isAdmin 
-                    ? 'bg-purple-600 text-white border-purple-600 shadow-sm shadow-purple-500/20' 
-                    : 'text-purple-700 bg-purple-50 hover:bg-purple-100 border-purple-200'
-                }`}
-                title="Admin Control Center"
-              >
-                <ShieldCheck className="w-4 h-4 shrink-0" />
-                <span>Admin</span>
-              </Link>
             </div>
 
             {/* Mobile menu trigger */}
@@ -243,14 +229,6 @@ export default function Navbar() {
               >
                 <Sparkles className="w-4 h-4 text-amber-600" />
                 Adaptive Weekly Exam
-              </Link>
-              <Link
-                href="/admin"
-                onClick={() => setMobileMenuOpen(false)}
-                className="py-2 text-sm font-bold text-purple-700 flex items-center gap-1.5"
-              >
-                <ShieldCheck className="w-4 h-4" />
-                Admin Portal
               </Link>
             </div>
 
