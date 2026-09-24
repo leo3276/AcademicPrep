@@ -26,6 +26,9 @@ import { JHS1_TWI_QUIZZES } from './curriculumJhs1TwiQuizzes';
 import { JHS1_CAREER_TECH_TOPICS } from './curriculumJhs1CareerTech';
 import { JHS1_CAREER_TECH_DETAILED_NOTES } from './curriculumDetailedNotesCareerTech';
 import { JHS1_CAREER_TECH_QUIZZES } from './curriculumJhs1CareerTechQuizzes';
+import { JHS2_MATH_TOPICS } from './curriculumJhs2Math';
+import { JHS2_MATH_DETAILED_NOTES } from './curriculumDetailedNotesJhs2Math';
+import { JHS2_MATH_QUIZZES } from './curriculumJhs2MathQuizzes';
 
 export const CURRICULUM_SUBJECTS: CurriculumSubject[] = [
   {
@@ -114,88 +117,9 @@ const BASE_JHS_TOPICS: CurriculumTopic[] = [
   ...JHS1_SCIENCE_TOPICS,
 
   // ==========================================
-  // JHS 2 - MATHEMATICS
+  // JHS 2 - MATHEMATICS (All 15 GES Topics)
   // ==========================================
-  {
-    id: 'jhs2-math-t1-algebra',
-    subjectId: 'math',
-    level: 'JHS 2',
-    term: 1,
-    orderIndex: 1,
-    title: 'Algebraic Expressions & Factorization',
-    description: 'Simplifying algebraic terms, expanding brackets, and common monomial factorization.',
-    isFreeTrial: true,
-    keyNotes: `Algebra uses letters (variables) to represent numbers.
-• Like Terms: Terms with identical variable parts and powers (e.g., 3x and 7x). Only like terms can be added or subtracted.
-• Distributive Law: a(b + c) = ab + ac.
-• Factorization: Finding the highest common factor (HCF) and rewriting as a product.
-  Example: 6x² + 9x = 3x(2x + 3).`,
-    quiz: {
-      id: 'quiz-jhs2-math-algebra',
-      topicId: 'jhs2-math-t1-algebra',
-      title: 'JHS 2 Algebraic Expressions Quiz',
-      timeLimitMinutes: 10,
-      passScorePercentage: 60,
-      questions: [
-        {
-          id: 'q-alg-1',
-          quizId: 'quiz-jhs2-math-algebra',
-          questionText: 'Simplify: 5x + 3y - 2x + 4y.',
-          optionA: '3x + 7y',
-          optionB: '7x + 7y',
-          optionC: '10xy',
-          optionD: '3x - y',
-          correctOption: 'A',
-          explanation: 'Group like terms: (5x - 2x) + (3y + 4y) = 3x + 7y.',
-        },
-        {
-          id: 'q-alg-2',
-          quizId: 'quiz-jhs2-math-algebra',
-          questionText: 'Factorize completely: 8xy - 12x.',
-          optionA: '2x(4y - 6)',
-          optionB: '4x(2y - 3)',
-          optionC: '4(2xy - 3x)',
-          optionD: 'x(8y - 12)',
-          correctOption: 'B',
-          explanation: 'The highest common factor of 8xy and 12x is 4x. Factoring out gives 4x(2y - 3).',
-        },
-      ],
-    },
-  },
-  {
-    id: 'jhs2-math-t2-linearequations',
-    subjectId: 'math',
-    level: 'JHS 2',
-    term: 2,
-    orderIndex: 2,
-    title: 'Linear Equations in One Variable',
-    description: 'Solve first-degree linear equations with fractions and word problems.',
-    isFreeTrial: false,
-    keyNotes: `A linear equation contains variables with power 1.
-• Goal: Isolate the unknown variable on one side.
-• Operations must balance: Whatever is done to one side must be done to the other side.
-• Clearing fractions: Multiply every term by the LCM of all denominators.`,
-    quiz: {
-      id: 'quiz-jhs2-math-linearequations',
-      topicId: 'jhs2-math-t2-linearequations',
-      title: 'Linear Equations Challenge Quiz',
-      timeLimitMinutes: 10,
-      passScorePercentage: 60,
-      questions: [
-        {
-          id: 'q-lineq-1',
-          quizId: 'quiz-jhs2-math-linearequations',
-          questionText: 'Solve for x: 3x - 7 = 14.',
-          optionA: 'x = 3',
-          optionB: 'x = 7',
-          optionC: 'x = 21',
-          optionD: 'x = 5',
-          correctOption: 'B',
-          explanation: '3x = 14 + 7 => 3x = 21 => x = 7.',
-        },
-      ],
-    },
-  },
+  ...JHS2_MATH_TOPICS,
 
   // ==========================================
   // JHS 2 - INTEGRATED SCIENCE
@@ -430,6 +354,7 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
   ...topic,
   detailedNotes:
     TOPIC_DETAILED_NOTES[topic.id] ||
+    JHS2_MATH_DETAILED_NOTES[topic.id] ||
     JHS1_SCIENCE_DETAILED_NOTES[topic.id] ||
     JHS1_ENGLISH_DETAILED_NOTES[topic.id] ||
     JHS1_SOCIAL_DETAILED_NOTES[topic.id] ||
@@ -441,6 +366,7 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
     topic.detailedNotes,
   quiz:
     JHS1_MATH_QUIZZES[topic.id] ||
+    JHS2_MATH_QUIZZES[topic.id] ||
     JHS1_SCIENCE_QUIZZES[topic.id] ||
     JHS1_ENGLISH_QUIZZES[topic.id] ||
     JHS1_SOCIAL_QUIZZES[topic.id] ||
