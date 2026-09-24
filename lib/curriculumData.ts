@@ -2,6 +2,9 @@ import { CurriculumSubject, CurriculumTopic } from './types';
 import { TOPIC_DETAILED_NOTES } from './curriculumDetailedNotes';
 import { JHS1_MATH_TOPICS } from './curriculumJhs1Math';
 import { JHS1_MATH_QUIZZES } from './curriculumJhs1MathQuizzes';
+import { JHS1_SCIENCE_TOPICS } from './curriculumJhs1Science';
+import { JHS1_SCIENCE_DETAILED_NOTES } from './curriculumDetailedNotesScience';
+import { JHS1_SCIENCE_QUIZZES } from './curriculumJhs1ScienceQuizzes';
 
 export const CURRICULUM_SUBJECTS: CurriculumSubject[] = [
   {
@@ -61,110 +64,9 @@ const BASE_JHS_TOPICS: CurriculumTopic[] = [
   ...JHS1_MATH_TOPICS,
 
   // ==========================================
-  // JHS 1 - INTEGRATED SCIENCE
+  // JHS 1 - INTEGRATED SCIENCE (All 15 GES Topics)
   // ==========================================
-  {
-    id: 'jhs1-sci-t1-matter',
-    subjectId: 'science',
-    level: 'JHS 1',
-    term: 1,
-    orderIndex: 1,
-    title: 'Matter and Its States',
-    description: 'Explore solids, liquids, gases, physical changes, and particle theory.',
-    isFreeTrial: true,
-    keyNotes: `Matter is anything that has mass and occupies space.
-• Three Main States: Solid, Liquid, and Gas.
-• Solid: Closely packed particles, fixed volume and definite shape.
-• Liquid: Loosely packed, fixed volume but takes shape of container.
-• Gas: Very loosely packed, high kinetic energy, no fixed shape or volume.
-• Changes of State:
-  - Melting: Solid to Liquid (gain heat).
-  - Freezing / Solidification: Liquid to Solid (lose heat).
-  - Evaporation / Boiling: Liquid to Gas.
-  - Condensation: Gas to Liquid.
-  - Sublimation: Solid directly to Gas without passing through liquid (e.g., Camphor/Dry Ice).`,
-    quiz: {
-      id: 'quiz-jhs1-sci-matter',
-      topicId: 'jhs1-sci-t1-matter',
-      title: 'States of Matter Diagnostic Quiz',
-      timeLimitMinutes: 10,
-      passScorePercentage: 60,
-      questions: [
-        {
-          id: 'q-matter-1',
-          quizId: 'quiz-jhs1-sci-matter',
-          questionText: 'The process whereby a solid turns directly into a gas without becoming a liquid is known as:',
-          optionA: 'Evaporation',
-          optionB: 'Condensation',
-          optionC: 'Sublimation',
-          optionD: 'Melting',
-          correctOption: 'C',
-          explanation: 'Sublimation is the direct transition from solid to gas (e.g., camphor balls, solid iodine).',
-        },
-        {
-          id: 'q-matter-2',
-          quizId: 'quiz-jhs1-sci-matter',
-          questionText: 'Which state of matter has neither a fixed shape nor a fixed volume?',
-          optionA: 'Solid',
-          optionB: 'Liquid',
-          optionC: 'Gas',
-          optionD: 'Crystal',
-          correctOption: 'C',
-          explanation: 'Gas molecules are spaced far apart with minimal intermolecular forces, filling any volume.',
-        },
-      ],
-    },
-  },
-  {
-    id: 'jhs1-sci-t2-livingcells',
-    subjectId: 'science',
-    level: 'JHS 1',
-    term: 2,
-    orderIndex: 2,
-    title: 'Living Cells and Organization of Life',
-    description: 'Plant and animal cells, organelles, cell wall, chloroplast, and cell differentiation.',
-    isFreeTrial: false,
-    keyNotes: `The cell is the basic structural and functional unit of all living organisms.
-• Cell Components:
-  - Nucleus: Controls all cell activities and stores genetic material (DNA).
-  - Cell Membrane: Semi-permeable barrier controlling entry and exit of substances.
-  - Cytoplasm: Jelly-like fluid where metabolic reactions take place.
-  - Mitochondria: Powerhouse of the cell, generates ATP energy through cellular respiration.
-• Differences between Plant & Animal Cells:
-  - Plant cells have a rigid cellulose Cell Wall and Chloroplasts for photosynthesis; animal cells do not.
-  - Plant cells have a large central permanent vacuole; animal cells have small temporary vacuoles.`,
-    quiz: {
-      id: 'quiz-jhs1-sci-cells',
-      topicId: 'jhs1-sci-t2-livingcells',
-      title: 'Plant and Animal Cells Quiz',
-      timeLimitMinutes: 10,
-      passScorePercentage: 60,
-      questions: [
-        {
-          id: 'q-cell-1',
-          quizId: 'quiz-jhs1-sci-cells',
-          questionText: 'Which organelle is responsible for generating energy in the cell?',
-          optionA: 'Ribosome',
-          optionB: 'Mitochondrion',
-          optionC: 'Vacuole',
-          optionD: 'Endoplasmic Reticulum',
-          correctOption: 'B',
-          explanation: 'Mitochondria are often referred to as the powerhouses of the cell as they produce ATP.',
-        },
-        {
-          id: 'q-cell-2',
-          quizId: 'quiz-jhs1-sci-cells',
-          questionText: 'Which structure is present in a plant cell but absent in an animal cell?',
-          optionA: 'Cell membrane',
-          optionB: 'Nucleus',
-          optionC: 'Cellulose cell wall',
-          optionD: 'Cytoplasm',
-          correctOption: 'C',
-          explanation: 'Plant cells have an outer cellulose cell wall providing structural rigidity.',
-        },
-      ],
-    },
-  },
+  ...JHS1_SCIENCE_TOPICS,
 
   // ==========================================
   // JHS 2 - MATHEMATICS
@@ -607,7 +509,13 @@ const BASE_JHS_TOPICS: CurriculumTopic[] = [
 
 export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((topic) => ({
   ...topic,
-  detailedNotes: TOPIC_DETAILED_NOTES[topic.id] || topic.detailedNotes,
-  quiz: JHS1_MATH_QUIZZES[topic.id] || topic.quiz,
+  detailedNotes:
+    TOPIC_DETAILED_NOTES[topic.id] ||
+    JHS1_SCIENCE_DETAILED_NOTES[topic.id] ||
+    topic.detailedNotes,
+  quiz:
+    JHS1_MATH_QUIZZES[topic.id] ||
+    JHS1_SCIENCE_QUIZZES[topic.id] ||
+    topic.quiz,
 }));
 

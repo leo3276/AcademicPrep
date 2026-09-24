@@ -53,10 +53,14 @@ export interface DetailedSection {
   title: string;
   content: string;
   bulletPoints?: string[];
+  keyTakeaway?: string;
+  realWorldExample?: string;
 }
 
 export interface DetailedNotes {
-  introduction: string;
+  topicId?: string;
+  introduction?: string;
+  realWorldContext?: string;
   objectives: string[];
   sections: DetailedSection[];
   commonMistakes?: string[];

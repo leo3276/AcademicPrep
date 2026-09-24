@@ -285,8 +285,8 @@ export default function DetailedTopicLessonPage() {
 
               {/* Introduction Paragraph */}
               <div className="p-4 sm:p-5 rounded-2xl bg-blue-50/50 border border-blue-100 text-xs sm:text-sm text-slate-800 leading-relaxed font-sans">
-                <p className="font-semibold text-blue-950 mb-1">Topic Introduction:</p>
-                <p>{notes.introduction}</p>
+                <p className="font-semibold text-blue-950 mb-1">Topic Introduction & Real-World Context:</p>
+                <p>{notes.introduction || notes.realWorldContext}</p>
               </div>
 
               {/* Learning Objectives */}
@@ -376,6 +376,26 @@ export default function DetailedTopicLessonPage() {
                             <span className="font-mono text-[11px] sm:text-xs leading-relaxed">{bp}</span>
                           </div>
                         ))}
+                      </div>
+                    )}
+
+                    {sec.keyTakeaway && (
+                      <div className="p-3 rounded-xl bg-blue-50/70 border border-blue-200/70 text-xs text-blue-950 flex items-start gap-2">
+                        <Lightbulb className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                        <div>
+                          <span className="font-bold">Key Takeaway: </span>
+                          {sec.keyTakeaway}
+                        </div>
+                      </div>
+                    )}
+
+                    {sec.realWorldExample && (
+                      <div className="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200/70 text-xs text-emerald-950 flex items-start gap-2">
+                        <Sparkles className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                        <div>
+                          <span className="font-bold">Real-World Application: </span>
+                          {sec.realWorldExample}
+                        </div>
                       </div>
                     )}
                   </div>
