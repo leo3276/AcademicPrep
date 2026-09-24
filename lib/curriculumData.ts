@@ -29,6 +29,9 @@ import { JHS1_CAREER_TECH_QUIZZES } from './curriculumJhs1CareerTechQuizzes';
 import { JHS2_MATH_TOPICS } from './curriculumJhs2Math';
 import { JHS2_MATH_DETAILED_NOTES } from './curriculumDetailedNotesJhs2Math';
 import { JHS2_MATH_QUIZZES } from './curriculumJhs2MathQuizzes';
+import { JHS2_SCIENCE_TOPICS } from './curriculumJhs2Science';
+import { JHS2_SCIENCE_DETAILED_NOTES } from './curriculumDetailedNotesJhs2Science';
+import { JHS2_SCIENCE_QUIZZES } from './curriculumJhs2ScienceQuizzes';
 
 export const CURRICULUM_SUBJECTS: CurriculumSubject[] = [
   {
@@ -122,58 +125,9 @@ const BASE_JHS_TOPICS: CurriculumTopic[] = [
   ...JHS2_MATH_TOPICS,
 
   // ==========================================
-  // JHS 2 - INTEGRATED SCIENCE
+  // JHS 2 - INTEGRATED SCIENCE (All 15 GES Topics)
   // ==========================================
-  {
-    id: 'jhs2-sci-t1-digestion',
-    subjectId: 'science',
-    level: 'JHS 2',
-    term: 1,
-    orderIndex: 1,
-    title: 'The Human Digestive System',
-    description: 'Alimentary canal, mechanical vs chemical digestion, and digestive enzymes.',
-    isFreeTrial: true,
-    keyNotes: `Digestion is the breakdown of large insoluble food molecules into smaller water-soluble molecules for absorption.
-• Mouth: Teeth chew food (mechanical); Salivary amylase breaks starch into maltose (chemical).
-• Oesophagus: Peristalsis pushes food bolus to the stomach.
-• Stomach: Hydrochloric acid kills germs; Pepsin breaks proteins into peptones.
-• Small Intestine (Duodenum & Ileum):
-  - Bile from liver emulsifies fats.
-  - Pancreatic enzymes (amylase, trypsin, lipase) complete breakdown.
-  - Villi absorb digested nutrients into the bloodstream.
-• Large Intestine (Colon): Absorbs water and minerals; rectum stores feces.`,
-    quiz: {
-      id: 'quiz-jhs2-sci-digestion',
-      topicId: 'jhs2-sci-t1-digestion',
-      title: 'Human Digestion & Enzymes Quiz',
-      timeLimitMinutes: 10,
-      passScorePercentage: 60,
-      questions: [
-        {
-          id: 'q-dig-1',
-          quizId: 'quiz-jhs2-sci-digestion',
-          questionText: 'Where in the human digestive system does the absorption of digested food take place?',
-          optionA: 'Stomach',
-          optionB: 'Small Intestine (Ileum)',
-          optionC: 'Large Intestine',
-          optionD: 'Oesophagus',
-          correctOption: 'B',
-          explanation: 'The inner wall of the small intestine is covered with tiny finger-like projections called villi that absorb nutrients.',
-        },
-        {
-          id: 'q-dig-2',
-          quizId: 'quiz-jhs2-sci-digestion',
-          questionText: 'What is the role of hydrochloric acid (HCl) in gastric juice?',
-          optionA: 'Emulsifies fat droplets',
-          optionB: 'Provides an acidic medium and kills harmful bacteria',
-          optionC: 'Digests starch into glucose',
-          optionD: 'Converts fats into fatty acids',
-          correctOption: 'B',
-          explanation: 'Hydrochloric acid in the stomach creates the acidic pH needed for pepsin and destroys ingested microbes.',
-        },
-      ],
-    },
-  },
+  ...JHS2_SCIENCE_TOPICS,
 
   // ==========================================
   // JHS 3 - MATHEMATICS (BECE Canditates)
@@ -355,6 +309,7 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
   detailedNotes:
     TOPIC_DETAILED_NOTES[topic.id] ||
     JHS2_MATH_DETAILED_NOTES[topic.id] ||
+    JHS2_SCIENCE_DETAILED_NOTES[topic.id] ||
     JHS1_SCIENCE_DETAILED_NOTES[topic.id] ||
     JHS1_ENGLISH_DETAILED_NOTES[topic.id] ||
     JHS1_SOCIAL_DETAILED_NOTES[topic.id] ||
@@ -367,6 +322,7 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
   quiz:
     JHS1_MATH_QUIZZES[topic.id] ||
     JHS2_MATH_QUIZZES[topic.id] ||
+    JHS2_SCIENCE_QUIZZES[topic.id] ||
     JHS1_SCIENCE_QUIZZES[topic.id] ||
     JHS1_ENGLISH_QUIZZES[topic.id] ||
     JHS1_SOCIAL_QUIZZES[topic.id] ||
