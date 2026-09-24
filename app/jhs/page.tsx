@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/authContext';
 import { CURRICULUM_SUBJECTS, JHS_CURRICULUM_TOPICS } from '@/lib/curriculumData';
@@ -31,13 +31,21 @@ const SUBJECT_ICONS: Record<string, React.ReactNode> = {
 
 export default function JhsPortalPage() {
   const { student, topicProgress } = useAuth();
-  const [selectedLevel, setSelectedLevel] = useState<EducationLevel>(
-    student?.currentLevel || 'JHS 1'
-  );
+  const [selectedLevel, setSelectedLevel] = useState<EducationLevel>('JHS 1');
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    if (student?.currentLevel) {
+      setSelectedLevel(student.currentLevel);
+    }
+  }, [student]);
 
   // Filter topics for the selected JHS level
   const levelTopics = JHS_CURRICULUM_TOPICS.filter((t) => t.level === selectedLevel);
-  const completedTopicsCount = levelTopics.filter((t) => topicProgress[t.id]?.completed).length;
+  const completedTopicsCount = mounted 
+    ? levelTopics.filter((t) => topicProgress[t.id]?.completed).length 
+    : 0;
   const progressPercent = levelTopics.length > 0 
     ? Math.round((completedTopicsCount / levelTopics.length) * 100) 
     : 0;
@@ -57,7 +65,7 @@ export default function JhsPortalPage() {
             Junior High School Curriculum Portal
           </h1>
           <p className="text-xs text-slate-600">
-            {student 
+            {mounted && student 
               ? `Logged in as ${student.fullName} (${student.phoneNumber})` 
               : 'Sign in with your phone & PIN to save your quiz progress and weekly exam scores.'}
           </p>

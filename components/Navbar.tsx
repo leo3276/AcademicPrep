@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/authContext';
@@ -26,6 +26,11 @@ export default function Navbar() {
   const [pinInput, setPinInput] = useState('');
   const [pinLoading, setPinLoading] = useState(false);
   const [pinFeedback, setPinFeedback] = useState<{ success?: boolean; text?: string } | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleRedeemPin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,7 +124,9 @@ export default function Navbar() {
               <div className="h-5 w-px bg-slate-200 shrink-0 mx-1" />
 
               {/* Student Profile Pill */}
-              {student ? (
+              {!mounted ? (
+                <div className="w-28 h-8 rounded-xl bg-slate-100 animate-pulse shrink-0" />
+              ) : student ? (
                 <div className="flex items-center gap-2.5 pl-2 pr-1.5 py-1 rounded-xl bg-slate-50 border border-slate-200 shrink-0">
                   <div className="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-xs">
                     {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
@@ -243,12 +250,14 @@ export default function Navbar() {
                 className="py-2 text-sm font-bold text-purple-700 flex items-center gap-1.5"
               >
                 <ShieldCheck className="w-4 h-4" />
-                Admin Dashboard & Cash Flows
+                Admin Portal
               </Link>
             </div>
 
             <div className="pt-2 border-t border-slate-100">
-              {student ? (
+              {!mounted ? (
+                <div className="w-full h-10 rounded-xl bg-slate-100 animate-pulse" />
+              ) : student ? (
                 <div className="flex items-center justify-between py-2">
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center">

@@ -22,12 +22,18 @@ import confetti from 'canvas-confetti';
 
 export default function WeeklyExamPage() {
   const { student, topicProgress, recordWeeklyExamAttempt, weeklyExamAttempts } = useAuth();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const currentLevel: EducationLevel = student?.currentLevel || 'JHS 1';
 
-  // Find all topics that the student has completed
-  const completedTopicIds = Object.keys(topicProgress).filter(
-    (id) => topicProgress[id]?.completed
-  );
+  // Find all topics that the student has completed (guarded by mounted)
+  const completedTopicIds = mounted
+    ? Object.keys(topicProgress).filter((id) => topicProgress[id]?.completed)
+    : [];
 
   const completedTopics = JHS_CURRICULUM_TOPICS.filter((t) =>
     completedTopicIds.includes(t.id)
@@ -232,7 +238,7 @@ export default function WeeklyExamPage() {
           </div>
 
           {/* Exam History if any */}
-          {weeklyExamAttempts.length > 0 && (
+          {mounted && weeklyExamAttempts.length > 0 && (
             <div className="pt-2 border-t border-slate-100 space-y-2">
               <h4 className="text-xs font-bold text-slate-800">Your Recent Weekly Exam Scores:</h4>
               <div className="space-y-1.5">

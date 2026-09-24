@@ -39,6 +39,11 @@ export default function AdminDashboardPage() {
   const [passcode, setPasscode] = useState('');
   const [authError, setAuthError] = useState(false);
   const [activeTab, setActiveTab] = useState<'entries' | 'cashflow' | 'pins' | 'progress' | 'upload'>('entries');
+  const [mounted, setMounted] = useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // PIN Generator Form State
   const [pinCount, setPinCount] = useState(10);
@@ -195,6 +200,18 @@ export default function AdminDashboardPage() {
       ]);
     }, 2500);
   };
+
+  if (!mounted) {
+    return (
+      <div className="max-w-md mx-auto my-16 px-4">
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-xl p-8 space-y-6 text-center animate-pulse">
+          <div className="w-14 h-14 rounded-2xl bg-purple-100 mx-auto" />
+          <div className="h-6 bg-slate-100 rounded-xl w-3/4 mx-auto" />
+          <div className="h-10 bg-slate-100 rounded-xl w-full" />
+        </div>
+      </div>
+    );
+  }
 
   if (!isAdmin) {
     return (

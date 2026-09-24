@@ -47,7 +47,7 @@ const DEFAULT_PINS: AccessPin[] = [
     priceGhs: 25.00,
     validityDays: 30,
     status: 'ACTIVE',
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-09-24T10:00:00.000Z',
   },
   {
     id: 'pin-1002',
@@ -56,7 +56,7 @@ const DEFAULT_PINS: AccessPin[] = [
     priceGhs: 25.00,
     validityDays: 30,
     status: 'ACTIVE',
-    createdAt: new Date().toISOString(),
+    createdAt: '2026-09-24T10:00:00.000Z',
   },
   {
     id: 'pin-1003',
@@ -65,8 +65,8 @@ const DEFAULT_PINS: AccessPin[] = [
     priceGhs: 25.00,
     validityDays: 30,
     status: 'REDEEMED',
-    redeemedAt: new Date(Date.now() - 86400000).toISOString(),
-    createdAt: new Date(Date.now() - 172800000).toISOString(),
+    redeemedAt: '2026-09-23T10:00:00.000Z',
+    createdAt: '2026-09-22T10:00:00.000Z',
   },
 ];
 
@@ -80,7 +80,7 @@ const DEFAULT_TRANSACTIONS: CashFlowTransaction[] = [
     paymentMethod: 'MTN Mobile Money',
     pinCodeUsed: 'PREP-9904-7712',
     description: '30-Day Full JHS Access Pass',
-    createdAt: new Date(Date.now() - 86400000).toISOString(),
+    createdAt: '2026-09-23T10:00:00.000Z',
   },
   {
     id: 'tx-2002',
@@ -90,7 +90,7 @@ const DEFAULT_TRANSACTIONS: CashFlowTransaction[] = [
     transactionType: 'PIN_PURCHASE',
     paymentMethod: 'Telecel Cash',
     description: '30-Day Full JHS Access Pass',
-    createdAt: new Date(Date.now() - 172800000).toISOString(),
+    createdAt: '2026-09-22T10:00:00.000Z',
   },
 ];
 
