@@ -493,14 +493,14 @@ export default function DetailedTopicLessonPage() {
             )}
 
             {/* Teacher's BECE Exam Tips */}
-            {notes.beceExamTips && notes.beceExamTips.length > 0 && !isVipLocked && (
+            {((notes.beceExamTips && notes.beceExamTips.length > 0) || (notes.examTips && notes.examTips.length > 0)) && !isVipLocked && (
               <div className="p-6 sm:p-8 rounded-3xl bg-amber-50/70 border border-amber-200 shadow-sm space-y-3">
                 <div className="flex items-center gap-2 text-amber-950 font-bold text-sm">
                   <Sparkles className="w-5 h-5 text-amber-600 shrink-0" />
                   <span>Teacher&apos;s BECE Exam Pro-Tips:</span>
                 </div>
                 <div className="space-y-2 pt-1">
-                  {notes.beceExamTips.map((tip, tIdx) => (
+                  {(notes.beceExamTips || notes.examTips)?.map((tip, tIdx) => (
                     <div
                       key={tIdx}
                       className="flex items-start gap-2.5 text-xs text-amber-900 bg-white/80 p-3 rounded-xl border border-amber-200/80"

@@ -12,6 +12,9 @@ import {
   Globe2, 
   Cpu, 
   HeartHandshake, 
+  Languages,
+  BookA,
+  Wrench,
   Sparkles, 
   ArrowRight, 
   CheckCircle2, 
@@ -27,6 +30,9 @@ const SUBJECT_ICONS: Record<string, React.ReactNode> = {
   social: <Globe2 className="w-6 h-6" />,
   ict: <Cpu className="w-6 h-6" />,
   rme: <HeartHandshake className="w-6 h-6" />,
+  french: <Languages className="w-6 h-6" />,
+  twi: <BookA className="w-6 h-6" />,
+  'career-tech': <Wrench className="w-6 h-6" />,
 };
 
 export default function JhsPortalPage() {
@@ -155,7 +161,7 @@ export default function JhsPortalPage() {
             <GraduationCap className="w-5 h-5 text-blue-600" />
             Core {selectedLevel} Subjects
           </h2>
-          <span className="text-xs text-slate-500">6 GES Accredited Subjects</span>
+          <span className="text-xs text-slate-500">{CURRICULUM_SUBJECTS.length} GES Accredited Subjects</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

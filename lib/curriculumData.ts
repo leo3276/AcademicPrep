@@ -17,6 +17,15 @@ import { JHS1_COMPUTING_QUIZZES } from './curriculumJhs1ComputingQuizzes';
 import { JHS1_RME_TOPICS } from './curriculumJhs1Rme';
 import { JHS1_RME_DETAILED_NOTES } from './curriculumDetailedNotesRme';
 import { JHS1_RME_QUIZZES } from './curriculumJhs1RmeQuizzes';
+import { JHS1_FRENCH_TOPICS } from './curriculumJhs1French';
+import { JHS1_FRENCH_DETAILED_NOTES } from './curriculumDetailedNotesFrench';
+import { JHS1_FRENCH_QUIZZES } from './curriculumJhs1FrenchQuizzes';
+import { JHS1_TWI_TOPICS } from './curriculumJhs1Twi';
+import { JHS1_TWI_DETAILED_NOTES } from './curriculumDetailedNotesTwi';
+import { JHS1_TWI_QUIZZES } from './curriculumJhs1TwiQuizzes';
+import { JHS1_CAREER_TECH_TOPICS } from './curriculumJhs1CareerTech';
+import { JHS1_CAREER_TECH_DETAILED_NOTES } from './curriculumDetailedNotesCareerTech';
+import { JHS1_CAREER_TECH_QUIZZES } from './curriculumJhs1CareerTechQuizzes';
 
 export const CURRICULUM_SUBJECTS: CurriculumSubject[] = [
   {
@@ -66,6 +75,30 @@ export const CURRICULUM_SUBJECTS: CurriculumSubject[] = [
     icon: 'HeartHandshake',
     color: 'from-rose-600 to-red-700',
     displayOrder: 6,
+  },
+  {
+    id: 'french',
+    name: 'French Language',
+    code: 'FRE',
+    icon: 'Languages',
+    color: 'from-sky-600 to-indigo-700',
+    displayOrder: 7,
+  },
+  {
+    id: 'twi',
+    name: 'Ghanaian Language (Akuapem Twi)',
+    code: 'TWI',
+    icon: 'BookA',
+    color: 'from-emerald-700 to-amber-700',
+    displayOrder: 8,
+  },
+  {
+    id: 'career-tech',
+    name: 'Career Technology',
+    code: 'CTECH',
+    icon: 'Wrench',
+    color: 'from-orange-600 to-amber-700',
+    displayOrder: 9,
   },
 ];
 
@@ -376,6 +409,21 @@ const BASE_JHS_TOPICS: CurriculumTopic[] = [
   // JHS 1 - RELIGIOUS & MORAL EDUCATION (All 15 GES Topics)
   // ==========================================
   ...JHS1_RME_TOPICS,
+
+  // ==========================================
+  // JHS 1 - FRENCH LANGUAGE (All 15 GES Topics)
+  // ==========================================
+  ...JHS1_FRENCH_TOPICS,
+
+  // ==========================================
+  // JHS 1 - GHANAIAN LANGUAGE (AKUAPEM TWI) (All 15 GES Topics)
+  // ==========================================
+  ...JHS1_TWI_TOPICS,
+
+  // ==========================================
+  // JHS 1 - CAREER TECHNOLOGY (All 15 GES Topics)
+  // ==========================================
+  ...JHS1_CAREER_TECH_TOPICS,
 ];
 
 export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((topic) => ({
@@ -387,6 +435,9 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
     JHS1_SOCIAL_DETAILED_NOTES[topic.id] ||
     JHS1_COMPUTING_DETAILED_NOTES[topic.id] ||
     JHS1_RME_DETAILED_NOTES[topic.id] ||
+    JHS1_FRENCH_DETAILED_NOTES[topic.id] ||
+    JHS1_TWI_DETAILED_NOTES[topic.id] ||
+    JHS1_CAREER_TECH_DETAILED_NOTES[topic.id] ||
     topic.detailedNotes,
   quiz:
     JHS1_MATH_QUIZZES[topic.id] ||
@@ -395,6 +446,9 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
     JHS1_SOCIAL_QUIZZES[topic.id] ||
     JHS1_COMPUTING_QUIZZES[topic.id] ||
     JHS1_RME_QUIZZES[topic.id] ||
+    JHS1_FRENCH_QUIZZES[topic.id] ||
+    JHS1_TWI_QUIZZES[topic.id] ||
+    JHS1_CAREER_TECH_QUIZZES[topic.id] ||
     topic.quiz,
 }));
 
