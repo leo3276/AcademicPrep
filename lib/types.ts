@@ -49,6 +49,14 @@ export interface CurriculumSubject {
   displayOrder: number;
 }
 
+export interface WorkedExample {
+  id: string;
+  title: string;
+  problem: string;
+  stepByStepSolution: string[];
+  keyTakeaway: string;
+}
+
 export interface CurriculumTopic {
   id: string;
   subjectId: string;
@@ -59,6 +67,10 @@ export interface CurriculumTopic {
   description: string;
   keyNotes: string;
   isFreeTrial: boolean;
+  isVip?: boolean;
+  youtubeUrl?: string;
+  youtubeId?: string;
+  examples?: WorkedExample[];
   quiz?: TopicQuiz;
 }
 

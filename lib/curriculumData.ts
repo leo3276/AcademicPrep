@@ -55,6 +55,9 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = [
   // ==========================================
   // JHS 1 - MATHEMATICS
   // ==========================================
+  // ==========================================
+  // JHS 1 - MATHEMATICS (Full Curriculum + VIP)
+  // ==========================================
   {
     id: 'jhs1-math-t1-sets',
     subjectId: 'math',
@@ -62,15 +65,46 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = [
     term: 1,
     orderIndex: 1,
     title: 'Sets and Operations on Sets',
-    description: 'Learn set notation, types of sets, union, intersection, and Venn diagrams.',
+    description: 'Master set notation, types of sets, union, intersection, and Venn diagrams.',
     isFreeTrial: true,
+    isVip: false,
+    youtubeUrl: 'https://www.youtube.com/watch?v=tyDN4pXkYCY',
+    youtubeId: 'tyDN4pXkYCY',
     keyNotes: `A set is a well-defined collection of distinct objects or elements.
 • Empty / Null Set: A set with no elements, denoted by ∅ or {}.
-• Finite Set: Elements can be counted (e.g., factors of 12).
-• Infinite Set: Elements are endless (e.g., set of prime numbers).
+• Finite Set: Elements can be counted (e.g., factors of 12 = {1, 2, 3, 4, 6, 12}).
+• Infinite Set: Elements are endless (e.g., set of prime numbers = {2, 3, 5, 7, 11, ...}).
 • Union of Sets (A ∪ B): The set of all elements belonging to set A, set B, or both.
 • Intersection of Sets (A ∩ B): The set of elements that are common to both A and B.
-• Subset (A ⊆ B): Every element in A is also present in set B.`,
+• Subset (A ⊆ B): Every element in A is also present in set B.
+• Universal Set (U): The entire set containing all objects under consideration.`,
+    examples: [
+      {
+        id: 'ex-sets-1',
+        title: 'Finding Union and Intersection of Two Sets',
+        problem: 'Given the universal set U = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, set A = {2, 4, 6, 8, 10} and set B = {4, 5, 6, 7, 8}. Find: (i) A ∩ B (ii) A ∪ B',
+        stepByStepSolution: [
+          'Step 1: Write down elements of both sets: A = {2, 4, 6, 8, 10} and B = {4, 5, 6, 7, 8}.',
+          'Step 2: Identify common elements for Intersection (A ∩ B): The numbers 4, 6, and 8 appear in both sets. Therefore, A ∩ B = {4, 6, 8}.',
+          'Step 3: Combine all distinct elements for Union (A ∪ B) without repeating duplicates: 2, 4, 5, 6, 7, 8, 10.',
+          'Step 4: Conclude: A ∪ B = {2, 4, 5, 6, 7, 8, 10}.',
+        ],
+        keyTakeaway: 'Intersection means "AND" (common items only). Union means "OR" (combine everything, no duplicates).',
+      },
+      {
+        id: 'ex-sets-2',
+        title: 'Two-Set Venn Diagram Problem',
+        problem: 'In a class of 30 students, 18 play Football (F), 14 play Volleyball (V), and 6 play both games. How many students play neither game?',
+        stepByStepSolution: [
+          'Step 1: Identify given quantities: Total n(U) = 30, n(F ∩ V) = 6 (both games).',
+          'Step 2: Find students playing football ONLY: 18 - 6 = 12.',
+          'Step 3: Find students playing volleyball ONLY: 14 - 6 = 8.',
+          'Step 4: Sum those who play at least one game: (Football Only) + (Both) + (Volleyball Only) = 12 + 6 + 8 = 26.',
+          'Step 5: Subtract from total class: Neither = 30 - 26 = 4 students.',
+        ],
+        keyTakeaway: 'Always subtract the intersection (both) from each circle to find the "only" region first.',
+      },
+    ],
     quiz: {
       id: 'quiz-jhs1-math-sets',
       topicId: 'jhs1-math-t1-sets',
@@ -115,23 +149,121 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = [
     },
   },
   {
-    id: 'jhs1-math-t2-fractions',
+    id: 'jhs1-math-t2-numberbases',
     subjectId: 'math',
     level: 'JHS 1',
     term: 1,
     orderIndex: 2,
+    title: 'Number Bases & Binary System (Base 2)',
+    description: 'Learn place values in Base 10, converting to and from Base 2 (Binary) and other bases.',
+    isFreeTrial: false,
+    isVip: true,
+    youtubeUrl: 'https://www.youtube.com/watch?v=5sS7w-CMHkU',
+    youtubeId: '5sS7w-CMHkU',
+    keyNotes: `Our daily counting uses Base 10 (decimal). Computers and digital circuits use Base 2 (Binary: 0 and 1).
+• Place Values in Base 2: 2⁰ = 1, 2¹ = 2, 2² = 4, 2³ = 8, 2⁴ = 16, 2⁵ = 32...
+• Converting Base 10 to Base 2: Repeatedly divide by 2 and record the remainders from bottom to top.
+• Converting Base 2 to Base 10: Multiply each digit by its corresponding power of 2 and sum the results.
+• Rule: In any base 'n', the largest single digit allowed is (n - 1). (e.g., Base 5 only has digits 0, 1, 2, 3, 4).`,
+    examples: [
+      {
+        id: 'ex-bases-1',
+        title: 'Converting Decimal (Base 10) to Binary (Base 2)',
+        problem: 'Convert the decimal number 25₁₀ to a binary number in base two.',
+        stepByStepSolution: [
+          'Step 1: Divide 25 by 2: 25 ÷ 2 = 12 remainder 1.',
+          'Step 2: Divide 12 by 2: 12 ÷ 2 = 6 remainder 0.',
+          'Step 3: Divide 6 by 2: 6 ÷ 2 = 3 remainder 0.',
+          'Step 4: Divide 3 by 2: 3 ÷ 2 = 1 remainder 1.',
+          'Step 5: Divide 1 by 2: 1 ÷ 2 = 0 remainder 1.',
+          'Step 6: Read remainders from bottom to top: 1, 1, 0, 0, 1.',
+          'Step 7: Result: 25₁₀ = 11001₂.',
+        ],
+        keyTakeaway: 'Always read the remainder chain from the bottom (most significant bit) upwards.',
+      },
+      {
+        id: 'ex-bases-2',
+        title: 'Converting Binary (Base 2) to Decimal (Base 10)',
+        problem: 'Convert the binary number 1101₂ to base ten.',
+        stepByStepSolution: [
+          'Step 1: Assign power weights from right to left starting at 0: (1 × 2³) + (1 × 2²) + (0 × 2¹) + (1 × 2⁰).',
+          'Step 2: Calculate powers: 2³ = 8, 2² = 4, 2¹ = 2, 2⁰ = 1.',
+          'Step 3: Multiply: (1 × 8) + (1 × 4) + (0 × 2) + (1 × 1) = 8 + 4 + 0 + 1.',
+          'Step 4: Add them up: 8 + 4 + 1 = 13.',
+          'Step 5: Result: 1101₂ = 13₁₀.',
+        ],
+        keyTakeaway: 'Any number raised to power 0 equals 1 (2⁰ = 1).',
+      },
+    ],
+    quiz: {
+      id: 'quiz-jhs1-math-numberbases',
+      topicId: 'jhs1-math-t2-numberbases',
+      title: 'Number Bases & Binary Diagnostics',
+      timeLimitMinutes: 10,
+      passScorePercentage: 60,
+      questions: [
+        {
+          id: 'q-base-1',
+          quizId: 'quiz-jhs1-math-numberbases',
+          questionText: 'What is the binary representation of decimal 14₁₀?',
+          optionA: '1110₂',
+          optionB: '1101₂',
+          optionC: '1010₂',
+          optionD: '1111₂',
+          correctOption: 'A',
+          explanation: '14 = 8 + 4 + 2 + 0 = (1×2³) + (1×2²) + (1×2¹) + (0×2⁰) = 1110₂.',
+        },
+        {
+          id: 'q-base-2',
+          quizId: 'quiz-jhs1-math-numberbases',
+          questionText: 'Convert 1011₂ to base ten.',
+          optionA: '9',
+          optionB: '11',
+          optionC: '13',
+          optionD: '15',
+          correctOption: 'B',
+          explanation: '1011₂ = (1×8) + (0×4) + (1×2) + (1×1) = 8 + 0 + 2 + 1 = 11₁₀.',
+        },
+      ],
+    },
+  },
+  {
+    id: 'jhs1-math-t3-fractions',
+    subjectId: 'math',
+    level: 'JHS 1',
+    term: 1,
+    orderIndex: 3,
     title: 'Fractions, Decimals & Percentages',
     description: 'Master operations with proper, improper, mixed fractions and decimal conversions.',
     isFreeTrial: false,
-    keyNotes: `Fractions represent part of a whole:
-• Proper Fraction: Numerator is smaller than denominator (e.g., 3/4).
-• Improper Fraction: Numerator is equal to or larger than denominator (e.g., 7/5).
-• Mixed Fraction: Whole number with a proper fraction (e.g., 1 2/5).
-• Adding / Subtracting: Always find the Lowest Common Multiple (LCM) of the denominators first.
-• Converting to Percentage: Multiply the fraction or decimal by 100%.`,
+    isVip: true,
+    youtubeUrl: 'https://www.youtube.com/watch?v=tBV_GsmrXWw',
+    youtubeId: 'tBV_GsmrXWw',
+    keyNotes: `Fractions represent equal parts of a whole quantity:
+• Proper Fraction: Numerator < Denominator (e.g., 3/4).
+• Improper Fraction: Numerator ≥ Denominator (e.g., 7/5).
+• Mixed Fraction: Whole number with a fraction (e.g., 1 2/5).
+• Addition / Subtraction: Always convert mixed fractions to improper fractions and find the LCM of denominators.
+• Multiplication: Multiply numerators directly, multiply denominators directly.
+• Division: Invert the second fraction (reciprocal) and multiply (Keep, Change, Flip).`,
+    examples: [
+      {
+        id: 'ex-frac-1',
+        title: 'Addition of Mixed Fractions',
+        problem: 'Simplify: 2 1/3 + 1 3/4',
+        stepByStepSolution: [
+          'Step 1: Convert both to improper fractions: 2 1/3 = 7/3, and 1 3/4 = 7/4.',
+          'Step 2: Find LCM of denominators 3 and 4, which is 12.',
+          'Step 3: Convert to equivalent fractions with denominator 12: 7/3 = 28/12, and 7/4 = 21/12.',
+          'Step 4: Add the numerators: (28 + 21) / 12 = 49 / 12.',
+          'Step 5: Convert back to mixed fraction: 49 ÷ 12 = 4 remainder 1 => 4 1/12.',
+        ],
+        keyTakeaway: 'Always change mixed numbers into improper fractions before finding the common denominator.',
+      },
+    ],
     quiz: {
       id: 'quiz-jhs1-math-fractions',
-      topicId: 'jhs1-math-t2-fractions',
+      topicId: 'jhs1-math-t3-fractions',
       title: 'Fractions & Percentages Practice Quiz',
       timeLimitMinutes: 10,
       passScorePercentage: 60,
@@ -157,6 +289,301 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = [
           optionD: '0.035%',
           correctOption: 'B',
           explanation: '0.35 × 100% = 35%.',
+        },
+      ],
+    },
+  },
+  {
+    id: 'jhs1-math-t4-algebra',
+    subjectId: 'math',
+    level: 'JHS 1',
+    term: 2,
+    orderIndex: 4,
+    title: 'Algebraic Expressions & Substitution',
+    description: 'Collecting like terms, expanding single brackets, and numerical substitution into formulas.',
+    isFreeTrial: false,
+    isVip: true,
+    youtubeUrl: 'https://www.youtube.com/watch?v=NybHckSEQBI',
+    youtubeId: 'NybHckSEQBI',
+    keyNotes: `Algebra uses letters (variables) to generalize mathematical rules.
+• Like Terms: Contain identical variables raised to identical powers (e.g., 5x and 3x). Only like terms can be added or subtracted!
+• Unlike Terms: Variables differ (e.g., 4x and 4y cannot be combined).
+• Distributive Law: a(b + c) = ab + ac.
+• Substitution: Replacing letters with given numerical values to compute a final answer. Remember to use brackets around negative numbers!`,
+    examples: [
+      {
+        id: 'ex-alg-1',
+        title: 'Collecting Like Terms',
+        problem: 'Simplify: 5x + 3y - 2x + 7y - 4',
+        stepByStepSolution: [
+          'Step 1: Group the x terms together: 5x - 2x = 3x.',
+          'Step 2: Group the y terms together: +3y + 7y = +10y.',
+          'Step 3: Keep the constant term: -4.',
+          'Step 4: Combine the resulting terms: 3x + 10y - 4.',
+        ],
+        keyTakeaway: 'Pay close attention to the sign in front of each term when rearranging.',
+      },
+      {
+        id: 'ex-alg-2',
+        title: 'Evaluating Expressions by Substitution',
+        problem: 'If a = 3 and b = -2, evaluate the expression: 2a² - 3b + 5',
+        stepByStepSolution: [
+          'Step 1: Substitute a = 3: 2(3)² = 2(9) = 18.',
+          'Step 2: Substitute b = -2: -3(-2) = +6 (negative times negative gives positive).',
+          'Step 3: Add the constant: 18 + 6 + 5.',
+          'Step 4: Final calculation: 24 + 5 = 29.',
+        ],
+        keyTakeaway: 'Always calculate powers first (BODMAS) before multiplying coefficients.',
+      },
+    ],
+    quiz: {
+      id: 'quiz-jhs1-math-algebra',
+      topicId: 'jhs1-math-t4-algebra',
+      title: 'Algebraic Expressions & Substitution Quiz',
+      timeLimitMinutes: 10,
+      passScorePercentage: 60,
+      questions: [
+        {
+          id: 'q-alg-1',
+          quizId: 'quiz-jhs1-math-algebra',
+          questionText: 'Simplify: 7p - 4q - 3p + 9q',
+          optionA: '4p + 5q',
+          optionB: '10p + 13q',
+          optionC: '4p - 5q',
+          optionD: '9pq',
+          correctOption: 'A',
+          explanation: '(7p - 3p) + (-4q + 9q) = 4p + 5q.',
+        },
+        {
+          id: 'q-alg-2',
+          quizId: 'quiz-jhs1-math-algebra',
+          questionText: 'If x = -3, what is the value of x² + 2x?',
+          optionA: '-15',
+          optionB: '3',
+          optionC: '15',
+          optionD: '-3',
+          correctOption: 'B',
+          explanation: '(-3)² + 2(-3) = 9 - 6 = 3.',
+        },
+      ],
+    },
+  },
+  {
+    id: 'jhs1-math-t5-linearequations',
+    subjectId: 'math',
+    level: 'JHS 1',
+    term: 2,
+    orderIndex: 5,
+    title: 'Linear Equations in One Variable',
+    description: 'Solve first-degree equations using inverse operations and clearing simple fractions.',
+    isFreeTrial: false,
+    isVip: true,
+    youtubeUrl: 'https://www.youtube.com/watch?v=DfZD5Wp_r_I',
+    youtubeId: 'DfZD5Wp_r_I',
+    keyNotes: `A linear equation contains an unknown variable with power 1 and an equals sign (=).
+• Golden Rule: Whatever operation you do to the left-hand side, you MUST do to the right-hand side.
+• Addition undoes Subtraction, and Multiplication undoes Division.
+• Strategy:
+  1. Expand brackets if any exist.
+  2. Collect all variable terms on one side (usually LHS).
+  3. Collect all constant numbers on the opposite side (RHS).
+  4. Divide by the coefficient of the variable to isolate it.`,
+    examples: [
+      {
+        id: 'ex-leq-1',
+        title: 'Solving an Equation with Brackets',
+        problem: 'Solve for x: 3(2x - 4) = 18',
+        stepByStepSolution: [
+          'Step 1: Expand the bracket on the left: 3 × 2x - 3 × 4 = 6x - 12.',
+          'Step 2: Set equal to 18: 6x - 12 = 18.',
+          'Step 3: Add 12 to both sides: 6x = 18 + 12 => 6x = 30.',
+          'Step 4: Divide both sides by 6: x = 30 / 6 => x = 5.',
+          'Step 5: Check answer: 3(2(5) - 4) = 3(10 - 4) = 3(6) = 18 (Correct!).',
+        ],
+        keyTakeaway: 'Always substitute your answer back into the original equation to check correctness.',
+      },
+    ],
+    quiz: {
+      id: 'quiz-jhs1-math-linearequations',
+      topicId: 'jhs1-math-t5-linearequations',
+      title: 'Linear Equations Mastery Test',
+      timeLimitMinutes: 10,
+      passScorePercentage: 60,
+      questions: [
+        {
+          id: 'q-leq-1',
+          quizId: 'quiz-jhs1-math-linearequations',
+          questionText: 'Solve for y: 5y + 8 = 33',
+          optionA: 'y = 4',
+          optionB: 'y = 5',
+          optionC: 'y = 6',
+          optionD: 'y = 7',
+          correctOption: 'B',
+          explanation: '5y = 33 - 8 => 5y = 25 => y = 5.',
+        },
+      ],
+    },
+  },
+  {
+    id: 'jhs1-math-t6-geometry',
+    subjectId: 'math',
+    level: 'JHS 1',
+    term: 2,
+    orderIndex: 6,
+    title: 'Angles, Parallel Lines & Polygons',
+    description: 'Angle properties, vertically opposite, alternate, corresponding, and triangle angle sums.',
+    isFreeTrial: false,
+    isVip: true,
+    youtubeUrl: 'https://www.youtube.com/watch?v=P3AOoLbA3us',
+    youtubeId: 'P3AOoLbA3us',
+    keyNotes: `Essential geometric angle laws for JHS 1:
+• Angles on a Straight Line sum up to 180° (Supplementary angles).
+• Angles at a Point sum up to 360°.
+• Vertically Opposite Angles are always equal.
+• When a transversal cuts parallel lines:
+  - Alternate angles ('Z' shape) are equal.
+  - Corresponding angles ('F' shape) are equal.
+  - Co-interior angles ('C' shape) add up to 180°.
+• Sum of angles in any triangle = 180°.
+• Sum of interior angles of an n-sided polygon = (n - 2) × 180°.`,
+    examples: [
+      {
+        id: 'ex-geo-1',
+        title: 'Finding an Unknown Angle in a Triangle',
+        problem: 'In triangle ABC, angle A = 55° and angle B = 75°. Find the value of angle C.',
+        stepByStepSolution: [
+          'Step 1: State the geometric property: Sum of angles in a triangle = 180°.',
+          'Step 2: Form the equation: 55° + 75° + Angle C = 180°.',
+          'Step 3: Sum the known angles: 130° + Angle C = 180°.',
+          'Step 4: Subtract 130° from 180°: Angle C = 180° - 130° = 50°.',
+        ],
+        keyTakeaway: 'Always state the geometrical reason in BECE exams to earn full working marks.',
+      },
+    ],
+    quiz: {
+      id: 'quiz-jhs1-math-geometry',
+      topicId: 'jhs1-math-t6-geometry',
+      title: 'Angles & Plane Geometry Quiz',
+      timeLimitMinutes: 10,
+      passScorePercentage: 60,
+      questions: [
+        {
+          id: 'q-geo-1',
+          quizId: 'quiz-jhs1-math-geometry',
+          questionText: 'What is the sum of interior angles in a 5-sided polygon (pentagon)?',
+          optionA: '360°',
+          optionB: '540°',
+          optionC: '720°',
+          optionD: '180°',
+          correctOption: 'B',
+          explanation: 'Sum = (n - 2) × 180° = (5 - 2) × 180° = 3 × 180° = 540°.',
+        },
+      ],
+    },
+  },
+  {
+    id: 'jhs1-math-t7-ratios',
+    subjectId: 'math',
+    level: 'JHS 1',
+    term: 3,
+    orderIndex: 7,
+    title: 'Ratio, Proportion & Sharing Quantities',
+    description: 'Simplifying ratios, dividing quantities in a given ratio, and direct vs indirect proportion.',
+    isFreeTrial: false,
+    isVip: true,
+    youtubeUrl: 'https://www.youtube.com/watch?v=HQ4i0_v1e_8',
+    youtubeId: 'HQ4i0_v1e_8',
+    keyNotes: `A ratio compares two or more quantities of the same kind and unit.
+• Simplifying Ratios: Divide all parts by their highest common factor (e.g., 12 : 18 = 2 : 3).
+• Sharing in a Ratio:
+  1. Add the ratio parts to find Total Ratio Parts.
+  2. Each person's share = (Their Part / Total Parts) × Total Amount.
+• Direct Proportion: As one quantity increases, the other increases at the same rate.
+• Inverse Proportion: As one quantity increases, the other decreases (e.g., more workers take less time).`,
+    examples: [
+      {
+        id: 'ex-rat-1',
+        title: 'Dividing Money in a Given Ratio',
+        problem: 'Share GHS 600 between Kwame and Ama in the ratio 3 : 2. How much does each person receive?',
+        stepByStepSolution: [
+          'Step 1: Calculate total ratio parts: 3 + 2 = 5 parts.',
+          'Step 2: Calculate Kwame’s share: (3 / 5) × 600 = 3 × 120 = GHS 360.',
+          'Step 3: Calculate Ama’s share: (2 / 5) × 600 = 2 × 120 = GHS 240.',
+          'Step 4: Verify total: 360 + 240 = GHS 600 (Correct!).',
+        ],
+        keyTakeaway: 'Always sum the ratio parts first before calculating individual fractional shares.',
+      },
+    ],
+    quiz: {
+      id: 'quiz-jhs1-math-ratios',
+      topicId: 'jhs1-math-t7-ratios',
+      title: 'Ratio & Proportion Challenge Quiz',
+      timeLimitMinutes: 10,
+      passScorePercentage: 60,
+      questions: [
+        {
+          id: 'q-rat-1',
+          quizId: 'quiz-jhs1-math-ratios',
+          questionText: 'Simplify the ratio 24 : 36 to its simplest form.',
+          optionA: '4 : 6',
+          optionB: '2 : 3',
+          optionC: '3 : 2',
+          optionD: '12 : 18',
+          correctOption: 'B',
+          explanation: 'Divide both sides by the HCF 12: 24/12 = 2 and 36/12 = 3. Result: 2 : 3.',
+        },
+      ],
+    },
+  },
+  {
+    id: 'jhs1-math-t8-statistics',
+    subjectId: 'math',
+    level: 'JHS 1',
+    term: 3,
+    orderIndex: 8,
+    title: 'Data Collection, Statistics & Probability',
+    description: 'Frequency tables, finding Mean, Median, Mode, Range, and calculating basic probability.',
+    isFreeTrial: false,
+    isVip: true,
+    youtubeUrl: 'https://www.youtube.com/watch?v=B1HEzNTGeZ4',
+    youtubeId: 'B1HEzNTGeZ4',
+    keyNotes: `Statistics deals with collecting, organizing, analyzing, and presenting data.
+• Mode: The number that appears most frequently.
+• Median: The middle number when data is arranged in ascending order.
+• Mean (Average): Sum of all values divided by total number of values: (Σx) / n.
+• Range: Highest value - Lowest value.
+• Probability: Chance of an event occurring: P(Event) = (Number of favorable outcomes) / (Total possible outcomes).`,
+    examples: [
+      {
+        id: 'ex-stat-1',
+        title: 'Finding Mean, Median, and Mode',
+        problem: 'Given the test scores: 7, 4, 8, 4, 9, 10, 7, 4. Find the: (i) Mode (ii) Median (iii) Mean.',
+        stepByStepSolution: [
+          'Step 1: Arrange data in ascending order: 4, 4, 4, 7, 7, 8, 9, 10 (Total n = 8 items).',
+          'Step 2: Mode = 4 (it appears 3 times, which is the highest frequency).',
+          'Step 3: Median = Average of the two middle numbers (4th and 5th items: 7 and 7): (7 + 7) / 2 = 7.',
+          'Step 4: Mean = (4 + 4 + 4 + 7 + 7 + 8 + 9 + 10) / 8 = 53 / 8 = 6.625.',
+        ],
+        keyTakeaway: 'Always arrange the numbers in ascending order BEFORE finding the median.',
+      },
+    ],
+    quiz: {
+      id: 'quiz-jhs1-math-statistics',
+      topicId: 'jhs1-math-t8-statistics',
+      title: 'Statistics & Probability Assessment',
+      timeLimitMinutes: 10,
+      passScorePercentage: 60,
+      questions: [
+        {
+          id: 'q-stat-1',
+          quizId: 'quiz-jhs1-math-statistics',
+          questionText: 'A fair 6-sided die is rolled once. What is the probability of rolling an even number (2, 4, 6)?',
+          optionA: '1/6',
+          optionB: '1/3',
+          optionC: '1/2',
+          optionD: '2/3',
+          correctOption: 'C',
+          explanation: 'Favorable outcomes = {2, 4, 6} (3 outcomes). Total outcomes = 6. Probability = 3/6 = 1/2.',
         },
       ],
     },

@@ -121,6 +121,15 @@ export default function Navbar() {
                 <span>Weekly Exam</span>
               </Link>
 
+              <button
+                onClick={() => setPinModalOpen(true)}
+                className="text-xs font-bold px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-sm shadow-amber-500/20 transition-all flex items-center gap-1.5 whitespace-nowrap"
+              >
+                <KeyRound className="w-3.5 h-3.5" />
+                <span>Redeem PIN</span>
+                <span className="text-[9px] bg-black/20 px-1 py-0.2 rounded font-black tracking-wider uppercase">VIP</span>
+              </button>
+
               <div className="h-5 w-px bg-slate-200 shrink-0 mx-1" />
 
               {/* Student Profile Pill */}
