@@ -14,6 +14,9 @@ import { JHS1_SOCIAL_QUIZZES } from './curriculumJhs1SocialQuizzes';
 import { JHS1_COMPUTING_TOPICS } from './curriculumJhs1Computing';
 import { JHS1_COMPUTING_DETAILED_NOTES } from './curriculumDetailedNotesComputing';
 import { JHS1_COMPUTING_QUIZZES } from './curriculumJhs1ComputingQuizzes';
+import { JHS1_RME_TOPICS } from './curriculumJhs1Rme';
+import { JHS1_RME_DETAILED_NOTES } from './curriculumDetailedNotesRme';
+import { JHS1_RME_QUIZZES } from './curriculumJhs1RmeQuizzes';
 
 export const CURRICULUM_SUBJECTS: CurriculumSubject[] = [
   {
@@ -370,42 +373,9 @@ const BASE_JHS_TOPICS: CurriculumTopic[] = [
   ...JHS1_SOCIAL_TOPICS,
 
   // ==========================================
-  // JHS 1 - RELIGIOUS & MORAL EDUCATION (RME)
+  // JHS 1 - RELIGIOUS & MORAL EDUCATION (All 15 GES Topics)
   // ==========================================
-  {
-    id: 'jhs1-rme-t1-creation',
-    subjectId: 'rme',
-    level: 'JHS 1',
-    term: 1,
-    orderIndex: 1,
-    title: 'Creation and the Environment in the Three Main Religions',
-    description: 'Christian, Islamic, and Indigenous Ghanaian beliefs on creation and human stewardship.',
-    isFreeTrial: true,
-    keyNotes: `All three major religions in Ghana (Christianity, Islam, and Indigenous Traditional Religion) agree that:
-• God (The Supreme Being / Onyankopon / Allah / Mawu) is the Creator of heaven and earth.
-• Humans have been appointed as caretakers / stewards of creation.
-• Protection of the environment is considered a moral and religious obligation.`,
-    quiz: {
-      id: 'quiz-jhs1-rme-creation',
-      topicId: 'jhs1-rme-t1-creation',
-      title: 'RME Creation & Moral Values Quiz',
-      timeLimitMinutes: 10,
-      passScorePercentage: 60,
-      questions: [
-        {
-          id: 'q-rme-1',
-          quizId: 'quiz-jhs1-rme-creation',
-          questionText: 'In Ghanaian traditional religion, why are sacred groves and rivers preserved?',
-          optionA: 'For commercial tourism only',
-          optionB: 'As habitats of spiritual deities and protectors of ecology',
-          optionC: 'For foreign export',
-          optionD: 'To prevent farming forever',
-          correctOption: 'B',
-          explanation: 'Sacred groves and taboos protected water sources and vital wildlife biodiversity in traditional society.',
-        },
-      ],
-    },
-  },
+  ...JHS1_RME_TOPICS,
 ];
 
 export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((topic) => ({
@@ -416,6 +386,7 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
     JHS1_ENGLISH_DETAILED_NOTES[topic.id] ||
     JHS1_SOCIAL_DETAILED_NOTES[topic.id] ||
     JHS1_COMPUTING_DETAILED_NOTES[topic.id] ||
+    JHS1_RME_DETAILED_NOTES[topic.id] ||
     topic.detailedNotes,
   quiz:
     JHS1_MATH_QUIZZES[topic.id] ||
@@ -423,6 +394,7 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
     JHS1_ENGLISH_QUIZZES[topic.id] ||
     JHS1_SOCIAL_QUIZZES[topic.id] ||
     JHS1_COMPUTING_QUIZZES[topic.id] ||
+    JHS1_RME_QUIZZES[topic.id] ||
     topic.quiz,
 }));
 
