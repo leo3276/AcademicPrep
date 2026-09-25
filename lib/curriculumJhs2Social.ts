@@ -7,7 +7,7 @@ import { CurriculumTopic } from './types';
 export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
   {
     "id": "jhs2-soc-t1-our-culture",
-    "subjectId": "social-studies",
+    "subjectId": "social",
     "level": "JHS 2",
     "term": 1,
     "orderIndex": 1,
@@ -48,7 +48,7 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "jhs2-soc-t2-family-socialization",
-    "subjectId": "social-studies",
+    "subjectId": "social",
     "level": "JHS 2",
     "term": 1,
     "orderIndex": 2,
@@ -88,7 +88,7 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "jhs2-soc-t3-mapping-ghana",
-    "subjectId": "social-studies",
+    "subjectId": "social",
     "level": "JHS 2",
     "term": 1,
     "orderIndex": 3,
@@ -127,7 +127,7 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "jhs2-soc-t4-weather-climate",
-    "subjectId": "social-studies",
+    "subjectId": "social",
     "level": "JHS 2",
     "term": 1,
     "orderIndex": 4,
@@ -165,7 +165,7 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "jhs2-soc-t5-citizenship-rights",
-    "subjectId": "social-studies",
+    "subjectId": "social",
     "level": "JHS 2",
     "term": 1,
     "orderIndex": 5,
@@ -204,7 +204,7 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "jhs2-soc-t6-indigenous-governance",
-    "subjectId": "social-studies",
+    "subjectId": "social",
     "level": "JHS 2",
     "term": 2,
     "orderIndex": 6,
@@ -242,7 +242,7 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "jhs2-soc-t7-democratic-governance",
-    "subjectId": "social-studies",
+    "subjectId": "social",
     "level": "JHS 2",
     "term": 2,
     "orderIndex": 7,
@@ -280,7 +280,7 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "jhs2-soc-t8-local-government",
-    "subjectId": "social-studies",
+    "subjectId": "social",
     "level": "JHS 2",
     "term": 2,
     "orderIndex": 8,
@@ -318,7 +318,7 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "jhs2-soc-t9-colonization-independence",
-    "subjectId": "social-studies",
+    "subjectId": "social",
     "level": "JHS 2",
     "term": 2,
     "orderIndex": 9,
@@ -357,7 +357,7 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "jhs2-soc-t10-population-ghana",
-    "subjectId": "social-studies",
+    "subjectId": "social",
     "level": "JHS 2",
     "term": 2,
     "orderIndex": 10,
@@ -397,7 +397,7 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "jhs2-soc-t11-natural-resources",
-    "subjectId": "social-studies",
+    "subjectId": "social",
     "level": "JHS 2",
     "term": 3,
     "orderIndex": 11,
@@ -438,7 +438,7 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "jhs2-soc-t12-financial-literacy",
-    "subjectId": "social-studies",
+    "subjectId": "social",
     "level": "JHS 2",
     "term": 3,
     "orderIndex": 12,
@@ -477,7 +477,7 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "jhs2-soc-t13-tourism-hospitality",
-    "subjectId": "social-studies",
+    "subjectId": "social",
     "level": "JHS 2",
     "term": 3,
     "orderIndex": 13,
@@ -515,7 +515,7 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "jhs2-soc-t14-social-problems",
-    "subjectId": "social-studies",
+    "subjectId": "social",
     "level": "JHS 2",
     "term": 3,
     "orderIndex": 14,
@@ -552,7 +552,7 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "jhs2-soc-t15-international-cooperation",
-    "subjectId": "social-studies",
+    "subjectId": "social",
     "level": "JHS 2",
     "term": 3,
     "orderIndex": 15,
