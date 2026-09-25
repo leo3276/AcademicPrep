@@ -44,6 +44,15 @@ import { JHS2_COMPUTING_QUIZZES } from './curriculumJhs2ComputingQuizzes';
 import { JHS2_RME_TOPICS } from './curriculumJhs2Rme';
 import { JHS2_RME_DETAILED_NOTES } from './curriculumDetailedNotesJhs2Rme';
 import { JHS2_RME_QUIZZES } from './curriculumJhs2RmeQuizzes';
+import { JHS2_FRENCH_TOPICS } from './curriculumJhs2French';
+import { JHS2_FRENCH_DETAILED_NOTES } from './curriculumDetailedNotesJhs2French';
+import { JHS2_FRENCH_QUIZZES } from './curriculumJhs2FrenchQuizzes';
+import { JHS2_TWI_TOPICS } from './curriculumJhs2Twi';
+import { JHS2_TWI_DETAILED_NOTES } from './curriculumDetailedNotesJhs2Twi';
+import { JHS2_TWI_QUIZZES } from './curriculumJhs2TwiQuizzes';
+import { JHS2_CAREER_TECH_TOPICS } from './curriculumJhs2CareerTech';
+import { JHS2_CAREER_TECH_DETAILED_NOTES } from './curriculumDetailedNotesJhs2CareerTech';
+import { JHS2_CAREER_TECH_QUIZZES } from './curriculumJhs2CareerTechQuizzes';
 
 export const CURRICULUM_SUBJECTS: CurriculumSubject[] = [
   {
@@ -160,6 +169,21 @@ const BASE_JHS_TOPICS: CurriculumTopic[] = [
   // JHS 2 - RELIGIOUS & MORAL EDUCATION (All 14 GES Topics)
   // ==========================================
   ...JHS2_RME_TOPICS,
+
+  // ==========================================
+  // JHS 2 - FRENCH LANGUAGE (All 12 GES Topics)
+  // ==========================================
+  ...JHS2_FRENCH_TOPICS,
+
+  // ==========================================
+  // JHS 2 - GHANAIAN LANGUAGE (AKUAPEM TWI) (All 10 GES Topics)
+  // ==========================================
+  ...JHS2_TWI_TOPICS,
+
+  // ==========================================
+  // JHS 2 - CAREER TECHNOLOGY (All 13 GES Topics)
+  // ==========================================
+  ...JHS2_CAREER_TECH_TOPICS,
 
   // ==========================================
   // JHS 3 - MATHEMATICS (BECE Canditates)
@@ -346,6 +370,9 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
     JHS2_SOCIAL_DETAILED_NOTES[topic.id] ||
     JHS2_COMPUTING_DETAILED_NOTES[topic.id] ||
     JHS2_RME_DETAILED_NOTES[topic.id] ||
+    JHS2_FRENCH_DETAILED_NOTES[topic.id] ||
+    JHS2_TWI_DETAILED_NOTES[topic.id] ||
+    JHS2_CAREER_TECH_DETAILED_NOTES[topic.id] ||
     JHS1_SCIENCE_DETAILED_NOTES[topic.id] ||
     JHS1_ENGLISH_DETAILED_NOTES[topic.id] ||
     JHS1_SOCIAL_DETAILED_NOTES[topic.id] ||
@@ -363,6 +390,9 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
     JHS2_SOCIAL_QUIZZES[topic.id] ||
     JHS2_COMPUTING_QUIZZES[topic.id] ||
     JHS2_RME_QUIZZES[topic.id] ||
+    JHS2_FRENCH_QUIZZES[topic.id] ||
+    JHS2_TWI_QUIZZES[topic.id] ||
+    JHS2_CAREER_TECH_QUIZZES[topic.id] ||
     JHS1_SCIENCE_QUIZZES[topic.id] ||
     JHS1_ENGLISH_QUIZZES[topic.id] ||
     JHS1_SOCIAL_QUIZZES[topic.id] ||
@@ -373,4 +403,5 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
     JHS1_CAREER_TECH_QUIZZES[topic.id] ||
     topic.quiz,
 }));
+
 
