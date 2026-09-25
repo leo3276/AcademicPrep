@@ -59,6 +59,8 @@ export interface DetailedSection {
 
 export interface DetailedNotes {
   topicId?: string;
+  title?: string;
+  overview?: string;
   introduction?: string;
   realWorldContext?: string;
   objectives: string[];

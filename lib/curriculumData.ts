@@ -32,6 +32,12 @@ import { JHS2_MATH_QUIZZES } from './curriculumJhs2MathQuizzes';
 import { JHS2_SCIENCE_TOPICS } from './curriculumJhs2Science';
 import { JHS2_SCIENCE_DETAILED_NOTES } from './curriculumDetailedNotesJhs2Science';
 import { JHS2_SCIENCE_QUIZZES } from './curriculumJhs2ScienceQuizzes';
+import { JHS2_ENGLISH_TOPICS } from './curriculumJhs2English';
+import { JHS2_ENGLISH_DETAILED_NOTES } from './curriculumDetailedNotesJhs2English';
+import { JHS2_ENGLISH_QUIZZES } from './curriculumJhs2EnglishQuizzes';
+import { JHS2_SOCIAL_TOPICS } from './curriculumJhs2Social';
+import { JHS2_SOCIAL_DETAILED_NOTES } from './curriculumDetailedNotesJhs2Social';
+import { JHS2_SOCIAL_QUIZZES } from './curriculumJhs2SocialQuizzes';
 
 export const CURRICULUM_SUBJECTS: CurriculumSubject[] = [
   {
@@ -128,6 +134,16 @@ const BASE_JHS_TOPICS: CurriculumTopic[] = [
   // JHS 2 - INTEGRATED SCIENCE (All 15 GES Topics)
   // ==========================================
   ...JHS2_SCIENCE_TOPICS,
+
+  // ==========================================
+  // JHS 2 - ENGLISH LANGUAGE (All 15 GES Topics)
+  // ==========================================
+  ...JHS2_ENGLISH_TOPICS,
+
+  // ==========================================
+  // JHS 2 - SOCIAL STUDIES (All 15 GES Topics)
+  // ==========================================
+  ...JHS2_SOCIAL_TOPICS,
 
   // ==========================================
   // JHS 3 - MATHEMATICS (BECE Canditates)
@@ -310,6 +326,8 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
     TOPIC_DETAILED_NOTES[topic.id] ||
     JHS2_MATH_DETAILED_NOTES[topic.id] ||
     JHS2_SCIENCE_DETAILED_NOTES[topic.id] ||
+    JHS2_ENGLISH_DETAILED_NOTES[topic.id] ||
+    JHS2_SOCIAL_DETAILED_NOTES[topic.id] ||
     JHS1_SCIENCE_DETAILED_NOTES[topic.id] ||
     JHS1_ENGLISH_DETAILED_NOTES[topic.id] ||
     JHS1_SOCIAL_DETAILED_NOTES[topic.id] ||
@@ -323,6 +341,8 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
     JHS1_MATH_QUIZZES[topic.id] ||
     JHS2_MATH_QUIZZES[topic.id] ||
     JHS2_SCIENCE_QUIZZES[topic.id] ||
+    JHS2_ENGLISH_QUIZZES[topic.id] ||
+    JHS2_SOCIAL_QUIZZES[topic.id] ||
     JHS1_SCIENCE_QUIZZES[topic.id] ||
     JHS1_ENGLISH_QUIZZES[topic.id] ||
     JHS1_SOCIAL_QUIZZES[topic.id] ||
