@@ -14,7 +14,9 @@ import {
   X,
   CheckCircle2,
   Sparkles,
-  Award
+  Award,
+  BookOpen,
+  FileCheck
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -108,6 +110,28 @@ export default function Navbar() {
                 }`}
               >
                 Curriculum
+              </Link>
+              <Link
+                href="/jhs/bece-past-questions"
+                className={`text-xs font-bold transition-colors flex items-center gap-1 px-2.5 py-1.5 rounded-lg whitespace-nowrap ${
+                  pathname === '/jhs/bece-past-questions' 
+                    ? 'text-blue-600 bg-blue-50 font-bold' 
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                }`}
+              >
+                <BookOpen className="w-3.5 h-3.5 text-blue-600" />
+                <span>BECE Past Questions</span>
+              </Link>
+              <Link
+                href="/jhs/trial-questions"
+                className={`text-xs font-bold transition-colors flex items-center gap-1 px-2.5 py-1.5 rounded-lg whitespace-nowrap ${
+                  pathname === '/jhs/trial-questions' 
+                    ? 'text-emerald-700 bg-emerald-50 font-bold' 
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                }`}
+              >
+                <FileCheck className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Trial Questions</span>
               </Link>
               <Link
                 href="/jhs/weekly-exam"
@@ -230,6 +254,22 @@ export default function Navbar() {
                 className="py-2 text-sm font-semibold text-slate-800"
               >
                 JHS Curriculum Topics
+              </Link>
+              <Link
+                href="/jhs/bece-past-questions"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2 text-sm font-semibold text-blue-700 flex items-center gap-1.5"
+              >
+                <BookOpen className="w-4 h-4 text-blue-600" />
+                BECE Past Questions (2020-2024)
+              </Link>
+              <Link
+                href="/jhs/trial-questions"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2 text-sm font-semibold text-emerald-700 flex items-center gap-1.5"
+              >
+                <FileCheck className="w-4 h-4 text-emerald-600" />
+                Trial Questions & Mocks
               </Link>
               <Link
                 href="/jhs/weekly-exam"

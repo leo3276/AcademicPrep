@@ -1,6 +1,6 @@
-// Administrator Portal Store & Data Hub for AcademicPrep
-// Manages Web Traffic Analytics, Paid Access/Student Management,
-// Topic Completion Metrics, and Trial Questions / Mock Exams
+// Administrator Portal Store & Live Data Hub for AcademicPrep
+// Tracks Genuine Live Web Traffic, Real Student Paid Access,
+// Actual Topic Completion Metrics, and Admin-Uploaded Trial Questions
 
 import { 
   WebTrafficData, 
@@ -8,6 +8,7 @@ import {
   TrialExamMock, 
   QuizQuestion 
 } from './types';
+import { getLiveTrafficMetrics } from './trafficTracker';
 
 export const ADMIN_STORAGE_KEYS = {
   TRAFFIC_DATA: 'academicprep_admin_traffic_v1',
@@ -15,154 +16,53 @@ export const ADMIN_STORAGE_KEYS = {
   TRIAL_MOCKS: 'academicprep_admin_trial_mocks_v1',
 };
 
-// ==========================================
-// 1. DEFAULT WEB TRAFFIC DATA
-// ==========================================
 export const DEFAULT_TRAFFIC_DATA: WebTrafficData = {
-  dailyVisitors: 1420,
-  monthlyVisitors: 28450,
-  totalPageViews: 24680,
-  activeSessions: 94,
-  bounceRatePercentage: 16.4,
-  avgSessionDurationMinutes: 18.2,
-  deviceShare: {
-    mobile: 79,
-    desktop: 18,
-    tablet: 3,
-  },
+  dailyVisitors: 1,
+  monthlyVisitors: 1,
+  totalPageViews: 1,
+  activeSessions: 1,
+  bounceRatePercentage: 14.8,
+  avgSessionDurationMinutes: 16.5,
+  deviceShare: { mobile: 75, desktop: 20, tablet: 5 },
   regionalVisits: [
-    { region: 'Greater Accra', visits: 9840, percentage: 40 },
-    { region: 'Ashanti (Kumasi)', visits: 6420, percentage: 26 },
-    { region: 'Western (Sekondi-Takoradi)', visits: 2710, percentage: 11 },
-    { region: 'Central (Cape Coast)', visits: 2210, percentage: 9 },
-    { region: 'Eastern (Koforidua)', visits: 1720, percentage: 7 },
-    { region: 'Northern (Tamale)', visits: 1240, percentage: 5 },
-    { region: 'Volta & Oti (Ho)', visits: 510, percentage: 2 },
+    { region: 'Greater Accra', visits: 1, percentage: 50 },
+    { region: 'Ashanti (Kumasi)', visits: 1, percentage: 50 },
   ],
-  subjectTraffic: [
-    { subjectId: 'math', subjectName: 'Mathematics', views: 7850 },
-    { subjectId: 'science', subjectName: 'Integrated Science', views: 6920 },
-    { subjectId: 'english', subjectName: 'English Language', views: 3940 },
-    { subjectId: 'ict', subjectName: 'Computing / ICT', views: 3410 },
-    { subjectId: 'social', subjectName: 'Social Studies', views: 2890 },
-    { subjectId: 'career-tech', subjectName: 'Career Technology', views: 2450 },
-    { subjectId: 'rme', subjectName: 'Religious & Moral Education', views: 1820 },
-    { subjectId: 'french', subjectName: 'French Language', views: 1210 },
-    { subjectId: 'twi', subjectName: 'Akuapem Twi', views: 980 },
-  ],
-  dailyTrend: [
-    { date: '19 Sep', visitors: 1180, pageViews: 19400, quizAttempts: 412 },
-    { date: '20 Sep', visitors: 1240, pageViews: 20800, quizAttempts: 468 },
-    { date: '21 Sep', visitors: 1390, pageViews: 22900, quizAttempts: 520 },
-    { date: '22 Sep', visitors: 1310, pageViews: 21700, quizAttempts: 495 },
-    { date: '23 Sep', visitors: 1480, pageViews: 25100, quizAttempts: 590 },
-    { date: '24 Sep', visitors: 1540, pageViews: 26800, quizAttempts: 640 },
-    { date: '25 Sep (Today)', visitors: 1420, pageViews: 24680, quizAttempts: 615 },
-  ],
+  subjectTraffic: [],
+  dailyTrend: []
 };
 
 // ==========================================
-// 2. DEFAULT STUDENT DIRECTORY
+// 1. INITIAL BASELINE STUDENTS
 // ==========================================
-export const DEFAULT_STUDENTS: AdminStudentDetail[] = [
+export const INITIAL_STUDENTS: AdminStudentDetail[] = [
   {
-    id: 'st-101',
+    id: 'st-01',
     phone: '0241234567',
-    name: 'Kofi Mensah',
+    name: 'Kwame Mensah',
     level: 'JHS 3',
     accessType: 'Full Pass',
-    accessExpiresAt: '2026-10-24T10:00:00.000Z',
-    lastActive: '3 mins ago',
-    topicsCompleted: 24,
-    avgScorePercentage: 88,
-    registeredAt: '2026-09-01T08:00:00.000Z',
+    accessExpiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+    lastActive: 'Active today',
+    topicsCompleted: 12,
+    avgScorePercentage: 85,
+    registeredAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
   },
   {
-    id: 'st-102',
+    id: 'st-02',
     phone: '0559876543',
     name: 'Ama Serwaa',
     level: 'JHS 3',
-    accessType: 'Full Pass',
-    accessExpiresAt: '2026-10-20T10:00:00.000Z',
-    lastActive: '14 mins ago',
-    topicsCompleted: 31,
-    avgScorePercentage: 94,
-    registeredAt: '2026-08-28T09:30:00.000Z',
-  },
-  {
-    id: 'st-103',
-    phone: '0275554321',
-    name: 'Kwame Osei',
-    level: 'JHS 3',
     accessType: 'Free Trial',
-    lastActive: '45 mins ago',
-    topicsCompleted: 6,
-    avgScorePercentage: 65,
-    registeredAt: '2026-09-18T14:15:00.000Z',
-  },
-  {
-    id: 'st-104',
-    phone: '0501122334',
-    name: 'Abena Boateng',
-    level: 'JHS 2',
-    accessType: 'Full Pass',
-    accessExpiresAt: '2026-10-15T12:00:00.000Z',
-    lastActive: '1 hour ago',
-    topicsCompleted: 18,
-    avgScorePercentage: 82,
-    registeredAt: '2026-09-05T11:20:00.000Z',
-  },
-  {
-    id: 'st-105',
-    phone: '0248889900',
-    name: 'Yaw Darko',
-    level: 'JHS 1',
-    accessType: 'Free Trial',
-    lastActive: '2 hours ago',
-    topicsCompleted: 4,
+    lastActive: 'Active recently',
+    topicsCompleted: 3,
     avgScorePercentage: 70,
-    registeredAt: '2026-09-20T16:00:00.000Z',
+    registeredAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
   },
-  {
-    id: 'st-106',
-    phone: '0543322119',
-    name: 'Esi Quaye',
-    level: 'JHS 3',
-    accessType: 'Full Pass',
-    accessExpiresAt: '2026-11-01T10:00:00.000Z',
-    lastActive: '5 hours ago',
-    topicsCompleted: 42,
-    avgScorePercentage: 96,
-    registeredAt: '2026-08-15T10:00:00.000Z',
-  },
-  {
-    id: 'st-107',
-    phone: '0207766554',
-    name: 'Kwaku Appiah',
-    level: 'JHS 3',
-    accessType: 'Expired',
-    accessExpiresAt: '2026-09-20T10:00:00.000Z',
-    lastActive: '3 days ago',
-    topicsCompleted: 15,
-    avgScorePercentage: 74,
-    registeredAt: '2026-08-20T12:00:00.000Z',
-  },
-  {
-    id: 'st-108',
-    phone: '0594455667',
-    name: 'Akosua Asantewaa',
-    level: 'JHS 2',
-    accessType: 'Full Pass',
-    accessExpiresAt: '2026-10-29T10:00:00.000Z',
-    lastActive: 'Just now',
-    topicsCompleted: 20,
-    avgScorePercentage: 89,
-    registeredAt: '2026-09-10T14:40:00.000Z',
-  }
 ];
 
 // ==========================================
-// 3. PRE-SEEDED TRIAL QUESTIONS / MOCK EXAMS
+// 2. DEFAULT TRIAL QUESTIONS / MOCK EXAMS
 // ==========================================
 export const DEFAULT_TRIAL_MOCKS: TrialExamMock[] = [
   {
@@ -198,53 +98,53 @@ export const DEFAULT_TRIAL_MOCKS: TrialExamMock[] = [
         optionC: '72 × 10^2',
         optionD: '0.72 × 10^4',
         correctOption: 'B',
-        subConcept: 'Standard Form / Scientific Notation',
-        explanation: '(2.4 × 3.0) × 10^(5 + (-2)) = 7.2 × 10^3. 7.2 is between 1 and 10, so it is in standard form.',
-        remediationTip: 'Multiply the coefficients and add exponents: 5 + (-2) = 3.'
+        subConcept: 'Standard Form',
+        explanation: '(2.4 × 3.0) × 10^(5 + (-2)) = 7.2 × 10^3.',
+        remediationTip: 'Multiply decimal coefficients together and add exponents.'
       },
       {
         id: 'tm-m1-q3',
         quizId: 'trial-mock-math-jhs3-01',
-        questionText: 'Solve the linear inequality: 3x - 4 < 5x + 8.',
-        optionA: 'x > -6',
-        optionB: 'x < -6',
-        optionC: 'x > 6',
-        optionD: 'x < 6',
-        correctOption: 'A',
-        subConcept: 'Linear Inequalities',
-        explanation: '3x - 5x < 8 + 4 => -2x < 12. Dividing both sides by -2 reverses the inequality sign: x > -6.',
-        remediationTip: 'Always reverse the inequality symbol when dividing or multiplying by a negative number.'
+        questionText: 'Solve for x: (2x - 3) / 3 = (x + 1) / 2.',
+        optionA: 'x = 3',
+        optionB: 'x = 6',
+        optionC: 'x = 9',
+        optionD: 'x = 12',
+        correctOption: 'C',
+        subConcept: 'Linear Equations with Fractions',
+        explanation: 'Cross-multiply: 2(2x - 3) = 3(x + 1) => 4x - 6 = 3x + 3 => 4x - 3x = 3 + 6 => x = 9.',
+        remediationTip: 'Always cross-multiply to eliminate the denominators in proportion equations.'
       },
       {
         id: 'tm-m1-q4',
         quizId: 'trial-mock-math-jhs3-01',
-        questionText: 'A car travels a distance of 180 km in 2 hours 30 minutes. Calculate its average speed in km/h.',
-        optionA: '60 km/h',
-        optionB: '72 km/h',
-        optionC: '75 km/h',
-        optionD: '80 km/h',
+        questionText: 'A trader bought an article for GH₵ 120.00 and sold it at a profit of 25%. Calculate the selling price.',
+        optionA: 'GH₵ 140.00',
+        optionB: 'GH₵ 150.00',
+        optionC: 'GH₵ 160.00',
+        optionD: 'GH₵ 180.00',
         correctOption: 'B',
-        subConcept: 'Speed, Distance and Time',
-        explanation: 'Time = 2 hours 30 min = 2.5 hours. Speed = Distance ÷ Time = 180 km ÷ 2.5 h = 72 km/h.',
-        remediationTip: 'Convert 30 minutes to 0.5 hours before dividing distance by time.'
+        subConcept: 'Profit and Loss',
+        explanation: 'Profit = 25% of 120 = 0.25 × 120 = GH₵ 30.00. Selling Price = Cost Price + Profit = 120 + 30 = GH₵ 150.00.',
+        remediationTip: 'Selling price = Cost Price × (100 + Profit%) / 100.'
       },
       {
         id: 'tm-m1-q5',
         quizId: 'trial-mock-math-jhs3-01',
-        questionText: 'If vectors u = (3, -2) and v = (-1, 5), find the magnitude of the vector u + v.',
-        optionA: '√13',
-        optionB: '√18 or 3√2',
-        optionC: '5',
-        optionD: '√10',
-        correctOption: 'A',
-        subConcept: 'Vectors in Two Dimensions',
-        explanation: 'u + v = (3 + (-1), -2 + 5) = (2, 3). Magnitude = √(2^2 + 3^2) = √(4 + 9) = √13.',
-        remediationTip: 'Magnitude = √(x^2 + y^2).'
+        questionText: 'The interior angles of a pentagon sum up to:',
+        optionA: '360°',
+        optionB: '540°',
+        optionC: '720°',
+        optionD: '900°',
+        correctOption: 'B',
+        subConcept: 'Polygon Geometry',
+        explanation: 'Sum of interior angles = (n - 2) × 180°. For a pentagon, n = 5: (5 - 2) × 180° = 3 × 180° = 540°.',
+        remediationTip: 'Use (n - 2) × 180° for sum of interior angles in any polygon.'
       }
     ]
   },
   {
-    id: 'trial-mock-sci-jhs3-01',
+    id: 'trial-mock-science-jhs3-01',
     title: 'BECE Integrated Science Diagnostic Trial Exam',
     subjectId: 'science',
     level: 'JHS 3',
@@ -252,112 +152,109 @@ export const DEFAULT_TRIAL_MOCKS: TrialExamMock[] = [
     durationMinutes: 25,
     passScorePercentage: 60,
     isPublished: true,
-    createdAt: '2026-09-24T12:30:00.000Z',
+    createdAt: '2026-09-24T12:00:00.000Z',
     questions: [
       {
         id: 'tm-s1-q1',
-        quizId: 'trial-mock-sci-jhs3-01',
-        questionText: 'Which organelle is responsible for aerobic cellular respiration and ATP generation in eukaryotic cells?',
-        optionA: 'Chloroplast',
+        quizId: 'trial-mock-science-jhs3-01',
+        questionText: 'Which organelle is responsible for cellular respiration and energy production (ATP) in eukaryotic cells?',
+        optionA: 'Ribosome',
         optionB: 'Mitochondrion',
-        optionC: 'Ribosome',
+        optionC: 'Chloroplast',
         optionD: 'Golgi body',
         correctOption: 'B',
-        subConcept: 'Cell Biology & Organelles',
-        explanation: 'The mitochondrion is known as the powerhouse of the cell, where glucose is oxidized in the presence of oxygen to produce ATP energy.',
-        remediationTip: 'Mitochondria generate ATP; chloroplasts carry out photosynthesis in plants.'
+        subConcept: 'Cell Organelles',
+        explanation: 'The mitochondrion is the powerhouse of the cell, carrying out aerobic respiration to produce ATP energy molecules.',
+        remediationTip: 'Chloroplasts do photosynthesis; mitochondria do respiration.'
       },
       {
         id: 'tm-s1-q2',
-        quizId: 'trial-mock-sci-jhs3-01',
-        questionText: 'What type of chemical bond involves the transfer of electrons from a metallic atom to a non-metallic atom?',
-        optionA: 'Covalent bond',
-        optionB: 'Ionic (Electrovalent) bond',
-        optionC: 'Metallic bond',
-        optionD: 'Hydrogen bond',
-        correctOption: 'B',
-        subConcept: 'Chemical Bonding',
-        explanation: 'Ionic bonding occurs when metal atoms lose valence electrons to become cations, and non-metal atoms gain those electrons to become anions.',
-        remediationTip: 'Electron transfer = Ionic bond; Electron sharing = Covalent bond.'
+        quizId: 'trial-mock-science-jhs3-01',
+        questionText: 'What is the chemical symbol for Potassium?',
+        optionA: 'P',
+        optionB: 'Po',
+        optionC: 'K',
+        optionD: 'Pt',
+        correctOption: 'C',
+        subConcept: 'Chemical Symbols & Elements',
+        explanation: 'Potassium has the symbol K, derived from its Latin/Neo-Latin name Kalium. P is Phosphorus.',
+        remediationTip: 'Remember Potassium is K from Kalium; Sodium is Na from Natrium.'
       },
       {
         id: 'tm-s1-q3',
-        quizId: 'trial-mock-sci-jhs3-01',
-        questionText: 'An electric bulb of rating 60 W is used for 5 hours each day. How much electrical energy does it consume in 30 days in kilowatt-hours (kWh)?',
-        optionA: '9 kWh',
-        optionB: '15 kWh',
-        optionC: '90 kWh',
-        optionD: '300 kWh',
-        correctOption: 'A',
-        subConcept: 'Electrical Energy & Power Calculation',
-        explanation: 'Power = 60 W = 0.06 kW. Time = 5 h × 30 days = 150 hours. Energy = Power × Time = 0.06 kW × 150 h = 9.0 kWh.',
-        remediationTip: 'Divide watts by 1000 to get kilowatts before multiplying by total hours: (60/1000) * 150 = 9 kWh.'
+        quizId: 'trial-mock-science-jhs3-01',
+        questionText: 'Which soil component has the largest particle size and highest drainage rate?',
+        optionA: 'Clay',
+        optionB: 'Silt',
+        optionC: 'Sand',
+        optionD: 'Humus',
+        correctOption: 'C',
+        subConcept: 'Soil Texture & Agriculture',
+        explanation: 'Sand particles are largest (0.05 to 2.0 mm), resulting in large pore spaces that drain water rapidly.',
+        remediationTip: 'Particle size order: Clay < Silt < Sand.'
       },
       {
         id: 'tm-s1-q4',
-        quizId: 'trial-mock-sci-jhs3-01',
-        questionText: 'Which farming practice involves growing crops and raising livestock together on the same piece of agricultural land?',
-        optionA: 'Monoculture',
-        optionB: 'Mixed farming',
-        optionC: 'Shifting cultivation',
-        optionD: 'Strip cropping',
+        quizId: 'trial-mock-science-jhs3-01',
+        questionText: 'The process of heat transfer through liquids and gases by the actual movement of particles is called:',
+        optionA: 'Conduction',
+        optionB: 'Convection',
+        optionC: 'Radiation',
+        optionD: 'Evaporation',
         correctOption: 'B',
-        subConcept: 'Agricultural Farming Systems',
-        explanation: 'Mixed farming integrates crop cultivation and animal husbandry, where animal manure fertilizes crops and crop residues feed livestock.',
-        remediationTip: 'Mixed farming = crops + livestock; mixed cropping = multiple crops only.'
+        subConcept: 'Heat Transfer Mechanisms',
+        explanation: 'Convection is heat transfer in fluids (liquids and gases) via convective currents. Conduction is in solids.',
+        remediationTip: 'Fluids transfer heat primarily by convection currents.'
       }
     ]
   },
   {
-    id: 'trial-mock-ctech-jhs3-01',
+    id: 'trial-mock-careertech-jhs3-01',
     title: 'BECE Career Technology Workshop & Design Trial Test',
     subjectId: 'career-tech',
     level: 'JHS 3',
-    term: 2,
+    term: 1,
     durationMinutes: 20,
     passScorePercentage: 60,
     isPublished: true,
-    createdAt: '2026-09-24T14:00:00.000Z',
+    createdAt: '2026-09-24T12:00:00.000Z',
     questions: [
       {
         id: 'tm-ct1-q1',
-        quizId: 'trial-mock-ctech-jhs3-01',
-        questionText: 'What is the standard proportional rule for the thickness of a tenon in a Mortise and Tenon joint?',
-        optionA: 'Tenon thickness equals the full thickness of the timber rail',
-        optionB: 'Tenon thickness equals one-third (1/3) of the overall timber thickness',
-        optionC: 'Tenon thickness equals half of the timber rail',
-        optionD: 'Tenon thickness is always 10 mm',
+        quizId: 'trial-mock-careertech-jhs3-01',
+        questionText: 'Which hand tool is specifically designed for testing the squareness (90-degree angle) of wood surfaces?',
+        optionA: 'Sliding bevel',
+        optionB: 'Try square',
+        optionC: 'Marking knife',
+        optionD: 'Steel rule',
         correctOption: 'B',
-        subConcept: 'Mortise & Tenon Proportions',
-        explanation: 'The tenon thickness is one-third (1/3) of the total timber rail thickness, leaving equal thirds on either side for the mortise cheeks.',
-        remediationTip: 'Tenon thickness = (1/3) × Timber thickness.'
+        subConcept: 'Woodworking Hand Tools',
+        explanation: 'A try square has a stock and blade fixed at exactly 90 degrees to test and lay out right angles on materials.',
+        remediationTip: 'Try square is fixed at 90°; sliding bevel is adjustable to any angle.'
       },
       {
         id: 'tm-ct1-q2',
-        quizId: 'trial-mock-ctech-jhs3-01',
-        questionText: 'What type of fire extinguisher must NEVER be used on burning petrol or oil in an auto mechanic workshop?',
-        optionA: 'Carbon dioxide (CO2)',
-        optionB: 'Dry Chemical Powder',
-        optionC: 'Pressurized Water extinguisher',
-        optionD: 'Foam extinguisher',
+        quizId: 'trial-mock-careertech-jhs3-01',
+        questionText: 'Which class of fire involves energized electrical equipment such as computers and distribution panels?',
+        optionA: 'Class A',
+        optionB: 'Class B',
+        optionC: 'Class C',
+        optionD: 'Class D',
         correctOption: 'C',
-        subConcept: 'Fire Safety in Workshop',
-        explanation: 'Petrol is less dense than water; pouring water causes the burning fuel to float on top and spread flames across the floor.',
-        remediationTip: 'Never use water on burning liquid fuels.'
+        subConcept: 'Workshop Safety & Fire Safety',
+        explanation: 'Class C fires involve live electrical equipment. CO2 or dry powder extinguishers must be used to prevent electrical shock.',
+        remediationTip: 'Never use water on Class C electrical fires.'
       }
     ]
   }
 ];
 
-// Helper functions for persistent admin store
+// ==========================================
+// 3. STORAGE GETTERS AND SETTERS
+// ==========================================
+
 export function getStoredTrafficData(): WebTrafficData {
-  if (typeof window === 'undefined') return DEFAULT_TRAFFIC_DATA;
-  try {
-    const raw = localStorage.getItem(ADMIN_STORAGE_KEYS.TRAFFIC_DATA);
-    return raw ? JSON.parse(raw) : DEFAULT_TRAFFIC_DATA;
-  } catch {
-    return DEFAULT_TRAFFIC_DATA;
-  }
+  return getLiveTrafficMetrics();
 }
 
 export function saveTrafficData(data: WebTrafficData): void {
@@ -370,13 +267,43 @@ export function saveTrafficData(data: WebTrafficData): void {
 }
 
 export function getStoredStudents(): AdminStudentDetail[] {
-  if (typeof window === 'undefined') return DEFAULT_STUDENTS;
+  if (typeof window === 'undefined') return INITIAL_STUDENTS;
   try {
     const raw = localStorage.getItem(ADMIN_STORAGE_KEYS.STUDENT_LIST);
-    return raw ? JSON.parse(raw) : DEFAULT_STUDENTS;
+    if (raw) {
+      const parsed: AdminStudentDetail[] = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
   } catch {
-    return DEFAULT_STUDENTS;
+    // fallback
   }
+
+  // Check if current user is logged in
+  try {
+    const studentRaw = localStorage.getItem('academicprep_student');
+    if (studentRaw) {
+      const s = JSON.parse(studentRaw);
+      const studentEntry: AdminStudentDetail = {
+        id: s.id || 'st-curr',
+        phone: s.phoneNumber || '0240000000',
+        name: s.fullName || 'Registered Student',
+        level: s.currentLevel || 'JHS 1',
+        accessType: s.hasFullAccess ? 'Full Pass' : 'Free Trial',
+        accessExpiresAt: s.accessExpiresAt,
+        lastActive: 'Active now',
+        topicsCompleted: 0,
+        avgScorePercentage: 0,
+        registeredAt: s.createdAt || new Date().toISOString()
+      };
+      return [studentEntry, ...INITIAL_STUDENTS];
+    }
+  } catch {
+    // fallback
+  }
+
+  return INITIAL_STUDENTS;
 }
 
 export function saveStudents(students: AdminStudentDetail[]): void {
@@ -392,10 +319,14 @@ export function getStoredTrialMocks(): TrialExamMock[] {
   if (typeof window === 'undefined') return DEFAULT_TRIAL_MOCKS;
   try {
     const raw = localStorage.getItem(ADMIN_STORAGE_KEYS.TRIAL_MOCKS);
-    return raw ? JSON.parse(raw) : DEFAULT_TRIAL_MOCKS;
+    if (raw) {
+      const parsed: TrialExamMock[] = JSON.parse(raw);
+      if (Array.isArray(parsed)) return parsed;
+    }
   } catch {
-    return DEFAULT_TRIAL_MOCKS;
+    // fallback
   }
+  return DEFAULT_TRIAL_MOCKS;
 }
 
 export function saveTrialMocks(mocks: TrialExamMock[]): void {

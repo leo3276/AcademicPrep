@@ -122,7 +122,7 @@ export default function AdminDashboardPage() {
     setTrafficData(getStoredTrafficData());
     setStudents(getStoredStudents());
     setTrialMocks(getStoredTrialMocks());
-  }, []);
+  }, [activeTab]);
 
   if (!mounted) {
     return (
@@ -221,7 +221,10 @@ export default function AdminDashboardPage() {
   const activePaidStudentsCount = students.filter(s => s.accessType === 'Full Pass').length;
   const freeTrialStudentsCount = students.filter(s => s.accessType === 'Free Trial').length;
   const expiredStudentsCount = students.filter(s => s.accessType === 'Expired').length;
-  const totalCompletedTopicsSum = students.reduce((acc, s) => acc + s.topicsCompleted, 0) + 14290;
+  const totalCompletedTopicsSum = students.reduce((acc, s) => acc + s.topicsCompleted, 0);
+  const overallAvgScore = students.length > 0
+    ? Math.round(students.reduce((acc, s) => acc + (s.avgScorePercentage || 0), 0) / students.length)
+    : 0;
 
   // Student Access Controls
   const handleGrantAccess = (targetStudent: AdminStudentDetail | null, phoneOverride?: string, nameOverride?: string) => {
@@ -762,8 +765,8 @@ export default function AdminDashboardPage() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               <div className="bg-white border border-slate-200/80 p-3.5 rounded-xl shadow-sm">
                 <span className="text-[11px] text-slate-500 font-medium">Total Registered</span>
-                <span className="text-xl font-semibold text-slate-900 mt-0.5 block font-mono">8,250</span>
-                <span className="text-[10px] text-slate-400">8,000+ WhatsApp base</span>
+                <span className="text-xl font-semibold text-slate-900 mt-0.5 block font-mono">{students.length}</span>
+                <span className="text-[10px] text-slate-400">Registered student directory</span>
               </div>
 
               <div className="bg-white border border-slate-200/80 p-3.5 rounded-xl shadow-sm">

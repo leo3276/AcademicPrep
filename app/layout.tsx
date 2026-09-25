@@ -4,6 +4,7 @@ import './globals.css';
 import { AuthProvider } from '@/lib/authContext';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import TrafficTracker from '@/components/TrafficTracker';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -32,6 +33,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <AuthProvider>
+          <TrafficTracker />
           <Navbar />
           <main className="flex-1">
             {children}

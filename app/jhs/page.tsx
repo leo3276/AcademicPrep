@@ -20,14 +20,18 @@ import {
   CheckCircle2, 
   KeyRound,
   Trophy,
-  GraduationCap
+  GraduationCap,
+  FileCheck,
+  FileText
 } from 'lucide-react';
 import SubjectIcon from '@/components/SubjectIcon';
+import { getStoredTrialMocks } from '@/lib/adminStore';
 
 export default function JhsPortalPage() {
   const { student, topicProgress } = useAuth();
   const [selectedLevel, setSelectedLevel] = useState<EducationLevel>('JHS 1');
   const [mounted, setMounted] = useState(false);
+  const [uploadedMocksCount, setUploadedMocksCount] = useState(0);
 
   useEffect(() => {
     setMounted(true);
@@ -45,6 +49,9 @@ export default function JhsPortalPage() {
       } else if (student?.currentLevel && validLevels.includes(student.currentLevel)) {
         setSelectedLevel(student.currentLevel);
       }
+
+      const publishedMocks = getStoredTrialMocks().filter(m => m.isPublished);
+      setUploadedMocksCount(publishedMocks.length);
     }
   }, [student]);
 
@@ -142,35 +149,83 @@ export default function JhsPortalPage() {
           )}
         </div>
 
-        {/* Dynamic Weekly Exam & Trial Mocks Card */}
-        <div className="md:col-span-2 p-6 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* BECE Past Questions Card */}
+        <div className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-blue-400 shadow-sm transition space-y-3 flex flex-col justify-between">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-bold uppercase tracking-wider">
-              <Sparkles className="w-3 h-3" />
-              Dynamic Test & Trial Mock Engine
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full">
+                WAEC Official
+              </span>
+              <span className="text-[11px] font-mono text-slate-500">2020 - 2024</span>
             </div>
-            <h3 className="text-lg sm:text-xl font-bold">Smart Weekly Exam & Trial Diagnostic Mocks</h3>
-            <p className="text-xs text-amber-50 max-w-lg leading-relaxed">
-              Take timed adaptive CBT examinations tailored to your completed topics, or sit for official standardized trial mock tests uploaded by GES curriculum coordinators.
+            <h3 className="text-base font-bold text-slate-900 flex items-center gap-1.5">
+              <BookOpen className="w-4 h-4 text-blue-600" />
+              BECE Past Questions
+            </h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Section A multiple choice CBT simulation & Section B theory with step-by-step marking rubrics.
             </p>
           </div>
-
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto shrink-0">
-            <Link
-              href="/jhs/weekly-exam?mode=trial"
-              className="px-4 py-3 rounded-xl bg-amber-950/40 hover:bg-amber-950/60 text-white font-bold text-xs transition-colors border border-white/20 flex items-center justify-center gap-1.5 whitespace-nowrap"
-            >
-              <span>Trial Mocks</span>
-            </Link>
-            <Link
-              href="/jhs/weekly-exam"
-              className="px-5 py-3 rounded-xl bg-white hover:bg-amber-50 text-amber-900 font-bold text-xs transition-colors shadow-sm flex items-center justify-center gap-2 whitespace-nowrap"
-            >
-              <span>Start Exam</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
+          <Link
+            href="/jhs/bece-past-questions"
+            className="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs"
+          >
+            <BookOpen className="w-3.5 h-3.5" />
+            <span>Open BECE Past Questions</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
         </div>
+
+        {/* Trial Questions Card (Uploaded by Admin) */}
+        <div className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-emerald-400 shadow-sm transition space-y-3 flex flex-col justify-between">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
+                Live Admin Uploads
+              </span>
+              <span className="text-[11px] font-mono text-slate-500 font-semibold">
+                {uploadedMocksCount} Available
+              </span>
+            </div>
+            <h3 className="text-base font-bold text-slate-900 flex items-center gap-1.5">
+              <FileCheck className="w-4 h-4 text-emerald-600" />
+              Trial Questions & Mocks
+            </h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Official diagnostic trial mock exams uploaded directly by your administrator with timed scoring and explanations.
+            </p>
+          </div>
+          <Link
+            href="/jhs/trial-questions"
+            className="w-full py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs"
+          >
+            <FileCheck className="w-3.5 h-3.5" />
+            <span>Open Trial Questions</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+      </div>
+
+      {/* Adaptive Weekly Exam Banner */}
+      <div className="p-5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="space-y-1">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-bold uppercase tracking-wider">
+            <Sparkles className="w-3 h-3" />
+            Curriculum Adaptive Engine
+          </div>
+          <h3 className="text-base sm:text-lg font-bold">Personalized Weekly Revision Exam</h3>
+          <p className="text-xs text-amber-50 max-w-xl leading-relaxed">
+            Generates a timed CBT examination based solely on the topics you have completed in {selectedLevel}.
+          </p>
+        </div>
+
+        <Link
+          href="/jhs/weekly-exam"
+          className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white hover:bg-amber-50 text-amber-900 font-bold text-xs shrink-0 transition-colors shadow-sm flex items-center justify-center gap-2 whitespace-nowrap"
+        >
+          <span>Start Weekly Exam</span>
+          <ArrowRight className="w-4 h-4" />
+        </Link>
       </div>
 
       {/* Core Subjects Grid */}
