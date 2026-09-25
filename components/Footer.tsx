@@ -74,6 +74,10 @@ export default function Footer() {
         <div className="pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-400">
           <p>© {new Date().getFullYear()} AcademicPrep (academicprep.com). All rights reserved.</p>
           <div className="flex items-center gap-4">
+            <Link href="/admin" className="text-slate-400 hover:text-white transition-colors">
+              Admin Portal
+            </Link>
+            <span>•</span>
             <span className="text-slate-300">Powered by Next.js & Supabase</span>
             <span>•</span>
             <span className="text-emerald-400 font-bold">99.9% Uptime High-Concurrency Engine</span>

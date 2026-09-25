@@ -142,26 +142,34 @@ export default function JhsPortalPage() {
           )}
         </div>
 
-        {/* Dynamic Weekly Exam Card */}
+        {/* Dynamic Weekly Exam & Trial Mocks Card */}
         <div className="md:col-span-2 p-6 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-bold uppercase tracking-wider">
               <Sparkles className="w-3 h-3" />
-              Dynamic Test Engine
+              Dynamic Test & Trial Mock Engine
             </div>
-            <h3 className="text-lg sm:text-xl font-bold">Smart Weekly Examination</h3>
+            <h3 className="text-lg sm:text-xl font-bold">Smart Weekly Exam & Trial Diagnostic Mocks</h3>
             <p className="text-xs text-amber-50 max-w-lg leading-relaxed">
-              Generates a timed CBT examination based solely on the topics you have completed in {selectedLevel}. As you study more topics, your weekly exam adapts automatically.
+              Take timed adaptive CBT examinations tailored to your completed topics, or sit for official standardized trial mock tests uploaded by GES curriculum coordinators.
             </p>
           </div>
 
-          <Link
-            href="/jhs/weekly-exam"
-            className="w-full sm:w-auto px-5 py-3 rounded-xl bg-white hover:bg-amber-50 text-amber-900 font-bold text-xs shrink-0 transition-colors shadow-sm flex items-center justify-center gap-2"
-          >
-            <span>Start Weekly Exam</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto shrink-0">
+            <Link
+              href="/jhs/weekly-exam?mode=trial"
+              className="px-4 py-3 rounded-xl bg-amber-950/40 hover:bg-amber-950/60 text-white font-bold text-xs transition-colors border border-white/20 flex items-center justify-center gap-1.5 whitespace-nowrap"
+            >
+              <span>Trial Mocks</span>
+            </Link>
+            <Link
+              href="/jhs/weekly-exam"
+              className="px-5 py-3 rounded-xl bg-white hover:bg-amber-50 text-amber-900 font-bold text-xs transition-colors shadow-sm flex items-center justify-center gap-2 whitespace-nowrap"
+            >
+              <span>Start Exam</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
       </div>
 

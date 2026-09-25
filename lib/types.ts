@@ -170,3 +170,42 @@ export interface AdminMetrics {
   totalQuizzesTaken: number;
   averageExamScore: number;
 }
+
+export interface WebTrafficData {
+  dailyVisitors: number;
+  monthlyVisitors: number;
+  totalPageViews: number;
+  activeSessions: number;
+  bounceRatePercentage: number;
+  avgSessionDurationMinutes: number;
+  deviceShare: { mobile: number; desktop: number; tablet: number };
+  regionalVisits: { region: string; visits: number; percentage: number }[];
+  subjectTraffic: { subjectId: string; subjectName: string; views: number }[];
+  dailyTrend: { date: string; visitors: number; pageViews: number; quizAttempts: number }[];
+}
+
+export interface AdminStudentDetail {
+  id: string;
+  phone: string;
+  name: string;
+  level: EducationLevel;
+  accessType: 'Full Pass' | 'Free Trial' | 'Expired';
+  accessExpiresAt?: string;
+  lastActive: string;
+  topicsCompleted: number;
+  avgScorePercentage: number;
+  registeredAt: string;
+}
+
+export interface TrialExamMock {
+  id: string;
+  title: string;
+  subjectId: string;
+  level: EducationLevel;
+  term: 1 | 2 | 3;
+  durationMinutes: number;
+  passScorePercentage: number;
+  questions: QuizQuestion[];
+  isPublished: boolean;
+  createdAt: string;
+}
