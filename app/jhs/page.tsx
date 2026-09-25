@@ -156,11 +156,11 @@ export default function JhsPortalPage() {
               <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full">
                 WAEC Official
               </span>
-              <span className="text-[11px] font-mono text-slate-500">2020 - 2024</span>
+              <span className="text-[11px] font-mono text-slate-500 font-semibold">2008 - 2026 (19 Years)</span>
             </div>
             <h3 className="text-base font-bold text-slate-900 flex items-center gap-1.5">
               <BookOpen className="w-4 h-4 text-blue-600" />
-              BECE Past Questions
+              BECE Past Questions Archive
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed">
               Section A multiple choice CBT simulation & Section B theory with step-by-step marking rubrics.

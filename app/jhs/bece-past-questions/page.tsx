@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { 
   BECE_PAPERS_CATALOG, 
   BECE_PAST_QUESTIONS, 
   BECEPastQuestion,
-  getAllBeceYears 
+  getAllBeceYears,
+  getBecePaperMeta
 } from '@/lib/becePastQuestionsData';
 import { CURRICULUM_SUBJECTS } from '@/lib/curriculumData';
 import { 
@@ -21,7 +22,11 @@ import {
   Check, 
   RotateCcw,
   Flag,
-  ArrowRight
+  ArrowRight,
+  Search,
+  Calendar,
+  Layers,
+  ChevronRight
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -30,6 +35,7 @@ export default function BecePastQuestionsPage() {
   const [selectedYear, setSelectedYear] = useState(2024);
   const [selectedPaper, setSelectedPaper] = useState<1 | 2>(1);
   const [practiceMode, setPracticeMode] = useState<'study' | 'timed_cbt'>('study');
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Timed CBT State
   const [cbtStarted, setCbtStarted] = useState(false);
@@ -41,20 +47,40 @@ export default function BecePastQuestionsPage() {
 
   const availableYears = getAllBeceYears();
 
-  // Filter questions by subject and year and paper
-  const questions = BECE_PAST_QUESTIONS.filter(
-    (q) => q.subjectId === selectedSubject && q.year === selectedYear && q.paper === selectedPaper
-  );
+  // Filter questions by subject, year, and paper
+  const rawQuestions = useMemo(() => {
+    return BECE_PAST_QUESTIONS.filter(
+      (q) => q.subjectId === selectedSubject && q.year === selectedYear && q.paper === selectedPaper
+    );
+  }, [selectedSubject, selectedYear, selectedPaper]);
+
+  // Apply search query in study mode
+  const questions = useMemo(() => {
+    if (!searchQuery.trim() || (selectedPaper === 1 && cbtStarted)) {
+      return rawQuestions;
+    }
+    const q = searchQuery.toLowerCase();
+    return rawQuestions.filter(
+      (item) =>
+        item.questionText.toLowerCase().includes(q) ||
+        item.subConcept.toLowerCase().includes(q) ||
+        (item.explanation && item.explanation.toLowerCase().includes(q))
+    );
+  }, [rawQuestions, searchQuery, selectedPaper, cbtStarted]);
 
   const subjectMeta = CURRICULUM_SUBJECTS.find((s) => s.id === selectedSubject);
-  const paperMeta = BECE_PAPERS_CATALOG.find((p) => p.subjectId === selectedSubject && p.year === selectedYear);
+  const paperMeta = getBecePaperMeta(selectedYear, selectedSubject) || 
+    BECE_PAPERS_CATALOG.find((p) => p.subjectId === selectedSubject && p.year === selectedYear);
+
+  const isCcp = selectedYear >= 2024;
 
   const startCbt = () => {
     setSelectedAnswers({});
     setFlagged({});
     setIsSubmitted(false);
     setCurrentIdx(0);
-    setTimeLeft(45 * 60);
+    const durationMins = paperMeta?.paper1DurationMinutes || 45;
+    setTimeLeft(durationMins * 60);
     setCbtStarted(true);
   };
 
@@ -108,30 +134,53 @@ export default function BecePastQuestionsPage() {
           className="text-xs font-semibold text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to JHS Portal</span>
+          <span>Back to JHS Hub</span>
         </Link>
-        <span className="text-xs font-mono font-semibold text-slate-700 bg-white px-3 py-1 rounded-full border border-slate-200 shadow-2xs">
-          WAEC / BECE Archive
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="text-[11px] font-mono font-medium text-slate-500">
+            19 Exam Cohorts (2008 – 2026)
+          </span>
+          <span className="text-xs font-mono font-semibold text-slate-800 bg-white px-2.5 py-1 rounded-full border border-slate-200 shadow-2xs">
+            WAEC BECE Archive
+          </span>
+        </div>
       </div>
 
       {/* Header Banner */}
-      <div className="bg-white border border-slate-200/80 rounded-2xl p-6 sm:p-8 shadow-sm space-y-3">
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
-          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-            Official WAEC Past Examination Papers
-          </span>
+      <div className="bg-white border border-slate-200/80 rounded-2xl p-6 sm:p-8 shadow-sm space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              Authentic WAEC BECE Archive (2008 – 2026)
+            </span>
+          </div>
+
+          {/* Syllabus Era Indicator Badge */}
+          {isCcp ? (
+            <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-800 border border-emerald-200/80 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+              <span>New Common Core Programme (CCP)</span>
+            </span>
+          ) : (
+            <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+              <span>Standard GES JHS Syllabus</span>
+            </span>
+          )}
         </div>
-        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
-          BECE Past Questions & Marking Schemes
-        </h1>
-        <p className="text-xs text-slate-600 max-w-2xl leading-relaxed">
-          Practice authentic past BECE questions from 2020 to 2024. Review Section A Multiple Choice with instant CBT scoring and Section B Theory questions with official step-by-step marking rubrics.
-        </p>
+
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+            BECE Past Questions & Official Marking Schemes
+          </h1>
+          <p className="text-xs text-slate-600 max-w-2xl leading-relaxed mt-1">
+            Browse and practice official WAEC examinations from 2008 through 2026. Test Paper 1 (Objectives) in Timed CBT or Study Mode with complete rationales, and review Paper 2 (Theory) with official WAEC mark allocations ($B1, M1, A1$).
+          </p>
+        </div>
 
         {/* Filters Strip */}
-        <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center gap-4">
+        <div className="pt-4 border-t border-slate-100 space-y-3">
           {/* Subject Filter */}
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full">
             {['math', 'science', 'english', 'social', 'ict'].map((subId) => {
@@ -152,54 +201,100 @@ export default function BecePastQuestionsPage() {
             })}
           </div>
 
-          <div className="h-4 w-px bg-slate-200 hidden sm:block"></div>
+          {/* Year Selector Carousel / Pill Row */}
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold text-slate-700 flex items-center gap-1">
+                <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                <span>Exam Year:</span>
+              </span>
 
-          {/* Year Filter */}
-          <div className="flex items-center gap-1">
-            {availableYears.map((yr) => (
+              {/* Quick Select Dropdown */}
+              <select
+                value={selectedYear}
+                onChange={(e) => { setSelectedYear(Number(e.target.value)); setCbtStarted(false); }}
+                className="text-xs font-mono font-semibold bg-white border border-slate-200 rounded-lg px-2.5 py-1 text-slate-800 focus:outline-none focus:ring-1 focus:ring-slate-900"
+              >
+                {availableYears.map((yr) => (
+                  <option key={yr} value={yr}>
+                    BECE {yr} {yr >= 2024 ? '(CCP)' : ''}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Paper 1 vs Paper 2 Selector */}
+            <div className="flex items-center bg-slate-100 p-0.5 rounded-lg text-xs font-medium">
               <button
-                key={yr}
-                onClick={() => { setSelectedYear(yr); setCbtStarted(false); }}
-                className={`px-2.5 py-1 rounded-md text-xs font-medium font-mono transition ${
-                  selectedYear === yr
-                    ? 'bg-blue-600 text-white shadow-2xs'
-                    : 'text-slate-600 hover:bg-slate-100'
+                onClick={() => { setSelectedPaper(1); setCbtStarted(false); }}
+                className={`px-3 py-1 rounded-md transition ${
+                  selectedPaper === 1 ? 'bg-white text-slate-900 shadow-2xs font-semibold' : 'text-slate-600'
                 }`}
               >
-                {yr}
+                Paper 1 (Objectives CBT)
               </button>
-            ))}
+              <button
+                onClick={() => { setSelectedPaper(2); setCbtStarted(false); }}
+                className={`px-3 py-1 rounded-md transition ${
+                  selectedPaper === 2 ? 'bg-white text-slate-900 shadow-2xs font-semibold' : 'text-slate-600'
+                }`}
+              >
+                Paper 2 (Theory & Rubrics)
+              </button>
+            </div>
           </div>
 
-          <div className="h-4 w-px bg-slate-200 hidden sm:block"></div>
-
-          {/* Paper Selector */}
-          <div className="flex items-center bg-slate-100 p-0.5 rounded-lg text-xs font-medium">
-            <button
-              onClick={() => { setSelectedPaper(1); setCbtStarted(false); }}
-              className={`px-3 py-1 rounded-md transition ${
-                selectedPaper === 1 ? 'bg-white text-slate-900 shadow-2xs font-semibold' : 'text-slate-600'
-              }`}
-            >
-              Paper 1 (Objectives)
-            </button>
-            <button
-              onClick={() => { setSelectedPaper(2); setCbtStarted(false); }}
-              className={`px-3 py-1 rounded-md transition ${
-                selectedPaper === 2 ? 'bg-white text-slate-900 shadow-2xs font-semibold' : 'text-slate-600'
-              }`}
-            >
-              Paper 2 (Theory)
-            </button>
+          {/* 19-Year Horizontal Scrollable Pill List */}
+          <div className="overflow-x-auto pb-1.5 pt-1 -mx-2 px-2 scrollbar-thin">
+            <div className="flex items-center gap-1 min-w-max">
+              {availableYears.map((yr) => {
+                const isSelected = selectedYear === yr;
+                const isPrediction = yr >= 2025;
+                return (
+                  <button
+                    key={yr}
+                    onClick={() => { setSelectedYear(yr); setCbtStarted(false); }}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition ${
+                      isSelected
+                        ? 'bg-blue-600 text-white shadow-2xs font-bold'
+                        : isPrediction
+                        ? 'bg-emerald-50 text-emerald-800 border border-emerald-200/60 hover:bg-emerald-100'
+                        : 'bg-slate-100/80 text-slate-600 hover:bg-slate-200/70'
+                    }`}
+                  >
+                    {yr}
+                    {isPrediction && <span className="ml-1 text-[10px] opacity-80">★</span>}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Mode Choice for Paper 1 */}
-      {selectedPaper === 1 && !cbtStarted && (
-        <div className="flex items-center justify-between bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
+      {/* Search & Paper Meta Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
+        <div className="flex items-center gap-3">
+          <div className="relative min-w-[220px]">
+            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              placeholder="Filter topics or questions..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-slate-900"
+            />
+          </div>
+
+          <span className="text-xs text-slate-500 hidden sm:inline">
+            Showing <strong className="text-slate-800">{questions.length}</strong> questions for{' '}
+            <strong className="text-slate-900">BECE {selectedYear} {subjectMeta?.name}</strong>
+          </span>
+        </div>
+
+        {selectedPaper === 1 && !cbtStarted && (
           <div className="flex items-center gap-2">
-            <span className="text-xs font-medium text-slate-700">Practice Mode:</span>
+            <span className="text-xs font-medium text-slate-600">Mode:</span>
             <div className="flex items-center bg-slate-100 p-0.5 rounded-lg text-xs">
               <button
                 onClick={() => setPracticeMode('study')}
@@ -207,7 +302,7 @@ export default function BecePastQuestionsPage() {
                   practiceMode === 'study' ? 'bg-white text-slate-900 font-semibold shadow-2xs' : 'text-slate-600'
                 }`}
               >
-                Study Mode (View Answers)
+                Study Mode
               </button>
               <button
                 onClick={() => setPracticeMode('timed_cbt')}
@@ -215,22 +310,22 @@ export default function BecePastQuestionsPage() {
                   practiceMode === 'timed_cbt' ? 'bg-white text-slate-900 font-semibold shadow-2xs' : 'text-slate-600'
                 }`}
               >
-                Timed CBT Simulation
+                Timed CBT
               </button>
             </div>
-          </div>
 
-          {practiceMode === 'timed_cbt' && (
-            <button
-              onClick={startCbt}
-              className="px-4 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-medium transition flex items-center gap-1.5 shadow-sm"
-            >
-              <span>Begin Timed CBT</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          )}
-        </div>
-      )}
+            {practiceMode === 'timed_cbt' && (
+              <button
+                onClick={startCbt}
+                className="px-4 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-medium transition flex items-center gap-1.5 shadow-sm"
+              >
+                <span>Start CBT</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+        )}
+      </div>
 
       {/* PAPER 1: TIMED CBT ACTIVE SIMULATION */}
       {selectedPaper === 1 && cbtStarted && !isSubmitted && currentQ && (
@@ -303,200 +398,140 @@ export default function BecePastQuestionsPage() {
 
           {/* Options */}
           {currentQ.options && (
-            <div className="space-y-2.5">
-              {(['A', 'B', 'C', 'D'] as const).map((optKey) => {
-                const optText = currentQ.options![optKey];
-                const isSelected = selectedAnswers[currentQ.id] === optKey;
-
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {(['A', 'B', 'C', 'D'] as const).map((opt) => {
+                const isSelected = selectedAnswers[currentQ.id] === opt;
                 return (
                   <button
-                    key={optKey}
-                    type="button"
-                    onClick={() => handleSelectOption(currentQ.id, optKey)}
-                    className={`w-full p-3.5 rounded-xl border text-left text-xs font-medium transition-all flex items-center gap-3 ${
+                    key={opt}
+                    onClick={() => handleSelectOption(currentQ.id, opt)}
+                    className={`p-4 rounded-xl text-left border transition flex items-center justify-between text-xs sm:text-sm ${
                       isSelected
-                        ? 'border-slate-900 bg-slate-50 text-slate-900 ring-1 ring-slate-900 shadow-2xs'
-                        : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
+                        ? 'border-blue-600 bg-blue-50/50 text-blue-900 font-semibold ring-1 ring-blue-600'
+                        : 'border-slate-200 hover:border-slate-300 bg-white text-slate-700'
                     }`}
                   >
-                    <span
-                      className={`w-6 h-6 rounded flex items-center justify-center text-xs font-bold shrink-0 ${
-                        isSelected ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600'
-                      }`}
-                    >
-                      {optKey}
+                    <span>
+                      <strong className="mr-2 font-mono text-slate-900">{opt}.</strong>
+                      {currentQ.options![opt]}
                     </span>
-                    <span className="flex-1">{optText}</span>
+                    {isSelected && (
+                      <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0 ml-2" />
+                    )}
                   </button>
                 );
               })}
             </div>
           )}
 
-          {/* Bottom Bar */}
+          {/* Bottom Actions */}
           <div className="flex items-center justify-between pt-4 border-t border-slate-100">
             <button
-              type="button"
+              onClick={() => setCurrentIdx((prev) => Math.max(0, prev - 1))}
               disabled={currentIdx === 0}
-              onClick={() => setCurrentIdx((i) => Math.max(0, i - 1))}
-              className="py-2 px-3.5 rounded-lg border border-slate-200 text-xs font-medium text-slate-600 disabled:opacity-40 hover:bg-slate-50"
+              className="px-4 py-2 border border-slate-200 text-slate-700 rounded-lg text-xs font-medium hover:bg-slate-50 disabled:opacity-40"
             >
               Previous
             </button>
 
-            {currentIdx < questions.length - 1 ? (
-              <button
-                type="button"
-                onClick={() => setCurrentIdx((i) => Math.min(questions.length - 1, i + 1))}
-                className="py-2 px-4 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-2xs"
-              >
-                Next Question
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={handleSubmit}
-                className="py-2 px-4 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold shadow-2xs flex items-center gap-1.5"
-              >
-                <CheckCircle2 className="w-4 h-4" />
-                <span>Submit CBT Paper</span>
-              </button>
-            )}
+            <div className="flex items-center gap-2">
+              {currentIdx < questions.length - 1 ? (
+                <button
+                  onClick={() => setCurrentIdx((prev) => Math.min(questions.length - 1, prev + 1))}
+                  className="px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-medium transition"
+                >
+                  Next Question
+                </button>
+              ) : (
+                <button
+                  onClick={handleSubmit}
+                  className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-sm transition"
+                >
+                  Submit Exam
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}
 
-      {/* PAPER 1: CBT RESULT SCREEN */}
+      {/* PAPER 1: CBT SCORE REPORT */}
       {selectedPaper === 1 && cbtStarted && isSubmitted && (
         <div className="bg-white border border-slate-200/80 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
-          <div
-            className={`p-6 rounded-2xl text-center space-y-2 ${
-              percentage >= 60
-                ? 'bg-emerald-50 border border-emerald-200 text-emerald-950'
-                : 'bg-amber-50 border border-amber-200 text-amber-950'
-            }`}
-          >
-            <h3 className="text-xl font-bold">
-              {percentage >= 60 ? 'BECE CBT Exam Passed!' : 'Exam Completed'}
-            </h3>
-            <p className="text-xs">
-              Score: <b>{correct}</b> / <b>{total}</b> Correct (<b>{percentage}%</b>)
-            </p>
-            <p className="text-[11px] text-slate-600 max-w-md mx-auto">
-              Review your question breakdown and step-by-step solutions below.
+          <div className="text-center space-y-2 py-4 border-b border-slate-100">
+            <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
+              percentage >= 60 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200'
+            }`}>
+              {percentage >= 60 ? 'Pass - Standard Attained' : 'Review & Practice Recommended'}
+            </span>
+            <h2 className="text-3xl font-extrabold text-slate-900">{percentage}%</h2>
+            <p className="text-xs text-slate-500">
+              You answered <strong>{correct}</strong> out of <strong>{total}</strong> questions correctly for BECE {selectedYear} ({subjectMeta?.name}).
             </p>
           </div>
 
-          <div className="space-y-4 pt-4 border-t border-slate-100">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-              Exam Solutions & Explanations
-            </h4>
-
-            {questions.map((q, idx) => {
-              const userChoice = selectedAnswers[q.id];
-              const isCorrect = userChoice === q.correctOption;
-
-              return (
-                <div
-                  key={q.id}
-                  className={`p-4 rounded-xl border text-xs space-y-2.5 ${
-                    isCorrect ? 'border-emerald-200 bg-emerald-50/20' : 'border-red-200 bg-red-50/20'
-                  }`}
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <span className="font-semibold text-slate-800">
-                      {idx + 1}. {q.questionText}
-                    </span>
-                    <span
-                      className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${
-                        isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'
-                      }`}
-                    >
-                      {isCorrect ? 'Correct' : `Chose ${userChoice || 'None'}`}
-                    </span>
-                  </div>
-
-                  {q.options && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-slate-600">
-                      <div className={q.correctOption === 'A' ? 'font-bold text-emerald-800 bg-emerald-50 p-1 rounded' : 'p-1'}>
-                        A: {q.options.A}
-                      </div>
-                      <div className={q.correctOption === 'B' ? 'font-bold text-emerald-800 bg-emerald-50 p-1 rounded' : 'p-1'}>
-                        B: {q.options.B}
-                      </div>
-                      <div className={q.correctOption === 'C' ? 'font-bold text-emerald-800 bg-emerald-50 p-1 rounded' : 'p-1'}>
-                        C: {q.options.C}
-                      </div>
-                      <div className={q.correctOption === 'D' ? 'font-bold text-emerald-800 bg-emerald-50 p-1 rounded' : 'p-1'}>
-                        D: {q.options.D}
-                      </div>
-                    </div>
-                  )}
-
-                  {q.explanation && (
-                    <div className="p-2.5 rounded-lg bg-white border border-slate-200/80 text-[11px] text-slate-700">
-                      <b className="text-slate-900">Solution: </b>
-                      {q.explanation}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="pt-4 border-t border-slate-100 flex items-center gap-3">
+          <div className="flex justify-center gap-3">
             <button
               onClick={startCbt}
-              className="px-4 py-2 bg-slate-900 text-white rounded-lg text-xs font-semibold transition"
+              className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-medium flex items-center gap-1.5 transition"
             >
-              Retake Examination
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Retake Exam</span>
             </button>
             <button
-              onClick={() => setCbtStarted(false)}
-              className="px-4 py-2 border border-slate-200 text-slate-700 rounded-lg text-xs font-medium hover:bg-slate-50 transition"
+              onClick={() => { setCbtStarted(false); setPracticeMode('study'); }}
+              className="px-4 py-2 border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg text-xs font-medium transition"
             >
-              Return to Paper View
+              View Full Solutions
             </button>
           </div>
         </div>
       )}
 
-      {/* PAPER 1: STUDY MODE (BROWSE ALL QUESTIONS) */}
-      {selectedPaper === 1 && !cbtStarted && (
-        <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm space-y-4">
-          <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-            <span className="text-xs font-semibold text-slate-900">
-              BECE {selectedYear} • {subjectMeta?.name} (Paper 1 Questions)
-            </span>
-            <span className="text-xs text-slate-500 font-mono">
+      {/* PAPER 1: STUDY MODE QUESTION LIST */}
+      {selectedPaper === 1 && (!cbtStarted || isSubmitted) && (
+        <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm space-y-6">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div>
+              <h3 className="text-sm font-semibold text-slate-900">
+                BECE {selectedYear} • {subjectMeta?.name} (Paper 1 Objectives)
+              </h3>
+              <p className="text-xs text-slate-500">
+                Study answers, options, and in-depth explanations for every question.
+              </p>
+            </div>
+            <span className="text-xs font-mono font-semibold text-slate-700 bg-slate-100 px-2.5 py-1 rounded">
               {questions.length} Questions
             </span>
           </div>
 
           {questions.length === 0 ? (
             <div className="p-8 text-center text-slate-400 text-xs">
-              No questions found for this subject and year. Try selecting another year or subject.
+              No questions found matching your search.
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-6">
               {questions.map((q, idx) => (
-                <div key={q.id} className="p-4 rounded-xl border border-slate-200/80 space-y-3">
-                  <div className="flex items-start justify-between gap-2">
-                    <span className="font-medium text-xs text-slate-900">
-                      <span className="font-mono text-slate-500 mr-1.5">#{idx + 1}</span>
-                      {q.questionText}
+                <div key={q.id} className="p-5 rounded-xl border border-slate-200/80 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-slate-900">
+                      Question {q.questionNumber || idx + 1}
                     </span>
-                    <span className="text-[10px] font-mono text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
+                    <span className="text-[11px] font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
                       {q.subConcept}
                     </span>
                   </div>
 
+                  <p className="text-xs sm:text-sm font-medium text-slate-800 leading-snug">
+                    {q.questionText}
+                  </p>
+
                   {q.options && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                       {(['A', 'B', 'C', 'D'] as const).map((opt) => (
                         <div
                           key={opt}
-                          className={`p-2 rounded-lg border ${
+                          className={`p-3 rounded-lg border text-xs ${
                             q.correctOption === opt
                               ? 'bg-emerald-50 border-emerald-300 font-semibold text-emerald-800'
                               : 'bg-slate-50/50 border-slate-200 text-slate-700'
