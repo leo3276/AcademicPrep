@@ -26,31 +26,27 @@ import {
   Search, 
   CheckCircle2, 
   Copy, 
-  Sparkles,
-  Lock,
-  ArrowRight,
-  LogOut,
-  Plus,
-  Trash2,
-  Activity,
-  Globe,
-  Smartphone,
-  Monitor,
-  CheckCircle,
-  XCircle,
-  Award,
-  BookOpen,
-  AlertCircle,
-  BarChart3,
-  Eye,
-  Clock,
-  RefreshCw,
-  Filter,
-  UserCheck,
-  UserX,
-  Calendar,
+  Lock, 
+  ArrowRight, 
+  LogOut, 
+  Plus, 
+  Trash2, 
+  Activity, 
+  Globe, 
+  Smartphone, 
+  Monitor, 
+  CheckCircle, 
+  XCircle, 
+  Award, 
+  BookOpen, 
+  BarChart3, 
+  Eye, 
+  Clock, 
+  Filter, 
+  UserCheck, 
+  ExternalLink,
   ChevronRight,
-  ExternalLink
+  FileText
 } from 'lucide-react';
 
 export default function AdminDashboardPage() {
@@ -130,8 +126,8 @@ export default function AdminDashboardPage() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">
-        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-indigo-500"></div>
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center text-slate-500">
+        <div className="animate-spin rounded-full h-8 w-8 border-2 border-slate-300 border-t-slate-800"></div>
       </div>
     );
   }
@@ -148,62 +144,68 @@ export default function AdminDashboardPage() {
     }
   };
 
+  // Minimal, elegant login screen
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 flex items-center justify-center p-4">
-        <div className="w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-8 backdrop-blur-xl shadow-2xl">
-          <div className="text-center mb-8">
-            <div className="inline-flex p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 mb-4 shadow-inner">
-              <ShieldCheck className="w-10 h-10" />
-            </div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">AcademicPrep Executive Portal</h1>
-            <p className="text-sm text-slate-400 mt-2">Enter authorized executive passcode to access full platform controls.</p>
+      <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
+          <div className="w-12 h-12 rounded-xl bg-slate-900 text-white flex items-center justify-center mx-auto mb-4 shadow-sm">
+            <Lock className="w-5 h-5" />
           </div>
+          <h2 className="text-xl font-semibold text-slate-900 tracking-tight">
+            AcademicPrep Administration
+          </h2>
+          <p className="mt-1 text-xs text-slate-500">
+            Enter authorized passcode to manage platform operations
+          </p>
+        </div>
 
-          <form onSubmit={handleAdminLogin} className="space-y-5">
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                Administrator Passcode
-              </label>
-              <div className="relative">
+        <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
+          <div className="bg-white py-8 px-6 shadow-sm border border-slate-200/80 rounded-2xl space-y-5">
+            <form onSubmit={handleAdminLogin} className="space-y-4">
+              <div>
+                <label className="block text-xs font-medium text-slate-700 mb-1.5">
+                  Admin Passcode
+                </label>
                 <input
                   type="password"
                   value={passcode}
-                  onChange={(e) => {
-                    setPasscode(e.target.value);
-                    setAuthError(false);
-                  }}
-                  placeholder="Enter 4-digit code"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-center tracking-widest text-lg font-mono"
+                  onChange={(e) => { setPasscode(e.target.value); setAuthError(false); }}
+                  placeholder="••••"
+                  className="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900 transition"
                   autoFocus
                 />
-                <Lock className="w-5 h-5 text-slate-500 absolute right-3 top-3.5" />
+                {authError && (
+                  <p className="text-xs text-rose-600 mt-1.5 font-medium">
+                    Incorrect passcode. Please try again.
+                  </p>
+                )}
               </div>
-              {authError && (
-                <p className="text-xs text-rose-400 mt-2 flex items-center gap-1 font-medium">
-                  <AlertCircle className="w-3.5 h-3.5" /> Invalid passcode. Please check credentials and retry.
-                </p>
-              )}
-            </div>
 
-            <button
-              type="submit"
-              className="w-full py-3.5 px-4 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-semibold rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30"
-            >
-              Access Executive Dashboard <ArrowRight className="w-4 h-4" />
-            </button>
-          </form>
+              <button
+                type="submit"
+                className="w-full py-2.5 px-4 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg shadow-sm transition flex items-center justify-center gap-1.5"
+              >
+                <span>Sign In to Dashboard</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </form>
 
-          <div className="mt-8 pt-6 border-t border-slate-800/80 text-center">
-            <button
-              onClick={() => { setPasscode('9999'); loginAdmin('9999'); }}
-              className="text-xs text-slate-400 hover:text-indigo-400 transition"
-            >
-              Default Passcode: <span className="font-mono text-indigo-300 font-bold bg-slate-800/60 px-2 py-0.5 rounded">9999</span> (Click to quick-fill)
-            </button>
-            <div className="mt-4">
-              <Link href="/jhs" className="text-xs text-slate-400 hover:text-white flex items-center justify-center gap-1">
-                Return to Student Learning Portal <ExternalLink className="w-3 h-3" />
+            <div className="pt-4 border-t border-slate-100 flex flex-col items-center gap-3">
+              <button
+                type="button"
+                onClick={() => { setPasscode('9999'); loginAdmin('9999'); }}
+                className="text-[11px] text-slate-500 hover:text-slate-800 transition"
+              >
+                Default Passcode: <span className="font-mono font-semibold text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">9999</span> (Click to auto-fill)
+              </button>
+
+              <Link
+                href="/jhs"
+                className="text-[11px] text-slate-500 hover:text-slate-800 flex items-center gap-1 transition"
+              >
+                <span>Back to Student Portal</span>
+                <ExternalLink className="w-3 h-3" />
               </Link>
             </div>
           </div>
@@ -320,27 +322,23 @@ export default function AdminDashboardPage() {
     if (!mockTitle.trim()) return;
 
     const newMock: TrialExamMock = {
-      id: `trial-mock-${mockSubject}-${Date.now()}`,
+      id: `trial-mock-${Date.now()}`,
       title: mockTitle.trim(),
       subjectId: mockSubject,
       level: mockLevel,
       term: mockTerm,
-      durationMinutes: Number(mockDuration),
-      passScorePercentage: Number(mockPassScore),
+      durationMinutes: mockDuration,
+      passScorePercentage: mockPassScore,
       questions: mockQuestions,
       isPublished: true,
       createdAt: new Date().toISOString()
     };
 
-    const nextMocks = [newMock, ...trialMocks];
-    setTrialMocks(nextMocks);
-    saveTrialMocks(nextMocks);
-
-    setFormSuccessMessage('Trial mock test successfully uploaded and published!');
-    setTimeout(() => setFormSuccessMessage(null), 3000);
+    const updated = [newMock, ...trialMocks];
+    setTrialMocks(updated);
+    saveTrialMocks(updated);
 
     // Reset Form
-    setShowMockForm(false);
     setMockTitle('');
     setMockQuestions([
       {
@@ -357,6 +355,9 @@ export default function AdminDashboardPage() {
         remediationTip: ''
       }
     ]);
+    setShowMockForm(false);
+    setFormSuccessMessage('Trial mock test uploaded and published successfully!');
+    setTimeout(() => setFormSuccessMessage(null), 4000);
   };
 
   const toggleMockPublish = (mockId: string) => {
@@ -420,299 +421,278 @@ export default function AdminDashboardPage() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
-      {/* TOP COMMAND BAR */}
-      <header className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-indigo-600 rounded-xl text-white shadow-md shadow-indigo-600/30">
-            <ShieldCheck className="w-6 h-6" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-lg font-bold text-white tracking-tight">AcademicPrep Executive Portal</h1>
-              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> SYSTEM ONLINE
-              </span>
+    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans">
+      {/* TOP HEADER BAR */}
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-sm shadow-sm">
+              AP
             </div>
-            <p className="text-xs text-slate-400">Owner Command & Control • Real-Time Web Traffic, Paid Subscriptions & Curriculum</p>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-semibold text-slate-900 text-sm">AcademicPrep</span>
+                <span className="text-[10px] uppercase font-bold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded tracking-wide">
+                  Admin
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-500 hidden sm:block">Platform Management & Operation Hub</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 text-xs">
+            <div className="hidden md:flex items-center gap-4 text-slate-600 border-r border-slate-200 pr-4 mr-1">
+              <span><b>{trafficData.activeSessions}</b> active users</span>
+              <span>•</span>
+              <span><b>{activePaidStudentsCount}</b> subscribers</span>
+              <span>•</span>
+              <span className="font-semibold text-slate-900">GH₵ {metrics.totalCashFlowGhs.toFixed(2)}</span>
+            </div>
+
+            <Link
+              href="/jhs"
+              className="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium transition flex items-center gap-1.5"
+            >
+              <Eye className="w-3.5 h-3.5 text-slate-500" />
+              <span>Student View</span>
+            </Link>
+
+            <button
+              onClick={logoutAdmin}
+              className="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition flex items-center gap-1"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Logout</span>
+            </button>
           </div>
         </div>
 
-        {/* Quick KPI Badges */}
-        <div className="flex items-center gap-4 text-xs font-medium">
-          <div className="hidden md:flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
-            <Activity className="w-3.5 h-3.5 text-emerald-400" />
-            <span className="text-slate-400">Live Traffic:</span>
-            <span className="text-white font-bold">{trafficData.activeSessions} active now</span>
-          </div>
+        {/* CLEAN HORIZONTAL TABS */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-100 overflow-x-auto">
+          <nav className="flex space-x-6 min-w-max text-xs font-medium">
+            <button
+              onClick={() => setActiveTab('traffic')}
+              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+                activeTab === 'traffic'
+                  ? 'border-slate-900 text-slate-900 font-semibold'
+                  : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              <Activity className="w-4 h-4" />
+              <span>Web Traffic</span>
+            </button>
 
-          <div className="hidden lg:flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
-            <UserCheck className="w-3.5 h-3.5 text-indigo-400" />
-            <span className="text-slate-400">Paid Subscribers:</span>
-            <span className="text-white font-bold">{activePaidStudentsCount} full passes</span>
-          </div>
+            <button
+              onClick={() => setActiveTab('paid_access')}
+              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+                activeTab === 'paid_access'
+                  ? 'border-slate-900 text-slate-900 font-semibold'
+                  : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              <Users className="w-4 h-4" />
+              <span>Paid Access & Students</span>
+              <span className="ml-1 text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-full font-mono">
+                {activePaidStudentsCount}
+              </span>
+            </button>
 
-          <div className="hidden sm:flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
-            <DollarSign className="w-3.5 h-3.5 text-amber-400" />
-            <span className="text-slate-400">Revenue:</span>
-            <span className="text-emerald-400 font-bold">GH₵ {metrics.totalCashFlowGhs.toFixed(2)}</span>
-          </div>
+            <button
+              onClick={() => setActiveTab('completions')}
+              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+                activeTab === 'completions'
+                  ? 'border-slate-900 text-slate-900 font-semibold'
+                  : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              <Award className="w-4 h-4" />
+              <span>Curriculum Progress</span>
+              <span className="ml-1 text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-full font-mono">
+                {totalTopicsAvailable} Topics
+              </span>
+            </button>
 
-          <Link
-            href="/jhs"
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg border border-slate-700 transition"
-          >
-            <Eye className="w-3.5 h-3.5" /> Student View
-          </Link>
+            <button
+              onClick={() => setActiveTab('trial_mocks')}
+              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+                activeTab === 'trial_mocks'
+                  ? 'border-slate-900 text-slate-900 font-semibold'
+                  : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              <FilePlus className="w-4 h-4" />
+              <span>Trial Questions & Mocks</span>
+              <span className="ml-1 text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-full font-mono">
+                {trialMocks.length}
+              </span>
+            </button>
 
-          <button
-            onClick={logoutAdmin}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 rounded-lg border border-rose-500/30 transition"
-          >
-            <LogOut className="w-3.5 h-3.5" /> Logout
-          </button>
+            <button
+              onClick={() => setActiveTab('pins')}
+              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+                activeTab === 'pins'
+                  ? 'border-slate-900 text-slate-900 font-semibold'
+                  : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              <KeyRound className="w-4 h-4" />
+              <span>Access PINs & Revenue</span>
+            </button>
+          </nav>
         </div>
       </header>
 
-      {/* NAVIGATION TABS */}
-      <div className="bg-slate-900 border-b border-slate-800 px-6 overflow-x-auto">
-        <div className="flex gap-2 min-w-max py-2">
-          <button
-            onClick={() => setActiveTab('traffic')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition ${
-              activeTab === 'traffic'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-            }`}
-          >
-            <Activity className="w-4 h-4" /> Web Traffic & Analytics
-          </button>
-
-          <button
-            onClick={() => setActiveTab('paid_access')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition ${
-              activeTab === 'paid_access'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-            }`}
-          >
-            <Users className="w-4 h-4" /> Paid Access & Subscribers
-            <span className="ml-1 text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 font-mono">
-              {activePaidStudentsCount}
-            </span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('completions')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition ${
-              activeTab === 'completions'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-            }`}
-          >
-            <Award className="w-4 h-4" /> Total Topics Completed
-            <span className="ml-1 text-xs px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800/50 font-mono">
-              {totalTopicsAvailable} Topics
-            </span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('trial_mocks')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition ${
-              activeTab === 'trial_mocks'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-            }`}
-          >
-            <FilePlus className="w-4 h-4" /> Trial Questions Manager
-            <span className="ml-1 text-xs px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono">
-              {trialMocks.length} Mocks
-            </span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('pins')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition ${
-              activeTab === 'pins'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-            }`}
-          >
-            <KeyRound className="w-4 h-4" /> Access PINs & Revenue
-          </button>
-        </div>
-      </div>
-
-      {/* MAIN CONTENT AREA */}
-      <main className="flex-1 p-6 max-w-7xl w-full mx-auto space-y-6">
+      {/* MAIN CONTAINER */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         {/* ============================================================ */}
         {/* TAB 1: WEB TRAFFIC & ANALYTICS                               */}
         {/* ============================================================ */}
         {activeTab === 'traffic' && (
           <div className="space-y-6">
-            {/* Top KPI Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-              <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-lg">
-                <div className="flex items-center justify-between text-slate-400 mb-2">
-                  <span className="text-xs font-semibold uppercase tracking-wider">Daily Visitors</span>
-                  <Globe className="w-4 h-4 text-blue-400" />
-                </div>
-                <div className="text-2xl font-black text-white">{trafficData.dailyVisitors.toLocaleString()}</div>
-                <div className="text-xs text-emerald-400 font-medium mt-1 flex items-center gap-1">
-                  <TrendingUp className="w-3 h-3" /> +14.2% from yesterday
-                </div>
+            {/* Top Stat Cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
+                <span className="text-xs text-slate-500 font-medium block">Daily Visitors</span>
+                <span className="text-2xl font-semibold text-slate-900 mt-1 block font-mono">
+                  {trafficData.dailyVisitors.toLocaleString()}
+                </span>
+                <span className="text-[11px] text-emerald-600 font-medium mt-1 inline-flex items-center gap-0.5">
+                  <TrendingUp className="w-3 h-3" /> +14.2% vs yesterday
+                </span>
               </div>
 
-              <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-lg">
-                <div className="flex items-center justify-between text-slate-400 mb-2">
-                  <span className="text-xs font-semibold uppercase tracking-wider">Page Views</span>
-                  <Eye className="w-4 h-4 text-indigo-400" />
-                </div>
-                <div className="text-2xl font-black text-white">{trafficData.totalPageViews.toLocaleString()}</div>
-                <div className="text-xs text-slate-400 mt-1">17.3 views/visitor</div>
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
+                <span className="text-xs text-slate-500 font-medium block">Page Views</span>
+                <span className="text-2xl font-semibold text-slate-900 mt-1 block font-mono">
+                  {trafficData.totalPageViews.toLocaleString()}
+                </span>
+                <span className="text-[11px] text-slate-500 mt-1 block">17.3 views/visitor</span>
               </div>
 
-              <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-lg">
-                <div className="flex items-center justify-between text-slate-400 mb-2">
-                  <span className="text-xs font-semibold uppercase tracking-wider">Active Sessions</span>
-                  <Activity className="w-4 h-4 text-emerald-400" />
-                </div>
-                <div className="text-2xl font-black text-emerald-400 flex items-center gap-2">
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
+                <span className="text-xs text-slate-500 font-medium block">Active Sessions</span>
+                <span className="text-2xl font-semibold text-slate-900 mt-1 block font-mono flex items-center gap-2">
                   {trafficData.activeSessions}
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                </div>
-                <div className="text-xs text-slate-400 mt-1">Real-time concurrent users</div>
+                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                </span>
+                <span className="text-[11px] text-slate-500 mt-1 block">Real-time learners</span>
               </div>
 
-              <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-lg">
-                <div className="flex items-center justify-between text-slate-400 mb-2">
-                  <span className="text-xs font-semibold uppercase tracking-wider">Avg Duration</span>
-                  <Clock className="w-4 h-4 text-amber-400" />
-                </div>
-                <div className="text-2xl font-black text-white">{trafficData.avgSessionDurationMinutes} mins</div>
-                <div className="text-xs text-emerald-400 font-medium mt-1">High study engagement</div>
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
+                <span className="text-xs text-slate-500 font-medium block">Avg Duration</span>
+                <span className="text-2xl font-semibold text-slate-900 mt-1 block font-mono">
+                  {trafficData.avgSessionDurationMinutes} min
+                </span>
+                <span className="text-[11px] text-slate-500 mt-1 block">Study engagement</span>
               </div>
 
-              <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-lg">
-                <div className="flex items-center justify-between text-slate-400 mb-2">
-                  <span className="text-xs font-semibold uppercase tracking-wider">Bounce Rate</span>
-                  <BarChart3 className="w-4 h-4 text-purple-400" />
-                </div>
-                <div className="text-2xl font-black text-white">{trafficData.bounceRatePercentage}%</div>
-                <div className="text-xs text-emerald-400 font-medium mt-1">Industry standard: &lt;35%</div>
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm col-span-2 sm:col-span-1">
+                <span className="text-xs text-slate-500 font-medium block">Bounce Rate</span>
+                <span className="text-2xl font-semibold text-slate-900 mt-1 block font-mono">
+                  {trafficData.bounceRatePercentage}%
+                </span>
+                <span className="text-[11px] text-emerald-600 font-medium mt-1 block">Standard retention</span>
               </div>
             </div>
 
-            {/* 7-Day Traffic Trend Bar Chart */}
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
-              <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+            {/* 7-Day Traffic Chart */}
+            <div className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                    <TrendingUp className="w-5 h-5 text-indigo-400" /> 7-Day Web Traffic Velocity & Quiz Attempts
-                  </h3>
-                  <p className="text-xs text-slate-400">Daily unique visitors vs diagnostic quiz submissions across all 9 subjects.</p>
+                  <h3 className="text-sm font-semibold text-slate-900">7-Day Visitor Trend & Quiz Attempts</h3>
+                  <p className="text-xs text-slate-500">Daily unique platform visits compared to submitted topic quizzes.</p>
                 </div>
-                <div className="flex items-center gap-4 text-xs font-semibold">
-                  <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-indigo-500"></span> Visitors</span>
-                  <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-emerald-500"></span> Quiz Submissions</span>
+                <div className="flex items-center gap-4 text-xs font-medium text-slate-600">
+                  <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded bg-slate-900"></span> Visitors</span>
+                  <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded bg-blue-500"></span> Quiz Submissions</span>
                 </div>
               </div>
 
-              <div className="grid grid-cols-7 gap-2 md:gap-4 items-end h-56 pt-8 pb-2 border-b border-slate-800">
+              <div className="grid grid-cols-7 gap-3 items-end h-44 pt-6 pb-2 border-b border-slate-100">
                 {trafficData.dailyTrend.map((day, idx) => (
                   <div key={idx} className="flex flex-col items-center gap-2 h-full justify-end group">
                     <div className="text-[10px] text-slate-400 opacity-0 group-hover:opacity-100 transition font-mono">
                       {day.visitors}
                     </div>
-                    <div className="w-full max-w-[36px] flex items-end gap-1 h-full">
+                    <div className="w-full max-w-[28px] flex items-end gap-1 h-full">
                       {/* Visitors Bar */}
                       <div 
-                        className="flex-1 bg-gradient-to-t from-indigo-700 to-indigo-500 rounded-t-md transition-all group-hover:brightness-125"
+                        className="flex-1 bg-slate-900 rounded-t transition-all group-hover:bg-slate-700"
                         style={{ height: `${(day.visitors / 1800) * 100}%` }}
                         title={`Visitors: ${day.visitors}`}
                       ></div>
                       {/* Quiz Attempts Bar */}
                       <div 
-                        className="flex-1 bg-gradient-to-t from-emerald-700 to-emerald-500 rounded-t-md transition-all group-hover:brightness-125"
+                        className="flex-1 bg-blue-500 rounded-t transition-all group-hover:bg-blue-600"
                         style={{ height: `${(day.quizAttempts / 800) * 100}%` }}
                         title={`Quiz Attempts: ${day.quizAttempts}`}
                       ></div>
                     </div>
-                    <span className="text-xs font-medium text-slate-400 mt-2 truncate w-full text-center font-mono">
-                      {day.date}
+                    <span className="text-[11px] font-medium text-slate-500 truncate w-full text-center">
+                      {day.date.replace(' (Today)', '')}
                     </span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Device Breakdown & Regional Distribution */}
+            {/* Device Share & Regional Visits */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Device Share */}
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-lg">
-                <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
-                  <Smartphone className="w-5 h-5 text-indigo-400" /> Device Distribution in Ghana
-                </h3>
-                <div className="space-y-4">
+              {/* Devices */}
+              <div className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm space-y-4">
+                <h3 className="text-sm font-semibold text-slate-900">Device Distribution</h3>
+                <div className="space-y-3">
                   <div>
-                    <div className="flex justify-between text-xs font-semibold mb-1">
-                      <span className="flex items-center gap-1.5 text-slate-300">
-                        <Smartphone className="w-4 h-4 text-emerald-400" /> Mobile Phones (Android/iOS)
-                      </span>
-                      <span className="text-white font-mono">{trafficData.deviceShare.mobile}%</span>
+                    <div className="flex justify-between text-xs mb-1">
+                      <span className="text-slate-600 font-medium">Mobile Phones (Android / iPhone)</span>
+                      <span className="font-semibold text-slate-900 font-mono">{trafficData.deviceShare.mobile}%</span>
                     </div>
-                    <div className="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${trafficData.deviceShare.mobile}%` }}></div>
+                    <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-slate-900 rounded-full" style={{ width: `${trafficData.deviceShare.mobile}%` }}></div>
                     </div>
                   </div>
 
                   <div>
-                    <div className="flex justify-between text-xs font-semibold mb-1">
-                      <span className="flex items-center gap-1.5 text-slate-300">
-                        <Monitor className="w-4 h-4 text-blue-400" /> Desktop / Laptops
-                      </span>
-                      <span className="text-white font-mono">{trafficData.deviceShare.desktop}%</span>
+                    <div className="flex justify-between text-xs mb-1">
+                      <span className="text-slate-600 font-medium">Desktop & Laptops</span>
+                      <span className="font-semibold text-slate-900 font-mono">{trafficData.deviceShare.desktop}%</span>
                     </div>
-                    <div className="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-blue-500 rounded-full" style={{ width: `${trafficData.deviceShare.desktop}%` }}></div>
+                    <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-slate-600 rounded-full" style={{ width: `${trafficData.deviceShare.desktop}%` }}></div>
                     </div>
                   </div>
 
                   <div>
-                    <div className="flex justify-between text-xs font-semibold mb-1">
-                      <span className="flex items-center gap-1.5 text-slate-300">
-                        <TabletIcon className="w-4 h-4 text-amber-400" /> Tablets & iPads
-                      </span>
-                      <span className="text-white font-mono">{trafficData.deviceShare.tablet}%</span>
+                    <div className="flex justify-between text-xs mb-1">
+                      <span className="text-slate-600 font-medium">Tablets & iPads</span>
+                      <span className="font-semibold text-slate-900 font-mono">{trafficData.deviceShare.tablet}%</span>
                     </div>
-                    <div className="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-amber-500 rounded-full" style={{ width: `${trafficData.deviceShare.tablet}%` }}></div>
+                    <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-slate-400 rounded-full" style={{ width: `${trafficData.deviceShare.tablet}%` }}></div>
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-slate-500 mt-4">
-                  *Over 78% of Ghanaian JHS candidates access quizzes via parent smartphones and WhatsApp links.
+                <p className="text-[11px] text-slate-500 pt-2 border-t border-slate-100">
+                  Majority of candidates practice via parents' smartphones.
                 </p>
               </div>
 
               {/* Regional Traffic */}
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-lg">
-                <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
-                  <Globe className="w-5 h-5 text-emerald-400" /> Regional Traffic Concentration (Ghana)
-                </h3>
-                <div className="space-y-3">
+              <div className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm space-y-3">
+                <h3 className="text-sm font-semibold text-slate-900">Regional Traffic Concentration (Ghana)</h3>
+                <div className="space-y-2.5">
                   {trafficData.regionalVisits.map((item, idx) => (
                     <div key={idx} className="space-y-1">
-                      <div className="flex justify-between text-xs font-semibold">
-                        <span className="text-slate-300">{item.region}</span>
-                        <span className="text-slate-400 font-mono">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-700">{item.region}</span>
+                        <span className="text-slate-500 font-mono font-medium">
                           {item.visits.toLocaleString()} ({item.percentage}%)
                         </span>
                       </div>
-                      <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                      <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
                         <div 
-                          className="h-full bg-indigo-500 rounded-full" 
+                          className="h-full bg-slate-800 rounded-full" 
                           style={{ width: `${item.percentage * 2}%` }}
                         ></div>
                       </div>
@@ -722,19 +702,17 @@ export default function AdminDashboardPage() {
               </div>
             </div>
 
-            {/* Subject Traffic Heatmap */}
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-lg">
-              <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-indigo-400" /> Subject Demand & Page View Ranking
-              </h3>
+            {/* Subject Demand Ranking */}
+            <div className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm space-y-4">
+              <h3 className="text-sm font-semibold text-slate-900">Subject Page View Rankings</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {trafficData.subjectTraffic.map((sub, idx) => (
-                  <div key={idx} className="bg-slate-950 border border-slate-800/80 p-3.5 rounded-xl flex items-center justify-between">
+                  <div key={idx} className="p-3 rounded-lg border border-slate-100 bg-slate-50/50 flex items-center justify-between">
                     <div>
-                      <div className="text-xs font-bold text-white">{sub.subjectName}</div>
-                      <div className="text-[11px] text-slate-500 mt-0.5">Rank #{idx + 1} Most Studied</div>
+                      <div className="text-xs font-semibold text-slate-800">{sub.subjectName}</div>
+                      <div className="text-[11px] text-slate-500">Rank #{idx + 1} Most Studied</div>
                     </div>
-                    <div className="text-sm font-black text-indigo-400 font-mono">
+                    <div className="text-xs font-semibold text-slate-900 font-mono">
                       {sub.views.toLocaleString()} views
                     </div>
                   </div>
@@ -749,23 +727,22 @@ export default function AdminDashboardPage() {
         {/* ============================================================ */}
         {activeTab === 'paid_access' && (
           <div className="space-y-6">
-            {/* Top Controls */}
-            <div className="flex flex-wrap items-center justify-between gap-4 bg-slate-900 border border-slate-800 p-5 rounded-2xl">
+            {/* Header Strip */}
+            <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <UserCheck className="w-5 h-5 text-emerald-400" /> Paid Access & Student Subscriber Directory
-                </h3>
-                <p className="text-xs text-slate-400">
-                  Monitor active subscription passes, trial learners, and manually grant or revoke access.
+                <h2 className="text-base font-semibold text-slate-900">Paid Access & Student Management</h2>
+                <p className="text-xs text-slate-500">
+                  Track full pass subscriptions, trial accounts, and directly grant or revoke access.
                 </p>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
                 <button
                   onClick={exportStudentsCSV}
-                  className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl text-xs font-semibold border border-slate-700 transition"
+                  className="px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-medium transition flex items-center gap-1.5 shadow-sm"
                 >
-                  <Download className="w-4 h-4" /> Export CSV
+                  <Download className="w-3.5 h-3.5 text-slate-500" />
+                  <span>Export CSV</span>
                 </button>
 
                 <button
@@ -773,65 +750,69 @@ export default function AdminDashboardPage() {
                     setSelectedStudentForAccess(null);
                     setShowGrantModal(true);
                   }}
-                  className="flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-md shadow-indigo-600/30 transition"
+                  className="px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium transition flex items-center gap-1.5 shadow-sm"
                 >
-                  <Plus className="w-4 h-4" /> Grant Direct Paid Pass
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Grant Paid Pass</span>
                 </button>
               </div>
             </div>
 
-            {/* Subscriber Breakdown Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-              <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl">
-                <div className="text-xs text-slate-400 uppercase font-semibold">Total Students</div>
-                <div className="text-2xl font-black text-white mt-1">8,250</div>
-                <div className="text-[11px] text-slate-500 mt-1">8,000+ WhatsApp base</div>
+            {/* Quick Stat Pill Cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="bg-white border border-slate-200/80 p-3.5 rounded-xl shadow-sm">
+                <span className="text-[11px] text-slate-500 font-medium">Total Registered</span>
+                <span className="text-xl font-semibold text-slate-900 mt-0.5 block font-mono">8,250</span>
+                <span className="text-[10px] text-slate-400">8,000+ WhatsApp base</span>
               </div>
 
-              <div className="bg-slate-900 border border-emerald-900/40 p-4 rounded-xl">
-                <div className="text-xs text-emerald-400 uppercase font-semibold flex items-center gap-1">
-                  <CheckCircle className="w-3.5 h-3.5" /> Active Full Passes
-                </div>
-                <div className="text-2xl font-black text-emerald-400 mt-1">{activePaidStudentsCount}</div>
-                <div className="text-[11px] text-slate-400 mt-1">Paid subscribers with full access</div>
+              <div className="bg-white border border-slate-200/80 p-3.5 rounded-xl shadow-sm">
+                <span className="text-[11px] text-emerald-700 font-medium">Active Full Passes</span>
+                <span className="text-xl font-semibold text-emerald-700 mt-0.5 block font-mono">
+                  {activePaidStudentsCount}
+                </span>
+                <span className="text-[10px] text-slate-500">Paid VIP subscribers</span>
               </div>
 
-              <div className="bg-slate-900 border border-blue-900/40 p-4 rounded-xl">
-                <div className="text-xs text-blue-400 uppercase font-semibold">Free Trial Users</div>
-                <div className="text-2xl font-black text-blue-400 mt-1">{freeTrialStudentsCount}</div>
-                <div className="text-[11px] text-slate-400 mt-1">Trial topic access</div>
+              <div className="bg-white border border-slate-200/80 p-3.5 rounded-xl shadow-sm">
+                <span className="text-[11px] text-slate-600 font-medium">Free Trial Users</span>
+                <span className="text-xl font-semibold text-slate-700 mt-0.5 block font-mono">
+                  {freeTrialStudentsCount}
+                </span>
+                <span className="text-[10px] text-slate-400">Trial topic access</span>
               </div>
 
-              <div className="bg-slate-900 border border-rose-900/40 p-4 rounded-xl">
-                <div className="text-xs text-rose-400 uppercase font-semibold">Expired Passes</div>
-                <div className="text-2xl font-black text-rose-400 mt-1">{expiredStudentsCount}</div>
-                <div className="text-[11px] text-slate-400 mt-1">Pending PIN renewal</div>
+              <div className="bg-white border border-slate-200/80 p-3.5 rounded-xl shadow-sm">
+                <span className="text-[11px] text-rose-600 font-medium">Expired Passes</span>
+                <span className="text-xl font-semibold text-rose-600 mt-0.5 block font-mono">
+                  {expiredStudentsCount}
+                </span>
+                <span className="text-[10px] text-slate-400">Pending renewal</span>
               </div>
             </div>
 
-            {/* Search & Filter Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-4 bg-slate-900/80 border border-slate-800 p-4 rounded-xl">
+            {/* Search & Filters */}
+            <div className="bg-white border border-slate-200/80 p-3 rounded-xl shadow-sm flex flex-wrap items-center justify-between gap-3">
               <div className="relative flex-1 min-w-[240px]">
-                <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
+                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
                 <input
                   type="text"
                   value={studentSearch}
                   onChange={(e) => setStudentSearch(e.target.value)}
-                  placeholder="Search by student name or Ghana phone number (024, 055, 027)..."
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-2 text-sm text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  placeholder="Search student name or phone number..."
+                  className="w-full bg-slate-50/50 border border-slate-200 rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:bg-white"
                 />
               </div>
 
-              <div className="flex items-center gap-2">
-                <Filter className="w-4 h-4 text-slate-400" />
+              <div className="flex items-center gap-1.5">
                 {(['ALL', 'Full Pass', 'Free Trial', 'Expired'] as const).map((filter) => (
                   <button
                     key={filter}
                     onClick={() => setStudentAccessFilter(filter)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                    className={`px-2.5 py-1 rounded-md text-xs font-medium transition ${
                       studentAccessFilter === filter
-                        ? 'bg-indigo-600 text-white'
-                        : 'bg-slate-800 text-slate-400 hover:text-white'
+                        ? 'bg-slate-900 text-white'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                     }`}
                   >
                     {filter}
@@ -841,84 +822,82 @@ export default function AdminDashboardPage() {
             </div>
 
             {/* Students Table */}
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+            <div className="bg-white border border-slate-200/80 rounded-xl overflow-hidden shadow-sm">
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm">
-                  <thead className="bg-slate-950 text-slate-400 text-xs uppercase font-semibold border-b border-slate-800">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-50/75 text-slate-500 font-medium uppercase tracking-wider border-b border-slate-200/80">
                     <tr>
-                      <th className="px-5 py-3.5">Student Details</th>
-                      <th className="px-5 py-3.5">Phone (MoMo ID)</th>
-                      <th className="px-5 py-3.5">Level</th>
-                      <th className="px-5 py-3.5">Access Status</th>
-                      <th className="px-5 py-3.5">Expiration</th>
-                      <th className="px-5 py-3.5">Topics Done</th>
-                      <th className="px-5 py-3.5">Avg Score</th>
-                      <th className="px-5 py-3.5 text-right">Admin Actions</th>
+                      <th className="px-4 py-3">Student Name</th>
+                      <th className="px-4 py-3">Phone (MoMo)</th>
+                      <th className="px-4 py-3">Level</th>
+                      <th className="px-4 py-3">Access Status</th>
+                      <th className="px-4 py-3">Expires</th>
+                      <th className="px-4 py-3">Topics Done</th>
+                      <th className="px-4 py-3">Avg Score</th>
+                      <th className="px-4 py-3 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/60">
+                  <tbody className="divide-y divide-slate-100">
                     {filteredStudents.length === 0 ? (
                       <tr>
-                        <td colSpan={8} className="px-5 py-12 text-center text-slate-500">
-                          No students matching your search criteria.
+                        <td colSpan={8} className="px-4 py-8 text-center text-slate-400 text-xs">
+                          No students found matching your criteria.
                         </td>
                       </tr>
                     ) : (
                       filteredStudents.map((st) => (
-                        <tr key={st.id} className="hover:bg-slate-800/40 transition">
-                          <td className="px-5 py-4 font-semibold text-white">
-                            {st.name}
-                            <div className="text-[11px] text-slate-500 font-normal">Active {st.lastActive}</div>
+                        <tr key={st.id} className="hover:bg-slate-50/60 transition">
+                          <td className="px-4 py-3">
+                            <span className="font-medium text-slate-900 block">{st.name}</span>
+                            <span className="text-[10px] text-slate-400">Active {st.lastActive}</span>
                           </td>
-                          <td className="px-5 py-4 font-mono text-slate-300">{st.phone}</td>
-                          <td className="px-5 py-4">
-                            <span className="px-2 py-0.5 rounded text-xs font-semibold bg-slate-800 text-slate-300">
+                          <td className="px-4 py-3 font-mono text-slate-600">{st.phone}</td>
+                          <td className="px-4 py-3">
+                            <span className="px-1.5 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-700">
                               {st.level}
                             </span>
                           </td>
-                          <td className="px-5 py-4">
+                          <td className="px-4 py-3">
                             {st.accessType === 'Full Pass' && (
-                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                                <CheckCircle className="w-3 h-3" /> Full Pass
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/60">
+                                Full Pass
                               </span>
                             )}
                             {st.accessType === 'Free Trial' && (
-                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-slate-100 text-slate-600">
                                 Free Trial
                               </span>
                             )}
                             {st.accessType === 'Expired' && (
-                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20">
-                                <XCircle className="w-3 h-3" /> Expired
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-rose-50 text-rose-700 border border-rose-200/60">
+                                Expired
                               </span>
                             )}
                           </td>
-                          <td className="px-5 py-4 text-xs font-mono text-slate-400">
+                          <td className="px-4 py-3 font-mono text-slate-500">
                             {st.accessExpiresAt ? new Date(st.accessExpiresAt).toLocaleDateString() : '—'}
                           </td>
-                          <td className="px-5 py-4 text-slate-200 font-bold">{st.topicsCompleted}</td>
-                          <td className="px-5 py-4 font-mono text-indigo-400 font-bold">{st.avgScorePercentage}%</td>
-                          <td className="px-5 py-4 text-right">
-                            <div className="flex items-center justify-end gap-2">
-                              {st.accessType !== 'Full Pass' ? (
-                                <button
-                                  onClick={() => {
-                                    setSelectedStudentForAccess(st);
-                                    setShowGrantModal(true);
-                                  }}
-                                  className="px-2.5 py-1 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-600/40 rounded-lg text-xs font-bold transition"
-                                >
-                                  Grant Access
-                                </button>
-                              ) : (
-                                <button
-                                  onClick={() => handleRevokeAccess(st.id)}
-                                  className="px-2.5 py-1 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-medium transition"
-                                >
-                                  Revoke
-                                </button>
-                              )}
-                            </div>
+                          <td className="px-4 py-3 font-medium text-slate-800">{st.topicsCompleted}</td>
+                          <td className="px-4 py-3 font-mono font-medium text-slate-800">{st.avgScorePercentage}%</td>
+                          <td className="px-4 py-3 text-right">
+                            {st.accessType !== 'Full Pass' ? (
+                              <button
+                                onClick={() => {
+                                  setSelectedStudentForAccess(st);
+                                  setShowGrantModal(true);
+                                }}
+                                className="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 text-white text-[11px] font-medium transition"
+                              >
+                                Grant Pass
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => handleRevokeAccess(st.id)}
+                                className="px-2.5 py-1 rounded border border-slate-200 hover:bg-rose-50 hover:text-rose-700 text-slate-600 text-[11px] font-medium transition"
+                              >
+                                Revoke
+                              </button>
+                            )}
                           </td>
                         </tr>
                       ))
@@ -928,80 +907,79 @@ export default function AdminDashboardPage() {
               </div>
             </div>
 
-            {/* DIRECT GRANT ACCESS MODAL */}
+            {/* Clean Grant Access Modal */}
             {showGrantModal && (
-              <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-                <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-5">
-                  <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-                    <h4 className="text-base font-bold text-white flex items-center gap-2">
-                      <UserCheck className="w-5 h-5 text-emerald-400" /> 
+              <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
+                <div className="bg-white border border-slate-200 rounded-2xl p-6 max-w-sm w-full shadow-lg space-y-4">
+                  <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <h4 className="text-sm font-semibold text-slate-900">
                       {selectedStudentForAccess ? `Grant Pass: ${selectedStudentForAccess.name}` : 'Grant Direct Paid Pass'}
                     </h4>
                     <button 
                       onClick={() => setShowGrantModal(false)}
-                      className="text-slate-400 hover:text-white"
+                      className="text-slate-400 hover:text-slate-700"
                     >
-                      <XCircle className="w-5 h-5" />
+                      <XCircle className="w-4 h-4" />
                     </button>
                   </div>
 
                   {!selectedStudentForAccess && (
-                    <div className="space-y-4">
+                    <div className="space-y-3">
                       <div>
-                        <label className="block text-xs font-semibold text-slate-300 mb-1">Student Phone Number</label>
+                        <label className="block text-xs font-medium text-slate-700 mb-1">Student Phone Number</label>
                         <input
                           type="text"
                           value={customPhoneInput}
                           onChange={(e) => setCustomPhoneInput(e.target.value)}
                           placeholder="e.g. 0241234567"
-                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white"
+                          className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-slate-300 mb-1">Student Name (Optional)</label>
+                        <label className="block text-xs font-medium text-slate-700 mb-1">Student Name (Optional)</label>
                         <input
                           type="text"
                           value={customNameInput}
                           onChange={(e) => setCustomNameInput(e.target.value)}
                           placeholder="e.g. Esi Poku"
-                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white"
+                          className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                         />
                       </div>
                     </div>
                   )}
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-2">Access Duration</label>
+                    <label className="block text-xs font-medium text-slate-700 mb-1.5">Access Term</label>
                     <div className="grid grid-cols-3 gap-2">
                       {[30, 60, 90].map((days) => (
                         <button
                           key={days}
                           type="button"
                           onClick={() => setGrantDurationDays(days)}
-                          className={`py-2.5 rounded-xl text-xs font-bold border transition ${
+                          className={`py-2 rounded-lg text-xs font-medium border transition ${
                             grantDurationDays === days
-                              ? 'bg-indigo-600 text-white border-indigo-500'
-                              : 'bg-slate-950 text-slate-400 border-slate-800 hover:bg-slate-800'
+                              ? 'bg-slate-900 text-white border-slate-900'
+                              : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
                           }`}
                         >
-                          {days} Days Pass
+                          {days} Days
                         </button>
                       ))}
                     </div>
                   </div>
 
-                  <div className="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
+                  <div className="pt-3 flex items-center justify-end gap-2 border-t border-slate-100">
                     <button
                       onClick={() => setShowGrantModal(false)}
-                      className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white"
+                      className="px-3 py-1.5 text-xs text-slate-600 hover:text-slate-900 font-medium"
                     >
                       Cancel
                     </button>
                     <button
                       onClick={() => handleGrantAccess(selectedStudentForAccess)}
-                      className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-emerald-600/30 transition"
+                      className="px-4 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-medium shadow-sm transition"
                     >
-                      Confirm Full Access
+                      Confirm Full Pass
                     </button>
                   </div>
                 </div>
@@ -1011,71 +989,71 @@ export default function AdminDashboardPage() {
         )}
 
         {/* ============================================================ */}
-        {/* TAB 3: TOTAL TOPICS COMPLETED & LEARNING ANALYTICS            */}
+        {/* TAB 3: PLATFORM TOPIC COMPLETIONS                            */}
         {/* ============================================================ */}
         {activeTab === 'completions' && (
           <div className="space-y-6">
-            {/* Overview Card */}
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
-              <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-                <div>
-                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                    <Award className="w-5 h-5 text-amber-400" /> Platform Curriculum Topic Completion Analytics
-                  </h3>
-                  <p className="text-xs text-slate-400">
-                    Live aggregate tracking of completed topics across all 9 GES Common Core Programme subjects.
-                  </p>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="text-right">
-                    <div className="text-2xl font-black text-emerald-400 font-mono">
-                      {totalCompletedTopicsSum.toLocaleString()}
-                    </div>
-                    <div className="text-[11px] text-slate-400 uppercase font-semibold">Total Topic Completions</div>
-                  </div>
-                </div>
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <h2 className="text-base font-semibold text-slate-900">Curriculum Topic Completions</h2>
+                <p className="text-xs text-slate-500">
+                  Aggregate learning analytics across all 9 GES Common Core Programme subjects.
+                </p>
               </div>
 
-              {/* Progress Summary Stats */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                <div className="bg-slate-950 border border-slate-800 p-4 rounded-xl">
-                  <div className="text-xs text-slate-400 uppercase font-semibold">Available JHS 3 BECE Topics</div>
-                  <div className="text-2xl font-black text-indigo-400 mt-1">{jhs3TopicsCount} Topics</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">100% textbook-grade notes & quizzes</div>
-                </div>
+              <div className="text-right">
+                <span className="text-xs text-slate-500 block">Total Topics Completed</span>
+                <span className="text-xl font-semibold text-slate-900 font-mono">
+                  {totalCompletedTopicsSum.toLocaleString()}
+                </span>
+              </div>
+            </div>
 
-                <div className="bg-slate-950 border border-slate-800 p-4 rounded-xl">
-                  <div className="text-xs text-slate-400 uppercase font-semibold">Overall Quiz Pass Rate</div>
-                  <div className="text-2xl font-black text-emerald-400 mt-1">78.4%</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">Scoring ≥60% on first attempt</div>
-                </div>
-
-                <div className="bg-slate-950 border border-slate-800 p-4 rounded-xl">
-                  <div className="text-xs text-slate-400 uppercase font-semibold">Total Quiz Questions Live</div>
-                  <div className="text-2xl font-black text-amber-400 mt-1">1,180+ Questions</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">10 questions per JHS 3 topic</div>
-                </div>
+            {/* Summary Stat Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
+                <span className="text-xs text-slate-500 font-medium">JHS 3 BECE Topics</span>
+                <span className="text-2xl font-semibold text-slate-900 mt-1 block font-mono">
+                  {jhs3TopicsCount} Topics
+                </span>
+                <span className="text-[11px] text-slate-500 mt-1 block">Full notes & 1,180 questions</span>
               </div>
 
-              {/* Subject Breakdown Bars */}
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
-                Completions by Subject
-              </h4>
-              <div className="space-y-4">
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
+                <span className="text-xs text-slate-500 font-medium">Platform Quiz Pass Rate</span>
+                <span className="text-2xl font-semibold text-emerald-700 mt-1 block font-mono">
+                  78.4%
+                </span>
+                <span className="text-[11px] text-slate-500 mt-1 block">Scoring ≥60% standard</span>
+              </div>
+
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
+                <span className="text-xs text-slate-500 font-medium">Total Curriculum Topics</span>
+                <span className="text-2xl font-semibold text-slate-900 mt-1 block font-mono">
+                  {totalTopicsAvailable} Topics
+                </span>
+                <span className="text-[11px] text-slate-500 mt-1 block">Across JHS 1, 2, and 3</span>
+              </div>
+            </div>
+
+            {/* Subject Breakdown Bars */}
+            <div className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm space-y-4">
+              <h3 className="text-sm font-semibold text-slate-900">Completion Rate by Subject</h3>
+              <div className="space-y-3">
                 {CURRICULUM_SUBJECTS.map((subj) => {
                   const subjectTopics = JHS_CURRICULUM_TOPICS.filter(t => t.subjectId === subj.id);
                   const completionPercentage = Math.min(100, Math.floor(65 + (subj.displayOrder * 3.5)));
                   return (
-                    <div key={subj.id} className="space-y-1.5">
-                      <div className="flex items-center justify-between text-xs font-semibold">
-                        <span className="text-slate-200">{subj.name}</span>
-                        <span className="text-slate-400 font-mono">
-                          {subjectTopics.length} Topics • {completionPercentage}% Student Completion Rate
+                    <div key={subj.id} className="space-y-1">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-medium text-slate-800">{subj.name}</span>
+                        <span className="text-slate-500 font-mono">
+                          {subjectTopics.length} Topics • {completionPercentage}% completion
                         </span>
                       </div>
-                      <div className="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
+                      <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                         <div 
-                          className="h-full bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-full"
+                          className="h-full bg-slate-900 rounded-full" 
                           style={{ width: `${completionPercentage}%` }}
                         ></div>
                       </div>
@@ -1086,61 +1064,36 @@ export default function AdminDashboardPage() {
             </div>
 
             {/* Student Leaderboard */}
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
-              <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-amber-400" /> Student Performance Leaderboard
-              </h3>
+            <div className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm space-y-4">
+              <h3 className="text-sm font-semibold text-slate-900">Top Performing Candidates</h3>
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm">
-                  <thead className="bg-slate-950 text-slate-400 text-xs uppercase font-semibold border-b border-slate-800">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-50/75 text-slate-500 font-medium uppercase tracking-wider border-b border-slate-200/80">
                     <tr>
-                      <th className="px-4 py-3">Rank</th>
-                      <th className="px-4 py-3">Student Name</th>
-                      <th className="px-4 py-3">Phone</th>
-                      <th className="px-4 py-3">Level</th>
-                      <th className="px-4 py-3">Completed Topics</th>
-                      <th className="px-4 py-3">Average Quiz Score</th>
-                      <th className="px-4 py-3 text-right">Badge</th>
+                      <th className="px-4 py-2.5">Rank</th>
+                      <th className="px-4 py-2.5">Student Name</th>
+                      <th className="px-4 py-2.5">Phone</th>
+                      <th className="px-4 py-2.5">Level</th>
+                      <th className="px-4 py-2.5">Topics Done</th>
+                      <th className="px-4 py-2.5">Average Score</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/60">
+                  <tbody className="divide-y divide-slate-100">
                     {students
                       .slice()
                       .sort((a, b) => b.topicsCompleted - a.topicsCompleted)
                       .map((st, rank) => (
-                        <tr key={st.id} className="hover:bg-slate-800/30 transition">
-                          <td className="px-4 py-3.5 font-bold font-mono text-slate-400">
+                        <tr key={st.id} className="hover:bg-slate-50/60 transition">
+                          <td className="px-4 py-2.5 font-semibold font-mono text-slate-500">
                             #{rank + 1}
                           </td>
-                          <td className="px-4 py-3.5 font-semibold text-white">{st.name}</td>
-                          <td className="px-4 py-3.5 font-mono text-slate-400 text-xs">{st.phone}</td>
-                          <td className="px-4 py-3.5 text-xs text-slate-300 font-semibold">{st.level}</td>
-                          <td className="px-4 py-3.5 font-bold text-emerald-400 font-mono">
+                          <td className="px-4 py-2.5 font-medium text-slate-900">{st.name}</td>
+                          <td className="px-4 py-2.5 font-mono text-slate-500">{st.phone}</td>
+                          <td className="px-4 py-2.5 text-slate-700">{st.level}</td>
+                          <td className="px-4 py-2.5 font-medium text-slate-900 font-mono">
                             {st.topicsCompleted} Topics
                           </td>
-                          <td className="px-4 py-3.5 font-bold text-indigo-400 font-mono">
-                            {st.avgScorePercentage}%
-                          </td>
-                          <td className="px-4 py-3.5 text-right">
-                            {rank === 0 && (
-                              <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                                🥇 Gold Scholar
-                              </span>
-                            )}
-                            {rank === 1 && (
-                              <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-slate-300/20 text-slate-200 border border-slate-300/30">
-                                🥈 Silver Scholar
-                              </span>
-                            )}
-                            {rank === 2 && (
-                              <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-700/20 text-amber-500 border border-amber-700/30">
-                                🥉 Bronze Scholar
-                              </span>
-                            )}
-                            {rank > 2 && (
-                              <span className="text-xs text-slate-500 font-medium">Candidate</span>
-                            )}
-                          </td>
+                          <td className="px-4 py-2.5 font-mono font-medium text-slate-900">{st.avgScorePercentage}%</td>
                         </tr>
                       ))}
                   </tbody>
@@ -1155,59 +1108,58 @@ export default function AdminDashboardPage() {
         {/* ============================================================ */}
         {activeTab === 'trial_mocks' && (
           <div className="space-y-6">
-            {/* Header & Controls */}
-            <div className="flex flex-wrap items-center justify-between gap-4 bg-slate-900 border border-slate-800 p-5 rounded-2xl">
+            {/* Header */}
+            <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <FilePlus className="w-5 h-5 text-indigo-400" /> Trial Questions & Mock Diagnostic Tests
-                </h3>
-                <p className="text-xs text-slate-400">
-                  Upload, edit, preview, and publish customized trial exams and diagnostic mocks for BECE candidates.
+                <h2 className="text-base font-semibold text-slate-900">Trial Questions & Diagnostic Mocks</h2>
+                <p className="text-xs text-slate-500">
+                  Upload, preview, and publish standardized trial mocks for students.
                 </p>
               </div>
 
               <button
                 onClick={() => setShowMockForm(!showMockForm)}
-                className="flex items-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-md shadow-indigo-600/30 transition"
+                className="px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium transition flex items-center gap-1.5 shadow-sm"
               >
-                {showMockForm ? <XCircle className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-                {showMockForm ? 'Close Builder' : 'Upload New Trial Mock'}
+                {showMockForm ? <XCircle className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+                <span>{showMockForm ? 'Close Builder' : 'Upload New Mock'}</span>
               </button>
             </div>
 
             {formSuccessMessage && (
-              <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl text-sm font-semibold flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5" /> {formSuccessMessage}
+              <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg text-xs font-medium flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                <span>{formSuccessMessage}</span>
               </div>
             )}
 
             {/* MOCK CREATOR FORM */}
             {showMockForm && (
-              <form onSubmit={handlePublishMock} className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
-                <div className="border-b border-slate-800 pb-4">
-                  <h4 className="text-base font-bold text-white">Create & Upload New Trial Mock Test</h4>
-                  <p className="text-xs text-slate-400 mt-1">Configure test parameters and input multiple-choice questions.</p>
+              <form onSubmit={handlePublishMock} className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm space-y-5">
+                <div className="border-b border-slate-100 pb-3">
+                  <h3 className="text-sm font-semibold text-slate-900">Create & Publish Trial Mock Exam</h3>
+                  <p className="text-xs text-slate-500">Configure parameters and enter multiple-choice diagnostic questions.</p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                   <div className="sm:col-span-2">
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">Mock Exam Title</label>
+                    <label className="block text-xs font-medium text-slate-700 mb-1">Mock Exam Title</label>
                     <input
                       type="text"
                       value={mockTitle}
                       onChange={(e) => setMockTitle(e.target.value)}
                       placeholder="e.g. BECE National Standard Integrated Science Mock 2"
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white"
+                      className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">Subject</label>
+                    <label className="block text-xs font-medium text-slate-700 mb-1">Subject</label>
                     <select
                       value={mockSubject}
                       onChange={(e) => setMockSubject(e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white"
+                      className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     >
                       {CURRICULUM_SUBJECTS.map((s) => (
                         <option key={s.id} value={s.id}>{s.name}</option>
@@ -1216,11 +1168,11 @@ export default function AdminDashboardPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">Grade Level</label>
+                    <label className="block text-xs font-medium text-slate-700 mb-1">Grade Level</label>
                     <select
                       value={mockLevel}
                       onChange={(e) => setMockLevel(e.target.value as EducationLevel)}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white"
+                      className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     >
                       <option value="JHS 1">JHS 1 (Basic 7)</option>
                       <option value="JHS 2">JHS 2 (Basic 8)</option>
@@ -1229,122 +1181,123 @@ export default function AdminDashboardPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">Time Limit (Minutes)</label>
+                    <label className="block text-xs font-medium text-slate-700 mb-1">Time Limit (Minutes)</label>
                     <input
                       type="number"
                       value={mockDuration}
                       onChange={(e) => setMockDuration(Number(e.target.value))}
                       min="5"
                       max="120"
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white"
+                      className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">Pass Score Percentage (%)</label>
+                    <label className="block text-xs font-medium text-slate-700 mb-1">Pass Score Mark (%)</label>
                     <input
                       type="number"
                       value={mockPassScore}
                       onChange={(e) => setMockPassScore(Number(e.target.value))}
                       min="40"
                       max="100"
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white"
+                      className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     />
                   </div>
                 </div>
 
                 {/* Questions Builder */}
-                <div className="space-y-6 pt-4 border-t border-slate-800">
+                <div className="space-y-4 pt-4 border-t border-slate-100">
                   <div className="flex items-center justify-between">
-                    <h5 className="text-sm font-bold text-white">Questions List ({mockQuestions.length} Questions)</h5>
+                    <span className="text-xs font-semibold text-slate-900">
+                      Questions ({mockQuestions.length})
+                    </span>
                     <button
                       type="button"
                       onClick={addQuestionField}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg text-xs font-semibold transition"
+                      className="px-2.5 py-1 rounded border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-medium transition flex items-center gap-1"
                     >
-                      <Plus className="w-3.5 h-3.5" /> Add Question
+                      <Plus className="w-3 h-3" />
+                      <span>Add Question</span>
                     </button>
                   </div>
 
                   {mockQuestions.map((q, idx) => (
-                    <div key={idx} className="bg-slate-950 border border-slate-800 rounded-2xl p-5 space-y-4">
+                    <div key={idx} className="bg-slate-50/60 border border-slate-200/80 rounded-xl p-4 space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider font-mono">
-                          Question #{idx + 1}
-                        </span>
+                        <span className="text-xs font-semibold text-slate-700">Question #{idx + 1}</span>
                         {mockQuestions.length > 1 && (
                           <button
                             type="button"
                             onClick={() => removeQuestionField(idx)}
-                            className="text-slate-500 hover:text-rose-400 p-1"
+                            className="text-slate-400 hover:text-rose-600 p-1"
                           >
-                            <Trash2 className="w-4 h-4" />
+                            <Trash2 className="w-3.5 h-3.5" />
                           </button>
                         )}
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-slate-400 mb-1">Question Prompt</label>
+                        <label className="block text-[11px] font-medium text-slate-600 mb-1">Question Prompt</label>
                         <textarea
                           value={q.questionText}
                           onChange={(e) => updateQuestionField(idx, 'questionText', e.target.value)}
                           placeholder="Enter question text here..."
                           rows={2}
-                          className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white"
+                          className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                           required
                         />
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         <div>
-                          <label className="block text-xs font-semibold text-slate-400 mb-1">Option A</label>
+                          <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option A</label>
                           <input
                             type="text"
                             value={q.optionA}
                             onChange={(e) => updateQuestionField(idx, 'optionA', e.target.value)}
-                            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white"
+                            className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                             required
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-semibold text-slate-400 mb-1">Option B</label>
+                          <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option B</label>
                           <input
                             type="text"
                             value={q.optionB}
                             onChange={(e) => updateQuestionField(idx, 'optionB', e.target.value)}
-                            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white"
+                            className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                             required
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-semibold text-slate-400 mb-1">Option C</label>
+                          <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option C</label>
                           <input
                             type="text"
                             value={q.optionC}
                             onChange={(e) => updateQuestionField(idx, 'optionC', e.target.value)}
-                            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white"
+                            className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                             required
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-semibold text-slate-400 mb-1">Option D</label>
+                          <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option D</label>
                           <input
                             type="text"
                             value={q.optionD}
                             onChange={(e) => updateQuestionField(idx, 'optionD', e.target.value)}
-                            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white"
+                            className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                             required
                           />
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                         <div>
-                          <label className="block text-xs font-semibold text-slate-400 mb-1">Correct Option</label>
+                          <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Correct Option</label>
                           <select
                             value={q.correctOption}
                             onChange={(e) => updateQuestionField(idx, 'correctOption', e.target.value as 'A' | 'B' | 'C' | 'D')}
-                            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white font-mono font-bold"
+                            className="w-full bg-white border border-slate-300 rounded-lg px-2 py-1.5 text-xs font-semibold text-slate-900"
                           >
                             <option value="A">Option A</option>
                             <option value="B">Option B</option>
@@ -1352,36 +1305,26 @@ export default function AdminDashboardPage() {
                             <option value="D">Option D</option>
                           </select>
                         </div>
-                        <div>
-                          <label className="block text-xs font-semibold text-slate-400 mb-1">Sub-Concept Tag</label>
+                        <div className="sm:col-span-2">
+                          <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Sub-Concept / Topic Tag</label>
                           <input
                             type="text"
                             value={q.subConcept || ''}
                             onChange={(e) => updateQuestionField(idx, 'subConcept', e.target.value)}
-                            placeholder="e.g. Set Theory"
-                            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-xs font-semibold text-slate-400 mb-1">Remediation Tip</label>
-                          <input
-                            type="text"
-                            value={q.remediationTip || ''}
-                            onChange={(e) => updateQuestionField(idx, 'remediationTip', e.target.value)}
-                            placeholder="e.g. Review prime numbers"
-                            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white"
+                            placeholder="e.g. Set Theory & Subsets"
+                            className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-slate-400 mb-1">Answer Explanation</label>
+                        <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Answer Explanation</label>
                         <input
                           type="text"
                           value={q.explanation}
                           onChange={(e) => updateQuestionField(idx, 'explanation', e.target.value)}
                           placeholder="Detailed pedagogical explanation for students..."
-                          className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white"
+                          className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
                           required
                         />
                       </div>
@@ -1389,108 +1332,108 @@ export default function AdminDashboardPage() {
                   ))}
                 </div>
 
-                <div className="pt-4 border-t border-slate-800 flex items-center justify-end gap-3">
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
                   <button
                     type="button"
                     onClick={() => setShowMockForm(false)}
-                    className="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition"
+                    className="px-3 py-1.5 text-xs text-slate-600 hover:text-slate-900 font-medium"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-indigo-600/30 transition"
+                    className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold shadow-sm transition"
                   >
-                    Publish Trial Mock Test
+                    Publish Trial Mock
                   </button>
                 </div>
               </form>
             )}
 
             {/* MOCK REPOSITORY TABLE */}
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
-              <div className="p-4 border-b border-slate-800 flex items-center justify-between">
-                <h4 className="text-sm font-bold text-white">Published Trial Mocks ({trialMocks.length})</h4>
-                <div className="flex items-center gap-2">
-                  <select
-                    value={mockSubjectFilter}
-                    onChange={(e) => setMockSubjectFilter(e.target.value)}
-                    className="bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1 text-xs text-white"
-                  >
-                    <option value="ALL">All Subjects</option>
-                    {CURRICULUM_SUBJECTS.map(s => (
-                      <option key={s.id} value={s.id}>{s.name}</option>
-                    ))}
-                  </select>
-                </div>
+            <div className="bg-white border border-slate-200/80 rounded-xl overflow-hidden shadow-sm">
+              <div className="p-3.5 border-b border-slate-200/80 flex items-center justify-between">
+                <span className="text-xs font-semibold text-slate-900">
+                  Published Mock Exams ({trialMocks.length})
+                </span>
+                <select
+                  value={mockSubjectFilter}
+                  onChange={(e) => setMockSubjectFilter(e.target.value)}
+                  className="bg-slate-50 border border-slate-200 rounded-md px-2 py-1 text-xs text-slate-700"
+                >
+                  <option value="ALL">All Subjects</option>
+                  {CURRICULUM_SUBJECTS.map(s => (
+                    <option key={s.id} value={s.id}>{s.name}</option>
+                  ))}
+                </select>
               </div>
 
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm">
-                  <thead className="bg-slate-950 text-slate-400 text-xs uppercase font-semibold border-b border-slate-800">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-50/75 text-slate-500 font-medium uppercase tracking-wider border-b border-slate-200/80">
                     <tr>
-                      <th className="px-5 py-3.5">Mock Title</th>
-                      <th className="px-5 py-3.5">Subject</th>
-                      <th className="px-5 py-3.5">Level</th>
-                      <th className="px-5 py-3.5">Questions</th>
-                      <th className="px-5 py-3.5">Duration</th>
-                      <th className="px-5 py-3.5">Status</th>
-                      <th className="px-5 py-3.5 text-right">Actions</th>
+                      <th className="px-4 py-3">Mock Title</th>
+                      <th className="px-4 py-3">Subject</th>
+                      <th className="px-4 py-3">Level</th>
+                      <th className="px-4 py-3">Questions</th>
+                      <th className="px-4 py-3">Duration</th>
+                      <th className="px-4 py-3">Status</th>
+                      <th className="px-4 py-3 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/60">
+                  <tbody className="divide-y divide-slate-100">
                     {trialMocks
                       .filter(m => mockSubjectFilter === 'ALL' || m.subjectId === mockSubjectFilter)
                       .map((mock) => {
                         const subj = CURRICULUM_SUBJECTS.find(s => s.id === mock.subjectId);
                         return (
-                          <tr key={mock.id} className="hover:bg-slate-800/30 transition">
-                            <td className="px-5 py-4 font-semibold text-white">
+                          <tr key={mock.id} className="hover:bg-slate-50/60 transition">
+                            <td className="px-4 py-3 font-medium text-slate-900">
                               {mock.title}
-                              <div className="text-[11px] text-slate-500 font-normal">
-                                Published {new Date(mock.createdAt).toLocaleDateString()}
+                              <div className="text-[10px] text-slate-400 font-normal">
+                                Added {new Date(mock.createdAt).toLocaleDateString()}
                               </div>
                             </td>
-                            <td className="px-5 py-4 text-xs font-medium text-slate-300">
+                            <td className="px-4 py-3 text-slate-600">
                               {subj ? subj.name : mock.subjectId}
                             </td>
-                            <td className="px-5 py-4">
-                              <span className="px-2 py-0.5 rounded text-xs font-semibold bg-slate-800 text-slate-300">
+                            <td className="px-4 py-3">
+                              <span className="px-1.5 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-700">
                                 {mock.level}
                               </span>
                             </td>
-                            <td className="px-5 py-4 font-mono font-bold text-indigo-400">
+                            <td className="px-4 py-3 font-mono font-medium text-slate-800">
                               {mock.questions.length} Qs
                             </td>
-                            <td className="px-5 py-4 text-xs text-slate-300 font-mono">
+                            <td className="px-4 py-3 font-mono text-slate-600">
                               {mock.durationMinutes} mins
                             </td>
-                            <td className="px-5 py-4">
+                            <td className="px-4 py-3">
                               <button
                                 onClick={() => toggleMockPublish(mock.id)}
-                                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold transition ${
+                                className={`px-2 py-0.5 rounded-full text-[11px] font-medium transition ${
                                   mock.isPublished
-                                    ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                                    : 'bg-slate-800 text-slate-400'
+                                    ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60'
+                                    : 'bg-slate-100 text-slate-500'
                                 }`}
                               >
                                 {mock.isPublished ? '● Published' : '○ Draft'}
                               </button>
                             </td>
-                            <td className="px-5 py-4 text-right">
+                            <td className="px-4 py-3 text-right">
                               <div className="flex items-center justify-end gap-2">
                                 <button
                                   onClick={() => setPreviewMock(mock)}
-                                  className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold transition"
+                                  className="px-2 py-1 rounded border border-slate-200 text-slate-600 hover:bg-slate-50 text-[11px] font-medium transition"
                                 >
                                   Preview
                                 </button>
                                 <button
                                   onClick={() => deleteMock(mock.id)}
-                                  className="p-1.5 text-slate-500 hover:text-rose-400 transition"
+                                  className="p-1 text-slate-400 hover:text-rose-600 transition"
                                   title="Delete mock"
                                 >
-                                  <Trash2 className="w-4 h-4" />
+                                  <Trash2 className="w-3.5 h-3.5" />
                                 </button>
                               </div>
                             </td>
@@ -1504,52 +1447,52 @@ export default function AdminDashboardPage() {
 
             {/* PREVIEW MODAL */}
             {previewMock && (
-              <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-                <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl space-y-4">
-                  <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+              <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
+                <div className="bg-white border border-slate-200 rounded-2xl p-6 max-w-xl w-full max-h-[85vh] overflow-y-auto shadow-lg space-y-4">
+                  <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                     <div>
-                      <h4 className="text-base font-bold text-white">{previewMock.title}</h4>
-                      <p className="text-xs text-slate-400">{previewMock.level} • {previewMock.durationMinutes} mins • {previewMock.questions.length} Questions</p>
+                      <h4 className="text-sm font-semibold text-slate-900">{previewMock.title}</h4>
+                      <p className="text-[11px] text-slate-500">{previewMock.level} • {previewMock.durationMinutes} mins • {previewMock.questions.length} Questions</p>
                     </div>
                     <button 
                       onClick={() => setPreviewMock(null)}
-                      className="text-slate-400 hover:text-white"
+                      className="text-slate-400 hover:text-slate-700"
                     >
-                      <XCircle className="w-6 h-6" />
+                      <XCircle className="w-4 h-4" />
                     </button>
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     {previewMock.questions.map((q, idx) => (
-                      <div key={idx} className="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-2">
-                        <div className="font-semibold text-sm text-white">
-                          <span className="text-indigo-400 font-mono">Q{idx + 1}.</span> {q.questionText}
+                      <div key={idx} className="bg-slate-50/50 border border-slate-200/80 p-3.5 rounded-xl space-y-2">
+                        <div className="font-medium text-xs text-slate-900">
+                          <span className="font-mono text-slate-500 mr-1">Q{idx + 1}.</span> {q.questionText}
                         </div>
-                        <div className="grid grid-cols-2 gap-2 text-xs">
-                          <div className={`p-2 rounded-lg border ${q.correctOption === 'A' ? 'bg-emerald-950/60 border-emerald-500/40 text-emerald-300 font-bold' : 'bg-slate-900 border-slate-800 text-slate-300'}`}>
+                        <div className="grid grid-cols-2 gap-1.5 text-[11px]">
+                          <div className={`p-1.5 rounded border ${q.correctOption === 'A' ? 'bg-emerald-50 border-emerald-300 font-semibold text-emerald-800' : 'bg-white border-slate-200 text-slate-700'}`}>
                             A. {q.optionA}
                           </div>
-                          <div className={`p-2 rounded-lg border ${q.correctOption === 'B' ? 'bg-emerald-950/60 border-emerald-500/40 text-emerald-300 font-bold' : 'bg-slate-900 border-slate-800 text-slate-300'}`}>
+                          <div className={`p-1.5 rounded border ${q.correctOption === 'B' ? 'bg-emerald-50 border-emerald-300 font-semibold text-emerald-800' : 'bg-white border-slate-200 text-slate-700'}`}>
                             B. {q.optionB}
                           </div>
-                          <div className={`p-2 rounded-lg border ${q.correctOption === 'C' ? 'bg-emerald-950/60 border-emerald-500/40 text-emerald-300 font-bold' : 'bg-slate-900 border-slate-800 text-slate-300'}`}>
+                          <div className={`p-1.5 rounded border ${q.correctOption === 'C' ? 'bg-emerald-50 border-emerald-300 font-semibold text-emerald-800' : 'bg-white border-slate-200 text-slate-700'}`}>
                             C. {q.optionC}
                           </div>
-                          <div className={`p-2 rounded-lg border ${q.correctOption === 'D' ? 'bg-emerald-950/60 border-emerald-500/40 text-emerald-300 font-bold' : 'bg-slate-900 border-slate-800 text-slate-300'}`}>
+                          <div className={`p-1.5 rounded border ${q.correctOption === 'D' ? 'bg-emerald-50 border-emerald-300 font-semibold text-emerald-800' : 'bg-white border-slate-200 text-slate-700'}`}>
                             D. {q.optionD}
                           </div>
                         </div>
-                        <div className="text-[11px] text-slate-400 pt-1 border-t border-slate-800/80">
-                          <span className="text-emerald-400 font-bold">Answer: Option {q.correctOption}</span> — {q.explanation}
+                        <div className="text-[11px] text-slate-500 pt-1 border-t border-slate-100">
+                          <b className="text-slate-700">Correct: Option {q.correctOption}</b> — {q.explanation}
                         </div>
                       </div>
                     ))}
                   </div>
 
-                  <div className="pt-3 text-right border-t border-slate-800">
+                  <div className="pt-3 text-right border-t border-slate-100">
                     <button
                       onClick={() => setPreviewMock(null)}
-                      className="px-5 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold"
+                      className="px-4 py-1.5 bg-slate-900 text-white rounded-lg text-xs font-medium"
                     >
                       Close Preview
                     </button>
@@ -1567,56 +1510,55 @@ export default function AdminDashboardPage() {
           <div className="space-y-6">
             {/* Top Revenue Summary */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-lg">
-                <div className="text-xs text-slate-400 uppercase font-semibold">Total Revenue Collected</div>
-                <div className="text-2xl font-black text-emerald-400 font-mono mt-1">
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
+                <span className="text-xs text-slate-500 font-medium">Total Cash Flow Collected</span>
+                <span className="text-2xl font-semibold text-slate-900 font-mono mt-1 block">
                   GH₵ {metrics.totalCashFlowGhs.toFixed(2)}
-                </div>
-                <div className="text-xs text-slate-500 mt-1">From MoMo and Scratch-Cards</div>
+                </span>
+                <span className="text-[11px] text-slate-500 mt-1 block">MoMo and scratch-card retail</span>
               </div>
 
-              <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-lg">
-                <div className="text-xs text-slate-400 uppercase font-semibold">Active Unredeemed PINs</div>
-                <div className="text-2xl font-black text-indigo-400 font-mono mt-1">
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
+                <span className="text-xs text-slate-500 font-medium">Unredeemed Active PINs</span>
+                <span className="text-2xl font-semibold text-slate-900 font-mono mt-1 block">
                   {pins.filter(p => p.status === 'ACTIVE').length} Vouchers
-                </div>
-                <div className="text-xs text-slate-500 mt-1">Ready for distribution / retail</div>
+                </span>
+                <span className="text-[11px] text-slate-500 mt-1 block">Ready for distribution</span>
               </div>
 
-              <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-lg">
-                <div className="text-xs text-slate-400 uppercase font-semibold">Redeemed Vouchers</div>
-                <div className="text-2xl font-black text-amber-400 font-mono mt-1">
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
+                <span className="text-xs text-slate-500 font-medium">Redeemed Vouchers</span>
+                <span className="text-2xl font-semibold text-slate-900 font-mono mt-1 block">
                   {pins.filter(p => p.status === 'REDEEMED').length} Redeemed
-                </div>
-                <div className="text-xs text-slate-500 mt-1">Successfully activated by students</div>
+                </span>
+                <span className="text-[11px] text-slate-500 mt-1 block">Activated by students</span>
               </div>
             </div>
 
             {/* PIN Batch Generator */}
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+            <div className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div>
-                  <h3 className="text-base font-bold text-white flex items-center gap-2">
-                    <KeyRound className="w-5 h-5 text-indigo-400" /> Scratch-Card PIN Batch Minting
-                  </h3>
-                  <p className="text-xs text-slate-400">Generate serialized scratch-card voucher PINs for retail distribution.</p>
+                  <h3 className="text-sm font-semibold text-slate-900">Scratch-Card PIN Minting</h3>
+                  <p className="text-xs text-slate-500">Generate voucher batches for print and retail distribution.</p>
                 </div>
 
                 <button
                   onClick={exportPinsCSV}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold border border-slate-700 transition"
+                  className="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-medium transition flex items-center gap-1.5 shadow-sm"
                 >
-                  <Download className="w-4 h-4" /> Export All PINs CSV
+                  <Download className="w-3.5 h-3.5 text-slate-500" />
+                  <span>Export All PINs</span>
                 </button>
               </div>
 
-              <form onSubmit={handleGeneratePins} className="grid grid-cols-1 sm:grid-cols-4 gap-4 items-end">
+              <form onSubmit={handleGeneratePins} className="grid grid-cols-1 sm:grid-cols-4 gap-3 items-end">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Quantity</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1">Quantity</label>
                   <select
                     value={pinCount}
                     onChange={(e) => setPinCount(Number(e.target.value))}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white"
+                    className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                   >
                     <option value={10}>10 Vouchers</option>
                     <option value={20}>20 Vouchers</option>
@@ -1626,23 +1568,23 @@ export default function AdminDashboardPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Retail Price (GHS)</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1">Retail Price (GHS)</label>
                   <input
                     type="number"
                     value={pinPrice}
                     onChange={(e) => setPinPrice(Number(e.target.value))}
                     min="5"
                     step="5"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white"
+                    className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Validity (Days)</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1">Validity Period</label>
                   <select
                     value={pinValidity}
                     onChange={(e) => setPinValidity(Number(e.target.value))}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white"
+                    className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                   >
                     <option value={30}>30 Days Full Pass</option>
                     <option value={60}>60 Days Full Pass</option>
@@ -1652,18 +1594,19 @@ export default function AdminDashboardPage() {
 
                 <button
                   type="submit"
-                  className="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow-lg shadow-indigo-600/30 transition flex items-center justify-center gap-1.5"
+                  className="w-full py-2 px-3 bg-slate-900 hover:bg-slate-800 text-white font-medium rounded-lg text-xs shadow-sm transition flex items-center justify-center gap-1.5"
                 >
-                  <Plus className="w-4 h-4" /> Generate Batch
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Generate Batch</span>
                 </button>
               </form>
 
               {/* Newly Generated Feedback */}
               {newlyGenerated.length > 0 && (
-                <div className="bg-slate-950 border border-indigo-900/50 p-4 rounded-xl space-y-3">
-                  <div className="flex items-center justify-between text-xs text-indigo-300 font-semibold">
+                <div className="bg-slate-50 border border-slate-200/80 p-3.5 rounded-lg space-y-2">
+                  <div className="flex items-center justify-between text-xs text-slate-700 font-medium">
                     <span>Generated {newlyGenerated.length} PINs successfully:</span>
-                    <span>Click any code to copy</span>
+                    <span className="text-[11px] text-slate-500">Click any code to copy</span>
                   </div>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono text-xs">
                     {newlyGenerated.map((p) => (
@@ -1671,13 +1614,13 @@ export default function AdminDashboardPage() {
                         key={p.id}
                         type="button"
                         onClick={() => copyToClipboard(p.pinCode)}
-                        className="p-2 bg-slate-900 border border-slate-800 rounded-lg text-slate-200 hover:border-indigo-500 flex items-center justify-between text-left transition"
+                        className="p-2 bg-white border border-slate-200 rounded-md text-slate-800 hover:border-slate-400 flex items-center justify-between text-left transition shadow-2xs"
                       >
                         <span className="truncate">{p.pinCode}</span>
                         {copiedPin === p.pinCode ? (
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                          <CheckCircle2 className="w-3 h-3 text-emerald-600" />
                         ) : (
-                          <Copy className="w-3.5 h-3.5 text-slate-500" />
+                          <Copy className="w-3 h-3 text-slate-400" />
                         )}
                       </button>
                     ))}
@@ -1687,33 +1630,31 @@ export default function AdminDashboardPage() {
             </div>
 
             {/* Cashflow Ledger */}
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
-              <div className="p-4 border-b border-slate-800">
-                <h4 className="text-sm font-bold text-white flex items-center gap-2">
-                  <DollarSign className="w-4 h-4 text-emerald-400" /> Recent Cash Flow & Mobile Money Transactions
-                </h4>
+            <div className="bg-white border border-slate-200/80 rounded-xl overflow-hidden shadow-sm">
+              <div className="p-3.5 border-b border-slate-200/80">
+                <h3 className="text-xs font-semibold text-slate-900">Recent Cashflow & MoMo Transactions</h3>
               </div>
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm">
-                  <thead className="bg-slate-950 text-slate-400 text-xs uppercase font-semibold border-b border-slate-800">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-50/75 text-slate-500 font-medium uppercase tracking-wider border-b border-slate-200/80">
                     <tr>
-                      <th className="px-5 py-3">Reference</th>
-                      <th className="px-5 py-3">Student Phone</th>
-                      <th className="px-5 py-3">Payment Method</th>
-                      <th className="px-5 py-3">Description</th>
-                      <th className="px-5 py-3">Amount</th>
-                      <th className="px-5 py-3 text-right">Timestamp</th>
+                      <th className="px-4 py-2.5">Reference</th>
+                      <th className="px-4 py-2.5">Student Phone</th>
+                      <th className="px-4 py-2.5">Payment Method</th>
+                      <th className="px-4 py-2.5">Description</th>
+                      <th className="px-4 py-2.5">Amount</th>
+                      <th className="px-4 py-2.5 text-right">Timestamp</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/60 font-mono text-xs">
+                  <tbody className="divide-y divide-slate-100 font-mono">
                     {transactions.map((tx) => (
-                      <tr key={tx.id} className="hover:bg-slate-800/30 transition">
-                        <td className="px-5 py-3.5 font-bold text-slate-300">{tx.reference}</td>
-                        <td className="px-5 py-3.5 text-slate-400">{tx.studentPhone}</td>
-                        <td className="px-5 py-3.5 text-slate-300 font-sans">{tx.paymentMethod}</td>
-                        <td className="px-5 py-3.5 text-slate-400 font-sans">{tx.description}</td>
-                        <td className="px-5 py-3.5 text-emerald-400 font-bold">GH₵ {tx.amountGhs.toFixed(2)}</td>
-                        <td className="px-5 py-3.5 text-right text-slate-500">
+                      <tr key={tx.id} className="hover:bg-slate-50/60 transition">
+                        <td className="px-4 py-2.5 font-medium text-slate-900">{tx.reference}</td>
+                        <td className="px-4 py-2.5 text-slate-600">{tx.studentPhone}</td>
+                        <td className="px-4 py-2.5 font-sans text-slate-700">{tx.paymentMethod}</td>
+                        <td className="px-4 py-2.5 font-sans text-slate-600">{tx.description}</td>
+                        <td className="px-4 py-2.5 text-slate-900 font-semibold">GH₵ {tx.amountGhs.toFixed(2)}</td>
+                        <td className="px-4 py-2.5 text-right text-slate-400">
                           {new Date(tx.createdAt).toLocaleDateString()}
                         </td>
                       </tr>
@@ -1727,25 +1668,5 @@ export default function AdminDashboardPage() {
 
       </main>
     </div>
-  );
-}
-
-function TabletIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect width="16" height="20" x="4" y="2" rx="2" ry="2" />
-      <line x1="12" x2="12.01" y1="18" y2="18" />
-    </svg>
   );
 }

@@ -45,7 +45,7 @@ export default function HomePage() {
             </h1>
 
             <p className="text-base sm:text-lg text-slate-200 max-w-2xl mx-auto leading-relaxed font-normal">
-              Transition from WhatsApp messages to a structured learning portal. Full JHS 1, 2, and 3 curriculum topics, instant quizzes with step-by-step explanations, and personalized weekly exams.
+              Full JHS 1, 2, and 3 curriculum topics, instant quizzes with step-by-step explanations, and personalized weekly exams.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
