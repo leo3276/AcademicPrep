@@ -71,6 +71,15 @@ import { JHS3_COMPUTING_QUIZZES } from './curriculumJhs3ComputingQuizzes';
 import { JHS3_RME_TOPICS } from './curriculumJhs3Rme';
 import { JHS3_RME_DETAILED_NOTES } from './curriculumDetailedNotesJhs3Rme';
 import { JHS3_RME_QUIZZES } from './curriculumJhs3RmeQuizzes';
+import { JHS3_FRENCH_TOPICS } from './curriculumJhs3French';
+import { JHS3_FRENCH_DETAILED_NOTES } from './curriculumDetailedNotesJhs3French';
+import { JHS3_FRENCH_QUIZZES } from './curriculumJhs3FrenchQuizzes';
+import { JHS3_TWI_TOPICS } from './curriculumJhs3Twi';
+import { JHS3_TWI_DETAILED_NOTES } from './curriculumDetailedNotesJhs3Twi';
+import { JHS3_TWI_QUIZZES } from './curriculumJhs3TwiQuizzes';
+import { JHS3_CAREER_TECH_TOPICS } from './curriculumJhs3CareerTech';
+import { JHS3_CAREER_TECH_DETAILED_NOTES } from './curriculumDetailedNotesJhs3CareerTech';
+import { JHS3_CAREER_TECH_QUIZZES } from './curriculumJhs3CareerTechQuizzes';
 
 export const CURRICULUM_SUBJECTS: CurriculumSubject[] = [
   {
@@ -234,6 +243,21 @@ const BASE_JHS_TOPICS: CurriculumTopic[] = [
   ...JHS3_RME_TOPICS,
 
   // ==========================================
+  // JHS 3 - FRENCH LANGUAGE (BECE Candidates - 12 Topics)
+  // ==========================================
+  ...JHS3_FRENCH_TOPICS,
+
+  // ==========================================
+  // JHS 3 - GHANAIAN LANGUAGE (AKUAPEM TWI) (BECE Candidates - 10 Topics)
+  // ==========================================
+  ...JHS3_TWI_TOPICS,
+
+  // ==========================================
+  // JHS 3 - CAREER TECHNOLOGY (BECE Candidates - 12 Topics)
+  // ==========================================
+  ...JHS3_CAREER_TECH_TOPICS,
+
+  // ==========================================
   // JHS 1 - COMPUTING / ICT (All 15 GES Topics)
   // ==========================================
   ...JHS1_COMPUTING_TOPICS,
@@ -279,6 +303,9 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
     JHS3_SOCIAL_DETAILED_NOTES[topic.id] ||
     JHS3_COMPUTING_DETAILED_NOTES[topic.id] ||
     JHS3_RME_DETAILED_NOTES[topic.id] ||
+    JHS3_FRENCH_DETAILED_NOTES[topic.id] ||
+    JHS3_TWI_DETAILED_NOTES[topic.id] ||
+    JHS3_CAREER_TECH_DETAILED_NOTES[topic.id] ||
     JHS2_MATH_DETAILED_NOTES[topic.id] ||
     JHS2_SCIENCE_DETAILED_NOTES[topic.id] ||
     JHS2_ENGLISH_DETAILED_NOTES[topic.id] ||
@@ -304,6 +331,9 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
     JHS3_SOCIAL_QUIZZES[topic.id] ||
     JHS3_COMPUTING_QUIZZES[topic.id] ||
     JHS3_RME_QUIZZES[topic.id] ||
+    JHS3_FRENCH_QUIZZES[topic.id] ||
+    JHS3_TWI_QUIZZES[topic.id] ||
+    JHS3_CAREER_TECH_QUIZZES[topic.id] ||
     JHS1_MATH_QUIZZES[topic.id] ||
     JHS2_MATH_QUIZZES[topic.id] ||
     JHS2_SCIENCE_QUIZZES[topic.id] ||
