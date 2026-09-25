@@ -53,6 +53,12 @@ import { JHS2_TWI_QUIZZES } from './curriculumJhs2TwiQuizzes';
 import { JHS2_CAREER_TECH_TOPICS } from './curriculumJhs2CareerTech';
 import { JHS2_CAREER_TECH_DETAILED_NOTES } from './curriculumDetailedNotesJhs2CareerTech';
 import { JHS2_CAREER_TECH_QUIZZES } from './curriculumJhs2CareerTechQuizzes';
+import { JHS3_MATH_TOPICS } from './curriculumJhs3Math';
+import { JHS3_MATH_DETAILED_NOTES } from './curriculumDetailedNotesJhs3Math';
+import { JHS3_MATH_QUIZZES } from './curriculumJhs3MathQuizzes';
+import { JHS3_SCIENCE_TOPICS } from './curriculumJhs3Science';
+import { JHS3_SCIENCE_DETAILED_NOTES } from './curriculumDetailedNotesJhs3Science';
+import { JHS3_SCIENCE_QUIZZES } from './curriculumJhs3ScienceQuizzes';
 
 export const CURRICULUM_SUBJECTS: CurriculumSubject[] = [
   {
@@ -186,143 +192,14 @@ const BASE_JHS_TOPICS: CurriculumTopic[] = [
   ...JHS2_CAREER_TECH_TOPICS,
 
   // ==========================================
-  // JHS 3 - MATHEMATICS (BECE Canditates)
+  // JHS 3 - MATHEMATICS (BECE Candidates - 14 Topics)
   // ==========================================
-  {
-    id: 'jhs3-math-t1-vectors',
-    subjectId: 'math',
-    level: 'JHS 3',
-    term: 1,
-    orderIndex: 1,
-    title: 'Vectors and Bearings (BECE Focus)',
-    description: 'Column vectors, addition, scalar multiplication, magnitude, and 3-figure bearings.',
-    isFreeTrial: true,
-    keyNotes: `A vector has both magnitude and direction.
-• Column Vector form: [x, y] where x is horizontal displacement and y is vertical displacement.
-• Magnitude |r| = √(x² + y²).
-• Bearings: Measured clockwise starting from True North (000° to 360°). Always written in three figures (e.g., 045°, 270°).`,
-    quiz: {
-      id: 'quiz-jhs3-math-vectors',
-      topicId: 'jhs3-math-t1-vectors',
-      title: 'Vectors & Bearings BECE Test',
-      timeLimitMinutes: 10,
-      passScorePercentage: 60,
-      questions: [
-        {
-          id: 'q-vec-1',
-          quizId: 'quiz-jhs3-math-vectors',
-          questionText: 'If vector u = (3, 4), what is the magnitude |u|?',
-          optionA: '7 units',
-          optionB: '5 units',
-          optionC: '25 units',
-          optionD: '1 unit',
-          correctOption: 'B',
-          explanation: '|u| = √(3² + 4²) = √(9 + 16) = √25 = 5 units.',
-        },
-        {
-          id: 'q-vec-2',
-          quizId: 'quiz-jhs3-math-vectors',
-          questionText: 'What is the three-figure bearing of South-West (SW)?',
-          optionA: '045°',
-          optionB: '135°',
-          optionC: '225°',
-          optionD: '315°',
-          correctOption: 'C',
-          explanation: 'North = 000°, East = 090°, South = 180°, West = 270°. South-West is exactly midway: 180° + 45° = 225°.',
-        },
-      ],
-    },
-  },
-  {
-    id: 'jhs3-math-t2-businessmath',
-    subjectId: 'math',
-    level: 'JHS 3',
-    term: 2,
-    orderIndex: 2,
-    title: 'Business Mathematics: Profit, Loss & Simple Interest',
-    description: 'Calculate cost price, selling price, profit percentage, and Simple Interest (I = PRT / 100).',
-    isFreeTrial: false,
-    keyNotes: `Essential financial formulas for BECE:
-• Profit = Selling Price (SP) - Cost Price (CP).
-• Percentage Profit = (Profit / CP) × 100%.
-• Simple Interest Formula: I = (P × R × T) / 100, where:
-  - P = Principal amount borrowed or invested.
-  - R = Rate per annum (%).
-  - T = Time in years.
-• Total Amount (A) = Principal (P) + Interest (I).`,
-    quiz: {
-      id: 'quiz-jhs3-math-biz',
-      topicId: 'jhs3-math-t2-businessmath',
-      title: 'Business Math & Simple Interest Quiz',
-      timeLimitMinutes: 10,
-      passScorePercentage: 60,
-      questions: [
-        {
-          id: 'q-biz-1',
-          quizId: 'quiz-jhs3-math-biz',
-          questionText: 'Calculate the simple interest on GHS 500 for 2 years at 10% per annum.',
-          optionA: 'GHS 50',
-          optionB: 'GHS 100',
-          optionC: 'GHS 200',
-          optionD: 'GHS 600',
-          correctOption: 'B',
-          explanation: 'I = (P × R × T) / 100 = (500 × 10 × 2) / 100 = 10,000 / 100 = GHS 100.',
-        },
-      ],
-    },
-  },
+  ...JHS3_MATH_TOPICS,
 
   // ==========================================
-  // JHS 3 - INTEGRATED SCIENCE
+  // JHS 3 - INTEGRATED SCIENCE (BECE Candidates - 14 Topics)
   // ==========================================
-  {
-    id: 'jhs3-sci-t1-circuits',
-    subjectId: 'science',
-    level: 'JHS 3',
-    term: 1,
-    orderIndex: 1,
-    title: 'Electric Current, Voltage & Circuits',
-    description: 'Series vs parallel circuits, Ohm’s Law (V = IR), conductors, and insulators.',
-    isFreeTrial: true,
-    keyNotes: `Electricity is the flow of electric charge (electrons).
-• Current (I): Measured in Amperes (A) using an ammeter connected in SERIES.
-• Potential Difference / Voltage (V): Measured in Volts (V) using a voltmeter in PARALLEL.
-• Resistance (R): Measured in Ohms (Ω).
-• Ohm’s Law: V = I × R.
-• Series Circuit: One continuous path; if one bulb blows, all go off.
-• Parallel Circuit: Multiple paths; each component receives the full supply voltage.`,
-    quiz: {
-      id: 'quiz-jhs3-sci-circuits',
-      topicId: 'jhs3-sci-t1-circuits',
-      title: 'Electricity & Circuits BECE Master Quiz',
-      timeLimitMinutes: 10,
-      passScorePercentage: 60,
-      questions: [
-        {
-          id: 'q-circ-1',
-          quizId: 'quiz-jhs3-sci-circuits',
-          questionText: 'A circuit has a resistance of 4 Ohms and a current of 3 Amperes. What is the voltage?',
-          optionA: '0.75 Volts',
-          optionB: '1.33 Volts',
-          optionC: '7 Volts',
-          optionD: '12 Volts',
-          correctOption: 'D',
-          explanation: 'According to Ohm’s Law, V = I × R = 3 A × 4 Ω = 12 V.',
-        },
-        {
-          id: 'q-circ-2',
-          quizId: 'quiz-jhs3-sci-circuits',
-          questionText: 'How is an ammeter connected to measure electric current in a circuit?',
-          optionA: 'In parallel',
-          optionB: 'In series',
-          optionC: 'Across the cell only',
-          optionD: 'In reverse bias',
-          correctOption: 'B',
-          explanation: 'An ammeter has very low internal resistance and must be connected in series to measure total current passing through.',
-        },
-      ],
-    },
-  },
+  ...JHS3_SCIENCE_TOPICS,
 
   // ==========================================
   // JHS 1 - COMPUTING / ICT (All 15 GES Topics)
@@ -364,6 +241,8 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
   ...topic,
   detailedNotes:
     TOPIC_DETAILED_NOTES[topic.id] ||
+    JHS3_MATH_DETAILED_NOTES[topic.id] ||
+    JHS3_SCIENCE_DETAILED_NOTES[topic.id] ||
     JHS2_MATH_DETAILED_NOTES[topic.id] ||
     JHS2_SCIENCE_DETAILED_NOTES[topic.id] ||
     JHS2_ENGLISH_DETAILED_NOTES[topic.id] ||
@@ -383,6 +262,8 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
     JHS1_CAREER_TECH_DETAILED_NOTES[topic.id] ||
     topic.detailedNotes,
   quiz:
+    JHS3_MATH_QUIZZES[topic.id] ||
+    JHS3_SCIENCE_QUIZZES[topic.id] ||
     JHS1_MATH_QUIZZES[topic.id] ||
     JHS2_MATH_QUIZZES[topic.id] ||
     JHS2_SCIENCE_QUIZZES[topic.id] ||
