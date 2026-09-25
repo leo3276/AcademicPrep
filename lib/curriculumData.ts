@@ -59,6 +59,12 @@ import { JHS3_MATH_QUIZZES } from './curriculumJhs3MathQuizzes';
 import { JHS3_SCIENCE_TOPICS } from './curriculumJhs3Science';
 import { JHS3_SCIENCE_DETAILED_NOTES } from './curriculumDetailedNotesJhs3Science';
 import { JHS3_SCIENCE_QUIZZES } from './curriculumJhs3ScienceQuizzes';
+import { JHS3_ENGLISH_TOPICS } from './curriculumJhs3English';
+import { JHS3_ENGLISH_DETAILED_NOTES } from './curriculumDetailedNotesJhs3English';
+import { JHS3_ENGLISH_QUIZZES } from './curriculumJhs3EnglishQuizzes';
+import { JHS3_SOCIAL_TOPICS } from './curriculumJhs3Social';
+import { JHS3_SOCIAL_DETAILED_NOTES } from './curriculumDetailedNotesJhs3Social';
+import { JHS3_SOCIAL_QUIZZES } from './curriculumJhs3SocialQuizzes';
 
 export const CURRICULUM_SUBJECTS: CurriculumSubject[] = [
   {
@@ -202,6 +208,16 @@ const BASE_JHS_TOPICS: CurriculumTopic[] = [
   ...JHS3_SCIENCE_TOPICS,
 
   // ==========================================
+  // JHS 3 - ENGLISH LANGUAGE (BECE Candidates - 14 Topics)
+  // ==========================================
+  ...JHS3_ENGLISH_TOPICS,
+
+  // ==========================================
+  // JHS 3 - SOCIAL STUDIES (BECE Candidates - 14 Topics)
+  // ==========================================
+  ...JHS3_SOCIAL_TOPICS,
+
+  // ==========================================
   // JHS 1 - COMPUTING / ICT (All 15 GES Topics)
   // ==========================================
   ...JHS1_COMPUTING_TOPICS,
@@ -243,6 +259,8 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
     TOPIC_DETAILED_NOTES[topic.id] ||
     JHS3_MATH_DETAILED_NOTES[topic.id] ||
     JHS3_SCIENCE_DETAILED_NOTES[topic.id] ||
+    JHS3_ENGLISH_DETAILED_NOTES[topic.id] ||
+    JHS3_SOCIAL_DETAILED_NOTES[topic.id] ||
     JHS2_MATH_DETAILED_NOTES[topic.id] ||
     JHS2_SCIENCE_DETAILED_NOTES[topic.id] ||
     JHS2_ENGLISH_DETAILED_NOTES[topic.id] ||
@@ -264,6 +282,8 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
   quiz:
     JHS3_MATH_QUIZZES[topic.id] ||
     JHS3_SCIENCE_QUIZZES[topic.id] ||
+    JHS3_ENGLISH_QUIZZES[topic.id] ||
+    JHS3_SOCIAL_QUIZZES[topic.id] ||
     JHS1_MATH_QUIZZES[topic.id] ||
     JHS2_MATH_QUIZZES[topic.id] ||
     JHS2_SCIENCE_QUIZZES[topic.id] ||
