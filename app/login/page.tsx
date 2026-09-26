@@ -4,14 +4,14 @@ import React, { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/lib/authContext';
 import { EducationLevel } from '@/lib/types';
-import { Phone, Lock, User, GraduationCap, ArrowRight, ShieldCheck, KeyRound, Sparkles, CheckCircle2, HelpCircle } from 'lucide-react';
+import { Phone, Lock, User, GraduationCap, ArrowRight, ShieldCheck, KeyRound, Sparkles, CheckCircle2, HelpCircle, LogOut } from 'lucide-react';
 import Link from 'next/link';
 
 function LoginFormContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get('redirect') || '/jhs/profile';
-  const { loginStudent, student } = useAuth();
+  const { loginStudent, logoutStudent, student } = useAuth();
 
   const [phone, setPhone] = useState('');
   const [fullName, setFullName] = useState('');
@@ -52,6 +52,19 @@ function LoginFormContent() {
             <span>Continue to JHS Curriculum</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
+          <button
+            type="button"
+            onClick={() => {
+              logoutStudent();
+              setPhone('');
+              setFullName('');
+              setAccessPin('');
+            }}
+            className="w-full py-2.5 rounded-xl border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer mt-1"
+          >
+            <LogOut className="w-4 h-4 text-slate-500" />
+            <span>Sign Out & Create New Account</span>
+          </button>
         </div>
       </div>
     );
@@ -73,22 +86,6 @@ function LoginFormContent() {
     router.push(redirectUrl);
   };
 
-  const handleFillDemoFree = () => {
-    setPhone('0241234567');
-    setFullName('Kofi Mensah');
-    setLevel('JHS 1');
-    setAccessPin('');
-    setError(null);
-  };
-
-  const handleFillDemoVip = () => {
-    setPhone('0559876543');
-    setFullName('Ama Serwaa');
-    setLevel('JHS 3');
-    setAccessPin('PREP-8842-9901');
-    setError(null);
-  };
-
   return (
     <div className="max-w-md mx-auto my-10 px-4">
       <div className="bg-white rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 p-6 sm:p-8 space-y-6">
@@ -100,24 +97,6 @@ function LoginFormContent() {
           <p className="text-xs text-slate-600 leading-relaxed">
             Enter your Phone Number & Full Name to begin with <b>3 free trial topics</b>, or enter a purchased Access PIN for immediate <b>VIP Full Pass</b>.
           </p>
-        </div>
-
-        {/* Quick Demo Autofill Helpers */}
-        <div className="grid grid-cols-2 gap-2 text-xs">
-          <button
-            type="button"
-            onClick={handleFillDemoFree}
-            className="py-1.5 px-2.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold border border-slate-200 text-center transition"
-          >
-            ⚡ Demo Free Student
-          </button>
-          <button
-            type="button"
-            onClick={handleFillDemoVip}
-            className="py-1.5 px-2.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 font-semibold border border-amber-200 text-center transition"
-          >
-            👑 Demo VIP with PIN
-          </button>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">

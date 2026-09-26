@@ -587,19 +587,32 @@ export default function StudentProfilePage() {
             </span>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-500 font-semibold uppercase tracking-wider border-b border-slate-200">
-                <tr>
-                  <th className="px-4 py-3">Rank</th>
-                  <th className="px-4 py-3">Student Name</th>
-                  <th className="px-4 py-3">Level</th>
-                  <th className="px-4 py-3">Topics Completed</th>
-                  <th className="px-4 py-3">Average Score</th>
-                  <th className="px-4 py-3">Access Tier</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
+          {leaderboard.length === 0 ? (
+            <div className="py-12 text-center space-y-3 bg-slate-50/50 rounded-xl border border-dashed border-slate-200">
+              <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto">
+                <Trophy className="w-6 h-6" />
+              </div>
+              <div className="space-y-1">
+                <p className="text-xs font-bold text-slate-800">No Students on the Leaderboard Yet</p>
+                <p className="text-[11px] text-slate-500 max-w-sm mx-auto">
+                  Complete your first curriculum topic quiz to rank #1 on the national leaderboard!
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-slate-50 text-slate-500 font-semibold uppercase tracking-wider border-b border-slate-200">
+                  <tr>
+                    <th className="px-4 py-3">Rank</th>
+                    <th className="px-4 py-3">Student Name</th>
+                    <th className="px-4 py-3">Level</th>
+                    <th className="px-4 py-3">Topics Completed</th>
+                    <th className="px-4 py-3">Average Score</th>
+                    <th className="px-4 py-3">Access Tier</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
                 {leaderboard.map((st, index) => {
                   const isCurrent = student && st.phone === student.phoneNumber;
                   return (
@@ -661,8 +674,9 @@ export default function StudentProfilePage() {
               </tbody>
             </table>
           </div>
-        </div>
-      </main>
+        )}
+      </div>
+    </main>
 
       {/* ============================================================ */}
       {/* 6. BUY ACCESS PIN MODAL                                      */}
