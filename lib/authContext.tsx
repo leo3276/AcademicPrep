@@ -21,8 +21,10 @@ interface AuthContextType {
   weeklyExamAttempts: WeeklyExamAttempt[];
   loginStudent: (phoneNumber: string, pin: string, fullName?: string, level?: EducationLevel) => Promise<{ success: boolean; error?: string }>;
   logoutStudent: () => void;
-  loginAdmin: (passcode: string) => boolean;
+  loginAdmin: (primaryPin: string, secondaryPin: string) => boolean;
   logoutAdmin: () => void;
+  updateAdminPins: (newPrimary: string, newSecondary: string) => boolean;
+  getAdminPins: () => { primary: string; secondary: string };
   redeemPin: (pinCode: string) => Promise<{ success: boolean; message: string }>;
   recordQuizScore: (topicId: string, scorePercentage: number) => void;
   recordWeeklyExamAttempt: (attempt: Omit<WeeklyExamAttempt, 'id' | 'createdAt'>) => void;
@@ -30,9 +32,14 @@ interface AuthContextType {
   getAdminMetrics: () => AdminMetrics;
 }
 
+export const DEFAULT_ADMIN_PRIMARY_PIN = '9276@Dollar';
+export const DEFAULT_ADMIN_SECONDARY_PIN = '9276@AcademicPrep';
+
 const STORAGE_KEYS = {
   CURRENT_STUDENT: 'academicprep_student',
   IS_ADMIN: 'academicprep_is_admin',
+  ADMIN_PRIMARY_PIN: 'academicprep_admin_primary_pin',
+  ADMIN_SECONDARY_PIN: 'academicprep_admin_secondary_pin',
   TOPIC_PROGRESS: 'academicprep_topic_progress',
   ACCESS_PINS: 'academicprep_access_pins',
   TRANSACTIONS: 'academicprep_cash_flow',
@@ -184,11 +191,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem(STORAGE_KEYS.CURRENT_STUDENT);
   };
 
-  const loginAdmin = (passcode: string): boolean => {
-    // Admin passcode: 9999
-    if (passcode.trim() === '9999') {
+  const loginAdmin = (primaryPin: string, secondaryPin: string): boolean => {
+    let expectedPrimary = DEFAULT_ADMIN_PRIMARY_PIN;
+    let expectedSecondary = DEFAULT_ADMIN_SECONDARY_PIN;
+
+    if (typeof window !== 'undefined') {
+      const storedPrimary = localStorage.getItem(STORAGE_KEYS.ADMIN_PRIMARY_PIN);
+      const storedSecondary = localStorage.getItem(STORAGE_KEYS.ADMIN_SECONDARY_PIN);
+      if (storedPrimary) expectedPrimary = storedPrimary;
+      if (storedSecondary) expectedSecondary = storedSecondary;
+    }
+
+    if (
+      primaryPin.trim() === expectedPrimary.trim() && 
+      secondaryPin.trim() === expectedSecondary.trim()
+    ) {
       setIsAdmin(true);
-      localStorage.setItem(STORAGE_KEYS.IS_ADMIN, 'true');
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(STORAGE_KEYS.IS_ADMIN, 'true');
+        sessionStorage.setItem(STORAGE_KEYS.IS_ADMIN, 'true');
+      }
       return true;
     }
     return false;
@@ -196,7 +218,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logoutAdmin = () => {
     setIsAdmin(false);
-    localStorage.removeItem(STORAGE_KEYS.IS_ADMIN);
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(STORAGE_KEYS.IS_ADMIN);
+      sessionStorage.removeItem(STORAGE_KEYS.IS_ADMIN);
+    }
+  };
+
+  const updateAdminPins = (newPrimary: string, newSecondary: string): boolean => {
+    if (!newPrimary.trim() || !newSecondary.trim()) return false;
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(STORAGE_KEYS.ADMIN_PRIMARY_PIN, newPrimary.trim());
+      localStorage.setItem(STORAGE_KEYS.ADMIN_SECONDARY_PIN, newSecondary.trim());
+    }
+    return true;
+  };
+
+  const getAdminPins = () => {
+    let primary = DEFAULT_ADMIN_PRIMARY_PIN;
+    let secondary = DEFAULT_ADMIN_SECONDARY_PIN;
+    if (typeof window !== 'undefined') {
+      const p = localStorage.getItem(STORAGE_KEYS.ADMIN_PRIMARY_PIN);
+      const s = localStorage.getItem(STORAGE_KEYS.ADMIN_SECONDARY_PIN);
+      if (p) primary = p;
+      if (s) secondary = s;
+    }
+    return { primary, secondary };
   };
 
   const redeemPin = async (pinCode: string): Promise<{ success: boolean; message: string }> => {
@@ -350,6 +396,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         logoutStudent,
         loginAdmin,
         logoutAdmin,
+        updateAdminPins,
+        getAdminPins,
         redeemPin,
         recordQuizScore,
         recordWeeklyExamAttempt,

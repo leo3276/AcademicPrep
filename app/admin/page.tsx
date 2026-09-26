@@ -24,7 +24,11 @@ import {
   PdfPaperType
 } from '@/lib/pdfStore';
 import { 
-  ShieldCheck, 
+  ShieldCheck,
+  EyeOff,
+  Key,
+  AlertCircle,
+  ShieldAlert, 
   Users, 
   DollarSign, 
   TrendingUp, 
@@ -63,6 +67,8 @@ export default function AdminDashboardPage() {
     isAdmin, 
     loginAdmin, 
     logoutAdmin, 
+    updateAdminPins,
+    getAdminPins,
     getAdminMetrics, 
     pins, 
     transactions, 
@@ -70,8 +76,18 @@ export default function AdminDashboardPage() {
   } = useAuth();
 
   const [mounted, setMounted] = useState(false);
-  const [passcode, setPasscode] = useState('');
-  const [authError, setAuthError] = useState(false);
+  // Dual-Key Authentication States
+  const [primaryPin, setPrimaryPin] = useState('');
+  const [secondaryPin, setSecondaryPin] = useState('');
+  const [showPrimaryPin, setShowPrimaryPin] = useState(false);
+  const [showSecondaryPin, setShowSecondaryPin] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
+
+  // Security Credentials Update Modal
+  const [showSecurityModal, setShowSecurityModal] = useState(false);
+  const [editPrimaryPin, setEditPrimaryPin] = useState('');
+  const [editSecondaryPin, setEditSecondaryPin] = useState('');
+  const [securityModalMsg, setSecurityModalMsg] = useState<string | null>(null);
   
   // Navigation Tabs: traffic, paid_access, completions, trial_mocks, pins
   const [activeTab, setActiveTab] = useState<'traffic' | 'paid_access' | 'completions' | 'trial_mocks' | 'pins'>('traffic');
@@ -130,84 +146,204 @@ export default function AdminDashboardPage() {
     );
   }
 
-  // Auth Handling
+  // Dual-Key Authentication Handling
   const handleAdminLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    const success = loginAdmin(passcode);
+    if (!primaryPin.trim()) {
+      setAuthError('Please enter the Primary Administrator Passcode.');
+      return;
+    }
+    if (!secondaryPin.trim()) {
+      setAuthError('Please enter the Secondary Security Token.');
+      return;
+    }
+    const success = loginAdmin(primaryPin.trim(), secondaryPin.trim());
     if (!success) {
-      setAuthError(true);
+      setAuthError('Access Denied: Invalid combination of Primary PIN and Secondary Token.');
     } else {
-      setAuthError(false);
-      setPasscode('');
+      setAuthError(null);
+      setPrimaryPin('');
+      setSecondaryPin('');
     }
   };
 
-  // Minimal, elegant login screen
+  const handleUpdateKeys = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editPrimaryPin.trim() || !editSecondaryPin.trim()) {
+      setSecurityModalMsg('Both primary passcode and secondary token are required.');
+      return;
+    }
+    const ok = updateAdminPins(editPrimaryPin.trim(), editSecondaryPin.trim());
+    if (ok) {
+      setSecurityModalMsg('Security credentials successfully updated!');
+      setTimeout(() => {
+        setShowSecurityModal(false);
+        setSecurityModalMsg(null);
+      }, 2000);
+    } else {
+      setSecurityModalMsg('Failed to update credentials.');
+    }
+  };
+
+  // DEDICATED RESTRICTED SECURITY GATEWAY (Standalone Web Surface)
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-          <div className="w-12 h-12 rounded-xl bg-slate-900 text-white flex items-center justify-center mx-auto mb-4 shadow-sm">
-            <Lock className="w-5 h-5" />
-          </div>
-          <h2 className="text-xl font-semibold text-slate-900 tracking-tight">
-            AcademicPrep Administration
-          </h2>
-          <p className="mt-1 text-xs text-slate-500">
-            Enter authorized passcode to manage platform operations
-          </p>
-        </div>
-
-        <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
-          <div className="bg-white py-8 px-6 shadow-sm border border-slate-200/80 rounded-2xl space-y-5">
-            <form onSubmit={handleAdminLogin} className="space-y-4">
-              <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1.5">
-                  Admin Passcode
-                </label>
-                <input
-                  type="password"
-                  value={passcode}
-                  onChange={(e) => { setPasscode(e.target.value); setAuthError(false); }}
-                  placeholder="••••"
-                  className="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900 transition"
-                  autoFocus
-                />
-                {authError && (
-                  <p className="text-xs text-rose-600 mt-1.5 font-medium">
-                    Incorrect passcode. Please try again.
-                  </p>
-                )}
+      <div className="min-h-screen bg-[#090D14] flex flex-col justify-between text-slate-200 selection:bg-blue-600 selection:text-white">
+        {/* Top Security Banner */}
+        <header className="border-b border-slate-800/80 bg-[#0B0F19]/80 backdrop-blur-md px-6 py-4">
+          <div className="max-w-6xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+                <ShieldAlert className="w-4 h-4" />
               </div>
+              <div>
+                <span className="text-xs font-bold tracking-wider text-slate-100 uppercase block font-mono">
+                  AcademicPrep System Gateway
+                </span>
+                <span className="text-[10px] text-slate-500 block font-mono">
+                  Isolated Administration Environment • 2-Key Cryptographic Lock
+                </span>
+              </div>
+            </div>
 
-              <button
-                type="submit"
-                className="w-full py-2.5 px-4 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg shadow-sm transition flex items-center justify-center gap-1.5"
-              >
-                <span>Sign In to Dashboard</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </form>
-
-            <div className="pt-4 border-t border-slate-100 flex flex-col items-center gap-3">
-              <button
-                type="button"
-                onClick={() => { setPasscode('9999'); loginAdmin('9999'); }}
-                className="text-[11px] text-slate-500 hover:text-slate-800 transition"
-              >
-                Default Passcode: <span className="font-mono font-semibold text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">9999</span> (Click to auto-fill)
-              </button>
-
+            <div className="flex items-center gap-3">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold font-mono uppercase bg-amber-500/10 border border-amber-500/20 text-amber-400">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                Locked Gateway
+              </span>
               <Link
                 href="/jhs"
-                className="text-[11px] text-slate-500 hover:text-slate-800 flex items-center gap-1 transition"
+                className="text-xs text-slate-400 hover:text-slate-200 transition flex items-center gap-1 px-2.5 py-1 rounded-lg hover:bg-slate-800/60"
               >
-                <span>Back to Student Portal</span>
+                <span>Student Portal</span>
                 <ExternalLink className="w-3 h-3" />
               </Link>
             </div>
           </div>
-        </div>
+        </header>
+
+        {/* Central Lock Panel */}
+        <main className="flex-1 flex items-center justify-center p-4 sm:p-6">
+          <div className="w-full max-w-md">
+            {/* Security Box */}
+            <div className="bg-[#0F1420] border border-slate-800/90 rounded-2xl shadow-2xl p-6 sm:p-8 space-y-6 relative overflow-hidden">
+              {/* Subtle top accent bar */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-emerald-500" />
+
+              <div className="text-center space-y-2">
+                <div className="w-12 h-12 rounded-xl bg-slate-800/90 border border-slate-700/80 flex items-center justify-center mx-auto text-blue-400 shadow-inner">
+                  <Lock className="w-5 h-5" />
+                </div>
+                <h1 className="text-xl font-bold text-white tracking-tight">
+                  Restricted Administrator Gateway
+                </h1>
+                <p className="text-xs text-slate-400 leading-relaxed max-w-sm mx-auto">
+                  Dual-key cryptographic clearance required. Enter both designated security credentials to unlock the administrative console.
+                </p>
+              </div>
+
+              {/* Login Form */}
+              <form onSubmit={handleAdminLogin} className="space-y-4">
+                {/* Key 1: Primary Passcode */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5 font-mono">
+                      <Key className="w-3.5 h-3.5 text-blue-400" />
+                      <span>1. Primary Administrator Passcode</span>
+                    </label>
+                    <span className="text-[10px] text-slate-500 font-mono">Master Key</span>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type={showPrimaryPin ? 'text' : 'password'}
+                      value={primaryPin}
+                      onChange={(e) => {
+                        setPrimaryPin(e.target.value);
+                        setAuthError(null);
+                      }}
+                      placeholder="Enter Primary PIN"
+                      className="w-full bg-[#080B11] border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 font-mono tracking-wider focus:outline-hidden focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition"
+                      autoFocus
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPrimaryPin(!showPrimaryPin)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition"
+                      tabIndex={-1}
+                    >
+                      {showPrimaryPin ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Key 2: Secondary Security Token */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5 font-mono">
+                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>2. Secondary Security Token</span>
+                    </label>
+                    <span className="text-[10px] text-slate-500 font-mono">Auth Token</span>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type={showSecondaryPin ? 'text' : 'password'}
+                      value={secondaryPin}
+                      onChange={(e) => {
+                        setSecondaryPin(e.target.value);
+                        setAuthError(null);
+                      }}
+                      placeholder="Enter Secondary PIN"
+                      className="w-full bg-[#080B11] border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 font-mono tracking-wider focus:outline-hidden focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowSecondaryPin(!showSecondaryPin)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition"
+                      tabIndex={-1}
+                    >
+                      {showSecondaryPin ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Error Banner */}
+                {authError && (
+                  <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+                    <span>{authError}</span>
+                  </div>
+                )}
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  className="w-full py-2.5 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs rounded-xl shadow-lg shadow-blue-900/30 transition flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>Verify Credentials & Enter Console</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </form>
+
+              {/* Security Policy Footer Note */}
+              <div className="pt-4 border-t border-slate-800/80 text-[11px] text-slate-500 space-y-2 text-center">
+                <div className="flex items-center justify-center gap-2 font-mono">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  <span>256-Bit Encrypted Admin Session</span>
+                </div>
+                <p>
+                  Unauthorized intrusion attempts will be blocked and recorded.
+                </p>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        {/* Global Footer */}
+        <footer className="border-t border-slate-800/60 bg-[#0B0F19]/50 py-3 text-center text-[11px] text-slate-600 font-mono">
+          AcademicPrep Ghana • Internal Management Infrastructure
+        </footer>
       </div>
     );
   }
@@ -414,6 +550,20 @@ export default function AdminDashboardPage() {
               <span className="font-semibold text-slate-900">GH₵ {metrics.totalCashFlowGhs.toFixed(2)}</span>
             </div>
 
+            <button
+              onClick={() => {
+                const current = getAdminPins();
+                setEditPrimaryPin(current.primary);
+                setEditSecondaryPin(current.secondary);
+                setShowSecurityModal(true);
+              }}
+              className="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 font-medium transition flex items-center gap-1.5"
+              title="Security credentials management"
+            >
+              <KeyRound className="w-3.5 h-3.5 text-slate-500" />
+              <span>Security Keys</span>
+            </button>
+
             <Link
               href="/jhs"
               className="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium transition flex items-center gap-1.5"
@@ -424,10 +574,11 @@ export default function AdminDashboardPage() {
 
             <button
               onClick={logoutAdmin}
-              className="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition flex items-center gap-1"
+              className="px-3 py-1.5 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 hover:bg-rose-100 font-semibold transition flex items-center gap-1.5"
+              title="Lock administration portal immediately"
             >
-              <LogOut className="w-3.5 h-3.5" />
-              <span>Logout</span>
+              <Lock className="w-3.5 h-3.5" />
+              <span>Lock Portal</span>
             </button>
           </div>
         </div>
@@ -1583,6 +1734,89 @@ export default function AdminDashboardPage() {
         )}
 
       </main>
+
+      {/* Security Credentials Management Modal */}
+      {showSecurityModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 backdrop-blur-xs p-4">
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 max-w-md w-full shadow-2xl space-y-5">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600">
+                  <KeyRound className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-slate-900">Security Credentials</h3>
+                  <p className="text-[11px] text-slate-500 font-mono">Manage Dual-Key Gateway Passwords</p>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  setShowSecurityModal(false);
+                  setSecurityModalMsg(null);
+                }}
+                className="text-slate-400 hover:text-slate-600 p-1"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleUpdateKeys} className="space-y-4">
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-slate-700 block font-mono">
+                  1. Primary Administrator Passcode
+                </label>
+                <input
+                  type="text"
+                  value={editPrimaryPin}
+                  onChange={(e) => setEditPrimaryPin(e.target.value)}
+                  className="w-full text-xs font-mono border border-slate-300 rounded-xl px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+                  required
+                />
+                <span className="text-[10px] text-slate-400 block">Default: 9276@Dollar</span>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-slate-700 block font-mono">
+                  2. Secondary Security Token
+                </label>
+                <input
+                  type="text"
+                  value={editSecondaryPin}
+                  onChange={(e) => setEditSecondaryPin(e.target.value)}
+                  className="w-full text-xs font-mono border border-slate-300 rounded-xl px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+                  required
+                />
+                <span className="text-[10px] text-slate-400 block">Default: 9276@AcademicPrep</span>
+              </div>
+
+              {securityModalMsg && (
+                <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-800 text-xs font-medium">
+                  {securityModalMsg}
+                </div>
+              )}
+
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowSecurityModal(false);
+                    setSecurityModalMsg(null);
+                  }}
+                  className="px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-medium text-slate-600 hover:bg-slate-50 transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition shadow-xs"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
