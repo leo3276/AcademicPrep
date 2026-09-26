@@ -59,26 +59,26 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+      <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="flex items-center justify-between h-16 w-full gap-2 sm:gap-4">
             {/* Logo */}
-            <div className="flex items-center gap-5 shrink-0">
+            <div className="flex items-center gap-4 shrink-0">
               <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform shrink-0">
-                  <GraduationCap className="w-6 h-6" />
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform shrink-0">
+                  <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-bold text-base sm:text-lg text-slate-900 tracking-tight leading-tight flex items-center gap-1.5 whitespace-nowrap">
+                  <span className="font-bold text-sm sm:text-base text-slate-900 tracking-tight leading-tight flex items-center gap-1.5 whitespace-nowrap">
                     AcademicPrep
-                    <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-blue-100 text-blue-700">Beta</span>
+                    <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-blue-100 text-blue-700">Beta</span>
                   </span>
-                  <span className="text-[11px] text-slate-500 font-medium whitespace-nowrap">academicprep.com</span>
+                  <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium whitespace-nowrap hidden sm:inline">academicprep.com</span>
                 </div>
               </Link>
 
-              {/* Education Level Switcher */}
-              <div className="hidden lg:flex items-center bg-slate-100 p-1 rounded-xl text-xs font-semibold shrink-0">
+              {/* Education Level Switcher - Shown on extra wide screens */}
+              <div className="hidden 2xl:flex items-center bg-slate-100 p-1 rounded-xl text-xs font-semibold shrink-0">
                 <Link 
                   href={student ? "/jhs" : "/login?redirect=/jhs"}
                   className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 whitespace-nowrap ${
@@ -101,8 +101,8 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Navigation links & Actions */}
-            <div className="hidden md:flex items-center gap-2.5">
+            {/* Desktop Navigation links & Actions (Visible on lg: 1024px+) */}
+            <div className="hidden lg:flex items-center gap-1.5 xl:gap-2.5 shrink-0">
               <Link
                 href={student ? "/jhs" : "/login?redirect=/jhs"}
                 className={`text-xs font-bold transition-colors whitespace-nowrap px-2.5 py-1.5 rounded-lg ${
@@ -113,29 +113,31 @@ export default function Navbar() {
               </Link>
               <Link
                 href="/jhs/bece-past-questions"
-                className={`text-xs font-bold transition-colors flex items-center gap-1 px-2.5 py-1.5 rounded-lg whitespace-nowrap ${
+                className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 xl:px-2.5 rounded-lg whitespace-nowrap ${
                   pathname === '/jhs/bece-past-questions' 
                     ? 'text-blue-600 bg-blue-50 font-bold' 
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                 }`}
               >
                 <BookOpen className="w-3.5 h-3.5 text-blue-600" />
-                <span>BECE Past Questions</span>
+                <span className="hidden xl:inline">BECE Past Questions</span>
+                <span className="xl:hidden">BECE</span>
               </Link>
               <Link
                 href="/jhs/trial-questions"
-                className={`text-xs font-bold transition-colors flex items-center gap-1 px-2.5 py-1.5 rounded-lg whitespace-nowrap ${
+                className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 xl:px-2.5 rounded-lg whitespace-nowrap ${
                   pathname === '/jhs/trial-questions' 
                     ? 'text-emerald-700 bg-emerald-50 font-bold' 
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                 }`}
               >
                 <FileCheck className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Trial Questions</span>
+                <span className="hidden xl:inline">Trial Questions</span>
+                <span className="xl:hidden">Trial Mocks</span>
               </Link>
               <Link
                 href="/jhs/weekly-exam"
-                className={`text-xs font-bold transition-colors flex items-center gap-1 px-3 py-1.5 rounded-xl whitespace-nowrap ${
+                className={`text-xs font-bold transition-colors flex items-center gap-1 px-2.5 py-1.5 xl:px-3 rounded-xl whitespace-nowrap ${
                   pathname === '/jhs/weekly-exam' 
                     ? 'bg-amber-100 text-amber-900 font-bold' 
                     : 'text-amber-800 bg-amber-50 hover:bg-amber-100'
@@ -148,7 +150,7 @@ export default function Navbar() {
               {student && (
                 <Link
                   href="/jhs/profile"
-                  className={`text-xs font-bold transition-colors flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg whitespace-nowrap ${
+                  className={`text-xs font-bold transition-colors flex items-center gap-1.5 px-2 py-1.5 xl:px-2.5 rounded-lg whitespace-nowrap ${
                     pathname === '/jhs/profile'
                       ? 'text-blue-700 bg-blue-50 font-bold border border-blue-200'
                       : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100'
@@ -161,7 +163,7 @@ export default function Navbar() {
 
               <button
                 onClick={() => setPinModalOpen(true)}
-                className="text-xs font-bold px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-sm shadow-amber-500/20 transition-all flex items-center gap-1.5 whitespace-nowrap"
+                className="text-xs font-bold px-2.5 py-1.5 xl:px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-sm shadow-amber-500/20 transition-all flex items-center gap-1.5 whitespace-nowrap"
               >
                 <KeyRound className="w-3.5 h-3.5" />
                 <span>Redeem PIN</span>
@@ -171,7 +173,7 @@ export default function Navbar() {
 
               {/* Student Profile Pill */}
               {!mounted ? (
-                <div className="w-28 h-8 rounded-xl bg-slate-100 animate-pulse shrink-0" />
+                <div className="w-24 sm:w-28 h-8 rounded-xl bg-slate-100 animate-pulse shrink-0" />
               ) : student ? (
                 <div className="flex items-center gap-2 pl-2 pr-1.5 py-1 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 shrink-0 transition">
                   <Link href="/jhs/profile" className="flex items-center gap-2 text-left leading-tight shrink-0 group">
@@ -179,17 +181,17 @@ export default function Navbar() {
                       {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
                     </div>
                     <div className="flex flex-col text-left leading-tight shrink-0">
-                      <span className="text-xs font-bold text-slate-900 truncate max-w-[100px] whitespace-nowrap group-hover:text-blue-600">
+                      <span className="text-xs font-bold text-slate-900 truncate max-w-[80px] xl:max-w-[110px] whitespace-nowrap group-hover:text-blue-600">
                         {student.fullName}
                       </span>
-                      <div className="flex items-center gap-1.5 mt-0.5 whitespace-nowrap">
+                      <div className="flex items-center gap-1 mt-0.5 whitespace-nowrap">
                         <span className="text-[10px] text-slate-600 font-bold whitespace-nowrap">
                           {student.currentLevel}
                         </span>
                         <span className="text-[10px] text-slate-300">•</span>
                         {student.hasFullAccess ? (
                           <span className="text-[9px] font-bold text-emerald-800 bg-emerald-100 px-1.5 py-0.2 rounded-full inline-flex items-center gap-0.5 whitespace-nowrap">
-                            <CheckCircle2 className="w-2.5 h-2.5" /> VIP Pass
+                            <CheckCircle2 className="w-2.5 h-2.5" /> VIP
                           </span>
                         ) : (
                           <span className="text-[9px] font-bold text-amber-800 bg-amber-100/90 px-1.5 py-0.2 rounded-full whitespace-nowrap">
@@ -210,25 +212,49 @@ export default function Navbar() {
               ) : (
                 <Link
                   href="/login?redirect=/jhs"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold px-3.5 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-sm shadow-blue-500/20 whitespace-nowrap"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 xl:px-3.5 xl:py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-sm shadow-blue-500/20 whitespace-nowrap"
                 >
                   <User className="w-3.5 h-3.5" />
-                  Create Account / Login
+                  <span>Create Account / Login</span>
                 </Link>
               )}
             </div>
 
-            {/* Mobile menu trigger */}
-            <div className="md:hidden flex items-center gap-2">
+            {/* Mobile / Tablet Menu Trigger & Quick Actions (< lg) */}
+            <div className="lg:hidden flex items-center gap-2 shrink-0">
               <button
                 onClick={() => setPinModalOpen(true)}
-                className="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200"
+                className="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-white shadow-xs flex items-center gap-1 whitespace-nowrap"
               >
-                PIN
+                <KeyRound className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Redeem PIN</span>
+                <span className="sm:hidden">PIN</span>
               </button>
+
+              {mounted && !student && (
+                <Link
+                  href="/login?redirect=/jhs"
+                  className="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-1 whitespace-nowrap shadow-xs"
+                >
+                  <User className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Login</span>
+                </Link>
+              )}
+
+              {mounted && student && (
+                <Link
+                  href="/jhs/profile"
+                  className="w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-xs"
+                  title={student.fullName}
+                >
+                  {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
+                </Link>
+              )}
+
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+                aria-label="Toggle menu"
               >
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
@@ -238,7 +264,7 @@ export default function Navbar() {
 
         {/* Mobile menu drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-3">
+          <div className="lg:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-3 w-full max-w-full">
             <div className="flex flex-col gap-2">
               <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Select Section</span>
               <div className="grid grid-cols-3 gap-2">
