@@ -4,7 +4,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/authContext';
-import { JHS_CURRICULUM_TOPICS } from '@/lib/curriculumData';
+import { JHS_CURRICULUM_TOPICS, CURRICULUM_SUBJECTS } from '@/lib/curriculumData';
+import { logQuizMistakes } from '@/lib/weeklyProgressTracker';
 import { 
   ArrowLeft, 
   Clock, 
@@ -251,6 +252,45 @@ export default function TopicQuizPage() {
 
     const { percentage } = calculateScore();
     recordQuizScore(topic.id, percentage);
+
+    // Track incorrect answers for adaptive weekly remediation
+    const mistakes: {
+      topicId: string;
+      topicTitle: string;
+      subjectId: string;
+      subjectName: string;
+      questionId: string;
+      questionText: string;
+      subConcept: string;
+      selectedOption: 'A' | 'B' | 'C' | 'D';
+      correctOption: 'A' | 'B' | 'C' | 'D';
+      explanation: string;
+      remediationTip?: string;
+    }[] = [];
+
+    quiz.questions.forEach((q) => {
+      const userAns = selectedAnswers[q.id];
+      if (userAns && userAns !== q.correctOption) {
+        const subName = CURRICULUM_SUBJECTS.find(s => s.id === topic.subjectId)?.name || topic.subjectId;
+        mistakes.push({
+          topicId: topic.id,
+          topicTitle: topic.title,
+          subjectId: topic.subjectId,
+          subjectName: subName,
+          questionId: q.id,
+          questionText: q.questionText,
+          subConcept: q.subConcept || topic.title,
+          selectedOption: userAns,
+          correctOption: q.correctOption,
+          explanation: q.explanation,
+          remediationTip: q.remediationTip,
+        });
+      }
+    });
+
+    if (mistakes.length > 0) {
+      logQuizMistakes(mistakes);
+    }
 
     if (percentage >= quiz.passScorePercentage) {
       try {

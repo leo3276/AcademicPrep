@@ -1,782 +1,1067 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/authContext';
-import { CURRICULUM_SUBJECTS, JHS_CURRICULUM_TOPICS } from '@/lib/curriculumData';
-import { EducationLevel, QuizQuestion, TrialExamMock } from '@/lib/types';
-import { getStoredTrialMocks } from '@/lib/adminStore';
+import { EducationLevel } from '@/lib/types';
 import { 
-  Sparkles, 
+  getWeeklyProgressSummary, 
+  generateAdaptiveWeeklyExam,
+  recordFullWeeklyExamAttempt,
+  getFullWeeklyExamAttempts,
+  calculateStanineGrade,
+  WeeklyProgressSummary,
+  WeeklyObjectiveQuestion,
+  AdaptiveExamPackage,
+  FullWeeklyExamAttempt
+} from '@/lib/weeklyProgressTracker';
+import { WeeklyTheoryQuestion } from '@/lib/weeklyTheoryQuestionBank';
+import { 
+  ArrowLeft, 
+  ArrowRight, 
   Clock, 
   CheckCircle2, 
-  HelpCircle, 
-  AlertTriangle, 
   Trophy, 
-  ArrowLeft, 
+  Sparkles, 
+  Target, 
+  Award, 
+  RotateCcw, 
+  AlertCircle, 
+  HelpCircle, 
+  Layers, 
+  BookOpen, 
+  Check, 
   Flag, 
-  RotateCcw,
-  BookOpen,
-  ArrowRight,
-  FileCheck,
-  Award,
-  Layers,
-  Check,
-  Calendar
+  FileText,
+  ShieldCheck,
+  ChevronRight,
+  TrendingUp,
+  BarChart3
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function WeeklyExamPage() {
-  const { student, topicProgress, recordWeeklyExamAttempt, weeklyExamAttempts } = useAuth();
+  const { student, topicProgress } = useAuth();
   const [mounted, setMounted] = useState(false);
   const [currentLevel, setCurrentLevel] = useState<EducationLevel>(student?.currentLevel || 'JHS 1');
 
-  // Exam selection and modes
-  const [examTab, setExamTab] = useState<'adaptive' | 'trial'>('adaptive');
-  const [trialMocks, setTrialMocks] = useState<TrialExamMock[]>([]);
-  const [selectedMock, setSelectedMock] = useState<TrialExamMock | null>(null);
-  const [mockLevelFilter, setMockLevelFilter] = useState<string>('ALL');
+  // Examination Lifecycle States
+  // 'dashboard' -> 'exam_paper1' -> 'exam_paper2' -> 'grading_review' -> 'results'
+  const [examState, setExamState] = useState<'dashboard' | 'exam_paper1' | 'exam_paper2' | 'grading_review' | 'results'>('dashboard');
 
-  // Active exam state
-  const [activeExamTitle, setActiveExamTitle] = useState('Personalized Weekly Examination');
-  const [activeExamSubject, setActiveExamSubject] = useState('Progress-Adaptive Review');
-  const [totalDurationSeconds, setTotalDurationSeconds] = useState(15 * 60);
-  const [examQuestions, setExamQuestions] = useState<QuizQuestion[]>([]);
-  const [examStarted, setExamStarted] = useState(false);
-  const [currentIdx, setCurrentIdx] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<Record<string, 'A' | 'B' | 'C' | 'D'>>({});
-  const [flagged, setFlagged] = useState<Record<string, boolean>>({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(15 * 60);
+  // Progress summary & generated exam package
+  const [summary, setSummary] = useState<WeeklyProgressSummary | null>(null);
+  const [examPackage, setExamPackage] = useState<AdaptiveExamPackage | null>(null);
+  const [pastAttempts, setPastAttempts] = useState<FullWeeklyExamAttempt[]>([]);
+
+  // Paper 1 (Objectives) State
+  const [paper1CurrentIdx, setPaper1CurrentIdx] = useState(0);
+  const [paper1Answers, setPaper1Answers] = useState<Record<string, 'A' | 'B' | 'C' | 'D'>>({});
+  const [paper1Flagged, setPaper1Flagged] = useState<Record<string, boolean>>({});
+
+  // Paper 2 (Theory) State
+  const [theoryAnswers, setTheoryAnswers] = useState<Record<string, string>>({}); // subQuestionId -> student text
+  const [theorySelfMarks, setTheorySelfMarks] = useState<Record<string, number>>({}); // subQuestionId -> mark awarded
+
+  // Timer State
+  const [timeLeftSeconds, setTimeLeftSeconds] = useState(45 * 60);
+  const [timeSpentSeconds, setTimeSpentSeconds] = useState(0);
+
+  // Final Completed Attempt
+  const [completedAttempt, setCompletedAttempt] = useState<FullWeeklyExamAttempt | null>(null);
+
+  // Load progress summary and past attempts on mount or level change
+  const reloadData = (lvl: EducationLevel) => {
+    const sum = getWeeklyProgressSummary(lvl);
+    setSummary(sum);
+    const attempts = getFullWeeklyExamAttempts().filter(a => a.level === lvl);
+    setPastAttempts(attempts);
+  };
 
   useEffect(() => {
     setMounted(true);
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
       const urlLevel = urlParams.get('level') as EducationLevel | null;
-      const urlMode = urlParams.get('mode');
-      const urlMockId = urlParams.get('mockId');
       const savedLevel = localStorage.getItem('academicprep_jhs_level') as EducationLevel | null;
       const validLevels: EducationLevel[] = ['JHS 1', 'JHS 2', 'JHS 3'];
 
+      let effectiveLevel: EducationLevel = 'JHS 1';
       if (urlLevel && validLevels.includes(urlLevel)) {
-        setCurrentLevel(urlLevel);
-        localStorage.setItem('academicprep_jhs_level', urlLevel);
+        effectiveLevel = urlLevel;
       } else if (savedLevel && validLevels.includes(savedLevel)) {
-        setCurrentLevel(savedLevel);
+        effectiveLevel = savedLevel;
+      } else if (student?.currentLevel && validLevels.includes(student.currentLevel)) {
+        effectiveLevel = student.currentLevel;
       }
 
-      // Load published trial mocks
-      const allMocks = getStoredTrialMocks();
-      const published = allMocks.filter((m) => m.isPublished);
-      setTrialMocks(published);
-
-      if (urlMode === 'trial' || urlMockId) {
-        setExamTab('trial');
-      }
-
-      if (urlMockId) {
-        const found = published.find((m) => m.id === urlMockId);
-        if (found) {
-          setSelectedMock(found);
-        }
-      }
+      setCurrentLevel(effectiveLevel);
+      reloadData(effectiveLevel);
     }
-  }, []);
+  }, [student]);
 
-  // Helper to get subject display name
-  const getSubjectName = (subjectId: string) => {
-    const s = CURRICULUM_SUBJECTS.find((sub) => sub.id === subjectId);
-    return s ? s.name : subjectId.toUpperCase();
+  const handleLevelChange = (lvl: EducationLevel) => {
+    setCurrentLevel(lvl);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('academicprep_jhs_level', lvl);
+      const url = new URL(window.location.href);
+      url.searchParams.set('level', lvl);
+      window.history.replaceState({}, '', url.toString());
+    }
+    reloadData(lvl);
   };
 
-  // Adaptive exam completed topics
-  const completedTopicIds = mounted
-    ? Object.keys(topicProgress).filter((id) => topicProgress[id]?.completed)
-    : [];
-
-  const completedTopics = JHS_CURRICULUM_TOPICS.filter((t) =>
-    completedTopicIds.includes(t.id)
-  );
-
-  const fallbackTopics = JHS_CURRICULUM_TOPICS.filter((t) => t.isFreeTrial);
-  const activePoolTopics = completedTopics.length > 0 ? completedTopics : fallbackTopics;
-
-  // Initialize Adaptive Weekly Exam
-  const initializeAdaptiveExam = () => {
-    const pooled: QuizQuestion[] = [];
-    activePoolTopics.forEach((t) => {
-      if (t.quiz?.questions) {
-        pooled.push(...t.quiz.questions);
-      }
-    });
-
-    const shuffled = [...pooled].sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, 10);
-
-    setActiveExamTitle(`Weekly Progress Exam (${currentLevel})`);
-    setActiveExamSubject('Curriculum Adaptive CBT');
-    setTotalDurationSeconds(15 * 60);
-    setExamQuestions(selected);
-    setSelectedAnswers({});
-    setFlagged({});
-    setIsSubmitted(false);
-    setCurrentIdx(0);
-    setTimeLeft(15 * 60);
-    setSelectedMock(null);
-    setExamStarted(true);
-  };
-
-  // Initialize Trial Diagnostic Mock Exam
-  const initializeTrialMock = (mock: TrialExamMock) => {
-    if (!mock.questions || mock.questions.length === 0) return;
-
-    setActiveExamTitle(mock.title);
-    setActiveExamSubject(getSubjectName(mock.subjectId));
-    const durationSec = (mock.durationMinutes || 20) * 60;
-    setTotalDurationSeconds(durationSec);
-    setExamQuestions([...mock.questions]);
-    setSelectedAnswers({});
-    setFlagged({});
-    setIsSubmitted(false);
-    setCurrentIdx(0);
-    setTimeLeft(durationSec);
-    setSelectedMock(mock);
-    setExamStarted(true);
-  };
-
-  // Timer countdown
+  // Timer countdown during active exam
   useEffect(() => {
-    if (!examStarted || isSubmitted || timeLeft <= 0) return;
+    if (!mounted) return;
+    if (examState !== 'exam_paper1' && examState !== 'exam_paper2') return;
 
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
+    const interval = setInterval(() => {
+      setTimeLeftSeconds(prev => {
         if (prev <= 1) {
-          clearInterval(timer);
-          handleSubmit();
+          clearInterval(interval);
+          // Auto advance to grading
+          handleProceedToGrading();
           return 0;
         }
         return prev - 1;
       });
+      setTimeSpentSeconds(prev => prev + 1);
     }, 1000);
 
-    return () => clearInterval(timer);
-  }, [examStarted, isSubmitted, timeLeft]);
+    return () => clearInterval(interval);
+  }, [examState, mounted]);
 
-  const handleSelectOption = (opt: 'A' | 'B' | 'C' | 'D') => {
-    if (isSubmitted) return;
-    const q = examQuestions[currentIdx];
-    if (!q) return;
-    setSelectedAnswers((prev) => ({
-      ...prev,
-      [q.id]: opt,
-    }));
+  // Start Exam
+  const handleStartExam = () => {
+    const pkg = generateAdaptiveWeeklyExam(currentLevel);
+    setExamPackage(pkg);
+    setPaper1CurrentIdx(0);
+    setPaper1Answers({});
+    setPaper1Flagged({});
+    setTheoryAnswers({});
+    setTheorySelfMarks({});
+    setTimeLeftSeconds((pkg.suggestedDurationMinutes || 45) * 60);
+    setTimeSpentSeconds(0);
+    setExamState('exam_paper1');
   };
 
-  const toggleFlag = (qId: string) => {
-    setFlagged((prev) => ({
-      ...prev,
-      [qId]: !prev[qId],
-    }));
+  // Paper 1 Navigation & Selection
+  const handleSelectPaper1Option = (questionId: string, opt: 'A' | 'B' | 'C' | 'D') => {
+    setPaper1Answers(prev => ({ ...prev, [questionId]: opt }));
   };
 
-  const calculateScore = () => {
-    let correct = 0;
-    examQuestions.forEach((q) => {
-      if (selectedAnswers[q.id] === q.correctOption) {
-        correct++;
+  const toggleFlagPaper1 = (questionId: string) => {
+    setPaper1Flagged(prev => ({ ...prev, [questionId]: !prev[questionId] }));
+  };
+
+  // Transition from Paper 1 to Paper 2
+  const handleProceedToPaper2 = () => {
+    setExamState('exam_paper2');
+  };
+
+  // Transition from Paper 2 to Rubric Self-Grading
+  const handleProceedToGrading = () => {
+    if (!examPackage) return;
+
+    // Pre-populate theory self-marks with 0 or estimate
+    const initialMarks: Record<string, number> = {};
+    examPackage.paper2Questions.forEach(q => {
+      q.subQuestions.forEach(sub => {
+        const subId = `${q.id}-${sub.part}`;
+        const typed = theoryAnswers[subId] || '';
+        // If student typed a substantial answer, default to partial mark
+        initialMarks[subId] = typed.trim().length > 10 ? Math.ceil(sub.maxMarks * 0.75) : 0;
+      });
+    });
+
+    setTheorySelfMarks(initialMarks);
+    setExamState('grading_review');
+  };
+
+  // Finalize Submission & Compute Composite Score
+  const handleFinalizeSubmission = () => {
+    if (!examPackage) return;
+
+    // 1. Calculate Paper 1 (Objectives) Score
+    let p1Correct = 0;
+    examPackage.paper1Questions.forEach(q => {
+      if (paper1Answers[q.id] === q.correctOption) {
+        p1Correct++;
       }
     });
-    const percentage = examQuestions.length > 0 
-      ? Math.round((correct / examQuestions.length) * 100) 
-      : 0;
-    return { correct, total: examQuestions.length, percentage };
-  };
 
-  const handleSubmit = () => {
-    if (isSubmitted) return;
-    setIsSubmitted(true);
+    const p1TotalQ = examPackage.paper1Questions.length;
+    const p1Percent = p1TotalQ > 0 ? Math.round((p1Correct / p1TotalQ) * 100) : 0;
+    const p1MarksAwarded = Math.round((p1Percent / 100) * examPackage.paper1MaxMarks);
 
-    const { correct, total, percentage } = calculateScore();
-
-    recordWeeklyExamAttempt({
-      studentId: student?.id || 'guest-student',
-      level: currentLevel,
-      coveredTopicIds: selectedMock ? [selectedMock.id] : activePoolTopics.map((t) => t.id),
-      totalQuestions: total,
-      correctAnswers: correct,
-      scorePercentage: percentage,
-      timeSpentSeconds: totalDurationSeconds - timeLeft,
+    // 2. Calculate Paper 2 (Theory) Score
+    let p2TotalMarks = 0;
+    let p2EarnedMarks = 0;
+    examPackage.paper2Questions.forEach(q => {
+      q.subQuestions.forEach(sub => {
+        p2TotalMarks += sub.maxMarks;
+        const subId = `${q.id}-${sub.part}`;
+        p2EarnedMarks += Math.min(sub.maxMarks, theorySelfMarks[subId] || 0);
+      });
     });
 
-    const passThreshold = selectedMock?.passScorePercentage || 60;
-    if (percentage >= passThreshold) {
+    const p2Percent = p2TotalMarks > 0 ? Math.round((p2EarnedMarks / p2TotalMarks) * 100) : 0;
+
+    // 3. Composite Score (40% Objectives + 60% Theory)
+    const compositePercent = Math.round((p1Percent * 0.4) + (p2Percent * 0.6));
+    const { grade, remark } = calculateStanineGrade(compositePercent);
+
+    // Identify weak areas
+    const weakTopics: string[] = [];
+    examPackage.paper1Questions.forEach(q => {
+      if (paper1Answers[q.id] !== q.correctOption && !weakTopics.includes(q.topicTitle)) {
+        weakTopics.push(q.topicTitle);
+      }
+    });
+
+    // Save Attempt
+    const record = recordFullWeeklyExamAttempt({
+      studentId: student?.id || 'guest-student',
+      level: currentLevel,
+      timeSpentSeconds,
+      coveredTopicIds: examPackage.paper1Questions.map(q => q.topicId),
+      coveredTopicTitles: Array.from(new Set(examPackage.paper1Questions.map(q => q.topicTitle))),
+      remediatedMistakesCount: examPackage.remediationCount,
+      paper1TotalQuestions: p1TotalQ,
+      paper1CorrectCount: p1Correct,
+      paper1ScoreMarks: p1MarksAwarded,
+      paper1Percentage: p1Percent,
+      paper1Answers,
+      paper2TotalMarks: p2TotalMarks,
+      paper2ScoreMarks: p2EarnedMarks,
+      paper2Percentage: p2Percent,
+      paper2StudentAnswers: theoryAnswers,
+      paper2GradingMarks: theorySelfMarks,
+      compositeTotalPercentage: compositePercent,
+      stanineGrade: grade,
+      gradeRemark: remark,
+      weakAreasIdentified: weakTopics.slice(0, 4)
+    });
+
+    setCompletedAttempt(record);
+    setExamState('results');
+    reloadData(currentLevel);
+
+    if (compositePercent >= 60) {
       try {
         confetti({
           particleCount: 100,
           spread: 80,
-          origin: { y: 0.6 },
+          origin: { y: 0.6 }
         });
       } catch {
-        // Safe fallback
+        // ignore
       }
     }
   };
 
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
-  const timeFormatted = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  const formatTimer = (totalSeconds: number) => {
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
 
-  const { correct, total, percentage } = calculateScore();
-  const currentQ = examQuestions[currentIdx];
-  const requiredPass = selectedMock?.passScorePercentage || 60;
-  const isPassed = percentage >= requiredPass;
-
-  // Filtered trial mocks for Tab 2
-  const displayedMocks = trialMocks.filter((m) => {
-    if (mockLevelFilter === 'ALL') return true;
-    return m.level === mockLevelFilter;
-  });
-
-  return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      {/* Top Banner Navigation */}
-      <div className="flex items-center justify-between">
-        <Link
-          href={`/jhs?level=${encodeURIComponent(currentLevel)}`}
-          className="text-xs font-semibold text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to JHS Portal</span>
-        </Link>
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-mono font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
-            {examStarted ? activeExamSubject : 'Examination Center'}
-          </span>
-        </div>
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center text-slate-500">
+        <div className="animate-spin rounded-full h-8 w-8 border-2 border-slate-300 border-t-slate-800"></div>
       </div>
+    );
+  }
 
-      {!examStarted ? (
-        /* Pre-Exam Dashboard: Switch between Adaptive Exam and Trial Mocks */
-        <div className="space-y-6">
-          {/* Main Card Header */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="space-y-1.5">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                  Examinations & Trial CBT Center
+  // =========================================================================
+  // VIEW 1: DASHBOARD (Weekly Progress Monitor & Exam Launcher)
+  // =========================================================================
+  if (examState === 'dashboard') {
+    return (
+      <div className="min-h-screen bg-slate-50/50 pb-20">
+        {/* Top Header */}
+        <header className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Link
+                href="/jhs"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 transition p-1.5 rounded-lg hover:bg-slate-100"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>Back to JHS Portal</span>
+              </Link>
+              <div className="h-4 w-px bg-slate-200 hidden sm:block" />
+              <div className="hidden sm:flex items-center gap-2 text-xs text-slate-500">
+                <span>Junior High School</span>
+                <span>/</span>
+                <span className="font-semibold text-slate-900">Adaptive Weekly Examination</span>
+              </div>
+            </div>
+
+            {/* Level Switcher */}
+            <div className="flex items-center bg-slate-100 p-1 rounded-xl">
+              {(['JHS 1', 'JHS 2', 'JHS 3'] as EducationLevel[]).map((lvl) => (
+                <button
+                  key={lvl}
+                  onClick={() => handleLevelChange(lvl)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    currentLevel === lvl
+                      ? 'bg-slate-900 text-white shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  {lvl}
+                </button>
+              ))}
+            </div>
+          </div>
+        </header>
+
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+          {/* Hero Banner */}
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden">
+            <div className="max-w-3xl space-y-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-[11px] font-bold uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+                <span>Curriculum Adaptive Assessment</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                {currentLevel} Adaptive Weekly Examination
+              </h1>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                This engine continuously monitors the topics you complete and the specific questions you got wrong in quizzes. At the end of every week, it synthesizes a full examination featuring <b>Paper 1 (Objectives)</b> and <b>Paper 2 (Theory)</b> with authentic WAEC marking rubrics.
+              </p>
+            </div>
+
+            {/* Exam Launch CTA */}
+            <div className="mt-6 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+              <div className="space-y-1 text-xs text-slate-500">
+                <div className="flex items-center gap-2 text-slate-800 font-semibold">
+                  <Clock className="w-4 h-4 text-slate-500" />
+                  <span>Full Exam: Paper 1 (Objectives) + Paper 2 (Theory)</span>
                 </div>
-                <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-                  AcademicPrep Examination Hub
-                </h1>
-                <p className="text-xs text-slate-600 leading-relaxed max-w-2xl">
-                  Choose between your personalized adaptive revision examination or take official standardized trial diagnostic mocks prepared by GES examiners.
-                </p>
+                <p>Duration: 45 minutes · Automated WAEC Stanine Grading (Grade 1 - 9)</p>
               </div>
 
-              {/* Mode Tabs */}
-              <div className="flex bg-slate-100 p-1 rounded-xl self-start sm:self-auto shrink-0">
-                <button
-                  type="button"
-                  onClick={() => setExamTab('adaptive')}
-                  className={`px-3.5 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
-                    examTab === 'adaptive'
-                      ? 'bg-amber-500 text-white shadow-sm'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Adaptive Exam</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setExamTab('trial')}
-                  className={`px-3.5 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
-                    examTab === 'trial'
-                      ? 'bg-amber-500 text-white shadow-sm'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  <FileCheck className="w-3.5 h-3.5" />
-                  <span>Trial Mocks</span>
-                  {trialMocks.length > 0 && (
-                    <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
-                      examTab === 'trial' ? 'bg-white/30 text-white' : 'bg-amber-200 text-amber-900'
-                    }`}>
-                      {trialMocks.length}
-                    </span>
-                  )}
-                </button>
-              </div>
+              <button
+                onClick={handleStartExam}
+                className="py-3 px-6 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition shadow-xs flex items-center justify-center gap-2 shrink-0 cursor-pointer"
+              >
+                <span>Launch Weekly Examination</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
             </div>
           </div>
 
-          {/* TAB 1: ADAPTIVE WEEKLY EXAM */}
-          {examTab === 'adaptive' && (
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
-              <div className="space-y-2">
-                <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-amber-500" />
-                  Personalized Adaptive Revision Exam
-                </h2>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  This examination dynamically compiles 10 randomized CBT questions based solely on the topics you have completed in {currentLevel}. As you complete more topics, your exam pool automatically expands.
+          {/* Diagnostic Stats Grid */}
+          {summary && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Stat 1: Topics Completed */}
+              <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-2">
+                <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
+                  <span>Topics Mastered</span>
+                  <BookOpen className="w-4 h-4 text-blue-600" />
+                </div>
+                <div className="text-2xl font-bold text-slate-900 font-mono">
+                  {summary.completedTopicsCount}
+                </div>
+                <p className="text-[11px] text-slate-500">
+                  {summary.completedTopicsCount > 0
+                    ? 'Covered in this week\'s exam pool'
+                    : 'Complete topic quizzes to expand pool'}
                 </p>
               </div>
 
-              {/* Topics Included */}
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                    <BookOpen className="w-4 h-4 text-blue-600" />
-                    Topics Covered in Your Exam Pool ({activePoolTopics.length})
-                  </h3>
-                  {completedTopics.length === 0 && (
-                    <span className="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">
-                      Demo Mode (Trial Topics)
-                    </span>
-                  )}
+              {/* Stat 2: Quiz Accuracy */}
+              <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-2">
+                <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
+                  <span>Quiz Accuracy</span>
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                 </div>
+                <div className="text-2xl font-bold text-slate-900 font-mono">
+                  {summary.quizAccuracyPercentage}%
+                </div>
+                <p className="text-[11px] text-slate-500">
+                  Based on daily topic quiz attempts
+                </p>
+              </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {activePoolTopics.map((topic) => (
-                    <div
-                      key={topic.id}
-                      className="p-2.5 rounded-lg bg-white border border-slate-200 text-xs flex items-center justify-between"
-                    >
-                      <span className="font-semibold text-slate-800 truncate mr-2">{topic.title}</span>
-                      <span className="text-[10px] font-bold text-slate-500 uppercase px-1.5 py-0.5 bg-slate-100 rounded">
-                        {topic.level}
+              {/* Stat 3: Flagged Mistake Concepts */}
+              <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-2">
+                <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
+                  <span>Flagged Mistakes</span>
+                  <Target className="w-4 h-4 text-amber-600" />
+                </div>
+                <div className="text-2xl font-bold text-slate-900 font-mono">
+                  {summary.mistakesCount}
+                </div>
+                <p className="text-[11px] text-amber-700 font-medium">
+                  Prioritized for remediation in exam
+                </p>
+              </div>
+
+              {/* Stat 4: Exam Readiness */}
+              <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-2">
+                <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
+                  <span>Weekly Readiness</span>
+                  <ShieldCheck className="w-4 h-4 text-blue-600" />
+                </div>
+                <div className="text-sm font-bold text-emerald-700 flex items-center gap-1.5 pt-1">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>Exam Ready</span>
+                </div>
+                <p className="text-[11px] text-slate-500">
+                  {summary.completedTopicsCount >= 3 ? 'High Mastery' : 'Foundational Mode'}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Remediation Concepts & Mistake Insights */}
+          {summary && summary.weakSubConcepts.length > 0 && (
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Target className="w-4 h-4 text-amber-600" />
+                  <h3 className="text-sm font-bold text-slate-900">
+                    Flagged Quiz Concepts Targeted for Remediation
+                  </h3>
+                </div>
+                <span className="text-[11px] text-slate-500">
+                  These concepts were answered incorrectly in daily practice
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                {summary.weakSubConcepts.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="p-3.5 rounded-xl border border-amber-200/80 bg-amber-50/40 text-xs space-y-1"
+                  >
+                    <div className="flex items-center justify-between font-semibold text-amber-900">
+                      <span>{item.concept}</span>
+                      <span className="font-mono text-[10px] bg-amber-200/60 px-1.5 py-0.5 rounded text-amber-900">
+                        {item.count} {item.count === 1 ? 'mistake' : 'mistakes'}
                       </span>
                     </div>
-                  ))}
-                </div>
-
-                {completedTopics.length === 0 && (
-                  <p className="text-[11px] text-slate-500 italic pt-1">
-                    💡 Tip: You haven't completed any topic quizzes yet. This practice run will draw from the starter topics. Pass more topic quizzes in the JHS portal to expand your pool!
-                  </p>
-                )}
-              </div>
-
-              {/* Exam Rules Card */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                <div className="p-3 rounded-xl bg-blue-50 border border-blue-100 text-blue-900">
-                  <span className="font-bold block mb-0.5">⏱️ 15 Minutes</span>
-                  <span className="text-[11px] text-blue-700">Timed countdown with auto-submission.</span>
-                </div>
-                <div className="p-3 rounded-xl bg-purple-50 border border-purple-100 text-purple-900">
-                  <span className="font-bold block mb-0.5">🎲 10 Randomized</span>
-                  <span className="text-[11px] text-purple-700">Pulled from your completed topics.</span>
-                </div>
-                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-900">
-                  <span className="font-bold block mb-0.5">🎯 60% Pass Mark</span>
-                  <span className="text-[11px] text-emerald-700">Includes detailed explanation review.</span>
-                </div>
-              </div>
-
-              {/* Exam History if any */}
-              {mounted && weeklyExamAttempts.length > 0 && (
-                <div className="pt-2 border-t border-slate-100 space-y-2">
-                  <h4 className="text-xs font-bold text-slate-800">Your Recent Exam Scores:</h4>
-                  <div className="space-y-1.5">
-                    {weeklyExamAttempts.slice(0, 3).map((attempt) => (
-                      <div
-                        key={attempt.id}
-                        className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs flex items-center justify-between"
-                      >
-                        <span>
-                          {new Date(attempt.createdAt).toLocaleDateString()} — {attempt.totalQuestions} Questions
-                        </span>
-                        <span
-                          className={`font-bold font-mono px-2 py-0.5 rounded ${
-                            attempt.scorePercentage >= 60
-                              ? 'bg-emerald-100 text-emerald-800'
-                              : 'bg-amber-100 text-amber-800'
-                          }`}
-                        >
-                          {attempt.scorePercentage}%
-                        </span>
-                      </div>
-                    ))}
+                    <div className="text-[11px] text-amber-700">
+                      Subject: {item.subjectName}
+                    </div>
                   </div>
-                </div>
-              )}
-
-              <div className="pt-2">
-                <button
-                  type="button"
-                  onClick={initializeAdaptiveExam}
-                  className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs transition-all shadow-md shadow-amber-500/20 flex items-center justify-center gap-2"
-                >
-                  <Sparkles className="w-4 h-4" />
-                  <span>Begin Timed Adaptive Exam</span>
-                </button>
+                ))}
               </div>
             </div>
           )}
 
-          {/* TAB 2: TRIAL DIAGNOSTIC MOCKS */}
-          {examTab === 'trial' && (
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="space-y-1">
-                  <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                    <FileCheck className="w-5 h-5 text-emerald-600" />
-                    Trial Diagnostic Mock Examinations
-                  </h2>
-                  <p className="text-xs text-slate-600">
-                    Official practice mock papers created by curriculum specialists to test subject readiness.
-                  </p>
-                </div>
-
-                {/* Level Filter for Mocks */}
-                <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl text-xs font-bold text-slate-600 self-start sm:self-auto">
-                  {['ALL', 'JHS 1', 'JHS 2', 'JHS 3'].map((lvl) => (
-                    <button
-                      key={lvl}
-                      type="button"
-                      onClick={() => setMockLevelFilter(lvl)}
-                      className={`px-2.5 py-1 rounded-lg transition-all ${
-                        mockLevelFilter === lvl
-                          ? 'bg-white text-slate-900 shadow-sm'
-                          : 'hover:text-slate-900'
-                      }`}
-                    >
-                      {lvl}
-                    </button>
-                  ))}
-                </div>
+          {/* Past Weekly Exam Attempts History */}
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Trophy className="w-4 h-4 text-slate-800" />
+                <h3 className="text-sm font-bold text-slate-900">
+                  Weekly Examination History ({currentLevel})
+                </h3>
               </div>
+              <span className="text-xs text-slate-500 font-mono">
+                {pastAttempts.length} {pastAttempts.length === 1 ? 'attempt' : 'attempts'} recorded
+              </span>
+            </div>
 
-              {displayedMocks.length === 0 ? (
-                <div className="p-8 text-center rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-                  <HelpCircle className="w-8 h-8 text-slate-400 mx-auto" />
-                  <p className="text-xs font-bold text-slate-700">
-                    No trial mock examinations found for this filter.
-                  </p>
-                  <p className="text-[11px] text-slate-500 max-w-sm mx-auto">
-                    New diagnostic mock tests are uploaded regularly by administrator coordinators. Check back soon or select another level.
-                  </p>
+            {pastAttempts.length === 0 ? (
+              <div className="text-center py-10 border border-dashed border-slate-200 rounded-xl space-y-2">
+                <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center mx-auto text-slate-400">
+                  <FileText className="w-5 h-5" />
                 </div>
-              ) : (
-                <div className="space-y-4">
-                  {displayedMocks.map((mock) => (
-                    <div
-                      key={mock.id}
-                      className="p-5 rounded-2xl border border-slate-200 hover:border-amber-400 transition-all bg-white hover:shadow-sm space-y-4"
-                    >
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                        <div className="space-y-1">
-                          <div className="flex items-center gap-2">
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 uppercase">
-                              {getSubjectName(mock.subjectId)}
-                            </span>
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 uppercase">
-                              {mock.level}
-                            </span>
-                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 uppercase">
-                              Term {mock.term}
-                            </span>
-                            <span className="text-[10px] text-slate-400">
-                              Added {new Date(mock.createdAt).toLocaleDateString()}
-                            </span>
-                          </div>
-                          <h3 className="text-base font-bold text-slate-900">
-                            {mock.title}
-                          </h3>
+                <h4 className="text-xs font-bold text-slate-800">No Weekly Exams Taken Yet</h4>
+                <p className="text-xs text-slate-500 max-w-sm mx-auto">
+                  Click the "Launch Weekly Examination" button above to take your first combined Paper 1 and Paper 2 exam.
+                </p>
+              </div>
+            ) : (
+              <div className="divide-y divide-slate-100">
+                {pastAttempts.map((attempt) => (
+                  <div key={attempt.id} className="py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-bold text-slate-900 font-mono">
+                          {new Date(attempt.completedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </span>
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-900 text-white font-mono">
+                          {attempt.gradeRemark}
+                        </span>
+                      </div>
+                      <div className="text-xs text-slate-500 flex items-center gap-3">
+                        <span>Paper 1 (Obj): <b>{attempt.paper1ScoreMarks} / {attempt.paper1TotalQuestions}</b> ({attempt.paper1Percentage}%)</span>
+                        <span>•</span>
+                        <span>Paper 2 (Theory): <b>{attempt.paper2ScoreMarks} / {attempt.paper2TotalMarks}</b> ({attempt.paper2Percentage}%)</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 self-end sm:self-center">
+                      <div className="text-right">
+                        <div className="text-lg font-bold text-slate-900 font-mono">
+                          {attempt.compositeTotalPercentage}%
                         </div>
-
-                        <button
-                          type="button"
-                          onClick={() => initializeTrialMock(mock)}
-                          className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 self-start sm:self-auto shrink-0 shadow-sm"
-                        >
-                          <span>Start Mock Exam</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-
-                      <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500 pt-2 border-t border-slate-100">
-                        <span className="flex items-center gap-1.5 font-medium">
-                          <BookOpen className="w-4 h-4 text-slate-400" />
-                          {mock.questions.length} Standard Questions
-                        </span>
-                        <span className="flex items-center gap-1.5 font-medium">
-                          <Clock className="w-4 h-4 text-slate-400" />
-                          {mock.durationMinutes} Minutes Allotted
-                        </span>
-                        <span className="flex items-center gap-1.5 font-medium">
-                          <Award className="w-4 h-4 text-slate-400" />
-                          Pass Mark: {mock.passScorePercentage}%
-                        </span>
+                        <div className="text-[10px] text-slate-400 uppercase font-semibold">
+                          Composite Score
+                        </div>
                       </div>
                     </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      ) : isSubmitted ? (
-        /* Result Screen */
-        <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
-          <div
-            className={`p-6 rounded-2xl text-center space-y-3 ${
-              isPassed
-                ? 'bg-emerald-50 border border-emerald-200 text-emerald-950'
-                : 'bg-amber-50 border border-amber-200 text-amber-950'
-            }`}
-          >
-            <div className="w-12 h-12 rounded-full mx-auto flex items-center justify-center">
-              {isPassed ? (
-                <Trophy className="w-8 h-8 text-emerald-600" />
-              ) : (
-                <AlertTriangle className="w-8 h-8 text-amber-600" />
-              )}
-            </div>
-
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">
-                {activeExamSubject}
-              </span>
-              <h2 className="text-2xl font-black mt-1">
-                {isPassed ? 'Examination Passed!' : 'Examination Completed'}
-              </h2>
-            </div>
-
-            <p className="text-xs">
-              Score: <b>{correct}</b> / <b>{total}</b> Correct (<b>{percentage}%</b>) — Required: <b>{requiredPass}%</b>
-            </p>
-
-            <p className="text-[11px] text-slate-600 max-w-md mx-auto">
-              {isPassed
-                ? 'Outstanding performance! You have met or exceeded the passing standard. Your score has been recorded.'
-                : 'Good effort! Review the detailed question explanations below to master the areas where you lost marks.'}
-            </p>
-          </div>
-
-          {/* Detailed Question Review */}
-          <div className="space-y-4 pt-4 border-t border-slate-100">
-            <h3 className="text-sm font-bold text-slate-900">Exam Question Review & Solutions</h3>
-
-            {examQuestions.map((q, idx) => {
-              const userChoice = selectedAnswers[q.id];
-              const isCorrect = userChoice === q.correctOption;
-
-              return (
-                <div
-                  key={q.id}
-                  className={`p-4 rounded-xl border text-xs space-y-2.5 ${
-                    isCorrect ? 'border-emerald-200 bg-emerald-50/20' : 'border-red-200 bg-red-50/20'
-                  }`}
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <span className="font-bold text-slate-800">
-                      {idx + 1}. {q.questionText}
-                    </span>
-                    <span
-                      className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${
-                        isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'
-                      }`}
-                    >
-                      {isCorrect ? 'Correct' : `Chose ${userChoice || 'None'}`}
-                    </span>
                   </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-slate-600">
-                    <div className={`p-1.5 rounded ${q.correctOption === 'A' ? 'font-bold text-emerald-700 bg-emerald-50' : ''}`}>
-                      A: {q.optionA}
-                    </div>
-                    <div className={`p-1.5 rounded ${q.correctOption === 'B' ? 'font-bold text-emerald-700 bg-emerald-50' : ''}`}>
-                      B: {q.optionB}
-                    </div>
-                    <div className={`p-1.5 rounded ${q.correctOption === 'C' ? 'font-bold text-emerald-700 bg-emerald-50' : ''}`}>
-                      C: {q.optionC}
-                    </div>
-                    <div className={`p-1.5 rounded ${q.correctOption === 'D' ? 'font-bold text-emerald-700 bg-emerald-50' : ''}`}>
-                      D: {q.optionD}
-                    </div>
-                  </div>
-
-                  {q.explanation && (
-                    <div className="p-2.5 rounded-lg bg-white border border-slate-200/80 text-[11px] text-slate-700">
-                      <b className="text-blue-700">Explanation: </b>
-                      {q.explanation}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-slate-100">
-            <button
-              type="button"
-              onClick={() => {
-                if (selectedMock) {
-                  initializeTrialMock(selectedMock);
-                } else {
-                  initializeAdaptiveExam();
-                }
-              }}
-              className="w-full sm:w-auto py-2.5 px-4 rounded-xl border border-slate-300 text-slate-700 font-bold text-xs hover:bg-slate-50 flex items-center justify-center gap-1.5"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Retake This Exam</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setExamStarted(false)}
-              className="w-full sm:w-auto py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center gap-1.5"
-            >
-              <Layers className="w-3.5 h-3.5" />
-              <span>Choose Another Exam</span>
-            </button>
-            <Link
-              href={`/jhs?level=${encodeURIComponent(currentLevel)}`}
-              className="w-full sm:w-auto py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5"
-            >
-              <span>Back to Curriculum</span>
-            </Link>
-          </div>
-        </div>
-      ) : (
-        /* Active CBT Test View */
-        <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
-          {/* Header Bar */}
-          <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">
-                Question {currentIdx + 1} of {examQuestions.length}
-              </span>
-              <span className="text-xs font-bold text-slate-800">{activeExamTitle}</span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => currentQ && toggleFlag(currentQ.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 border ${
-                  currentQ && flagged[currentQ.id]
-                    ? 'bg-amber-50 text-amber-700 border-amber-300'
-                    : 'text-slate-600 border-slate-200 hover:bg-slate-50'
-                }`}
-              >
-                <Flag className="w-3 h-3" />
-                <span>{currentQ && flagged[currentQ.id] ? 'Flagged' : 'Flag'}</span>
-              </button>
-
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-mono font-bold">
-                <Clock className="w-3.5 h-3.5 text-amber-400" />
-                <span>{timeFormatted}</span>
+                ))}
               </div>
+            )}
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // =========================================================================
+  // VIEW 2: PAPER 1 (OBJECTIVES / CBT EXAM)
+  // =========================================================================
+  if (examState === 'exam_paper1' && examPackage) {
+    const currentQ = examPackage.paper1Questions[paper1CurrentIdx];
+    const totalP1 = examPackage.paper1Questions.length;
+    const answeredCount = Object.keys(paper1Answers).length;
+
+    return (
+      <div className="min-h-screen bg-slate-50 flex flex-col">
+        {/* Sticky Exam Bar */}
+        <header className="bg-white border-b border-slate-200 sticky top-0 z-40 px-4 sm:px-8 py-3.5 shadow-xs">
+          <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span className="px-2.5 py-1 rounded-md text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                PAPER 1: SECTION A (OBJECTIVES)
+              </span>
+              <span className="text-xs font-semibold text-slate-700 hidden sm:inline">
+                Question {paper1CurrentIdx + 1} of {totalP1}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-slate-800 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
+                <Clock className="w-3.5 h-3.5 text-slate-600" />
+                <span>{formatTimer(timeLeftSeconds)}</span>
+              </div>
+
+              <button
+                onClick={handleProceedToPaper2}
+                className="py-1.5 px-3 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-lg transition shadow-xs flex items-center gap-1.5 cursor-pointer"
+              >
+                <span>Go to Paper 2 (Theory)</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
             </div>
           </div>
+        </header>
 
-          {/* Question Grid Navigator */}
-          <div className="flex flex-wrap gap-1.5">
-            {examQuestions.map((q, idx) => {
-              const isAnswered = Boolean(selectedAnswers[q.id]);
-              const isCurrent = idx === currentIdx;
-              const isFlag = flagged[q.id];
-
-              return (
-                <button
-                  key={q.id}
-                  type="button"
-                  onClick={() => setCurrentIdx(idx)}
-                  className={`w-8 h-8 rounded-lg text-xs font-bold transition-all relative ${
-                    isCurrent
-                      ? 'bg-blue-600 text-white ring-2 ring-blue-400'
-                      : isAnswered
-                      ? 'bg-emerald-100 text-emerald-800'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                  }`}
-                >
-                  {idx + 1}
-                  {isFlag && (
-                    <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-amber-500" />
-                  )}
-                </button>
-              );
-            })}
+        {/* Paper 1 Question Canvas */}
+        <main className="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-6 space-y-6">
+          {/* Progress Bar */}
+          <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+            <div
+              className="bg-blue-600 h-full rounded-full transition-all duration-300"
+              style={{ width: `${Math.round((answeredCount / totalP1) * 100)}%` }}
+            />
           </div>
 
-          {/* Question Text */}
-          {currentQ && (
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-              <p className="text-sm sm:text-base font-semibold text-slate-900 leading-snug">
+          {/* Question Card */}
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs space-y-6">
+            {/* Remediation & Meta Tag */}
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
+                  {currentQ.subjectName}
+                </span>
+                <span className="text-xs text-slate-500 font-medium">
+                  {currentQ.topicTitle}
+                </span>
+              </div>
+
+              {currentQ.isRemediationTarget && (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 border border-amber-200 text-amber-800">
+                  <Target className="w-3 h-3 text-amber-600" />
+                  <span>Targeted Remediation Concept</span>
+                </span>
+              )}
+            </div>
+
+            {/* Question Text */}
+            <div className="space-y-2">
+              <span className="text-xs font-bold text-slate-400 font-mono">QUESTION {paper1CurrentIdx + 1}</span>
+              <p className="text-base sm:text-lg font-semibold text-slate-900 leading-relaxed">
                 {currentQ.questionText}
               </p>
             </div>
-          )}
 
-          {/* Options */}
-          {currentQ && (
-            <div className="space-y-2.5">
-              {(['A', 'B', 'C', 'D'] as const).map((optKey) => {
-                const optText = currentQ[`option${optKey}` as keyof typeof currentQ];
-                const isSelected = selectedAnswers[currentQ.id] === optKey;
+            {/* Options */}
+            <div className="space-y-3 pt-2">
+              {(['A', 'B', 'C', 'D'] as const).map((opt) => {
+                const optText = opt === 'A' ? currentQ.optionA : opt === 'B' ? currentQ.optionB : opt === 'C' ? currentQ.optionC : currentQ.optionD;
+                const isSelected = paper1Answers[currentQ.id] === opt;
 
                 return (
                   <button
-                    key={optKey}
-                    type="button"
-                    onClick={() => handleSelectOption(optKey)}
-                    className={`w-full p-4 rounded-xl border text-left text-xs font-medium transition-all flex items-center gap-3 ${
+                    key={opt}
+                    onClick={() => handleSelectPaper1Option(currentQ.id, opt)}
+                    className={`w-full text-left p-4 rounded-xl border text-xs sm:text-sm font-medium transition flex items-center gap-3 cursor-pointer ${
                       isSelected
-                        ? 'border-blue-600 bg-blue-50/70 text-blue-950 ring-2 ring-blue-500/20 shadow-sm'
+                        ? 'border-slate-900 bg-slate-900 text-white shadow-xs'
                         : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-800'
                     }`}
                   >
-                    <span
-                      className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 ${
-                        isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600'
-                      }`}
-                    >
-                      {optKey}
+                    <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold font-mono shrink-0 ${
+                      isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-700'
+                    }`}>
+                      {opt}
                     </span>
                     <span className="flex-1">{optText}</span>
                   </button>
                 );
               })}
             </div>
-          )}
 
-          {/* Bottom Actions */}
-          <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+            {/* Navigation Buttons */}
+            <div className="flex items-center justify-between pt-6 border-t border-slate-100">
+              <button
+                onClick={() => setPaper1CurrentIdx(prev => Math.max(0, prev - 1))}
+                disabled={paper1CurrentIdx === 0}
+                className="py-2 px-4 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 hover:text-slate-900 disabled:opacity-40 transition"
+              >
+                Previous
+              </button>
+
+              <button
+                onClick={() => toggleFlagPaper1(currentQ.id)}
+                className={`py-2 px-3 rounded-xl border text-xs font-semibold transition flex items-center gap-1.5 ${
+                  paper1Flagged[currentQ.id]
+                    ? 'border-amber-300 bg-amber-50 text-amber-800'
+                    : 'border-slate-200 text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                <Flag className="w-3.5 h-3.5" />
+                <span>{paper1Flagged[currentQ.id] ? 'Flagged' : 'Flag'}</span>
+              </button>
+
+              {paper1CurrentIdx < totalP1 - 1 ? (
+                <button
+                  onClick={() => setPaper1CurrentIdx(prev => Math.min(totalP1 - 1, prev + 1))}
+                  className="py-2 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition shadow-xs"
+                >
+                  Next Question
+                </button>
+              ) : (
+                <button
+                  onClick={handleProceedToPaper2}
+                  className="py-2 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition shadow-xs flex items-center gap-1.5"
+                >
+                  <span>Proceed to Paper 2</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Quick Palette */}
+          <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-xs">
+            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-3 font-mono">
+              Question Navigator ({answeredCount}/{totalP1} Answered)
+            </span>
+            <div className="flex flex-wrap gap-2">
+              {examPackage.paper1Questions.map((q, idx) => {
+                const isAns = paper1Answers[q.id] !== undefined;
+                const isCur = idx === paper1CurrentIdx;
+                const isFlg = paper1Flagged[q.id];
+
+                return (
+                  <button
+                    key={q.id}
+                    onClick={() => setPaper1CurrentIdx(idx)}
+                    className={`w-8 h-8 rounded-lg text-xs font-bold font-mono transition flex items-center justify-center ${
+                      isCur
+                        ? 'ring-2 ring-blue-600 bg-slate-900 text-white'
+                        : isAns
+                        ? 'bg-slate-200 text-slate-800'
+                        : 'border border-slate-200 text-slate-500 hover:bg-slate-100'
+                    } ${isFlg ? 'border-amber-400 bg-amber-50 text-amber-900' : ''}`}
+                  >
+                    {idx + 1}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // =========================================================================
+  // VIEW 3: PAPER 2 (THEORY / WRITTEN PROBLEMS)
+  // =========================================================================
+  if (examState === 'exam_paper2' && examPackage) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex flex-col">
+        {/* Sticky Exam Bar */}
+        <header className="bg-white border-b border-slate-200 sticky top-0 z-40 px-4 sm:px-8 py-3.5 shadow-xs">
+          <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setExamState('exam_paper1')}
+                className="text-xs font-semibold text-slate-600 hover:text-slate-900 p-1 rounded hover:bg-slate-100"
+              >
+                ← Return to Paper 1
+              </button>
+              <span className="px-2.5 py-1 rounded-md text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                PAPER 2: SECTION B (THEORY)
+              </span>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-slate-800 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
+                <Clock className="w-3.5 h-3.5 text-slate-600" />
+                <span>{formatTimer(timeLeftSeconds)}</span>
+              </div>
+
+              <button
+                onClick={handleProceedToGrading}
+                className="py-1.5 px-4 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-lg transition shadow-xs flex items-center gap-1.5 cursor-pointer"
+              >
+                <span>Submit & View Marking Guide</span>
+                <Check className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        </header>
+
+        {/* Paper 2 Question Canvas */}
+        <main className="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-6 space-y-8">
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-2">
+            <h2 className="text-base font-bold text-slate-900">
+              Section B: Structured Problem-Solving & Theory Questions
+            </h2>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Answer all questions clearly. Type your full step-by-step mathematical working, explanations, or essay paragraphs into the designated answer boxes below. Marks are awarded for method [M1], accuracy [A1], and clear reasoning.
+            </p>
+          </div>
+
+          {examPackage.paper2Questions.map((q) => (
+            <div key={q.id} className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs space-y-6">
+              {/* Question Header */}
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div className="flex items-center gap-2">
+                  <span className="w-7 h-7 rounded-lg bg-slate-900 text-white font-bold font-mono text-xs flex items-center justify-center">
+                    {q.questionNumber}
+                  </span>
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-900">
+                      {q.subjectName}: {q.topicTitle}
+                    </h3>
+                  </div>
+                </div>
+
+                <span className="text-xs font-bold font-mono text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">
+                  {q.totalMarks} Marks
+                </span>
+              </div>
+
+              {/* Scenario */}
+              {q.scenario && (
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-800 leading-relaxed font-sans">
+                  {q.scenario}
+                </div>
+              )}
+
+              {/* Sub-questions */}
+              <div className="space-y-6 pt-2">
+                {q.subQuestions.map((sub) => {
+                  const subId = `${q.id}-${sub.part}`;
+                  const val = theoryAnswers[subId] || '';
+
+                  return (
+                    <div key={sub.part} className="space-y-3">
+                      <div className="flex items-start justify-between gap-4">
+                        <p className="text-xs sm:text-sm font-semibold text-slate-900 leading-relaxed">
+                          <span className="font-mono text-blue-600 font-bold mr-1.5">{sub.part}</span>
+                          {sub.prompt}
+                        </p>
+                        <span className="text-[11px] font-mono text-slate-500 font-semibold shrink-0">
+                          [{sub.maxMarks} {sub.maxMarks === 1 ? 'mark' : 'marks'}]
+                        </span>
+                      </div>
+
+                      {/* Text Input for Working */}
+                      <textarea
+                        value={val}
+                        onChange={(e) => {
+                          const text = e.target.value;
+                          setTheoryAnswers(prev => ({ ...prev, [subId]: text }));
+                        }}
+                        placeholder="Type your working steps, final values, or structured answer here..."
+                        rows={4}
+                        className="w-full text-xs font-mono p-3.5 border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-slate-50/50"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+
+          {/* Bottom Submit CTA */}
+          <div className="p-6 bg-white border border-slate-200 rounded-2xl shadow-xs flex items-center justify-between">
+            <span className="text-xs text-slate-500">
+              Ready to submit? You will review your working side-by-side with the official WAEC marking rubric.
+            </span>
             <button
-              type="button"
-              disabled={currentIdx === 0}
-              onClick={() => setCurrentIdx((i) => Math.max(0, i - 1))}
-              className="py-2 px-3.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 disabled:opacity-40 hover:bg-slate-50"
+              onClick={handleProceedToGrading}
+              className="py-2.5 px-6 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition shadow-xs cursor-pointer flex items-center gap-2"
             >
-              Previous
+              <span>Submit & Review Marking Rubrics</span>
+              <ArrowRight className="w-4 h-4" />
             </button>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
-            {currentIdx < examQuestions.length - 1 ? (
-              <button
-                type="button"
-                onClick={() => setCurrentIdx((i) => Math.min(examQuestions.length - 1, i + 1))}
-                className="py-2 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-sm shadow-blue-500/20"
-              >
-                Next Question
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={handleSubmit}
-                className="py-2.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md shadow-emerald-500/20 flex items-center gap-1.5"
-              >
-                <CheckCircle2 className="w-4 h-4" />
-                <span>Submit Examination</span>
-              </button>
+  // =========================================================================
+  // VIEW 4: INTERACTIVE MARKING RUBRIC REVIEW (Self-Scoring Side-by-Side)
+  // =========================================================================
+  if (examState === 'grading_review' && examPackage) {
+    return (
+      <div className="min-h-screen bg-slate-50 pb-20">
+        <header className="bg-white border-b border-slate-200 sticky top-0 z-40 px-4 sm:px-8 py-4 shadow-xs">
+          <div className="max-w-6xl mx-auto flex items-center justify-between">
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                Interactive Grading Stage
+              </span>
+              <h1 className="text-base font-bold text-slate-900 mt-0.5">
+                Official WAEC Marking Guide & Self-Assessment
+              </h1>
+            </div>
+
+            <button
+              onClick={handleFinalizeSubmission}
+              className="py-2 px-5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition shadow-xs flex items-center gap-1.5 cursor-pointer"
+            >
+              <span>Calculate Final Stanine Grade</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </header>
+
+        <main className="max-w-5xl mx-auto p-4 sm:p-6 space-y-8">
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-2">
+            <h2 className="text-sm font-bold text-slate-900">
+              How to Score Your Paper 2 Answers
+            </h2>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Compare your typed working on the left with the official WAEC model answer and step-by-step marking rubrics on the right. Award yourself marks based on whether you satisfied the method marks [M1] and accuracy marks [A1].
+            </p>
+          </div>
+
+          {examPackage.paper2Questions.map((q) => (
+            <div key={q.id} className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs space-y-6">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                <span className="text-sm font-bold text-slate-900">
+                  Question {q.questionNumber}: {q.subjectName} ({q.topicTitle})
+                </span>
+                <span className="text-xs font-mono font-semibold text-slate-500">
+                  Max: {q.totalMarks} Marks
+                </span>
+              </div>
+
+              <div className="space-y-8">
+                {q.subQuestions.map((sub) => {
+                  const subId = `${q.id}-${sub.part}`;
+                  const studentText = theoryAnswers[subId] || '(No answer provided)';
+                  const currentAwarded = theorySelfMarks[subId] || 0;
+
+                  return (
+                    <div key={sub.part} className="space-y-4 pt-2">
+                      <div className="text-xs font-bold text-slate-800 flex items-center justify-between">
+                        <span>Part {sub.part}: {sub.prompt}</span>
+                        <span className="font-mono text-slate-500">Max: {sub.maxMarks} marks</span>
+                      </div>
+
+                      {/* Side by Side Grid */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {/* Student Answer */}
+                        <div className="p-4 rounded-xl border border-slate-200 bg-slate-50/60 space-y-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block font-mono">
+                            Your Working
+                          </span>
+                          <p className="text-xs text-slate-800 font-mono whitespace-pre-wrap leading-relaxed">
+                            {studentText}
+                          </p>
+                        </div>
+
+                        {/* Model Solution & Rubrics */}
+                        <div className="p-4 rounded-xl border border-emerald-200 bg-emerald-50/40 space-y-3">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 block font-mono">
+                            Official Model Answer & Rubric
+                          </span>
+                          <p className="text-xs text-slate-800 whitespace-pre-wrap leading-relaxed font-sans">
+                            {sub.modelAnswer}
+                          </p>
+                          <div className="p-2.5 rounded-lg bg-white border border-emerald-200/80 text-[11px] font-mono text-emerald-900 whitespace-pre-wrap">
+                            {sub.markingSchemeRubric}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Score Selector */}
+                      <div className="flex items-center justify-between p-3 rounded-xl bg-slate-100/80 border border-slate-200 text-xs">
+                        <span className="font-semibold text-slate-700">
+                          Marks Awarded for Part {sub.part}:
+                        </span>
+                        <div className="flex items-center gap-1.5">
+                          {Array.from({ length: sub.maxMarks + 1 }, (_, i) => i).map((pt) => (
+                            <button
+                              key={pt}
+                              type="button"
+                              onClick={() => {
+                                setTheorySelfMarks(prev => ({ ...prev, [subId]: pt }));
+                              }}
+                              className={`w-8 h-8 rounded-lg font-bold font-mono text-xs transition cursor-pointer ${
+                                currentAwarded === pt
+                                  ? 'bg-slate-900 text-white shadow-xs'
+                                  : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
+                              }`}
+                            >
+                              {pt}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+
+          <div className="flex justify-end pt-4">
+            <button
+              onClick={handleFinalizeSubmission}
+              className="py-3 px-8 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition shadow-xs flex items-center gap-2 cursor-pointer"
+            >
+              <span>Calculate Final Stanine Grade & View Report</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // =========================================================================
+  // VIEW 5: FINAL COMPOSITE RESULTS & WAEC REPORT CARD
+  // =========================================================================
+  if (examState === 'results' && completedAttempt) {
+    return (
+      <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto space-y-8">
+          {/* Main Report Card */}
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs space-y-8 text-center">
+            {/* Top Grade Badge */}
+            <div className="space-y-3">
+              <div className="w-16 h-16 rounded-2xl bg-slate-900 text-white flex items-center justify-center mx-auto shadow-md">
+                <Trophy className="w-8 h-8 text-amber-400" />
+              </div>
+
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 font-mono">
+                  Official WAEC Stanine Assessment
+                </span>
+                <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
+                  {completedAttempt.gradeRemark}
+                </h1>
+                <p className="text-xs text-slate-500 mt-1">
+                  Completed on {new Date(completedAttempt.completedAt).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
+                </p>
+              </div>
+            </div>
+
+            {/* Score Breakdown Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-100">
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                <span className="text-xs text-slate-500 font-medium block">Composite Score</span>
+                <span className="text-3xl font-extrabold text-slate-900 font-mono mt-1 block">
+                  {completedAttempt.compositeTotalPercentage}%
+                </span>
+                <span className="text-[10px] text-slate-400 font-semibold uppercase">Overall Average</span>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                <span className="text-xs text-slate-500 font-medium block">Paper 1 (Objectives)</span>
+                <span className="text-3xl font-extrabold text-slate-900 font-mono mt-1 block">
+                  {completedAttempt.paper1Percentage}%
+                </span>
+                <span className="text-[10px] text-slate-400 font-semibold uppercase">
+                  {completedAttempt.paper1CorrectCount} / {completedAttempt.paper1TotalQuestions} Correct
+                </span>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                <span className="text-xs text-slate-500 font-medium block">Paper 2 (Theory)</span>
+                <span className="text-3xl font-extrabold text-slate-900 font-mono mt-1 block">
+                  {completedAttempt.paper2Percentage}%
+                </span>
+                <span className="text-[10px] text-slate-400 font-semibold uppercase">
+                  {completedAttempt.paper2ScoreMarks} / {completedAttempt.paper2TotalMarks} Marks
+                </span>
+              </div>
+            </div>
+
+            {/* Weak Areas / Remediation Feedback */}
+            {completedAttempt.weakAreasIdentified.length > 0 && (
+              <div className="p-5 rounded-2xl border border-amber-200 bg-amber-50/40 text-left space-y-3">
+                <div className="flex items-center gap-2 text-amber-900 font-bold text-xs">
+                  <Target className="w-4 h-4 text-amber-600" />
+                  <span>Topics Requiring Additional Revision</span>
+                </div>
+                <ul className="space-y-1 text-xs text-amber-800">
+                  {completedAttempt.weakAreasIdentified.map((topic, i) => (
+                    <li key={i} className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                      <span>{topic}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
+
+            {/* Actions */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4 border-t border-slate-100">
+              <button
+                onClick={() => {
+                  setExamState('dashboard');
+                  reloadData(currentLevel);
+                }}
+                className="w-full sm:w-auto py-2.5 px-6 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition shadow-xs"
+              >
+                Back to Weekly Exam Hub
+              </button>
+
+              <Link
+                href="/jhs"
+                className="w-full sm:w-auto py-2.5 px-6 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-bold transition"
+              >
+                Return to JHS Portal
+              </Link>
+            </div>
           </div>
         </div>
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
+
+  return null;
 }
