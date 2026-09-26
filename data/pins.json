@@ -1,0 +1,46 @@
+[
+  {
+    "id": "pin-test-1790434618668",
+    "pinCode": "PREP-TEST-8673",
+    "batchId": "BATCH-TEST-E2E",
+    "priceGhs": 25,
+    "validityDays": 30,
+    "status": "REDEEMED",
+    "redeemedByStudentId": "0598680053",
+    "redeemedAt": "2026-09-26T14:57:01.112Z",
+    "createdAt": "2026-09-26T14:56:58.668+00:00"
+  },
+  {
+    "id": "pin-1001",
+    "pinCode": "PREP-8842-9901",
+    "batchId": "BATCH-JHS-01",
+    "priceGhs": 25,
+    "validityDays": 30,
+    "status": "ACTIVE",
+    "redeemedByStudentId": null,
+    "redeemedAt": null,
+    "createdAt": "2026-09-26T14:50:38.456593+00:00"
+  },
+  {
+    "id": "pin-1002",
+    "pinCode": "PREP-4412-3321",
+    "batchId": "BATCH-JHS-01",
+    "priceGhs": 25,
+    "validityDays": 30,
+    "status": "ACTIVE",
+    "redeemedByStudentId": null,
+    "redeemedAt": null,
+    "createdAt": "2026-09-26T14:50:38.456593+00:00"
+  },
+  {
+    "id": "pin-1003",
+    "pinCode": "PREP-9904-7712",
+    "batchId": "BATCH-JHS-01",
+    "priceGhs": 25,
+    "validityDays": 30,
+    "status": "REDEEMED",
+    "redeemedByStudentId": null,
+    "redeemedAt": null,
+    "createdAt": "2026-09-25T14:50:38.456593+00:00"
+  }
+]

@@ -74,7 +74,8 @@ export default function AdminDashboardPage() {
     getAdminMetrics, 
     pins, 
     transactions, 
-    generatePinBatch 
+    generatePinBatch,
+    refreshPins
   } = useAuth();
 
   const [mounted, setMounted] = useState(false);
@@ -139,6 +140,7 @@ export default function AdminDashboardPage() {
     setTrafficData(getStoredTrafficData());
     setStudents(getStoredStudents());
     fetchUploadedDocuments().then(setPdfDocuments).catch(e => console.warn('Fetch docs warning:', e?.message || e));
+    refreshPins();
   }, [activeTab]);
 
   if (!mounted) {
@@ -474,10 +476,11 @@ export default function AdminDashboardPage() {
   };
 
   // PIN Generation
-  const handleGeneratePins = (e: React.FormEvent) => {
+  const handleGeneratePins = async (e: React.FormEvent) => {
     e.preventDefault();
     const created = generatePinBatch(pinCount, pinPrice, pinValidity);
     setNewlyGenerated(created);
+    await refreshPins();
   };
 
   const copyToClipboard = (code: string) => {

@@ -1,5 +1,5 @@
 import { supabase, isSupabaseConfigured } from './supabaseClient';
-import { Student, EducationLevel, StudentTopicProgress } from './types';
+import { Student, EducationLevel, StudentTopicProgress, AccessPin } from './types';
 import type { FullWeeklyExamAttempt } from './weeklyProgressTracker';
 
 export interface SupabaseStudentRow {
@@ -476,4 +476,166 @@ export async function fetchStudentMistakesFromSupabase(
     return [];
   }
 }
+
+/**
+ * Save / Upsert newly generated Access PIN batch to Supabase
+ */
+export async function savePinBatchToSupabase(pins: AccessPin[]): Promise<boolean> {
+  if (!Array.isArray(pins) || pins.length === 0) return true;
+  if (!isSupabaseConfigured || !supabase) return false;
+
+  try {
+    const rows = pins.map((p) => ({
+      id: p.id,
+      pin_code: p.pinCode.trim().toUpperCase(),
+      batch_id: p.batchId,
+      price_ghs: p.priceGhs,
+      validity_days: p.validityDays,
+      status: p.status || 'ACTIVE',
+      redeemed_by_student_phone: p.redeemedByStudentId || null,
+      redeemed_at: p.redeemedAt || null,
+      created_at: p.createdAt || new Date().toISOString(),
+    }));
+
+    const { error } = await supabase
+      .from('access_pins')
+      .upsert(rows, { onConflict: 'pin_code' });
+
+    if (error) {
+      console.warn('Supabase save pin batch notice:', error.message);
+      return false;
+    }
+    return true;
+  } catch (err: any) {
+    console.warn('Error saving pin batch to Supabase:', err?.message || err);
+    return false;
+  }
+}
+
+/**
+ * Fetch all Access PINs from Supabase
+ */
+export async function fetchPinsFromSupabase(): Promise<AccessPin[]> {
+  if (!isSupabaseConfigured || !supabase) return [];
+
+  try {
+    const { data, error } = await supabase
+      .from('access_pins')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.warn('Supabase fetch pins notice:', error.message);
+      return [];
+    }
+
+    return (data || []).map((row: any) => ({
+      id: row.id,
+      pinCode: row.pin_code,
+      batchId: row.batch_id,
+      priceGhs: Number(row.price_ghs),
+      validityDays: row.validity_days,
+      status: row.status,
+      redeemedByStudentId: row.redeemed_by_student_phone,
+      redeemedAt: row.redeemed_at,
+      createdAt: row.created_at,
+    }));
+  } catch (err: any) {
+    console.warn('Error fetching pins from Supabase:', err?.message || err);
+    return [];
+  }
+}
+
+/**
+ * Strict single-use redemption of an Access PIN in Supabase
+ */
+export async function redeemPinInSupabaseStrict(
+  pinCode: string,
+  studentPhone?: string
+): Promise<{ success: boolean; message: string; validityDays?: number }> {
+  const cleanCode = pinCode.trim().toUpperCase();
+  if (!cleanCode) {
+    return { success: false, message: 'Please enter a valid Access PIN.' };
+  }
+
+  if (!isSupabaseConfigured || !supabase) {
+    return { success: false, message: 'Database connection offline. Please check your internet connection.' };
+  }
+
+  try {
+    // 1. Look up the PIN in Supabase
+    const { data: row, error: fetchErr } = await supabase
+      .from('access_pins')
+      .select('*')
+      .eq('pin_code', cleanCode)
+      .maybeSingle();
+
+    if (fetchErr) {
+      console.warn('Supabase pin query error:', fetchErr.message);
+      return { success: false, message: 'Error verifying PIN: ' + fetchErr.message };
+    }
+
+    if (!row) {
+      return { success: false, message: 'Invalid PIN code. Please verify the code and try again.' };
+    }
+
+    // 2. Check if already redeemed
+    if (row.status === 'REDEEMED') {
+      const redeemedDate = row.redeemed_at ? new Date(row.redeemed_at).toLocaleDateString() : 'earlier';
+      return { 
+        success: false, 
+        message: `This PIN code has already been redeemed on ${redeemedDate} and cannot be reused.` 
+      };
+    }
+
+    if (row.status !== 'ACTIVE') {
+      return { success: false, message: 'This PIN code is expired or no longer active.' };
+    }
+
+    const validityDays = Number(row.validity_days) || 30;
+    const now = new Date().toISOString();
+    const cleanPhone = studentPhone ? studentPhone.trim().replace(/\s+/g, '') : null;
+
+    // 3. Mark the PIN as REDEEMED
+    const { error: updatePinErr } = await supabase
+      .from('access_pins')
+      .update({
+        status: 'REDEEMED',
+        redeemed_by_student_phone: cleanPhone || 'DIRECT_REDEEM',
+        redeemed_at: now,
+      })
+      .eq('pin_code', cleanCode);
+
+    if (updatePinErr) {
+      console.warn('Supabase pin status update error:', updatePinErr.message);
+      return { success: false, message: 'Failed to update PIN status: ' + updatePinErr.message };
+    }
+
+    // 4. If studentPhone is provided, grant Full Pass in students table
+    if (cleanPhone) {
+      const expiry = new Date();
+      expiry.setDate(expiry.getDate() + validityDays);
+
+      await supabase
+        .from('students')
+        .update({
+          has_full_access: true,
+          access_type: 'Full Pass',
+          access_expires_at: expiry.toISOString(),
+          last_active_at: now,
+        })
+        .eq('phone_number', cleanPhone);
+    }
+
+    return {
+      success: true,
+      message: `Access PIN successfully verified! Full access unlocked for ${validityDays} days.`,
+      validityDays,
+    };
+  } catch (err: any) {
+    console.warn('Error during pin redemption:', err?.message || err);
+    return { success: false, message: 'Network error verifying PIN. Please try again.' };
+  }
+}
+
 

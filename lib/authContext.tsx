@@ -49,6 +49,7 @@ interface AuthContextType {
   recordQuizScore: (topicId: string, scorePercentage: number) => void;
   recordWeeklyExamAttempt: (attempt: Omit<WeeklyExamAttempt, 'id' | 'createdAt'>) => void;
   generatePinBatch: (count: number, priceGhs: number, validityDays: number) => AccessPin[];
+  refreshPins: () => Promise<void>;
   getAdminMetrics: () => AdminMetrics;
 }
 
@@ -220,14 +221,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         const storedPins = localStorage.getItem(STORAGE_KEYS.ACCESS_PINS);
         if (storedPins) {
-          if (isMounted) setPins(JSON.parse(storedPins));
+          try {
+            if (isMounted) setPins(JSON.parse(storedPins));
+          } catch {}
         } else {
           localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(DEFAULT_PINS));
         }
 
+        // Background sync live PIN database from server/Supabase
+        try {
+          const res = await fetch('/api/pins');
+          if (res.ok) {
+            const serverPins = await res.json();
+            if (Array.isArray(serverPins) && serverPins.length > 0 && isMounted) {
+              setPins(serverPins);
+              localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(serverPins));
+            }
+          }
+        } catch (e: any) {
+          console.warn('Pins sync notice:', e?.message || e);
+        }
+
         const storedTxs = localStorage.getItem(STORAGE_KEYS.TRANSACTIONS);
         if (storedTxs) {
-          if (isMounted) setTransactions(JSON.parse(storedTxs));
+          try {
+            if (isMounted) setTransactions(JSON.parse(storedTxs));
+          } catch {}
         } else {
           localStorage.setItem(STORAGE_KEYS.TRANSACTIONS, JSON.stringify(DEFAULT_TRANSACTIONS));
         }
@@ -573,82 +592,140 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const redeemPin = async (pinCode: string): Promise<{ success: boolean; message: string }> => {
     const cleanCode = pinCode.trim().toUpperCase();
-    const pinIndex = pins.findIndex(p => p.pinCode === cleanCode);
-
-    if (pinIndex === -1) {
-      return { success: false, message: 'Invalid PIN code. Please verify the code and try again.' };
+    if (!cleanCode) {
+      return { success: false, message: 'Please enter an Access PIN code.' };
     }
 
-    const targetPin = pins[pinIndex];
-    if (targetPin.status !== 'ACTIVE') {
-      return { success: false, message: 'This PIN code has already been redeemed or is no longer valid.' };
-    }
+    try {
+      const res = await fetch('/api/pins', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'redeem',
+          pinCode: cleanCode,
+          studentPhone: student?.phoneNumber || null,
+        }),
+      });
 
-    const updatedPins = [...pins];
-    const expiryDate = new Date();
-    expiryDate.setDate(expiryDate.getDate() + targetPin.validityDays);
+      const data = await res.json();
 
-    updatedPins[pinIndex] = {
-      ...targetPin,
-      status: 'REDEEMED',
-      redeemedByStudentId: student?.id,
-      redeemedAt: new Date().toISOString(),
-    };
-
-    setPins(updatedPins);
-    localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(updatedPins));
-
-    if (student) {
-      const updatedStudent: Student = {
-        ...student,
-        hasFullAccess: true,
-        accessType: 'Full Pass',
-        accessExpiresAt: expiryDate.toISOString(),
-      };
-      setStudent(updatedStudent);
-      localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(updatedStudent));
-
-      // Sync upgrade to Supabase
-      redeemPinInSupabase(student.phoneNumber, targetPin.validityDays).catch(e => console.warn('Supabase pin notice:', e?.message || e));
-
-      // Sync upgrade to server
-      try {
-        fetch('/api/students', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            phone: student.phoneNumber,
-            accessType: 'Full Pass',
-            accessExpiresAt: expiryDate.toISOString()
-          })
-        }).catch(e => console.warn('Student pin sync notice:', e?.message || e));
-      } catch {
-        // ignore
+      if (!data.success) {
+        return { 
+          success: false, 
+          message: data.message || 'Invalid or already redeemed PIN code.' 
+        };
       }
+
+      const validityDays = data.validityDays || 30;
+      const expiryDate = new Date();
+      expiryDate.setDate(expiryDate.getDate() + validityDays);
+
+      // Mark the PIN as REDEEMED in local pins state
+      setPins((prevPins) => {
+        const updated = prevPins.map((p) =>
+          p.pinCode === cleanCode
+            ? { 
+                ...p, 
+                status: 'REDEEMED' as const, 
+                redeemedByStudentId: student?.phoneNumber || 'DIRECT', 
+                redeemedAt: new Date().toISOString() 
+              }
+            : p
+        );
+        localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(updated));
+        return updated;
+      });
+
+      // Upgrade student to Full Pass
+      if (student) {
+        const updatedStudent: Student = {
+          ...student,
+          hasFullAccess: true,
+          accessType: 'Full Pass',
+          accessExpiresAt: expiryDate.toISOString(),
+        };
+        setStudent(updatedStudent);
+        localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(updatedStudent));
+
+        // Sync upgrade to server
+        try {
+          fetch('/api/students', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              phone: student.phoneNumber,
+              accessType: 'Full Pass',
+              accessExpiresAt: expiryDate.toISOString()
+            })
+          }).catch(e => console.warn('Student pin sync notice:', e?.message || e));
+        } catch {}
+      }
+
+      // Record cash flow entry
+      const newTx: CashFlowTransaction = {
+        id: `tx-${Date.now()}`,
+        reference: `REF-${Math.floor(100000 + Math.random() * 900000)}`,
+        studentId: student?.id,
+        studentPhone: student?.phoneNumber || 'Direct PIN',
+        amountGhs: 25.00,
+        transactionType: 'PIN_PURCHASE',
+        paymentMethod: 'Scratch-Card / PIN Voucher',
+        pinCodeUsed: cleanCode,
+        description: `${validityDays}-Day Full JHS Access Pass`,
+        createdAt: new Date().toISOString(),
+      };
+
+      setTransactions((prev) => {
+        const next = [newTx, ...prev];
+        localStorage.setItem(STORAGE_KEYS.TRANSACTIONS, JSON.stringify(next));
+        return next;
+      });
+
+      return {
+        success: true,
+        message: data.message || `Access PIN successfully redeemed! Full access unlocked for ${validityDays} days.`,
+      };
+    } catch (err: any) {
+      console.warn('Redeem PIN error:', err?.message || err);
+      // Fallback to checking local state in case offline
+      const pinIndex = pins.findIndex((p) => p.pinCode === cleanCode);
+      if (pinIndex === -1) {
+        return { success: false, message: 'Invalid PIN code. Please verify the code and try again.' };
+      }
+      const targetPin = pins[pinIndex];
+      if (targetPin.status !== 'ACTIVE') {
+        return { success: false, message: 'This PIN code has already been redeemed or is no longer valid.' };
+      }
+
+      const updatedPins = [...pins];
+      const expiryDate = new Date();
+      expiryDate.setDate(expiryDate.getDate() + targetPin.validityDays);
+
+      updatedPins[pinIndex] = {
+        ...targetPin,
+        status: 'REDEEMED',
+        redeemedByStudentId: student?.phoneNumber || 'OFFLINE_USER',
+        redeemedAt: new Date().toISOString(),
+      };
+      setPins(updatedPins);
+      localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(updatedPins));
+
+      if (student) {
+        const updatedStudent: Student = {
+          ...student,
+          hasFullAccess: true,
+          accessType: 'Full Pass',
+          accessExpiresAt: expiryDate.toISOString(),
+        };
+        setStudent(updatedStudent);
+        localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(updatedStudent));
+      }
+
+      return {
+        success: true,
+        message: `Access PIN redeemed! Full access unlocked for ${targetPin.validityDays} days.`,
+      };
     }
-
-    // Record cash flow entry
-    const newTx: CashFlowTransaction = {
-      id: `tx-${Date.now()}`,
-      reference: `REF-${Math.floor(100000 + Math.random() * 900000)}`,
-      studentId: student?.id,
-      studentPhone: student?.phoneNumber || 'Direct PIN',
-      amountGhs: targetPin.priceGhs,
-      transactionType: 'PIN_PURCHASE',
-      paymentMethod: 'Scratch-Card / PIN Voucher',
-      pinCodeUsed: targetPin.pinCode,
-      description: `${targetPin.validityDays}-Day Full JHS Access Pass`,
-      createdAt: new Date().toISOString(),
-    };
-
-    const updatedTxs = [newTx, ...transactions];
-    setTransactions(updatedTxs);
-    localStorage.setItem(STORAGE_KEYS.TRANSACTIONS, JSON.stringify(updatedTxs));
-
-    return { 
-      success: true, 
-      message: `Full Access granted! Your pass is valid for ${targetPin.validityDays} days until ${expiryDate.toLocaleDateString()}.` 
-    };
   };
 
   const recordQuizScore = (topicId: string, scorePercentage: number) => {
@@ -743,7 +820,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const updated = [...newBatch, ...pins];
     setPins(updated);
     localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(updated));
+
+    // Sync newly created batch to centralized server API and Supabase
+    try {
+      fetch('/api/pins', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'generate', pins: newBatch }),
+      }).catch((err) => console.warn('Sync generated pins error:', err?.message || err));
+    } catch {}
+
     return newBatch;
+  };
+
+  const refreshPins = async (): Promise<void> => {
+    try {
+      const res = await fetch('/api/pins');
+      if (res.ok) {
+        const serverPins = await res.json();
+        if (Array.isArray(serverPins) && serverPins.length > 0) {
+          setPins(serverPins);
+          localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(serverPins));
+        }
+      }
+    } catch (e: any) {
+      console.warn('Refresh pins notice:', e?.message || e);
+    }
   };
 
   const getAdminMetrics = (): AdminMetrics => {
@@ -793,6 +895,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         recordQuizScore,
         recordWeeklyExamAttempt,
         generatePinBatch,
+        refreshPins,
         getAdminMetrics,
       }}
     >
