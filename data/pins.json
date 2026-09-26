@@ -1,5 +1,115 @@
 [
   {
+    "id": "pin-1790434860030-1",
+    "pinCode": "PREP-7062-6300",
+    "batchId": "BATCH-860029",
+    "priceGhs": 25,
+    "validityDays": 30,
+    "status": "REDEEMED",
+    "redeemedByStudentId": "0596443113",
+    "redeemedAt": "2026-09-26T15:01:16.542+00:00",
+    "createdAt": "2026-09-26T15:01:00.03+00:00"
+  },
+  {
+    "id": "pin-1790434860030-6",
+    "pinCode": "PREP-9606-2441",
+    "batchId": "BATCH-860029",
+    "priceGhs": 25,
+    "validityDays": 30,
+    "status": "ACTIVE",
+    "redeemedByStudentId": null,
+    "redeemedAt": null,
+    "createdAt": "2026-09-26T15:01:00.03+00:00"
+  },
+  {
+    "id": "pin-1790434860030-7",
+    "pinCode": "PREP-1319-9609",
+    "batchId": "BATCH-860029",
+    "priceGhs": 25,
+    "validityDays": 30,
+    "status": "ACTIVE",
+    "redeemedByStudentId": null,
+    "redeemedAt": null,
+    "createdAt": "2026-09-26T15:01:00.03+00:00"
+  },
+  {
+    "id": "pin-1790434860030-8",
+    "pinCode": "PREP-5384-4212",
+    "batchId": "BATCH-860029",
+    "priceGhs": 25,
+    "validityDays": 30,
+    "status": "ACTIVE",
+    "redeemedByStudentId": null,
+    "redeemedAt": null,
+    "createdAt": "2026-09-26T15:01:00.03+00:00"
+  },
+  {
+    "id": "pin-1790434860030-9",
+    "pinCode": "PREP-9975-6474",
+    "batchId": "BATCH-860029",
+    "priceGhs": 25,
+    "validityDays": 30,
+    "status": "ACTIVE",
+    "redeemedByStudentId": null,
+    "redeemedAt": null,
+    "createdAt": "2026-09-26T15:01:00.03+00:00"
+  },
+  {
+    "id": "pin-1790434860030-0",
+    "pinCode": "PREP-9022-5217",
+    "batchId": "BATCH-860029",
+    "priceGhs": 25,
+    "validityDays": 30,
+    "status": "ACTIVE",
+    "redeemedByStudentId": null,
+    "redeemedAt": null,
+    "createdAt": "2026-09-26T15:01:00.03+00:00"
+  },
+  {
+    "id": "pin-1790434860030-2",
+    "pinCode": "PREP-7478-6088",
+    "batchId": "BATCH-860029",
+    "priceGhs": 25,
+    "validityDays": 30,
+    "status": "ACTIVE",
+    "redeemedByStudentId": null,
+    "redeemedAt": null,
+    "createdAt": "2026-09-26T15:01:00.03+00:00"
+  },
+  {
+    "id": "pin-1790434860030-3",
+    "pinCode": "PREP-1042-8797",
+    "batchId": "BATCH-860029",
+    "priceGhs": 25,
+    "validityDays": 30,
+    "status": "ACTIVE",
+    "redeemedByStudentId": null,
+    "redeemedAt": null,
+    "createdAt": "2026-09-26T15:01:00.03+00:00"
+  },
+  {
+    "id": "pin-1790434860030-4",
+    "pinCode": "PREP-5515-8064",
+    "batchId": "BATCH-860029",
+    "priceGhs": 25,
+    "validityDays": 30,
+    "status": "ACTIVE",
+    "redeemedByStudentId": null,
+    "redeemedAt": null,
+    "createdAt": "2026-09-26T15:01:00.03+00:00"
+  },
+  {
+    "id": "pin-1790434860030-5",
+    "pinCode": "PREP-4096-3288",
+    "batchId": "BATCH-860029",
+    "priceGhs": 25,
+    "validityDays": 30,
+    "status": "ACTIVE",
+    "redeemedByStudentId": null,
+    "redeemedAt": null,
+    "createdAt": "2026-09-26T15:01:00.03+00:00"
+  },
+  {
     "id": "pin-test-1790434618668",
     "pinCode": "PREP-TEST-8673",
     "batchId": "BATCH-TEST-E2E",
@@ -7,12 +117,12 @@
     "validityDays": 30,
     "status": "REDEEMED",
     "redeemedByStudentId": "0598680053",
-    "redeemedAt": "2026-09-26T14:57:01.112Z",
+    "redeemedAt": "2026-09-26T14:57:00.406+00:00",
     "createdAt": "2026-09-26T14:56:58.668+00:00"
   },
   {
-    "id": "pin-1001",
-    "pinCode": "PREP-8842-9901",
+    "id": "pin-1002",
+    "pinCode": "PREP-4412-3321",
     "batchId": "BATCH-JHS-01",
     "priceGhs": 25,
     "validityDays": 30,
@@ -22,8 +132,8 @@
     "createdAt": "2026-09-26T14:50:38.456593+00:00"
   },
   {
-    "id": "pin-1002",
-    "pinCode": "PREP-4412-3321",
+    "id": "pin-1001",
+    "pinCode": "PREP-8842-9901",
     "batchId": "BATCH-JHS-01",
     "priceGhs": 25,
     "validityDays": 30,

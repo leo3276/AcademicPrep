@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/authContext';
+import PaystackPaymentModal from '@/components/PaystackPaymentModal';
 import { CURRICULUM_SUBJECTS, JHS_CURRICULUM_TOPICS } from '@/lib/curriculumData';
 import { getStudentQuizMistakes, QuizMistakeRecord } from '@/lib/weeklyProgressTracker';
 import { 
@@ -72,6 +73,7 @@ export default function StudentProfilePage() {
 
   // Buy PIN Modal State
   const [showBuyModal, setShowBuyModal] = useState(false);
+  const [modalTab, setModalTab] = useState<'momo' | 'pin'>('momo');
 
   // Fetch real students leaderboard from API
   const fetchLeaderboard = async () => {
@@ -324,11 +326,14 @@ export default function StudentProfilePage() {
             <div className="flex flex-wrap items-center gap-2 self-start md:self-auto">
               {!isFullPass && (
                 <button
-                  onClick={() => setShowBuyModal(true)}
+                  onClick={() => {
+                    setModalTab('momo');
+                    setShowBuyModal(true);
+                  }}
                   className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-xs shadow-md shadow-amber-500/20 transition flex items-center gap-1.5 cursor-pointer"
                 >
-                  <KeyRound className="w-3.5 h-3.5" />
-                  <span>Buy Access PIN (GHS 25)</span>
+                  <Sparkles className="w-3.5 h-3.5 text-amber-200" />
+                  <span>Buy VIP Pass (GHS 20/mo MoMo)</span>
                 </button>
               )}
               <button
@@ -703,68 +708,13 @@ export default function StudentProfilePage() {
     </main>
 
       {/* ============================================================ */}
-      {/* 6. BUY ACCESS PIN MODAL                                      */}
+      {/* 6. PAYSTACK PAYMENT & VIP PIN REDEMPTION MODAL               */}
       {/* ============================================================ */}
-      {showBuyModal && (
-        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 space-y-5 shadow-xl">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
-                  <KeyRound className="w-4 h-4" />
-                </div>
-                <h3 className="text-base font-extrabold text-slate-900">Upgrade to VIP Pass</h3>
-              </div>
-              <button
-                onClick={() => setShowBuyModal(false)}
-                className="text-slate-400 hover:text-slate-700 p-1 rounded-lg"
-              >
-                <XCircle className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="space-y-3 text-xs text-slate-600">
-              <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-amber-950 font-medium">
-                <p className="font-bold text-sm text-amber-900">30-Day VIP Pass: GHS 25.00</p>
-                <p className="text-[11px] mt-1 text-amber-800">
-                  Unlocks all 9 subjects, 4th topic onwards, 2008–2026 BECE Past Question PDFs, Trial Mocks, and Dynamic Weekly Exams.
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <p className="font-bold text-slate-800 uppercase tracking-wider text-[11px]">How to Purchase via Mobile Money:</p>
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 font-mono text-xs space-y-1">
-                  <p><b>MTN MoMo / Telecel Cash:</b> 024 123 4567</p>
-                  <p><b>Merchant / Name:</b> AcademicPrep Ghana</p>
-                  <p><b>Reference:</b> Your Phone Number ({student.phoneNumber})</p>
-                </div>
-              </div>
-
-              <p className="text-[11px] text-slate-500">
-                After payment, you will receive your unique 12-digit PIN code via SMS to redeem immediately on this dashboard.
-              </p>
-            </div>
-
-            <div className="pt-2 border-t border-slate-100 flex flex-col gap-2">
-              <button
-                type="button"
-                onClick={handleInstantDemoPurchase}
-                className="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-sm"
-              >
-                <Sparkles className="w-4 h-4" />
-                <span>Simulate Instant Purchase (Demo Active PIN)</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setShowBuyModal(false)}
-                className="w-full py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 text-center"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <PaystackPaymentModal
+        isOpen={showBuyModal}
+        onClose={() => setShowBuyModal(false)}
+        defaultTab={modalTab}
+      />
     </div>
   );
 }

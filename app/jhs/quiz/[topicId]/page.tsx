@@ -25,6 +25,7 @@ import {
   Lock
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import PaystackPaymentModal from '@/components/PaystackPaymentModal';
 
 export default function TopicQuizPage() {
   const params = useParams();
@@ -34,6 +35,8 @@ export default function TopicQuizPage() {
   const [pinInput, setPinInput] = useState('');
   const [pinLoading, setPinLoading] = useState(false);
   const [pinFeedback, setPinFeedback] = useState<{ success?: boolean; text?: string } | null>(null);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [modalTab, setModalTab] = useState<'momo' | 'pin'>('momo');
 
   const topicId = params.topicId as string;
   const topic = JHS_CURRICULUM_TOPICS.find((t) => t.id === topicId);
@@ -148,8 +151,31 @@ export default function TopicQuizPage() {
             </ul>
           </div>
 
+          {/* Instant MoMo Purchase Option */}
+          <div className="pt-1">
+            <button
+              onClick={() => {
+                setModalTab('momo');
+                setShowPaymentModal(true);
+              }}
+              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white font-extrabold text-sm transition-all shadow-md shadow-amber-500/20 flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <Sparkles className="w-4 h-4 text-amber-200" />
+              <span>Buy VIP Pass via Mobile Money (GHS 20 / month)</span>
+            </button>
+            <p className="text-[11px] text-slate-500 text-center mt-1.5 font-medium">
+              Instant activation via MTN MoMo, Telecel Cash, AT Money or Card
+            </p>
+          </div>
+
+          <div className="relative flex py-1 items-center">
+            <div className="flex-grow border-t border-slate-200"></div>
+            <span className="shrink mx-3 text-slate-400 text-xs font-semibold uppercase">Or Redeem Voucher PIN</span>
+            <div className="flex-grow border-t border-slate-200"></div>
+          </div>
+
           {/* Quick PIN Redemption Form */}
-          <form onSubmit={handleRedeemPin} className="space-y-3 pt-2">
+          <form onSubmit={handleRedeemPin} className="space-y-3 pt-1">
             <div className="text-left">
               <label className="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">
                 Enter Your Access PIN Code
@@ -166,14 +192,14 @@ export default function TopicQuizPage() {
                 <button
                   type="submit"
                   disabled={pinLoading || !pinInput.trim()}
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 disabled:bg-slate-300 text-white font-bold text-xs transition-all shadow-md shadow-amber-500/20 flex items-center justify-center gap-1.5 whitespace-nowrap"
+                  className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:bg-slate-300 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 whitespace-nowrap"
                 >
                   {pinLoading ? (
                     <span>Verifying...</span>
                   ) : (
                     <>
                       <KeyRound className="w-4 h-4" />
-                      Unlock Quiz Now
+                      Unlock Quiz
                     </>
                   )}
                 </button>
@@ -181,11 +207,11 @@ export default function TopicQuizPage() {
             </div>
 
             <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1">
-              <span>Need a PIN? Contact your teacher or school administrator.</span>
+              <span>Have a voucher? Enter PIN or contact your teacher.</span>
               <button
                 type="button"
                 onClick={() => setPinInput('PREP-8842-9901')}
-                className="text-amber-700 font-bold hover:underline"
+                className="text-amber-700 font-bold hover:underline cursor-pointer"
               >
                 Autofill Active Demo PIN
               </button>
@@ -203,6 +229,14 @@ export default function TopicQuizPage() {
               </div>
             )}
           </form>
+
+          {/* Paystack Payment Modal */}
+          <PaystackPaymentModal
+            isOpen={showPaymentModal}
+            onClose={() => setShowPaymentModal(false)}
+            defaultTab={modalTab}
+            featureName={`Topic: ${topic.title}`}
+          />
 
           <div className="pt-2 border-t border-slate-100 flex items-center justify-center gap-4 text-xs font-semibold">
             <Link

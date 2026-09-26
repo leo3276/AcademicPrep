@@ -18,44 +18,21 @@ import {
   BookOpen,
   FileCheck
 } from 'lucide-react';
+import PaystackPaymentModal from './PaystackPaymentModal';
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { student, isAdmin, logoutStudent, logoutAdmin, redeemPin } = useAuth();
+  const { student, isAdmin, logoutStudent, logoutAdmin } = useAuth();
   
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [pinModalOpen, setPinModalOpen] = useState(false);
-  const [pinInput, setPinInput] = useState('');
-  const [pinLoading, setPinLoading] = useState(false);
-  const [pinFeedback, setPinFeedback] = useState<{ success?: boolean; text?: string } | null>(null);
+  const [modalTab, setModalTab] = useState<'momo' | 'pin'>('momo');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const handleRedeemPin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!pinInput.trim()) return;
-
-    setPinLoading(true);
-    setPinFeedback(null);
-
-    const res = await redeemPin(pinInput);
-    setPinLoading(false);
-    setPinFeedback({
-      success: res.success,
-      text: res.message,
-    });
-
-    if (res.success) {
-      setTimeout(() => {
-        setPinModalOpen(false);
-        setPinInput('');
-        setPinFeedback(null);
-      }, 2000);
-    }
-  };
 
   return (
     <>
@@ -162,11 +139,14 @@ export default function Navbar() {
               )}
 
               <button
-                onClick={() => setPinModalOpen(true)}
-                className="text-xs font-bold px-2.5 py-1.5 xl:px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-sm shadow-amber-500/20 transition-all flex items-center gap-1.5 whitespace-nowrap"
+                onClick={() => {
+                  setModalTab('momo');
+                  setPinModalOpen(true);
+                }}
+                className="text-xs font-bold px-2.5 py-1.5 xl:px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-sm shadow-amber-500/20 transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
               >
-                <KeyRound className="w-3.5 h-3.5" />
-                <span>Redeem PIN</span>
+                <Sparkles className="w-3.5 h-3.5 text-amber-200" />
+                <span>VIP Pass (GHS 20/mo)</span>
               </button>
 
               <div className="h-5 w-px bg-slate-200 shrink-0 mx-0.5" />
@@ -223,12 +203,15 @@ export default function Navbar() {
             {/* Mobile / Tablet Menu Trigger & Quick Actions (< lg) */}
             <div className="lg:hidden flex items-center gap-2 shrink-0">
               <button
-                onClick={() => setPinModalOpen(true)}
-                className="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-white shadow-xs flex items-center gap-1 whitespace-nowrap"
+                onClick={() => {
+                  setModalTab('momo');
+                  setPinModalOpen(true);
+                }}
+                className="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-xs flex items-center gap-1 whitespace-nowrap cursor-pointer"
               >
-                <KeyRound className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Redeem PIN</span>
-                <span className="sm:hidden">PIN</span>
+                <Sparkles className="w-3.5 h-3.5 text-amber-200" />
+                <span className="hidden sm:inline">VIP Pass (GHS 20/mo)</span>
+                <span className="sm:hidden">VIP</span>
               </button>
 
               {mounted && !student && (
@@ -320,15 +303,16 @@ export default function Navbar() {
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
+                  setModalTab('momo');
                   setPinModalOpen(true);
                 }}
-                className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold text-xs flex items-center justify-between shadow-xs mt-1"
+                className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold text-xs flex items-center justify-between shadow-xs mt-1 cursor-pointer"
               >
                 <div className="flex items-center gap-2">
-                  <KeyRound className="w-4 h-4" />
-                  <span>Redeem Access PIN</span>
+                  <Sparkles className="w-4 h-4 text-amber-200" />
+                  <span>VIP Pass (GHS 20/mo MoMo)</span>
                 </div>
-                <span className="text-[10px] bg-black/20 px-1.5 py-0.5 rounded font-black tracking-wider uppercase">VIP PASS</span>
+                <span className="text-[10px] bg-black/20 px-1.5 py-0.5 rounded font-black tracking-wider uppercase">30 DAYS</span>
               </button>
             </div>
 
@@ -386,85 +370,12 @@ export default function Navbar() {
         )}
       </header>
 
-      {/* Redeem PIN Modal */}
-      {pinModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-150">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-100 relative">
-            <button
-              onClick={() => {
-                setPinModalOpen(false);
-                setPinFeedback(null);
-              }}
-              className="absolute top-4 right-4 p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
-                <KeyRound className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-base font-bold text-slate-900">Redeem Access PIN</h3>
-                <p className="text-xs text-slate-500">Unlock all subjects, quizzes & exams for 30 days</p>
-              </div>
-            </div>
-
-            <form onSubmit={handleRedeemPin} className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">
-                  Access PIN Code
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. PREP-8842-9901"
-                  value={pinInput}
-                  onChange={(e) => setPinInput(e.target.value.toUpperCase())}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 font-mono text-center tracking-widest text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 uppercase text-sm"
-                  autoFocus
-                />
-                <div className="flex items-center justify-between text-[11px] text-slate-500 mt-1.5">
-                  <span>💡 Active Demo PIN: <span className="font-mono font-bold text-emerald-700">PREP-8842-9901</span></span>
-                  <button
-                    type="button"
-                    onClick={() => setPinInput('PREP-8842-9901')}
-                    className="text-emerald-700 font-bold hover:underline cursor-pointer"
-                  >
-                    Autofill
-                  </button>
-                </div>
-              </div>
-
-              {pinFeedback && (
-                <div
-                  className={`p-3 rounded-xl text-xs font-medium ${
-                    pinFeedback.success
-                      ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                      : 'bg-red-50 text-red-800 border border-red-200'
-                  }`}
-                >
-                  {pinFeedback.text}
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={pinLoading || !pinInput.trim()}
-                className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white font-bold text-xs transition-all shadow-md shadow-emerald-500/20 flex items-center justify-center gap-1.5"
-              >
-                {pinLoading ? (
-                  <span>Verifying PIN...</span>
-                ) : (
-                  <>
-                    <Award className="w-4 h-4" />
-                    Activate Full Access Pass
-                  </>
-                )}
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
+      {/* Paystack Payment & PIN Redemption Modal */}
+      <PaystackPaymentModal
+        isOpen={pinModalOpen}
+        onClose={() => setPinModalOpen(false)}
+        defaultTab={modalTab}
+      />
     </>
   );
 }
