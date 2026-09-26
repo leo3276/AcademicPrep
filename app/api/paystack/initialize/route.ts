@@ -16,7 +16,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, message: 'Server payment configuration missing' }, { status: 500 });
     }
 
-    const email = `${phoneNumber}@academicprep.com`;
+    const email = (body.email && typeof body.email === 'string' && body.email.includes('@'))
+      ? body.email.trim()
+      : `${phoneNumber}@academicprep.com`;
     const amountPesewas = 2000; // GHS 20.00 / month
 
     const paystackRes = await fetch('https://api.paystack.co/transaction/initialize', {

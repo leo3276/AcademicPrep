@@ -36,6 +36,7 @@ export interface PaystackCheckoutParams {
   email?: string;
   fullName?: string;
   onSuccess: (reference: string) => void;
+  onError?: (message: string) => void;
   onClose?: () => void;
 }
 
@@ -45,9 +46,14 @@ export interface PaystackCheckoutParams {
 export async function launchPaystackCheckout(params: PaystackCheckoutParams): Promise<boolean> {
   const cleanPhone = (params.phoneNumber || '').trim().replace(/\s+/g, '');
   if (!cleanPhone) {
-    alert('Please enter a valid phone number.');
+    if (params.onError) params.onError('Please enter a valid phone number.');
+    else alert('Please enter a valid phone number.');
     return false;
   }
+
+  const cleanEmail = params.email && params.email.includes('@')
+    ? params.email.trim()
+    : `${cleanPhone}@academicprep.com`;
 
   // 1. Initialize on server to generate a secure pre-authenticated access_code
   let initData: {
@@ -64,18 +70,23 @@ export async function launchPaystackCheckout(params: PaystackCheckoutParams): Pr
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         phoneNumber: cleanPhone,
+        email: cleanEmail,
         fullName: params.fullName || 'AcademicPrep Student',
       }),
     });
     initData = await initRes.json();
 
     if (!initData.success || !initData.access_code) {
-      alert(initData.message || 'Could not start payment session. Please try again.');
+      const msg = initData.message || 'Could not start payment session. Please try again.';
+      if (params.onError) params.onError(msg);
+      else alert(msg);
       return false;
     }
   } catch (err: any) {
     console.warn('Paystack initialize fetch error:', err);
-    alert('Could not connect to payment gateway. Please check your internet connection.');
+    const msg = 'Could not connect to payment gateway. Please check your internet connection.';
+    if (params.onError) params.onError(msg);
+    else alert(msg);
     return false;
   }
 
@@ -86,15 +97,21 @@ export async function launchPaystackCheckout(params: PaystackCheckoutParams): Pr
       window.location.href = initData.authorization_url;
       return true;
     }
-    alert('Could not load checkout modal. Please check your internet connection.');
+    const msg = 'Could not load checkout modal. Please check your internet connection.';
+    if (params.onError) params.onError(msg);
+    else alert(msg);
     return false;
   }
 
-  // 3. Open Paystack popup with the validated access_code
+  // 3. Open Paystack popup with the validated access_code and student email
   try {
     const handler = (window as any).PaystackPop.setup({
       key: PAYSTACK_PUBLIC_KEY,
       access_code: initData.access_code,
+      email: cleanEmail,
+      amount: PAYSTACK_VIP_AMOUNT_PESEWAS,
+      currency: 'GHS',
+      channels: ['mobile_money', 'card'],
       callback: (response: { reference?: string }) => {
         const ref = response?.reference || initData.reference || '';
         if (ref) {
@@ -114,7 +131,9 @@ export async function launchPaystackCheckout(params: PaystackCheckoutParams): Pr
       window.location.href = initData.authorization_url;
       return true;
     }
-    alert('Failed to launch checkout: ' + (err?.message || 'Unknown error'));
+    const msg = 'Failed to launch checkout: ' + (err?.message || 'Unknown error');
+    if (params.onError) params.onError(msg);
+    else alert(msg);
     return false;
   }
 }

@@ -51,6 +51,10 @@ export default function PaystackPaymentModal({
     const launched = await launchPaystackCheckout({
       phoneNumber: cleanPhone,
       fullName: student?.fullName || 'AcademicPrep Student',
+      onError: (err) => {
+        setPayError(err);
+        setIsPaying(false);
+      },
       onSuccess: async (reference: string) => {
         try {
           const res = await fetch('/api/paystack/verify', {
