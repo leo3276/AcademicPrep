@@ -14,6 +14,7 @@ export interface Student {
   accessExpiresAt?: string;
   completedTopicIds?: string[];
   topicsCompletedCount?: number;
+  password?: string;
   createdAt: string;
   lastActiveAt: string;
 }

@@ -10,6 +10,14 @@ import {
   WeeklyExamAttempt,
   AdminMetrics
 } from './types';
+import {
+  registerStudentInSupabase,
+  loginStudentInSupabase,
+  fetchStudentProgressFromSupabase,
+  saveTopicProgressToSupabase,
+  redeemPinInSupabase,
+  fetchWeeklyExamsFromSupabase
+} from './supabaseService';
 
 interface AuthContextType {
   student: Student | null;
@@ -20,6 +28,14 @@ interface AuthContextType {
   transactions: CashFlowTransaction[];
   weeklyExamAttempts: WeeklyExamAttempt[];
   loginStudent: (phoneNumber: string, fullNameOrPin: string, levelOrFullName?: EducationLevel | string, accessPinCode?: string) => Promise<{ success: boolean; error?: string }>;
+  signInStudent: (phoneNumber: string, password?: string) => Promise<{ success: boolean; error?: string }>;
+  registerStudent: (params: {
+    phoneNumber: string;
+    fullName: string;
+    currentLevel: EducationLevel;
+    password?: string;
+    accessPinCode?: string;
+  }) => Promise<{ success: boolean; error?: string }>;
   logoutStudent: () => void;
   canAccessTopic: (topicId: string) => { allowed: boolean; reason?: string; topicsUsed: number; maxFreeTopics: number };
   getCompletedTopicsCount: () => number;
@@ -116,93 +132,144 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [transactions, setTransactions] = useState<CashFlowTransaction[]>(DEFAULT_TRANSACTIONS);
   const [weeklyExamAttempts, setWeeklyExamAttempts] = useState<WeeklyExamAttempt[]>([]);
 
-  // Load persisted state from localStorage on mount
+  // Load persisted state from localStorage on mount and sync with Supabase
   useEffect(() => {
-    try {
-      const storedStudent = localStorage.getItem(STORAGE_KEYS.CURRENT_STUDENT);
-      if (storedStudent) {
-        setStudent(JSON.parse(storedStudent));
-      }
+    let isMounted = true;
 
-      if (typeof window !== 'undefined') {
-        const sessionAdmin = sessionStorage.getItem(STORAGE_KEYS.IS_ADMIN);
-        if (sessionAdmin === 'true') {
-          setIsAdmin(true);
-        } else {
-          setIsAdmin(false);
-          localStorage.removeItem(STORAGE_KEYS.IS_ADMIN);
+    async function initializeAuth() {
+      try {
+        let activeStudent: Student | null = null;
+        const storedStudentStr = localStorage.getItem(STORAGE_KEYS.CURRENT_STUDENT);
+        if (storedStudentStr) {
+          activeStudent = JSON.parse(storedStudentStr);
+          if (isMounted) setStudent(activeStudent);
         }
-      }
 
-      const storedProgress = localStorage.getItem(STORAGE_KEYS.TOPIC_PROGRESS);
-      if (storedProgress) {
-        setTopicProgress(JSON.parse(storedProgress));
-      }
+        if (typeof window !== 'undefined') {
+          const sessionAdmin = sessionStorage.getItem(STORAGE_KEYS.IS_ADMIN);
+          if (sessionAdmin === 'true') {
+            if (isMounted) setIsAdmin(true);
+          } else {
+            if (isMounted) setIsAdmin(false);
+            localStorage.removeItem(STORAGE_KEYS.IS_ADMIN);
+          }
+        }
 
-      const storedPins = localStorage.getItem(STORAGE_KEYS.ACCESS_PINS);
-      if (storedPins) {
-        setPins(JSON.parse(storedPins));
-      } else {
-        localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(DEFAULT_PINS));
-      }
+        // Load account-specific topic progress
+        if (activeStudent && activeStudent.phoneNumber) {
+          const phone = activeStudent.phoneNumber;
+          let studentProgress: Record<string, StudentTopicProgress> = {};
+          
+          const localScoped = localStorage.getItem(`academicprep_progress_${phone}`);
+          if (localScoped) {
+            try {
+              studentProgress = JSON.parse(localScoped);
+            } catch {}
+          } else {
+            // Check legacy key for initial migration
+            const legacyProgress = localStorage.getItem(STORAGE_KEYS.TOPIC_PROGRESS);
+            if (legacyProgress) {
+              try {
+                studentProgress = JSON.parse(legacyProgress);
+              } catch {}
+            }
+          }
 
-      const storedTxs = localStorage.getItem(STORAGE_KEYS.TRANSACTIONS);
-      if (storedTxs) {
-        setTransactions(JSON.parse(storedTxs));
-      } else {
-        localStorage.setItem(STORAGE_KEYS.TRANSACTIONS, JSON.stringify(DEFAULT_TRANSACTIONS));
-      }
+          if (isMounted) setTopicProgress(studentProgress);
 
-      const storedExams = localStorage.getItem(STORAGE_KEYS.EXAM_ATTEMPTS);
-      if (storedExams) {
-        setWeeklyExamAttempts(JSON.parse(storedExams));
+          // Background sync from Supabase
+          try {
+            const supaProgress = await fetchStudentProgressFromSupabase(phone);
+            if (supaProgress && Object.keys(supaProgress).length > 0 && isMounted) {
+              setTopicProgress(prev => {
+                const merged = { ...prev, ...supaProgress };
+                localStorage.setItem(`academicprep_progress_${phone}`, JSON.stringify(merged));
+                return merged;
+              });
+            }
+          } catch (err) {
+            console.error('Supabase progress sync error:', err);
+          }
+
+          // Background fetch weekly exams for this student
+          try {
+            const supaExams = await fetchWeeklyExamsFromSupabase(phone);
+            if (Array.isArray(supaExams) && supaExams.length > 0 && isMounted) {
+              const formattedExams: WeeklyExamAttempt[] = supaExams.map((e: any) => ({
+                id: e.id,
+                studentId: e.student_phone || phone,
+                level: e.level,
+                coveredTopicIds: [],
+                totalQuestions: e.paper1_total || 20,
+                correctAnswers: e.paper1_score || 0,
+                scorePercentage: e.composite_total_percentage || 0,
+                timeSpentSeconds: 1200,
+                createdAt: e.completed_at
+              }));
+              setWeeklyExamAttempts(formattedExams);
+            }
+          } catch (err) {
+            console.error('Supabase exams fetch error:', err);
+          }
+        } else {
+          if (isMounted) {
+            setTopicProgress({});
+            setWeeklyExamAttempts([]);
+          }
+        }
+
+        const storedPins = localStorage.getItem(STORAGE_KEYS.ACCESS_PINS);
+        if (storedPins) {
+          if (isMounted) setPins(JSON.parse(storedPins));
+        } else {
+          localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(DEFAULT_PINS));
+        }
+
+        const storedTxs = localStorage.getItem(STORAGE_KEYS.TRANSACTIONS);
+        if (storedTxs) {
+          if (isMounted) setTransactions(JSON.parse(storedTxs));
+        } else {
+          localStorage.setItem(STORAGE_KEYS.TRANSACTIONS, JSON.stringify(DEFAULT_TRANSACTIONS));
+        }
+      } catch {
+        // Graceful fallback for SSR or restricted storage
+      } finally {
+        if (isMounted) setIsLoading(false);
       }
-    } catch {
-      // Graceful fallback for SSR or restricted storage
-    } finally {
-      setIsLoading(false);
     }
+
+    initializeAuth();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  const loginStudent = async (
-    phoneNumber: string, 
-    fullNameOrPin: string, 
-    levelOrFullName?: EducationLevel | string, 
-    accessPinCode?: string
-  ): Promise<{ success: boolean; error?: string }> => {
-    const cleanPhone = phoneNumber.trim().replace(/\s+/g, '');
+  /**
+   * Register a new student account in Supabase
+   */
+  const registerStudent = async (params: {
+    phoneNumber: string;
+    fullName: string;
+    currentLevel: EducationLevel;
+    password?: string;
+    accessPinCode?: string;
+  }): Promise<{ success: boolean; error?: string }> => {
+    const cleanPhone = params.phoneNumber.trim().replace(/\s+/g, '');
     if (cleanPhone.length < 10) {
       return { success: false, error: 'Please enter a valid phone number (at least 10 digits).' };
     }
-
-    // Resolve parameters
-    let fullName = '';
-    let level: EducationLevel = 'JHS 1';
-    let pinCode: string | undefined = undefined;
-
-    // Check if legacy call: (phone, 4-digit-pin, fullName, level)
-    if (fullNameOrPin && fullNameOrPin.length === 4 && /^\d{4}$/.test(fullNameOrPin) && typeof levelOrFullName === 'string' && levelOrFullName.length > 2) {
-      fullName = levelOrFullName.trim();
-      level = 'JHS 1';
-    } else {
-      fullName = fullNameOrPin ? fullNameOrPin.trim() : '';
-      if (levelOrFullName && ['JHS 1', 'JHS 2', 'JHS 3', 'SHS 1', 'SHS 2', 'SHS 3', 'UNIVERSITY'].includes(levelOrFullName as string)) {
-        level = levelOrFullName as EducationLevel;
-      }
-      pinCode = accessPinCode?.trim();
-    }
-
-    if (!fullName) {
-      return { success: false, error: 'Please enter your full name to create or access your profile.' };
+    if (!params.fullName.trim()) {
+      return { success: false, error: 'Please enter your full name.' };
     }
 
     let hasFullAccess = false;
     let accessType: 'Full Pass' | 'Free Trial' = 'Free Trial';
     let accessExpiresAt: string | undefined = undefined;
 
-    // If an Access PIN was entered at registration/login
-    if (pinCode) {
-      const cleanPin = pinCode.trim().toUpperCase();
+    // Check Access PIN if supplied
+    if (params.accessPinCode && params.accessPinCode.trim()) {
+      const cleanPin = params.accessPinCode.trim().toUpperCase();
       const targetPinIdx = pins.findIndex(p => p.pinCode === cleanPin);
       if (targetPinIdx >= 0 && pins[targetPinIdx].status === 'ACTIVE') {
         const targetPin = pins[targetPinIdx];
@@ -229,44 +296,170 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     }
 
-    // Preserve existing completed topics if user was previously studying
-    const completedIds = Object.keys(topicProgress).filter(id => topicProgress[id]?.completed);
-
-    const currentStudent: Student = {
-      id: `student-${cleanPhone.slice(-6)}`,
+    // Register with Supabase
+    const supaRes = await registerStudentInSupabase({
       phoneNumber: cleanPhone,
-      fullName,
-      currentLevel: level,
+      fullName: params.fullName,
+      password: params.password,
+      currentLevel: params.currentLevel,
       hasFullAccess,
       accessType,
       accessExpiresAt,
-      completedTopicIds: completedIds,
-      topicsCompletedCount: completedIds.length,
+    });
+
+    if (!supaRes.success) {
+      return { success: false, error: supaRes.error };
+    }
+
+    const newStudent = supaRes.student || {
+      id: `student-${cleanPhone.slice(-6)}`,
+      phoneNumber: cleanPhone,
+      fullName: params.fullName.trim(),
+      currentLevel: params.currentLevel,
+      hasFullAccess,
+      accessType,
+      accessExpiresAt,
+      completedTopicIds: [],
+      topicsCompletedCount: 0,
       createdAt: new Date().toISOString(),
       lastActiveAt: new Date().toISOString(),
     };
 
-    setStudent(currentStudent);
-    localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(currentStudent));
+    // Initialize completely clean per-account state (no cross-account data leakage)
+    setStudent(newStudent);
+    setTopicProgress({});
+    setWeeklyExamAttempts([]);
+    localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(newStudent));
+    localStorage.setItem(`academicprep_progress_${cleanPhone}`, JSON.stringify({}));
+    localStorage.removeItem(STORAGE_KEYS.TOPIC_PROGRESS);
 
-    // Sync with server-side database for real leaderboard
+    // Sync to API endpoint for redundancy
     try {
       fetch('/api/students', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           phone: cleanPhone,
-          name: fullName,
-          level,
+          name: params.fullName,
+          level: params.currentLevel,
           accessType,
           accessExpiresAt,
         })
       }).catch(console.error);
-    } catch {
-      // ignore
-    }
+    } catch {}
 
     return { success: true };
+  };
+
+  /**
+   * Sign In an existing student with Phone Number + Password/PIN
+   */
+  const signInStudent = async (
+    phoneNumber: string,
+    password?: string
+  ): Promise<{ success: boolean; error?: string }> => {
+    const cleanPhone = phoneNumber.trim().replace(/\s+/g, '');
+    if (cleanPhone.length < 10) {
+      return { success: false, error: 'Please enter a valid phone number (at least 10 digits).' };
+    }
+
+    // 1. Authenticate with Supabase
+    const supaRes = await loginStudentInSupabase(cleanPhone, password);
+    if (!supaRes.success || !supaRes.student) {
+      return { success: false, error: supaRes.error || 'Authentication failed. Please check your credentials.' };
+    }
+
+    const authenticatedStudent = supaRes.student;
+
+    // 2. Fetch this student's isolated topic progress from Supabase
+    const supaProgress = await fetchStudentProgressFromSupabase(cleanPhone);
+    
+    // Check account-scoped local cache
+    let localProgress: Record<string, StudentTopicProgress> = {};
+    try {
+      const raw = localStorage.getItem(`academicprep_progress_${cleanPhone}`);
+      if (raw) localProgress = JSON.parse(raw);
+    } catch {}
+
+    const mergedProgress = { ...localProgress, ...supaProgress };
+
+    // 3. Fetch this student's isolated weekly exam attempts
+    const supaExams = await fetchWeeklyExamsFromSupabase(cleanPhone);
+    const examAttempts: WeeklyExamAttempt[] = Array.isArray(supaExams) ? supaExams.map((e: any) => ({
+      id: e.id,
+      studentId: e.student_phone || cleanPhone,
+      level: e.level,
+      coveredTopicIds: [],
+      totalQuestions: e.paper1_total || 20,
+      correctAnswers: e.paper1_score || 0,
+      scorePercentage: e.composite_total_percentage || 0,
+      timeSpentSeconds: 1200,
+      createdAt: e.completed_at
+    })) : [];
+
+    // 4. Update memory state for this student only
+    setStudent(authenticatedStudent);
+    setTopicProgress(mergedProgress);
+    setWeeklyExamAttempts(examAttempts);
+
+    // 5. Persist student and isolated cache
+    localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(authenticatedStudent));
+    localStorage.setItem(`academicprep_progress_${cleanPhone}`, JSON.stringify(mergedProgress));
+
+    return { success: true };
+  };
+
+  /**
+   * Backwards-compatible loginStudent helper
+   */
+  const loginStudent = async (
+    phoneNumber: string, 
+    fullNameOrPin: string, 
+    levelOrFullName?: EducationLevel | string, 
+    accessPinCode?: string
+  ): Promise<{ success: boolean; error?: string }> => {
+    const cleanPhone = phoneNumber.trim().replace(/\s+/g, '');
+    let fullName = '';
+    let level: EducationLevel = 'JHS 1';
+    let pinCode: string | undefined = undefined;
+
+    if (fullNameOrPin && fullNameOrPin.length === 4 && /^\d{4}$/.test(fullNameOrPin) && typeof levelOrFullName === 'string' && levelOrFullName.length > 2) {
+      fullName = levelOrFullName.trim();
+      level = 'JHS 1';
+    } else {
+      fullName = fullNameOrPin ? fullNameOrPin.trim() : '';
+      if (levelOrFullName && ['JHS 1', 'JHS 2', 'JHS 3', 'SHS 1', 'SHS 2', 'SHS 3', 'UNIVERSITY'].includes(levelOrFullName as string)) {
+        level = levelOrFullName as EducationLevel;
+      }
+      pinCode = accessPinCode?.trim();
+    }
+
+    if (fullName) {
+      const regRes = await registerStudent({
+        phoneNumber: cleanPhone,
+        fullName,
+        currentLevel: level,
+        accessPinCode: pinCode,
+      });
+      if (regRes.success) return { success: true };
+      if (regRes.error && regRes.error.toLowerCase().includes('already exists')) {
+        return await signInStudent(cleanPhone);
+      }
+      return regRes;
+    } else {
+      return await signInStudent(cleanPhone);
+    }
+  };
+
+  /**
+   * Log out current student and completely isolate state
+   */
+  const logoutStudent = () => {
+    setStudent(null);
+    setTopicProgress({});
+    setWeeklyExamAttempts([]);
+    localStorage.removeItem(STORAGE_KEYS.CURRENT_STUDENT);
+    localStorage.removeItem(STORAGE_KEYS.TOPIC_PROGRESS);
   };
 
   const getCompletedTopicsCount = (): number => {
@@ -298,11 +491,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     return { allowed: true, topicsUsed, maxFreeTopics };
-  };
-
-  const logoutStudent = () => {
-    setStudent(null);
-    localStorage.removeItem(STORAGE_KEYS.CURRENT_STUDENT);
   };
 
   const loginAdmin = (primaryPin: string, secondaryPin: string): boolean => {
@@ -414,6 +602,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setStudent(updatedStudent);
       localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(updatedStudent));
 
+      // Sync upgrade to Supabase
+      redeemPinInSupabase(student.phoneNumber, targetPin.validityDays).catch(console.error);
+
       // Sync upgrade to server
       try {
         fetch('/api/students', {
@@ -471,10 +662,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     setTopicProgress(nextState);
-    localStorage.setItem(STORAGE_KEYS.TOPIC_PROGRESS, JSON.stringify(nextState));
 
-    // Update student's completed topics count
+    // Update student's completed topics count and persist to isolated storage
     if (student) {
+      const studentPhone = student.phoneNumber;
+      localStorage.setItem(`academicprep_progress_${studentPhone}`, JSON.stringify(nextState));
+
+      // Persist to Supabase
+      saveTopicProgressToSupabase({
+        phoneNumber: studentPhone,
+        topicId,
+        scorePercentage
+      }).catch(console.error);
+
       const allCompleted = Object.keys(nextState).filter(id => nextState[id]?.completed);
       const updatedStudent: Student = {
         ...student,
@@ -499,6 +699,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } catch {
         // ignore
       }
+    } else {
+      localStorage.setItem(STORAGE_KEYS.TOPIC_PROGRESS, JSON.stringify(nextState));
     }
   };
 
@@ -570,6 +772,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         transactions,
         weeklyExamAttempts,
         loginStudent,
+        signInStudent,
+        registerStudent,
         logoutStudent,
         canAccessTopic,
         getCompletedTopicsCount,

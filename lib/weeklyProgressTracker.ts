@@ -4,6 +4,7 @@
 import { EducationLevel, QuizQuestion, CurriculumTopic } from './types';
 import { JHS_CURRICULUM_TOPICS, CURRICULUM_SUBJECTS } from './curriculumData';
 import { WEEKLY_THEORY_QUESTIONS, WeeklyTheoryQuestion } from './weeklyTheoryQuestionBank';
+import { saveWeeklyExamToSupabase, saveStudentMistakeToSupabase } from './supabaseService';
 
 export interface QuizMistakeRecord {
   id: string;
@@ -93,6 +94,35 @@ const STORAGE_KEYS = {
   TOPIC_PROGRESS: 'academicprep_topic_progress',
 };
 
+function getActiveStudentPhone(): string | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem('academicprep_student');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.phoneNumber) {
+        return parsed.phoneNumber.trim().replace(/\s+/g, '');
+      }
+    }
+  } catch {}
+  return null;
+}
+
+function getMistakesStorageKey(): string {
+  const phone = getActiveStudentPhone();
+  return phone ? `academicprep_quiz_mistakes_${phone}` : STORAGE_KEYS.QUIZ_MISTAKES;
+}
+
+function getExamsStorageKey(): string {
+  const phone = getActiveStudentPhone();
+  return phone ? `academicprep_full_weekly_exams_${phone}` : STORAGE_KEYS.WEEKLY_EXAMS;
+}
+
+function getProgressStorageKey(): string {
+  const phone = getActiveStudentPhone();
+  return phone ? `academicprep_progress_${phone}` : STORAGE_KEYS.TOPIC_PROGRESS;
+}
+
 /**
  * Log incorrect answers from a quiz into the student's mistake ledger
  */
@@ -109,7 +139,23 @@ export function logQuizMistakes(newMistakes: Omit<QuizMistakeRecord, 'id' | 'tim
 
     // Avoid recording exact identical question mistakes multiple times in short window
     const combined = [...formatted, ...existing].slice(0, 50); // Keep latest 50
-    localStorage.setItem(STORAGE_KEYS.QUIZ_MISTAKES, JSON.stringify(combined));
+    localStorage.setItem(getMistakesStorageKey(), JSON.stringify(combined));
+
+    // Also persist mistakes to Supabase for the active student
+    const phone = getActiveStudentPhone();
+    if (phone) {
+      newMistakes.forEach(m => {
+        saveStudentMistakeToSupabase({
+          phoneNumber: phone,
+          topicId: m.topicId,
+          subjectName: m.subjectName,
+          subConcept: m.subConcept,
+          questionText: m.questionText,
+          studentWrongAnswer: m.selectedOption,
+          correctAnswer: m.correctOption,
+        }).catch(console.error);
+      });
+    }
   } catch (err) {
     console.error('Failed to log quiz mistakes:', err);
   }
@@ -122,7 +168,11 @@ export function getStudentQuizMistakes(): QuizMistakeRecord[] {
   if (typeof window === 'undefined') return [];
 
   try {
-    const stored = localStorage.getItem(STORAGE_KEYS.QUIZ_MISTAKES);
+    const key = getMistakesStorageKey();
+    let stored = localStorage.getItem(key);
+    if (!stored && key !== STORAGE_KEYS.QUIZ_MISTAKES) {
+      stored = localStorage.getItem(STORAGE_KEYS.QUIZ_MISTAKES);
+    }
     if (stored) {
       const parsed = JSON.parse(stored);
       if (Array.isArray(parsed)) return parsed;
@@ -138,6 +188,7 @@ export function getStudentQuizMistakes(): QuizMistakeRecord[] {
  */
 export function clearStudentQuizMistakes(): void {
   if (typeof window !== 'undefined') {
+    localStorage.removeItem(getMistakesStorageKey());
     localStorage.removeItem(STORAGE_KEYS.QUIZ_MISTAKES);
   }
 }
@@ -165,7 +216,11 @@ export function getWeeklyProgressSummary(level: EducationLevel = 'JHS 1'): Weekl
 
   if (typeof window !== 'undefined') {
     try {
-      const storedProgress = localStorage.getItem(STORAGE_KEYS.TOPIC_PROGRESS);
+      const key = getProgressStorageKey();
+      let storedProgress = localStorage.getItem(key);
+      if (!storedProgress && key !== STORAGE_KEYS.TOPIC_PROGRESS) {
+        storedProgress = localStorage.getItem(STORAGE_KEYS.TOPIC_PROGRESS);
+      }
       if (storedProgress) {
         const parsed = JSON.parse(storedProgress);
         completedTopicIds = Object.keys(parsed).filter(id => parsed[id]?.completed);
@@ -373,9 +428,15 @@ export function recordFullWeeklyExamAttempt(attempt: Omit<FullWeeklyExamAttempt,
 
   if (typeof window !== 'undefined') {
     try {
+      const key = getExamsStorageKey();
       const existing = getFullWeeklyExamAttempts();
       const updated = [fullAttempt, ...existing];
-      localStorage.setItem(STORAGE_KEYS.WEEKLY_EXAMS, JSON.stringify(updated));
+      localStorage.setItem(key, JSON.stringify(updated));
+
+      const phone = getActiveStudentPhone();
+      if (phone) {
+        saveWeeklyExamToSupabase(phone, fullAttempt).catch(console.error);
+      }
     } catch (err) {
       console.error('Failed to save weekly exam attempt:', err);
     }
@@ -391,7 +452,11 @@ export function getFullWeeklyExamAttempts(): FullWeeklyExamAttempt[] {
   if (typeof window === 'undefined') return [];
 
   try {
-    const stored = localStorage.getItem(STORAGE_KEYS.WEEKLY_EXAMS);
+    const key = getExamsStorageKey();
+    let stored = localStorage.getItem(key);
+    if (!stored && key !== STORAGE_KEYS.WEEKLY_EXAMS) {
+      stored = localStorage.getItem(STORAGE_KEYS.WEEKLY_EXAMS);
+    }
     if (stored) {
       const parsed = JSON.parse(stored);
       if (Array.isArray(parsed)) return parsed;

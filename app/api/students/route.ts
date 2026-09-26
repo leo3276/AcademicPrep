@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { fetchLeaderboardFromSupabase } from '@/lib/supabaseService';
 
 const DATA_FILE = path.join(process.cwd(), 'data', 'students.json');
 
@@ -45,6 +46,16 @@ function saveStoredStudents(students: ServerStudentDetail[]): void {
 }
 
 export async function GET() {
+  try {
+    const supabaseStudents = await fetchLeaderboardFromSupabase();
+    if (Array.isArray(supabaseStudents) && supabaseStudents.length > 0) {
+      return NextResponse.json(supabaseStudents);
+    }
+  } catch (err) {
+    console.error('Supabase leaderboard fetch failed in API route:', err);
+  }
+
+  // Fallback to local stored students
   const students = getStoredStudents();
   // Sort by topics completed (desc) then avgScorePercentage (desc)
   const ranked = [...students].sort((a, b) => {

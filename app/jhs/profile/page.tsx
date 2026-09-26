@@ -31,7 +31,8 @@ import {
   Zap,
   Clock,
   Layers,
-  HelpCircle
+  HelpCircle,
+  LogOut
 } from 'lucide-react';
 
 interface ServerStudent {
@@ -56,7 +57,8 @@ export default function StudentProfilePage() {
     topicProgress, 
     weeklyExamAttempts, 
     redeemPin, 
-    getCompletedTopicsCount 
+    getCompletedTopicsCount,
+    logoutStudent
   } = useAuth();
 
   const [mounted, setMounted] = useState(false);
@@ -258,6 +260,17 @@ export default function StudentProfilePage() {
             >
               Study Curriculum
             </Link>
+            <button
+              onClick={() => {
+                logoutStudent();
+                router.push('/login');
+              }}
+              className="px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-red-600 hover:bg-red-50 text-xs font-semibold transition flex items-center gap-1 cursor-pointer"
+              title="Sign Out of Account"
+            >
+              <LogOut className="w-3.5 h-3.5 text-slate-400 group-hover:text-red-500" />
+              <span className="hidden sm:inline">Sign Out</span>
+            </button>
           </div>
         </div>
       </div>
@@ -312,12 +325,23 @@ export default function StudentProfilePage() {
               {!isFullPass && (
                 <button
                   onClick={() => setShowBuyModal(true)}
-                  className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-xs shadow-md shadow-amber-500/20 transition flex items-center gap-1.5"
+                  className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-xs shadow-md shadow-amber-500/20 transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <KeyRound className="w-3.5 h-3.5" />
                   <span>Buy Access PIN (GHS 25)</span>
                 </button>
               )}
+              <button
+                onClick={() => {
+                  logoutStudent();
+                  router.push('/login');
+                }}
+                className="px-3 py-2 rounded-xl border border-slate-200 hover:border-red-200 hover:bg-red-50 text-slate-600 hover:text-red-600 font-semibold text-xs transition flex items-center gap-1.5 cursor-pointer"
+                title="Sign Out of Account"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Sign Out</span>
+              </button>
             </div>
           </div>
         </div>
