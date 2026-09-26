@@ -67,6 +67,8 @@ export default function AdminDashboardPage() {
     isAdmin, 
     loginAdmin, 
     logoutAdmin, 
+    verifyPrimaryPin,
+    verifySecondaryPin,
     updateAdminPins,
     getAdminPins,
     getAdminMetrics, 
@@ -76,7 +78,8 @@ export default function AdminDashboardPage() {
   } = useAuth();
 
   const [mounted, setMounted] = useState(false);
-  // Dual-Key Authentication States
+  // Sequential Two-Stage Authentication States
+  const [authStep, setAuthStep] = useState<'primary' | 'secondary'>('primary');
   const [primaryPin, setPrimaryPin] = useState('');
   const [secondaryPin, setSecondaryPin] = useState('');
   const [showPrimaryPin, setShowPrimaryPin] = useState(false);
@@ -146,24 +149,37 @@ export default function AdminDashboardPage() {
     );
   }
 
-  // Dual-Key Authentication Handling
-  const handleAdminLogin = (e: React.FormEvent) => {
+  // Sequential Two-Stage Authentication Handlers
+  const handleVerifyPrimary = (e: React.FormEvent) => {
     e.preventDefault();
     if (!primaryPin.trim()) {
-      setAuthError('Please enter the Primary Administrator Passcode.');
+      setAuthError('Please enter your Primary Administrator Passcode.');
       return;
     }
-    if (!secondaryPin.trim()) {
-      setAuthError('Please enter the Secondary Security Token.');
-      return;
-    }
-    const success = loginAdmin(primaryPin.trim(), secondaryPin.trim());
-    if (!success) {
-      setAuthError('Access Denied: Invalid combination of Primary PIN and Secondary Token.');
+    const isValid = verifyPrimaryPin(primaryPin.trim());
+    if (!isValid) {
+      setAuthError('Access Denied: Incorrect Primary Passcode.');
     } else {
       setAuthError(null);
+      setAuthStep('secondary');
+    }
+  };
+
+  const handleVerifySecondary = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!secondaryPin.trim()) {
+      setAuthError('Please enter your Secondary Security Token.');
+      return;
+    }
+    const isValid = verifySecondaryPin(secondaryPin.trim());
+    if (!isValid) {
+      setAuthError('Access Denied: Incorrect Secondary Security Token.');
+    } else {
+      setAuthError(null);
+      loginAdmin(primaryPin.trim(), secondaryPin.trim());
       setPrimaryPin('');
       setSecondaryPin('');
+      setAuthStep('primary');
     }
   };
 
@@ -185,7 +201,7 @@ export default function AdminDashboardPage() {
     }
   };
 
-  // DEDICATED RESTRICTED SECURITY GATEWAY (Standalone Web Surface)
+  // DEDICATED RESTRICTED SECURITY GATEWAY (Sequential 2-Stage Clearance)
   if (!isAdmin) {
     return (
       <div className="min-h-screen bg-[#090D14] flex flex-col justify-between text-slate-200 selection:bg-blue-600 selection:text-white">
@@ -201,7 +217,7 @@ export default function AdminDashboardPage() {
                   AcademicPrep System Gateway
                 </span>
                 <span className="text-[10px] text-slate-500 block font-mono">
-                  Isolated Administration Environment • 2-Key Cryptographic Lock
+                  Restricted Administration • 2-Stage Cryptographic Clearance
                 </span>
               </div>
             </div>
@@ -209,7 +225,7 @@ export default function AdminDashboardPage() {
             <div className="flex items-center gap-3">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold font-mono uppercase bg-amber-500/10 border border-amber-500/20 text-amber-400">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-                Locked Gateway
+                {authStep === 'primary' ? 'Gate 1: Primary' : 'Gate 2: Secondary'}
               </span>
               <Link
                 href="/jhs"
@@ -224,113 +240,203 @@ export default function AdminDashboardPage() {
 
         {/* Central Lock Panel */}
         <main className="flex-1 flex items-center justify-center p-4 sm:p-6">
-          <div className="w-full max-w-md">
-            {/* Security Box */}
-            <div className="bg-[#0F1420] border border-slate-800/90 rounded-2xl shadow-2xl p-6 sm:p-8 space-y-6 relative overflow-hidden">
-              {/* Subtle top accent bar */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-emerald-500" />
-
-              <div className="text-center space-y-2">
-                <div className="w-12 h-12 rounded-xl bg-slate-800/90 border border-slate-700/80 flex items-center justify-center mx-auto text-blue-400 shadow-inner">
-                  <Lock className="w-5 h-5" />
-                </div>
-                <h1 className="text-xl font-bold text-white tracking-tight">
-                  Restricted Administrator Gateway
-                </h1>
-                <p className="text-xs text-slate-400 leading-relaxed max-w-sm mx-auto">
-                  Dual-key cryptographic clearance required. Enter both designated security credentials to unlock the administrative console.
-                </p>
+          <div className="w-full max-w-md space-y-4">
+            {/* Step Progress Indicators */}
+            <div className="flex items-center justify-between px-3">
+              <div className="flex items-center gap-2">
+                <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold font-mono transition ${
+                  authStep === 'primary'
+                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/50'
+                    : 'bg-emerald-600 text-white'
+                }`}>
+                  {authStep === 'secondary' ? '✓' : '1'}
+                </span>
+                <span className={`text-xs font-mono ${
+                  authStep === 'primary' ? 'text-white font-bold' : 'text-emerald-400 font-medium'
+                }`}>
+                  Primary Passcode
+                </span>
               </div>
 
-              {/* Login Form */}
-              <form onSubmit={handleAdminLogin} className="space-y-4">
-                {/* Key 1: Primary Passcode */}
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5 font-mono">
-                      <Key className="w-3.5 h-3.5 text-blue-400" />
-                      <span>1. Primary Administrator Passcode</span>
-                    </label>
-                    <span className="text-[10px] text-slate-500 font-mono">Master Key</span>
+              <div className="flex-1 mx-3 h-px bg-slate-800" />
+
+              <div className="flex items-center gap-2">
+                <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold font-mono transition ${
+                  authStep === 'secondary'
+                    ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/50'
+                    : 'bg-slate-800 text-slate-500'
+                }`}>
+                  2
+                </span>
+                <span className={`text-xs font-mono ${
+                  authStep === 'secondary' ? 'text-white font-bold' : 'text-slate-500'
+                }`}>
+                  Secondary Token
+                </span>
+              </div>
+            </div>
+
+            {/* Security Box */}
+            <div className="bg-[#0F1420] border border-slate-800/90 rounded-2xl shadow-2xl p-6 sm:p-8 space-y-6 relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-emerald-500" />
+
+              {/* STAGE 1: PRIMARY PASSCODE */}
+              {authStep === 'primary' && (
+                <div className="space-y-6">
+                  <div className="text-center space-y-2">
+                    <div className="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/30 flex items-center justify-center mx-auto text-blue-400 shadow-inner">
+                      <Key className="w-5 h-5" />
+                    </div>
+                    <div className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono uppercase bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                      Step 1 of 2 Clearance
+                    </div>
+                    <h1 className="text-xl font-bold text-white tracking-tight">
+                      Enter Primary Passcode
+                    </h1>
+                    <p className="text-xs text-slate-400 leading-relaxed max-w-sm mx-auto">
+                      Enter the primary administrator passcode to initiate cryptographic authentication.
+                    </p>
                   </div>
-                  <div className="relative">
-                    <input
-                      type={showPrimaryPin ? 'text' : 'password'}
-                      value={primaryPin}
-                      onChange={(e) => {
-                        setPrimaryPin(e.target.value);
-                        setAuthError(null);
-                      }}
-                      placeholder="Enter Primary PIN"
-                      className="w-full bg-[#080B11] border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 font-mono tracking-wider focus:outline-hidden focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition"
-                      autoFocus
-                    />
+
+                  <form onSubmit={handleVerifyPrimary} className="space-y-4">
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5 font-mono">
+                          <Key className="w-3.5 h-3.5 text-blue-400" />
+                          <span>Primary Administrator Passcode</span>
+                        </label>
+                        <span className="text-[10px] text-slate-500 font-mono">Gate 1</span>
+                      </div>
+                      <div className="relative">
+                        <input
+                          type={showPrimaryPin ? 'text' : 'password'}
+                          value={primaryPin}
+                          onChange={(e) => {
+                            setPrimaryPin(e.target.value);
+                            setAuthError(null);
+                          }}
+                          placeholder="Enter Primary Passcode"
+                          className="w-full bg-[#080B11] border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 font-mono tracking-wider focus:outline-hidden focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition"
+                          autoFocus
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPrimaryPin(!showPrimaryPin)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition"
+                          tabIndex={-1}
+                        >
+                          {showPrimaryPin ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
+                      </div>
+                    </div>
+
+                    {authError && (
+                      <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
+                        <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+                        <span>{authError}</span>
+                      </div>
+                    )}
+
                     <button
-                      type="button"
-                      onClick={() => setShowPrimaryPin(!showPrimaryPin)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition"
-                      tabIndex={-1}
+                      type="submit"
+                      className="w-full py-2.5 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs rounded-xl shadow-lg shadow-blue-900/30 transition flex items-center justify-center gap-2 cursor-pointer"
                     >
-                      {showPrimaryPin ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      <span>Proceed to Secondary Clearance</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
                     </button>
-                  </div>
+                  </form>
                 </div>
+              )}
 
-                {/* Key 2: Secondary Security Token */}
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5 font-mono">
-                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                      <span>2. Secondary Security Token</span>
-                    </label>
-                    <span className="text-[10px] text-slate-500 font-mono">Auth Token</span>
+              {/* STAGE 2: SECONDARY TOKEN */}
+              {authStep === 'secondary' && (
+                <div className="space-y-6">
+                  <div className="text-center space-y-2">
+                    <div className="w-12 h-12 rounded-xl bg-emerald-600/10 border border-emerald-500/30 flex items-center justify-center mx-auto text-emerald-400 shadow-inner">
+                      <ShieldCheck className="w-5 h-5" />
+                    </div>
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                      <span>✓ Primary Verified</span>
+                      <span>•</span>
+                      <span>Step 2 of 2</span>
+                    </div>
+                    <h1 className="text-xl font-bold text-white tracking-tight">
+                      Enter Secondary Security Token
+                    </h1>
+                    <p className="text-xs text-slate-400 leading-relaxed max-w-sm mx-auto">
+                      Primary key verified. Now enter your secret secondary authorization token to unlock the console.
+                    </p>
                   </div>
-                  <div className="relative">
-                    <input
-                      type={showSecondaryPin ? 'text' : 'password'}
-                      value={secondaryPin}
-                      onChange={(e) => {
-                        setSecondaryPin(e.target.value);
-                        setAuthError(null);
-                      }}
-                      placeholder="Enter Secondary PIN"
-                      className="w-full bg-[#080B11] border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 font-mono tracking-wider focus:outline-hidden focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowSecondaryPin(!showSecondaryPin)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition"
-                      tabIndex={-1}
-                    >
-                      {showSecondaryPin ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                  </div>
+
+                  <form onSubmit={handleVerifySecondary} className="space-y-4">
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5 font-mono">
+                          <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                          <span>Secondary Security Token</span>
+                        </label>
+                        <span className="text-[10px] text-slate-500 font-mono">Gate 2</span>
+                      </div>
+                      <div className="relative">
+                        <input
+                          type={showSecondaryPin ? 'text' : 'password'}
+                          value={secondaryPin}
+                          onChange={(e) => {
+                            setSecondaryPin(e.target.value);
+                            setAuthError(null);
+                          }}
+                          placeholder="Enter Secondary Token"
+                          className="w-full bg-[#080B11] border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 font-mono tracking-wider focus:outline-hidden focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition"
+                          autoFocus
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowSecondaryPin(!showSecondaryPin)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition"
+                          tabIndex={-1}
+                        >
+                          {showSecondaryPin ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
+                      </div>
+                    </div>
+
+                    {authError && (
+                      <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
+                        <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+                        <span>{authError}</span>
+                      </div>
+                    )}
+
+                    <div className="grid grid-cols-3 gap-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setAuthStep('primary');
+                          setAuthError(null);
+                          setSecondaryPin('');
+                        }}
+                        className="py-2.5 px-3 rounded-xl border border-slate-700 hover:border-slate-600 text-slate-400 hover:text-slate-200 text-xs font-semibold transition"
+                      >
+                        ← Back
+                      </button>
+
+                      <button
+                        type="submit"
+                        className="col-span-2 py-2.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold text-xs rounded-xl shadow-lg shadow-emerald-900/30 transition flex items-center justify-center gap-2 cursor-pointer"
+                      >
+                        <ShieldCheck className="w-4 h-4" />
+                        <span>Unlock Console</span>
+                      </button>
+                    </div>
+                  </form>
                 </div>
-
-                {/* Error Banner */}
-                {authError && (
-                  <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
-                    <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
-                    <span>{authError}</span>
-                  </div>
-                )}
-
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="w-full py-2.5 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs rounded-xl shadow-lg shadow-blue-900/30 transition flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <ShieldCheck className="w-4 h-4" />
-                  <span>Verify Credentials & Enter Console</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </form>
+              )}
 
               {/* Security Policy Footer Note */}
               <div className="pt-4 border-t border-slate-800/80 text-[11px] text-slate-500 space-y-2 text-center">
                 <div className="flex items-center justify-center gap-2 font-mono">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  <span>256-Bit Encrypted Admin Session</span>
+                  <span>Two-Stage Authentication Active</span>
                 </div>
                 <p>
                   Unauthorized intrusion attempts will be blocked and recorded.
@@ -573,7 +679,12 @@ export default function AdminDashboardPage() {
             </Link>
 
             <button
-              onClick={logoutAdmin}
+              onClick={() => {
+                logoutAdmin();
+                setAuthStep('primary');
+                setPrimaryPin('');
+                setSecondaryPin('');
+              }}
               className="px-3 py-1.5 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 hover:bg-rose-100 font-semibold transition flex items-center gap-1.5"
               title="Lock administration portal immediately"
             >

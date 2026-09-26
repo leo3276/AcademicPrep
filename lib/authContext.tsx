@@ -23,6 +23,8 @@ interface AuthContextType {
   logoutStudent: () => void;
   loginAdmin: (primaryPin: string, secondaryPin: string) => boolean;
   logoutAdmin: () => void;
+  verifyPrimaryPin: (pin: string) => boolean;
+  verifySecondaryPin: (pin: string) => boolean;
   updateAdminPins: (newPrimary: string, newSecondary: string) => boolean;
   getAdminPins: () => { primary: string; secondary: string };
   redeemPin: (pinCode: string) => Promise<{ success: boolean; message: string }>;
@@ -120,9 +122,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setStudent(JSON.parse(storedStudent));
       }
 
-      const storedAdmin = localStorage.getItem(STORAGE_KEYS.IS_ADMIN);
-      if (storedAdmin === 'true') {
-        setIsAdmin(true);
+      if (typeof window !== 'undefined') {
+        const sessionAdmin = sessionStorage.getItem(STORAGE_KEYS.IS_ADMIN);
+        if (sessionAdmin === 'true') {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+          localStorage.removeItem(STORAGE_KEYS.IS_ADMIN);
+        }
       }
 
       const storedProgress = localStorage.getItem(STORAGE_KEYS.TOPIC_PROGRESS);
@@ -222,6 +229,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.removeItem(STORAGE_KEYS.IS_ADMIN);
       sessionStorage.removeItem(STORAGE_KEYS.IS_ADMIN);
     }
+  };
+
+  const verifyPrimaryPin = (pin: string): boolean => {
+    let expectedPrimary = DEFAULT_ADMIN_PRIMARY_PIN;
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem(STORAGE_KEYS.ADMIN_PRIMARY_PIN);
+      if (stored) expectedPrimary = stored;
+    }
+    return pin.trim() === expectedPrimary.trim();
+  };
+
+  const verifySecondaryPin = (pin: string): boolean => {
+    let expectedSecondary = DEFAULT_ADMIN_SECONDARY_PIN;
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem(STORAGE_KEYS.ADMIN_SECONDARY_PIN);
+      if (stored) expectedSecondary = stored;
+    }
+    return pin.trim() === expectedSecondary.trim();
   };
 
   const updateAdminPins = (newPrimary: string, newSecondary: string): boolean => {
@@ -396,6 +421,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         logoutStudent,
         loginAdmin,
         logoutAdmin,
+        verifyPrimaryPin,
+        verifySecondaryPin,
         updateAdminPins,
         getAdminPins,
         redeemPin,
