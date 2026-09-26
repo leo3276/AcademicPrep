@@ -10,15 +10,19 @@ import {
   saveTrafficData, 
   getStoredStudents, 
   saveStudents, 
-  getStoredTrialMocks, 
-  saveTrialMocks,
-  getStoredBeceQuestions,
-  saveBeceQuestions,
-  clearAllExamData,
   DEFAULT_TRAFFIC_DATA
 } from '@/lib/adminStore';
-import { AdminStudentDetail, TrialExamMock, WebTrafficData, BECEPastQuestion } from '@/lib/types';
+import { AdminStudentDetail, WebTrafficData } from '@/lib/types';
 import { getAllBeceYears } from '@/lib/becePastQuestionsData';
+import { 
+  UploadedPdfDocument, 
+  fetchUploadedDocuments, 
+  uploadPdfDocument, 
+  deletePdfDocument, 
+  formatFileSize,
+  PdfCategory,
+  PdfPaperType
+} from '@/lib/pdfStore';
 import { 
   ShieldCheck, 
   Users, 
@@ -26,6 +30,7 @@ import {
   TrendingUp, 
   KeyRound, 
   FilePlus, 
+  Upload,
   Download, 
   Search, 
   CheckCircle2, 
@@ -74,35 +79,26 @@ export default function AdminDashboardPage() {
   // Stores
   const [trafficData, setTrafficData] = useState<WebTrafficData>(DEFAULT_TRAFFIC_DATA);
   const [students, setStudents] = useState<AdminStudentDetail[]>([]);
-  const [trialMocks, setTrialMocks] = useState<TrialExamMock[]>([]);
-  const [beceQuestions, setBeceQuestions] = useState<BECEPastQuestion[]>([]);
-  const [questionSubTab, setQuestionSubTab] = useState<'trial_mocks' | 'bece_questions'>('trial_mocks');
+  // PDF Documents Store
+  const [pdfDocuments, setPdfDocuments] = useState<UploadedPdfDocument[]>([]);
+  const [pdfFilterCategory, setPdfFilterCategory] = useState<'ALL' | PdfCategory>('ALL');
+  const [pdfFilterSubject, setPdfFilterSubject] = useState('ALL');
+  const [showPdfUploadForm, setShowPdfUploadForm] = useState(false);
+  const [isUploadingPdf, setIsUploadingPdf] = useState(false);
 
-  // BECE Filter & Form State
-  const [beceYearFilter, setBeceYearFilter] = useState<number | 'ALL'>('ALL');
-  const [beceSubjectFilter, setBeceSubjectFilter] = useState('ALL');
-  const [showBeceForm, setShowBeceForm] = useState(false);
-  const [beceYear, setBeceYear] = useState(2024);
-  const [beceSubject, setBeceSubject] = useState('math');
-  const [becePaper, setBecePaper] = useState<1 | 2>(1);
-  const [beceQNum, setBeceQNum] = useState(1);
-  const [beceQText, setBeceQText] = useState('');
-  const [beceOptA, setBeceOptA] = useState('');
-  const [beceOptB, setBeceOptB] = useState('');
-  const [beceOptC, setBeceOptC] = useState('');
-  const [beceOptD, setBeceOptD] = useState('');
-  const [beceCorrect, setBeceCorrect] = useState<'A' | 'B' | 'C' | 'D'>('A');
-  const [beceConcept, setBeceConcept] = useState('');
-  const [beceExplanation, setBeceExplanation] = useState('');
-  const [beceTheoryPart, setBeceTheoryPart] = useState('(a)');
-  const [beceTheoryModel, setBeceTheoryModel] = useState('');
-  const [beceTheoryRubric, setBeceTheoryRubric] = useState('');
-  const [beceTheoryMarks, setBeceTheoryMarks] = useState(5);
+  // PDF Upload Form State
+  const [pdfFile, setPdfFile] = useState<File | null>(null);
+  const [pdfTitle, setPdfTitle] = useState('');
+  const [pdfCategory, setPdfCategory] = useState<PdfCategory>('bece_past_question');
+  const [pdfSubject, setPdfSubject] = useState('math');
+  const [pdfYear, setPdfYear] = useState(2024);
+  const [pdfLevel, setPdfLevel] = useState<EducationLevel>('JHS 3');
+  const [pdfPaperType, setPdfPaperType] = useState<PdfPaperType>('Combined Paper');
 
   // Search & Filters
   const [studentSearch, setStudentSearch] = useState('');
   const [studentAccessFilter, setStudentAccessFilter] = useState<'ALL' | 'Full Pass' | 'Free Trial' | 'Expired'>('ALL');
-  const [mockSubjectFilter, setMockSubjectFilter] = useState('ALL');
+
 
   // Grant Access Modal
   const [showGrantModal, setShowGrantModal] = useState(false);
@@ -110,31 +106,6 @@ export default function AdminDashboardPage() {
   const [customPhoneInput, setCustomPhoneInput] = useState('');
   const [customNameInput, setCustomNameInput] = useState('');
   const [grantDurationDays, setGrantDurationDays] = useState(30);
-
-  // New Trial Mock Form State
-  const [showMockForm, setShowMockForm] = useState(false);
-  const [mockTitle, setMockTitle] = useState('');
-  const [mockSubject, setMockSubject] = useState('math');
-  const [mockLevel, setMockLevel] = useState<EducationLevel>('JHS 3');
-  const [mockTerm, setMockTerm] = useState<1 | 2 | 3>(1);
-  const [mockDuration, setMockDuration] = useState(25);
-  const [mockPassScore, setMockPassScore] = useState(60);
-  const [mockQuestions, setMockQuestions] = useState<QuizQuestion[]>([
-    {
-      id: 'q-1',
-      quizId: 'new-mock',
-      questionText: '',
-      optionA: '',
-      optionB: '',
-      optionC: '',
-      optionD: '',
-      correctOption: 'A',
-      subConcept: '',
-      explanation: '',
-      remediationTip: ''
-    }
-  ]);
-  const [previewMock, setPreviewMock] = useState<TrialExamMock | null>(null);
   const [formSuccessMessage, setFormSuccessMessage] = useState<string | null>(null);
 
   // PIN Generator Form State
@@ -148,8 +119,7 @@ export default function AdminDashboardPage() {
     setMounted(true);
     setTrafficData(getStoredTrafficData());
     setStudents(getStoredStudents());
-    setTrialMocks(getStoredTrialMocks());
-    setBeceQuestions(getStoredBeceQuestions());
+    fetchUploadedDocuments().then(setPdfDocuments).catch(console.error);
   }, [activeTab]);
 
   if (!mounted) {
@@ -315,174 +285,62 @@ export default function AdminDashboardPage() {
     saveStudents(updated);
   };
 
-  // Mock Test Creation Handlers
-  const addQuestionField = () => {
-    setMockQuestions(prev => [
-      ...prev,
-      {
-        id: `q-${prev.length + 1}`,
-        quizId: 'new-mock',
-        questionText: '',
-        optionA: '',
-        optionB: '',
-        optionC: '',
-        optionD: '',
-        correctOption: 'A',
-        subConcept: '',
-        explanation: '',
-        remediationTip: ''
-      }
-    ]);
-  };
 
-  const removeQuestionField = (idx: number) => {
-    if (mockQuestions.length <= 1) return;
-    setMockQuestions(prev => prev.filter((_, i) => i !== idx));
-  };
-
-  const updateQuestionField = (idx: number, field: keyof QuizQuestion, value: string) => {
-    setMockQuestions(prev => {
-      const next = [...prev];
-      next[idx] = { ...next[idx], [field]: value };
-      return next;
-    });
-  };
-
-  const handlePublishMock = (e: React.FormEvent) => {
+  const handleUploadPdfSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!mockTitle.trim()) return;
+    if (!pdfFile) {
+      alert('Please select a local PDF file to upload.');
+      return;
+    }
+    if (!pdfTitle.trim()) {
+      alert('Please enter a title for the document.');
+      return;
+    }
 
-    const newMock: TrialExamMock = {
-      id: `trial-mock-${Date.now()}`,
-      title: mockTitle.trim(),
-      subjectId: mockSubject,
-      level: mockLevel,
-      term: mockTerm,
-      durationMinutes: mockDuration,
-      passScorePercentage: mockPassScore,
-      questions: mockQuestions,
-      isPublished: true,
-      createdAt: new Date().toISOString()
-    };
+    try {
+      setIsUploadingPdf(true);
+      const subName = CURRICULUM_SUBJECTS.find(s => s.id === pdfSubject)?.name || pdfSubject;
 
-    const updated = [newMock, ...trialMocks];
-    setTrialMocks(updated);
-    saveTrialMocks(updated);
+      const formData = new FormData();
+      formData.append('file', pdfFile);
+      formData.append('title', pdfTitle.trim());
+      formData.append('category', pdfCategory);
+      formData.append('subjectId', pdfSubject);
+      formData.append('subjectName', subName);
+      formData.append('paperType', pdfPaperType);
 
-    // Reset Form
-    setMockTitle('');
-    setMockQuestions([
-      {
-        id: 'q-1',
-        quizId: 'new-mock',
-        questionText: '',
-        optionA: '',
-        optionB: '',
-        optionC: '',
-        optionD: '',
-        correctOption: 'A',
-        subConcept: '',
-        explanation: '',
-        remediationTip: ''
+      if (pdfCategory === 'bece_past_question') {
+        formData.append('year', String(pdfYear));
+      } else {
+        formData.append('level', pdfLevel);
       }
-    ]);
-    setShowMockForm(false);
-    setFormSuccessMessage('Trial mock test uploaded and published successfully!');
-    setTimeout(() => setFormSuccessMessage(null), 4000);
+
+      const created = await uploadPdfDocument(formData);
+      setPdfDocuments(prev => [created, ...prev]);
+
+      // Reset form
+      setPdfFile(null);
+      setPdfTitle('');
+      setShowPdfUploadForm(false);
+      setFormSuccessMessage(`"${created.title}" uploaded successfully!`);
+      setTimeout(() => setFormSuccessMessage(null), 4000);
+    } catch (err: any) {
+      alert('Upload failed: ' + (err.message || 'Error occurred'));
+    } finally {
+      setIsUploadingPdf(false);
+    }
   };
 
-  const toggleMockPublish = (mockId: string) => {
-    const updated = trialMocks.map(m => {
-      if (m.id === mockId) {
-        return { ...m, isPublished: !m.isPublished };
-      }
-      return m;
-    });
-    setTrialMocks(updated);
-    saveTrialMocks(updated);
-  };
-
-  const deleteMock = (mockId: string) => {
-    if (!confirm('Are you sure you want to delete this trial mock exam?')) return;
-    const updated = trialMocks.filter(m => m.id !== mockId);
-    setTrialMocks(updated);
-    saveTrialMocks(updated);
-  };
-
-  const handlePublishBeceQuestion = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!beceQText.trim()) return;
-
-    const subName = CURRICULUM_SUBJECTS.find(s => s.id === beceSubject)?.name || beceSubject;
-
-    const newQuestion: BECEPastQuestion = {
-      id: `bece-${beceSubject}-${beceYear}-p${becePaper}-${Date.now()}`,
-      year: beceYear,
-      subjectId: beceSubject,
-      subjectName: subName,
-      paper: becePaper,
-      questionNumber: beceQNum,
-      questionText: beceQText.trim(),
-      subConcept: beceConcept.trim() || 'General Concept',
-      ...(becePaper === 1
-        ? {
-            options: {
-              A: beceOptA.trim(),
-              B: beceOptB.trim(),
-              C: beceOptC.trim(),
-              D: beceOptD.trim()
-            },
-            correctOption: beceCorrect,
-            explanation: beceExplanation.trim()
-          }
-        : {
-            totalMarks: beceTheoryMarks,
-            subQuestions: [
-              {
-                part: beceTheoryPart,
-                prompt: beceQText.trim(),
-                modelAnswer: beceTheoryModel.trim(),
-                markingSchemeRubric: beceTheoryRubric.trim(),
-                maxMarks: beceTheoryMarks
-              }
-            ]
-          })
-    };
-
-    const updated = [newQuestion, ...beceQuestions];
-    setBeceQuestions(updated);
-    saveBeceQuestions(updated);
-
-    // Reset Form
-    setBeceQText('');
-    setBeceOptA('');
-    setBeceOptB('');
-    setBeceOptC('');
-    setBeceOptD('');
-    setBeceConcept('');
-    setBeceExplanation('');
-    setBeceTheoryModel('');
-    setBeceTheoryRubric('');
-    setBeceQNum(prev => prev + 1);
-    setShowBeceForm(false);
-    setFormSuccessMessage(`BECE ${beceYear} ${subName} Paper ${becePaper} question uploaded successfully!`);
-    setTimeout(() => setFormSuccessMessage(null), 4000);
-  };
-
-  const handleDeleteBeceQuestion = (qId: string) => {
-    if (!confirm('Are you sure you want to delete this BECE question?')) return;
-    const updated = beceQuestions.filter(q => q.id !== qId);
-    setBeceQuestions(updated);
-    saveBeceQuestions(updated);
-  };
-
-  const handleClearAllQuestions = () => {
-    if (!confirm('Are you sure you want to clear ALL trial mocks and BECE questions? This will wipe all uploaded questions from your browser.')) return;
-    clearAllExamData();
-    setTrialMocks([]);
-    setBeceQuestions([]);
-    setFormSuccessMessage('All trial mock exams and BECE past questions have been completely cleared.');
-    setTimeout(() => setFormSuccessMessage(null), 4000);
+  const handleDeletePdf = async (id: string, title: string) => {
+    if (!confirm(`Are you sure you want to delete "${title}"?`)) return;
+    try {
+      await deletePdfDocument(id);
+      setPdfDocuments(prev => prev.filter(d => d.id !== id));
+      setFormSuccessMessage(`Document "${title}" deleted successfully.`);
+      setTimeout(() => setFormSuccessMessage(null), 4000);
+    } catch (err: any) {
+      alert('Failed to delete: ' + err.message);
+    }
   };
 
   // PIN Generation
@@ -628,9 +486,9 @@ export default function AdminDashboardPage() {
               }`}
             >
               <FilePlus className="w-4 h-4" />
-              <span>Trial & BECE Questions</span>
+              <span>PDF Past Papers & Mocks</span>
               <span className="ml-1 text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-full font-mono">
-                {trialMocks.length + beceQuestions.length}
+                {pdfDocuments.length}
               </span>
             </button>
 
@@ -1216,57 +1074,22 @@ export default function AdminDashboardPage() {
         {activeTab === 'trial_mocks' && (
           <div className="space-y-6">
             {/* Header & Sub-Tabs */}
-            <div className="flex flex-wrap items-center justify-between gap-4 pb-2 border-b border-slate-200">
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setQuestionSubTab('trial_mocks')}
-                  className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition ${
-                    questionSubTab === 'trial_mocks'
-                      ? 'bg-slate-900 text-white shadow-sm'
-                      : 'bg-slate-100 text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  Trial Questions & Mocks ({trialMocks.length})
-                </button>
-                <button
-                  onClick={() => setQuestionSubTab('bece_questions')}
-                  className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition ${
-                    questionSubTab === 'bece_questions'
-                      ? 'bg-slate-900 text-white shadow-sm'
-                      : 'bg-slate-100 text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  BECE Past Questions ({beceQuestions.length})
-                </button>
+            <div className="flex flex-wrap items-center justify-between gap-4 pb-3 border-b border-slate-200">
+              <div>
+                <h2 className="text-base font-semibold text-slate-900">PDF Document Management Hub</h2>
+                <p className="text-xs text-slate-500">
+                  Upload local PDF examination papers from your computer for BECE Past Questions and Trial Mocks.
+                </p>
               </div>
 
               <div className="flex items-center gap-2">
-                {(trialMocks.length > 0 || beceQuestions.length > 0) && (
-                  <button
-                    onClick={handleClearAllQuestions}
-                    className="px-3 py-1.5 rounded-lg border border-rose-200 text-rose-700 hover:bg-rose-50 text-xs font-medium transition"
-                  >
-                    Clear All Uploaded Questions
-                  </button>
-                )}
-
-                {questionSubTab === 'trial_mocks' ? (
-                  <button
-                    onClick={() => setShowMockForm(!showMockForm)}
-                    className="px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium transition flex items-center gap-1.5 shadow-sm"
-                  >
-                    {showMockForm ? <XCircle className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
-                    <span>{showMockForm ? 'Close Builder' : 'Upload New Mock'}</span>
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => setShowBeceForm(!showBeceForm)}
-                    className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium transition flex items-center gap-1.5 shadow-sm"
-                  >
-                    {showBeceForm ? <XCircle className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
-                    <span>{showBeceForm ? 'Close Builder' : 'Upload BECE Question'}</span>
-                  </button>
-                )}
+                <button
+                  onClick={() => setShowPdfUploadForm(!showPdfUploadForm)}
+                  className="px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-sm"
+                >
+                  {showPdfUploadForm ? <XCircle className="w-3.5 h-3.5" /> : <Upload className="w-3.5 h-3.5" />}
+                  <span>{showPdfUploadForm ? 'Close Uploader' : 'Upload Local PDF'}</span>
+                </button>
               </div>
             </div>
 
@@ -1277,675 +1100,325 @@ export default function AdminDashboardPage() {
               </div>
             )}
 
-            {/* SUB-TAB 1: TRIAL QUESTIONS & MOCKS */}
-            {questionSubTab === 'trial_mocks' && (
-              <div className="space-y-6">
-                {/* MOCK CREATOR FORM */}
-                {showMockForm && (
-                  <form onSubmit={handlePublishMock} className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm space-y-5">
-                    <div className="border-b border-slate-100 pb-3">
-                      <h3 className="text-sm font-semibold text-slate-900">Create & Publish Trial Mock Exam</h3>
-                      <p className="text-xs text-slate-500">Configure parameters and enter multiple-choice diagnostic questions.</p>
-                    </div>
+            {/* UPLOAD PDF FORM */}
+            {showPdfUploadForm && (
+              <form onSubmit={handleUploadPdfSubmit} className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm space-y-5">
+                <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
+                  <div>
+                    <h3 className="text-sm font-semibold text-slate-900">Upload PDF Past Paper or Mock</h3>
+                    <p className="text-xs text-slate-500">Select a PDF file from your local computer and set the subject/year tags.</p>
+                  </div>
+                  <span className="text-[11px] font-mono text-slate-400">PDF Format Only</span>
+                </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                      <div className="sm:col-span-2">
-                        <label className="block text-xs font-medium text-slate-700 mb-1">Mock Exam Title</label>
-                        <input
-                          type="text"
-                          value={mockTitle}
-                          onChange={(e) => setMockTitle(e.target.value)}
-                          placeholder="e.g. BECE National Standard Integrated Science Mock 2"
-                          className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
-                          required
-                        />
+                {/* File Drop / Select Area */}
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                    Select PDF File from Local Storage *
+                  </label>
+                  <div className="border-2 border-dashed border-slate-200 hover:border-slate-400 rounded-xl p-6 text-center transition bg-slate-50/50">
+                    <input
+                      type="file"
+                      id="pdfFileInput"
+                      accept=".pdf,application/pdf"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0] || null;
+                        setPdfFile(file);
+                        if (file && !pdfTitle) {
+                          // Auto-suggest title from filename
+                          const clean = file.name.replace(/\.pdf$/i, '').replace(/[_-]/g, ' ');
+                          setPdfTitle(clean);
+                        }
+                      }}
+                      className="hidden"
+                    />
+                    <label htmlFor="pdfFileInput" className="cursor-pointer block space-y-2">
+                      <div className="w-10 h-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center mx-auto">
+                        <Upload className="w-5 h-5 text-slate-500" />
                       </div>
-
-                      <div>
-                        <label className="block text-xs font-medium text-slate-700 mb-1">Subject</label>
-                        <select
-                          value={mockSubject}
-                          onChange={(e) => setMockSubject(e.target.value)}
-                          className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
-                        >
-                          {CURRICULUM_SUBJECTS.map((s) => (
-                            <option key={s.id} value={s.id}>{s.name}</option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-medium text-slate-700 mb-1">Grade Level</label>
-                        <select
-                          value={mockLevel}
-                          onChange={(e) => setMockLevel(e.target.value as EducationLevel)}
-                          className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
-                        >
-                          <option value="JHS 1">JHS 1 (Basic 7)</option>
-                          <option value="JHS 2">JHS 2 (Basic 8)</option>
-                          <option value="JHS 3">JHS 3 (Basic 9 - BECE)</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-medium text-slate-700 mb-1">Time Limit (Minutes)</label>
-                        <input
-                          type="number"
-                          value={mockDuration}
-                          onChange={(e) => setMockDuration(Number(e.target.value))}
-                          min="5"
-                          max="120"
-                          className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-medium text-slate-700 mb-1">Pass Score Mark (%)</label>
-                        <input
-                          type="number"
-                          value={mockPassScore}
-                          onChange={(e) => setMockPassScore(Number(e.target.value))}
-                          min="40"
-                          max="100"
-                          className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Questions Builder */}
-                    <div className="space-y-4 pt-4 border-t border-slate-100">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold text-slate-900">
-                          Questions ({mockQuestions.length})
-                        </span>
-                        <button
-                          type="button"
-                          onClick={addQuestionField}
-                          className="px-2.5 py-1 rounded border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-medium transition flex items-center gap-1"
-                        >
-                          <Plus className="w-3 h-3" />
-                          <span>Add Question</span>
-                        </button>
-                      </div>
-
-                      {mockQuestions.map((q, idx) => (
-                        <div key={idx} className="bg-slate-50/60 border border-slate-200/80 rounded-xl p-4 space-y-3">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-slate-700">Question #{idx + 1}</span>
-                            {mockQuestions.length > 1 && (
-                              <button
-                                type="button"
-                                onClick={() => removeQuestionField(idx)}
-                                className="text-slate-400 hover:text-rose-600 p-1"
-                              >
-                                <Trash2 className="w-3.5 h-3.5" />
-                              </button>
-                            )}
-                          </div>
-
-                          <div>
-                            <label className="block text-[11px] font-medium text-slate-600 mb-1">Question Prompt</label>
-                            <textarea
-                              value={q.questionText}
-                              onChange={(e) => updateQuestionField(idx, 'questionText', e.target.value)}
-                              placeholder="Enter question text here..."
-                              rows={2}
-                              className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
-                              required
-                            />
-                          </div>
-
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            <div>
-                              <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option A</label>
-                              <input
-                                type="text"
-                                value={q.optionA}
-                                onChange={(e) => updateQuestionField(idx, 'optionA', e.target.value)}
-                                className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                                required
-                              />
-                            </div>
-                            <div>
-                              <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option B</label>
-                              <input
-                                type="text"
-                                value={q.optionB}
-                                onChange={(e) => updateQuestionField(idx, 'optionB', e.target.value)}
-                                className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                                required
-                              />
-                            </div>
-                            <div>
-                              <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option C</label>
-                              <input
-                                type="text"
-                                value={q.optionC}
-                                onChange={(e) => updateQuestionField(idx, 'optionC', e.target.value)}
-                                className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                                required
-                              />
-                            </div>
-                            <div>
-                              <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option D</label>
-                              <input
-                                type="text"
-                                value={q.optionD}
-                                onChange={(e) => updateQuestionField(idx, 'optionD', e.target.value)}
-                                className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                                required
-                              />
-                            </div>
-                          </div>
-
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                            <div>
-                              <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Correct Option</label>
-                              <select
-                                value={q.correctOption}
-                                onChange={(e) => updateQuestionField(idx, 'correctOption', e.target.value as 'A' | 'B' | 'C' | 'D')}
-                                className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                              >
-                                <option value="A">Option A</option>
-                                <option value="B">Option B</option>
-                                <option value="C">Option C</option>
-                                <option value="D">Option D</option>
-                              </select>
-                            </div>
-                            <div>
-                              <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Topic / Sub-Concept</label>
-                              <input
-                                type="text"
-                                value={q.subConcept}
-                                onChange={(e) => updateQuestionField(idx, 'subConcept', e.target.value)}
-                                placeholder="e.g. Chemical Bonding"
-                                className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                                required
-                              />
-                            </div>
-                          </div>
-
-                          <div>
-                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Pedagogical Explanation</label>
-                            <textarea
-                              value={q.explanation}
-                              onChange={(e) => updateQuestionField(idx, 'explanation', e.target.value)}
-                              placeholder="Explain why the correct answer is right..."
-                              rows={2}
-                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                              required
-                            />
-                          </div>
+                      {pdfFile ? (
+                        <div className="space-y-1">
+                          <p className="text-xs font-bold text-emerald-700 flex items-center justify-center gap-1">
+                            <CheckCircle2 className="w-3.5 h-3.5" />
+                            <span>{pdfFile.name}</span>
+                          </p>
+                          <p className="text-[11px] text-slate-500 font-mono">
+                            {formatFileSize(pdfFile.size)}
+                          </p>
+                          <span className="text-[10px] text-blue-600 underline">Click to choose a different file</span>
                         </div>
-                      ))}
-                    </div>
+                      ) : (
+                        <div>
+                          <p className="text-xs font-semibold text-slate-800">
+                            Click here to browse your computer for a PDF file
+                          </p>
+                          <p className="text-[11px] text-slate-500 mt-0.5">
+                            Supports official WAEC question papers, marking guides, and trial mocks.
+                          </p>
+                        </div>
+                      )}
+                    </label>
+                  </div>
+                </div>
 
-                    <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setShowMockForm(false)}
-                        className="px-3 py-1.5 text-xs text-slate-600 hover:text-slate-900 font-medium"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="submit"
-                        className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold shadow-sm transition"
-                      >
-                        Publish Trial Mock
-                      </button>
-                    </div>
-                  </form>
-                )}
+                {/* Metadata Fields */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                  <div className="sm:col-span-2 lg:col-span-3">
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Document Title *
+                    </label>
+                    <input
+                      type="text"
+                      value={pdfTitle}
+                      onChange={(e) => setPdfTitle(e.target.value)}
+                      placeholder="e.g. BECE 2024 Integrated Science Paper 1 & 2 with Solutions"
+                      className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                      required
+                    />
+                  </div>
 
-                {/* MOCK REPOSITORY TABLE */}
-                <div className="bg-white border border-slate-200/80 rounded-xl overflow-hidden shadow-sm">
-                  <div className="p-3.5 border-b border-slate-200/80 flex items-center justify-between">
-                    <span className="text-xs font-semibold text-slate-900">
-                      Published Mock Exams ({trialMocks.length})
-                    </span>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Document Category *
+                    </label>
                     <select
-                      value={mockSubjectFilter}
-                      onChange={(e) => setMockSubjectFilter(e.target.value)}
-                      className="bg-slate-50 border border-slate-200 rounded-md px-2 py-1 text-xs text-slate-700"
+                      value={pdfCategory}
+                      onChange={(e) => setPdfCategory(e.target.value as PdfCategory)}
+                      className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900"
                     >
-                      <option value="ALL">All Subjects</option>
-                      {CURRICULUM_SUBJECTS.map(s => (
+                      <option value="bece_past_question">BECE Past Question (2008 – 2026)</option>
+                      <option value="trial_mock">Trial Question / Mock Exam</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Subject *
+                    </label>
+                    <select
+                      value={pdfSubject}
+                      onChange={(e) => setPdfSubject(e.target.value)}
+                      className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900"
+                    >
+                      {CURRICULUM_SUBJECTS.map((s) => (
                         <option key={s.id} value={s.id}>{s.name}</option>
                       ))}
                     </select>
                   </div>
 
-                  {trialMocks.length === 0 ? (
-                    <div className="p-12 text-center space-y-2">
-                      <FilePlus className="w-8 h-8 text-slate-300 mx-auto" />
-                      <h4 className="text-xs font-semibold text-slate-800">No Trial Mocks Uploaded Yet</h4>
-                      <p className="text-[11px] text-slate-500 max-w-sm mx-auto">
-                        Click "Upload New Mock" above to create and publish a trial mock exam for students.
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-left text-xs">
-                        <thead className="bg-slate-50/75 text-slate-500 font-medium uppercase tracking-wider border-b border-slate-200/80">
-                          <tr>
-                            <th className="px-4 py-3">Mock Title</th>
-                            <th className="px-4 py-3">Subject</th>
-                            <th className="px-4 py-3">Level</th>
-                            <th className="px-4 py-3">Questions</th>
-                            <th className="px-4 py-3">Duration</th>
-                            <th className="px-4 py-3">Status</th>
-                            <th className="px-4 py-3 text-right">Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-slate-100">
-                          {trialMocks
-                            .filter(m => mockSubjectFilter === 'ALL' || m.subjectId === mockSubjectFilter)
-                            .map((mock) => {
-                              const subj = CURRICULUM_SUBJECTS.find(s => s.id === mock.subjectId);
-                              return (
-                                <tr key={mock.id} className="hover:bg-slate-50/60 transition">
-                                  <td className="px-4 py-3 font-medium text-slate-900">
-                                    {mock.title}
-                                    <div className="text-[10px] text-slate-400 font-normal">
-                                      Added {new Date(mock.createdAt).toLocaleDateString()}
-                                    </div>
-                                  </td>
-                                  <td className="px-4 py-3 text-slate-600">
-                                    {subj ? subj.name : mock.subjectId}
-                                  </td>
-                                  <td className="px-4 py-3">
-                                    <span className="px-1.5 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-700">
-                                      {mock.level}
-                                    </span>
-                                  </td>
-                                  <td className="px-4 py-3 font-mono font-medium text-slate-800">
-                                    {mock.questions.length} Qs
-                                  </td>
-                                  <td className="px-4 py-3 font-mono text-slate-600">
-                                    {mock.durationMinutes} mins
-                                  </td>
-                                  <td className="px-4 py-3">
-                                    <button
-                                      onClick={() => toggleMockPublish(mock.id)}
-                                      className={`px-2 py-0.5 rounded-full text-[11px] font-medium transition ${
-                                        mock.isPublished
-                                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60'
-                                          : 'bg-slate-100 text-slate-500'
-                                      }`}
-                                    >
-                                      {mock.isPublished ? '● Published' : '○ Draft'}
-                                    </button>
-                                  </td>
-                                  <td className="px-4 py-3 text-right">
-                                    <div className="flex items-center justify-end gap-2">
-                                      <button
-                                        onClick={() => setPreviewMock(mock)}
-                                        className="px-2 py-1 rounded border border-slate-200 text-slate-600 hover:bg-slate-50 text-[11px] font-medium transition"
-                                      >
-                                        Preview
-                                      </button>
-                                      <button
-                                        onClick={() => deleteMock(mock.id)}
-                                        className="p-1 text-slate-400 hover:text-rose-600 transition"
-                                        title="Delete mock"
-                                      >
-                                        <Trash2 className="w-3.5 h-3.5" />
-                                      </button>
-                                    </div>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                        </tbody>
-                      </table>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* SUB-TAB 2: BECE PAST QUESTIONS UPLOADER */}
-            {questionSubTab === 'bece_questions' && (
-              <div className="space-y-6">
-                {/* BECE QUESTION FORM */}
-                {showBeceForm && (
-                  <form onSubmit={handlePublishBeceQuestion} className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm space-y-4">
-                    <div className="border-b border-slate-100 pb-3">
-                      <h3 className="text-sm font-semibold text-slate-900">Upload BECE Past Question</h3>
-                      <p className="text-xs text-slate-500">Add an authentic objective or theory question for any year (2008 – 2026).</p>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                      <div>
-                        <label className="block text-xs font-medium text-slate-700 mb-1">Exam Year</label>
-                        <select
-                          value={beceYear}
-                          onChange={(e) => setBeceYear(Number(e.target.value))}
-                          className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900"
-                        >
-                          {getAllBeceYears().map((yr) => (
-                            <option key={yr} value={yr}>BECE {yr}</option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-medium text-slate-700 mb-1">Subject</label>
-                        <select
-                          value={beceSubject}
-                          onChange={(e) => setBeceSubject(e.target.value)}
-                          className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900"
-                        >
-                          {CURRICULUM_SUBJECTS.map((s) => (
-                            <option key={s.id} value={s.id}>{s.name}</option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-medium text-slate-700 mb-1">Paper Type</label>
-                        <select
-                          value={becePaper}
-                          onChange={(e) => setBecePaper(Number(e.target.value) as 1 | 2)}
-                          className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900"
-                        >
-                          <option value="1">Paper 1 (Objectives CBT)</option>
-                          <option value="2">Paper 2 (Theory / Structured)</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-medium text-slate-700 mb-1">Question Number</label>
-                        <input
-                          type="number"
-                          value={beceQNum}
-                          onChange={(e) => setBeceQNum(Number(e.target.value))}
-                          min="1"
-                          max="60"
-                          className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900"
-                          required
-                        />
-                      </div>
-                    </div>
-
+                  {pdfCategory === 'bece_past_question' ? (
                     <div>
-                      <label className="block text-xs font-medium text-slate-700 mb-1">
-                        {becePaper === 1 ? 'Question Text / Prompt' : 'Theory Question Stem'}
+                      <label className="block text-xs font-semibold text-slate-700 mb-1">
+                        Exam Year (2008 – 2026) *
                       </label>
-                      <textarea
-                        value={beceQText}
-                        onChange={(e) => setBeceQText(e.target.value)}
-                        placeholder="Enter the question text here..."
-                        rows={3}
-                        className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900"
-                        required
-                      />
-                    </div>
-
-                    {becePaper === 1 ? (
-                      <div className="space-y-3">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                          <div>
-                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option A</label>
-                            <input
-                              type="text"
-                              value={beceOptA}
-                              onChange={(e) => setBeceOptA(e.target.value)}
-                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                              required
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option B</label>
-                            <input
-                              type="text"
-                              value={beceOptB}
-                              onChange={(e) => setBeceOptB(e.target.value)}
-                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                              required
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option C</label>
-                            <input
-                              type="text"
-                              value={beceOptC}
-                              onChange={(e) => setBeceOptC(e.target.value)}
-                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                              required
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option D</label>
-                            <input
-                              type="text"
-                              value={beceOptD}
-                              onChange={(e) => setBeceOptD(e.target.value)}
-                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                              required
-                            />
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                          <div>
-                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Correct Option</label>
-                            <select
-                              value={beceCorrect}
-                              onChange={(e) => setBeceCorrect(e.target.value as 'A' | 'B' | 'C' | 'D')}
-                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                            >
-                              <option value="A">Option A</option>
-                              <option value="B">Option B</option>
-                              <option value="C">Option C</option>
-                              <option value="D">Option D</option>
-                            </select>
-                          </div>
-                          <div>
-                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Sub-Concept / Topic</label>
-                            <input
-                              type="text"
-                              value={beceConcept}
-                              onChange={(e) => setBeceConcept(e.target.value)}
-                              placeholder="e.g. Prime Factorization"
-                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                              required
-                            />
-                          </div>
-                        </div>
-
-                        <div>
-                          <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Step-by-Step Explanation</label>
-                          <textarea
-                            value={beceExplanation}
-                            onChange={(e) => setBeceExplanation(e.target.value)}
-                            placeholder="Detailed explanation of the solution..."
-                            rows={2}
-                            className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                            required
-                          />
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="space-y-3">
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                          <div>
-                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Sub-part (e.g. (a))</label>
-                            <input
-                              type="text"
-                              value={beceTheoryPart}
-                              onChange={(e) => setBeceTheoryPart(e.target.value)}
-                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                              required
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Max Marks</label>
-                            <input
-                              type="number"
-                              value={beceTheoryMarks}
-                              onChange={(e) => setBeceTheoryMarks(Number(e.target.value))}
-                              min="1"
-                              max="20"
-                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                              required
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Topic / Sub-Concept</label>
-                            <input
-                              type="text"
-                              value={beceConcept}
-                              onChange={(e) => setBeceConcept(e.target.value)}
-                              placeholder="e.g. Simultaneous Equations"
-                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                              required
-                            />
-                          </div>
-                        </div>
-
-                        <div>
-                          <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Model Answer</label>
-                          <textarea
-                            value={beceTheoryModel}
-                            onChange={(e) => setBeceTheoryModel(e.target.value)}
-                            placeholder="Complete step-by-step working..."
-                            rows={3}
-                            className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                            required
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Official WAEC Marking Scheme (B1, M1, A1 marks)</label>
-                          <textarea
-                            value={beceTheoryRubric}
-                            onChange={(e) => setBeceTheoryRubric(e.target.value)}
-                            placeholder="e.g. Formula [B1], Substitution [M1], Final Value [A1]"
-                            rows={2}
-                            className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                            required
-                          />
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setShowBeceForm(false)}
-                        className="px-3 py-1.5 text-xs text-slate-600 hover:text-slate-900 font-medium"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="submit"
-                        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold shadow-sm transition"
-                      >
-                        Publish BECE Question
-                      </button>
-                    </div>
-                  </form>
-                )}
-
-                {/* BECE QUESTIONS TABLE */}
-                <div className="bg-white border border-slate-200/80 rounded-xl overflow-hidden shadow-sm">
-                  <div className="p-3.5 border-b border-slate-200/80 flex flex-wrap items-center justify-between gap-3">
-                    <span className="text-xs font-semibold text-slate-900">
-                      Uploaded BECE Questions ({beceQuestions.length})
-                    </span>
-
-                    <div className="flex items-center gap-2">
                       <select
-                        value={beceYearFilter}
-                        onChange={(e) => setBeceYearFilter(e.target.value === 'ALL' ? 'ALL' : Number(e.target.value))}
-                        className="bg-slate-50 border border-slate-200 rounded-md px-2 py-1 text-xs text-slate-700"
+                        value={pdfYear}
+                        onChange={(e) => setPdfYear(Number(e.target.value))}
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900"
                       >
-                        <option value="ALL">All Years (2008–2026)</option>
-                        {getAllBeceYears().map(yr => (
+                        {getAllBeceYears().map((yr) => (
                           <option key={yr} value={yr}>BECE {yr}</option>
                         ))}
                       </select>
-
-                      <select
-                        value={beceSubjectFilter}
-                        onChange={(e) => setBeceSubjectFilter(e.target.value)}
-                        className="bg-slate-50 border border-slate-200 rounded-md px-2 py-1 text-xs text-slate-700"
-                      >
-                        <option value="ALL">All Subjects</option>
-                        {CURRICULUM_SUBJECTS.map(s => (
-                          <option key={s.id} value={s.id}>{s.name}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
-                  {beceQuestions.length === 0 ? (
-                    <div className="p-12 text-center space-y-2">
-                      <BookOpen className="w-8 h-8 text-slate-300 mx-auto" />
-                      <h4 className="text-xs font-semibold text-slate-800">No BECE Past Questions Uploaded Yet</h4>
-                      <p className="text-[11px] text-slate-500 max-w-sm mx-auto">
-                        Click "Upload BECE Question" above to add official exam questions and marking rubrics for any year.
-                      </p>
                     </div>
                   ) : (
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-left text-xs">
-                        <thead className="bg-slate-50/75 text-slate-500 font-medium uppercase tracking-wider border-b border-slate-200/80">
-                          <tr>
-                            <th className="px-4 py-3">Year & Subject</th>
-                            <th className="px-4 py-3">Paper</th>
-                            <th className="px-4 py-3">Question Prompt</th>
-                            <th className="px-4 py-3">Sub-Concept</th>
-                            <th className="px-4 py-3 text-right">Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-slate-100">
-                          {beceQuestions
-                            .filter(q => beceYearFilter === 'ALL' || q.year === beceYearFilter)
-                            .filter(q => beceSubjectFilter === 'ALL' || q.subjectId === beceSubjectFilter)
-                            .map((q) => (
-                              <tr key={q.id} className="hover:bg-slate-50/60 transition">
-                                <td className="px-4 py-3">
-                                  <div className="font-semibold text-slate-900">
-                                    BECE {q.year}
-                                  </div>
-                                  <div className="text-[10px] text-slate-500">{q.subjectName}</div>
-                                </td>
-                                <td className="px-4 py-3">
-                                  <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                                    q.paper === 1
-                                      ? 'bg-blue-50 text-blue-800 border border-blue-200'
-                                      : 'bg-purple-50 text-purple-800 border border-purple-200'
-                                  }`}>
-                                    Paper {q.paper}
-                                  </span>
-                                </td>
-                                <td className="px-4 py-3 font-medium text-slate-800 max-w-xs truncate">
-                                  Q{q.questionNumber}: {q.questionText}
-                                </td>
-                                <td className="px-4 py-3 text-slate-600">
-                                  {q.subConcept}
-                                </td>
-                                <td className="px-4 py-3 text-right">
-                                  <button
-                                    onClick={() => handleDeleteBeceQuestion(q.id)}
-                                    className="p-1 text-slate-400 hover:text-rose-600 transition"
-                                    title="Delete question"
-                                  >
-                                    <Trash2 className="w-3.5 h-3.5" />
-                                  </button>
-                                </td>
-                              </tr>
-                            ))}
-                        </tbody>
-                      </table>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1">
+                        Target Grade Level *
+                      </label>
+                      <select
+                        value={pdfLevel}
+                        onChange={(e) => setPdfLevel(e.target.value as EducationLevel)}
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900"
+                      >
+                        <option value="JHS 1">JHS 1 (Basic 7)</option>
+                        <option value="JHS 2">JHS 2 (Basic 8)</option>
+                        <option value="JHS 3">JHS 3 (Basic 9 - BECE)</option>
+                      </select>
                     </div>
                   )}
+
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Paper Type *
+                    </label>
+                    <select
+                      value={pdfPaperType}
+                      onChange={(e) => setPdfPaperType(e.target.value as PdfPaperType)}
+                      className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900"
+                    >
+                      <option value="Combined Paper">Combined Paper (Section A & B)</option>
+                      <option value="Paper 1">Paper 1 (Objectives)</option>
+                      <option value="Paper 2">Paper 2 (Theory / Written)</option>
+                      <option value="Marking Scheme">Official Marking Scheme</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowPdfUploadForm(false)}
+                    className="px-3.5 py-2 text-xs text-slate-600 hover:text-slate-900 font-medium"
+                    disabled={isUploadingPdf}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isUploadingPdf || !pdfFile}
+                    className="px-5 py-2 bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center gap-1.5"
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>{isUploadingPdf ? 'Uploading Document...' : 'Upload & Publish PDF'}</span>
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* DOCUMENT REPOSITORY TABLE */}
+            <div className="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm">
+              <div className="p-4 border-b border-slate-200/80 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setPdfFilterCategory('ALL')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                      pdfFilterCategory === 'ALL'
+                        ? 'bg-slate-900 text-white'
+                        : 'bg-slate-100 text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    All PDFs ({pdfDocuments.length})
+                  </button>
+                  <button
+                    onClick={() => setPdfFilterCategory('bece_past_question')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                      pdfFilterCategory === 'bece_past_question'
+                        ? 'bg-slate-900 text-white'
+                        : 'bg-slate-100 text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    BECE Past Questions ({pdfDocuments.filter(d => d.category === 'bece_past_question').length})
+                  </button>
+                  <button
+                    onClick={() => setPdfFilterCategory('trial_mock')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                      pdfFilterCategory === 'trial_mock'
+                        ? 'bg-slate-900 text-white'
+                        : 'bg-slate-100 text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    Trial Mocks ({pdfDocuments.filter(d => d.category === 'trial_mock').length})
+                  </button>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <select
+                    value={pdfFilterSubject}
+                    onChange={(e) => setPdfFilterSubject(e.target.value)}
+                    className="bg-slate-50 border border-slate-200 rounded-md px-2.5 py-1 text-xs text-slate-700"
+                  >
+                    <option value="ALL">All Subjects</option>
+                    {CURRICULUM_SUBJECTS.map(s => (
+                      <option key={s.id} value={s.id}>{s.name}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
-            )}
+
+              {pdfDocuments.length === 0 ? (
+                <div className="p-16 text-center space-y-3">
+                  <FileText className="w-10 h-10 text-slate-300 mx-auto" />
+                  <h4 className="text-sm font-semibold text-slate-800">No PDF Documents Uploaded Yet</h4>
+                  <p className="text-xs text-slate-500 max-w-sm mx-auto">
+                    Click "Upload Local PDF" above to upload past question booklets, trial exams, or marking schemes directly from your local storage.
+                  </p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead className="bg-slate-50/75 text-slate-500 font-medium uppercase tracking-wider border-b border-slate-200/80">
+                      <tr>
+                        <th className="px-4 py-3">Document Title</th>
+                        <th className="px-4 py-3">Category</th>
+                        <th className="px-4 py-3">Subject</th>
+                        <th className="px-4 py-3">Year / Grade</th>
+                        <th className="px-4 py-3">Paper</th>
+                        <th className="px-4 py-3">Size</th>
+                        <th className="px-4 py-3 text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {pdfDocuments
+                        .filter(d => pdfFilterCategory === 'ALL' || d.category === pdfFilterCategory)
+                        .filter(d => pdfFilterSubject === 'ALL' || d.subjectId === pdfFilterSubject)
+                        .map((doc) => (
+                          <tr key={doc.id} className="hover:bg-slate-50/60 transition">
+                            <td className="px-4 py-3">
+                              <div className="font-semibold text-slate-900 flex items-center gap-1.5">
+                                <FileText className="w-3.5 h-3.5 text-rose-600 shrink-0" />
+                                <span>{doc.title}</span>
+                              </div>
+                              <div className="text-[11px] text-slate-400 font-mono mt-0.5">
+                                {doc.fileName}
+                              </div>
+                            </td>
+                            <td className="px-4 py-3">
+                              <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                                doc.category === 'bece_past_question'
+                                  ? 'bg-blue-50 text-blue-800 border border-blue-200'
+                                  : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                              }`}>
+                                {doc.category === 'bece_past_question' ? 'BECE Past Paper' : 'Trial Mock'}
+                              </span>
+                            </td>
+                            <td className="px-4 py-3 text-slate-700 font-medium">
+                              {doc.subjectName}
+                            </td>
+                            <td className="px-4 py-3 font-mono text-slate-700">
+                              {doc.category === 'bece_past_question' ? `BECE ${doc.year}` : doc.level}
+                            </td>
+                            <td className="px-4 py-3 text-slate-600">
+                              {doc.paperType}
+                            </td>
+                            <td className="px-4 py-3 font-mono text-slate-500">
+                              {formatFileSize(doc.fileSizeBytes)}
+                            </td>
+                            <td className="px-4 py-3 text-right">
+                              <div className="flex items-center justify-end gap-2">
+                                <a
+                                  href={doc.fileUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="px-2.5 py-1 rounded border border-slate-200 text-slate-700 hover:bg-slate-100 text-[11px] font-medium transition flex items-center gap-1"
+                                >
+                                  <span>View</span>
+                                  <ExternalLink className="w-3 h-3" />
+                                </a>
+                                <a
+                                  href={doc.fileUrl}
+                                  download={doc.fileName}
+                                  className="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 text-white text-[11px] font-medium transition flex items-center gap-1"
+                                >
+                                  <span>Download</span>
+                                  <Download className="w-3 h-3" />
+                                </a>
+                                <button
+                                  onClick={() => handleDeletePdf(doc.id, doc.title)}
+                                  className="p-1.5 text-slate-400 hover:text-rose-600 transition"
+                                  title="Delete PDF"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
           </div>
         )}
 

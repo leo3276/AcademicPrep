@@ -25,7 +25,7 @@ import {
   FileText
 } from 'lucide-react';
 import SubjectIcon from '@/components/SubjectIcon';
-import { getStoredTrialMocks, getStoredBeceQuestions } from '@/lib/adminStore';
+import { fetchUploadedDocuments } from '@/lib/pdfStore';
 
 export default function JhsPortalPage() {
   const { student, topicProgress } = useAuth();
@@ -51,10 +51,10 @@ export default function JhsPortalPage() {
         setSelectedLevel(student.currentLevel);
       }
 
-      const publishedMocks = getStoredTrialMocks().filter(m => m.isPublished);
-      setUploadedMocksCount(publishedMocks.length);
-      const beceQuestions = getStoredBeceQuestions();
-      setUploadedBeceCount(beceQuestions.length);
+      fetchUploadedDocuments().then((docs) => {
+        setUploadedMocksCount(docs.filter((d) => d.category === 'trial_mock').length);
+        setUploadedBeceCount(docs.filter((d) => d.category === 'bece_past_question').length);
+      }).catch(console.error);
     }
   }, [student]);
 
@@ -160,15 +160,15 @@ export default function JhsPortalPage() {
                 WAEC Official
               </span>
               <span className="text-[11px] font-mono text-slate-500 font-semibold">
-                {uploadedBeceCount > 0 ? `${uploadedBeceCount} Uploaded` : 'Admin Upload Portal'}
+                {uploadedBeceCount > 0 ? `${uploadedBeceCount} PDFs Available` : 'Admin Upload Archive'}
               </span>
             </div>
             <h3 className="text-base font-bold text-slate-900 flex items-center gap-1.5">
               <BookOpen className="w-4 h-4 text-blue-600" />
-              BECE Past Questions Archive
+              BECE Past Questions (2008 – 2026)
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Section A multiple choice CBT simulation & Section B theory with step-by-step marking rubrics.
+              Authentic WAEC BECE past question papers, objective tests, theory booklets, and marking guides uploaded by school administration.
             </p>
           </div>
           <Link
@@ -189,7 +189,7 @@ export default function JhsPortalPage() {
                 Live Admin Uploads
               </span>
               <span className="text-[11px] font-mono text-slate-500 font-semibold">
-                {uploadedMocksCount} Available
+                {uploadedMocksCount > 0 ? `${uploadedMocksCount} PDFs Available` : 'Admin Upload Portal'}
               </span>
             </div>
             <h3 className="text-base font-bold text-slate-900 flex items-center gap-1.5">
@@ -197,7 +197,7 @@ export default function JhsPortalPage() {
               Trial Questions & Mocks
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Official diagnostic trial mock exams uploaded directly by your administrator with timed scoring and explanations.
+              Official diagnostic trial mock exams and end-of-term assessment booklets uploaded directly by your administrator for viewing & download.
             </p>
           </div>
           <Link
