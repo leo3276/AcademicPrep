@@ -146,7 +146,7 @@ export default function Navbar() {
                 className="text-xs font-bold px-2.5 py-1.5 xl:px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-sm shadow-amber-500/20 transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
               >
                 <Sparkles className="w-3.5 h-3.5 text-amber-200" />
-                <span>VIP Pass (GHS 20/mo)</span>
+                <span>VIP Pass (GHS 25/mo)</span>
               </button>
 
               <div className="h-5 w-px bg-slate-200 shrink-0 mx-0.5" />
@@ -210,7 +210,7 @@ export default function Navbar() {
                 className="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-xs flex items-center gap-1 whitespace-nowrap cursor-pointer"
               >
                 <Sparkles className="w-3.5 h-3.5 text-amber-200" />
-                <span className="hidden sm:inline">VIP Pass (GHS 20/mo)</span>
+                <span className="hidden sm:inline">VIP Pass (GHS 25/mo)</span>
                 <span className="sm:hidden">VIP</span>
               </button>
 
@@ -310,7 +310,7 @@ export default function Navbar() {
               >
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-amber-200" />
-                  <span>VIP Pass (GHS 20/mo MoMo)</span>
+                  <span>VIP Pass (GHS 25/mo MoMo)</span>
                 </div>
                 <span className="text-[10px] bg-black/20 px-1.5 py-0.5 rounded font-black tracking-wider uppercase">30 DAYS</span>
               </button>

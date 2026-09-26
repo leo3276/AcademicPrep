@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
 
     if (event.event === 'charge.success') {
       const data = event.data;
-      if (data.status === 'success' && data.currency === 'GHS' && data.amount >= 2000) {
+      if (data.status === 'success' && data.currency === 'GHS' && data.amount >= 2500) {
         // Extract student phone
         const customPhone = data.metadata?.custom_fields?.find(
           (f: any) => f.variable_name === 'phone_number'

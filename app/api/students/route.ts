@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import { fetchLeaderboardFromSupabase } from '@/lib/supabaseService';
+import { supabase, isSupabaseConfigured } from '@/lib/supabaseClient';
 
 const DATA_FILE = path.join(process.cwd(), 'data', 'students.json');
 
@@ -26,7 +27,7 @@ function getStoredStudents(): ServerStudentDetail[] {
     }
     const raw = fs.readFileSync(DATA_FILE, 'utf8');
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
+    return Array.isArray(parsed) ? parsed.filter(s => s.phone !== '0241234567' && s.phone !== '0559876543') : [];
   } catch (err) {
     console.error('Failed to read students.json', err);
     return [];
@@ -49,7 +50,16 @@ export async function GET() {
   try {
     const supabaseStudents = await fetchLeaderboardFromSupabase();
     if (Array.isArray(supabaseStudents) && supabaseStudents.length > 0) {
-      return NextResponse.json(supabaseStudents);
+      // Calculate dynamic expiration status
+      const formatted = supabaseStudents.map(s => {
+        const isExpired = s.accessExpiresAt ? new Date(s.accessExpiresAt).getTime() <= Date.now() : false;
+        return {
+          ...s,
+          accessType: isExpired ? 'Expired' : (s.accessType || 'Free Trial')
+        };
+      });
+      saveStoredStudents(formatted);
+      return NextResponse.json(formatted);
     }
   } catch (err) {
     console.error('Supabase leaderboard fetch failed in API route:', err);
@@ -90,6 +100,27 @@ export async function POST(request: NextRequest) {
     const existingIdx = students.findIndex(s => s.phone === cleanPhone);
 
     const now = new Date().toISOString();
+    const isFullPass = accessType === 'Full Pass';
+
+    // 1. Sync directly to Supabase if connected
+    if (isSupabaseConfigured && supabase) {
+      try {
+        await supabase
+          .from('students')
+          .upsert({
+            phone_number: cleanPhone,
+            full_name: name ? String(name).trim() : `Student ${cleanPhone.slice(-4)}`,
+            current_level: level || 'JHS 3',
+            has_full_access: isFullPass,
+            access_type: accessType || 'Free Trial',
+            access_expires_at: accessExpiresAt || null,
+            last_active_at: now,
+            updated_at: now
+          }, { onConflict: 'phone_number' });
+      } catch (sbErr) {
+        console.warn('Supabase upsert student notice:', sbErr);
+      }
+    }
 
     if (existingIdx >= 0) {
       const existing = students[existingIdx];

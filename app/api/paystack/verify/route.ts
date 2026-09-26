@@ -37,13 +37,13 @@ export async function POST(req: NextRequest) {
 
     const paystackData = verifyData.data;
 
-    // Validate currency and amount (2000 pesewas = GHS 20.00 / month)
+    // Validate currency and amount (2500 pesewas = GHS 25.00 / month)
     if (paystackData.currency !== 'GHS') {
       return NextResponse.json({ success: false, message: 'Invalid payment currency' }, { status: 400 });
     }
 
-    if (paystackData.amount < 2000) {
-      return NextResponse.json({ success: false, message: 'Payment amount is less than GHS 20.00 required for Monthly VIP Pass' }, { status: 400 });
+    if (paystackData.amount < 2500) {
+      return NextResponse.json({ success: false, message: 'Payment amount is less than GHS 25.00 required for Monthly VIP Pass' }, { status: 400 });
     }
 
     // If phone number was not provided in request, check Paystack customer / metadata
@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
           id: `pin-paystack-${Date.now()}`,
           pin_code: generatedPin,
           batch_id: 'BATCH-PAYSTACK-MOMO',
-          price_ghs: 20.00,
+          price_ghs: 25.00,
           validity_days: validityDays,
           status: 'REDEEMED',
           redeemed_by_student_phone: phoneNumber,

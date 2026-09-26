@@ -135,10 +135,25 @@ export default function AdminDashboardPage() {
   const [newlyGenerated, setNewlyGenerated] = useState<AccessPin[]>([]);
   const [copiedPin, setCopiedPin] = useState<string | null>(null);
 
+  const loadRealStudents = async () => {
+    try {
+      const res = await fetch('/api/students');
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setStudents(data);
+          saveStudents(data);
+        }
+      }
+    } catch (e) {
+      console.warn('Error loading real students:', e);
+    }
+  };
+
   useEffect(() => {
     setMounted(true);
     setTrafficData(getStoredTrafficData());
-    setStudents(getStoredStudents());
+    loadRealStudents();
     fetchUploadedDocuments().then(setPdfDocuments).catch(e => console.warn('Fetch docs warning:', e?.message || e));
     refreshPins();
   }, [activeTab]);
@@ -356,65 +371,56 @@ export default function AdminDashboardPage() {
     ? Math.round(students.reduce((acc, s) => acc + (s.avgScorePercentage || 0), 0) / students.length)
     : 0;
 
-  // Student Access Controls
-  const handleGrantAccess = (targetStudent: AdminStudentDetail | null, phoneOverride?: string, nameOverride?: string) => {
+  // Student Access Controls (100% Real Supabase Sync)
+  const handleGrantAccess = async (targetStudent: AdminStudentDetail | null, phoneOverride?: string, nameOverride?: string) => {
     const expiry = new Date();
     expiry.setDate(expiry.getDate() + grantDurationDays);
 
-    let updated: AdminStudentDetail[];
-    if (targetStudent) {
-      updated = students.map(s => {
-        if (s.id === targetStudent.id) {
-          return {
-            ...s,
-            accessType: 'Full Pass',
-            accessExpiresAt: expiry.toISOString(),
-            lastActive: 'Just now'
-          };
-        }
-        return s;
+    const phone = (targetStudent ? targetStudent.phone : (phoneOverride || customPhoneInput)).trim().replace(/\s+/g, '');
+    const name = (targetStudent ? targetStudent.name : (nameOverride || customNameInput)).trim() || 'Direct Paid Student';
+    if (!phone) return;
+
+    try {
+      await fetch('/api/students', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          phone,
+          name,
+          accessType: 'Full Pass',
+          accessExpiresAt: expiry.toISOString(),
+        })
       });
-    } else {
-      const phone = (phoneOverride || customPhoneInput).trim();
-      const name = (nameOverride || customNameInput).trim() || 'Direct Paid Student';
-      if (!phone) return;
-      
-      const newEntry: AdminStudentDetail = {
-        id: `st-${Date.now()}`,
-        phone,
-        name,
-        level: 'JHS 3',
-        accessType: 'Full Pass',
-        accessExpiresAt: expiry.toISOString(),
-        lastActive: 'Just now',
-        topicsCompleted: 0,
-        avgScorePercentage: 0,
-        registeredAt: new Date().toISOString()
-      };
-      updated = [newEntry, ...students];
+      await loadRealStudents();
+    } catch (e) {
+      console.warn('Error granting access:', e);
     }
 
-    setStudents(updated);
-    saveStudents(updated);
     setShowGrantModal(false);
     setSelectedStudentForAccess(null);
     setCustomPhoneInput('');
     setCustomNameInput('');
   };
 
-  const handleRevokeAccess = (studentId: string) => {
-    const updated = students.map(s => {
-      if (s.id === studentId) {
-        return {
-          ...s,
-          accessType: 'Expired' as const,
+  const handleRevokeAccess = async (studentId: string) => {
+    const target = students.find(s => s.id === studentId);
+    if (!target) return;
+
+    try {
+      await fetch('/api/students', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          phone: target.phone,
+          name: target.name,
+          accessType: 'Expired',
           accessExpiresAt: new Date().toISOString()
-        };
-      }
-      return s;
-    });
-    setStudents(updated);
-    saveStudents(updated);
+        })
+      });
+      await loadRealStudents();
+    } catch (e) {
+      console.warn('Error revoking access:', e);
+    }
   };
 
 
@@ -676,7 +682,7 @@ export default function AdminDashboardPage() {
                   {trafficData.dailyVisitors.toLocaleString()}
                 </span>
                 <span className="text-[11px] text-emerald-600 font-medium mt-1 inline-flex items-center gap-0.5">
-                  <TrendingUp className="w-3 h-3" /> +14.2% vs yesterday
+                  <TrendingUp className="w-3 h-3" /> Live traffic stream
                 </span>
               </div>
 
@@ -685,7 +691,9 @@ export default function AdminDashboardPage() {
                 <span className="text-2xl font-semibold text-slate-900 mt-1 block font-mono">
                   {trafficData.totalPageViews.toLocaleString()}
                 </span>
-                <span className="text-[11px] text-slate-500 mt-1 block">17.3 views/visitor</span>
+                <span className="text-[11px] text-slate-500 mt-1 block font-mono">
+                  {(trafficData.totalPageViews / Math.max(1, trafficData.dailyVisitors)).toFixed(1)} views/visitor
+                </span>
               </div>
 
               <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
@@ -728,30 +736,35 @@ export default function AdminDashboardPage() {
               </div>
 
               <div className="grid grid-cols-7 gap-3 items-end h-44 pt-6 pb-2 border-b border-slate-100">
-                {trafficData.dailyTrend.map((day, idx) => (
-                  <div key={idx} className="flex flex-col items-center gap-2 h-full justify-end group">
-                    <div className="text-[10px] text-slate-400 opacity-0 group-hover:opacity-100 transition font-mono">
-                      {day.visitors}
+                {trafficData.dailyTrend.map((day, idx) => {
+                  const maxTrendVisitors = Math.max(...trafficData.dailyTrend.map(d => d.visitors), 1);
+                  const maxTrendQuizzes = Math.max(...trafficData.dailyTrend.map(d => d.quizAttempts), 1);
+
+                  return (
+                    <div key={idx} className="flex flex-col items-center gap-2 h-full justify-end group">
+                      <div className="text-[10px] text-slate-400 opacity-0 group-hover:opacity-100 transition font-mono">
+                        {day.visitors}
+                      </div>
+                      <div className="w-full max-w-[28px] flex items-end gap-1 h-full">
+                        {/* Visitors Bar */}
+                        <div 
+                          className="flex-1 bg-slate-900 rounded-t transition-all group-hover:bg-slate-700"
+                          style={{ height: `${Math.max(day.visitors > 0 ? 10 : 0, (day.visitors / maxTrendVisitors) * 100)}%` }}
+                          title={`Visitors: ${day.visitors}`}
+                        ></div>
+                        {/* Quiz Attempts Bar */}
+                        <div 
+                          className="flex-1 bg-blue-500 rounded-t transition-all group-hover:bg-blue-600"
+                          style={{ height: `${Math.max(day.quizAttempts > 0 ? 10 : 0, (day.quizAttempts / maxTrendQuizzes) * 100)}%` }}
+                          title={`Quiz Attempts: ${day.quizAttempts}`}
+                        ></div>
+                      </div>
+                      <span className="text-[11px] font-medium text-slate-500 truncate w-full text-center">
+                        {day.date.replace(' (Today)', '')}
+                      </span>
                     </div>
-                    <div className="w-full max-w-[28px] flex items-end gap-1 h-full">
-                      {/* Visitors Bar */}
-                      <div 
-                        className="flex-1 bg-slate-900 rounded-t transition-all group-hover:bg-slate-700"
-                        style={{ height: `${(day.visitors / 1800) * 100}%` }}
-                        title={`Visitors: ${day.visitors}`}
-                      ></div>
-                      {/* Quiz Attempts Bar */}
-                      <div 
-                        className="flex-1 bg-blue-500 rounded-t transition-all group-hover:bg-blue-600"
-                        style={{ height: `${(day.quizAttempts / 800) * 100}%` }}
-                        title={`Quiz Attempts: ${day.quizAttempts}`}
-                      ></div>
-                    </div>
-                    <span className="text-[11px] font-medium text-slate-500 truncate w-full text-center">
-                      {day.date.replace(' (Today)', '')}
-                    </span>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
@@ -1138,11 +1151,11 @@ export default function AdminDashboardPage() {
               </div>
 
               <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
-                <span className="text-xs text-slate-500 font-medium">Platform Quiz Pass Rate</span>
+                <span className="text-xs text-slate-500 font-medium">Candidate Average Score</span>
                 <span className="text-2xl font-semibold text-emerald-700 mt-1 block font-mono">
-                  78.4%
+                  {overallAvgScore}%
                 </span>
-                <span className="text-[11px] text-slate-500 mt-1 block">Scoring ≥60% standard</span>
+                <span className="text-[11px] text-slate-500 mt-1 block">Real diagnostic candidate average</span>
               </div>
 
               <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
@@ -1160,19 +1173,25 @@ export default function AdminDashboardPage() {
               <div className="space-y-3">
                 {CURRICULUM_SUBJECTS.map((subj) => {
                   const subjectTopics = JHS_CURRICULUM_TOPICS.filter(t => t.subjectId === subj.id);
-                  const completionPercentage = Math.min(100, Math.floor(65 + (subj.displayOrder * 3.5)));
+                  const completedInSubject = students.reduce((acc, s) => {
+                    const count = (s.completedTopicIds || []).filter((tid: string) => subjectTopics.some(st => st.id === tid)).length;
+                    return acc + count;
+                  }, 0);
+                  const maxPossible = Math.max(1, students.length * subjectTopics.length);
+                  const completionPercentage = Math.round((completedInSubject / maxPossible) * 100);
+
                   return (
                     <div key={subj.id} className="space-y-1">
                       <div className="flex items-center justify-between text-xs">
                         <span className="font-medium text-slate-800">{subj.name}</span>
                         <span className="text-slate-500 font-mono">
-                          {subjectTopics.length} Topics • {completionPercentage}% completion
+                          {completedInSubject} completions • {subjectTopics.length} Topics ({completionPercentage}%)
                         </span>
                       </div>
                       <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                         <div 
-                          className="h-full bg-slate-900 rounded-full" 
-                          style={{ width: `${completionPercentage}%` }}
+                          className="h-full bg-slate-900 rounded-full transition-all" 
+                          style={{ width: `${Math.max(completedInSubject > 0 ? 6 : 0, completionPercentage)}%` }}
                         ></div>
                       </div>
                     </div>

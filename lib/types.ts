@@ -197,6 +197,7 @@ export interface AdminStudentDetail {
   accessExpiresAt?: string;
   lastActive: string;
   topicsCompleted: number;
+  completedTopicIds?: string[];
   avgScorePercentage: number;
   registeredAt: string;
 }

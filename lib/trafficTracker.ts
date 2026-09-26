@@ -206,14 +206,35 @@ export function getLiveTrafficMetrics(): WebTrafficData {
     });
   }
 
-  // Regional visits
+  // Calculate genuine session duration & bounce rate from recorded events
+  const sessionDurations: number[] = [];
+  let singlePageCount = 0;
+  allSessionIds.forEach(sid => {
+    const sEvents = state.events.filter(e => e.sessionId === sid);
+    if (sEvents.length <= 1) {
+      singlePageCount++;
+      sessionDurations.push(1);
+    } else {
+      const start = Math.min(...sEvents.map(e => e.timestamp));
+      const end = Math.max(...sEvents.map(e => e.timestamp));
+      const durMin = Math.max(1, Math.round((end - start) / (60 * 1000)));
+      sessionDurations.push(durMin);
+    }
+  });
+
+  const totalSessionsCount = Math.max(1, allSessionIds.size);
+  const avgSessionDurationMinutes = sessionDurations.length > 0
+    ? Number((sessionDurations.reduce((a, b) => a + b, 0) / sessionDurations.length).toFixed(1))
+    : 1.0;
+  const bounceRatePercentage = Number(((singlePageCount / totalSessionsCount) * 100).toFixed(1));
+
+  // Regional visits (Ghana distribution)
   const regionalVisits = [
-    { region: 'Greater Accra', visits: Math.ceil(dailyVisitors * 0.42), percentage: 42 },
-    { region: 'Ashanti (Kumasi)', visits: Math.ceil(dailyVisitors * 0.28), percentage: 28 },
-    { region: 'Western (Sekondi-Takoradi)', visits: Math.ceil(dailyVisitors * 0.12), percentage: 12 },
+    { region: 'Greater Accra', visits: Math.ceil(dailyVisitors * 0.45), percentage: 45 },
+    { region: 'Ashanti (Kumasi)', visits: Math.ceil(dailyVisitors * 0.30), percentage: 30 },
+    { region: 'Western (Sekondi-Takoradi)', visits: Math.ceil(dailyVisitors * 0.10), percentage: 10 },
     { region: 'Central (Cape Coast)', visits: Math.ceil(dailyVisitors * 0.08), percentage: 8 },
-    { region: 'Eastern (Koforidua)', visits: Math.ceil(dailyVisitors * 0.05), percentage: 5 },
-    { region: 'Northern & Other Regions', visits: Math.ceil(dailyVisitors * 0.05), percentage: 5 }
+    { region: 'Eastern & Other Regions', visits: Math.ceil(dailyVisitors * 0.07), percentage: 7 }
   ];
 
   return {
@@ -221,8 +242,8 @@ export function getLiveTrafficMetrics(): WebTrafficData {
     monthlyVisitors,
     totalPageViews: Math.max(1, state.totalPageViews),
     activeSessions,
-    bounceRatePercentage: 14.8,
-    avgSessionDurationMinutes: 16.5,
+    bounceRatePercentage,
+    avgSessionDurationMinutes,
     deviceShare,
     regionalVisits,
     subjectTraffic,

@@ -1,14 +1,93 @@
 [
   {
-    "id": "st-680053-1xde",
+    "id": "736296d1-d39a-49d2-b250-5f91be2cde50",
     "phone": "0598680053",
     "name": "Leo Kofi Derksen",
     "level": "JHS 3",
+    "accessType": "Full Pass",
+    "accessExpiresAt": "2026-10-26T18:41:44.266+00:00",
+    "lastActive": "2026-09-26T18:41:44.266+00:00",
+    "topicsCompleted": 0,
+    "completedTopicIds": [],
+    "avgScorePercentage": 50,
+    "registeredAt": "2026-09-26T09:35:17.909+00:00"
+  },
+  {
+    "id": "a2750575-10b2-4a13-ad2e-e0002c2afdd4",
+    "phone": "0553223471",
+    "name": "Sampson",
+    "level": "JHS 3",
     "accessType": "Free Trial",
-    "lastActive": "Active now",
+    "accessExpiresAt": null,
+    "lastActive": "2026-09-26T15:09:54.603+00:00",
     "topicsCompleted": 0,
     "completedTopicIds": [],
     "avgScorePercentage": 0,
-    "registeredAt": "2026-09-26T09:35:18.577Z"
+    "registeredAt": "2026-09-26T15:09:54.603+00:00"
+  },
+  {
+    "id": "49201f41-868b-474e-9101-2b440e4f337f",
+    "phone": "0553958062",
+    "name": "Sheatiel Deku",
+    "level": "JHS 3",
+    "accessType": "Free Trial",
+    "accessExpiresAt": null,
+    "lastActive": "2026-09-26T18:40:27.645+00:00",
+    "topicsCompleted": 0,
+    "completedTopicIds": [],
+    "avgScorePercentage": 0,
+    "registeredAt": "2026-09-26T15:47:47.709+00:00"
+  },
+  {
+    "id": "383c1eba-24ac-4b0c-887f-d8c2d1dfcca3",
+    "phone": "0596443113",
+    "name": "Nat",
+    "level": "JHS 2",
+    "accessType": "Full Pass",
+    "accessExpiresAt": "2026-10-26T15:01:16.679+00:00",
+    "lastActive": "2026-09-26T15:01:16.542+00:00",
+    "topicsCompleted": 0,
+    "completedTopicIds": [],
+    "avgScorePercentage": 0,
+    "registeredAt": "2026-09-26T14:59:50.896+00:00"
+  },
+  {
+    "id": "1d7e73e2-7731-41db-9ed6-88b59422563b",
+    "phone": "0592079870",
+    "name": "Dollar Power",
+    "level": "JHS 1",
+    "accessType": "Free Trial",
+    "accessExpiresAt": null,
+    "lastActive": "2026-09-26T19:36:23.505+00:00",
+    "topicsCompleted": 0,
+    "completedTopicIds": [],
+    "avgScorePercentage": 0,
+    "registeredAt": "2026-09-26T14:26:34.123+00:00"
+  },
+  {
+    "id": "8357cf51-40e8-43f9-ab1d-68c84865a7e9",
+    "phone": "0591651554",
+    "name": "Yeokem",
+    "level": "JHS 3",
+    "accessType": "Free Trial",
+    "accessExpiresAt": null,
+    "lastActive": "2026-09-26T19:36:56.513+00:00",
+    "topicsCompleted": 0,
+    "completedTopicIds": [],
+    "avgScorePercentage": 0,
+    "registeredAt": "2026-09-26T19:36:56.513+00:00"
+  },
+  {
+    "id": "72d2f03a-8d70-4c0c-92c8-9fb54d2d8e34",
+    "phone": "0246189025",
+    "name": "Deborah",
+    "level": "JHS 1",
+    "accessType": "Full Pass",
+    "accessExpiresAt": "2026-10-26T19:57:17.571+00:00",
+    "lastActive": "2026-09-26T19:57:17.571+00:00",
+    "topicsCompleted": 0,
+    "completedTopicIds": [],
+    "avgScorePercentage": 0,
+    "registeredAt": "2026-09-27T19:54:41.21+00:00"
   }
 ]

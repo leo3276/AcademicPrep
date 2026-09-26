@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     const email = (body.email && typeof body.email === 'string' && body.email.includes('@'))
       ? body.email.trim()
       : `${phoneNumber}@academicprep.com`;
-    const amountPesewas = 2000; // GHS 20.00 / month
+    const amountPesewas = 2500; // GHS 25.00 / month
 
     const paystackRes = await fetch('https://api.paystack.co/transaction/initialize', {
       method: 'POST',

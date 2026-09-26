@@ -1,7 +1,7 @@
 'use client';
 
-export const PAYSTACK_VIP_PRICE_GHS = 20;
-export const PAYSTACK_VIP_AMOUNT_PESEWAS = 2000; // GHS 20.00 / month in pesewas
+export const PAYSTACK_VIP_PRICE_GHS = 25;
+export const PAYSTACK_VIP_AMOUNT_PESEWAS = 2500; // GHS 25.00 / month in pesewas
 export const PAYSTACK_PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || 'pk_live_f09af5e82872d14a47d3029faab6257483e8d2c7';
 
 /**

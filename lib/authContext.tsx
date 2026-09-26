@@ -68,60 +68,8 @@ const STORAGE_KEYS = {
   EXAM_ATTEMPTS: 'academicprep_exam_attempts',
 };
 
-const DEFAULT_PINS: AccessPin[] = [
-  {
-    id: 'pin-1001',
-    pinCode: 'PREP-8842-9901',
-    batchId: 'BATCH-JHS-01',
-    priceGhs: 25.00,
-    validityDays: 30,
-    status: 'ACTIVE',
-    createdAt: '2026-09-24T10:00:00.000Z',
-  },
-  {
-    id: 'pin-1002',
-    pinCode: 'PREP-4412-3321',
-    batchId: 'BATCH-JHS-01',
-    priceGhs: 25.00,
-    validityDays: 30,
-    status: 'ACTIVE',
-    createdAt: '2026-09-24T10:00:00.000Z',
-  },
-  {
-    id: 'pin-1003',
-    pinCode: 'PREP-9904-7712',
-    batchId: 'BATCH-JHS-01',
-    priceGhs: 25.00,
-    validityDays: 30,
-    status: 'REDEEMED',
-    redeemedAt: '2026-09-23T10:00:00.000Z',
-    createdAt: '2026-09-22T10:00:00.000Z',
-  },
-];
-
-const DEFAULT_TRANSACTIONS: CashFlowTransaction[] = [
-  {
-    id: 'tx-2001',
-    reference: 'REF-MOMO-88392',
-    studentPhone: '0241234567',
-    amountGhs: 25.00,
-    transactionType: 'PIN_PURCHASE',
-    paymentMethod: 'MTN Mobile Money',
-    pinCodeUsed: 'PREP-9904-7712',
-    description: '30-Day Full JHS Access Pass',
-    createdAt: '2026-09-23T10:00:00.000Z',
-  },
-  {
-    id: 'tx-2002',
-    reference: 'REF-MOMO-77123',
-    studentPhone: '0559876543',
-    amountGhs: 25.00,
-    transactionType: 'PIN_PURCHASE',
-    paymentMethod: 'Telecel Cash',
-    description: '30-Day Full JHS Access Pass',
-    createdAt: '2026-09-22T10:00:00.000Z',
-  },
-];
+const DEFAULT_PINS: AccessPin[] = [];
+const DEFAULT_TRANSACTIONS: CashFlowTransaction[] = [];
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -264,6 +212,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             if (Array.isArray(serverPins) && serverPins.length > 0 && isMounted) {
               setPins(serverPins);
               localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(serverPins));
+
+              // Derive genuine transactions from real redeemed vouchers & Paystack payments
+              const redeemedPins = serverPins.filter((p: any) => p.status === 'REDEEMED');
+              const realTxs: CashFlowTransaction[] = redeemedPins.map((p: any) => {
+                const isPaystack = p.batchId === 'BATCH-PAYSTACK-MOMO' || p.batch_id === 'BATCH-PAYSTACK-MOMO' || (p.pinCode || p.pin_code || '').includes('MOMO');
+                return {
+                  id: `tx-${p.id}`,
+                  reference: p.pinCode || p.pin_code || `REF-${p.id.slice(-6)}`,
+                  studentPhone: p.redeemedByStudentId || p.redeemed_by_student_phone || 'Verified Student',
+                  amountGhs: Number(p.priceGhs || p.price_ghs || 25),
+                  transactionType: 'PIN_PURCHASE',
+                  paymentMethod: isPaystack ? 'Paystack Mobile Money' : 'Scratch-Card / PIN Voucher',
+                  pinCodeUsed: p.pinCode || p.pin_code,
+                  description: `${p.validityDays || p.validity_days || 30}-Day Full JHS Access Pass`,
+                  createdAt: p.redeemedAt || p.redeemed_at || p.createdAt || p.created_at || new Date().toISOString()
+                };
+              });
+
+              setTransactions(realTxs);
+              localStorage.setItem(STORAGE_KEYS.TRANSACTIONS, JSON.stringify(realTxs));
             }
           }
         } catch (e: any) {
@@ -273,10 +241,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const storedTxs = localStorage.getItem(STORAGE_KEYS.TRANSACTIONS);
         if (storedTxs) {
           try {
-            if (isMounted) setTransactions(JSON.parse(storedTxs));
+            const parsed = JSON.parse(storedTxs);
+            if (Array.isArray(parsed) && isMounted) {
+              const cleaned = parsed.filter((t: any) => t.studentPhone !== '0241234567' && t.studentPhone !== '0559876543');
+              setTransactions(cleaned);
+            }
           } catch {}
-        } else {
-          localStorage.setItem(STORAGE_KEYS.TRANSACTIONS, JSON.stringify(DEFAULT_TRANSACTIONS));
         }
       } catch {
         // Graceful fallback for SSR or restricted storage
@@ -876,9 +846,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const res = await fetch('/api/pins');
       if (res.ok) {
         const serverPins = await res.json();
-        if (Array.isArray(serverPins) && serverPins.length > 0) {
+        if (Array.isArray(serverPins)) {
           setPins(serverPins);
           localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(serverPins));
+
+          const redeemedPins = serverPins.filter((p: any) => p.status === 'REDEEMED');
+          const realTxs: CashFlowTransaction[] = redeemedPins.map((p: any) => {
+            const isPaystack = p.batchId === 'BATCH-PAYSTACK-MOMO' || p.batch_id === 'BATCH-PAYSTACK-MOMO' || (p.pinCode || p.pin_code || '').includes('MOMO');
+            return {
+              id: `tx-${p.id}`,
+              reference: p.pinCode || p.pin_code || `REF-${p.id.slice(-6)}`,
+              studentPhone: p.redeemedByStudentId || p.redeemed_by_student_phone || 'Customer',
+              amountGhs: Number(p.priceGhs || p.price_ghs || 25),
+              transactionType: 'PIN_PURCHASE',
+              paymentMethod: isPaystack ? 'Paystack Mobile Money' : 'Scratch-Card / PIN Voucher',
+              pinCodeUsed: p.pinCode || p.pin_code,
+              description: `${p.validityDays || p.validity_days || 30}-Day Full JHS Access Pass`,
+              createdAt: p.redeemedAt || p.redeemed_at || p.createdAt || p.created_at || new Date().toISOString()
+            };
+          });
+
+          setTransactions(realTxs);
+          localStorage.setItem(STORAGE_KEYS.TRANSACTIONS, JSON.stringify(realTxs));
         }
       }
     } catch (e: any) {
@@ -898,8 +887,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     return {
-      totalStudents: 8250, // Representative of the 8,000+ WhatsApp student base
-      activeToday: 640,
+      totalStudents: 0,
+      activeToday: 0,
       totalCashFlowGhs: totalCash,
       activePinsCount: activePins,
       totalQuizzesTaken: totalQuizzes,

@@ -35,33 +35,9 @@ export const DEFAULT_TRAFFIC_DATA: WebTrafficData = {
 };
 
 // ==========================================
-// 1. INITIAL BASELINE STUDENTS
+// 1. INITIAL BASELINE STUDENTS (100% REAL FROM SUPABASE DATABASE)
 // ==========================================
-export const INITIAL_STUDENTS: AdminStudentDetail[] = [
-  {
-    id: 'st-01',
-    phone: '0241234567',
-    name: 'Kwame Mensah',
-    level: 'JHS 3',
-    accessType: 'Full Pass',
-    accessExpiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-    lastActive: 'Active today',
-    topicsCompleted: 12,
-    avgScorePercentage: 85,
-    registeredAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: 'st-02',
-    phone: '0559876543',
-    name: 'Ama Serwaa',
-    level: 'JHS 3',
-    accessType: 'Free Trial',
-    lastActive: 'Active recently',
-    topicsCompleted: 3,
-    avgScorePercentage: 70,
-    registeredAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-];
+export const INITIAL_STUDENTS: AdminStudentDetail[] = [];
 
 // ==========================================
 // 2. TRIAL QUESTIONS / MOCK EXAMS (EMPTY BY DEFAULT - ADMIN UPLOADS ONLY)
@@ -86,43 +62,21 @@ export function saveTrafficData(data: WebTrafficData): void {
 }
 
 export function getStoredStudents(): AdminStudentDetail[] {
-  if (typeof window === 'undefined') return INITIAL_STUDENTS;
+  if (typeof window === 'undefined') return [];
   try {
     const raw = localStorage.getItem(ADMIN_STORAGE_KEYS.STUDENT_LIST);
     if (raw) {
       const parsed: AdminStudentDetail[] = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
+        // Filter out dummy mock numbers from previous local testing
+        return parsed.filter(s => s.phone !== '0241234567' && s.phone !== '0559876543' && s.phone !== '0240000000');
       }
     }
   } catch {
     // fallback
   }
 
-  // Check if current user is logged in
-  try {
-    const studentRaw = localStorage.getItem('academicprep_student');
-    if (studentRaw) {
-      const s = JSON.parse(studentRaw);
-      const studentEntry: AdminStudentDetail = {
-        id: s.id || 'st-curr',
-        phone: s.phoneNumber || '0240000000',
-        name: s.fullName || 'Registered Student',
-        level: s.currentLevel || 'JHS 1',
-        accessType: s.hasFullAccess ? 'Full Pass' : 'Free Trial',
-        accessExpiresAt: s.accessExpiresAt,
-        lastActive: 'Active now',
-        topicsCompleted: 0,
-        avgScorePercentage: 0,
-        registeredAt: s.createdAt || new Date().toISOString()
-      };
-      return [studentEntry, ...INITIAL_STUDENTS];
-    }
-  } catch {
-    // fallback
-  }
-
-  return INITIAL_STUDENTS;
+  return [];
 }
 
 export function saveStudents(students: AdminStudentDetail[]): void {

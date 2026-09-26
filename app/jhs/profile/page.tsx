@@ -338,7 +338,7 @@ export default function StudentProfilePage() {
                   className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-xs shadow-md shadow-amber-500/20 transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-amber-200" />
-                  <span>{student.accessType === 'Expired' ? 'Renew VIP Pass (GHS 20/mo MoMo)' : 'Buy VIP Pass (GHS 20/mo MoMo)'}</span>
+                  <span>{student.accessType === 'Expired' ? 'Renew VIP Pass (GHS 25/mo MoMo)' : 'Buy VIP Pass (GHS 25/mo MoMo)'}</span>
                 </button>
               )}
               <button
@@ -377,7 +377,7 @@ export default function StudentProfilePage() {
                 </h3>
                 <p className="text-xs text-amber-900/80 mt-0.5">
                   {student.accessType === 'Expired'
-                    ? 'Your 30-day VIP pass has expired. Renew for GH₵ 20/mo via Mobile Money or enter an Access PIN to restore full unlimited access.'
+                    ? 'Your 30-day VIP pass has expired. Renew for GH₵ 25/mo via Mobile Money or enter an Access PIN to restore full unlimited access.'
                     : <>You have <b>{remainingFreeTopics} free {remainingFreeTopics === 1 ? 'topic' : 'topics'}</b> remaining. Once the 4th topic is triggered, an Access PIN is required to continue.</>}
                 </p>
               </div>
