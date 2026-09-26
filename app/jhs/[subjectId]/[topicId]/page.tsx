@@ -23,13 +23,13 @@ import {
   ChevronRight, 
   X,
   PlayCircle,
-  FileText
+  FileText,
+  Lock
 } from 'lucide-react';
 
 export default function DetailedTopicLessonPage() {
   const params = useParams();
-  const router = useRouter();
-  const { student, topicProgress, redeemPin } = useAuth();
+  const { student, topicProgress, redeemPin, canAccessTopic } = useAuth();
 
   const [mounted, setMounted] = useState(false);
   const [activeSectionTab, setActiveSectionTab] = useState<'notes' | 'video' | 'examples'>('notes');
@@ -105,9 +105,84 @@ export default function DetailedTopicLessonPage() {
 
   const isCompleted = mounted && topicProgress[topic.id]?.completed;
   const bestScore = mounted ? topicProgress[topic.id]?.bestScorePercentage : undefined;
-  const isVipLocked = mounted && !student?.hasFullAccess && (topic.isVip || !topic.isFreeTrial);
+
+  // 3-Topic Free Limit Access Check
+  const accessCheck = mounted ? canAccessTopic(topic.id) : { allowed: true, topicsUsed: 0, maxFreeTopics: 3 };
+  if (!accessCheck.allowed) {
+    return (
+      <div className="max-w-2xl mx-auto px-4 py-16 text-center space-y-6">
+        <div className="p-8 rounded-3xl bg-white border border-amber-200 shadow-xl space-y-5">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-600 text-white flex items-center justify-center mx-auto shadow-md shadow-amber-500/30">
+            <Lock className="w-8 h-8" />
+          </div>
+
+          <div className="space-y-2">
+            <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-200">
+              Free Trial Limit Reached (3 of 3 Topics Used)
+            </span>
+            <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">
+              {topic.title}
+            </h1>
+            <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
+              {accessCheck.reason || 'You have completed your 3 free trial topics across all subjects. To unlock this 4th topic and the full curriculum, please enter or buy an Access PIN.'}
+            </p>
+          </div>
+
+          {/* Quick PIN Redemption Form */}
+          <form onSubmit={handleRedeemPin} className="space-y-3 pt-2">
+            <div className="text-left">
+              <label className="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">
+                Enter Your Access PIN Code
+              </label>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <input
+                  type="text"
+                  placeholder="e.g. PREP-8842-9901"
+                  value={pinInput}
+                  onChange={(e) => setPinInput(e.target.value.toUpperCase())}
+                  className="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 font-mono text-center tracking-widest text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 uppercase text-sm"
+                  autoFocus
+                />
+                <button
+                  type="submit"
+                  disabled={pinLoading || !pinInput.trim()}
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 disabled:bg-slate-300 text-white font-bold text-xs transition-all shadow-md shadow-amber-500/20 flex items-center justify-center gap-1.5 whitespace-nowrap"
+                >
+                  {pinLoading ? 'Verifying...' : 'Unlock Lesson Now'}
+                </button>
+              </div>
+            </div>
+
+            {pinFeedback && (
+              <div className={`p-3 rounded-xl text-xs font-medium ${pinFeedback.success ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
+                {pinFeedback.text}
+              </div>
+            )}
+          </form>
+
+          <div className="pt-2 border-t border-slate-100 flex items-center justify-center gap-4 text-xs font-semibold">
+            <Link
+              href={`/jhs/${subject.id}?level=${encodeURIComponent(topic.level)}`}
+              className="text-slate-600 hover:text-slate-900 flex items-center gap-1"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              Return to Subject Topics
+            </Link>
+            <span className="text-slate-300">•</span>
+            <Link
+              href="/jhs/profile"
+              className="text-blue-600 hover:text-blue-700"
+            >
+              Go to Profile Dashboard
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const notes = topic.detailedNotes;
+  const isVipLocked = false;
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">

@@ -36,14 +36,18 @@ import {
   ShieldCheck,
   ChevronRight,
   TrendingUp,
-  BarChart3
+  BarChart3,
+  Lock,
+  KeyRound
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import AccessPinModal from '@/components/AccessPinModal';
 
 export default function WeeklyExamPage() {
   const { student, topicProgress } = useAuth();
   const [mounted, setMounted] = useState(false);
   const [currentLevel, setCurrentLevel] = useState<EducationLevel>(student?.currentLevel || 'JHS 1');
+  const [isPinModalOpen, setIsPinModalOpen] = useState(false);
 
   // Examination Lifecycle States
   // 'dashboard' -> 'exam_paper1' -> 'exam_paper2' -> 'grading_review' -> 'results'
@@ -134,6 +138,10 @@ export default function WeeklyExamPage() {
 
   // Start Exam
   const handleStartExam = () => {
+    if (!student?.hasFullAccess) {
+      setIsPinModalOpen(true);
+      return;
+    }
     const pkg = generateAdaptiveWeeklyExam(currentLevel);
     setExamPackage(pkg);
     setPaper1CurrentIdx(0);
@@ -335,6 +343,32 @@ export default function WeeklyExamPage() {
               </p>
             </div>
 
+            {/* VIP Lock Notice */}
+            {mounted && !student?.hasFullAccess && (
+              <div className="mt-4 p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-950 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+                    <Lock className="w-5 h-5" />
+                  </div>
+                  <div className="space-y-0.5">
+                    <p className="text-xs font-bold text-amber-950">
+                      Weekly Adaptive Examination Requires VIP Access Pass
+                    </p>
+                    <p className="text-[11px] text-amber-800">
+                      Free accounts allow studying up to 3 curriculum topics. An Access PIN unlocks full CBT weekly examinations featuring timed objectives and theory marking rubrics.
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setIsPinModalOpen(true)}
+                  className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shrink-0 transition shadow-xs flex items-center justify-center gap-1.5"
+                >
+                  <KeyRound className="w-3.5 h-3.5" />
+                  <span>Enter PIN to Unlock</span>
+                </button>
+              </div>
+            )}
+
             {/* Exam Launch CTA */}
             <div className="mt-6 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
               <div className="space-y-1 text-xs text-slate-500">
@@ -347,10 +381,23 @@ export default function WeeklyExamPage() {
 
               <button
                 onClick={handleStartExam}
-                className="py-3 px-6 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition shadow-xs flex items-center justify-center gap-2 shrink-0 cursor-pointer"
+                className={`py-3 px-6 rounded-xl text-xs font-bold transition shadow-xs flex items-center justify-center gap-2 shrink-0 cursor-pointer ${
+                  !student?.hasFullAccess
+                    ? 'bg-amber-600 hover:bg-amber-700 text-white'
+                    : 'bg-slate-900 hover:bg-slate-800 text-white'
+                }`}
               >
-                <span>Launch Weekly Examination</span>
-                <ArrowRight className="w-4 h-4" />
+                {!student?.hasFullAccess ? (
+                  <>
+                    <Lock className="w-4 h-4" />
+                    <span>Unlock Weekly Exam (Enter PIN)</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Launch Weekly Examination</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
               </button>
             </div>
           </div>
@@ -515,6 +562,16 @@ export default function WeeklyExamPage() {
             )}
           </div>
         </main>
+
+        {/* Access PIN Paywall Modal */}
+        <AccessPinModal
+          isOpen={isPinModalOpen}
+          onClose={() => setIsPinModalOpen(false)}
+          featureName="Adaptive Weekly Examination"
+          onSuccess={() => {
+            setIsPinModalOpen(false);
+          }}
+        />
       </div>
     );
   }

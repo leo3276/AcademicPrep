@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/authContext';
 import { CURRICULUM_SUBJECTS, JHS_CURRICULUM_TOPICS } from '@/lib/curriculumData';
 import { EducationLevel } from '@/lib/types';
@@ -22,13 +23,15 @@ import {
   Trophy,
   GraduationCap,
   FileCheck,
-  FileText
+  FileText,
+  Lock
 } from 'lucide-react';
 import SubjectIcon from '@/components/SubjectIcon';
 import { fetchUploadedDocuments } from '@/lib/pdfStore';
 
 export default function JhsPortalPage() {
-  const { student, topicProgress } = useAuth();
+  const router = useRouter();
+  const { student, isLoading, topicProgress, getCompletedTopicsCount } = useAuth();
   const [selectedLevel, setSelectedLevel] = useState<EducationLevel>('JHS 1');
   const [mounted, setMounted] = useState(false);
   const [uploadedMocksCount, setUploadedMocksCount] = useState(0);
@@ -57,6 +60,12 @@ export default function JhsPortalPage() {
       }).catch(console.error);
     }
   }, [student]);
+
+  useEffect(() => {
+    if (mounted && !isLoading && !student) {
+      router.push('/login?redirect=/jhs');
+    }
+  }, [mounted, isLoading, student, router]);
 
   const handleLevelSelect = (lvl: EducationLevel) => {
     setSelectedLevel(lvl);
@@ -143,11 +152,14 @@ export default function JhsPortalPage() {
           </div>
 
           {!student?.hasFullAccess && (
-            <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200/80 text-[11px] text-amber-800 flex items-center justify-between">
+            <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200/80 text-[11px] text-amber-900 flex items-center justify-between">
               <span className="flex items-center gap-1.5">
-                <KeyRound className="w-3.5 h-3.5 text-amber-600" />
-                Free Trial: Topic 1 of each subject is unlocked.
+                <KeyRound className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                <span>Limited Free Access: {getCompletedTopicsCount()} of 3 topics used.</span>
               </span>
+              <Link href="/jhs/profile" className="font-bold underline text-amber-800 hover:text-amber-950 shrink-0">
+                Unlock VIP
+              </Link>
             </div>
           )}
         </div>

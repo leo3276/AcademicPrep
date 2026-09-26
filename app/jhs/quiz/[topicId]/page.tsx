@@ -21,14 +21,14 @@ import {
   Award,
   BookOpen,
   Lightbulb,
-  Target
+  Target,
+  Lock
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function TopicQuizPage() {
   const params = useParams();
-  const router = useRouter();
-  const { recordQuizScore, student, redeemPin } = useAuth();
+  const { recordQuizScore, student, redeemPin, canAccessTopic } = useAuth();
   
   const [mounted, setMounted] = useState(false);
   const [pinInput, setPinInput] = useState('');
@@ -111,26 +111,27 @@ export default function TopicQuizPage() {
     );
   }
 
-  // VIP Paywall check
-  const isVipLocked = mounted && !student?.hasFullAccess && (topic.isVip || !topic.isFreeTrial);
+  // 3-Topic Free Tier Check
+  const accessCheck = mounted ? canAccessTopic(topic.id) : { allowed: true, topicsUsed: 0, maxFreeTopics: 3 };
+  const isLocked = !accessCheck.allowed;
 
-  if (isVipLocked) {
+  if (isLocked) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-12">
         <div className="p-8 rounded-3xl bg-white border border-amber-200 shadow-xl space-y-6 text-center">
           <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-600 text-white flex items-center justify-center mx-auto shadow-lg shadow-amber-500/30">
-            <Crown className="w-8 h-8" />
+            <Lock className="w-8 h-8" />
           </div>
 
           <div className="space-y-2">
             <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-200">
-              VIP Pass Required
+              Free Trial Limit Reached (3 of 3 Topics Used)
             </span>
             <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">
               {quiz.title}
             </h1>
             <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
-              Topic diagnostic quizzes, timer-based exam simulation, and automated answer grading for <b>{topic.title}</b> are reserved for students with an active VIP Access Pass.
+              {accessCheck.reason || 'You have completed your 3 free trial topics across all subjects. To unlock this 4th topic and all 9 subjects, please enter or buy an Access PIN.'}
             </p>
           </div>
 

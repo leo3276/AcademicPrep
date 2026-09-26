@@ -80,7 +80,7 @@ export default function Navbar() {
               {/* Education Level Switcher */}
               <div className="hidden lg:flex items-center bg-slate-100 p-1 rounded-xl text-xs font-semibold shrink-0">
                 <Link 
-                  href="/jhs"
+                  href={student ? "/jhs" : "/login?redirect=/jhs"}
                   className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 whitespace-nowrap ${
                     pathname.startsWith('/jhs') || pathname === '/'
                       ? 'bg-white text-blue-700 shadow-sm font-bold'
@@ -102,9 +102,9 @@ export default function Navbar() {
             </div>
 
             {/* Navigation links & Actions */}
-            <div className="hidden md:flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-2.5">
               <Link
-                href="/jhs"
+                href={student ? "/jhs" : "/login?redirect=/jhs"}
                 className={`text-xs font-bold transition-colors whitespace-nowrap px-2.5 py-1.5 rounded-lg ${
                   pathname === '/jhs' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                 }`}
@@ -137,7 +137,7 @@ export default function Navbar() {
                 href="/jhs/weekly-exam"
                 className={`text-xs font-bold transition-colors flex items-center gap-1 px-3 py-1.5 rounded-xl whitespace-nowrap ${
                   pathname === '/jhs/weekly-exam' 
-                    ? 'bg-amber-100 text-amber-900' 
+                    ? 'bg-amber-100 text-amber-900 font-bold' 
                     : 'text-amber-800 bg-amber-50 hover:bg-amber-100'
                 }`}
               >
@@ -145,49 +145,60 @@ export default function Navbar() {
                 <span>Weekly Exam</span>
               </Link>
 
+              {student && (
+                <Link
+                  href="/jhs/profile"
+                  className={`text-xs font-bold transition-colors flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg whitespace-nowrap ${
+                    pathname === '/jhs/profile'
+                      ? 'text-blue-700 bg-blue-50 font-bold border border-blue-200'
+                      : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100'
+                  }`}
+                >
+                  <User className="w-3.5 h-3.5 text-blue-600" />
+                  <span>My Profile</span>
+                </Link>
+              )}
+
               <button
                 onClick={() => setPinModalOpen(true)}
                 className="text-xs font-bold px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-sm shadow-amber-500/20 transition-all flex items-center gap-1.5 whitespace-nowrap"
               >
                 <KeyRound className="w-3.5 h-3.5" />
                 <span>Redeem PIN</span>
-                <span className="text-[9px] bg-black/20 px-1 py-0.2 rounded font-black tracking-wider uppercase">VIP</span>
               </button>
 
-              <div className="h-5 w-px bg-slate-200 shrink-0 mx-1" />
+              <div className="h-5 w-px bg-slate-200 shrink-0 mx-0.5" />
 
               {/* Student Profile Pill */}
               {!mounted ? (
                 <div className="w-28 h-8 rounded-xl bg-slate-100 animate-pulse shrink-0" />
               ) : student ? (
-                <div className="flex items-center gap-2.5 pl-2 pr-1.5 py-1 rounded-xl bg-slate-50 border border-slate-200 shrink-0">
-                  <div className="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-xs">
-                    {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
-                  </div>
-                  <div className="flex flex-col text-left leading-tight shrink-0">
-                    <span className="text-xs font-bold text-slate-900 truncate max-w-[110px] whitespace-nowrap">
-                      {student.fullName}
-                    </span>
-                    <div className="flex items-center gap-1.5 mt-0.5 whitespace-nowrap">
-                      <span className="text-[10px] text-slate-600 font-bold whitespace-nowrap">
-                        {student.currentLevel}
-                      </span>
-                      <span className="text-[10px] text-slate-300">•</span>
-                      {student.hasFullAccess ? (
-                        <span className="text-[9px] font-bold text-emerald-800 bg-emerald-100 px-1.5 py-0.2 rounded-full inline-flex items-center gap-0.5 whitespace-nowrap">
-                          <CheckCircle2 className="w-2.5 h-2.5" /> Pass
-                        </span>
-                      ) : (
-                        <button
-                          onClick={() => setPinModalOpen(true)}
-                          title="Click to Redeem PIN & Upgrade"
-                          className="text-[9px] font-bold text-amber-800 bg-amber-100/90 hover:bg-amber-200 px-1.5 py-0.2 rounded-full whitespace-nowrap cursor-pointer transition-colors"
-                        >
-                          Free Mode
-                        </button>
-                      )}
+                <div className="flex items-center gap-2 pl-2 pr-1.5 py-1 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 shrink-0 transition">
+                  <Link href="/jhs/profile" className="flex items-center gap-2 text-left leading-tight shrink-0 group">
+                    <div className="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform">
+                      {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
                     </div>
-                  </div>
+                    <div className="flex flex-col text-left leading-tight shrink-0">
+                      <span className="text-xs font-bold text-slate-900 truncate max-w-[100px] whitespace-nowrap group-hover:text-blue-600">
+                        {student.fullName}
+                      </span>
+                      <div className="flex items-center gap-1.5 mt-0.5 whitespace-nowrap">
+                        <span className="text-[10px] text-slate-600 font-bold whitespace-nowrap">
+                          {student.currentLevel}
+                        </span>
+                        <span className="text-[10px] text-slate-300">•</span>
+                        {student.hasFullAccess ? (
+                          <span className="text-[9px] font-bold text-emerald-800 bg-emerald-100 px-1.5 py-0.2 rounded-full inline-flex items-center gap-0.5 whitespace-nowrap">
+                            <CheckCircle2 className="w-2.5 h-2.5" /> VIP Pass
+                          </span>
+                        ) : (
+                          <span className="text-[9px] font-bold text-amber-800 bg-amber-100/90 px-1.5 py-0.2 rounded-full whitespace-nowrap">
+                            {student.topicsCompletedCount || 0}/3 Free
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
                   <button
                     onClick={logoutStudent}
                     title="Sign Out"
@@ -198,11 +209,11 @@ export default function Navbar() {
                 </div>
               ) : (
                 <Link
-                  href="/login"
+                  href="/login?redirect=/jhs"
                   className="inline-flex items-center gap-1.5 text-xs font-bold px-3.5 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-sm shadow-blue-500/20 whitespace-nowrap"
                 >
                   <User className="w-3.5 h-3.5" />
-                  Student Login
+                  Create Account / Login
                 </Link>
               )}
             </div>
@@ -299,35 +310,49 @@ export default function Navbar() {
               {!mounted ? (
                 <div className="w-full h-10 rounded-xl bg-slate-100 animate-pulse" />
               ) : student ? (
-                <div className="flex items-center justify-between py-2">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center">
-                      {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-slate-900">{student.fullName}</p>
-                      <p className="text-[11px] text-slate-500 font-medium">
-                        {student.phoneNumber} • {student.currentLevel}
-                      </p>
-                    </div>
+                <div className="space-y-2 py-1">
+                  <div className="flex items-center justify-between">
+                    <Link
+                      href="/jhs/profile"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center gap-2"
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center">
+                        {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-slate-900">{student.fullName}</p>
+                        <p className="text-[11px] text-slate-500 font-medium">
+                          {student.phoneNumber} • {student.currentLevel}
+                        </p>
+                      </div>
+                    </Link>
+                    <button
+                      onClick={() => {
+                        logoutStudent();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="text-xs font-bold text-red-600 py-1.5 px-3 bg-red-50 rounded-lg hover:bg-red-100"
+                    >
+                      Logout
+                    </button>
                   </div>
-                  <button
-                    onClick={() => {
-                      logoutStudent();
-                      setMobileMenuOpen(false);
-                    }}
-                    className="text-xs font-bold text-red-600 py-1.5 px-3 bg-red-50 rounded-lg hover:bg-red-100"
+                  <Link
+                    href="/jhs/profile"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full py-2 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold flex items-center justify-center gap-1.5"
                   >
-                    Logout
-                  </button>
+                    <User className="w-3.5 h-3.5 text-blue-600" />
+                    <span>View Student Profile & Leaderboard</span>
+                  </Link>
                 </div>
               ) : (
                 <Link
-                  href="/login"
+                  href="/login?redirect=/jhs"
                   onClick={() => setMobileMenuOpen(false)}
                   className="w-full block text-center py-2.5 rounded-xl bg-blue-600 text-white font-bold text-xs shadow-md"
                 >
-                  Student Login (Phone + PIN)
+                  Create Student Account / Sign In
                 </Link>
               )}
             </div>

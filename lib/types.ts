@@ -10,7 +10,10 @@ export interface Student {
   fullName: string;
   currentLevel: EducationLevel;
   hasFullAccess: boolean;
+  accessType?: 'Full Pass' | 'Free Trial' | 'Expired';
   accessExpiresAt?: string;
+  completedTopicIds?: string[];
+  topicsCompletedCount?: number;
   createdAt: string;
   lastActiveAt: string;
 }

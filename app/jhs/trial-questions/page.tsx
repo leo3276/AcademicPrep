@@ -24,14 +24,27 @@ import {
   Sparkles,
   BookOpen,
   RefreshCw,
-  Info
+  Info,
+  Lock,
+  KeyRound
 } from 'lucide-react';
+import AccessPinModal from '@/components/AccessPinModal';
 
 export default function TrialQuestionsPage() {
   const { student } = useAuth();
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
   const [documents, setDocuments] = useState<UploadedPdfDocument[]>([]);
+  const [isPinModalOpen, setIsPinModalOpen] = useState(false);
+  const [selectedDocForPin, setSelectedDocForPin] = useState<UploadedPdfDocument | null>(null);
+
+  const handleDocumentAction = (e: React.MouseEvent, doc: UploadedPdfDocument) => {
+    if (!student?.hasFullAccess) {
+      e.preventDefault();
+      setSelectedDocForPin(doc);
+      setIsPinModalOpen(true);
+    }
+  };
 
   // Filters
   const [searchQuery, setSearchQuery] = useState('');
@@ -235,6 +248,35 @@ export default function TrialQuestionsPage() {
           </div>
         </div>
 
+        {/* VIP Lock Banner for Free Tier */}
+        {mounted && !student?.hasFullAccess && (
+          <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-950 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+                <Lock className="w-5 h-5" />
+              </div>
+              <div className="space-y-0.5">
+                <p className="text-xs font-bold text-amber-950">
+                  Trial Mock Exam Booklets Require VIP Access Pass
+                </p>
+                <p className="text-[11px] text-amber-800">
+                  Free accounts allow studying up to 3 curriculum topics. An Access PIN unlocks viewing and downloading all official trial mocks and practice booklets.
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => {
+                setSelectedDocForPin(null);
+                setIsPinModalOpen(true);
+              }}
+              className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shrink-0 transition shadow-xs flex items-center justify-center gap-1.5"
+            >
+              <KeyRound className="w-3.5 h-3.5" />
+              <span>Unlock Mocks (Enter PIN)</span>
+            </button>
+          </div>
+        )}
+
         {/* Content Section */}
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -339,19 +381,37 @@ export default function TrialQuestionsPage() {
                     href={doc.fileUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="py-2 px-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-slate-50/50 hover:bg-slate-100 text-slate-800 text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-2xs"
+                    onClick={(e) => handleDocumentAction(e, doc)}
+                    className={`py-2 px-3 rounded-xl border text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-2xs ${
+                      !student?.hasFullAccess
+                        ? 'border-amber-200 bg-amber-50/70 hover:bg-amber-100 text-amber-900'
+                        : 'border-slate-200 hover:border-slate-300 bg-slate-50/50 hover:bg-slate-100 text-slate-800'
+                    }`}
                   >
-                    <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
-                    <span>View PDF</span>
+                    {!student?.hasFullAccess ? (
+                      <Lock className="w-3.5 h-3.5 text-amber-600" />
+                    ) : (
+                      <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
+                    )}
+                    <span>{!student?.hasFullAccess ? 'Unlock PDF' : 'View PDF'}</span>
                   </a>
 
                   <a
                     href={doc.fileUrl}
                     download={doc.fileName}
-                    className="py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-2xs"
+                    onClick={(e) => handleDocumentAction(e, doc)}
+                    className={`py-2 px-3 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-2xs ${
+                      !student?.hasFullAccess
+                        ? 'bg-amber-600 hover:bg-amber-700 text-white'
+                        : 'bg-slate-900 hover:bg-slate-800 text-white'
+                    }`}
                   >
-                    <Download className="w-3.5 h-3.5" />
-                    <span>Download</span>
+                    {!student?.hasFullAccess ? (
+                      <KeyRound className="w-3.5 h-3.5" />
+                    ) : (
+                      <Download className="w-3.5 h-3.5" />
+                    )}
+                    <span>{!student?.hasFullAccess ? 'Unlock Access' : 'Download'}</span>
                   </a>
                 </div>
               </div>
@@ -359,6 +419,16 @@ export default function TrialQuestionsPage() {
           </div>
         )}
       </main>
+
+      {/* Access PIN Paywall Modal */}
+      <AccessPinModal
+        isOpen={isPinModalOpen}
+        onClose={() => setIsPinModalOpen(false)}
+        featureName={selectedDocForPin ? `Mock Booklet: "${selectedDocForPin.title}"` : 'Trial Mock Examination Booklets'}
+        onSuccess={() => {
+          setIsPinModalOpen(false);
+        }}
+      />
     </div>
   );
 }

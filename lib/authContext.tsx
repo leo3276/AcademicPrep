@@ -19,8 +19,10 @@ interface AuthContextType {
   pins: AccessPin[];
   transactions: CashFlowTransaction[];
   weeklyExamAttempts: WeeklyExamAttempt[];
-  loginStudent: (phoneNumber: string, pin: string, fullName?: string, level?: EducationLevel) => Promise<{ success: boolean; error?: string }>;
+  loginStudent: (phoneNumber: string, fullNameOrPin: string, levelOrFullName?: EducationLevel | string, accessPinCode?: string) => Promise<{ success: boolean; error?: string }>;
   logoutStudent: () => void;
+  canAccessTopic: (topicId: string) => { allowed: boolean; reason?: string; topicsUsed: number; maxFreeTopics: number };
+  getCompletedTopicsCount: () => number;
   loginAdmin: (primaryPin: string, secondaryPin: string) => boolean;
   logoutAdmin: () => void;
   verifyPrimaryPin: (pin: string) => boolean;
@@ -164,33 +166,138 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const loginStudent = async (
     phoneNumber: string, 
-    pin: string, 
-    fullName?: string, 
-    level?: EducationLevel
+    fullNameOrPin: string, 
+    levelOrFullName?: EducationLevel | string, 
+    accessPinCode?: string
   ): Promise<{ success: boolean; error?: string }> => {
     const cleanPhone = phoneNumber.trim().replace(/\s+/g, '');
-    const cleanPin = pin.trim();
-
     if (cleanPhone.length < 10) {
       return { success: false, error: 'Please enter a valid phone number (at least 10 digits).' };
     }
-    if (cleanPin.length !== 4 || !/^\d{4}$/.test(cleanPin)) {
-      return { success: false, error: 'PIN must be exactly 4 digits.' };
+
+    // Resolve parameters
+    let fullName = '';
+    let level: EducationLevel = 'JHS 1';
+    let pinCode: string | undefined = undefined;
+
+    // Check if legacy call: (phone, 4-digit-pin, fullName, level)
+    if (fullNameOrPin && fullNameOrPin.length === 4 && /^\d{4}$/.test(fullNameOrPin) && typeof levelOrFullName === 'string' && levelOrFullName.length > 2) {
+      fullName = levelOrFullName.trim();
+      level = 'JHS 1';
+    } else {
+      fullName = fullNameOrPin ? fullNameOrPin.trim() : '';
+      if (levelOrFullName && ['JHS 1', 'JHS 2', 'JHS 3', 'SHS 1', 'SHS 2', 'SHS 3', 'UNIVERSITY'].includes(levelOrFullName as string)) {
+        level = levelOrFullName as EducationLevel;
+      }
+      pinCode = accessPinCode?.trim();
     }
+
+    if (!fullName) {
+      return { success: false, error: 'Please enter your full name to create or access your profile.' };
+    }
+
+    let hasFullAccess = false;
+    let accessType: 'Full Pass' | 'Free Trial' = 'Free Trial';
+    let accessExpiresAt: string | undefined = undefined;
+
+    // If an Access PIN was entered at registration/login
+    if (pinCode) {
+      const cleanPin = pinCode.trim().toUpperCase();
+      const targetPinIdx = pins.findIndex(p => p.pinCode === cleanPin);
+      if (targetPinIdx >= 0 && pins[targetPinIdx].status === 'ACTIVE') {
+        const targetPin = pins[targetPinIdx];
+        const expiry = new Date();
+        expiry.setDate(expiry.getDate() + targetPin.validityDays);
+        hasFullAccess = true;
+        accessType = 'Full Pass';
+        accessExpiresAt = expiry.toISOString();
+
+        // Mark pin redeemed
+        const updatedPins = [...pins];
+        updatedPins[targetPinIdx] = {
+          ...targetPin,
+          status: 'REDEEMED',
+          redeemedAt: new Date().toISOString(),
+        };
+        setPins(updatedPins);
+        localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(updatedPins));
+      } else {
+        return { 
+          success: false, 
+          error: 'The Access PIN entered is invalid or already redeemed. Leave the PIN field empty to start with 3 free trial topics.' 
+        };
+      }
+    }
+
+    // Preserve existing completed topics if user was previously studying
+    const completedIds = Object.keys(topicProgress).filter(id => topicProgress[id]?.completed);
 
     const currentStudent: Student = {
       id: `student-${cleanPhone.slice(-6)}`,
       phoneNumber: cleanPhone,
-      fullName: fullName?.trim() || `Student ${cleanPhone.slice(-4)}`,
-      currentLevel: level || 'JHS 1',
-      hasFullAccess: false,
+      fullName,
+      currentLevel: level,
+      hasFullAccess,
+      accessType,
+      accessExpiresAt,
+      completedTopicIds: completedIds,
+      topicsCompletedCount: completedIds.length,
       createdAt: new Date().toISOString(),
       lastActiveAt: new Date().toISOString(),
     };
 
     setStudent(currentStudent);
     localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(currentStudent));
+
+    // Sync with server-side database for real leaderboard
+    try {
+      fetch('/api/students', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          phone: cleanPhone,
+          name: fullName,
+          level,
+          accessType,
+          accessExpiresAt,
+        })
+      }).catch(console.error);
+    } catch {
+      // ignore
+    }
+
     return { success: true };
+  };
+
+  const getCompletedTopicsCount = (): number => {
+    return Object.keys(topicProgress).filter(id => topicProgress[id]?.completed).length;
+  };
+
+  const canAccessTopic = (topicId: string): { allowed: boolean; reason?: string; topicsUsed: number; maxFreeTopics: number } => {
+    const maxFreeTopics = 3;
+    if (student?.hasFullAccess) {
+      return { allowed: true, topicsUsed: 0, maxFreeTopics };
+    }
+
+    const completedIds = Object.keys(topicProgress).filter(id => topicProgress[id]?.completed);
+    const topicsUsed = completedIds.length;
+
+    // If student already completed this topic, allow reviewing notes and quiz
+    if (completedIds.includes(topicId)) {
+      return { allowed: true, topicsUsed, maxFreeTopics };
+    }
+
+    // If student has completed 3 or more topics across all subjects, lock the 4th
+    if (topicsUsed >= maxFreeTopics) {
+      return {
+        allowed: false,
+        reason: `You have completed your ${maxFreeTopics} free trial topics across all subjects. To unlock this 4th topic and unlimited learning, please enter or buy an Access PIN.`,
+        topicsUsed,
+        maxFreeTopics
+      };
+    }
+
+    return { allowed: true, topicsUsed, maxFreeTopics };
   };
 
   const logoutStudent = () => {
@@ -301,10 +408,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const updatedStudent: Student = {
         ...student,
         hasFullAccess: true,
+        accessType: 'Full Pass',
         accessExpiresAt: expiryDate.toISOString(),
       };
       setStudent(updatedStudent);
       localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(updatedStudent));
+
+      // Sync upgrade to server
+      try {
+        fetch('/api/students', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            phone: student.phoneNumber,
+            accessType: 'Full Pass',
+            accessExpiresAt: expiryDate.toISOString()
+          })
+        }).catch(console.error);
+      } catch {
+        // ignore
+      }
     }
 
     // Record cash flow entry
@@ -333,9 +456,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const recordQuizScore = (topicId: string, scorePercentage: number) => {
     const prev = topicProgress[topicId];
+    const isCompleted = scorePercentage >= 60 || (prev ? prev.completed : false);
     const updated: StudentTopicProgress = {
       topicId,
-      completed: scorePercentage >= 60,
+      completed: isCompleted,
       bestScorePercentage: prev ? Math.max(prev.bestScorePercentage, scorePercentage) : scorePercentage,
       attemptsCount: (prev?.attemptsCount || 0) + 1,
       lastStudiedAt: new Date().toISOString(),
@@ -348,6 +472,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     setTopicProgress(nextState);
     localStorage.setItem(STORAGE_KEYS.TOPIC_PROGRESS, JSON.stringify(nextState));
+
+    // Update student's completed topics count
+    if (student) {
+      const allCompleted = Object.keys(nextState).filter(id => nextState[id]?.completed);
+      const updatedStudent: Student = {
+        ...student,
+        completedTopicIds: allCompleted,
+        topicsCompletedCount: allCompleted.length,
+        lastActiveAt: new Date().toISOString()
+      };
+      setStudent(updatedStudent);
+      localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(updatedStudent));
+
+      // Sync to server for real leaderboard
+      try {
+        fetch('/api/students', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            phone: student.phoneNumber,
+            topicIdCompleted: isCompleted ? topicId : undefined,
+            newQuizScore: scorePercentage
+          })
+        }).catch(console.error);
+      } catch {
+        // ignore
+      }
+    }
   };
 
   const recordWeeklyExamAttempt = (attemptData: Omit<WeeklyExamAttempt, 'id' | 'createdAt'>) => {
@@ -419,6 +571,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         weeklyExamAttempts,
         loginStudent,
         logoutStudent,
+        canAccessTopic,
+        getCompletedTopicsCount,
         loginAdmin,
         logoutAdmin,
         verifyPrimaryPin,
