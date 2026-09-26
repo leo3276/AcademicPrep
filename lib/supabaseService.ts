@@ -65,7 +65,7 @@ export async function registerStudentInSupabase(params: {
       .maybeSingle();
 
     if (checkErr) {
-      console.error('Supabase check error:', checkErr);
+      console.warn('Supabase check warning:', checkErr?.message || checkErr);
     }
 
     if (existing) {
@@ -100,13 +100,13 @@ export async function registerStudentInSupabase(params: {
       .single();
 
     if (insertErr) {
-      console.error('Supabase registration error:', insertErr);
+      console.warn('Supabase registration error:', insertErr?.message || insertErr);
       return { success: false, error: insertErr.message || 'Failed to create student account in Supabase' };
     }
 
     return { success: true, student: studentRowToStudent(newRow as SupabaseStudentRow) };
   } catch (err: any) {
-    console.error('Supabase register error:', err);
+    console.warn('Supabase register error:', err?.message || err);
     return { success: false, error: err?.message || 'Database connection error during registration' };
   }
 }
@@ -171,7 +171,7 @@ export async function loginStudentInSupabase(
       student: studentRowToStudent({ ...row, last_active_at: now } as SupabaseStudentRow) 
     };
   } catch (err: any) {
-    console.error('Supabase login error:', err);
+    console.warn('Supabase login warning:', err?.message || err);
     return { success: false, error: err?.message || 'Failed to authenticate student' };
   }
 }
@@ -180,12 +180,12 @@ export async function loginStudentInSupabase(
  * Fetch all topic progress for a specific student phone from Supabase
  */
 export async function fetchStudentProgressFromSupabase(
-  phoneNumber: string
+  phoneNumber?: string
 ): Promise<Record<string, StudentTopicProgress>> {
-  const cleanPhone = phoneNumber.trim().replace(/\s+/g, '');
   const result: Record<string, StudentTopicProgress> = {};
-
-  if (!isSupabaseConfigured || !supabase) return result;
+  if (!phoneNumber) return result;
+  const cleanPhone = phoneNumber.trim().replace(/\s+/g, '');
+  if (!cleanPhone || !isSupabaseConfigured || !supabase) return result;
 
   try {
     const { data, error } = await supabase
@@ -194,7 +194,7 @@ export async function fetchStudentProgressFromSupabase(
       .eq('student_phone', cleanPhone);
 
     if (error) {
-      console.error('Error fetching student progress:', error);
+      console.warn('[Supabase Progress Sync]', error?.message || error);
       return result;
     }
 
@@ -209,8 +209,8 @@ export async function fetchStudentProgressFromSupabase(
         };
       });
     }
-  } catch (err) {
-    console.error('Error in fetchStudentProgressFromSupabase:', err);
+  } catch (err: any) {
+    console.warn('[Supabase Progress Sync] Exception:', err?.message || err);
   }
 
   return result;
@@ -287,8 +287,8 @@ export async function saveTopicProgressToSupabase(params: {
         })
         .eq('phone_number', cleanPhone);
     }
-  } catch (err) {
-    console.error('Error saving topic progress to Supabase:', err);
+  } catch (err: any) {
+    console.warn('Error saving topic progress to Supabase:', err?.message || err);
   }
 }
 
@@ -306,7 +306,7 @@ export async function fetchLeaderboardFromSupabase(): Promise<any[]> {
       .order('avg_score_percentage', { ascending: false });
 
     if (error) {
-      console.error('Error fetching Supabase leaderboard:', error);
+      console.warn('Notice fetching Supabase leaderboard:', error?.message || error);
       return [];
     }
 
@@ -323,8 +323,8 @@ export async function fetchLeaderboardFromSupabase(): Promise<any[]> {
       avgScorePercentage: s.avg_score_percentage || 0,
       registeredAt: s.created_at,
     }));
-  } catch (err) {
-    console.error('Error in fetchLeaderboardFromSupabase:', err);
+  } catch (err: any) {
+    console.warn('Error in fetchLeaderboardFromSupabase:', err?.message || err);
     return [];
   }
 }
@@ -333,11 +333,12 @@ export async function fetchLeaderboardFromSupabase(): Promise<any[]> {
  * Redeem an Access PIN for a student in Supabase
  */
 export async function redeemPinInSupabase(
-  phoneNumber: string,
+  phoneNumber?: string,
   validityDays: number = 30
 ): Promise<boolean> {
+  if (!phoneNumber) return false;
   const cleanPhone = phoneNumber.trim().replace(/\s+/g, '');
-  if (!isSupabaseConfigured || !supabase) return false;
+  if (!cleanPhone || !isSupabaseConfigured || !supabase) return false;
 
   try {
     const expiry = new Date();
@@ -354,8 +355,8 @@ export async function redeemPinInSupabase(
       .eq('phone_number', cleanPhone);
 
     return !error;
-  } catch (err) {
-    console.error('Error redeeming pin in Supabase:', err);
+  } catch (err: any) {
+    console.warn('Error redeeming pin in Supabase:', err?.message || err);
     return false;
   }
 }
@@ -367,8 +368,9 @@ export async function saveWeeklyExamToSupabase(
   phoneNumber: string,
   attempt: FullWeeklyExamAttempt
 ): Promise<void> {
+  if (!phoneNumber) return;
   const cleanPhone = phoneNumber.trim().replace(/\s+/g, '');
-  if (!isSupabaseConfigured || !supabase) return;
+  if (!cleanPhone || !isSupabaseConfigured || !supabase) return;
 
   try {
     await supabase
@@ -385,8 +387,8 @@ export async function saveWeeklyExamToSupabase(
         grade_remark: attempt.gradeRemark,
         completed_at: attempt.completedAt,
       });
-  } catch (err) {
-    console.error('Error saving weekly exam to Supabase:', err);
+  } catch (err: any) {
+    console.warn('Error saving weekly exam to Supabase:', err?.message || err);
   }
 }
 
@@ -394,10 +396,11 @@ export async function saveWeeklyExamToSupabase(
  * Fetch Weekly Exam Attempts for a student from Supabase
  */
 export async function fetchWeeklyExamsFromSupabase(
-  phoneNumber: string
+  phoneNumber?: string
 ): Promise<any[]> {
+  if (!phoneNumber) return [];
   const cleanPhone = phoneNumber.trim().replace(/\s+/g, '');
-  if (!isSupabaseConfigured || !supabase) return [];
+  if (!cleanPhone || !isSupabaseConfigured || !supabase) return [];
 
   try {
     const { data, error } = await supabase
@@ -408,8 +411,8 @@ export async function fetchWeeklyExamsFromSupabase(
 
     if (error) return [];
     return data || [];
-  } catch (err) {
-    console.error('Error fetching weekly exams from Supabase:', err);
+  } catch (err: any) {
+    console.warn('Error fetching weekly exams from Supabase:', err?.message || err);
     return [];
   }
 }
@@ -418,7 +421,7 @@ export async function fetchWeeklyExamsFromSupabase(
  * Save Student Mistake to Supabase
  */
 export async function saveStudentMistakeToSupabase(params: {
-  phoneNumber: string;
+  phoneNumber?: string;
   topicId: string;
   subjectName: string;
   subConcept: string;
@@ -426,8 +429,9 @@ export async function saveStudentMistakeToSupabase(params: {
   studentWrongAnswer: string;
   correctAnswer: string;
 }): Promise<void> {
+  if (!params.phoneNumber) return;
   const cleanPhone = params.phoneNumber.trim().replace(/\s+/g, '');
-  if (!isSupabaseConfigured || !supabase) return;
+  if (!cleanPhone || !isSupabaseConfigured || !supabase) return;
 
   try {
     await supabase
@@ -442,8 +446,8 @@ export async function saveStudentMistakeToSupabase(params: {
         correct_answer: params.correctAnswer,
         timestamp: new Date().toISOString(),
       });
-  } catch (err) {
-    console.error('Error saving mistake to Supabase:', err);
+  } catch (err: any) {
+    console.warn('Error saving mistake to Supabase:', err?.message || err);
   }
 }
 
@@ -451,10 +455,11 @@ export async function saveStudentMistakeToSupabase(params: {
  * Fetch Student Mistakes from Supabase
  */
 export async function fetchStudentMistakesFromSupabase(
-  phoneNumber: string
+  phoneNumber?: string
 ): Promise<any[]> {
+  if (!phoneNumber) return [];
   const cleanPhone = phoneNumber.trim().replace(/\s+/g, '');
-  if (!isSupabaseConfigured || !supabase) return [];
+  if (!cleanPhone || !isSupabaseConfigured || !supabase) return [];
 
   try {
     const { data, error } = await supabase
@@ -466,8 +471,8 @@ export async function fetchStudentMistakesFromSupabase(
 
     if (error) return [];
     return data || [];
-  } catch (err) {
-    console.error('Error fetching mistakes from Supabase:', err);
+  } catch (err: any) {
+    console.warn('Error fetching mistakes from Supabase:', err?.message || err);
     return [];
   }
 }

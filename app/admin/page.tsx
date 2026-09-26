@@ -138,7 +138,7 @@ export default function AdminDashboardPage() {
     setMounted(true);
     setTrafficData(getStoredTrafficData());
     setStudents(getStoredStudents());
-    fetchUploadedDocuments().then(setPdfDocuments).catch(console.error);
+    fetchUploadedDocuments().then(setPdfDocuments).catch(e => console.warn('Fetch docs warning:', e?.message || e));
   }, [activeTab]);
 
   if (!mounted) {

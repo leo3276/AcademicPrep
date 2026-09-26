@@ -57,7 +57,7 @@ export default function JhsPortalPage() {
       fetchUploadedDocuments().then((docs) => {
         setUploadedMocksCount(docs.filter((d) => d.category === 'trial_mock').length);
         setUploadedBeceCount(docs.filter((d) => d.category === 'bece_past_question').length);
-      }).catch(console.error);
+      }).catch(e => console.warn('Fetch docs warning:', e?.message || e));
     }
   }, [student]);
 

@@ -59,8 +59,8 @@ export default function BecePastQuestionsPage() {
       setLoading(true);
       const allDocs = await fetchUploadedDocuments();
       setDocuments(allDocs.filter(d => d.category === 'bece_past_question'));
-    } catch (err) {
-      console.error('Failed to load BECE documents:', err);
+    } catch (err: any) {
+      console.warn('BECE documents notice:', err?.message || err);
     } finally {
       setLoading(false);
     }

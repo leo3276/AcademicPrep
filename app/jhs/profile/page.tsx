@@ -84,8 +84,8 @@ export default function StudentProfilePage() {
           setLeaderboard(data);
         }
       }
-    } catch (err) {
-      console.error('Failed to fetch leaderboard:', err);
+    } catch (err: any) {
+      console.warn('Leaderboard fetch notice:', err?.message || err);
     } finally {
       setLoadingLeaderboard(false);
     }

@@ -153,11 +153,11 @@ export function logQuizMistakes(newMistakes: Omit<QuizMistakeRecord, 'id' | 'tim
           questionText: m.questionText,
           studentWrongAnswer: m.selectedOption,
           correctAnswer: m.correctOption,
-        }).catch(console.error);
+        }).catch(err => console.warn('Supabase mistake log notice:', err?.message || err));
       });
     }
-  } catch (err) {
-    console.error('Failed to log quiz mistakes:', err);
+  } catch (err: any) {
+    console.warn('Failed to log quiz mistakes:', err?.message || err);
   }
 }
 
@@ -177,8 +177,8 @@ export function getStudentQuizMistakes(): QuizMistakeRecord[] {
       const parsed = JSON.parse(stored);
       if (Array.isArray(parsed)) return parsed;
     }
-  } catch (err) {
-    console.error('Failed to read quiz mistakes:', err);
+  } catch (err: any) {
+    console.warn('Failed to read quiz mistakes:', err?.message || err);
   }
   return [];
 }
@@ -435,10 +435,10 @@ export function recordFullWeeklyExamAttempt(attempt: Omit<FullWeeklyExamAttempt,
 
       const phone = getActiveStudentPhone();
       if (phone) {
-        saveWeeklyExamToSupabase(phone, fullAttempt).catch(console.error);
+        saveWeeklyExamToSupabase(phone, fullAttempt).catch(e => console.warn('Supabase weekly exam save notice:', e?.message || e));
       }
-    } catch (err) {
-      console.error('Failed to save weekly exam attempt:', err);
+    } catch (err: any) {
+      console.warn('Failed to save weekly exam attempt:', err?.message || err);
     }
   }
 
@@ -461,8 +461,8 @@ export function getFullWeeklyExamAttempts(): FullWeeklyExamAttempt[] {
       const parsed = JSON.parse(stored);
       if (Array.isArray(parsed)) return parsed;
     }
-  } catch (err) {
-    console.error('Failed to read weekly exam attempts:', err);
+  } catch (err: any) {
+    console.warn('Failed to read weekly exam attempts:', err?.message || err);
   }
   return [];
 }

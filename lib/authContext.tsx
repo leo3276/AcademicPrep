@@ -187,8 +187,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 return merged;
               });
             }
-          } catch (err) {
-            console.error('Supabase progress sync error:', err);
+          } catch (err: any) {
+            console.warn('Supabase progress sync warning:', err?.message || err);
           }
 
           // Background fetch weekly exams for this student
@@ -208,8 +208,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               }));
               setWeeklyExamAttempts(formattedExams);
             }
-          } catch (err) {
-            console.error('Supabase exams fetch error:', err);
+          } catch (err: any) {
+            console.warn('Supabase exams fetch warning:', err?.message || err);
           }
         } else {
           if (isMounted) {
@@ -348,7 +348,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           accessType,
           accessExpiresAt,
         })
-      }).catch(console.error);
+      }).catch(err => console.warn('Student sync notice:', err?.message || err));
     } catch {}
 
     return { success: true };
@@ -609,7 +609,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(updatedStudent));
 
       // Sync upgrade to Supabase
-      redeemPinInSupabase(student.phoneNumber, targetPin.validityDays).catch(console.error);
+      redeemPinInSupabase(student.phoneNumber, targetPin.validityDays).catch(e => console.warn('Supabase pin notice:', e?.message || e));
 
       // Sync upgrade to server
       try {
@@ -621,7 +621,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             accessType: 'Full Pass',
             accessExpiresAt: expiryDate.toISOString()
           })
-        }).catch(console.error);
+        }).catch(e => console.warn('Student pin sync notice:', e?.message || e));
       } catch {
         // ignore
       }
@@ -679,7 +679,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         phoneNumber: studentPhone,
         topicId,
         scorePercentage
-      }).catch(console.error);
+      }).catch(e => console.warn('Supabase topic save notice:', e?.message || e));
 
       const allCompleted = Object.keys(nextState).filter(id => nextState[id]?.completed);
       const updatedStudent: Student = {
@@ -701,7 +701,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             topicIdCompleted: isCompleted ? topicId : undefined,
             newQuizScore: scorePercentage
           })
-        }).catch(console.error);
+        }).catch(e => console.warn('Student progress sync notice:', e?.message || e));
       } catch {
         // ignore
       }

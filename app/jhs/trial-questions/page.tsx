@@ -57,8 +57,8 @@ export default function TrialQuestionsPage() {
       setLoading(true);
       const allDocs = await fetchUploadedDocuments();
       setDocuments(allDocs.filter(d => d.category === 'trial_mock'));
-    } catch (err) {
-      console.error('Failed to load trial mock documents:', err);
+    } catch (err: any) {
+      console.warn('Trial mock documents notice:', err?.message || err);
     } finally {
       setLoading(false);
     }
