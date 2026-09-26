@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { 
   BECE_PAPERS_CATALOG, 
-  BECE_PAST_QUESTIONS, 
   BECEPastQuestion,
   getAllBeceYears,
-  getBecePaperMeta
+  getBecePaperMeta,
+  getStoredBeceQuestions
 } from '@/lib/becePastQuestionsData';
 import { CURRICULUM_SUBJECTS } from '@/lib/curriculumData';
 import { 
@@ -24,9 +24,7 @@ import {
   Flag,
   ArrowRight,
   Search,
-  Calendar,
-  Layers,
-  ChevronRight
+  Calendar
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -36,6 +34,8 @@ export default function BecePastQuestionsPage() {
   const [selectedPaper, setSelectedPaper] = useState<1 | 2>(1);
   const [practiceMode, setPracticeMode] = useState<'study' | 'timed_cbt'>('study');
   const [searchQuery, setSearchQuery] = useState('');
+  const [allQuestions, setAllQuestions] = useState<BECEPastQuestion[]>([]);
+  const [mounted, setMounted] = useState(false);
 
   // Timed CBT State
   const [cbtStarted, setCbtStarted] = useState(false);
@@ -47,12 +47,19 @@ export default function BecePastQuestionsPage() {
 
   const availableYears = getAllBeceYears();
 
+  useEffect(() => {
+    setMounted(true);
+    // Load dynamically from admin storage
+    const stored = getStoredBeceQuestions();
+    setAllQuestions(stored);
+  }, []);
+
   // Filter questions by subject, year, and paper
   const rawQuestions = useMemo(() => {
-    return BECE_PAST_QUESTIONS.filter(
+    return allQuestions.filter(
       (q) => q.subjectId === selectedSubject && q.year === selectedYear && q.paper === selectedPaper
     );
-  }, [selectedSubject, selectedYear, selectedPaper]);
+  }, [allQuestions, selectedSubject, selectedYear, selectedPaper]);
 
   // Apply search query in study mode
   const questions = useMemo(() => {
@@ -75,6 +82,7 @@ export default function BecePastQuestionsPage() {
   const isCcp = selectedYear >= 2024;
 
   const startCbt = () => {
+    if (questions.length === 0) return;
     setSelectedAnswers({});
     setFlagged({});
     setIsSubmitted(false);
@@ -138,10 +146,10 @@ export default function BecePastQuestionsPage() {
         </Link>
         <div className="flex items-center gap-2">
           <span className="text-[11px] font-mono font-medium text-slate-500">
-            19 Exam Cohorts (2008 – 2026)
+            {allQuestions.length} Admin Questions Uploaded
           </span>
           <span className="text-xs font-mono font-semibold text-slate-800 bg-white px-2.5 py-1 rounded-full border border-slate-200 shadow-2xs">
-            WAEC BECE Archive
+            WAEC BECE Portal
           </span>
         </div>
       </div>
@@ -152,7 +160,7 @@ export default function BecePastQuestionsPage() {
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-              Authentic WAEC BECE Archive (2008 – 2026)
+              WAEC BECE Examination Portal
             </span>
           </div>
 
@@ -175,7 +183,7 @@ export default function BecePastQuestionsPage() {
             BECE Past Questions & Official Marking Schemes
           </h1>
           <p className="text-xs text-slate-600 max-w-2xl leading-relaxed mt-1">
-            Browse and practice official WAEC examinations from 2008 through 2026. Test Paper 1 (Objectives) in Timed CBT or Study Mode with complete rationales, and review Paper 2 (Theory) with official WAEC mark allocations ($B1, M1, A1$).
+            Questions and marking schemes are published directly by your administrator. Select a subject and exam year below to study or take a timed CBT simulation.
           </p>
         </div>
 
@@ -201,7 +209,7 @@ export default function BecePastQuestionsPage() {
             })}
           </div>
 
-          {/* Year Selector Carousel / Pill Row */}
+          {/* Year Selector Carousel / Dropdown */}
           <div className="flex items-center justify-between gap-3 flex-wrap">
             <div className="flex items-center gap-2">
               <span className="text-xs font-semibold text-slate-700 flex items-center gap-1">
@@ -209,7 +217,6 @@ export default function BecePastQuestionsPage() {
                 <span>Exam Year:</span>
               </span>
 
-              {/* Quick Select Dropdown */}
               <select
                 value={selectedYear}
                 onChange={(e) => { setSelectedYear(Number(e.target.value)); setCbtStarted(false); }}
@@ -249,7 +256,6 @@ export default function BecePastQuestionsPage() {
             <div className="flex items-center gap-1 min-w-max">
               {availableYears.map((yr) => {
                 const isSelected = selectedYear === yr;
-                const isPrediction = yr >= 2025;
                 return (
                   <button
                     key={yr}
@@ -257,13 +263,10 @@ export default function BecePastQuestionsPage() {
                     className={`px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition ${
                       isSelected
                         ? 'bg-blue-600 text-white shadow-2xs font-bold'
-                        : isPrediction
-                        ? 'bg-emerald-50 text-emerald-800 border border-emerald-200/60 hover:bg-emerald-100'
                         : 'bg-slate-100/80 text-slate-600 hover:bg-slate-200/70'
                     }`}
                   >
                     {yr}
-                    {isPrediction && <span className="ml-1 text-[10px] opacity-80">★</span>}
                   </button>
                 );
               })}
@@ -279,7 +282,7 @@ export default function BecePastQuestionsPage() {
             <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Filter topics or questions..."
+              placeholder="Search questions or topics..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-slate-900"
@@ -292,7 +295,7 @@ export default function BecePastQuestionsPage() {
           </span>
         </div>
 
-        {selectedPaper === 1 && !cbtStarted && (
+        {selectedPaper === 1 && questions.length > 0 && !cbtStarted && (
           <div className="flex items-center gap-2">
             <span className="text-xs font-medium text-slate-600">Mode:</span>
             <div className="flex items-center bg-slate-100 p-0.5 rounded-lg text-xs">
@@ -488,7 +491,7 @@ export default function BecePastQuestionsPage() {
         </div>
       )}
 
-      {/* PAPER 1: STUDY MODE QUESTION LIST */}
+      {/* PAPER 1: STUDY MODE OR EMPTY STATE */}
       {selectedPaper === 1 && (!cbtStarted || isSubmitted) && (
         <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm space-y-6">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -506,8 +509,14 @@ export default function BecePastQuestionsPage() {
           </div>
 
           {questions.length === 0 ? (
-            <div className="p-8 text-center text-slate-400 text-xs">
-              No questions found matching your search.
+            <div className="p-12 text-center space-y-3">
+              <BookOpen className="w-8 h-8 text-slate-400 mx-auto" />
+              <h3 className="text-sm font-semibold text-slate-800">
+                No BECE questions uploaded for {subjectMeta?.name} ({selectedYear}) yet.
+              </h3>
+              <p className="text-xs text-slate-500 max-w-sm mx-auto">
+                Your administrator has not uploaded or published examination questions for this paper yet. When uploaded in the Admin Portal, they will appear right here.
+              </p>
             </div>
           ) : (
             <div className="space-y-6">
@@ -573,8 +582,14 @@ export default function BecePastQuestionsPage() {
           </div>
 
           {questions.length === 0 ? (
-            <div className="p-8 text-center text-slate-400 text-xs">
-              No Paper 2 theory questions available for this year yet.
+            <div className="p-12 text-center space-y-3">
+              <FileText className="w-8 h-8 text-slate-400 mx-auto" />
+              <h3 className="text-sm font-semibold text-slate-800">
+                No Paper 2 theory questions uploaded for {subjectMeta?.name} ({selectedYear}) yet.
+              </h3>
+              <p className="text-xs text-slate-500 max-w-sm mx-auto">
+                When the administrator uploads structured theory questions and official WAEC marking rubrics, they will be displayed here.
+              </p>
             </div>
           ) : (
             <div className="space-y-6">

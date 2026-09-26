@@ -12,9 +12,13 @@ import {
   saveStudents, 
   getStoredTrialMocks, 
   saveTrialMocks,
+  getStoredBeceQuestions,
+  saveBeceQuestions,
+  clearAllExamData,
   DEFAULT_TRAFFIC_DATA
 } from '@/lib/adminStore';
-import { AdminStudentDetail, TrialExamMock, WebTrafficData } from '@/lib/types';
+import { AdminStudentDetail, TrialExamMock, WebTrafficData, BECEPastQuestion } from '@/lib/types';
+import { getAllBeceYears } from '@/lib/becePastQuestionsData';
 import { 
   ShieldCheck, 
   Users, 
@@ -71,6 +75,29 @@ export default function AdminDashboardPage() {
   const [trafficData, setTrafficData] = useState<WebTrafficData>(DEFAULT_TRAFFIC_DATA);
   const [students, setStudents] = useState<AdminStudentDetail[]>([]);
   const [trialMocks, setTrialMocks] = useState<TrialExamMock[]>([]);
+  const [beceQuestions, setBeceQuestions] = useState<BECEPastQuestion[]>([]);
+  const [questionSubTab, setQuestionSubTab] = useState<'trial_mocks' | 'bece_questions'>('trial_mocks');
+
+  // BECE Filter & Form State
+  const [beceYearFilter, setBeceYearFilter] = useState<number | 'ALL'>('ALL');
+  const [beceSubjectFilter, setBeceSubjectFilter] = useState('ALL');
+  const [showBeceForm, setShowBeceForm] = useState(false);
+  const [beceYear, setBeceYear] = useState(2024);
+  const [beceSubject, setBeceSubject] = useState('math');
+  const [becePaper, setBecePaper] = useState<1 | 2>(1);
+  const [beceQNum, setBeceQNum] = useState(1);
+  const [beceQText, setBeceQText] = useState('');
+  const [beceOptA, setBeceOptA] = useState('');
+  const [beceOptB, setBeceOptB] = useState('');
+  const [beceOptC, setBeceOptC] = useState('');
+  const [beceOptD, setBeceOptD] = useState('');
+  const [beceCorrect, setBeceCorrect] = useState<'A' | 'B' | 'C' | 'D'>('A');
+  const [beceConcept, setBeceConcept] = useState('');
+  const [beceExplanation, setBeceExplanation] = useState('');
+  const [beceTheoryPart, setBeceTheoryPart] = useState('(a)');
+  const [beceTheoryModel, setBeceTheoryModel] = useState('');
+  const [beceTheoryRubric, setBeceTheoryRubric] = useState('');
+  const [beceTheoryMarks, setBeceTheoryMarks] = useState(5);
 
   // Search & Filters
   const [studentSearch, setStudentSearch] = useState('');
@@ -122,6 +149,7 @@ export default function AdminDashboardPage() {
     setTrafficData(getStoredTrafficData());
     setStudents(getStoredStudents());
     setTrialMocks(getStoredTrialMocks());
+    setBeceQuestions(getStoredBeceQuestions());
   }, [activeTab]);
 
   if (!mounted) {
@@ -381,6 +409,82 @@ export default function AdminDashboardPage() {
     saveTrialMocks(updated);
   };
 
+  const handlePublishBeceQuestion = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!beceQText.trim()) return;
+
+    const subName = CURRICULUM_SUBJECTS.find(s => s.id === beceSubject)?.name || beceSubject;
+
+    const newQuestion: BECEPastQuestion = {
+      id: `bece-${beceSubject}-${beceYear}-p${becePaper}-${Date.now()}`,
+      year: beceYear,
+      subjectId: beceSubject,
+      subjectName: subName,
+      paper: becePaper,
+      questionNumber: beceQNum,
+      questionText: beceQText.trim(),
+      subConcept: beceConcept.trim() || 'General Concept',
+      ...(becePaper === 1
+        ? {
+            options: {
+              A: beceOptA.trim(),
+              B: beceOptB.trim(),
+              C: beceOptC.trim(),
+              D: beceOptD.trim()
+            },
+            correctOption: beceCorrect,
+            explanation: beceExplanation.trim()
+          }
+        : {
+            totalMarks: beceTheoryMarks,
+            subQuestions: [
+              {
+                part: beceTheoryPart,
+                prompt: beceQText.trim(),
+                modelAnswer: beceTheoryModel.trim(),
+                markingSchemeRubric: beceTheoryRubric.trim(),
+                maxMarks: beceTheoryMarks
+              }
+            ]
+          })
+    };
+
+    const updated = [newQuestion, ...beceQuestions];
+    setBeceQuestions(updated);
+    saveBeceQuestions(updated);
+
+    // Reset Form
+    setBeceQText('');
+    setBeceOptA('');
+    setBeceOptB('');
+    setBeceOptC('');
+    setBeceOptD('');
+    setBeceConcept('');
+    setBeceExplanation('');
+    setBeceTheoryModel('');
+    setBeceTheoryRubric('');
+    setBeceQNum(prev => prev + 1);
+    setShowBeceForm(false);
+    setFormSuccessMessage(`BECE ${beceYear} ${subName} Paper ${becePaper} question uploaded successfully!`);
+    setTimeout(() => setFormSuccessMessage(null), 4000);
+  };
+
+  const handleDeleteBeceQuestion = (qId: string) => {
+    if (!confirm('Are you sure you want to delete this BECE question?')) return;
+    const updated = beceQuestions.filter(q => q.id !== qId);
+    setBeceQuestions(updated);
+    saveBeceQuestions(updated);
+  };
+
+  const handleClearAllQuestions = () => {
+    if (!confirm('Are you sure you want to clear ALL trial mocks and BECE questions? This will wipe all uploaded questions from your browser.')) return;
+    clearAllExamData();
+    setTrialMocks([]);
+    setBeceQuestions([]);
+    setFormSuccessMessage('All trial mock exams and BECE past questions have been completely cleared.');
+    setTimeout(() => setFormSuccessMessage(null), 4000);
+  };
+
   // PIN Generation
   const handleGeneratePins = (e: React.FormEvent) => {
     e.preventDefault();
@@ -524,9 +628,9 @@ export default function AdminDashboardPage() {
               }`}
             >
               <FilePlus className="w-4 h-4" />
-              <span>Trial Questions & Mocks</span>
+              <span>Trial & BECE Questions</span>
               <span className="ml-1 text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-full font-mono">
-                {trialMocks.length}
+                {trialMocks.length + beceQuestions.length}
               </span>
             </button>
 
@@ -1111,22 +1215,59 @@ export default function AdminDashboardPage() {
         {/* ============================================================ */}
         {activeTab === 'trial_mocks' && (
           <div className="space-y-6">
-            {/* Header */}
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div>
-                <h2 className="text-base font-semibold text-slate-900">Trial Questions & Diagnostic Mocks</h2>
-                <p className="text-xs text-slate-500">
-                  Upload, preview, and publish standardized trial mocks for students.
-                </p>
+            {/* Header & Sub-Tabs */}
+            <div className="flex flex-wrap items-center justify-between gap-4 pb-2 border-b border-slate-200">
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setQuestionSubTab('trial_mocks')}
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition ${
+                    questionSubTab === 'trial_mocks'
+                      ? 'bg-slate-900 text-white shadow-sm'
+                      : 'bg-slate-100 text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  Trial Questions & Mocks ({trialMocks.length})
+                </button>
+                <button
+                  onClick={() => setQuestionSubTab('bece_questions')}
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition ${
+                    questionSubTab === 'bece_questions'
+                      ? 'bg-slate-900 text-white shadow-sm'
+                      : 'bg-slate-100 text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  BECE Past Questions ({beceQuestions.length})
+                </button>
               </div>
 
-              <button
-                onClick={() => setShowMockForm(!showMockForm)}
-                className="px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium transition flex items-center gap-1.5 shadow-sm"
-              >
-                {showMockForm ? <XCircle className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
-                <span>{showMockForm ? 'Close Builder' : 'Upload New Mock'}</span>
-              </button>
+              <div className="flex items-center gap-2">
+                {(trialMocks.length > 0 || beceQuestions.length > 0) && (
+                  <button
+                    onClick={handleClearAllQuestions}
+                    className="px-3 py-1.5 rounded-lg border border-rose-200 text-rose-700 hover:bg-rose-50 text-xs font-medium transition"
+                  >
+                    Clear All Uploaded Questions
+                  </button>
+                )}
+
+                {questionSubTab === 'trial_mocks' ? (
+                  <button
+                    onClick={() => setShowMockForm(!showMockForm)}
+                    className="px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium transition flex items-center gap-1.5 shadow-sm"
+                  >
+                    {showMockForm ? <XCircle className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+                    <span>{showMockForm ? 'Close Builder' : 'Upload New Mock'}</span>
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => setShowBeceForm(!showBeceForm)}
+                    className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium transition flex items-center gap-1.5 shadow-sm"
+                  >
+                    {showBeceForm ? <XCircle className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+                    <span>{showBeceForm ? 'Close Builder' : 'Upload BECE Question'}</span>
+                  </button>
+                )}
+              </div>
             </div>
 
             {formSuccessMessage && (
@@ -1136,379 +1277,678 @@ export default function AdminDashboardPage() {
               </div>
             )}
 
-            {/* MOCK CREATOR FORM */}
-            {showMockForm && (
-              <form onSubmit={handlePublishMock} className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm space-y-5">
-                <div className="border-b border-slate-100 pb-3">
-                  <h3 className="text-sm font-semibold text-slate-900">Create & Publish Trial Mock Exam</h3>
-                  <p className="text-xs text-slate-500">Configure parameters and enter multiple-choice diagnostic questions.</p>
-                </div>
+            {/* SUB-TAB 1: TRIAL QUESTIONS & MOCKS */}
+            {questionSubTab === 'trial_mocks' && (
+              <div className="space-y-6">
+                {/* MOCK CREATOR FORM */}
+                {showMockForm && (
+                  <form onSubmit={handlePublishMock} className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm space-y-5">
+                    <div className="border-b border-slate-100 pb-3">
+                      <h3 className="text-sm font-semibold text-slate-900">Create & Publish Trial Mock Exam</h3>
+                      <p className="text-xs text-slate-500">Configure parameters and enter multiple-choice diagnostic questions.</p>
+                    </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                  <div className="sm:col-span-2">
-                    <label className="block text-xs font-medium text-slate-700 mb-1">Mock Exam Title</label>
-                    <input
-                      type="text"
-                      value={mockTitle}
-                      onChange={(e) => setMockTitle(e.target.value)}
-                      placeholder="e.g. BECE National Standard Integrated Science Mock 2"
-                      className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
-                      required
-                    />
-                  </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                      <div className="sm:col-span-2">
+                        <label className="block text-xs font-medium text-slate-700 mb-1">Mock Exam Title</label>
+                        <input
+                          type="text"
+                          value={mockTitle}
+                          onChange={(e) => setMockTitle(e.target.value)}
+                          placeholder="e.g. BECE National Standard Integrated Science Mock 2"
+                          className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                          required
+                        />
+                      </div>
 
-                  <div>
-                    <label className="block text-xs font-medium text-slate-700 mb-1">Subject</label>
+                      <div>
+                        <label className="block text-xs font-medium text-slate-700 mb-1">Subject</label>
+                        <select
+                          value={mockSubject}
+                          onChange={(e) => setMockSubject(e.target.value)}
+                          className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                        >
+                          {CURRICULUM_SUBJECTS.map((s) => (
+                            <option key={s.id} value={s.id}>{s.name}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-medium text-slate-700 mb-1">Grade Level</label>
+                        <select
+                          value={mockLevel}
+                          onChange={(e) => setMockLevel(e.target.value as EducationLevel)}
+                          className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                        >
+                          <option value="JHS 1">JHS 1 (Basic 7)</option>
+                          <option value="JHS 2">JHS 2 (Basic 8)</option>
+                          <option value="JHS 3">JHS 3 (Basic 9 - BECE)</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-medium text-slate-700 mb-1">Time Limit (Minutes)</label>
+                        <input
+                          type="number"
+                          value={mockDuration}
+                          onChange={(e) => setMockDuration(Number(e.target.value))}
+                          min="5"
+                          max="120"
+                          className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-medium text-slate-700 mb-1">Pass Score Mark (%)</label>
+                        <input
+                          type="number"
+                          value={mockPassScore}
+                          onChange={(e) => setMockPassScore(Number(e.target.value))}
+                          min="40"
+                          max="100"
+                          className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Questions Builder */}
+                    <div className="space-y-4 pt-4 border-t border-slate-100">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-semibold text-slate-900">
+                          Questions ({mockQuestions.length})
+                        </span>
+                        <button
+                          type="button"
+                          onClick={addQuestionField}
+                          className="px-2.5 py-1 rounded border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-medium transition flex items-center gap-1"
+                        >
+                          <Plus className="w-3 h-3" />
+                          <span>Add Question</span>
+                        </button>
+                      </div>
+
+                      {mockQuestions.map((q, idx) => (
+                        <div key={idx} className="bg-slate-50/60 border border-slate-200/80 rounded-xl p-4 space-y-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-semibold text-slate-700">Question #{idx + 1}</span>
+                            {mockQuestions.length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => removeQuestionField(idx)}
+                                className="text-slate-400 hover:text-rose-600 p-1"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            )}
+                          </div>
+
+                          <div>
+                            <label className="block text-[11px] font-medium text-slate-600 mb-1">Question Prompt</label>
+                            <textarea
+                              value={q.questionText}
+                              onChange={(e) => updateQuestionField(idx, 'questionText', e.target.value)}
+                              placeholder="Enter question text here..."
+                              rows={2}
+                              className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                              required
+                            />
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <div>
+                              <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option A</label>
+                              <input
+                                type="text"
+                                value={q.optionA}
+                                onChange={(e) => updateQuestionField(idx, 'optionA', e.target.value)}
+                                className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                                required
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option B</label>
+                              <input
+                                type="text"
+                                value={q.optionB}
+                                onChange={(e) => updateQuestionField(idx, 'optionB', e.target.value)}
+                                className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                                required
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option C</label>
+                              <input
+                                type="text"
+                                value={q.optionC}
+                                onChange={(e) => updateQuestionField(idx, 'optionC', e.target.value)}
+                                className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                                required
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option D</label>
+                              <input
+                                type="text"
+                                value={q.optionD}
+                                onChange={(e) => updateQuestionField(idx, 'optionD', e.target.value)}
+                                className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                                required
+                              />
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                            <div>
+                              <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Correct Option</label>
+                              <select
+                                value={q.correctOption}
+                                onChange={(e) => updateQuestionField(idx, 'correctOption', e.target.value as 'A' | 'B' | 'C' | 'D')}
+                                className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                              >
+                                <option value="A">Option A</option>
+                                <option value="B">Option B</option>
+                                <option value="C">Option C</option>
+                                <option value="D">Option D</option>
+                              </select>
+                            </div>
+                            <div>
+                              <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Topic / Sub-Concept</label>
+                              <input
+                                type="text"
+                                value={q.subConcept}
+                                onChange={(e) => updateQuestionField(idx, 'subConcept', e.target.value)}
+                                placeholder="e.g. Chemical Bonding"
+                                className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                                required
+                              />
+                            </div>
+                          </div>
+
+                          <div>
+                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Pedagogical Explanation</label>
+                            <textarea
+                              value={q.explanation}
+                              onChange={(e) => updateQuestionField(idx, 'explanation', e.target.value)}
+                              placeholder="Explain why the correct answer is right..."
+                              rows={2}
+                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                              required
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setShowMockForm(false)}
+                        className="px-3 py-1.5 text-xs text-slate-600 hover:text-slate-900 font-medium"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold shadow-sm transition"
+                      >
+                        Publish Trial Mock
+                      </button>
+                    </div>
+                  </form>
+                )}
+
+                {/* MOCK REPOSITORY TABLE */}
+                <div className="bg-white border border-slate-200/80 rounded-xl overflow-hidden shadow-sm">
+                  <div className="p-3.5 border-b border-slate-200/80 flex items-center justify-between">
+                    <span className="text-xs font-semibold text-slate-900">
+                      Published Mock Exams ({trialMocks.length})
+                    </span>
                     <select
-                      value={mockSubject}
-                      onChange={(e) => setMockSubject(e.target.value)}
-                      className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                      value={mockSubjectFilter}
+                      onChange={(e) => setMockSubjectFilter(e.target.value)}
+                      className="bg-slate-50 border border-slate-200 rounded-md px-2 py-1 text-xs text-slate-700"
                     >
-                      {CURRICULUM_SUBJECTS.map((s) => (
+                      <option value="ALL">All Subjects</option>
+                      {CURRICULUM_SUBJECTS.map(s => (
                         <option key={s.id} value={s.id}>{s.name}</option>
                       ))}
                     </select>
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-medium text-slate-700 mb-1">Grade Level</label>
-                    <select
-                      value={mockLevel}
-                      onChange={(e) => setMockLevel(e.target.value as EducationLevel)}
-                      className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
-                    >
-                      <option value="JHS 1">JHS 1 (Basic 7)</option>
-                      <option value="JHS 2">JHS 2 (Basic 8)</option>
-                      <option value="JHS 3">JHS 3 (Basic 9 - BECE)</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-medium text-slate-700 mb-1">Time Limit (Minutes)</label>
-                    <input
-                      type="number"
-                      value={mockDuration}
-                      onChange={(e) => setMockDuration(Number(e.target.value))}
-                      min="5"
-                      max="120"
-                      className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-medium text-slate-700 mb-1">Pass Score Mark (%)</label>
-                    <input
-                      type="number"
-                      value={mockPassScore}
-                      onChange={(e) => setMockPassScore(Number(e.target.value))}
-                      min="40"
-                      max="100"
-                      className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
-                    />
-                  </div>
-                </div>
-
-                {/* Questions Builder */}
-                <div className="space-y-4 pt-4 border-t border-slate-100">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-semibold text-slate-900">
-                      Questions ({mockQuestions.length})
-                    </span>
-                    <button
-                      type="button"
-                      onClick={addQuestionField}
-                      className="px-2.5 py-1 rounded border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-medium transition flex items-center gap-1"
-                    >
-                      <Plus className="w-3 h-3" />
-                      <span>Add Question</span>
-                    </button>
-                  </div>
-
-                  {mockQuestions.map((q, idx) => (
-                    <div key={idx} className="bg-slate-50/60 border border-slate-200/80 rounded-xl p-4 space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold text-slate-700">Question #{idx + 1}</span>
-                        {mockQuestions.length > 1 && (
-                          <button
-                            type="button"
-                            onClick={() => removeQuestionField(idx)}
-                            className="text-slate-400 hover:text-rose-600 p-1"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        )}
-                      </div>
-
-                      <div>
-                        <label className="block text-[11px] font-medium text-slate-600 mb-1">Question Prompt</label>
-                        <textarea
-                          value={q.questionText}
-                          onChange={(e) => updateQuestionField(idx, 'questionText', e.target.value)}
-                          placeholder="Enter question text here..."
-                          rows={2}
-                          className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
-                          required
-                        />
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        <div>
-                          <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option A</label>
-                          <input
-                            type="text"
-                            value={q.optionA}
-                            onChange={(e) => updateQuestionField(idx, 'optionA', e.target.value)}
-                            className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
-                            required
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option B</label>
-                          <input
-                            type="text"
-                            value={q.optionB}
-                            onChange={(e) => updateQuestionField(idx, 'optionB', e.target.value)}
-                            className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
-                            required
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option C</label>
-                          <input
-                            type="text"
-                            value={q.optionC}
-                            onChange={(e) => updateQuestionField(idx, 'optionC', e.target.value)}
-                            className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
-                            required
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option D</label>
-                          <input
-                            type="text"
-                            value={q.optionD}
-                            onChange={(e) => updateQuestionField(idx, 'optionD', e.target.value)}
-                            className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
-                            required
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                        <div>
-                          <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Correct Option</label>
-                          <select
-                            value={q.correctOption}
-                            onChange={(e) => updateQuestionField(idx, 'correctOption', e.target.value as 'A' | 'B' | 'C' | 'D')}
-                            className="w-full bg-white border border-slate-300 rounded-lg px-2 py-1.5 text-xs font-semibold text-slate-900"
-                          >
-                            <option value="A">Option A</option>
-                            <option value="B">Option B</option>
-                            <option value="C">Option C</option>
-                            <option value="D">Option D</option>
-                          </select>
-                        </div>
-                        <div className="sm:col-span-2">
-                          <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Sub-Concept / Topic Tag</label>
-                          <input
-                            type="text"
-                            value={q.subConcept || ''}
-                            onChange={(e) => updateQuestionField(idx, 'subConcept', e.target.value)}
-                            placeholder="e.g. Set Theory & Subsets"
-                            className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Answer Explanation</label>
-                        <input
-                          type="text"
-                          value={q.explanation}
-                          onChange={(e) => updateQuestionField(idx, 'explanation', e.target.value)}
-                          placeholder="Detailed pedagogical explanation for students..."
-                          className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
-                          required
-                        />
-                      </div>
+                  {trialMocks.length === 0 ? (
+                    <div className="p-12 text-center space-y-2">
+                      <FilePlus className="w-8 h-8 text-slate-300 mx-auto" />
+                      <h4 className="text-xs font-semibold text-slate-800">No Trial Mocks Uploaded Yet</h4>
+                      <p className="text-[11px] text-slate-500 max-w-sm mx-auto">
+                        Click "Upload New Mock" above to create and publish a trial mock exam for students.
+                      </p>
                     </div>
-                  ))}
+                  ) : (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-xs">
+                        <thead className="bg-slate-50/75 text-slate-500 font-medium uppercase tracking-wider border-b border-slate-200/80">
+                          <tr>
+                            <th className="px-4 py-3">Mock Title</th>
+                            <th className="px-4 py-3">Subject</th>
+                            <th className="px-4 py-3">Level</th>
+                            <th className="px-4 py-3">Questions</th>
+                            <th className="px-4 py-3">Duration</th>
+                            <th className="px-4 py-3">Status</th>
+                            <th className="px-4 py-3 text-right">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100">
+                          {trialMocks
+                            .filter(m => mockSubjectFilter === 'ALL' || m.subjectId === mockSubjectFilter)
+                            .map((mock) => {
+                              const subj = CURRICULUM_SUBJECTS.find(s => s.id === mock.subjectId);
+                              return (
+                                <tr key={mock.id} className="hover:bg-slate-50/60 transition">
+                                  <td className="px-4 py-3 font-medium text-slate-900">
+                                    {mock.title}
+                                    <div className="text-[10px] text-slate-400 font-normal">
+                                      Added {new Date(mock.createdAt).toLocaleDateString()}
+                                    </div>
+                                  </td>
+                                  <td className="px-4 py-3 text-slate-600">
+                                    {subj ? subj.name : mock.subjectId}
+                                  </td>
+                                  <td className="px-4 py-3">
+                                    <span className="px-1.5 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-700">
+                                      {mock.level}
+                                    </span>
+                                  </td>
+                                  <td className="px-4 py-3 font-mono font-medium text-slate-800">
+                                    {mock.questions.length} Qs
+                                  </td>
+                                  <td className="px-4 py-3 font-mono text-slate-600">
+                                    {mock.durationMinutes} mins
+                                  </td>
+                                  <td className="px-4 py-3">
+                                    <button
+                                      onClick={() => toggleMockPublish(mock.id)}
+                                      className={`px-2 py-0.5 rounded-full text-[11px] font-medium transition ${
+                                        mock.isPublished
+                                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60'
+                                          : 'bg-slate-100 text-slate-500'
+                                      }`}
+                                    >
+                                      {mock.isPublished ? '● Published' : '○ Draft'}
+                                    </button>
+                                  </td>
+                                  <td className="px-4 py-3 text-right">
+                                    <div className="flex items-center justify-end gap-2">
+                                      <button
+                                        onClick={() => setPreviewMock(mock)}
+                                        className="px-2 py-1 rounded border border-slate-200 text-slate-600 hover:bg-slate-50 text-[11px] font-medium transition"
+                                      >
+                                        Preview
+                                      </button>
+                                      <button
+                                        onClick={() => deleteMock(mock.id)}
+                                        className="p-1 text-slate-400 hover:text-rose-600 transition"
+                                        title="Delete mock"
+                                      >
+                                        <Trash2 className="w-3.5 h-3.5" />
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
                 </div>
-
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setShowMockForm(false)}
-                    className="px-3 py-1.5 text-xs text-slate-600 hover:text-slate-900 font-medium"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold shadow-sm transition"
-                  >
-                    Publish Trial Mock
-                  </button>
-                </div>
-              </form>
+              </div>
             )}
 
-            {/* MOCK REPOSITORY TABLE */}
-            <div className="bg-white border border-slate-200/80 rounded-xl overflow-hidden shadow-sm">
-              <div className="p-3.5 border-b border-slate-200/80 flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-900">
-                  Published Mock Exams ({trialMocks.length})
-                </span>
-                <select
-                  value={mockSubjectFilter}
-                  onChange={(e) => setMockSubjectFilter(e.target.value)}
-                  className="bg-slate-50 border border-slate-200 rounded-md px-2 py-1 text-xs text-slate-700"
-                >
-                  <option value="ALL">All Subjects</option>
-                  {CURRICULUM_SUBJECTS.map(s => (
-                    <option key={s.id} value={s.id}>{s.name}</option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-50/75 text-slate-500 font-medium uppercase tracking-wider border-b border-slate-200/80">
-                    <tr>
-                      <th className="px-4 py-3">Mock Title</th>
-                      <th className="px-4 py-3">Subject</th>
-                      <th className="px-4 py-3">Level</th>
-                      <th className="px-4 py-3">Questions</th>
-                      <th className="px-4 py-3">Duration</th>
-                      <th className="px-4 py-3">Status</th>
-                      <th className="px-4 py-3 text-right">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {trialMocks
-                      .filter(m => mockSubjectFilter === 'ALL' || m.subjectId === mockSubjectFilter)
-                      .map((mock) => {
-                        const subj = CURRICULUM_SUBJECTS.find(s => s.id === mock.subjectId);
-                        return (
-                          <tr key={mock.id} className="hover:bg-slate-50/60 transition">
-                            <td className="px-4 py-3 font-medium text-slate-900">
-                              {mock.title}
-                              <div className="text-[10px] text-slate-400 font-normal">
-                                Added {new Date(mock.createdAt).toLocaleDateString()}
-                              </div>
-                            </td>
-                            <td className="px-4 py-3 text-slate-600">
-                              {subj ? subj.name : mock.subjectId}
-                            </td>
-                            <td className="px-4 py-3">
-                              <span className="px-1.5 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-700">
-                                {mock.level}
-                              </span>
-                            </td>
-                            <td className="px-4 py-3 font-mono font-medium text-slate-800">
-                              {mock.questions.length} Qs
-                            </td>
-                            <td className="px-4 py-3 font-mono text-slate-600">
-                              {mock.durationMinutes} mins
-                            </td>
-                            <td className="px-4 py-3">
-                              <button
-                                onClick={() => toggleMockPublish(mock.id)}
-                                className={`px-2 py-0.5 rounded-full text-[11px] font-medium transition ${
-                                  mock.isPublished
-                                    ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60'
-                                    : 'bg-slate-100 text-slate-500'
-                                }`}
-                              >
-                                {mock.isPublished ? '● Published' : '○ Draft'}
-                              </button>
-                            </td>
-                            <td className="px-4 py-3 text-right">
-                              <div className="flex items-center justify-end gap-2">
-                                <button
-                                  onClick={() => setPreviewMock(mock)}
-                                  className="px-2 py-1 rounded border border-slate-200 text-slate-600 hover:bg-slate-50 text-[11px] font-medium transition"
-                                >
-                                  Preview
-                                </button>
-                                <button
-                                  onClick={() => deleteMock(mock.id)}
-                                  className="p-1 text-slate-400 hover:text-rose-600 transition"
-                                  title="Delete mock"
-                                >
-                                  <Trash2 className="w-3.5 h-3.5" />
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            {/* PREVIEW MODAL */}
-            {previewMock && (
-              <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
-                <div className="bg-white border border-slate-200 rounded-2xl p-6 max-w-xl w-full max-h-[85vh] overflow-y-auto shadow-lg space-y-4">
-                  <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-                    <div>
-                      <h4 className="text-sm font-semibold text-slate-900">{previewMock.title}</h4>
-                      <p className="text-[11px] text-slate-500">{previewMock.level} • {previewMock.durationMinutes} mins • {previewMock.questions.length} Questions</p>
+            {/* SUB-TAB 2: BECE PAST QUESTIONS UPLOADER */}
+            {questionSubTab === 'bece_questions' && (
+              <div className="space-y-6">
+                {/* BECE QUESTION FORM */}
+                {showBeceForm && (
+                  <form onSubmit={handlePublishBeceQuestion} className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm space-y-4">
+                    <div className="border-b border-slate-100 pb-3">
+                      <h3 className="text-sm font-semibold text-slate-900">Upload BECE Past Question</h3>
+                      <p className="text-xs text-slate-500">Add an authentic objective or theory question for any year (2008 – 2026).</p>
                     </div>
-                    <button 
-                      onClick={() => setPreviewMock(null)}
-                      className="text-slate-400 hover:text-slate-700"
-                    >
-                      <XCircle className="w-4 h-4" />
-                    </button>
-                  </div>
 
-                  <div className="space-y-3">
-                    {previewMock.questions.map((q, idx) => (
-                      <div key={idx} className="bg-slate-50/50 border border-slate-200/80 p-3.5 rounded-xl space-y-2">
-                        <div className="font-medium text-xs text-slate-900">
-                          <span className="font-mono text-slate-500 mr-1">Q{idx + 1}.</span> {q.questionText}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                      <div>
+                        <label className="block text-xs font-medium text-slate-700 mb-1">Exam Year</label>
+                        <select
+                          value={beceYear}
+                          onChange={(e) => setBeceYear(Number(e.target.value))}
+                          className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900"
+                        >
+                          {getAllBeceYears().map((yr) => (
+                            <option key={yr} value={yr}>BECE {yr}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-medium text-slate-700 mb-1">Subject</label>
+                        <select
+                          value={beceSubject}
+                          onChange={(e) => setBeceSubject(e.target.value)}
+                          className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900"
+                        >
+                          {CURRICULUM_SUBJECTS.map((s) => (
+                            <option key={s.id} value={s.id}>{s.name}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-medium text-slate-700 mb-1">Paper Type</label>
+                        <select
+                          value={becePaper}
+                          onChange={(e) => setBecePaper(Number(e.target.value) as 1 | 2)}
+                          className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900"
+                        >
+                          <option value="1">Paper 1 (Objectives CBT)</option>
+                          <option value="2">Paper 2 (Theory / Structured)</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-medium text-slate-700 mb-1">Question Number</label>
+                        <input
+                          type="number"
+                          value={beceQNum}
+                          onChange={(e) => setBeceQNum(Number(e.target.value))}
+                          min="1"
+                          max="60"
+                          className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-slate-700 mb-1">
+                        {becePaper === 1 ? 'Question Text / Prompt' : 'Theory Question Stem'}
+                      </label>
+                      <textarea
+                        value={beceQText}
+                        onChange={(e) => setBeceQText(e.target.value)}
+                        placeholder="Enter the question text here..."
+                        rows={3}
+                        className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900"
+                        required
+                      />
+                    </div>
+
+                    {becePaper === 1 ? (
+                      <div className="space-y-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div>
+                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option A</label>
+                            <input
+                              type="text"
+                              value={beceOptA}
+                              onChange={(e) => setBeceOptA(e.target.value)}
+                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                              required
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option B</label>
+                            <input
+                              type="text"
+                              value={beceOptB}
+                              onChange={(e) => setBeceOptB(e.target.value)}
+                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                              required
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option C</label>
+                            <input
+                              type="text"
+                              value={beceOptC}
+                              onChange={(e) => setBeceOptC(e.target.value)}
+                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                              required
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Option D</label>
+                            <input
+                              type="text"
+                              value={beceOptD}
+                              onChange={(e) => setBeceOptD(e.target.value)}
+                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                              required
+                            />
+                          </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-1.5 text-[11px]">
-                          <div className={`p-1.5 rounded border ${q.correctOption === 'A' ? 'bg-emerald-50 border-emerald-300 font-semibold text-emerald-800' : 'bg-white border-slate-200 text-slate-700'}`}>
-                            A. {q.optionA}
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div>
+                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Correct Option</label>
+                            <select
+                              value={beceCorrect}
+                              onChange={(e) => setBeceCorrect(e.target.value as 'A' | 'B' | 'C' | 'D')}
+                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                            >
+                              <option value="A">Option A</option>
+                              <option value="B">Option B</option>
+                              <option value="C">Option C</option>
+                              <option value="D">Option D</option>
+                            </select>
                           </div>
-                          <div className={`p-1.5 rounded border ${q.correctOption === 'B' ? 'bg-emerald-50 border-emerald-300 font-semibold text-emerald-800' : 'bg-white border-slate-200 text-slate-700'}`}>
-                            B. {q.optionB}
-                          </div>
-                          <div className={`p-1.5 rounded border ${q.correctOption === 'C' ? 'bg-emerald-50 border-emerald-300 font-semibold text-emerald-800' : 'bg-white border-slate-200 text-slate-700'}`}>
-                            C. {q.optionC}
-                          </div>
-                          <div className={`p-1.5 rounded border ${q.correctOption === 'D' ? 'bg-emerald-50 border-emerald-300 font-semibold text-emerald-800' : 'bg-white border-slate-200 text-slate-700'}`}>
-                            D. {q.optionD}
+                          <div>
+                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Sub-Concept / Topic</label>
+                            <input
+                              type="text"
+                              value={beceConcept}
+                              onChange={(e) => setBeceConcept(e.target.value)}
+                              placeholder="e.g. Prime Factorization"
+                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                              required
+                            />
                           </div>
                         </div>
-                        <div className="text-[11px] text-slate-500 pt-1 border-t border-slate-100">
-                          <b className="text-slate-700">Correct: Option {q.correctOption}</b> — {q.explanation}
+
+                        <div>
+                          <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Step-by-Step Explanation</label>
+                          <textarea
+                            value={beceExplanation}
+                            onChange={(e) => setBeceExplanation(e.target.value)}
+                            placeholder="Detailed explanation of the solution..."
+                            rows={2}
+                            className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                            required
+                          />
                         </div>
                       </div>
-                    ))}
+                    ) : (
+                      <div className="space-y-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                          <div>
+                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Sub-part (e.g. (a))</label>
+                            <input
+                              type="text"
+                              value={beceTheoryPart}
+                              onChange={(e) => setBeceTheoryPart(e.target.value)}
+                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                              required
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Max Marks</label>
+                            <input
+                              type="number"
+                              value={beceTheoryMarks}
+                              onChange={(e) => setBeceTheoryMarks(Number(e.target.value))}
+                              min="1"
+                              max="20"
+                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                              required
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Topic / Sub-Concept</label>
+                            <input
+                              type="text"
+                              value={beceConcept}
+                              onChange={(e) => setBeceConcept(e.target.value)}
+                              placeholder="e.g. Simultaneous Equations"
+                              className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                              required
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Model Answer</label>
+                          <textarea
+                            value={beceTheoryModel}
+                            onChange={(e) => setBeceTheoryModel(e.target.value)}
+                            placeholder="Complete step-by-step working..."
+                            rows={3}
+                            className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                            required
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] font-medium text-slate-600 mb-0.5">Official WAEC Marking Scheme (B1, M1, A1 marks)</label>
+                          <textarea
+                            value={beceTheoryRubric}
+                            onChange={(e) => setBeceTheoryRubric(e.target.value)}
+                            placeholder="e.g. Formula [B1], Substitution [M1], Final Value [A1]"
+                            rows={2}
+                            className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                            required
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setShowBeceForm(false)}
+                        className="px-3 py-1.5 text-xs text-slate-600 hover:text-slate-900 font-medium"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold shadow-sm transition"
+                      >
+                        Publish BECE Question
+                      </button>
+                    </div>
+                  </form>
+                )}
+
+                {/* BECE QUESTIONS TABLE */}
+                <div className="bg-white border border-slate-200/80 rounded-xl overflow-hidden shadow-sm">
+                  <div className="p-3.5 border-b border-slate-200/80 flex flex-wrap items-center justify-between gap-3">
+                    <span className="text-xs font-semibold text-slate-900">
+                      Uploaded BECE Questions ({beceQuestions.length})
+                    </span>
+
+                    <div className="flex items-center gap-2">
+                      <select
+                        value={beceYearFilter}
+                        onChange={(e) => setBeceYearFilter(e.target.value === 'ALL' ? 'ALL' : Number(e.target.value))}
+                        className="bg-slate-50 border border-slate-200 rounded-md px-2 py-1 text-xs text-slate-700"
+                      >
+                        <option value="ALL">All Years (2008–2026)</option>
+                        {getAllBeceYears().map(yr => (
+                          <option key={yr} value={yr}>BECE {yr}</option>
+                        ))}
+                      </select>
+
+                      <select
+                        value={beceSubjectFilter}
+                        onChange={(e) => setBeceSubjectFilter(e.target.value)}
+                        className="bg-slate-50 border border-slate-200 rounded-md px-2 py-1 text-xs text-slate-700"
+                      >
+                        <option value="ALL">All Subjects</option>
+                        {CURRICULUM_SUBJECTS.map(s => (
+                          <option key={s.id} value={s.id}>{s.name}</option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
 
-                  <div className="pt-3 text-right border-t border-slate-100">
-                    <button
-                      onClick={() => setPreviewMock(null)}
-                      className="px-4 py-1.5 bg-slate-900 text-white rounded-lg text-xs font-medium"
-                    >
-                      Close Preview
-                    </button>
-                  </div>
+                  {beceQuestions.length === 0 ? (
+                    <div className="p-12 text-center space-y-2">
+                      <BookOpen className="w-8 h-8 text-slate-300 mx-auto" />
+                      <h4 className="text-xs font-semibold text-slate-800">No BECE Past Questions Uploaded Yet</h4>
+                      <p className="text-[11px] text-slate-500 max-w-sm mx-auto">
+                        Click "Upload BECE Question" above to add official exam questions and marking rubrics for any year.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-xs">
+                        <thead className="bg-slate-50/75 text-slate-500 font-medium uppercase tracking-wider border-b border-slate-200/80">
+                          <tr>
+                            <th className="px-4 py-3">Year & Subject</th>
+                            <th className="px-4 py-3">Paper</th>
+                            <th className="px-4 py-3">Question Prompt</th>
+                            <th className="px-4 py-3">Sub-Concept</th>
+                            <th className="px-4 py-3 text-right">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100">
+                          {beceQuestions
+                            .filter(q => beceYearFilter === 'ALL' || q.year === beceYearFilter)
+                            .filter(q => beceSubjectFilter === 'ALL' || q.subjectId === beceSubjectFilter)
+                            .map((q) => (
+                              <tr key={q.id} className="hover:bg-slate-50/60 transition">
+                                <td className="px-4 py-3">
+                                  <div className="font-semibold text-slate-900">
+                                    BECE {q.year}
+                                  </div>
+                                  <div className="text-[10px] text-slate-500">{q.subjectName}</div>
+                                </td>
+                                <td className="px-4 py-3">
+                                  <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                                    q.paper === 1
+                                      ? 'bg-blue-50 text-blue-800 border border-blue-200'
+                                      : 'bg-purple-50 text-purple-800 border border-purple-200'
+                                  }`}>
+                                    Paper {q.paper}
+                                  </span>
+                                </td>
+                                <td className="px-4 py-3 font-medium text-slate-800 max-w-xs truncate">
+                                  Q{q.questionNumber}: {q.questionText}
+                                </td>
+                                <td className="px-4 py-3 text-slate-600">
+                                  {q.subConcept}
+                                </td>
+                                <td className="px-4 py-3 text-right">
+                                  <button
+                                    onClick={() => handleDeleteBeceQuestion(q.id)}
+                                    className="p-1 text-slate-400 hover:text-rose-600 transition"
+                                    title="Delete question"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
           </div>
         )}
 
-        {/* ============================================================ */}
-        {/* TAB 5: ACCESS PINS & REVENUE                                  */}
-        {/* ============================================================ */}
         {activeTab === 'pins' && (
           <div className="space-y-6">
             {/* Top Revenue Summary */}

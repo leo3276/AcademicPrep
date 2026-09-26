@@ -25,13 +25,14 @@ import {
   FileText
 } from 'lucide-react';
 import SubjectIcon from '@/components/SubjectIcon';
-import { getStoredTrialMocks } from '@/lib/adminStore';
+import { getStoredTrialMocks, getStoredBeceQuestions } from '@/lib/adminStore';
 
 export default function JhsPortalPage() {
   const { student, topicProgress } = useAuth();
   const [selectedLevel, setSelectedLevel] = useState<EducationLevel>('JHS 1');
   const [mounted, setMounted] = useState(false);
   const [uploadedMocksCount, setUploadedMocksCount] = useState(0);
+  const [uploadedBeceCount, setUploadedBeceCount] = useState(0);
 
   useEffect(() => {
     setMounted(true);
@@ -52,6 +53,8 @@ export default function JhsPortalPage() {
 
       const publishedMocks = getStoredTrialMocks().filter(m => m.isPublished);
       setUploadedMocksCount(publishedMocks.length);
+      const beceQuestions = getStoredBeceQuestions();
+      setUploadedBeceCount(beceQuestions.length);
     }
   }, [student]);
 
@@ -156,7 +159,9 @@ export default function JhsPortalPage() {
               <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full">
                 WAEC Official
               </span>
-              <span className="text-[11px] font-mono text-slate-500 font-semibold">2008 - 2026 (19 Years)</span>
+              <span className="text-[11px] font-mono text-slate-500 font-semibold">
+                {uploadedBeceCount > 0 ? `${uploadedBeceCount} Uploaded` : 'Admin Upload Portal'}
+              </span>
             </div>
             <h3 className="text-base font-bold text-slate-900 flex items-center gap-1.5">
               <BookOpen className="w-4 h-4 text-blue-600" />

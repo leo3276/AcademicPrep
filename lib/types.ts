@@ -209,3 +209,44 @@ export interface TrialExamMock {
   isPublished: boolean;
   createdAt: string;
 }
+
+export interface BECEPastQuestion {
+  id: string;
+  year: number;
+  subjectId: string;
+  subjectName: string;
+  paper: 1 | 2;
+  questionNumber: number;
+  questionText: string;
+  options?: {
+    A: string;
+    B: string;
+    C: string;
+    D: string;
+  };
+  correctOption?: 'A' | 'B' | 'C' | 'D';
+  explanation?: string;
+  subConcept: string;
+  // For Paper 2 Theory
+  subQuestions?: {
+    part: string;
+    prompt: string;
+    modelAnswer: string;
+    markingSchemeRubric: string;
+    maxMarks: number;
+  }[];
+  totalMarks?: number;
+}
+
+export interface BECEPaperMeta {
+  id: string;
+  year: number;
+  subjectId: string;
+  subjectName: string;
+  syllabusEra: 'Common Core (CCP)' | 'Standard JHS Syllabus';
+  paper1DurationMinutes: number;
+  paper2DurationMinutes: number;
+  totalPaper1Questions: number;
+  totalPaper2Questions: number;
+  overview: string;
+}
