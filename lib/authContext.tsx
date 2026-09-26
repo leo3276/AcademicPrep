@@ -262,6 +262,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (!params.fullName.trim()) {
       return { success: false, error: 'Please enter your full name.' };
     }
+    if (!params.password || !params.password.trim()) {
+      return { success: false, error: 'Please create a password or PIN for your account.' };
+    }
 
     let hasFullAccess = false;
     let accessType: 'Full Pass' | 'Free Trial' = 'Free Trial';
@@ -362,6 +365,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (cleanPhone.length < 10) {
       return { success: false, error: 'Please enter a valid phone number (at least 10 digits).' };
     }
+    if (!password || !password.trim()) {
+      return { success: false, error: 'Please enter your password or PIN.' };
+    }
 
     // 1. Authenticate with Supabase
     const supaRes = await loginStudentInSupabase(cleanPhone, password);
@@ -443,11 +449,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
       if (regRes.success) return { success: true };
       if (regRes.error && regRes.error.toLowerCase().includes('already exists')) {
-        return await signInStudent(cleanPhone);
+        return { success: false, error: 'An account with this phone number already exists. Please switch to Sign In and enter your password.' };
       }
       return regRes;
     } else {
-      return await signInStudent(cleanPhone);
+      return await signInStudent(cleanPhone, fullNameOrPin);
     }
   };
 

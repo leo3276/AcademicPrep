@@ -48,30 +48,25 @@ export async function registerStudentInSupabase(params: {
 }): Promise<{ success: boolean; student?: Student; error?: string }> {
   const cleanPhone = params.phoneNumber.trim().replace(/\s+/g, '');
 
+  if (!params.password || !params.password.trim()) {
+    return { success: false, error: 'Please create a password or PIN for your account.' };
+  }
+
   if (!isSupabaseConfigured || !supabase) {
-    const student: Student = {
-      id: `student-${cleanPhone.slice(-6)}`,
-      phoneNumber: cleanPhone,
-      fullName: params.fullName,
-      currentLevel: params.currentLevel,
-      hasFullAccess: Boolean(params.hasFullAccess),
-      accessType: params.accessType || (params.hasFullAccess ? 'Full Pass' : 'Free Trial'),
-      accessExpiresAt: params.accessExpiresAt,
-      completedTopicIds: [],
-      topicsCompletedCount: 0,
-      createdAt: new Date().toISOString(),
-      lastActiveAt: new Date().toISOString(),
-    };
-    return { success: true, student };
+    return { success: false, error: 'Database connection error. Please verify your internet or Supabase configuration.' };
   }
 
   try {
     // 1. Check if phone number already registered
-    const { data: existing } = await supabase
+    const { data: existing, error: checkErr } = await supabase
       .from('students')
       .select('id, phone_number')
       .eq('phone_number', cleanPhone)
       .maybeSingle();
+
+    if (checkErr) {
+      console.error('Supabase check error:', checkErr);
+    }
 
     if (existing) {
       return { 
@@ -85,7 +80,7 @@ export async function registerStudentInSupabase(params: {
     const insertPayload = {
       phone_number: cleanPhone,
       full_name: params.fullName.trim(),
-      pin_hash: params.password ? params.password.trim() : '',
+      pin_hash: params.password.trim(),
       current_level: params.currentLevel,
       has_full_access: Boolean(params.hasFullAccess),
       access_type: params.accessType || (params.hasFullAccess ? 'Full Pass' : 'Free Trial'),
@@ -125,6 +120,10 @@ export async function loginStudentInSupabase(
 ): Promise<{ success: boolean; student?: Student; error?: string }> {
   const cleanPhone = phoneNumber.trim().replace(/\s+/g, '');
 
+  if (!password || !password.trim()) {
+    return { success: false, error: 'Please enter your password or PIN.' };
+  }
+
   if (!isSupabaseConfigured || !supabase) {
     return { success: false, error: 'Database not connected. Please check configuration.' };
   }
@@ -147,11 +146,17 @@ export async function loginStudentInSupabase(
       };
     }
 
-    // Verify password if account has one configured
+    // Verify password strictly
     if (row.pin_hash && row.pin_hash.trim() !== '') {
-      if (!password || password.trim() !== row.pin_hash.trim()) {
+      if (password.trim() !== row.pin_hash.trim()) {
         return { success: false, error: 'Incorrect password or PIN. Please try again.' };
       }
+    } else {
+      // If account was created without a password, lock it to this password now
+      await supabase
+        .from('students')
+        .update({ pin_hash: password.trim() })
+        .eq('phone_number', cleanPhone);
     }
 
     // Update last_active_at
