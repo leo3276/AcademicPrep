@@ -13,6 +13,7 @@ import {
 import {
   registerStudentInSupabase,
   loginStudentInSupabase,
+  fetchStudentByPhoneFromSupabase,
   fetchStudentProgressFromSupabase,
   saveTopicProgressToSupabase,
   redeemPinInSupabase,
@@ -142,8 +143,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         let activeStudent: Student | null = null;
         const storedStudentStr = localStorage.getItem(STORAGE_KEYS.CURRENT_STUDENT);
         if (storedStudentStr) {
-          activeStudent = JSON.parse(storedStudentStr);
-          if (isMounted) setStudent(activeStudent);
+          try {
+            activeStudent = JSON.parse(storedStudentStr);
+            if (activeStudent) {
+              const isExpired = activeStudent.accessExpiresAt
+                ? new Date(activeStudent.accessExpiresAt).getTime() <= Date.now()
+                : false;
+              if (isExpired && activeStudent.hasFullAccess) {
+                activeStudent = {
+                  ...activeStudent,
+                  hasFullAccess: false,
+                  accessType: 'Expired',
+                };
+                localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(activeStudent));
+              }
+              if (isMounted) setStudent(activeStudent);
+            }
+          } catch {}
         }
 
         if (typeof window !== 'undefined') {
@@ -156,9 +172,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           }
         }
 
-        // Load account-specific topic progress
+        // Load account-specific topic progress & sync live student data
         if (activeStudent && activeStudent.phoneNumber) {
           const phone = activeStudent.phoneNumber;
+
+          // Background sync student record from Supabase (to pick up expiry or new payment)
+          try {
+            const liveStudent = await fetchStudentByPhoneFromSupabase(phone);
+            if (liveStudent && isMounted) {
+              activeStudent = liveStudent;
+              setStudent(liveStudent);
+              localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(liveStudent));
+            }
+          } catch (err: any) {
+            console.warn('Student profile sync notice:', err?.message || err);
+          }
           let studentProgress: Record<string, StudentTopicProgress> = {};
           
           const localScoped = localStorage.getItem(`academicprep_progress_${phone}`);
@@ -493,7 +521,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const canAccessTopic = (topicId: string): { allowed: boolean; reason?: string; topicsUsed: number; maxFreeTopics: number } => {
     const maxFreeTopics = 3;
-    if (student?.hasFullAccess) {
+    const isExpired = student?.accessExpiresAt 
+      ? new Date(student.accessExpiresAt).getTime() <= Date.now() 
+      : false;
+    const isVip = Boolean(student?.hasFullAccess) && !isExpired;
+
+    if (isVip) {
       return { allowed: true, topicsUsed: 0, maxFreeTopics };
     }
 
@@ -759,8 +792,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }).catch(e => console.warn('Supabase topic save notice:', e?.message || e));
 
       const allCompleted = Object.keys(nextState).filter(id => nextState[id]?.completed);
+      const isExpired = student.accessExpiresAt 
+        ? new Date(student.accessExpiresAt).getTime() <= Date.now() 
+        : false;
       const updatedStudent: Student = {
         ...student,
+        hasFullAccess: isExpired ? false : student.hasFullAccess,
+        accessType: isExpired ? 'Expired' : student.accessType,
         completedTopicIds: allCompleted,
         topicsCompletedCount: allCompleted.length,
         lastActiveAt: new Date().toISOString()

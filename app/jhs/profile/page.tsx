@@ -297,6 +297,11 @@ export default function StudentProfilePage() {
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                       VIP Full Pass
                     </span>
+                  ) : student.accessType === 'Expired' ? (
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-900 border border-rose-200">
+                      <AlertCircle className="w-3.5 h-3.5 text-rose-600" />
+                      VIP Pass Expired
+                    </span>
                   ) : (
                     <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-200">
                       <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
@@ -333,7 +338,7 @@ export default function StudentProfilePage() {
                   className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-xs shadow-md shadow-amber-500/20 transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-amber-200" />
-                  <span>Buy VIP Pass (GHS 20/mo MoMo)</span>
+                  <span>{student.accessType === 'Expired' ? 'Renew VIP Pass (GHS 20/mo MoMo)' : 'Buy VIP Pass (GHS 20/mo MoMo)'}</span>
                 </button>
               )}
               <button
@@ -359,15 +364,25 @@ export default function StudentProfilePage() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <h3 className="text-sm font-bold text-amber-950 flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-amber-600" />
-                  <span>Free Trial Status: {freeTopicsUsed} of {maxFreeTopics} Topics Completed</span>
+                  {student.accessType === 'Expired' ? (
+                    <AlertCircle className="w-4 h-4 text-amber-600" />
+                  ) : (
+                    <Zap className="w-4 h-4 text-amber-600" />
+                  )}
+                  <span>
+                    {student.accessType === 'Expired'
+                      ? 'VIP Monthly Pass Expired'
+                      : `Free Trial Status: ${freeTopicsUsed} of ${maxFreeTopics} Topics Completed`}
+                  </span>
                 </h3>
                 <p className="text-xs text-amber-900/80 mt-0.5">
-                  You have <b>{remainingFreeTopics} free {remainingFreeTopics === 1 ? 'topic' : 'topics'}</b> remaining. Once the 4th topic is triggered, an Access PIN is required to continue.
+                  {student.accessType === 'Expired'
+                    ? 'Your 30-day VIP pass has expired. Renew for GH₵ 20/mo via Mobile Money or enter an Access PIN to restore full unlimited access.'
+                    : <>You have <b>{remainingFreeTopics} free {remainingFreeTopics === 1 ? 'topic' : 'topics'}</b> remaining. Once the 4th topic is triggered, an Access PIN is required to continue.</>}
                 </p>
               </div>
               <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-amber-200/80 text-amber-900 shrink-0">
-                {Math.round((freeTopicsUsed / maxFreeTopics) * 100)}% Used
+                {student.accessType === 'Expired' ? 'Expired' : `${Math.round((freeTopicsUsed / maxFreeTopics) * 100)}% Used`}
               </span>
             </div>
 
@@ -454,6 +469,19 @@ export default function StudentProfilePage() {
             <p className="text-xs text-emerald-900/80">
               You have full, unrestricted access to all curriculum topics, diagnostic quizzes, 2008–2026 BECE Past Question PDFs, Trial Mocks, and Adaptive Weekly Examinations.
             </p>
+            {student.accessExpiresAt && (
+              <div className="text-xs text-emerald-800 pt-2 border-t border-emerald-200/70 flex items-center justify-between font-medium">
+                <span>Pass Expiration:</span>
+                <span className="font-bold">
+                  {new Date(student.accessExpiresAt).toLocaleDateString(undefined, {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                  })}
+                  {' '}({Math.max(0, Math.ceil((new Date(student.accessExpiresAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24)))} days remaining)
+                </span>
+              </div>
+            )}
           </div>
         )}
 

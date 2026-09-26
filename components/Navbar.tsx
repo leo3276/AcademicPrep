@@ -175,7 +175,7 @@ export default function Navbar() {
                           </span>
                         ) : (
                           <span className="text-[9px] font-bold text-amber-800 bg-amber-100/90 px-1.5 py-0.2 rounded-full whitespace-nowrap">
-                            {student.topicsCompletedCount || 0}/3 Free
+                            {student.accessType === 'Expired' ? 'VIP Expired' : `${student.topicsCompletedCount || 0}/3 Free`}
                           </span>
                         )}
                       </div>

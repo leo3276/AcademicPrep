@@ -19,13 +19,16 @@ export interface SupabaseStudentRow {
 }
 
 export function studentRowToStudent(row: SupabaseStudentRow): Student {
+  const isExpired = row.access_expires_at ? new Date(row.access_expires_at).getTime() <= Date.now() : false;
+  const hasFullAccess = Boolean(row.has_full_access) && !isExpired;
+
   return {
     id: row.id,
     phoneNumber: row.phone_number,
     fullName: row.full_name,
     currentLevel: (row.current_level || 'JHS 1') as EducationLevel,
-    hasFullAccess: Boolean(row.has_full_access),
-    accessType: row.access_type || (row.has_full_access ? 'Full Pass' : 'Free Trial'),
+    hasFullAccess,
+    accessType: isExpired ? 'Expired' : (row.access_type || (hasFullAccess ? 'Full Pass' : 'Free Trial')),
     accessExpiresAt: row.access_expires_at,
     completedTopicIds: row.completed_topic_ids || [],
     topicsCompletedCount: row.topics_completed_count || 0,
@@ -173,6 +176,31 @@ export async function loginStudentInSupabase(
   } catch (err: any) {
     console.warn('Supabase login warning:', err?.message || err);
     return { success: false, error: err?.message || 'Failed to authenticate student' };
+  }
+}
+
+/**
+ * Fetch a single student record by phone number directly from Supabase
+ */
+export async function fetchStudentByPhoneFromSupabase(
+  phoneNumber?: string
+): Promise<Student | null> {
+  if (!phoneNumber) return null;
+  const cleanPhone = phoneNumber.trim().replace(/\s+/g, '');
+  if (!cleanPhone || !isSupabaseConfigured || !supabase) return null;
+
+  try {
+    const { data: row, error } = await supabase
+      .from('students')
+      .select('*')
+      .eq('phone_number', cleanPhone)
+      .maybeSingle();
+
+    if (error || !row) return null;
+    return studentRowToStudent(row as SupabaseStudentRow);
+  } catch (err: any) {
+    console.warn('Error fetching student from Supabase:', err?.message || err);
+    return null;
   }
 }
 
