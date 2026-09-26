@@ -1,8 +1,8 @@
 'use client';
 
 export const PAYSTACK_VIP_PRICE_GHS = 20;
-export const PAYSTACK_VIP_AMOUNT_PESEWAS = 2000; // GHS 20.00 in pesewas (1 month / 30-day access)
-export const PAYSTACK_PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || '';
+export const PAYSTACK_VIP_AMOUNT_PESEWAS = 2000; // GHS 20.00 / month in pesewas
+export const PAYSTACK_PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || 'pk_live_f09af5e82872d14a47d3029faab6257483e8d2c7';
 
 /**
  * Dynamically load Paystack Inline JS
@@ -40,49 +40,65 @@ export interface PaystackCheckoutParams {
 }
 
 /**
- * Launch Paystack Modal Popup for Ghana Mobile Money (MTN MoMo, Telecel Cash, AT Money) and Cards
+ * Launch Paystack Modal Popup with server-generated access code
  */
 export async function launchPaystackCheckout(params: PaystackCheckoutParams): Promise<boolean> {
-  const loaded = await loadPaystackScript();
-  if (!loaded || !(window as any).PaystackPop) {
-    alert('Could not connect to payment gateway. Please check your internet connection and try again.');
+  const cleanPhone = (params.phoneNumber || '').trim().replace(/\s+/g, '');
+  if (!cleanPhone) {
+    alert('Please enter a valid phone number.');
     return false;
   }
 
-  const cleanPhone = (params.phoneNumber || '').trim().replace(/\s+/g, '');
-  const cleanEmail = params.email && params.email.includes('@')
-    ? params.email.trim()
-    : `${cleanPhone || 'student'}@academicprep.com`;
+  // 1. Initialize on server to generate a secure pre-authenticated access_code
+  let initData: {
+    success: boolean;
+    access_code?: string;
+    reference?: string;
+    authorization_url?: string;
+    message?: string;
+  };
 
+  try {
+    const initRes = await fetch('/api/paystack/initialize', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        phoneNumber: cleanPhone,
+        fullName: params.fullName || 'AcademicPrep Student',
+      }),
+    });
+    initData = await initRes.json();
+
+    if (!initData.success || !initData.access_code) {
+      alert(initData.message || 'Could not start payment session. Please try again.');
+      return false;
+    }
+  } catch (err: any) {
+    console.warn('Paystack initialize fetch error:', err);
+    alert('Could not connect to payment gateway. Please check your internet connection.');
+    return false;
+  }
+
+  // 2. Load Paystack inline popup script
+  const loaded = await loadPaystackScript();
+  if (!loaded || !(window as any).PaystackPop) {
+    if (initData.authorization_url) {
+      window.location.href = initData.authorization_url;
+      return true;
+    }
+    alert('Could not load checkout modal. Please check your internet connection.');
+    return false;
+  }
+
+  // 3. Open Paystack popup with the validated access_code
   try {
     const handler = (window as any).PaystackPop.setup({
       key: PAYSTACK_PUBLIC_KEY,
-      email: cleanEmail,
-      amount: PAYSTACK_VIP_AMOUNT_PESEWAS, // 2000 pesewas = GHS 20.00 / month
-      currency: 'GHS',
-      channels: ['mobile_money', 'card'],
-      metadata: {
-        custom_fields: [
-          {
-            display_name: 'Mobile Number',
-            variable_name: 'phone_number',
-            value: cleanPhone,
-          },
-          {
-            display_name: 'Student Name',
-            variable_name: 'full_name',
-            value: params.fullName || 'AcademicPrep Student',
-          },
-          {
-            display_name: 'Product',
-            variable_name: 'product',
-            value: 'Monthly VIP Full Access Pass (30 Days)',
-          },
-        ],
-      },
-      callback: (response: { reference: string }) => {
-        if (response && response.reference) {
-          params.onSuccess(response.reference);
+      access_code: initData.access_code,
+      callback: (response: { reference?: string }) => {
+        const ref = response?.reference || initData.reference || '';
+        if (ref) {
+          params.onSuccess(ref);
         }
       },
       onClose: () => {
@@ -93,8 +109,12 @@ export async function launchPaystackCheckout(params: PaystackCheckoutParams): Pr
     handler.openIframe();
     return true;
   } catch (err: any) {
-    console.warn('Error launching Paystack modal:', err?.message || err);
-    alert('Failed to launch payment checkout: ' + (err?.message || 'Unknown error'));
+    console.warn('Error launching Paystack modal with access_code:', err?.message || err);
+    if (initData.authorization_url) {
+      window.location.href = initData.authorization_url;
+      return true;
+    }
+    alert('Failed to launch checkout: ' + (err?.message || 'Unknown error'));
     return false;
   }
 }
