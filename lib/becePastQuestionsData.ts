@@ -3,10 +3,8 @@
 // Supporting all 19 examination cohorts from 2008 to 2026
 
 import { BECEPastQuestion, BECEPaperMeta } from './types';
-import { getStoredBeceQuestions, saveBeceQuestions } from './adminStore';
 
 export type { BECEPastQuestion, BECEPaperMeta };
-export { getStoredBeceQuestions, saveBeceQuestions };
 
 export const BECE_PAPERS_CATALOG: BECEPaperMeta[] = [
   {
@@ -2066,9 +2064,8 @@ export const BECE_PAPERS_CATALOG: BECEPaperMeta[] = [
 // Empty by default - All questions are uploaded dynamically by the Admin
 export const BECE_PAST_QUESTIONS: BECEPastQuestion[] = [];
 
-export function getBeceQuestionsByYearAndSubject(year: number, subjectId: string): BECEPastQuestion[] {
-  const allStored = getStoredBeceQuestions();
-  return allStored.filter(q => q.year === year && q.subjectId === subjectId);
+export function getBeceQuestionsByYearAndSubject(questions: BECEPastQuestion[], year: number, subjectId: string): BECEPastQuestion[] {
+  return questions.filter(q => q.year === year && q.subjectId === subjectId);
 }
 
 export function getAllBeceYears(): number[] {

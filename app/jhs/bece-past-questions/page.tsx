@@ -6,9 +6,9 @@ import {
   BECE_PAPERS_CATALOG, 
   BECEPastQuestion,
   getAllBeceYears,
-  getBecePaperMeta,
-  getStoredBeceQuestions
+  getBecePaperMeta
 } from '@/lib/becePastQuestionsData';
+import { getStoredBeceQuestions } from '@/lib/adminStore';
 import { CURRICULUM_SUBJECTS } from '@/lib/curriculumData';
 import { 
   BookOpen, 
