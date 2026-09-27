@@ -99,7 +99,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'c8Px8UXe68J_qsfw_IA5WvgDvVUWE1he_RjcaRInd40',
   },
 };
 
@@ -154,6 +154,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta name="google-site-verification" content="c8Px8UXe68J_qsfw_IA5WvgDvVUWE1he_RjcaRInd40" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
