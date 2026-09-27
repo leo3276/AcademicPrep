@@ -256,6 +256,110 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* High-Intent SEO & Study Resources Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-10">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold mb-3">
+            <Sparkles className="w-3.5 h-3.5" />
+            Ghana’s Premier BECE Hub
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            BECE Past Questions, Mock Exams & NaCCA Curriculum Notes
+          </h2>
+          <p className="text-sm sm:text-base text-slate-600 mt-3 leading-relaxed">
+            Everything Ghanaian Junior High School students (JHS 1, 2, and 3) need to prepare for WAEC BECE success, with step-by-step solutions and verified marking schemes.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* BECE Past Questions Archive Card */}
+          <div className="rounded-2xl bg-gradient-to-br from-blue-900 to-indigo-950 text-white p-7 shadow-xl relative overflow-hidden flex flex-col justify-between">
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-semibold">
+                <FileText className="w-4 h-4 text-blue-400" />
+                1990 – 2025 Archive
+              </div>
+              <h3 className="text-2xl font-bold text-white">
+                WAEC BECE Past Questions & Marking Schemes
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                Access over 30+ years of official WAEC BECE past examination questions with complete marking schemes for all 9 subjects, including Mathematics, Integrated Science, English, Social Studies, ICT, and RME.
+              </p>
+              <div className="grid grid-cols-2 gap-2 text-xs text-slate-300 pt-2">
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>Paper 1 (Obj) & Paper 2</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>Verified Marking Schemes</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>All 9 JHS Subjects</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>Instant PDF Downloads</span>
+                </div>
+              </div>
+            </div>
+            <div className="pt-6">
+              <Link
+                href="/jhs/bece-past-questions"
+                className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md shadow-blue-500/30"
+              >
+                <span>Browse BECE Past Questions (1990 - 2025)</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+
+          {/* BECE Trial & Mock Exam Card */}
+          <div className="rounded-2xl bg-white border-2 border-emerald-500/40 p-7 shadow-xl shadow-emerald-500/5 flex flex-col justify-between">
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold">
+                <Sparkles className="w-4 h-4 text-emerald-600" />
+                2025 Candidates
+              </div>
+              <h3 className="text-2xl font-bold text-slate-900">
+                BECE Trial & Mock Examination Papers
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Standard BECE trial exams and mock papers prepared by veteran GES teachers and examiners to test candidate readiness under real WAEC examination conditions.
+              </p>
+              <div className="grid grid-cols-2 gap-2 text-xs text-slate-700 pt-2">
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>NaCCA-Aligned Mocks</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Detailed Solutions</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Timed Exam Simulator</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Instant Performance Scores</span>
+                </div>
+              </div>
+            </div>
+            <div className="pt-6">
+              <Link
+                href="/jhs/trial-questions"
+                className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md shadow-emerald-600/20"
+              >
+                <span>Practice BECE Trial & Mock Papers</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Key Innovation: Dynamic Weekly Exam */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="rounded-3xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">

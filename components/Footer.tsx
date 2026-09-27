@@ -37,6 +37,16 @@ export default function Footer() {
             <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-3">Study Engine</h4>
             <ul className="space-y-2">
               <li>
+                <Link href="/jhs/bece-past-questions" className="text-slate-300 hover:text-white transition-colors font-medium">
+                  BECE Past Questions (1990 - 2025)
+                </Link>
+              </li>
+              <li>
+                <Link href="/jhs/trial-questions" className="text-slate-300 hover:text-white transition-colors font-medium">
+                  BECE Trial & Mock Exams
+                </Link>
+              </li>
+              <li>
                 <Link href="/jhs" className="text-slate-300 hover:text-white transition-colors font-medium">
                   Curriculum Topic Notes
                 </Link>
