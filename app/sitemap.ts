@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { CURRICULUM_SUBJECTS } from '@/lib/curriculumData';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://academicprep.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.acadmicprep.com';
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
