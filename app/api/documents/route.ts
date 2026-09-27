@@ -107,6 +107,57 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    const contentType = request.headers.get('content-type') || '';
+
+    // 1. Direct-to-Cloud Upload Registration (JSON metadata payload)
+    if (contentType.includes('application/json')) {
+      const body = await request.json();
+      const {
+        title,
+        category,
+        subjectId,
+        subjectName,
+        year,
+        level,
+        paperType,
+        fileName,
+        fileUrl,
+        fileSizeBytes,
+      } = body;
+
+      if (!title || !category || !subjectId || !fileUrl) {
+        return NextResponse.json(
+          { error: 'Missing required metadata (title, category, subject, fileUrl)' },
+          { status: 400 }
+        );
+      }
+
+      const timestamp = Date.now();
+      const docId = `doc_${timestamp}_${Math.random().toString(36).slice(2, 7)}`;
+
+      const newDoc: UploadedPdfDocument = {
+        id: docId,
+        title: String(title).trim(),
+        category,
+        subjectId,
+        subjectName: subjectName || subjectId,
+        year: year ? Number(year) : undefined,
+        level: level ? (level as any) : undefined,
+        paperType: paperType || 'Full Exam Paper',
+        fileName: fileName || 'document.pdf',
+        fileUrl,
+        fileSizeBytes: Number(fileSizeBytes) || 0,
+        uploadedAt: new Date().toISOString(),
+      };
+
+      const existingDocs = await getStoredDocuments();
+      const updated = [newDoc, ...existingDocs.filter((d) => d.id !== newDoc.id)];
+      await saveStoredDocuments(updated);
+
+      return NextResponse.json(newDoc, { status: 201 });
+    }
+
+    // 2. Standard Multipart FormData Upload Fallback
     const formData = await request.formData();
     const file = formData.get('file') as File | null;
     const title = formData.get('title') as string | null;

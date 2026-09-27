@@ -67,6 +67,82 @@ export async function fetchUploadedDocuments(): Promise<UploadedPdfDocument[]> {
  * Upload a new PDF document via multipart FormData
  */
 export async function uploadPdfDocument(formData: FormData): Promise<UploadedPdfDocument> {
+  const file = formData.get('file') as File | null;
+  const title = formData.get('title') as string | null;
+  const category = formData.get('category') as PdfCategory | null;
+  const subjectId = formData.get('subjectId') as string | null;
+  const subjectName = formData.get('subjectName') as string | null;
+  const year = formData.get('year') as string | null;
+  const level = formData.get('level') as any;
+  const paperType = formData.get('paperType') as PdfPaperType | null;
+
+  // 1. Direct-to-Cloud Upload (Bypasses Vercel 4.5MB serverless body limit)
+  if (file && typeof file !== 'string') {
+    try {
+      // Step A: Request a signed upload authorization (< 1 KB request)
+      const signRes = await fetch('/api/documents/upload-url', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fileName: file.name, contentType: file.type }),
+      });
+
+      if (signRes.ok) {
+        const signData = await signRes.json();
+        if (signData.signedUrl && signData.publicUrl) {
+          // Step B: Stream file directly to Supabase Storage CDN (No 4.5MB Vercel limit!)
+          const uploadRes = await fetch(signData.signedUrl, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': file.type || 'application/pdf',
+            },
+            body: file,
+          });
+
+          if (!uploadRes.ok) {
+            throw new Error(`Direct cloud storage upload failed (HTTP ${uploadRes.status})`);
+          }
+
+          // Step C: Register document metadata on the server (< 1 KB request)
+          const metaRes = await fetch('/api/documents', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              title: title ? title.trim() : file.name,
+              category,
+              subjectId,
+              subjectName: subjectName || subjectId,
+              year,
+              level,
+              paperType: paperType || 'Full Exam Paper',
+              fileName: file.name,
+              fileUrl: signData.publicUrl,
+              fileSizeBytes: file.size,
+            }),
+          });
+
+          if (metaRes.ok) {
+            const created: UploadedPdfDocument = await metaRes.json();
+            // Sync with local cache
+            if (typeof window !== 'undefined') {
+              try {
+                const existing = await fetchUploadedDocuments();
+                const updated = [created, ...existing.filter((d) => d.id !== created.id)];
+                localStorage.setItem(PDF_LOCAL_STORAGE_KEY, JSON.stringify(updated));
+              } catch {}
+            }
+            return created;
+          } else {
+            const errData = await metaRes.json().catch(() => ({}));
+            throw new Error(errData.error || 'Failed to register document metadata');
+          }
+        }
+      }
+    } catch (directErr: any) {
+      console.warn('Direct upload warning, attempting multipart fallback:', directErr?.message || directErr);
+    }
+  }
+
+  // 2. Fallback: Standard multipart upload
   const res = await fetch('/api/documents', {
     method: 'POST',
     body: formData,
@@ -83,7 +159,7 @@ export async function uploadPdfDocument(formData: FormData): Promise<UploadedPdf
   if (typeof window !== 'undefined') {
     try {
       const existing = await fetchUploadedDocuments();
-      const updated = [created, ...existing.filter(d => d.id !== created.id)];
+      const updated = [created, ...existing.filter((d) => d.id !== created.id)];
       localStorage.setItem(PDF_LOCAL_STORAGE_KEY, JSON.stringify(updated));
     } catch {
       // ignore
