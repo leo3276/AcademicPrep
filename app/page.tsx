@@ -323,27 +323,27 @@ export default function HomePage() {
                 2025 Candidates
               </div>
               <h3 className="text-2xl font-bold text-slate-900">
-                BECE Trial & Mock Examination Papers
+                BECE Trial, Mock Papers & Likely Questions
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Standard BECE trial exams and mock papers prepared by veteran GES teachers and examiners to test candidate readiness under real WAEC examination conditions.
+                Access BECE likely questions, Best Brain mock papers, CEPME, GBat, Metro and GES district mock exams prepared to test candidate readiness with verified marking schemes.
               </p>
               <div className="grid grid-cols-2 gap-2 text-xs text-slate-700 pt-2">
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>NaCCA-Aligned Mocks</span>
+                  <span>Best Brain & GES Mocks</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Detailed Solutions</span>
+                  <span>Official Marking Schemes</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Timed Exam Simulator</span>
+                  <span>BECE Likely Questions</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Instant Performance Scores</span>
+                  <span>Step-by-Step Math & Science</span>
                 </div>
               </div>
             </div>

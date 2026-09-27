@@ -5,9 +5,16 @@ export const metadata: Metadata = {
   description:
     'Download and practice official WAEC BECE past examination questions with step-by-step marking schemes for Mathematics, Integrated Science, English, Social Studies, ICT, and RME.',
   keywords: [
+    'BECE likely questions',
+    'BECE apor',
+    'How to solve Mathematics',
+    'science questions',
+    'free questions',
+    'Marking schemes',
     'BECE past questions and answers',
     'BECE 2024 past questions pdf',
     'BECE 2025 past questions',
+    'BECE 2027 questions',
     'WAEC BECE past questions download',
     'BECE past questions Ghana',
     'BECE integrated science past questions',
