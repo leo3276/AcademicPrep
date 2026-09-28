@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
+import OnboardingGuide from '@/components/OnboardingGuide';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/lib/authContext';
 import { EducationLevel } from '@/lib/types';
@@ -44,6 +45,8 @@ function LoginFormContent() {
   const [regAccessPin, setRegAccessPin] = useState('');
   const [regLoading, setRegLoading] = useState(false);
   const [regError, setRegError] = useState<string | null>(null);
+  const [hasClosedGuide, setHasClosedGuide] = useState(false);
+  const showGuide = activeTab === 'register' && !hasClosedGuide;
 
   // If already logged in, show status & option to switch account or sign out
   if (student) {
@@ -171,7 +174,7 @@ function LoginFormContent() {
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex p-1 bg-slate-100 rounded-xl">
+        <div id="guide-step-tab" className="flex p-1 bg-slate-100 rounded-xl">
           <button
             type="button"
             onClick={() => {
@@ -308,7 +311,7 @@ function LoginFormContent() {
         {activeTab === 'register' && (
           <form onSubmit={handleRegister} className="space-y-4">
             {/* Full Name */}
-            <div>
+            <div id="guide-step-name">
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
                 Full Name <span className="text-rose-500">*</span>
               </label>
@@ -326,7 +329,7 @@ function LoginFormContent() {
             </div>
 
             {/* Phone Number */}
-            <div>
+            <div id="guide-step-phone">
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
                 Phone Number <span className="text-rose-500">*</span>
               </label>
@@ -345,7 +348,7 @@ function LoginFormContent() {
             </div>
 
             {/* Class Level */}
-            <div>
+            <div id="guide-step-level">
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
                 Class Level <span className="text-rose-500">*</span>
               </label>
@@ -361,7 +364,7 @@ function LoginFormContent() {
             </div>
 
             {/* Password */}
-            <div>
+            <div id="guide-step-pass">
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
                 Create Account Password or PIN <span className="text-rose-500">*</span>
               </label>
@@ -386,7 +389,7 @@ function LoginFormContent() {
             </div>
 
             {/* Access PIN (Optional) */}
-            <div className="pt-2 border-t border-slate-100 space-y-1.5">
+            <div id="guide-step-access" className="pt-2 border-t border-slate-100 space-y-1.5">
               <div className="flex items-center justify-between">
                 <label className="text-xs font-bold uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
                   <KeyRound className="w-3.5 h-3.5 text-amber-600" />
@@ -426,6 +429,7 @@ function LoginFormContent() {
             )}
 
             <button
+              id="guide-step-submit"
               type="submit"
               disabled={regLoading}
               className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-md shadow-blue-500/20 disabled:bg-slate-300 cursor-pointer"
@@ -472,6 +476,13 @@ function LoginFormContent() {
         </div>
 
       </div>
+
+      {/* Minimalist Guided Onboarding Walkthrough */}
+      <OnboardingGuide
+        isOpen={showGuide}
+        onClose={() => setHasClosedGuide(true)}
+        activeTab={activeTab}
+      />
     </div>
   );
 }
