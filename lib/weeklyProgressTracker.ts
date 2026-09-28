@@ -4,7 +4,7 @@
 import { EducationLevel, QuizQuestion, CurriculumTopic } from './types';
 import { JHS_CURRICULUM_TOPICS, CURRICULUM_SUBJECTS } from './curriculumData';
 import { WEEKLY_THEORY_QUESTIONS, WeeklyTheoryQuestion } from './weeklyTheoryQuestionBank';
-import { saveWeeklyExamToSupabase, saveStudentMistakeToSupabase } from './supabaseService';
+import { saveWeeklyExam, saveStudentMistake, hasSessionToken } from './apiClient';
 
 export interface QuizMistakeRecord {
   id: string;
@@ -141,19 +141,18 @@ export function logQuizMistakes(newMistakes: Omit<QuizMistakeRecord, 'id' | 'tim
     const combined = [...formatted, ...existing].slice(0, 50); // Keep latest 50
     localStorage.setItem(getMistakesStorageKey(), JSON.stringify(combined));
 
-    // Also persist mistakes to Supabase for the active student
-    const phone = getActiveStudentPhone();
-    if (phone) {
+    // Sync the mistake ledger to the signed-in account. Anonymous visitors keep
+    // their mistakes on the device only.
+    if (hasSessionToken()) {
       newMistakes.forEach(m => {
-        saveStudentMistakeToSupabase({
-          phoneNumber: phone,
+        saveStudentMistake({
           topicId: m.topicId,
           subjectName: m.subjectName,
           subConcept: m.subConcept,
           questionText: m.questionText,
           studentWrongAnswer: m.selectedOption,
           correctAnswer: m.correctOption,
-        }).catch(err => console.warn('Supabase mistake log notice:', err?.message || err));
+        }).catch(err => console.warn('Mistake sync notice:', err?.message || err));
       });
     }
   } catch (err: any) {
@@ -433,9 +432,8 @@ export function recordFullWeeklyExamAttempt(attempt: Omit<FullWeeklyExamAttempt,
       const updated = [fullAttempt, ...existing];
       localStorage.setItem(key, JSON.stringify(updated));
 
-      const phone = getActiveStudentPhone();
-      if (phone) {
-        saveWeeklyExamToSupabase(phone, fullAttempt).catch(e => console.warn('Supabase weekly exam save notice:', e?.message || e));
+      if (hasSessionToken()) {
+        saveWeeklyExam(fullAttempt).catch(e => console.warn('Weekly exam sync notice:', e?.message || e));
       }
     } catch (err: any) {
       console.warn('Failed to save weekly exam attempt:', err?.message || err);

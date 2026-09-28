@@ -1,24 +1,36 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { 
-  Student, 
-  EducationLevel, 
-  AccessPin, 
-  CashFlowTransaction, 
-  StudentTopicProgress, 
+import {
+  Student,
+  EducationLevel,
+  AccessPin,
+  CashFlowTransaction,
+  StudentTopicProgress,
   WeeklyExamAttempt,
   AdminMetrics
 } from './types';
 import {
-  registerStudentInSupabase,
-  loginStudentInSupabase,
-  fetchStudentByPhoneFromSupabase,
-  fetchStudentProgressFromSupabase,
-  saveTopicProgressToSupabase,
-  redeemPinInSupabase,
-  fetchWeeklyExamsFromSupabase
-} from './supabaseService';
+  registerStudent as apiRegisterStudent,
+  loginStudent as apiLoginStudent,
+  fetchCurrentStudent,
+  logoutStudent as apiLogoutStudent,
+  fetchStudentProgress,
+  saveTopicProgress,
+  syncStudentAccount,
+  redeemAccessPin as apiRedeemAccessPin,
+  fetchWeeklyExams,
+  fetchAccessPins,
+  generatePinBatch as apiGeneratePinBatch,
+  adminLogin,
+  adminLogout,
+  fetchAdminSession,
+  updateAdminPins as apiUpdateAdminPins,
+  getSessionToken,
+  setSessionToken,
+  clearSessionToken,
+  ALLOWED_LEVELS,
+} from './apiClient';
 
 interface AuthContextType {
   student: Student | null;
@@ -37,216 +49,177 @@ interface AuthContextType {
     password?: string;
     accessPinCode?: string;
   }) => Promise<{ success: boolean; error?: string }>;
-  logoutStudent: () => void;
+  logoutStudent: () => Promise<void>;
   canAccessTopic: (topicId: string) => { allowed: boolean; reason?: string; topicsUsed: number; maxFreeTopics: number };
   getCompletedTopicsCount: () => number;
-  loginAdmin: (primaryPin: string, secondaryPin: string) => boolean;
-  logoutAdmin: () => void;
-  verifyPrimaryPin: (pin: string) => boolean;
-  verifySecondaryPin: (pin: string) => boolean;
-  updateAdminPins: (newPrimary: string, newSecondary: string) => boolean;
-  getAdminPins: () => { primary: string; secondary: string };
+  loginAdmin: (primaryPin: string, secondaryPin: string) => Promise<boolean>;
+  logoutAdmin: () => Promise<void>;
+  updateAdminPins: (params: {
+    currentPrimary: string;
+    currentSecondary: string;
+    newPrimary: string;
+    newSecondary: string;
+  }) => Promise<{ success: boolean; error?: string }>;
   redeemPin: (pinCode: string) => Promise<{ success: boolean; message: string }>;
   recordQuizScore: (topicId: string, scorePercentage: number) => void;
   recordWeeklyExamAttempt: (attempt: Omit<WeeklyExamAttempt, 'id' | 'createdAt'>) => void;
-  generatePinBatch: (count: number, priceGhs: number, validityDays: number) => AccessPin[];
+  generatePinBatch: (count: number, priceGhs: number, validityDays: number) => Promise<AccessPin[]>;
   refreshPins: () => Promise<void>;
   getAdminMetrics: () => AdminMetrics;
 }
 
-export const DEFAULT_ADMIN_PRIMARY_PIN = '9276@Dollar';
-export const DEFAULT_ADMIN_SECONDARY_PIN = '9276@AcademicPrep';
-
 const STORAGE_KEYS = {
   CURRENT_STUDENT: 'academicprep_student',
-  IS_ADMIN: 'academicprep_is_admin',
-  ADMIN_PRIMARY_PIN: 'academicprep_admin_primary_pin',
-  ADMIN_SECONDARY_PIN: 'academicprep_admin_secondary_pin',
   TOPIC_PROGRESS: 'academicprep_topic_progress',
   ACCESS_PINS: 'academicprep_access_pins',
   TRANSACTIONS: 'academicprep_cash_flow',
   EXAM_ATTEMPTS: 'academicprep_exam_attempts',
 };
 
-const DEFAULT_PINS: AccessPin[] = [];
-const DEFAULT_TRANSACTIONS: CashFlowTransaction[] = [];
+// Credentials and admin flags must never live in the browser any more. These
+// keys are from the previous implementation and are cleared on load so a stale
+// value cannot be used to spoof the dashboard.
+const RETIRED_STORAGE_KEYS = [
+  'academicprep_is_admin',
+  'academicprep_admin_primary_pin',
+  'academicprep_admin_secondary_pin',
+];
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+function readLocalStorage<T>(key: string, fallback: T): T {
+  if (typeof window === 'undefined') return fallback;
+  try {
+    const raw = window.localStorage.getItem(key);
+    return raw ? (JSON.parse(raw) as T) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function writeLocalStorage(key: string, value: unknown): void {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    // Storage unavailable (private mode); state simply will not persist.
+  }
+}
+
+/** Derive the cash-flow ledger from redeemed vouchers and Paystack payments. */
+function deriveTransactions(pinRows: AccessPin[]): CashFlowTransaction[] {
+  return pinRows
+    .filter((pin) => pin.status === 'REDEEMED')
+    .map((pin) => {
+      const isPaystack = pin.batchId === 'BATCH-PAYSTACK-MOMO' || pin.pinCode.includes('MOMO');
+      return {
+        id: `tx-${pin.id}`,
+        reference: pin.pinCode,
+        studentPhone: pin.redeemedByStudentId || 'Verified Student',
+        amountGhs: Number(pin.priceGhs) || 25,
+        transactionType: 'PIN_PURCHASE' as const,
+        paymentMethod: isPaystack ? 'Paystack Mobile Money' : 'Scratch-Card / PIN Voucher',
+        pinCodeUsed: pin.pinCode,
+        description: `${pin.validityDays || 30}-Day Full Access Pass`,
+        createdAt: pin.redeemedAt || pin.createdAt,
+      };
+    });
+}
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [student, setStudent] = useState<Student | null>(null);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [topicProgress, setTopicProgress] = useState<Record<string, StudentTopicProgress>>({});
-  const [pins, setPins] = useState<AccessPin[]>(DEFAULT_PINS);
-  const [transactions, setTransactions] = useState<CashFlowTransaction[]>(DEFAULT_TRANSACTIONS);
+  const [pins, setPins] = useState<AccessPin[]>([]);
+  const [transactions, setTransactions] = useState<CashFlowTransaction[]>([]);
   const [weeklyExamAttempts, setWeeklyExamAttempts] = useState<WeeklyExamAttempt[]>([]);
 
-  // Load persisted state from localStorage on mount and sync with Supabase
   useEffect(() => {
     let isMounted = true;
 
     async function initializeAuth() {
       try {
-        let activeStudent: Student | null = null;
-        const storedStudentStr = localStorage.getItem(STORAGE_KEYS.CURRENT_STUDENT);
-        if (storedStudentStr) {
-          try {
-            activeStudent = JSON.parse(storedStudentStr);
-            if (activeStudent) {
-              const isExpired = activeStudent.accessExpiresAt
-                ? new Date(activeStudent.accessExpiresAt).getTime() <= Date.now()
-                : false;
-              if (isExpired && activeStudent.hasFullAccess) {
-                activeStudent = {
-                  ...activeStudent,
-                  hasFullAccess: false,
-                  accessType: 'Expired',
-                };
-                localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(activeStudent));
-              }
-              if (isMounted) setStudent(activeStudent);
-            }
-          } catch {}
-        }
-
         if (typeof window !== 'undefined') {
-          const sessionAdmin = sessionStorage.getItem(STORAGE_KEYS.IS_ADMIN);
-          if (sessionAdmin === 'true') {
-            if (isMounted) setIsAdmin(true);
-          } else {
-            if (isMounted) setIsAdmin(false);
-            localStorage.removeItem(STORAGE_KEYS.IS_ADMIN);
-          }
+          RETIRED_STORAGE_KEYS.forEach((key) => window.localStorage.removeItem(key));
+          window.sessionStorage.removeItem('academicprep_is_admin');
         }
 
-        // Load account-specific topic progress & sync live student data
-        if (activeStudent && activeStudent.phoneNumber) {
-          const phone = activeStudent.phoneNumber;
+        // Administrator state comes from the server session cookie, never from a
+        // browser flag that any visitor could set in devtools.
+        const adminSession = await fetchAdminSession();
+        if (isMounted) setIsAdmin(adminSession);
 
-          // Background sync student record from Supabase (to pick up expiry or new payment)
-          try {
-            const liveStudent = await fetchStudentByPhoneFromSupabase(phone);
-            if (liveStudent && isMounted) {
-              activeStudent = liveStudent;
-              setStudent(liveStudent);
-              localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(liveStudent));
-            }
-          } catch (err: any) {
-            console.warn('Student profile sync notice:', err?.message || err);
-          }
-          let studentProgress: Record<string, StudentTopicProgress> = {};
-          
-          const localScoped = localStorage.getItem(`academicprep_progress_${phone}`);
-          if (localScoped) {
-            try {
-              studentProgress = JSON.parse(localScoped);
-            } catch {}
-          } else {
-            // Check legacy key for initial migration
-            const legacyProgress = localStorage.getItem(STORAGE_KEYS.TOPIC_PROGRESS);
-            if (legacyProgress) {
-              try {
-                studentProgress = JSON.parse(legacyProgress);
-              } catch {}
-            }
-          }
+        const cachedStudent = readLocalStorage<Student | null>(STORAGE_KEYS.CURRENT_STUDENT, null);
+        if (cachedStudent && isMounted) setStudent(cachedStudent);
 
-          if (isMounted) setTopicProgress(studentProgress);
+        if (getSessionToken()) {
+          const liveStudent = await fetchCurrentStudent();
 
-          // Background sync from Supabase
-          try {
-            const supaProgress = await fetchStudentProgressFromSupabase(phone);
-            if (supaProgress && Object.keys(supaProgress).length > 0 && isMounted) {
-              setTopicProgress(prev => {
-                const merged = { ...prev, ...supaProgress };
-                localStorage.setItem(`academicprep_progress_${phone}`, JSON.stringify(merged));
-                return merged;
-              });
-            }
-          } catch (err: any) {
-            console.warn('Supabase progress sync warning:', err?.message || err);
-          }
+          if (!liveStudent) {
+            // Token rejected or expired: drop it and the cached profile so the
+            // paywall cannot be driven by stale local data.
+            clearSessionToken();
+            if (typeof window !== 'undefined') window.localStorage.removeItem(STORAGE_KEYS.CURRENT_STUDENT);
+            if (isMounted) setStudent(null);
+          } else if (isMounted) {
+            setStudent(liveStudent);
+            writeLocalStorage(STORAGE_KEYS.CURRENT_STUDENT, liveStudent);
 
-          // Background fetch weekly exams for this student
-          try {
-            const supaExams = await fetchWeeklyExamsFromSupabase(phone);
-            if (Array.isArray(supaExams) && supaExams.length > 0 && isMounted) {
-              const formattedExams: WeeklyExamAttempt[] = supaExams.map((e: any) => ({
-                id: e.id,
-                studentId: e.student_phone || phone,
-                level: e.level,
-                coveredTopicIds: [],
-                totalQuestions: e.paper1_total || 20,
-                correctAnswers: e.paper1_score || 0,
-                scorePercentage: e.composite_total_percentage || 0,
-                timeSpentSeconds: 1200,
-                createdAt: e.completed_at
-              }));
-              setWeeklyExamAttempts(formattedExams);
+            const phone = liveStudent.phoneNumber;
+
+            const scopedProgress = readLocalStorage<Record<string, StudentTopicProgress>>(
+              `academicprep_progress_${phone}`,
+              {}
+            );
+            const cloudProgress = await fetchStudentProgress();
+            const mergedProgress = { ...scopedProgress, ...cloudProgress };
+
+            if (isMounted) {
+              setTopicProgress(mergedProgress);
+              writeLocalStorage(`academicprep_progress_${phone}`, mergedProgress);
             }
-          } catch (err: any) {
-            console.warn('Supabase exams fetch warning:', err?.message || err);
+
+            const exams = await fetchWeeklyExams();
+            if (isMounted && Array.isArray(exams)) {
+              setWeeklyExamAttempts(
+                exams.map((exam: any) => ({
+                  id: exam.id,
+                  studentId: exam.student_phone || phone,
+                  level: exam.level,
+                  coveredTopicIds: [],
+                  totalQuestions: exam.paper1_total || 20,
+                  correctAnswers: exam.paper1_score || 0,
+                  scorePercentage: exam.composite_total_percentage || 0,
+                  timeSpentSeconds: 1200,
+                  createdAt: exam.completed_at,
+                }))
+              );
+            }
           }
-        } else {
+        } else if (isMounted) {
+          const fallbackProgress = cachedStudent?.phoneNumber
+            ? readLocalStorage<Record<string, StudentTopicProgress>>(
+                `academicprep_progress_${cachedStudent.phoneNumber}`,
+                {}
+              )
+            : readLocalStorage<Record<string, StudentTopicProgress>>(STORAGE_KEYS.TOPIC_PROGRESS, {});
+
+          setTopicProgress(fallbackProgress);
+          setWeeklyExamAttempts(readLocalStorage<WeeklyExamAttempt[]>(STORAGE_KEYS.EXAM_ATTEMPTS, []));
+        }
+
+        // Voucher codes are worth money, so they are only loaded for admins.
+        if (adminSession) {
+          const livePins = await fetchAccessPins();
           if (isMounted) {
-            setTopicProgress({});
-            setWeeklyExamAttempts([]);
+            setPins(livePins);
+            writeLocalStorage(STORAGE_KEYS.ACCESS_PINS, livePins);
+
+            const derived = deriveTransactions(livePins);
+            setTransactions(derived);
+            writeLocalStorage(STORAGE_KEYS.TRANSACTIONS, derived);
           }
-        }
-
-        const storedPins = localStorage.getItem(STORAGE_KEYS.ACCESS_PINS);
-        if (storedPins) {
-          try {
-            if (isMounted) setPins(JSON.parse(storedPins));
-          } catch {}
-        } else {
-          localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(DEFAULT_PINS));
-        }
-
-        // Background sync live PIN database from server/Supabase
-        try {
-          const res = await fetch('/api/pins');
-          if (res.ok) {
-            const serverPins = await res.json();
-            if (Array.isArray(serverPins) && serverPins.length > 0 && isMounted) {
-              setPins(serverPins);
-              localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(serverPins));
-
-              // Derive genuine transactions from real redeemed vouchers & Paystack payments
-              const redeemedPins = serverPins.filter((p: any) => p.status === 'REDEEMED');
-              const realTxs: CashFlowTransaction[] = redeemedPins.map((p: any) => {
-                const isPaystack = p.batchId === 'BATCH-PAYSTACK-MOMO' || p.batch_id === 'BATCH-PAYSTACK-MOMO' || (p.pinCode || p.pin_code || '').includes('MOMO');
-                return {
-                  id: `tx-${p.id}`,
-                  reference: p.pinCode || p.pin_code || `REF-${p.id.slice(-6)}`,
-                  studentPhone: p.redeemedByStudentId || p.redeemed_by_student_phone || 'Verified Student',
-                  amountGhs: Number(p.priceGhs || p.price_ghs || 25),
-                  transactionType: 'PIN_PURCHASE',
-                  paymentMethod: isPaystack ? 'Paystack Mobile Money' : 'Scratch-Card / PIN Voucher',
-                  pinCodeUsed: p.pinCode || p.pin_code,
-                  description: `${p.validityDays || p.validity_days || 30}-Day Full JHS Access Pass`,
-                  createdAt: p.redeemedAt || p.redeemed_at || p.createdAt || p.created_at || new Date().toISOString()
-                };
-              });
-
-              setTransactions(realTxs);
-              localStorage.setItem(STORAGE_KEYS.TRANSACTIONS, JSON.stringify(realTxs));
-            }
-          }
-        } catch (e: any) {
-          console.warn('Pins sync notice:', e?.message || e);
-        }
-
-        const storedTxs = localStorage.getItem(STORAGE_KEYS.TRANSACTIONS);
-        if (storedTxs) {
-          try {
-            const parsed = JSON.parse(storedTxs);
-            if (Array.isArray(parsed) && isMounted) {
-              const cleaned = parsed.filter((t: any) => t.studentPhone !== '0241234567' && t.studentPhone !== '0559876543');
-              setTransactions(cleaned);
-            }
-          } catch {}
         }
       } catch {
         // Graceful fallback for SSR or restricted storage
@@ -262,9 +235,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
   }, []);
 
-  /**
-   * Register a new student account in Supabase
-   */
   const registerStudent = async (params: {
     phoneNumber: string;
     fullName: string;
@@ -282,98 +252,40 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (!params.password || !params.password.trim()) {
       return { success: false, error: 'Please create a password or PIN for your account.' };
     }
-
-    let hasFullAccess = false;
-    let accessType: 'Full Pass' | 'Free Trial' = 'Free Trial';
-    let accessExpiresAt: string | undefined = undefined;
-
-    // Check Access PIN if supplied
-    if (params.accessPinCode && params.accessPinCode.trim()) {
-      const cleanPin = params.accessPinCode.trim().toUpperCase();
-      const targetPinIdx = pins.findIndex(p => p.pinCode === cleanPin);
-      if (targetPinIdx >= 0 && pins[targetPinIdx].status === 'ACTIVE') {
-        const targetPin = pins[targetPinIdx];
-        const expiry = new Date();
-        expiry.setDate(expiry.getDate() + targetPin.validityDays);
-        hasFullAccess = true;
-        accessType = 'Full Pass';
-        accessExpiresAt = expiry.toISOString();
-
-        // Mark pin redeemed
-        const updatedPins = [...pins];
-        updatedPins[targetPinIdx] = {
-          ...targetPin,
-          status: 'REDEEMED',
-          redeemedAt: new Date().toISOString(),
-        };
-        setPins(updatedPins);
-        localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(updatedPins));
-      } else {
-        return { 
-          success: false, 
-          error: 'The Access PIN entered is invalid or already redeemed. Leave the PIN field empty to start with 3 free trial topics.' 
-        };
-      }
+    if (!ALLOWED_LEVELS.includes(params.currentLevel)) {
+      return { success: false, error: 'Please select a valid class level.' };
     }
 
-    // Register with Supabase
-    const supaRes = await registerStudentInSupabase({
-      phoneNumber: cleanPhone,
-      fullName: params.fullName,
-      password: params.password,
-      currentLevel: params.currentLevel,
-      hasFullAccess,
-      accessType,
-      accessExpiresAt,
-    });
-
-    if (!supaRes.success) {
-      return { success: false, error: supaRes.error };
-    }
-
-    const newStudent = supaRes.student || {
-      id: `student-${cleanPhone.slice(-6)}`,
+    // Voucher validation is the server's job. Trusting the locally cached pin
+    // list let anyone unlock full access offline.
+    const result = await apiRegisterStudent({
       phoneNumber: cleanPhone,
       fullName: params.fullName.trim(),
       currentLevel: params.currentLevel,
-      hasFullAccess,
-      accessType,
-      accessExpiresAt,
-      completedTopicIds: [],
-      topicsCompletedCount: 0,
-      createdAt: new Date().toISOString(),
-      lastActiveAt: new Date().toISOString(),
-    };
+      password: params.password.trim(),
+      accessPinCode: params.accessPinCode?.trim() || undefined,
+    });
 
-    // Initialize completely clean per-account state (no cross-account data leakage)
+    if (!result.success || !result.student) {
+      return { success: false, error: result.error || 'Registration failed. Please try again.' };
+    }
+
+    const newStudent = result.student;
+
     setStudent(newStudent);
     setTopicProgress({});
     setWeeklyExamAttempts([]);
-    localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(newStudent));
-    localStorage.setItem(`academicprep_progress_${cleanPhone}`, JSON.stringify({}));
-    localStorage.removeItem(STORAGE_KEYS.TOPIC_PROGRESS);
+    writeLocalStorage(STORAGE_KEYS.CURRENT_STUDENT, newStudent);
+    writeLocalStorage(`academicprep_progress_${cleanPhone}`, {});
+    if (typeof window !== 'undefined') window.localStorage.removeItem(STORAGE_KEYS.TOPIC_PROGRESS);
 
-    // Sync to API endpoint for redundancy
-    try {
-      fetch('/api/students', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          phone: cleanPhone,
-          name: params.fullName,
-          level: params.currentLevel,
-          accessType,
-          accessExpiresAt,
-        })
-      }).catch(err => console.warn('Student sync notice:', err?.message || err));
-    } catch {}
+    if (result.pinMessage && !newStudent.hasFullAccess) {
+      return { success: true, error: result.pinMessage };
+    }
 
     return { success: true };
   };
 
-  /**
-   * Sign In an existing student with Phone Number + Password/PIN
-   */
   const signInStudent = async (
     phoneNumber: string,
     password?: string
@@ -386,113 +298,106 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return { success: false, error: 'Please enter your password or PIN.' };
     }
 
-    // 1. Authenticate with Supabase
-    const supaRes = await loginStudentInSupabase(cleanPhone, password);
-    if (!supaRes.success || !supaRes.student) {
-      return { success: false, error: supaRes.error || 'Authentication failed. Please check your credentials.' };
+    const result = await apiLoginStudent(cleanPhone, password.trim());
+    if (!result.success || !result.student) {
+      return { success: false, error: result.error || 'Authentication failed. Please check your credentials.' };
     }
 
-    const authenticatedStudent = supaRes.student;
+    const authenticatedStudent = result.student;
 
-    // 2. Fetch this student's isolated topic progress from Supabase
-    const supaProgress = await fetchStudentProgressFromSupabase(cleanPhone);
-    
-    // Check account-scoped local cache
-    let localProgress: Record<string, StudentTopicProgress> = {};
-    try {
-      const raw = localStorage.getItem(`academicprep_progress_${cleanPhone}`);
-      if (raw) localProgress = JSON.parse(raw);
-    } catch {}
+    const localProgress = readLocalStorage<Record<string, StudentTopicProgress>>(
+      `academicprep_progress_${cleanPhone}`,
+      {}
+    );
+    const cloudProgress = await fetchStudentProgress();
+    const mergedProgress = { ...localProgress, ...cloudProgress };
 
-    const mergedProgress = { ...localProgress, ...supaProgress };
+    const exams = await fetchWeeklyExams();
+    const examAttempts: WeeklyExamAttempt[] = Array.isArray(exams)
+      ? exams.map((exam: any) => ({
+          id: exam.id,
+          studentId: exam.student_phone || cleanPhone,
+          level: exam.level,
+          coveredTopicIds: [],
+          totalQuestions: exam.paper1_total || 20,
+          correctAnswers: exam.paper1_score || 0,
+          scorePercentage: exam.composite_total_percentage || 0,
+          timeSpentSeconds: 1200,
+          createdAt: exam.completed_at,
+        }))
+      : [];
 
-    // 3. Fetch this student's isolated weekly exam attempts
-    const supaExams = await fetchWeeklyExamsFromSupabase(cleanPhone);
-    const examAttempts: WeeklyExamAttempt[] = Array.isArray(supaExams) ? supaExams.map((e: any) => ({
-      id: e.id,
-      studentId: e.student_phone || cleanPhone,
-      level: e.level,
-      coveredTopicIds: [],
-      totalQuestions: e.paper1_total || 20,
-      correctAnswers: e.paper1_score || 0,
-      scorePercentage: e.composite_total_percentage || 0,
-      timeSpentSeconds: 1200,
-      createdAt: e.completed_at
-    })) : [];
-
-    // 4. Update memory state for this student only
     setStudent(authenticatedStudent);
     setTopicProgress(mergedProgress);
     setWeeklyExamAttempts(examAttempts);
 
-    // 5. Persist student and isolated cache
-    localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(authenticatedStudent));
-    localStorage.setItem(`academicprep_progress_${cleanPhone}`, JSON.stringify(mergedProgress));
+    writeLocalStorage(STORAGE_KEYS.CURRENT_STUDENT, authenticatedStudent);
+    writeLocalStorage(`academicprep_progress_${cleanPhone}`, mergedProgress);
 
     return { success: true };
   };
 
-  /**
-   * Backwards-compatible loginStudent helper
-   */
   const loginStudent = async (
-    phoneNumber: string, 
-    fullNameOrPin: string, 
-    levelOrFullName?: EducationLevel | string, 
+    phoneNumber: string,
+    fullNameOrPin: string,
+    levelOrFullName?: EducationLevel | string,
     accessPinCode?: string
   ): Promise<{ success: boolean; error?: string }> => {
     const cleanPhone = phoneNumber.trim().replace(/\s+/g, '');
     let fullName = '';
     let level: EducationLevel = 'JHS 1';
-    let pinCode: string | undefined = undefined;
+    let pinCode: string | undefined;
 
-    if (fullNameOrPin && fullNameOrPin.length === 4 && /^\d{4}$/.test(fullNameOrPin) && typeof levelOrFullName === 'string' && levelOrFullName.length > 2) {
+    if (
+      fullNameOrPin &&
+      fullNameOrPin.length === 4 &&
+      /^\d{4}$/.test(fullNameOrPin) &&
+      typeof levelOrFullName === 'string' &&
+      levelOrFullName.length > 2
+    ) {
       fullName = levelOrFullName.trim();
       level = 'JHS 1';
     } else {
       fullName = fullNameOrPin ? fullNameOrPin.trim() : '';
-      if (levelOrFullName && ['JHS 1', 'JHS 2', 'JHS 3', 'SHS 1', 'SHS 2', 'SHS 3', 'UNIVERSITY'].includes(levelOrFullName as string)) {
+      if (levelOrFullName && (ALLOWED_LEVELS as string[]).includes(levelOrFullName as string)) {
         level = levelOrFullName as EducationLevel;
       }
       pinCode = accessPinCode?.trim();
     }
 
     if (fullName) {
-      const regRes = await registerStudent({
+      return registerStudent({
         phoneNumber: cleanPhone,
         fullName,
         currentLevel: level,
         accessPinCode: pinCode,
       });
-      if (regRes.success) return { success: true };
-      if (regRes.error && regRes.error.toLowerCase().includes('already exists')) {
-        return { success: false, error: 'An account with this phone number already exists. Please switch to Sign In and enter your password.' };
-      }
-      return regRes;
-    } else {
-      return await signInStudent(cleanPhone, fullNameOrPin);
     }
+
+    return signInStudent(cleanPhone, fullNameOrPin);
   };
 
-  /**
-   * Log out current student and completely isolate state
-   */
-  const logoutStudent = () => {
+  const logoutStudent = async (): Promise<void> => {
+    await apiLogoutStudent();
+
     setStudent(null);
     setTopicProgress({});
     setWeeklyExamAttempts([]);
-    localStorage.removeItem(STORAGE_KEYS.CURRENT_STUDENT);
-    localStorage.removeItem(STORAGE_KEYS.TOPIC_PROGRESS);
+
+    if (typeof window !== 'undefined') {
+      window.localStorage.removeItem(STORAGE_KEYS.CURRENT_STUDENT);
+      window.localStorage.removeItem(STORAGE_KEYS.TOPIC_PROGRESS);
+    }
   };
 
   const getCompletedTopicsCount = (): number => {
-    return Object.keys(topicProgress).filter(id => topicProgress[id]?.completed).length;
+    return Object.keys(topicProgress).filter((id) => topicProgress[id]?.completed).length;
   };
 
   const canAccessTopic = (topicId: string): { allowed: boolean; reason?: string; topicsUsed: number; maxFreeTopics: number } => {
     const maxFreeTopics = 3;
-    const isExpired = student?.accessExpiresAt 
-      ? new Date(student.accessExpiresAt).getTime() <= Date.now() 
+    const isExpired = student?.accessExpiresAt
+      ? new Date(student.accessExpiresAt).getTime() <= Date.now()
       : false;
     const isVip = Boolean(student?.hasFullAccess) && !isExpired;
 
@@ -500,97 +405,55 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return { allowed: true, topicsUsed: 0, maxFreeTopics };
     }
 
-    const completedIds = Object.keys(topicProgress).filter(id => topicProgress[id]?.completed);
+    const completedIds = Object.keys(topicProgress).filter((id) => topicProgress[id]?.completed);
     const topicsUsed = completedIds.length;
 
-    // If student already completed this topic, allow reviewing notes and quiz
     if (completedIds.includes(topicId)) {
       return { allowed: true, topicsUsed, maxFreeTopics };
     }
 
-    // If student has completed 3 or more topics across all subjects, lock the 4th
     if (topicsUsed >= maxFreeTopics) {
       return {
         allowed: false,
-        reason: `You have completed your ${maxFreeTopics} free trial topics across all subjects. To unlock this 4th topic and unlimited learning, please enter or buy an Access PIN.`,
+        reason: `You have completed your ${maxFreeTopics} free trial topics across all subjects. To unlock this topic and unlimited learning, please enter or buy an Access PIN.`,
         topicsUsed,
-        maxFreeTopics
+        maxFreeTopics,
       };
     }
 
     return { allowed: true, topicsUsed, maxFreeTopics };
   };
 
-  const loginAdmin = (primaryPin: string, secondaryPin: string): boolean => {
-    let expectedPrimary = DEFAULT_ADMIN_PRIMARY_PIN;
-    let expectedSecondary = DEFAULT_ADMIN_SECONDARY_PIN;
+  const loginAdmin = async (primaryPin: string, secondaryPin: string): Promise<boolean> => {
+    const result = await adminLogin(primaryPin.trim(), secondaryPin.trim());
 
-    if (typeof window !== 'undefined') {
-      const storedPrimary = localStorage.getItem(STORAGE_KEYS.ADMIN_PRIMARY_PIN);
-      const storedSecondary = localStorage.getItem(STORAGE_KEYS.ADMIN_SECONDARY_PIN);
-      if (storedPrimary) expectedPrimary = storedPrimary;
-      if (storedSecondary) expectedSecondary = storedSecondary;
-    }
-
-    if (
-      primaryPin.trim() === expectedPrimary.trim() && 
-      secondaryPin.trim() === expectedSecondary.trim()
-    ) {
+    if (result.success) {
       setIsAdmin(true);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem(STORAGE_KEYS.IS_ADMIN, 'true');
-        sessionStorage.setItem(STORAGE_KEYS.IS_ADMIN, 'true');
-      }
+      await refreshPins();
       return true;
     }
+
     return false;
   };
 
-  const logoutAdmin = () => {
+  const logoutAdmin = async (): Promise<void> => {
+    await adminLogout();
     setIsAdmin(false);
+    setPins([]);
+    setTransactions([]);
     if (typeof window !== 'undefined') {
-      localStorage.removeItem(STORAGE_KEYS.IS_ADMIN);
-      sessionStorage.removeItem(STORAGE_KEYS.IS_ADMIN);
+      window.localStorage.removeItem(STORAGE_KEYS.ACCESS_PINS);
+      window.localStorage.removeItem(STORAGE_KEYS.TRANSACTIONS);
     }
   };
 
-  const verifyPrimaryPin = (pin: string): boolean => {
-    let expectedPrimary = DEFAULT_ADMIN_PRIMARY_PIN;
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem(STORAGE_KEYS.ADMIN_PRIMARY_PIN);
-      if (stored) expectedPrimary = stored;
-    }
-    return pin.trim() === expectedPrimary.trim();
-  };
-
-  const verifySecondaryPin = (pin: string): boolean => {
-    let expectedSecondary = DEFAULT_ADMIN_SECONDARY_PIN;
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem(STORAGE_KEYS.ADMIN_SECONDARY_PIN);
-      if (stored) expectedSecondary = stored;
-    }
-    return pin.trim() === expectedSecondary.trim();
-  };
-
-  const updateAdminPins = (newPrimary: string, newSecondary: string): boolean => {
-    if (!newPrimary.trim() || !newSecondary.trim()) return false;
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(STORAGE_KEYS.ADMIN_PRIMARY_PIN, newPrimary.trim());
-      localStorage.setItem(STORAGE_KEYS.ADMIN_SECONDARY_PIN, newSecondary.trim());
-    }
-    return true;
-  };
-
-  const getAdminPins = () => {
-    let primary = DEFAULT_ADMIN_PRIMARY_PIN;
-    let secondary = DEFAULT_ADMIN_SECONDARY_PIN;
-    if (typeof window !== 'undefined') {
-      const p = localStorage.getItem(STORAGE_KEYS.ADMIN_PRIMARY_PIN);
-      const s = localStorage.getItem(STORAGE_KEYS.ADMIN_SECONDARY_PIN);
-      if (p) primary = p;
-      if (s) secondary = s;
-    }
-    return { primary, secondary };
+  const updateAdminPins = async (params: {
+    currentPrimary: string;
+    currentSecondary: string;
+    newPrimary: string;
+    newSecondary: string;
+  }): Promise<{ success: boolean; error?: string }> => {
+    return apiUpdateAdminPins(params);
   };
 
   const redeemPin = async (pinCode: string): Promise<{ success: boolean; message: string }> => {
@@ -599,136 +462,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return { success: false, message: 'Please enter an Access PIN code.' };
     }
 
-    try {
-      const res = await fetch('/api/pins', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'redeem',
-          pinCode: cleanCode,
-          studentPhone: student?.phoneNumber || null,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (!data.success) {
-        return { 
-          success: false, 
-          message: data.message || 'Invalid or already redeemed PIN code.' 
-        };
-      }
-
-      const validityDays = data.validityDays || 30;
-      const expiryDate = new Date();
-      expiryDate.setDate(expiryDate.getDate() + validityDays);
-
-      // Mark the PIN as REDEEMED in local pins state
-      setPins((prevPins) => {
-        const updated = prevPins.map((p) =>
-          p.pinCode === cleanCode
-            ? { 
-                ...p, 
-                status: 'REDEEMED' as const, 
-                redeemedByStudentId: student?.phoneNumber || 'DIRECT', 
-                redeemedAt: new Date().toISOString() 
-              }
-            : p
-        );
-        localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(updated));
-        return updated;
-      });
-
-      // Upgrade student to Full Pass
-      if (student) {
-        const updatedStudent: Student = {
-          ...student,
-          hasFullAccess: true,
-          accessType: 'Full Pass',
-          accessExpiresAt: expiryDate.toISOString(),
-        };
-        setStudent(updatedStudent);
-        localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(updatedStudent));
-
-        // Sync upgrade to server
-        try {
-          fetch('/api/students', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              phone: student.phoneNumber,
-              accessType: 'Full Pass',
-              accessExpiresAt: expiryDate.toISOString()
-            })
-          }).catch(e => console.warn('Student pin sync notice:', e?.message || e));
-        } catch {}
-      }
-
-      // Record cash flow entry
-      const newTx: CashFlowTransaction = {
-        id: `tx-${Date.now()}`,
-        reference: `REF-${Math.floor(100000 + Math.random() * 900000)}`,
-        studentId: student?.id,
-        studentPhone: student?.phoneNumber || 'Direct PIN',
-        amountGhs: 25.00,
-        transactionType: 'PIN_PURCHASE',
-        paymentMethod: 'Scratch-Card / PIN Voucher',
-        pinCodeUsed: cleanCode,
-        description: `${validityDays}-Day Full JHS Access Pass`,
-        createdAt: new Date().toISOString(),
-      };
-
-      setTransactions((prev) => {
-        const next = [newTx, ...prev];
-        localStorage.setItem(STORAGE_KEYS.TRANSACTIONS, JSON.stringify(next));
-        return next;
-      });
-
-      return {
-        success: true,
-        message: data.message || `Access PIN successfully redeemed! Full access unlocked for ${validityDays} days.`,
-      };
-    } catch (err: any) {
-      console.warn('Redeem PIN error:', err?.message || err);
-      // Fallback to checking local state in case offline
-      const pinIndex = pins.findIndex((p) => p.pinCode === cleanCode);
-      if (pinIndex === -1) {
-        return { success: false, message: 'Invalid PIN code. Please verify the code and try again.' };
-      }
-      const targetPin = pins[pinIndex];
-      if (targetPin.status !== 'ACTIVE') {
-        return { success: false, message: 'This PIN code has already been redeemed or is no longer valid.' };
-      }
-
-      const updatedPins = [...pins];
-      const expiryDate = new Date();
-      expiryDate.setDate(expiryDate.getDate() + targetPin.validityDays);
-
-      updatedPins[pinIndex] = {
-        ...targetPin,
-        status: 'REDEEMED',
-        redeemedByStudentId: student?.phoneNumber || 'OFFLINE_USER',
-        redeemedAt: new Date().toISOString(),
-      };
-      setPins(updatedPins);
-      localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(updatedPins));
-
-      if (student) {
-        const updatedStudent: Student = {
-          ...student,
-          hasFullAccess: true,
-          accessType: 'Full Pass',
-          accessExpiresAt: expiryDate.toISOString(),
-        };
-        setStudent(updatedStudent);
-        localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(updatedStudent));
-      }
-
-      return {
-        success: true,
-        message: `Access PIN redeemed! Full access unlocked for ${targetPin.validityDays} days.`,
-      };
+    if (!student || !getSessionToken()) {
+      return { success: false, message: 'Please sign in to your account before redeeming a PIN.' };
     }
+
+    const result = await apiRedeemAccessPin(cleanCode);
+
+    if (!result.success) {
+      return { success: false, message: result.message };
+    }
+
+    // The server has already granted and recorded the access; adopt its state
+    // rather than computing an expiry in the browser.
+    if (result.student) {
+      setStudent(result.student);
+      writeLocalStorage(STORAGE_KEYS.CURRENT_STUDENT, result.student);
+    }
+
+    if (isAdmin) {
+      await refreshPins();
+    }
+
+    return {
+      success: true,
+      message: result.message || `Access PIN redeemed! Full access unlocked for ${result.validityDays || 30} days.`,
+    };
   };
 
   const recordQuizScore = (topicId: string, scorePercentage: number) => {
@@ -742,56 +500,46 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       lastStudiedAt: new Date().toISOString(),
     };
 
-    const nextState = {
-      ...topicProgress,
-      [topicId]: updated,
-    };
-
+    const nextState = { ...topicProgress, [topicId]: updated };
     setTopicProgress(nextState);
 
-    // Update student's completed topics count and persist to isolated storage
     if (student) {
       const studentPhone = student.phoneNumber;
-      localStorage.setItem(`academicprep_progress_${studentPhone}`, JSON.stringify(nextState));
+      writeLocalStorage(`academicprep_progress_${studentPhone}`, nextState);
 
-      // Persist to Supabase
-      saveTopicProgressToSupabase({
-        phoneNumber: studentPhone,
-        topicId,
-        scorePercentage
-      }).catch(e => console.warn('Supabase topic save notice:', e?.message || e));
+      saveTopicProgress({ topicId, scorePercentage }).catch((e) =>
+        console.warn('Progress sync notice:', e?.message || e)
+      );
 
-      const allCompleted = Object.keys(nextState).filter(id => nextState[id]?.completed);
-      const isExpired = student.accessExpiresAt 
-        ? new Date(student.accessExpiresAt).getTime() <= Date.now() 
+      const allCompleted = Object.keys(nextState).filter((id) => nextState[id]?.completed);
+      const isExpired = student.accessExpiresAt
+        ? new Date(student.accessExpiresAt).getTime() <= Date.now()
         : false;
+
       const updatedStudent: Student = {
         ...student,
         hasFullAccess: isExpired ? false : student.hasFullAccess,
         accessType: isExpired ? 'Expired' : student.accessType,
         completedTopicIds: allCompleted,
         topicsCompletedCount: allCompleted.length,
-        lastActiveAt: new Date().toISOString()
+        lastActiveAt: new Date().toISOString(),
       };
       setStudent(updatedStudent);
-      localStorage.setItem(STORAGE_KEYS.CURRENT_STUDENT, JSON.stringify(updatedStudent));
+      writeLocalStorage(STORAGE_KEYS.CURRENT_STUDENT, updatedStudent);
 
-      // Sync to server for real leaderboard
-      try {
-        fetch('/api/students', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            phone: student.phoneNumber,
-            topicIdCompleted: isCompleted ? topicId : undefined,
-            newQuizScore: scorePercentage
-          })
-        }).catch(e => console.warn('Student progress sync notice:', e?.message || e));
-      } catch {
-        // ignore
-      }
+      syncStudentAccount({
+        topicIdCompleted: isCompleted ? topicId : undefined,
+        newQuizScore: scorePercentage,
+      })
+        .then((synced) => {
+          if (synced) {
+            setStudent(synced);
+            writeLocalStorage(STORAGE_KEYS.CURRENT_STUDENT, synced);
+          }
+        })
+        .catch((e) => console.warn('Student progress sync notice:', e?.message || e));
     } else {
-      localStorage.setItem(STORAGE_KEYS.TOPIC_PROGRESS, JSON.stringify(nextState));
+      writeLocalStorage(STORAGE_KEYS.TOPIC_PROGRESS, nextState);
     }
   };
 
@@ -804,82 +552,43 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const nextState = [newAttempt, ...weeklyExamAttempts];
     setWeeklyExamAttempts(nextState);
-    localStorage.setItem(STORAGE_KEYS.EXAM_ATTEMPTS, JSON.stringify(nextState));
+    writeLocalStorage(STORAGE_KEYS.EXAM_ATTEMPTS, nextState);
   };
 
-  const generatePinBatch = (count: number, priceGhs: number, validityDays: number): AccessPin[] => {
-    const batchId = `BATCH-${Date.now().toString().slice(-6)}`;
-    const newBatch: AccessPin[] = [];
+  const generatePinBatch = async (
+    count: number,
+    priceGhs: number,
+    validityDays: number
+  ): Promise<AccessPin[]> => {
+    const result = await apiGeneratePinBatch({ count, priceGhs, validityDays });
 
-    for (let i = 0; i < count; i++) {
-      const part1 = Math.floor(1000 + Math.random() * 9000);
-      const part2 = Math.floor(1000 + Math.random() * 9000);
-      newBatch.push({
-        id: `pin-${Date.now()}-${i}`,
-        pinCode: `PREP-${part1}-${part2}`,
-        batchId,
-        priceGhs,
-        validityDays,
-        status: 'ACTIVE',
-        createdAt: new Date().toISOString(),
-      });
+    if (!result.success) {
+      throw new Error(result.error || 'Could not generate the PIN batch.');
     }
 
-    const updated = [...newBatch, ...pins];
+    const updated = [...result.pins, ...pins];
     setPins(updated);
-    localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(updated));
+    writeLocalStorage(STORAGE_KEYS.ACCESS_PINS, updated);
 
-    // Sync newly created batch to centralized server API and Supabase
-    try {
-      fetch('/api/pins', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'generate', pins: newBatch }),
-      }).catch((err) => console.warn('Sync generated pins error:', err?.message || err));
-    } catch {}
-
-    return newBatch;
+    return result.pins;
   };
 
   const refreshPins = async (): Promise<void> => {
-    try {
-      const res = await fetch('/api/pins');
-      if (res.ok) {
-        const serverPins = await res.json();
-        if (Array.isArray(serverPins)) {
-          setPins(serverPins);
-          localStorage.setItem(STORAGE_KEYS.ACCESS_PINS, JSON.stringify(serverPins));
+    const livePins = await fetchAccessPins();
 
-          const redeemedPins = serverPins.filter((p: any) => p.status === 'REDEEMED');
-          const realTxs: CashFlowTransaction[] = redeemedPins.map((p: any) => {
-            const isPaystack = p.batchId === 'BATCH-PAYSTACK-MOMO' || p.batch_id === 'BATCH-PAYSTACK-MOMO' || (p.pinCode || p.pin_code || '').includes('MOMO');
-            return {
-              id: `tx-${p.id}`,
-              reference: p.pinCode || p.pin_code || `REF-${p.id.slice(-6)}`,
-              studentPhone: p.redeemedByStudentId || p.redeemed_by_student_phone || 'Customer',
-              amountGhs: Number(p.priceGhs || p.price_ghs || 25),
-              transactionType: 'PIN_PURCHASE',
-              paymentMethod: isPaystack ? 'Paystack Mobile Money' : 'Scratch-Card / PIN Voucher',
-              pinCodeUsed: p.pinCode || p.pin_code,
-              description: `${p.validityDays || p.validity_days || 30}-Day Full JHS Access Pass`,
-              createdAt: p.redeemedAt || p.redeemed_at || p.createdAt || p.created_at || new Date().toISOString()
-            };
-          });
+    setPins(livePins);
+    writeLocalStorage(STORAGE_KEYS.ACCESS_PINS, livePins);
 
-          setTransactions(realTxs);
-          localStorage.setItem(STORAGE_KEYS.TRANSACTIONS, JSON.stringify(realTxs));
-        }
-      }
-    } catch (e: any) {
-      console.warn('Refresh pins notice:', e?.message || e);
-    }
+    const derived = deriveTransactions(livePins);
+    setTransactions(derived);
+    writeLocalStorage(STORAGE_KEYS.TRANSACTIONS, derived);
   };
 
   const getAdminMetrics = (): AdminMetrics => {
     const totalCash = transactions.reduce((acc, curr) => acc + curr.amountGhs, 0);
-    const activePins = pins.filter(p => p.status === 'ACTIVE').length;
+    const activePins = pins.filter((p) => p.status === 'ACTIVE').length;
     const totalQuizzes = Object.values(topicProgress).reduce((acc, curr) => acc + curr.attemptsCount, 0);
-    
+
     let avgScore = 0;
     if (weeklyExamAttempts.length > 0) {
       const totalScore = weeklyExamAttempts.reduce((acc, curr) => acc + curr.scorePercentage, 0);
@@ -914,10 +623,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         getCompletedTopicsCount,
         loginAdmin,
         logoutAdmin,
-        verifyPrimaryPin,
-        verifySecondaryPin,
         updateAdminPins,
-        getAdminPins,
         redeemPin,
         recordQuizScore,
         recordWeeklyExamAttempt,
@@ -938,3 +644,5 @@ export const useAuth = () => {
   }
   return context;
 };
+
+export { setSessionToken };

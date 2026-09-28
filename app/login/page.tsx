@@ -94,8 +94,8 @@ function LoginFormContent() {
 
             <button
               type="button"
-              onClick={() => {
-                logoutStudent();
+              onClick={async () => {
+                await logoutStudent();
                 setSignInPhone('');
                 setSignInPassword('');
                 setRegFullName('');
@@ -399,7 +399,7 @@ function LoginFormContent() {
               </div>
               <input
                 type="text"
-                placeholder="e.g. PREP-8842-9901"
+                placeholder="e.g. PREP-XXXX-XXXX"
                 value={regAccessPin}
                 onChange={(e) => setRegAccessPin(e.target.value.toUpperCase())}
                 className="w-full px-3 py-2.5 rounded-xl border border-amber-300 bg-amber-50/40 text-xs font-mono tracking-wider text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500 uppercase placeholder:normal-case placeholder:font-sans"

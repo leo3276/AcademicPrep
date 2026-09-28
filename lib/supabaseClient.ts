@@ -1,15 +1,46 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const SUPABASE_PROJECT_URL = 'https://wwbmayypdzisopdqlefg.supabase.co';
-const SUPABASE_ANON_PUBLIC_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind3Ym1heXlwZHppc29wZHFsZWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMDI4MDMsImV4cCI6MjEwMTY3ODgwM30.f0RH0P7dsU4B2FSKfu7GNXYNFLT6KLRruSyGWY30puE';
-const SUPABASE_SERVICE_ROLE_KEY_FALLBACK = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind3Ym1heXlwZHppc29wZHFsZWZnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NjEwMjgwMywiZXhwIjoyMTAxNjc4ODAzfQ.Y7y2deZYanYKn5kN4CCoyDlNpfQUo2CdRUuF2KBNJ2w';
+/**
+ * SERVER-ONLY MODULE.
+ *
+ * This file exposes the service_role client, which bypasses Row Level Security
+ * and can read and write every row in the database. It must only ever be
+ * imported from API route handlers or other server modules - never from a
+ * React component or any file reachable from the browser bundle.
+ *
+ * Browser-facing code goes through the /api/* routes, which enforce session
+ * tokens and admin keys before touching the database.
+ */
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || SUPABASE_PROJECT_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || SUPABASE_ANON_PUBLIC_KEY;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || SUPABASE_SERVICE_ROLE_KEY_FALLBACK;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
-export const isSupabaseConfigured = true;
+/**
+ * True only when both the project URL and the service_role key are present in
+ * the server environment. Every data-access path must check this and fail
+ * closed rather than silently degrading to an unauthenticated client.
+ */
+export const isSupabaseConfigured: boolean = Boolean(supabaseUrl && supabaseServiceKey);
 
-export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseAnonKey);
-export const supabaseAdmin: SupabaseClient = createClient(supabaseUrl, supabaseServiceKey);
+if (!isSupabaseConfigured) {
+  // eslint-disable-next-line no-console
+  console.error(
+    '[supabaseClient] Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY. ' +
+      'All database operations will be rejected until these are configured.'
+  );
+}
 
+/**
+ * A syntactically valid placeholder keeps createClient from throwing at import
+ * time when the environment is incomplete. Every call site is gated on
+ * isSupabaseConfigured, so this client is never actually used in that state.
+ */
+const PLACEHOLDER_URL = 'https://unconfigured.invalid';
+
+export const supabaseAdmin: SupabaseClient = createClient(
+  isSupabaseConfigured ? supabaseUrl : PLACEHOLDER_URL,
+  isSupabaseConfigured ? supabaseServiceKey : 'unconfigured',
+  {
+    auth: { autoRefreshToken: false, persistSession: false },
+  }
+);

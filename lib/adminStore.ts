@@ -4,9 +4,7 @@
 
 import { 
   WebTrafficData, 
-  AdminStudentDetail, 
   TrialExamMock, 
-  QuizQuestion,
   BECEPastQuestion
 } from './types';
 import { getLiveTrafficMetrics } from './trafficTracker';
@@ -35,12 +33,7 @@ export const DEFAULT_TRAFFIC_DATA: WebTrafficData = {
 };
 
 // ==========================================
-// 1. INITIAL BASELINE STUDENTS (100% REAL FROM SUPABASE DATABASE)
-// ==========================================
-export const INITIAL_STUDENTS: AdminStudentDetail[] = [];
-
-// ==========================================
-// 2. TRIAL QUESTIONS / MOCK EXAMS (EMPTY BY DEFAULT - ADMIN UPLOADS ONLY)
+// 1. TRIAL QUESTIONS / MOCK EXAMS (EMPTY BY DEFAULT - ADMIN UPLOADS ONLY)
 // ==========================================
 export const DEFAULT_TRIAL_MOCKS: TrialExamMock[] = [];
 
@@ -58,33 +51,6 @@ export function saveTrafficData(data: WebTrafficData): void {
     localStorage.setItem(ADMIN_STORAGE_KEYS.TRAFFIC_DATA, JSON.stringify(data));
   } catch (e) {
     console.error('Failed to save traffic data', e);
-  }
-}
-
-export function getStoredStudents(): AdminStudentDetail[] {
-  if (typeof window === 'undefined') return [];
-  try {
-    const raw = localStorage.getItem(ADMIN_STORAGE_KEYS.STUDENT_LIST);
-    if (raw) {
-      const parsed: AdminStudentDetail[] = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        // Filter out dummy mock numbers from previous local testing
-        return parsed.filter(s => s.phone !== '0241234567' && s.phone !== '0559876543' && s.phone !== '0240000000');
-      }
-    }
-  } catch {
-    // fallback
-  }
-
-  return [];
-}
-
-export function saveStudents(students: AdminStudentDetail[]): void {
-  if (typeof window === 'undefined') return;
-  try {
-    localStorage.setItem(ADMIN_STORAGE_KEYS.STUDENT_LIST, JSON.stringify(students));
-  } catch (e) {
-    console.error('Failed to save students', e);
   }
 }
 
@@ -141,5 +107,18 @@ export function clearAllExamData(): void {
     localStorage.removeItem(ADMIN_STORAGE_KEYS.BECE_QUESTIONS);
   } catch (e) {
     console.error('Failed to clear exam data', e);
+  }
+}
+
+/**
+ * Wipe any roster cached by earlier builds. Student phone numbers are personal
+ * data and must not survive in a browser an administrator has walked away from.
+ */
+export function clearStudentRosterCache(): void {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.removeItem(ADMIN_STORAGE_KEYS.STUDENT_LIST);
+  } catch (e) {
+    console.error('Failed to clear student roster cache', e);
   }
 }

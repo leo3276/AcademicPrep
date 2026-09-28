@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { UploadedPdfDocument } from '@/lib/pdfStore';
 import { supabaseAdmin } from '@/lib/supabaseClient';
+import { requireAdmin } from '@/lib/adminAuth';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -107,6 +108,12 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    // Uploading past questions is an administrator action. Without this guard
+    // anyone could publish arbitrary PDFs into the student document library.
+    if (!requireAdmin(request)) {
+      return NextResponse.json({ error: 'Administrator access required.' }, { status: 401 });
+    }
+
     const contentType = request.headers.get('content-type') || '';
 
     // 1. Direct-to-Cloud Upload Registration (JSON metadata payload)
@@ -249,6 +256,10 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
+    if (!requireAdmin(request)) {
+      return NextResponse.json({ error: 'Administrator access required.' }, { status: 401 });
+    }
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 

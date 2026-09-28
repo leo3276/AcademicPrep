@@ -338,9 +338,9 @@ export default function Navbar() {
                       </div>
                     </Link>
                     <button
-                      onClick={() => {
-                        logoutStudent();
+                      onClick={async () => {
                         setMobileMenuOpen(false);
+                        await logoutStudent();
                       }}
                       className="text-xs font-bold text-red-600 py-1.5 px-3 bg-red-50 rounded-lg hover:bg-red-100"
                     >

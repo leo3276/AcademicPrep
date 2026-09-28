@@ -252,21 +252,14 @@ export default function PaystackPaymentModal({
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. PREP-8842-9901"
+                  placeholder="e.g. PREP-XXXX-XXXX"
                   value={pinInput}
                   onChange={(e) => setPinInput(e.target.value.toUpperCase())}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 font-mono text-center tracking-wider text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-400 uppercase transition"
                   autoFocus
                 />
                 <div className="flex items-center justify-between text-[11px] text-slate-400 mt-1.5">
-                  <span>Demo: <span className="font-mono text-slate-600">PREP-8842-9901</span></span>
-                  <button
-                    type="button"
-                    onClick={() => setPinInput('PREP-8842-9901')}
-                    className="text-blue-600 hover:underline cursor-pointer font-medium"
-                  >
-                    Autofill
-                  </button>
+                  <span>Scratch-card vouchers are sold by your teacher.</span>
                 </div>
               </div>
 

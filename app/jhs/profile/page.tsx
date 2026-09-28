@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/authContext';
+import { fetchLeaderboard as fetchLeaderboardEntries, LeaderboardEntry } from '@/lib/apiClient';
 import PaystackPaymentModal from '@/components/PaystackPaymentModal';
 import { CURRICULUM_SUBJECTS, JHS_CURRICULUM_TOPICS } from '@/lib/curriculumData';
 import { getStudentQuizMistakes, QuizMistakeRecord } from '@/lib/weeklyProgressTracker';
@@ -36,20 +37,6 @@ import {
   LogOut
 } from 'lucide-react';
 
-interface ServerStudent {
-  id: string;
-  phone: string;
-  name: string;
-  level: string;
-  accessType: 'Full Pass' | 'Free Trial' | 'Expired';
-  accessExpiresAt?: string;
-  lastActive: string;
-  topicsCompleted: number;
-  completedTopicIds?: string[];
-  avgScorePercentage: number;
-  registeredAt: string;
-}
-
 export default function StudentProfilePage() {
   const router = useRouter();
   const { 
@@ -63,7 +50,7 @@ export default function StudentProfilePage() {
   } = useAuth();
 
   const [mounted, setMounted] = useState(false);
-  const [leaderboard, setLeaderboard] = useState<ServerStudent[]>([]);
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [loadingLeaderboard, setLoadingLeaderboard] = useState(true);
 
   // PIN Redemption State
@@ -75,17 +62,13 @@ export default function StudentProfilePage() {
   const [showBuyModal, setShowBuyModal] = useState(false);
   const [modalTab, setModalTab] = useState<'momo' | 'pin'>('momo');
 
-  // Fetch real students leaderboard from API
+  // Fetch the masked public leaderboard. The server marks the signed-in
+  // student's own row, so no phone number ever reaches the browser.
   const fetchLeaderboard = async () => {
+    setLoadingLeaderboard(true);
     try {
-      setLoadingLeaderboard(true);
-      const res = await fetch('/api/students');
-      if (res.ok) {
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          setLeaderboard(data);
-        }
-      }
+      const entries = await fetchLeaderboardEntries();
+      setLeaderboard(entries);
     } catch (err: any) {
       console.warn('Leaderboard fetch notice:', err?.message || err);
     } finally {
@@ -160,9 +143,8 @@ export default function StudentProfilePage() {
 
   // Find user's rank in leaderboard
   const userRankIndex = useMemo(() => {
-    if (!student) return -1;
-    return leaderboard.findIndex(s => s.phone === student.phoneNumber);
-  }, [leaderboard, student]);
+    return leaderboard.findIndex(s => s.isCurrentUser);
+  }, [leaderboard]);
 
   const handleRedeemPin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -182,18 +164,6 @@ export default function StudentProfilePage() {
       setPinInput('');
       fetchLeaderboard(); // refresh leaderboard
     }
-  };
-
-  const handleInstantDemoPurchase = async () => {
-    setPinLoading(true);
-    const res = await redeemPin('PREP-8842-9901');
-    setPinLoading(false);
-    setPinFeedback({
-      success: res.success,
-      text: res.message
-    });
-    setShowBuyModal(false);
-    fetchLeaderboard();
   };
 
   if (!mounted || isLoading) {
@@ -263,8 +233,8 @@ export default function StudentProfilePage() {
               Study Curriculum
             </Link>
             <button
-              onClick={() => {
-                logoutStudent();
+              onClick={async () => {
+                await logoutStudent();
                 router.push('/login');
               }}
               className="px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-red-600 hover:bg-red-50 text-xs font-semibold transition flex items-center gap-1 cursor-pointer"
@@ -342,8 +312,8 @@ export default function StudentProfilePage() {
                 </button>
               )}
               <button
-                onClick={() => {
-                  logoutStudent();
+                onClick={async () => {
+                  await logoutStudent();
                   router.push('/login');
                 }}
                 className="px-3 py-2 rounded-xl border border-slate-200 hover:border-red-200 hover:bg-red-50 text-slate-600 hover:text-red-600 font-semibold text-xs transition flex items-center gap-1.5 cursor-pointer"
@@ -433,7 +403,7 @@ export default function StudentProfilePage() {
             <form onSubmit={handleRedeemPin} className="pt-2 flex flex-col sm:flex-row gap-2 items-stretch">
               <input
                 type="text"
-                placeholder="Enter Access PIN (e.g. PREP-8842-9901)"
+                placeholder="Enter Access PIN (e.g. PREP-XXXX-XXXX)"
                 value={pinInput}
                 onChange={(e) => setPinInput(e.target.value.toUpperCase())}
                 className="flex-1 px-4 py-2 text-xs border border-amber-300 rounded-xl bg-white font-mono uppercase focus:outline-none focus:ring-2 focus:ring-amber-500"
@@ -510,7 +480,7 @@ export default function StudentProfilePage() {
           <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs space-y-1">
             <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Leaderboard Standing</span>
             <p className="text-2xl font-black text-amber-600">
-              {userRankIndex >= 0 ? `#${userRankIndex + 1}` : 'Ranked'}
+              {userRankIndex >= 0 ? `#${leaderboard[userRankIndex].rank}` : 'Ranked'}
             </p>
             <p className="text-[11px] text-slate-500">Out of {leaderboard.length} candidates</p>
           </div>
@@ -666,15 +636,14 @@ export default function StudentProfilePage() {
                     <th className="px-4 py-3">Level</th>
                     <th className="px-4 py-3">Topics Completed</th>
                     <th className="px-4 py-3">Average Score</th>
-                    <th className="px-4 py-3">Access Tier</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                 {leaderboard.map((st, index) => {
-                  const isCurrent = student && st.phone === student.phoneNumber;
+                  const isCurrent = st.isCurrentUser;
                   return (
                     <tr
-                      key={st.id || index}
+                      key={`${st.rank}-${index}`}
                       className={`transition ${
                         isCurrent
                           ? 'bg-blue-50/80 font-bold border-l-4 border-l-blue-600'
@@ -689,7 +658,7 @@ export default function StudentProfilePage() {
                         ) : index === 2 ? (
                           <span className="inline-flex items-center gap-1 text-amber-700">🥉 #3</span>
                         ) : (
-                          `#${index + 1}`
+                          `#${st.rank}`
                         )}
                       </td>
                       <td className="px-4 py-3">
@@ -702,7 +671,7 @@ export default function StudentProfilePage() {
                           )}
                         </div>
                         <span className="text-[10px] text-slate-400 font-mono">
-                          {st.phone.slice(0, 3)}••••{st.phone.slice(-3)}
+                          {st.phoneMasked}
                         </span>
                       </td>
                       <td className="px-4 py-3 text-slate-600">{st.level}</td>
@@ -713,17 +682,6 @@ export default function StudentProfilePage() {
                         <span className={`px-2 py-0.5 rounded ${st.avgScorePercentage >= 80 ? 'text-emerald-700 bg-emerald-50' : 'text-slate-800'}`}>
                           {st.avgScorePercentage}%
                         </span>
-                      </td>
-                      <td className="px-4 py-3">
-                        {st.accessType === 'Full Pass' ? (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
-                            VIP Pass
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-600">
-                            Free Trial
-                          </span>
-                        )}
                       </td>
                     </tr>
                   );

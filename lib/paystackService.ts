@@ -2,7 +2,10 @@
 
 export const PAYSTACK_VIP_PRICE_GHS = 25;
 export const PAYSTACK_VIP_AMOUNT_PESEWAS = 2500; // GHS 25.00 / month in pesewas
-export const PAYSTACK_PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || 'pk_live_f09af5e82872d14a47d3029faab6257483e8d2c7';
+export const PAYSTACK_PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || '';
+
+/** True when the browser-side Paystack key is configured for this deployment. */
+export const isPaystackClientConfigured = Boolean(PAYSTACK_PUBLIC_KEY);
 
 /**
  * Dynamically load Paystack Inline JS
@@ -103,7 +106,20 @@ export async function launchPaystackCheckout(params: PaystackCheckoutParams): Pr
     return false;
   }
 
-  // 3. Open Paystack popup with the validated access_code and student email
+  // 3. Open Paystack popup with the validated access_code and student email.
+  // Without a configured public key the modal cannot render, so fall back to the
+  // hosted authorization URL that Paystack already returned.
+  if (!isPaystackClientConfigured) {
+    if (initData.authorization_url) {
+      window.location.href = initData.authorization_url;
+      return true;
+    }
+    const msg = 'Payments are not configured on this server. Please contact support.';
+    if (params.onError) params.onError(msg);
+    else alert(msg);
+    return false;
+  }
+
   try {
     const handler = (window as any).PaystackPop.setup({
       key: PAYSTACK_PUBLIC_KEY,

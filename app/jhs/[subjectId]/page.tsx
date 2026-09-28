@@ -359,21 +359,14 @@ export default function SubjectDetailPage() {
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. PREP-8842-9901"
+                  placeholder="e.g. PREP-XXXX-XXXX"
                   value={pinInput}
                   onChange={(e) => setPinInput(e.target.value.toUpperCase())}
                   className="w-full px-4 py-2.5 rounded-xl border border-slate-300 font-mono text-center tracking-widest text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 uppercase text-sm"
                   autoFocus
                 />
                 <div className="flex items-center justify-between text-[11px] text-slate-500 mt-1.5">
-                  <span>💡 Active VIP Demo PIN: <span className="font-mono font-bold text-amber-700">PREP-8842-9901</span></span>
-                  <button
-                    type="button"
-                    onClick={() => setPinInput('PREP-8842-9901')}
-                    className="text-amber-700 font-bold hover:underline cursor-pointer"
-                  >
-                    Autofill
-                  </button>
+                  <span>💡 Vouchers are sold by your teacher or via Mobile Money above.</span>
                 </div>
               </div>
 

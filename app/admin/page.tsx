@@ -3,15 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/authContext';
-import { EducationLevel, AccessPin, QuizQuestion } from '@/lib/types';
+import { EducationLevel, AccessPin } from '@/lib/types';
 import { CURRICULUM_SUBJECTS, JHS_CURRICULUM_TOPICS } from '@/lib/curriculumData';
-import { 
-  getStoredTrafficData, 
-  saveTrafficData, 
-  getStoredStudents, 
-  saveStudents, 
+import {
+  getStoredTrafficData,
+  clearStudentRosterCache,
   DEFAULT_TRAFFIC_DATA
 } from '@/lib/adminStore';
+import { fetchStudents, adminGrantAccess, adminRevokeAccess } from '@/lib/apiClient';
 import { AdminStudentDetail, WebTrafficData } from '@/lib/types';
 import { getAllBeceYears } from '@/lib/becePastQuestionsData';
 import { 
@@ -67,10 +66,7 @@ export default function AdminDashboardPage() {
     isAdmin, 
     loginAdmin, 
     logoutAdmin, 
-    verifyPrimaryPin,
-    verifySecondaryPin,
     updateAdminPins,
-    getAdminPins,
     getAdminMetrics, 
     pins, 
     transactions, 
@@ -86,12 +82,16 @@ export default function AdminDashboardPage() {
   const [showPrimaryPin, setShowPrimaryPin] = useState(false);
   const [showSecondaryPin, setShowSecondaryPin] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
+  const [isSigningIn, setIsSigningIn] = useState(false);
 
   // Security Credentials Update Modal
   const [showSecurityModal, setShowSecurityModal] = useState(false);
+  const [currentPrimaryPin, setCurrentPrimaryPin] = useState('');
+  const [currentSecondaryPin, setCurrentSecondaryPin] = useState('');
   const [editPrimaryPin, setEditPrimaryPin] = useState('');
   const [editSecondaryPin, setEditSecondaryPin] = useState('');
   const [securityModalMsg, setSecurityModalMsg] = useState<string | null>(null);
+  const [isSavingKeys, setIsSavingKeys] = useState(false);
   
   // Navigation Tabs: traffic, paid_access, completions, trial_mocks, pins
   const [activeTab, setActiveTab] = useState<'traffic' | 'paid_access' | 'completions' | 'trial_mocks' | 'pins'>('traffic');
@@ -124,7 +124,6 @@ export default function AdminDashboardPage() {
   const [showGrantModal, setShowGrantModal] = useState(false);
   const [selectedStudentForAccess, setSelectedStudentForAccess] = useState<AdminStudentDetail | null>(null);
   const [customPhoneInput, setCustomPhoneInput] = useState('');
-  const [customNameInput, setCustomNameInput] = useState('');
   const [grantDurationDays, setGrantDurationDays] = useState(30);
   const [formSuccessMessage, setFormSuccessMessage] = useState<string | null>(null);
 
@@ -134,29 +133,31 @@ export default function AdminDashboardPage() {
   const [pinValidity, setPinValidity] = useState(30);
   const [newlyGenerated, setNewlyGenerated] = useState<AccessPin[]>([]);
   const [copiedPin, setCopiedPin] = useState<string | null>(null);
+  const [isGeneratingPins, setIsGeneratingPins] = useState(false);
+  const [pinError, setPinError] = useState<string | null>(null);
+  const [accessError, setAccessError] = useState<string | null>(null);
 
   const loadRealStudents = async () => {
-    try {
-      const res = await fetch('/api/students');
-      if (res.ok) {
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          setStudents(data);
-          saveStudents(data);
-        }
-      }
-    } catch (e) {
-      console.warn('Error loading real students:', e);
+    const { view, students: roster } = await fetchStudents();
+
+    // The server only returns unmasked phone numbers to an authenticated
+    // administrator; anonymous callers get the public leaderboard instead.
+    if (view !== 'admin') {
+      setStudents([]);
+      return;
     }
+
+    setStudents(roster as AdminStudentDetail[]);
   };
 
   useEffect(() => {
     setMounted(true);
     setTrafficData(getStoredTrafficData());
+    clearStudentRosterCache();
     loadRealStudents();
     fetchUploadedDocuments().then(setPdfDocuments).catch(e => console.warn('Fetch docs warning:', e?.message || e));
-    refreshPins();
-  }, [activeTab]);
+    if (isAdmin) refreshPins();
+  }, [activeTab, isAdmin]);
 
   if (!mounted) {
     return (
@@ -166,55 +167,84 @@ export default function AdminDashboardPage() {
     );
   }
 
-  // Sequential Two-Stage Authentication Handlers
+  // Sequential Two-Stage Authentication Handlers.
+  // Both passwords are verified together by the server; the two screens are a
+  // presentation choice, not two separate checks.
   const handleVerifyPrimary = (e: React.FormEvent) => {
     e.preventDefault();
     if (!primaryPin.trim()) {
       setAuthError('Please enter your primary password.');
       return;
     }
-    const isValid = verifyPrimaryPin(primaryPin.trim());
-    if (!isValid) {
-      setAuthError('Incorrect primary password. Please try again.');
-    } else {
-      setAuthError(null);
-      setAuthStep('secondary');
-    }
+    setAuthError(null);
+    setAuthStep('secondary');
   };
 
-  const handleVerifySecondary = (e: React.FormEvent) => {
+  const handleVerifySecondary = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!secondaryPin.trim()) {
       setAuthError('Please enter your secondary password.');
       return;
     }
-    const isValid = verifySecondaryPin(secondaryPin.trim());
-    if (!isValid) {
-      setAuthError('Incorrect secondary password. Please try again.');
-    } else {
-      setAuthError(null);
-      loginAdmin(primaryPin.trim(), secondaryPin.trim());
-      setPrimaryPin('');
+
+    setIsSigningIn(true);
+    setAuthError(null);
+
+    const ok = await loginAdmin(primaryPin.trim(), secondaryPin.trim());
+
+    setIsSigningIn(false);
+
+    if (!ok) {
       setSecondaryPin('');
       setAuthStep('primary');
-    }
-  };
-
-  const handleUpdateKeys = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!editPrimaryPin.trim() || !editSecondaryPin.trim()) {
-      setSecurityModalMsg('Both primary and secondary passwords are required.');
+      setAuthError('Those administrator passwords were rejected. Please try again.');
       return;
     }
-    const ok = updateAdminPins(editPrimaryPin.trim(), editSecondaryPin.trim());
-    if (ok) {
+
+    setPrimaryPin('');
+    setSecondaryPin('');
+    setAuthStep('primary');
+  };
+
+  const handleUpdateKeys = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!currentPrimaryPin.trim() || !currentSecondaryPin.trim()) {
+      setSecurityModalMsg('Enter both current passwords to prove you own this console.');
+      return;
+    }
+    if (!editPrimaryPin.trim() || !editSecondaryPin.trim()) {
+      setSecurityModalMsg('Both new passwords are required.');
+      return;
+    }
+    if (editPrimaryPin.trim().length < 8 || editSecondaryPin.trim().length < 8) {
+      setSecurityModalMsg('Each new password must be at least 8 characters long.');
+      return;
+    }
+
+    setIsSavingKeys(true);
+
+    const result = await updateAdminPins({
+      currentPrimary: currentPrimaryPin.trim(),
+      currentSecondary: currentSecondaryPin.trim(),
+      newPrimary: editPrimaryPin.trim(),
+      newSecondary: editSecondaryPin.trim(),
+    });
+
+    setIsSavingKeys(false);
+
+    if (result.success) {
       setSecurityModalMsg('Passwords successfully updated!');
+      setCurrentPrimaryPin('');
+      setCurrentSecondaryPin('');
+      setEditPrimaryPin('');
+      setEditSecondaryPin('');
       setTimeout(() => {
         setShowSecurityModal(false);
         setSecurityModalMsg(null);
       }, 1500);
     } else {
-      setSecurityModalMsg('Failed to update passwords.');
+      setSecurityModalMsg(result.error || 'Failed to update passwords.');
     }
   };
 
@@ -336,9 +366,10 @@ export default function AdminDashboardPage() {
                   </button>
                   <button
                     type="submit"
-                    className="w-2/3 py-2.5 px-4 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                    disabled={isSigningIn}
+                    className="w-2/3 py-2.5 px-4 bg-slate-900 hover:bg-slate-800 disabled:opacity-60 text-white text-xs font-semibold rounded-lg transition shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
                   >
-                    <span>Sign In</span>
+                    <span>{isSigningIn ? 'Verifying…' : 'Sign In'}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -371,56 +402,39 @@ export default function AdminDashboardPage() {
     ? Math.round(students.reduce((acc, s) => acc + (s.avgScorePercentage || 0), 0) / students.length)
     : 0;
 
-  // Student Access Controls (100% Real Supabase Sync)
-  const handleGrantAccess = async (targetStudent: AdminStudentDetail | null, phoneOverride?: string, nameOverride?: string) => {
-    const expiry = new Date();
-    expiry.setDate(expiry.getDate() + grantDurationDays);
-
-    const phone = (targetStudent ? targetStudent.phone : (phoneOverride || customPhoneInput)).trim().replace(/\s+/g, '');
-    const name = (targetStudent ? targetStudent.name : (nameOverride || customNameInput)).trim() || 'Direct Paid Student';
+  // Student Access Controls (server-verified administrator actions)
+  const handleGrantAccess = async (targetStudent: AdminStudentDetail | null) => {
+    const phone = (targetStudent ? targetStudent.phone : customPhoneInput).trim().replace(/\s+/g, '');
     if (!phone) return;
 
-    try {
-      await fetch('/api/students', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          phone,
-          name,
-          accessType: 'Full Pass',
-          accessExpiresAt: expiry.toISOString(),
-        })
-      });
-      await loadRealStudents();
-    } catch (e) {
-      console.warn('Error granting access:', e);
+    setAccessError(null);
+
+    const result = await adminGrantAccess(phone, grantDurationDays);
+    if (!result.success) {
+      setAccessError(result.error || 'Could not grant access.');
+      return;
     }
+
+    await loadRealStudents();
 
     setShowGrantModal(false);
     setSelectedStudentForAccess(null);
     setCustomPhoneInput('');
-    setCustomNameInput('');
   };
 
   const handleRevokeAccess = async (studentId: string) => {
     const target = students.find(s => s.id === studentId);
     if (!target) return;
 
-    try {
-      await fetch('/api/students', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          phone: target.phone,
-          name: target.name,
-          accessType: 'Expired',
-          accessExpiresAt: new Date().toISOString()
-        })
-      });
-      await loadRealStudents();
-    } catch (e) {
-      console.warn('Error revoking access:', e);
+    setAccessError(null);
+
+    const result = await adminRevokeAccess(target.phone);
+    if (!result.success) {
+      setAccessError(result.error || 'Could not revoke access.');
+      return;
     }
+
+    await loadRealStudents();
   };
 
 
@@ -481,12 +495,23 @@ export default function AdminDashboardPage() {
     }
   };
 
-  // PIN Generation
+  // PIN Generation (codes are minted by the server's CSPRNG)
   const handleGeneratePins = async (e: React.FormEvent) => {
     e.preventDefault();
-    const created = generatePinBatch(pinCount, pinPrice, pinValidity);
-    setNewlyGenerated(created);
-    await refreshPins();
+
+    setIsGeneratingPins(true);
+    setPinError(null);
+
+    try {
+      const created = await generatePinBatch(pinCount, pinPrice, pinValidity);
+      setNewlyGenerated(created);
+      await refreshPins();
+    } catch (err: any) {
+      setPinError(err?.message || 'Could not generate the PIN batch.');
+      setNewlyGenerated([]);
+    } finally {
+      setIsGeneratingPins(false);
+    }
   };
 
   const copyToClipboard = (code: string) => {
@@ -555,9 +580,11 @@ export default function AdminDashboardPage() {
 
             <button
               onClick={() => {
-                const current = getAdminPins();
-                setEditPrimaryPin(current.primary);
-                setEditSecondaryPin(current.secondary);
+                setCurrentPrimaryPin('');
+                setCurrentSecondaryPin('');
+                setEditPrimaryPin('');
+                setEditSecondaryPin('');
+                setSecurityModalMsg(null);
                 setShowSecurityModal(true);
               }}
               className="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 font-medium transition flex items-center gap-1.5"
@@ -577,7 +604,9 @@ export default function AdminDashboardPage() {
 
             <button
               onClick={() => {
-                logoutAdmin();
+                void logoutAdmin();
+                clearStudentRosterCache();
+                setStudents([]);
                 setAuthStep('primary');
                 setPrimaryPin('');
                 setSecondaryPin('');
@@ -879,6 +908,7 @@ export default function AdminDashboardPage() {
                 <button
                   onClick={() => {
                     setSelectedStudentForAccess(null);
+                    setAccessError(null);
                     setShowGrantModal(true);
                   }}
                   className="px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium transition flex items-center gap-1.5 shadow-sm"
@@ -888,6 +918,18 @@ export default function AdminDashboardPage() {
                 </button>
               </div>
             </div>
+
+            {accessError && !showGrantModal && (
+              <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-lg text-xs font-medium flex items-start justify-between gap-3">
+                <span className="flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  {accessError}
+                </span>
+                <button onClick={() => setAccessError(null)} className="text-rose-400 hover:text-rose-700">
+                  <XCircle className="w-4 h-4" />
+                </button>
+              </div>
+            )}
 
             {/* Quick Stat Pill Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -1055,27 +1097,18 @@ export default function AdminDashboardPage() {
                   </div>
 
                   {!selectedStudentForAccess && (
-                    <div className="space-y-3">
-                      <div>
-                        <label className="block text-xs font-medium text-slate-700 mb-1">Student Phone Number</label>
-                        <input
-                          type="text"
-                          value={customPhoneInput}
-                          onChange={(e) => setCustomPhoneInput(e.target.value)}
-                          placeholder="e.g. 0241234567"
-                          className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-xs font-medium text-slate-700 mb-1">Student Name (Optional)</label>
-                        <input
-                          type="text"
-                          value={customNameInput}
-                          onChange={(e) => setCustomNameInput(e.target.value)}
-                          placeholder="e.g. Esi Poku"
-                          className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
-                        />
-                      </div>
+                    <div className="space-y-1">
+                      <label className="block text-xs font-medium text-slate-700 mb-1">Student Phone Number</label>
+                      <input
+                        type="text"
+                        value={customPhoneInput}
+                        onChange={(e) => setCustomPhoneInput(e.target.value)}
+                        placeholder="e.g. 0241234567"
+                        className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                      />
+                      <p className="text-[10px] text-slate-400">
+                        The student must already have a registered account on this number.
+                      </p>
                     </div>
                   )}
 
@@ -1098,6 +1131,12 @@ export default function AdminDashboardPage() {
                       ))}
                     </div>
                   </div>
+
+                  {accessError && (
+                    <div className="p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium">
+                      {accessError}
+                    </div>
+                  )}
 
                   <div className="pt-3 flex items-center justify-end gap-2 border-t border-slate-100">
                     <button
@@ -1682,12 +1721,20 @@ export default function AdminDashboardPage() {
 
                 <button
                   type="submit"
-                  className="w-full py-2 px-3 bg-slate-900 hover:bg-slate-800 text-white font-medium rounded-lg text-xs shadow-sm transition flex items-center justify-center gap-1.5"
+                  disabled={isGeneratingPins}
+                  className="w-full py-2 px-3 bg-slate-900 hover:bg-slate-800 disabled:opacity-60 text-white font-medium rounded-lg text-xs shadow-sm transition flex items-center justify-center gap-1.5"
                 >
                   <Plus className="w-3.5 h-3.5" />
-                  <span>Generate Batch</span>
+                  <span>{isGeneratingPins ? 'Minting…' : 'Generate Batch'}</span>
                 </button>
               </form>
+
+              {pinError && (
+                <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-lg text-xs font-medium flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  <span>{pinError}</span>
+                </div>
+              )}
 
               {/* Newly Generated Feedback */}
               {newlyGenerated.length > 0 && (
@@ -1782,32 +1829,69 @@ export default function AdminDashboardPage() {
             </div>
 
             <form onSubmit={handleUpdateKeys} className="space-y-4">
-              <div className="space-y-1">
-                <label className="text-xs font-semibold text-slate-700 block font-mono">
-                  1. Primary Administrator Passcode
-                </label>
-                <input
-                  type="text"
-                  value={editPrimaryPin}
-                  onChange={(e) => setEditPrimaryPin(e.target.value)}
-                  className="w-full text-xs font-mono border border-slate-300 rounded-xl px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
-                  required
-                />
-                <span className="text-[10px] text-slate-400 block">Default: 9276@Dollar</span>
+              <p className="text-[11px] text-slate-500 leading-relaxed">
+                Passwords are stored as bcrypt hashes on the server and are never shown again. Confirm
+                both current passwords to prove you control this console before setting new ones.
+              </p>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-700 block font-mono">
+                    Current Primary
+                  </label>
+                  <input
+                    type="password"
+                    value={currentPrimaryPin}
+                    onChange={(e) => setCurrentPrimaryPin(e.target.value)}
+                    autoComplete="current-password"
+                    className="w-full text-xs font-mono border border-slate-300 rounded-xl px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-700 block font-mono">
+                    Current Secondary
+                  </label>
+                  <input
+                    type="password"
+                    value={currentSecondaryPin}
+                    onChange={(e) => setCurrentSecondaryPin(e.target.value)}
+                    autoComplete="current-password"
+                    className="w-full text-xs font-mono border border-slate-300 rounded-xl px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+                    required
+                  />
+                </div>
               </div>
 
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-slate-700 block font-mono">
-                  2. Secondary Security Token
+                  1. New Primary Administrator Passcode
                 </label>
                 <input
-                  type="text"
-                  value={editSecondaryPin}
-                  onChange={(e) => setEditSecondaryPin(e.target.value)}
+                  type="password"
+                  value={editPrimaryPin}
+                  onChange={(e) => setEditPrimaryPin(e.target.value)}
+                  autoComplete="new-password"
                   className="w-full text-xs font-mono border border-slate-300 rounded-xl px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
                   required
                 />
-                <span className="text-[10px] text-slate-400 block">Default: 9276@AcademicPrep</span>
+                <span className="text-[10px] text-slate-400 block">Minimum 8 characters</span>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-slate-700 block font-mono">
+                  2. New Secondary Security Token
+                </label>
+                <input
+                  type="password"
+                  value={editSecondaryPin}
+                  onChange={(e) => setEditSecondaryPin(e.target.value)}
+                  autoComplete="new-password"
+                  className="w-full text-xs font-mono border border-slate-300 rounded-xl px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+                  required
+                />
+                <span className="text-[10px] text-slate-400 block">Minimum 8 characters</span>
               </div>
 
               {securityModalMsg && (
@@ -1829,9 +1913,10 @@ export default function AdminDashboardPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition shadow-xs"
+                  disabled={isSavingKeys}
+                  className="px-4 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:opacity-60 text-white text-xs font-bold transition shadow-xs"
                 >
-                  Save Changes
+                  {isSavingKeys ? 'Saving…' : 'Save Changes'}
                 </button>
               </div>
             </form>

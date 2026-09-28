@@ -1,164 +1,149 @@
+import crypto from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-import { 
-  fetchPinsFromSupabase, 
-  savePinBatchToSupabase, 
-  redeemPinInSupabaseStrict 
-} from '@/lib/supabaseService';
-import { AccessPin } from '@/lib/types';
+import { requireAdmin } from '@/lib/adminAuth';
+import { getStudentFromRequest, checkLoginThrottle, recordFailedLogin, resetLoginThrottle } from '@/lib/serverAuth';
+import { fetchAccessPins, savePinBatch, redeemAccessPin } from '@/lib/dbService';
 
-const DATA_FILE = path.join(process.cwd(), 'data', 'pins.json');
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
-const DEFAULT_PINS: AccessPin[] = [
-  {
-    id: 'pin-1001',
-    pinCode: 'PREP-8842-9901',
-    batchId: 'BATCH-JHS-01',
-    priceGhs: 25.00,
-    validityDays: 30,
-    status: 'ACTIVE',
-    createdAt: '2026-09-24T10:00:00.000Z',
-  },
-  {
-    id: 'pin-1002',
-    pinCode: 'PREP-4412-3321',
-    batchId: 'BATCH-JHS-01',
-    priceGhs: 25.00,
-    validityDays: 30,
-    status: 'ACTIVE',
-    createdAt: '2026-09-24T10:00:00.000Z',
-  },
-  {
-    id: 'pin-1003',
-    pinCode: 'PREP-9904-7712',
-    batchId: 'BATCH-JHS-01',
-    priceGhs: 25.00,
-    validityDays: 30,
-    status: 'REDEEMED',
-    redeemedAt: '2026-09-23T10:00:00.000Z',
-    createdAt: '2026-09-22T10:00:00.000Z',
-  },
-];
+// Excludes I, O, 0 and 1 so codes transcribed from a scratch card stay legible.
+// 32 divides 256 evenly, so the modulo introduces no bias.
+const PIN_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const MAX_BATCH_SIZE = 500;
 
-function getStoredPins(): AccessPin[] {
-  try {
-    if (!fs.existsSync(DATA_FILE)) {
-      saveStoredPins(DEFAULT_PINS);
-      return DEFAULT_PINS;
-    }
-    const raw = fs.readFileSync(DATA_FILE, 'utf8');
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) && parsed.length > 0 ? parsed : DEFAULT_PINS;
-  } catch (err: any) {
-    console.warn('Failed to read pins.json:', err?.message || err);
-    return DEFAULT_PINS;
+const ADMIN_REQUIRED = () =>
+  NextResponse.json({ success: false, error: 'Administrator access required.' }, { status: 401 });
+
+/**
+ * Generate a voucher code from the CSPRNG. Codes are never supplied by the
+ * client: the previous implementation accepted whatever the browser sent, so a
+ * caller who could reach this endpoint could mint working vouchers, and the
+ * browser-generated codes came from Math.random().
+ */
+function generatePinCode(): string {
+  const bytes = crypto.randomBytes(8);
+  let chars = '';
+  for (let i = 0; i < bytes.length; i += 1) {
+    chars += PIN_ALPHABET[bytes[i] % PIN_ALPHABET.length];
   }
+  return `PREP-${chars.slice(0, 4)}-${chars.slice(4)}`;
 }
 
-function saveStoredPins(pins: AccessPin[]): void {
-  try {
-    const dir = path.dirname(DATA_FILE);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    fs.writeFileSync(DATA_FILE, JSON.stringify(pins, null, 2), 'utf8');
-  } catch (err: any) {
-    console.warn('Failed to save pins.json:', err?.message || err);
-  }
-}
+/**
+ * GET /api/pins - administrator only.
+ * Voucher codes are worth GH₵ 25 each, so listing them is a privileged read.
+ */
+export async function GET(req: NextRequest) {
+  if (!requireAdmin(req)) return ADMIN_REQUIRED();
 
-export async function GET() {
-  try {
-    const supaPins = await fetchPinsFromSupabase();
-    if (Array.isArray(supaPins) && supaPins.length > 0) {
-      saveStoredPins(supaPins);
-      return NextResponse.json(supaPins);
-    }
-  } catch (err: any) {
-    console.warn('Supabase fetch pins notice in API:', err?.message || err);
-  }
+  const pins = await fetchAccessPins();
 
-  const localPins = getStoredPins();
-  return NextResponse.json(localPins);
+  return NextResponse.json({ success: true, pins });
 }
 
 export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json();
+  const body = await req.json().catch(() => null);
+  const action = typeof body?.action === 'string' ? body.action : '';
 
-    // 1. Generation of a new PIN batch
-    if (body.action === 'generate') {
-      const newPins: AccessPin[] = body.pins;
-      if (!Array.isArray(newPins) || newPins.length === 0) {
-        return NextResponse.json({ success: false, error: 'No pins provided' }, { status: 400 });
-      }
-
-      // Save to Supabase
-      await savePinBatchToSupabase(newPins);
-
-      // Save to server JSON
-      const currentPins = getStoredPins();
-      const merged = [...newPins, ...currentPins.filter(cp => !newPins.some(np => np.pinCode === cp.pinCode))];
-      saveStoredPins(merged);
-
-      return NextResponse.json({ success: true, count: newPins.length });
-    }
-
-    // 2. Redemption of a PIN
-    if (body.action === 'redeem') {
-      const pinCode = (body.pinCode || '').trim().toUpperCase();
-      const studentPhone = (body.studentPhone || '').trim();
-
-      if (!pinCode) {
-        return NextResponse.json({ success: false, message: 'Please enter a PIN code.' }, { status: 400 });
-      }
-
-      // Check with Supabase strict single-use redemption first
-      const supaResult = await redeemPinInSupabaseStrict(pinCode, studentPhone);
-
-      if (!supaResult.success) {
-        // Also check local JSON fallback
-        const localPins = getStoredPins();
-        const localPin = localPins.find(p => p.pinCode === pinCode);
-        if (localPin) {
-          if (localPin.status === 'REDEEMED') {
-            return NextResponse.json({ 
-              success: false, 
-              message: 'This PIN code has already been redeemed and cannot be reused.' 
-            });
-          }
-          if (localPin.status === 'ACTIVE') {
-            localPin.status = 'REDEEMED';
-            localPin.redeemedByStudentId = studentPhone || 'DIRECT';
-            localPin.redeemedAt = new Date().toISOString();
-            saveStoredPins(localPins);
-            return NextResponse.json({ 
-              success: true, 
-              message: 'PIN successfully verified! Full access unlocked for ' + localPin.validityDays + ' days.',
-              validityDays: localPin.validityDays 
-            });
-          }
-        }
-        return NextResponse.json(supaResult);
-      }
-
-      // Update local storage to match Supabase state
-      const localPins = getStoredPins();
-      const foundIdx = localPins.findIndex(p => p.pinCode === pinCode);
-      if (foundIdx !== -1) {
-        localPins[foundIdx].status = 'REDEEMED';
-        localPins[foundIdx].redeemedByStudentId = studentPhone || 'DIRECT';
-        localPins[foundIdx].redeemedAt = new Date().toISOString();
-        saveStoredPins(localPins);
-      }
-
-      return NextResponse.json(supaResult);
-    }
-
-    return NextResponse.json({ success: false, error: 'Unknown action' }, { status: 400 });
-  } catch (err: any) {
-    console.warn('PIN API route error:', err?.message || err);
-    return NextResponse.json({ success: false, message: 'Server error processing PIN request' }, { status: 500 });
+  if (action === 'generate') {
+    return handleGenerate(req, body);
   }
+
+  if (action === 'redeem') {
+    return handleRedeem(req, body);
+  }
+
+  return NextResponse.json({ success: false, error: 'Unknown action' }, { status: 400 });
+}
+
+/** POST /api/pins { action: 'generate', count, priceGhs, validityDays } - admin only. */
+async function handleGenerate(req: NextRequest, body: any) {
+  if (!requireAdmin(req)) return ADMIN_REQUIRED();
+
+  const count = Number(body?.count);
+  if (!Number.isInteger(count) || count < 1 || count > MAX_BATCH_SIZE) {
+    return NextResponse.json(
+      { success: false, error: `Please request between 1 and ${MAX_BATCH_SIZE} PINs.` },
+      { status: 400 }
+    );
+  }
+
+  const priceGhs = Number(body?.priceGhs);
+  if (!Number.isFinite(priceGhs) || priceGhs <= 0 || priceGhs > 1000) {
+    return NextResponse.json({ success: false, error: 'Please provide a valid price.' }, { status: 400 });
+  }
+
+  const validityDays = Number(body?.validityDays);
+  if (!Number.isInteger(validityDays) || validityDays < 1 || validityDays > 365) {
+    return NextResponse.json({ success: false, error: 'Please provide validity between 1 and 365 days.' }, { status: 400 });
+  }
+
+  const batchId = `BATCH-${Date.now().toString(36).toUpperCase()}`;
+
+  const pins: { pinCode: string; batchId: string; priceGhs: number; validityDays: number }[] = [];
+  const seen = new Set<string>();
+  while (pins.length < count) {
+    const pinCode = generatePinCode();
+    if (seen.has(pinCode)) continue;
+    seen.add(pinCode);
+    pins.push({ pinCode, batchId, priceGhs, validityDays });
+  }
+
+  const saved = await savePinBatch(pins);
+  if (saved.error) {
+    return NextResponse.json({ success: false, error: 'Could not save the PIN batch. Please try again.' }, { status: 500 });
+  }
+
+  return NextResponse.json({ success: true, batchId, count: saved.saved, pins }, { status: 201 });
+}
+
+/**
+ * POST /api/pins { action: 'redeem', pinCode } - requires a student session.
+ *
+ * The voucher is credited to the account that owns the session. Attempts are
+ * throttled so a signed-in student cannot brute-force the code space.
+ */
+async function handleRedeem(req: NextRequest, body: any) {
+  const row = await getStudentFromRequest(req);
+
+  if (!row) {
+    return NextResponse.json(
+      { success: false, message: 'Please sign in before redeeming a PIN.' },
+      { status: 401 }
+    );
+  }
+
+  const phone = String(row.phone_number);
+  const pinCode = typeof body?.pinCode === 'string' ? body.pinCode.trim().toUpperCase().slice(0, 32) : '';
+
+  if (!pinCode) {
+    return NextResponse.json({ success: false, message: 'Please enter a PIN code.' }, { status: 400 });
+  }
+
+  const throttleKey = `pin:${phone}`;
+  const throttle = await checkLoginThrottle(throttleKey);
+  if (!throttle.allowed) {
+    const minutes = Math.max(1, Math.ceil(throttle.retryAfterSeconds / 60));
+    return NextResponse.json(
+      { success: false, message: `Too many PIN attempts. Please try again in ${minutes} minute${minutes === 1 ? '' : 's'}.` },
+      { status: 429 }
+    );
+  }
+
+  const result = await redeemAccessPin(pinCode, phone);
+
+  if (!result.success) {
+    await recordFailedLogin(throttleKey);
+    return NextResponse.json({ success: false, message: result.message, student: result.student }, { status: 400 });
+  }
+
+  await resetLoginThrottle(throttleKey);
+
+  return NextResponse.json({
+    success: true,
+    message: result.message,
+    validityDays: result.validityDays,
+    student: result.student,
+  });
 }
