@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS public.access_pins (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     pin_code VARCHAR(16) NOT NULL UNIQUE,
     batch_id VARCHAR(64) NOT NULL,
-    price_ghs NUMERIC(10, 2) NOT NULL DEFAULT 20.00,
+    price_ghs NUMERIC(10, 2) NOT NULL DEFAULT 25.00,
     validity_days INTEGER NOT NULL DEFAULT 30,
     status pin_status NOT NULL DEFAULT 'ACTIVE',
     redeemed_by_student_id UUID REFERENCES public.students(id) ON DELETE SET NULL,

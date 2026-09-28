@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
       success: true,
       message: 'Payment confirmed! Monthly VIP Full Access Pass (30 Days) successfully activated.',
       reference,
-      amountGhs: 20.00,
+      amountGhs: 25.00,
       validityDays,
       expiresAt,
       phoneNumber,
