@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { NextRequest } from 'next/server';
-import { supabaseAdmin } from './supabaseClient';
+import { supabaseAdmin, isSupabaseConfigured } from './supabaseClient';
 
 /**
  * Server-side authentication primitives.
@@ -59,6 +59,11 @@ export interface SessionResult {
  * database leak does not produce usable sessions.
  */
 export async function createSession(studentId: string): Promise<SessionResult | null> {
+  if (!isSupabaseConfigured) {
+    console.error('createSession rejected: Supabase is not configured on this server.');
+    return null;
+  }
+
   const token = crypto.randomBytes(32).toString('hex');
   const expiresAt = new Date(Date.now() + SESSION_TTL_DAYS * 24 * 60 * 60 * 1000).toISOString();
 
@@ -85,6 +90,7 @@ export async function createSession(studentId: string): Promise<SessionResult | 
  */
 export async function resolveSession(token?: string | null): Promise<string | null> {
   if (!token || typeof token !== 'string' || token.length < 32) return null;
+  if (!isSupabaseConfigured) return null;
 
   const { data, error } = await supabaseAdmin
     .from('student_sessions')
@@ -107,7 +113,7 @@ export function getBearerToken(req: NextRequest): string | null {
 }
 
 export async function revokeSession(token?: string | null): Promise<void> {
-  if (!token) return;
+  if (!token || !isSupabaseConfigured) return;
   await supabaseAdmin
     .from('student_sessions')
     .update({ revoked_at: new Date().toISOString() })
@@ -117,6 +123,8 @@ export async function revokeSession(token?: string | null): Promise<void> {
 
 /** Revoke every session for a student (password change, account compromise). */
 export async function revokeAllSessions(studentId: string): Promise<void> {
+  if (!isSupabaseConfigured || !studentId) return;
+
   await supabaseAdmin
     .from('student_sessions')
     .update({ revoked_at: new Date().toISOString() })
@@ -135,6 +143,11 @@ export interface ThrottleState {
  * own any account in minutes.
  */
 export async function checkLoginThrottle(phone: string): Promise<ThrottleState> {
+  // Without a database there is nothing to throttle against. Return early so
+  // the request fails fast at PIN verification instead of blocking on a network
+  // call to the unconfigured placeholder host.
+  if (!isSupabaseConfigured) return { allowed: true, retryAfterSeconds: 0 };
+
   const { data, error } = await supabaseAdmin
     .from('login_attempts')
     .select('attempt_count, first_attempt_at, locked_until')
@@ -166,6 +179,8 @@ export async function checkLoginThrottle(phone: string): Promise<ThrottleState> 
 
 /** Record a failed login. Locks the phone once MAX_LOGIN_ATTEMPTS is reached. */
 export async function recordFailedLogin(phone: string): Promise<void> {
+  if (!isSupabaseConfigured) return;
+
   const now = new Date();
 
   const { data } = await supabaseAdmin
@@ -198,6 +213,8 @@ export async function recordFailedLogin(phone: string): Promise<void> {
 
 /** Clear the throttle after a successful login. */
 export async function resetLoginThrottle(phone: string): Promise<void> {
+  if (!isSupabaseConfigured || !phone) return;
+
   await supabaseAdmin.from('login_attempts').delete().eq('phone_number', phone);
 }
 

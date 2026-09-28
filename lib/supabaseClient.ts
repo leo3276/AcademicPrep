@@ -12,7 +12,7 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
  * tokens and admin keys before touching the database.
  */
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseUrl = process.env.SUPABASE_URL || '';
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
 /**
@@ -25,7 +25,7 @@ export const isSupabaseConfigured: boolean = Boolean(supabaseUrl && supabaseServ
 if (!isSupabaseConfigured) {
   // eslint-disable-next-line no-console
   console.error(
-    '[supabaseClient] Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY. ' +
+    '[supabaseClient] Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY. ' +
       'All database operations will be rejected until these are configured.'
   );
 }

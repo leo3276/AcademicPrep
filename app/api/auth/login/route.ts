@@ -7,6 +7,7 @@ import {
   resetLoginThrottle,
 } from '@/lib/serverAuth';
 import { verifyPin, findStudentByPhone, touchLastActive, toSafeStudent } from '@/lib/dbService';
+import { isSupabaseConfigured } from '@/lib/supabaseClient';
 
 // Deliberately identical for "no such account" and "wrong password" so the
 // endpoint cannot be used to enumerate which phone numbers are registered.
@@ -37,6 +38,17 @@ export async function POST(req: NextRequest) {
 
     if (password.length > 72) {
       return NextResponse.json({ success: false, error: GENERIC_FAILURE }, { status: 400 });
+    }
+
+    // Reported as a server fault, not a bad credential: answering "incorrect
+    // password" while the database is unreachable sends whoever is debugging it
+    // after a credentials bug that does not exist.
+    if (!isSupabaseConfigured) {
+      console.error('[/api/auth/login] rejected: Supabase is not configured on this server.');
+      return NextResponse.json(
+        { success: false, error: 'Sign-in is temporarily unavailable. Please try again shortly.' },
+        { status: 503 }
+      );
     }
 
     const throttle = await checkLoginThrottle(phone);
