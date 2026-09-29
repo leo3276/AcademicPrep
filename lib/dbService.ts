@@ -1,4 +1,5 @@
 import { supabaseAdmin, isSupabaseConfigured } from './supabaseClient';
+import { buildTopicProgressWrite } from './topicProgressWrite';
 
 /**
  * SERVER-ONLY DATA ACCESS LAYER.
@@ -612,9 +613,11 @@ export async function fetchStudentProgress(phone: string): Promise<Record<string
 }
 
 /**
- * Upsert topic progress and refresh the denormalised counters on students.
- * Uses the unique (student_phone, topic_id) index so concurrent writes from two
- * devices converge instead of creating duplicate rows.
+ * Save topic progress and refresh the denormalised counters on students.
+ *
+ * Insert or update explicitly. A PostgREST upsert on (student_phone, topic_id)
+ * does not work against the live unique index, which is partial
+ * (`WHERE student_phone IS NOT NULL`), so ON CONFLICT cannot match it.
  */
 export async function saveTopicProgress(params: {
   phone: string;
@@ -624,7 +627,6 @@ export async function saveTopicProgress(params: {
   if (!isSupabaseConfigured || !params.phone) return;
 
   const now = new Date().toISOString();
-  const isCompleted = params.scorePercentage >= 60;
 
   const { data: existing, error: selectErr } = await supabaseAdmin
     .from('student_topic_progress')
@@ -638,27 +640,22 @@ export async function saveTopicProgress(params: {
     return;
   }
 
-  const upsertPayload = existing
-    ? {
-        student_phone: params.phone,
-        topic_id: params.topicId,
-        completed: Boolean(existing.completed) || isCompleted,
-        best_score_percentage: Math.max(existing.best_score_percentage || 0, params.scorePercentage),
-        attempts_count: (existing.attempts_count || 1) + 1,
-        last_studied_at: now,
-      }
-    : {
-        student_phone: params.phone,
-        topic_id: params.topicId,
-        completed: isCompleted,
-        best_score_percentage: params.scorePercentage,
-        attempts_count: 1,
-        last_studied_at: now,
-      };
+  const write = buildTopicProgressWrite({
+    phone: params.phone,
+    topicId: params.topicId,
+    scorePercentage: params.scorePercentage,
+    existing: existing || null,
+    nowIso: now,
+  });
 
-  const { error } = await supabaseAdmin
-    .from('student_topic_progress')
-    .upsert(upsertPayload, { onConflict: 'student_phone,topic_id' });
+  const { error } =
+    write.action === 'update'
+      ? await supabaseAdmin
+          .from('student_topic_progress')
+          .update(write.payload)
+          .eq('student_phone', params.phone)
+          .eq('topic_id', params.topicId)
+      : await supabaseAdmin.from('student_topic_progress').insert(write.payload);
 
   if (error) {
     console.error('[dbService] saveTopicProgress failed:', error.message);

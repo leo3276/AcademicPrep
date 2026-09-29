@@ -507,10 +507,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const studentPhone = student.phoneNumber;
       writeLocalStorage(`academicprep_progress_${studentPhone}`, nextState);
 
-      saveTopicProgress({ topicId, scorePercentage }).catch((e) =>
-        console.warn('Progress sync notice:', e?.message || e)
-      );
-
       const allCompleted = Object.keys(nextState).filter((id) => nextState[id]?.completed);
       const isExpired = student.accessExpiresAt
         ? new Date(student.accessExpiresAt).getTime() <= Date.now()
@@ -527,17 +523,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setStudent(updatedStudent);
       writeLocalStorage(STORAGE_KEYS.CURRENT_STUDENT, updatedStudent);
 
-      syncStudentAccount({
-        topicIdCompleted: isCompleted ? topicId : undefined,
-        newQuizScore: scorePercentage,
-      })
+      // Persist the quiz once. A second write through syncStudentAccount used
+      // to double-count attempts after the progress row started saving.
+      saveTopicProgress({ topicId, scorePercentage })
+        .then(() => syncStudentAccount({}))
         .then((synced) => {
           if (synced) {
             setStudent(synced);
             writeLocalStorage(STORAGE_KEYS.CURRENT_STUDENT, synced);
           }
         })
-        .catch((e) => console.warn('Student progress sync notice:', e?.message || e));
+        .catch((e) => console.warn('Progress sync notice:', e?.message || e));
     } else {
       writeLocalStorage(STORAGE_KEYS.TOPIC_PROGRESS, nextState);
     }
