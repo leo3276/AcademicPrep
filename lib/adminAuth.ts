@@ -61,12 +61,21 @@ export function verifyAdminToken(token?: string | null): boolean {
 }
 
 /**
- * Authorise an admin request. Accepts either the signed session cookie set by
- * /api/admin/login or an `x-admin-key` header for server-to-server scripts.
+ * Authorise an admin request. Accepts the signed session token from either the
+ * cookie set by /api/admin/login or an `Authorization: Bearer` header, plus an
+ * `x-admin-key` header for server-to-server scripts.
+ *
+ * The bearer path exists for the React Native app: it has no cookie jar, so it
+ * replays the same short-lived signed token as a header. It is never a PIN and
+ * never leaves the device that authenticated with both PINs.
  */
 export function requireAdmin(req: NextRequest): boolean {
   const cookieToken = req.cookies.get(ADMIN_COOKIE_NAME)?.value;
   if (verifyAdminToken(cookieToken)) return true;
+
+  const authorization = req.headers.get('authorization') || '';
+  const bearerToken = authorization.replace(/^Bearer\s+/i, '').trim();
+  if (verifyAdminToken(bearerToken)) return true;
 
   const configuredKey = process.env.ADMIN_API_KEY || '';
   const providedKey = req.headers.get('x-admin-key') || '';

@@ -58,8 +58,13 @@ export async function POST(req: NextRequest) {
 
   await resetLoginThrottle(ADMIN_THROTTLE_KEY);
 
-  const response = NextResponse.json({ success: true });
-  response.cookies.set(ADMIN_COOKIE_NAME, createAdminToken(), adminCookieOptions());
+  const token = createAdminToken();
+
+  // The cookie carries the browser dashboard session. The same token is echoed
+  // in the body for the React Native admin, which cannot hold a cookie; only a
+  // caller that already produced both PINs ever sees it.
+  const response = NextResponse.json({ success: true, token });
+  response.cookies.set(ADMIN_COOKIE_NAME, token, adminCookieOptions());
 
   return response;
 }
