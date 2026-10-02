@@ -61,6 +61,12 @@ export default function Footer() {
                   Adaptive Weekly Exams
                 </Link>
               </li>
+              <li>
+                <Link href="/blog" className="text-slate-300 hover:text-white transition-colors font-medium flex items-center gap-1.5">
+                  <span className="text-blue-400">★</span>
+                  <span>Study Journal & Guides</span>
+                </Link>
+              </li>
             </ul>
           </div>
 

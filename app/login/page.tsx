@@ -151,7 +151,12 @@ function LoginFormContent() {
       return;
     }
 
-    router.push(redirectUrl);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('academicprep_show_new_account_tour', 'true');
+    }
+
+    const destination = searchParams.get('redirect') || '/jhs';
+    router.push(destination);
   };
 
   return (

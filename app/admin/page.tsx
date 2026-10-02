@@ -23,6 +23,15 @@ import {
   PdfPaperType
 } from '@/lib/pdfStore';
 import { 
+  BlogPost, 
+  BlogCategory, 
+  BLOG_CATEGORIES, 
+  fetchBlogPosts, 
+  createBlogPost, 
+  updateBlogPost, 
+  deleteBlogPost 
+} from '@/lib/blogStore';
+import { 
   ShieldCheck,
   EyeOff,
   Key,
@@ -58,8 +67,18 @@ import {
   UserCheck, 
   ExternalLink,
   ChevronRight,
-  FileText
+  FileText,
+  Flame,
+  Edit,
+  Sparkles,
+  Image as ImageIcon,
+  Video as VideoIcon,
+  UploadCloud,
+  Play,
+  X
 } from 'lucide-react';
+import { parseVideoUrl } from '@/lib/mediaUtils';
+
 
 export default function AdminDashboardPage() {
   const { 
@@ -93,8 +112,8 @@ export default function AdminDashboardPage() {
   const [securityModalMsg, setSecurityModalMsg] = useState<string | null>(null);
   const [isSavingKeys, setIsSavingKeys] = useState(false);
   
-  // Navigation Tabs: traffic, paid_access, completions, trial_mocks, pins
-  const [activeTab, setActiveTab] = useState<'traffic' | 'paid_access' | 'completions' | 'trial_mocks' | 'pins'>('traffic');
+  // Navigation Tabs: traffic, paid_access, completions, trial_mocks, pins, blog
+  const [activeTab, setActiveTab] = useState<'traffic' | 'paid_access' | 'completions' | 'trial_mocks' | 'pins' | 'blog'>('traffic');
 
   // Stores
   const [trafficData, setTrafficData] = useState<WebTrafficData>(DEFAULT_TRAFFIC_DATA);
@@ -105,6 +124,29 @@ export default function AdminDashboardPage() {
   const [pdfFilterSubject, setPdfFilterSubject] = useState('ALL');
   const [showPdfUploadForm, setShowPdfUploadForm] = useState(false);
   const [isUploadingPdf, setIsUploadingPdf] = useState(false);
+
+  // Blog Management Store & Composer State
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [loadingBlog, setLoadingBlog] = useState(false);
+  const [blogSearch, setBlogSearch] = useState('');
+  const [blogCategoryFilter, setBlogCategoryFilter] = useState<'ALL' | BlogCategory>('ALL');
+  const [showBlogComposer, setShowBlogComposer] = useState(false);
+  const [editingPostId, setEditingPostId] = useState<string | null>(null);
+
+  const [blogTitle, setBlogTitle] = useState('');
+  const [blogCategory, setBlogCategory] = useState<BlogCategory>('Study Tips');
+  const [blogAuthor, setBlogAuthor] = useState('AcademicPrep Editorial');
+  const [blogReadTime, setBlogReadTime] = useState(4);
+  const [blogExcerpt, setBlogExcerpt] = useState('');
+  const [blogContent, setBlogContent] = useState('');
+  const [blogFeatured, setBlogFeatured] = useState(false);
+  const [blogMediaType, setBlogMediaType] = useState<'none' | 'image' | 'video'>('none');
+  const [blogMediaUrl, setBlogMediaUrl] = useState('');
+  const [blogMediaCaption, setBlogMediaCaption] = useState('');
+  const [isUploadingBlogMedia, setIsUploadingBlogMedia] = useState(false);
+  const [blogMediaUploadError, setBlogMediaUploadError] = useState<string | null>(null);
+  const [isSavingBlog, setIsSavingBlog] = useState(false);
+  const [blogBanner, setBlogBanner] = useState<{ kind: 'ok' | 'bad'; text: string } | null>(null);
 
   // PDF Upload Form State
   const [pdfFile, setPdfFile] = useState<File | null>(null);
@@ -150,12 +192,205 @@ export default function AdminDashboardPage() {
     setStudents(roster as AdminStudentDetail[]);
   };
 
+  const loadBlogPosts = async () => {
+    try {
+      setLoadingBlog(true);
+      const data = await fetchBlogPosts();
+      setBlogPosts(data);
+    } catch (err: any) {
+      console.warn('Failed to load blog posts in admin:', err);
+    } finally {
+      setLoadingBlog(false);
+    }
+  };
+
+  const resetBlogForm = () => {
+    setEditingPostId(null);
+    setBlogTitle('');
+    setBlogCategory('Study Tips');
+    setBlogAuthor('AcademicPrep Editorial');
+    setBlogReadTime(4);
+    setBlogExcerpt('');
+    setBlogContent('');
+    setBlogFeatured(false);
+    setBlogMediaType('none');
+    setBlogMediaUrl('');
+    setBlogMediaCaption('');
+    setBlogMediaUploadError(null);
+    setShowBlogComposer(false);
+  };
+
+  const handleStartEditPost = (post: BlogPost) => {
+    setEditingPostId(post.id);
+    setBlogTitle(post.title);
+    setBlogCategory(post.category);
+    setBlogAuthor(post.author);
+    setBlogReadTime(post.readTimeMinutes);
+    setBlogExcerpt(post.excerpt);
+    setBlogContent(post.content);
+    setBlogFeatured(Boolean(post.featured));
+    setBlogMediaType(post.mediaType || 'none');
+    setBlogMediaUrl(post.mediaUrl || '');
+    setBlogMediaCaption(post.mediaCaption || '');
+    setBlogMediaUploadError(null);
+    setShowBlogComposer(true);
+    setBlogBanner(null);
+  };
+
+  const handleBlogMediaFileUpload = async (file: File) => {
+    if (!file) return;
+    setIsUploadingBlogMedia(true);
+    setBlogMediaUploadError(null);
+    try {
+      const isVideo = file.type.startsWith('video/');
+      const isImage = file.type.startsWith('image/');
+      if (!isImage && !isVideo) {
+        throw new Error('Please select an image (PNG, JPG, WEBP) or video (MP4, WebM) file.');
+      }
+      if (file.size > 60 * 1024 * 1024) {
+        throw new Error('File exceeds 60MB limit. For large video lectures, paste a YouTube link instead.');
+      }
+
+      const signRes = await fetch('/api/documents/upload-url', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fileName: file.name, contentType: file.type }),
+      });
+
+      if (!signRes.ok) {
+        const signErr = await signRes.json().catch(() => ({}));
+        throw new Error(signErr.error || `Upload authorization failed (HTTP ${signRes.status})`);
+      }
+
+      const signData = await signRes.json();
+      if (!signData.signedUrl || !signData.publicUrl) {
+        throw new Error('Server did not return a valid signed upload URL.');
+      }
+
+      const uploadRes = await fetch(signData.signedUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type },
+        body: file,
+      });
+
+      if (!uploadRes.ok) {
+        throw new Error(`Direct cloud storage upload failed (HTTP ${uploadRes.status})`);
+      }
+
+      setBlogMediaUrl(signData.publicUrl);
+      setBlogMediaType(isVideo ? 'video' : 'image');
+    } catch (err: any) {
+      setBlogMediaUploadError(err?.message || 'Failed to upload media file.');
+    } finally {
+      setIsUploadingBlogMedia(false);
+    }
+  };
+
+  const handleSaveBlogPost = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!blogTitle.trim() || !blogExcerpt.trim() || !blogContent.trim()) {
+      setBlogBanner({ kind: 'bad', text: 'Title, summary excerpt, and content are required.' });
+      return;
+    }
+
+    setIsSavingBlog(true);
+    setBlogBanner(null);
+
+    const mediaPayload = {
+      mediaType: blogMediaType === 'none' ? null : blogMediaType,
+      mediaUrl: blogMediaType === 'none' ? null : (blogMediaUrl.trim() || null),
+      mediaCaption: blogMediaType === 'none' ? null : (blogMediaCaption.trim() || null),
+    };
+
+    try {
+      if (editingPostId) {
+        const res = await updateBlogPost(editingPostId, {
+          title: blogTitle.trim(),
+          category: blogCategory,
+          author: blogAuthor.trim() || 'AcademicPrep Editorial',
+          readTimeMinutes: Number(blogReadTime) || 4,
+          excerpt: blogExcerpt.trim(),
+          content: blogContent.trim(),
+          featured: blogFeatured,
+          ...mediaPayload,
+        });
+
+        if (!res.success) {
+          setBlogBanner({ kind: 'bad', text: res.error || 'Failed to update article.' });
+        } else {
+          setBlogBanner({ kind: 'ok', text: `Updated "${blogTitle}" successfully.` });
+          resetBlogForm();
+          await loadBlogPosts();
+        }
+      } else {
+        const res = await createBlogPost({
+          title: blogTitle.trim(),
+          category: blogCategory,
+          author: blogAuthor.trim() || 'AcademicPrep Editorial',
+          readTimeMinutes: Number(blogReadTime) || 4,
+          excerpt: blogExcerpt.trim(),
+          content: blogContent.trim(),
+          featured: blogFeatured,
+          ...mediaPayload,
+        });
+
+        if (!res.success) {
+          setBlogBanner({ kind: 'bad', text: res.error || 'Failed to publish article.' });
+        } else {
+          setBlogBanner({ kind: 'ok', text: `Published "${blogTitle}" successfully.` });
+          resetBlogForm();
+          await loadBlogPosts();
+        }
+      }
+    } catch (err: any) {
+      setBlogBanner({ kind: 'bad', text: err?.message || 'Error saving article.' });
+    } finally {
+      setIsSavingBlog(false);
+    }
+  };
+
+  const handleDeleteBlogPost = async (post: BlogPost) => {
+    if (!confirm(`Are you sure you want to delete "${post.title}"?`)) {
+      return;
+    }
+
+    try {
+      const res = await deleteBlogPost(post.id);
+      if (res.success) {
+        setBlogBanner({ kind: 'ok', text: `Deleted "${post.title}".` });
+        await loadBlogPosts();
+      } else {
+        setBlogBanner({ kind: 'bad', text: res.error || 'Failed to delete article.' });
+      }
+    } catch (err: any) {
+      setBlogBanner({ kind: 'bad', text: err?.message || 'Error deleting article.' });
+    }
+  };
+
+  const handleToggleFeatured = async (post: BlogPost) => {
+    try {
+      const res = await updateBlogPost(post.id, { featured: !post.featured });
+      if (res.success) {
+        setBlogBanner({
+          kind: 'ok',
+          text: !post.featured
+            ? `"${post.title}" is now featured on the homepage.`
+            : `Un-featured "${post.title}".`,
+        });
+        await loadBlogPosts();
+      }
+    } catch (err: any) {
+      setBlogBanner({ kind: 'bad', text: err?.message || 'Error updating feature status.' });
+    }
+  };
+
   useEffect(() => {
     setMounted(true);
     setTrafficData(getStoredTrafficData());
     clearStudentRosterCache();
     loadRealStudents();
     fetchUploadedDocuments().then(setPdfDocuments).catch(e => console.warn('Fetch docs warning:', e?.message || e));
+    loadBlogPosts();
     if (isAdmin) refreshPins();
   }, [activeTab, isAdmin]);
 
@@ -690,6 +925,21 @@ export default function AdminDashboardPage() {
             >
               <KeyRound className="w-4 h-4" />
               <span>Access PINs & Revenue</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('blog')}
+              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+                activeTab === 'blog'
+                  ? 'border-slate-900 text-slate-900 font-semibold'
+                  : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              <FileText className="w-4 h-4" />
+              <span>App Blog & Articles</span>
+              <span className="ml-1 text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-full font-mono">
+                {blogPosts.length}
+              </span>
             </button>
           </nav>
         </div>
@@ -1797,6 +2047,649 @@ export default function AdminDashboardPage() {
                   </tbody>
                 </table>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* ============================================================ */}
+        {/* TAB 6: APP BLOG & ARTICLES MANAGEMENT                        */}
+        {/* ============================================================ */}
+        {activeTab === 'blog' && (
+          <div className="space-y-6">
+            {/* Feedback Banner */}
+            {blogBanner && (
+              <div
+                className={`p-4 rounded-xl border text-xs font-semibold flex items-center justify-between shadow-xs ${
+                  blogBanner.kind === 'ok'
+                    ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
+                    : 'bg-rose-50 border-rose-200 text-rose-800'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  {blogBanner.kind === 'ok' ? (
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  ) : (
+                    <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                  )}
+                  <span>{blogBanner.text}</span>
+                </div>
+                <button
+                  onClick={() => setBlogBanner(null)}
+                  className="text-slate-400 hover:text-slate-600 text-xs px-2 py-0.5"
+                >
+                  Dismiss
+                </button>
+              </div>
+            )}
+
+            {/* Top Stat Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
+                <span className="text-xs text-slate-500 font-medium block">Total Articles</span>
+                <span className="text-2xl font-semibold text-slate-900 mt-1 block font-mono">
+                  {blogPosts.length}
+                </span>
+                <span className="text-[11px] text-blue-600 font-medium mt-1 inline-flex items-center gap-1">
+                  <FileText className="w-3 h-3" /> Live on App & Website
+                </span>
+              </div>
+
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
+                <span className="text-xs text-slate-500 font-medium block">Featured Article</span>
+                <span className="text-sm font-bold text-slate-900 mt-1 block truncate">
+                  {blogPosts.find((p) => p.featured)?.title || 'None designated'}
+                </span>
+                <span className="text-[11px] text-amber-600 font-medium mt-1 inline-flex items-center gap-1">
+                  <Flame className="w-3 h-3" /> Displayed prominently on homepage
+                </span>
+              </div>
+
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
+                <span className="text-xs text-slate-500 font-medium block">Active Categories</span>
+                <span className="text-2xl font-semibold text-slate-900 mt-1 block font-mono">
+                  {BLOG_CATEGORIES.length}
+                </span>
+                <span className="text-[11px] text-slate-500 font-medium mt-1 inline-flex items-center gap-1">
+                  Study Tips, Strategy, BECE & Updates
+                </span>
+              </div>
+            </div>
+
+            {/* Header & New Article Toggle */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm">
+              <div>
+                <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-blue-600" />
+                  <span>Educational Articles & Study Journal</span>
+                </h3>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Publish revision guides, chief examiner insights, and announcements for 8,000+ students.
+                </p>
+              </div>
+
+              <button
+                onClick={() => {
+                  if (showBlogComposer) {
+                    resetBlogForm();
+                  } else {
+                    resetBlogForm();
+                    setShowBlogComposer(true);
+                  }
+                }}
+                className={`px-4 py-2 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow-sm ${
+                  showBlogComposer
+                    ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300'
+                    : 'bg-slate-900 hover:bg-slate-800 text-white'
+                }`}
+              >
+                {showBlogComposer ? (
+                  <span>Cancel Composer</span>
+                ) : (
+                  <>
+                    <Plus className="w-4 h-4" />
+                    <span>New Article</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* COMPOSER FORM (New or Edit) */}
+            {showBlogComposer && (
+              <div className="bg-white border-2 border-blue-500/40 rounded-xl p-5 sm:p-6 shadow-md space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                  <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <Edit className="w-4 h-4 text-blue-600" />
+                    <span>{editingPostId ? 'Edit Article' : 'Compose New Article'}</span>
+                  </h4>
+                  <span className="text-[11px] text-slate-400 font-mono">
+                    {editingPostId ? `ID: ${editingPostId}` : 'Instant Multi-Platform Sync'}
+                  </span>
+                </div>
+
+                <form onSubmit={handleSaveBlogPost} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="sm:col-span-2">
+                      <label className="block text-xs font-semibold text-slate-700 mb-1">
+                        Article Title *
+                      </label>
+                      <input
+                        type="text"
+                        value={blogTitle}
+                        onChange={(e) => setBlogTitle(e.target.value)}
+                        placeholder="e.g. How to Score Raw 1s in Core Mathematics & Integrated Science"
+                        className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1">
+                        Category *
+                      </label>
+                      <select
+                        value={blogCategory}
+                        onChange={(e) => setBlogCategory(e.target.value as BlogCategory)}
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                      >
+                        {BLOG_CATEGORIES.map((cat) => (
+                          <option key={cat} value={cat}>
+                            {cat}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1">
+                        Author Byline
+                      </label>
+                      <input
+                        type="text"
+                        value={blogAuthor}
+                        onChange={(e) => setBlogAuthor(e.target.value)}
+                        placeholder="e.g. AcademicPrep Editorial or Teacher Name"
+                        className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1">
+                        Estimated Read Time (Minutes)
+                      </label>
+                      <input
+                        type="number"
+                        min="1"
+                        max="60"
+                        value={blogReadTime}
+                        onChange={(e) => setBlogReadTime(Number(e.target.value))}
+                        className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Summary Excerpt * (2-3 sentences shown on cards and previews)
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={blogExcerpt}
+                      onChange={(e) => setBlogExcerpt(e.target.value)}
+                      placeholder="Brief overview highlighting the main takeaway for students..."
+                      className="w-full bg-white border border-slate-300 rounded-lg p-3 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Full Article Content * (Supports bullet points with •, numbered lists, and blank lines between paragraphs)
+                    </label>
+                    <textarea
+                      rows={8}
+                      value={blogContent}
+                      onChange={(e) => setBlogContent(e.target.value)}
+                      placeholder="Write your detailed guide here. Use • for bullet points and numbers (1., 2.) for step-by-step advice..."
+                      className="w-full bg-white border border-slate-300 rounded-lg p-3 text-xs font-sans text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900 leading-relaxed"
+                      required
+                    />
+                  </div>
+
+                  {/* Media Attachment (Picture or Video) */}
+                  <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3.5">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <ImageIcon className="w-4 h-4 text-blue-600" />
+                        <label className="text-xs font-bold text-slate-800">
+                          Media Attachment (Picture or Video)
+                        </label>
+                      </div>
+                      <div className="flex items-center gap-1.5 p-1 bg-white border border-slate-200 rounded-lg self-start sm:self-auto">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setBlogMediaType('none');
+                            setBlogMediaUrl('');
+                          }}
+                          className={`px-2.5 py-1 rounded text-[11px] font-semibold transition ${
+                            blogMediaType === 'none'
+                              ? 'bg-slate-900 text-white'
+                              : 'text-slate-600 hover:text-slate-900'
+                          }`}
+                        >
+                          No Media
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setBlogMediaType('image');
+                          }}
+                          className={`px-2.5 py-1 rounded text-[11px] font-semibold flex items-center gap-1 transition ${
+                            blogMediaType === 'image'
+                              ? 'bg-blue-600 text-white'
+                              : 'text-slate-600 hover:text-slate-900'
+                          }`}
+                        >
+                          <ImageIcon className="w-3 h-3" />
+                          <span>Picture</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setBlogMediaType('video');
+                          }}
+                          className={`px-2.5 py-1 rounded text-[11px] font-semibold flex items-center gap-1 transition ${
+                            blogMediaType === 'video'
+                              ? 'bg-blue-600 text-white'
+                              : 'text-slate-600 hover:text-slate-900'
+                          }`}
+                        >
+                          <VideoIcon className="w-3 h-3" />
+                          <span>Video</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {blogMediaType !== 'none' && (
+                      <div className="space-y-3 pt-1 border-t border-slate-200/70">
+                        {blogMediaUploadError && (
+                          <div className="p-2.5 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+                            <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                            <span>{blogMediaUploadError}</span>
+                          </div>
+                        )}
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {/* File Upload Option */}
+                          <div>
+                            <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                              Upload {blogMediaType === 'image' ? 'Image File' : 'Video File'} (Direct to Cloud)
+                            </label>
+                            <label className="border border-dashed border-slate-300 hover:border-blue-500 rounded-lg p-3 bg-white flex flex-col items-center justify-center cursor-pointer transition text-center group">
+                              <UploadCloud className="w-5 h-5 text-slate-400 group-hover:text-blue-600 mb-1" />
+                              <span className="text-xs font-semibold text-slate-700 group-hover:text-blue-600">
+                                {isUploadingBlogMedia ? 'Uploading to Cloud CDN...' : `Select ${blogMediaType === 'image' ? 'Image' : 'Video'}`}
+                              </span>
+                              <span className="text-[10px] text-slate-400 mt-0.5">
+                                {blogMediaType === 'image' ? 'PNG, JPG, WEBP (Max 20MB)' : 'MP4, WebM (Max 60MB)'}
+                              </span>
+                              <input
+                                type="file"
+                                accept={blogMediaType === 'image' ? 'image/*' : 'video/*'}
+                                disabled={isUploadingBlogMedia}
+                                onChange={(e) => {
+                                  const f = e.target.files?.[0];
+                                  if (f) handleBlogMediaFileUpload(f);
+                                }}
+                                className="hidden"
+                              />
+                            </label>
+                          </div>
+
+                          {/* URL Paste Option */}
+                          <div>
+                            <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                              Or Paste {blogMediaType === 'image' ? 'Image Web URL' : 'YouTube / Vimeo / MP4 Link'}
+                            </label>
+                            <div className="relative">
+                              <input
+                                type="url"
+                                value={blogMediaUrl}
+                                onChange={(e) => setBlogMediaUrl(e.target.value)}
+                                placeholder={
+                                  blogMediaType === 'image'
+                                    ? 'https://example.com/photo.jpg or Unsplash URL'
+                                    : 'https://www.youtube.com/watch?v=... or direct .mp4'
+                                }
+                                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                              />
+                              {blogMediaUrl && (
+                                <button
+                                  type="button"
+                                  onClick={() => setBlogMediaUrl('')}
+                                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                                >
+                                  <X className="w-3.5 h-3.5" />
+                                </button>
+                              )}
+                            </div>
+                            <p className="text-[10px] text-slate-500 mt-1">
+                              {blogMediaType === 'image'
+                                ? 'Paste a direct link to any public image on the web.'
+                                : 'YouTube links auto-convert to responsive embedded players for students.'}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Caption input */}
+                        <div>
+                          <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                            Media Caption / Description (Optional)
+                          </label>
+                          <input
+                            type="text"
+                            value={blogMediaCaption}
+                            onChange={(e) => setBlogMediaCaption(e.target.value)}
+                            placeholder="e.g. WAEC Chief Examiner illustration for Question 4(b)..."
+                            className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                          />
+                        </div>
+
+                        {/* Live Responsive Preview */}
+                        {blogMediaUrl.trim() && (
+                          <div className="pt-2 border-t border-slate-200/70">
+                            <div className="flex items-center justify-between mb-1.5">
+                              <span className="text-[11px] font-bold text-slate-700 flex items-center gap-1">
+                                <span>Live Responsive Preview</span>
+                                <span className="text-[10px] font-normal text-slate-500">(How students will see it)</span>
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setBlogMediaUrl('');
+                                  setBlogMediaCaption('');
+                                }}
+                                className="text-[11px] text-red-600 hover:text-red-700 font-semibold"
+                              >
+                                Remove Media
+                              </button>
+                            </div>
+
+                            <div className="rounded-xl overflow-hidden border border-slate-200 bg-white p-2">
+                              {blogMediaType === 'image' ? (
+                                <div className="space-y-1.5">
+                                  <img
+                                    src={blogMediaUrl.trim()}
+                                    alt="Preview"
+                                    className="w-full max-h-48 object-cover rounded-lg"
+                                    onError={(e) => {
+                                      (e.target as any).style.display = 'none';
+                                    }}
+                                  />
+                                  {blogMediaCaption && (
+                                    <p className="text-[11px] text-slate-500 italic text-center">
+                                      {blogMediaCaption}
+                                    </p>
+                                  )}
+                                </div>
+                              ) : (
+                                <div className="space-y-1.5">
+                                  {(() => {
+                                    const parsed = parseVideoUrl(blogMediaUrl.trim());
+                                    if (!parsed) return <p className="text-xs text-slate-400">Invalid video URL</p>;
+                                    return (
+                                      <div className="relative aspect-video w-full max-w-md mx-auto rounded-lg overflow-hidden bg-black">
+                                        {parsed.type === 'youtube' || parsed.type === 'vimeo' ? (
+                                          <iframe
+                                            src={parsed.embedUrl}
+                                            title="Video Preview"
+                                            className="w-full h-full border-0"
+                                            allowFullScreen
+                                          />
+                                        ) : (
+                                          <video src={parsed.embedUrl} controls className="w-full h-full" />
+                                        )}
+                                      </div>
+                                    );
+                                  })()}
+                                  {blogMediaCaption && (
+                                    <p className="text-[11px] text-slate-500 italic text-center">
+                                      {blogMediaCaption}
+                                    </p>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+
+                  <div className="flex items-center gap-2 pt-1">
+                    <input
+                      type="checkbox"
+                      id="blogFeatured"
+                      checked={blogFeatured}
+                      onChange={(e) => setBlogFeatured(e.target.checked)}
+                      className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer"
+                    />
+                    <label htmlFor="blogFeatured" className="text-xs text-slate-700 font-medium cursor-pointer">
+                      Feature this article prominently on Homepage & Blog header
+                    </label>
+                  </div>
+
+                  <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+                    <button
+                      type="button"
+                      onClick={resetBlogForm}
+                      className="px-4 py-2 border border-slate-300 text-slate-700 hover:bg-slate-50 rounded-lg text-xs font-semibold transition"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={isSavingBlog}
+                      className="px-5 py-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center gap-1.5"
+                    >
+                      {isSavingBlog ? (
+                        <span>Saving...</span>
+                      ) : (
+                        <>
+                          <CheckCircle2 className="w-4 h-4" />
+                          <span>{editingPostId ? 'Save Changes' : 'Publish Article'}</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
+
+            {/* Filter & Search Bar */}
+            <div className="bg-white p-3.5 rounded-xl border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="relative w-full sm:w-72">
+                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={blogSearch}
+                  onChange={(e) => setBlogSearch(e.target.value)}
+                  placeholder="Search articles by title or author..."
+                  className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                />
+              </div>
+
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <Filter className="w-3.5 h-3.5 text-slate-400" />
+                <select
+                  value={blogCategoryFilter}
+                  onChange={(e) => setBlogCategoryFilter(e.target.value as any)}
+                  className="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-700 font-medium focus:outline-none"
+                >
+                  <option value="ALL">All Categories</option>
+                  {BLOG_CATEGORIES.map((c) => (
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Articles Table */}
+            <div className="bg-white border border-slate-200/80 rounded-xl overflow-hidden shadow-sm">
+              <div className="p-3.5 border-b border-slate-200/80 flex items-center justify-between">
+                <h3 className="text-xs font-semibold text-slate-900">
+                  Published Articles ({blogPosts.length})
+                </h3>
+                <span className="text-[11px] text-slate-500 font-mono">
+                  Synced across Next.js & Mobile App
+                </span>
+              </div>
+
+              {loadingBlog ? (
+                <div className="p-8 text-center text-xs text-slate-500">
+                  Loading articles...
+                </div>
+              ) : blogPosts.length === 0 ? (
+                <div className="p-8 text-center text-xs text-slate-500">
+                  No articles published yet. Click "New Article" to publish your first post.
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead className="bg-slate-50/75 text-slate-500 font-medium uppercase tracking-wider border-b border-slate-200/80">
+                      <tr>
+                        <th className="px-4 py-2.5">Article Details</th>
+                        <th className="px-4 py-2.5">Category</th>
+                        <th className="px-4 py-2.5">Author</th>
+                        <th className="px-4 py-2.5">Read Time</th>
+                        <th className="px-4 py-2.5">Published Date</th>
+                        <th className="px-4 py-2.5 text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {blogPosts
+                        .filter((p) => {
+                          const matchesCat =
+                            blogCategoryFilter === 'ALL' || p.category === blogCategoryFilter;
+                          const q = blogSearch.toLowerCase().trim();
+                          const matchesSearch =
+                            !q ||
+                            p.title.toLowerCase().includes(q) ||
+                            p.author.toLowerCase().includes(q);
+                          return matchesCat && matchesSearch;
+                        })
+                        .map((post) => (
+                          <tr key={post.id} className="hover:bg-slate-50/60 transition">
+                            <td className="px-4 py-3">
+                              <div className="flex items-start gap-3 max-w-md">
+                                {post.mediaType === 'image' && post.mediaUrl ? (
+                                  <div className="w-11 h-11 rounded-lg overflow-hidden shrink-0 border border-slate-200 bg-slate-100">
+                                    <img
+                                      src={post.mediaUrl}
+                                      alt=""
+                                      className="w-full h-full object-cover"
+                                      onError={(e) => {
+                                        (e.target as any).style.display = 'none';
+                                      }}
+                                    />
+                                  </div>
+                                ) : post.mediaType === 'video' && post.mediaUrl ? (
+                                  <div className="w-11 h-11 rounded-lg shrink-0 bg-slate-900 border border-slate-700 flex items-center justify-center text-white" title="Contains Video">
+                                    <VideoIcon className="w-4 h-4 text-blue-400" />
+                                  </div>
+                                ) : null}
+
+                                <div className="min-w-0">
+                                  <div className="flex items-center gap-1.5 flex-wrap">
+                                    {post.featured && (
+                                      <span className="shrink-0 px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 text-[10px] font-bold" title="Featured Post">
+                                        ★ Featured
+                                      </span>
+                                    )}
+                                    {post.mediaType === 'video' && (
+                                      <span className="shrink-0 px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 text-[9px] font-bold">
+                                        VIDEO
+                                      </span>
+                                    )}
+                                    {post.mediaType === 'image' && (
+                                      <span className="shrink-0 px-1.5 py-0.5 rounded bg-blue-100 text-blue-700 text-[9px] font-bold">
+                                        PHOTO
+                                      </span>
+                                    )}
+                                    <Link
+                                      href={`/blog/${post.id}`}
+                                      target="_blank"
+                                      className="font-semibold text-slate-900 hover:text-blue-600 transition flex items-center gap-1 group truncate"
+                                    >
+                                      <span>{post.title}</span>
+                                      <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-blue-600 shrink-0" />
+                                    </Link>
+                                  </div>
+                                  <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
+                                    {post.excerpt}
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+
+                            <td className="px-4 py-3 whitespace-nowrap">
+                              <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                                {post.category}
+                              </span>
+                            </td>
+
+                            <td className="px-4 py-3 whitespace-nowrap font-medium text-slate-700">
+                              {post.author}
+                            </td>
+
+                            <td className="px-4 py-3 whitespace-nowrap text-slate-500 font-mono">
+                              {post.readTimeMinutes} min
+                            </td>
+
+                            <td className="px-4 py-3 whitespace-nowrap text-slate-500 font-mono">
+                              {new Date(post.publishedAt).toLocaleDateString()}
+                            </td>
+
+                            <td className="px-4 py-3 whitespace-nowrap text-right space-x-1">
+                              <button
+                                onClick={() => handleToggleFeatured(post)}
+                                className={`p-1.5 rounded-lg border transition ${
+                                  post.featured
+                                    ? 'bg-amber-50 border-amber-200 text-amber-700 hover:bg-amber-100'
+                                    : 'border-slate-200 text-slate-400 hover:text-slate-700 hover:bg-slate-100'
+                                }`}
+                                title={post.featured ? 'Unfeature' : 'Set as Featured Article'}
+                              >
+                                <Flame className="w-3.5 h-3.5" />
+                              </button>
+
+                              <button
+                                onClick={() => handleStartEditPost(post)}
+                                className="p-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition"
+                                title="Edit Article"
+                              >
+                                <Edit className="w-3.5 h-3.5" />
+                              </button>
+
+                              <button
+                                onClick={() => handleDeleteBlogPost(post)}
+                                className="p-1.5 rounded-lg border border-slate-200 text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition"
+                                title="Delete Article"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
           </div>
         )}

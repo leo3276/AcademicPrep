@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/authContext';
 import { 
   GraduationCap, 
@@ -16,12 +16,15 @@ import {
   Sparkles,
   Award,
   BookOpen,
-  FileCheck
+  FileCheck,
+  FileText,
+  Compass
 } from 'lucide-react';
 import PaystackPaymentModal from './PaystackPaymentModal';
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { student, isAdmin, logoutStudent, logoutAdmin } = useAuth();
   
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -33,6 +36,15 @@ export default function Navbar() {
     setMounted(true);
   }, []);
 
+  const handleOpenGuide = () => {
+    if (mobileMenuOpen) setMobileMenuOpen(false);
+    if (pathname === '/' || pathname === '/jhs') {
+      window.dispatchEvent(new CustomEvent('academicprep:open-tour'));
+    } else {
+      router.push('/jhs?tour=1');
+    }
+  };
+
 
   return (
     <>
@@ -41,7 +53,7 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16 w-full gap-2 sm:gap-4">
             {/* Logo */}
             <div className="flex items-center gap-4 shrink-0">
-              <Link href="/" className="flex items-center gap-2.5 group shrink-0">
+              <Link href="/" id="tour-nav-logo" className="flex items-center gap-2.5 group shrink-0">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform shrink-0">
                   <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
@@ -78,11 +90,11 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Desktop Navigation links & Actions (Visible on lg: 1024px+) */}
-            <div className="hidden lg:flex items-center gap-1.5 xl:gap-2.5 shrink-0">
+            {/* Desktop Navigation links & Actions (Visible on xl: 1280px+) */}
+            <div id="tour-nav-links" className="hidden xl:flex items-center gap-1.5 2xl:gap-2">
               <Link
                 href={student ? "/jhs" : "/login?redirect=/jhs"}
-                className={`text-xs font-bold transition-colors whitespace-nowrap px-2.5 py-1.5 rounded-lg ${
+                className={`text-xs font-bold transition-colors whitespace-nowrap px-2 py-1.5 2xl:px-2.5 rounded-lg ${
                   pathname === '/jhs' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                 }`}
               >
@@ -90,31 +102,29 @@ export default function Navbar() {
               </Link>
               <Link
                 href="/jhs/bece-past-questions"
-                className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 xl:px-2.5 rounded-lg whitespace-nowrap ${
+                className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 2xl:px-2.5 rounded-lg whitespace-nowrap ${
                   pathname === '/jhs/bece-past-questions' 
                     ? 'text-blue-600 bg-blue-50 font-bold' 
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                 }`}
               >
                 <BookOpen className="w-3.5 h-3.5 text-blue-600" />
-                <span className="hidden xl:inline">BECE Past Questions</span>
-                <span className="xl:hidden">BECE</span>
+                <span>BECE Past Questions</span>
               </Link>
               <Link
                 href="/jhs/trial-questions"
-                className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 xl:px-2.5 rounded-lg whitespace-nowrap ${
+                className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 2xl:px-2.5 rounded-lg whitespace-nowrap ${
                   pathname === '/jhs/trial-questions' 
                     ? 'text-emerald-700 bg-emerald-50 font-bold' 
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                 }`}
               >
                 <FileCheck className="w-3.5 h-3.5 text-emerald-600" />
-                <span className="hidden xl:inline">Trial Questions</span>
-                <span className="xl:hidden">Trial Mocks</span>
+                <span>Trial Mocks</span>
               </Link>
               <Link
                 href="/jhs/weekly-exam"
-                className={`text-xs font-bold transition-colors flex items-center gap-1 px-2.5 py-1.5 xl:px-3 rounded-xl whitespace-nowrap ${
+                className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 2xl:px-2.5 rounded-xl whitespace-nowrap ${
                   pathname === '/jhs/weekly-exam' 
                     ? 'bg-amber-100 text-amber-900 font-bold' 
                     : 'text-amber-800 bg-amber-50 hover:bg-amber-100'
@@ -124,29 +134,45 @@ export default function Navbar() {
                 <span>Weekly Exam</span>
               </Link>
 
-              {student && (
-                <Link
-                  href="/jhs/profile"
-                  className={`text-xs font-bold transition-colors flex items-center gap-1.5 px-2 py-1.5 xl:px-2.5 rounded-lg whitespace-nowrap ${
-                    pathname === '/jhs/profile'
-                      ? 'text-blue-700 bg-blue-50 font-bold border border-blue-200'
-                      : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100'
-                  }`}
-                >
-                  <User className="w-3.5 h-3.5 text-blue-600" />
-                  <span>My Profile</span>
-                </Link>
-              )}
+              <Link
+                href="/blog"
+                className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 2xl:px-2.5 rounded-lg whitespace-nowrap ${
+                  pathname.startsWith('/blog')
+                    ? 'text-blue-600 bg-blue-50 font-bold'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                }`}
+              >
+                <FileText className="w-3.5 h-3.5 text-blue-600" />
+                <span>Journal & Guides</span>
+              </Link>
+
+              {/* Platform Feature Tour Guide Link */}
+              <button
+                type="button"
+                id="tour-nav-guide"
+                onClick={handleOpenGuide}
+                className="text-xs font-bold transition-all flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-blue-700 bg-blue-50 hover:bg-blue-100 hover:text-blue-800 border border-blue-200/80 shadow-2xs whitespace-nowrap cursor-pointer relative"
+                title="Interactive Guide to Platform Features"
+              >
+                <Compass className="w-3.5 h-3.5 text-blue-600 animate-spin-slow" />
+                <span>Guide</span>
+                <span className="flex h-1.5 w-1.5 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-600"></span>
+                </span>
+              </button>
 
               <button
+                type="button"
+                id="tour-nav-vip"
                 onClick={() => {
                   setModalTab('momo');
                   setPinModalOpen(true);
                 }}
-                className="text-xs font-bold px-2.5 py-1.5 xl:px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-sm shadow-amber-500/20 transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
+                className="text-xs font-bold px-2.5 py-1.5 2xl:px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-sm shadow-amber-500/20 transition-all flex items-center gap-1 whitespace-nowrap cursor-pointer"
               >
                 <Sparkles className="w-3.5 h-3.5 text-amber-200" />
-                <span>VIP Pass (GHS 25/mo)</span>
+                <span>VIP Pass</span>
               </button>
 
               <div className="h-5 w-px bg-slate-200 shrink-0 mx-0.5" />
@@ -155,13 +181,13 @@ export default function Navbar() {
               {!mounted ? (
                 <div className="w-24 sm:w-28 h-8 rounded-xl bg-slate-100 animate-pulse shrink-0" />
               ) : student ? (
-                <div className="flex items-center gap-2 pl-2 pr-1.5 py-1 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 shrink-0 transition">
+                <div id="tour-nav-profile" className="flex items-center gap-2 pl-2 pr-1.5 py-1 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 shrink-0 transition">
                   <Link href="/jhs/profile" className="flex items-center gap-2 text-left leading-tight shrink-0 group">
                     <div className="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform">
                       {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
                     </div>
                     <div className="flex flex-col text-left leading-tight shrink-0">
-                      <span className="text-xs font-bold text-slate-900 truncate max-w-[80px] xl:max-w-[110px] whitespace-nowrap group-hover:text-blue-600">
+                      <span className="text-xs font-bold text-slate-900 truncate max-w-[80px] 2xl:max-w-[100px] whitespace-nowrap group-hover:text-blue-600">
                         {student.fullName}
                       </span>
                       <div className="flex items-center gap-1 mt-0.5 whitespace-nowrap">
@@ -192,6 +218,7 @@ export default function Navbar() {
               ) : (
                 <Link
                   href="/login?redirect=/jhs"
+                  id="tour-nav-profile"
                   className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 xl:px-3.5 xl:py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-sm shadow-blue-500/20 whitespace-nowrap"
                 >
                   <User className="w-3.5 h-3.5" />
@@ -200,17 +227,32 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* Mobile / Tablet Menu Trigger & Quick Actions (< lg) */}
-            <div className="lg:hidden flex items-center gap-2 shrink-0">
+            {/* Mobile / Tablet Menu Trigger & Quick Actions (< xl) */}
+            <div className="xl:hidden flex items-center gap-1.5 sm:gap-2 shrink-0">
+              <button
+                type="button"
+                id="tour-nav-guide-mobile"
+                onClick={handleOpenGuide}
+                className="p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 transition-colors flex items-center gap-1 text-xs font-bold cursor-pointer relative"
+                title="Platform Feature Guide"
+              >
+                <Compass className="w-4 h-4 text-blue-600 animate-spin-slow" />
+                <span className="hidden sm:inline">Guide</span>
+                <span className="flex h-1.5 w-1.5 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-600"></span>
+                </span>
+              </button>
+
               <button
                 onClick={() => {
                   setModalTab('momo');
                   setPinModalOpen(true);
                 }}
-                className="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-xs flex items-center gap-1 whitespace-nowrap cursor-pointer"
+                className="text-xs font-bold px-2 py-1.5 sm:px-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-xs flex items-center gap-1 whitespace-nowrap cursor-pointer"
               >
                 <Sparkles className="w-3.5 h-3.5 text-amber-200" />
-                <span className="hidden sm:inline">VIP Pass (GHS 25/mo)</span>
+                <span className="hidden sm:inline">VIP Pass</span>
                 <span className="sm:hidden">VIP</span>
               </button>
 
@@ -247,7 +289,7 @@ export default function Navbar() {
 
         {/* Mobile menu drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-3 w-full max-w-full">
+          <div className="xl:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-3 w-full max-w-full">
             <div className="flex flex-col gap-2">
               <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Select Section</span>
               <div className="grid grid-cols-3 gap-2">
@@ -268,6 +310,17 @@ export default function Navbar() {
             </div>
 
             <div className="pt-2 border-t border-slate-100 flex flex-col gap-2">
+              <button
+                type="button"
+                onClick={handleOpenGuide}
+                className="py-2 px-2.5 text-sm font-bold text-blue-700 bg-blue-50/80 hover:bg-blue-100 rounded-xl flex items-center gap-2.5 text-left w-full transition-colors cursor-pointer border border-blue-200"
+              >
+                <div className="w-6 h-6 rounded-lg bg-blue-600 flex items-center justify-center text-white shrink-0">
+                  <Compass className="w-3.5 h-3.5" />
+                </div>
+                <span>Platform Feature Tour Guide</span>
+              </button>
+
               <Link
                 href="/jhs"
                 onClick={() => setMobileMenuOpen(false)}
@@ -298,6 +351,14 @@ export default function Navbar() {
               >
                 <Sparkles className="w-4 h-4 text-amber-600" />
                 Adaptive Weekly Exam
+              </Link>
+              <Link
+                href="/blog"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2 text-sm font-semibold text-slate-800 flex items-center gap-1.5"
+              >
+                <FileText className="w-4 h-4 text-blue-600" />
+                Study Journal & Guides
               </Link>
 
               <button

@@ -24,10 +24,16 @@ import {
   GraduationCap,
   FileCheck,
   FileText,
-  Lock
+  Lock,
+  Clock,
+  Compass,
+  Play
 } from 'lucide-react';
 import SubjectIcon from '@/components/SubjectIcon';
 import { fetchUploadedDocuments } from '@/lib/pdfStore';
+import { BlogPost, fetchBlogPosts, INITIAL_BLOG_POSTS } from '@/lib/blogStore';
+import PlatformTourGuide from '@/components/PlatformTourGuide';
+import TourPromptToast from '@/components/TourPromptToast';
 
 export default function JhsPortalPage() {
   const router = useRouter();
@@ -36,6 +42,8 @@ export default function JhsPortalPage() {
   const [mounted, setMounted] = useState(false);
   const [uploadedMocksCount, setUploadedMocksCount] = useState(0);
   const [uploadedBeceCount, setUploadedBeceCount] = useState(0);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>(INITIAL_BLOG_POSTS.slice(0, 3));
+  const [showTour, setShowTour] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -58,8 +66,37 @@ export default function JhsPortalPage() {
         setUploadedMocksCount(docs.filter((d) => d.category === 'trial_mock').length);
         setUploadedBeceCount(docs.filter((d) => d.category === 'bece_past_question').length);
       }).catch(e => console.warn('Fetch docs warning:', e?.message || e));
+
+      fetchBlogPosts().then((posts) => {
+        if (posts && posts.length > 0) {
+          setBlogPosts(posts.slice(0, 3));
+        }
+      }).catch(e => console.warn('Fetch blog in JHS warning:', e?.message || e));
+
+      // Trigger interactive onboarding guide if user just registered an account or clicked Guide in nav
+      const urlTour = urlParams.get('tour') === 'true' || urlParams.get('tour') === '1';
+      const shouldTour = localStorage.getItem('academicprep_show_new_account_tour') === 'true' || urlTour;
+      if (shouldTour) {
+        localStorage.removeItem('academicprep_show_new_account_tour');
+        localStorage.setItem('academicprep_account_tour_completed', 'true');
+        if (urlTour) {
+          const cleanUrl = new URL(window.location.href);
+          cleanUrl.searchParams.delete('tour');
+          window.history.replaceState({}, '', cleanUrl.toString());
+        }
+        const timer = setTimeout(() => {
+          setShowTour(true);
+        }, 450);
+        return () => clearTimeout(timer);
+      }
     }
   }, [student]);
+
+  useEffect(() => {
+    const handleOpenTour = () => setShowTour(true);
+    window.addEventListener('academicprep:open-tour', handleOpenTour);
+    return () => window.removeEventListener('academicprep:open-tour', handleOpenTour);
+  }, []);
 
   useEffect(() => {
     if (mounted && !isLoading && !student) {
@@ -107,28 +144,41 @@ export default function JhsPortalPage() {
           </p>
         </div>
 
-        {/* Level Switcher (JHS 1 / 2 / 3) */}
-        <div className="flex items-center bg-slate-100 p-1 rounded-xl self-start md:self-auto">
-          {(['JHS 1', 'JHS 2', 'JHS 3'] as EducationLevel[]).map((lvl) => (
-            <button
-              key={lvl}
-              onClick={() => handleLevelSelect(lvl)}
-              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
-                selectedLevel === lvl
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              {lvl}
-            </button>
-          ))}
+        {/* Level Switcher & Feature Tour button */}
+        <div className="flex items-center gap-2.5 self-start md:self-auto flex-wrap">
+          <button
+            type="button"
+            onClick={() => setShowTour(true)}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 transition-colors shadow-2xs"
+            title="Start interactive platform tour"
+          >
+            <Compass className="w-3.5 h-3.5 text-blue-600" />
+            <span>Platform Tour</span>
+          </button>
+
+          {/* Level Switcher (JHS 1 / 2 / 3) */}
+          <div id="tour-level-switcher" className="flex items-center bg-slate-100 p-1 rounded-xl">
+            {(['JHS 1', 'JHS 2', 'JHS 3'] as EducationLevel[]).map((lvl) => (
+              <button
+                key={lvl}
+                onClick={() => handleLevelSelect(lvl)}
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                  selectedLevel === lvl
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                {lvl}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Progress & Dynamic Exam Trigger Row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Progress Card */}
-        <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+        <div id="tour-topic-mastery" className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-600">
               {selectedLevel} Topic Mastery
@@ -165,7 +215,7 @@ export default function JhsPortalPage() {
         </div>
 
         {/* BECE Past Questions Card */}
-        <div className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-blue-400 shadow-sm transition space-y-3 flex flex-col justify-between">
+        <div id="tour-bece-past-questions" className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-blue-400 shadow-sm transition space-y-3 flex flex-col justify-between">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full">
@@ -194,7 +244,7 @@ export default function JhsPortalPage() {
         </div>
 
         {/* Trial Questions Card (Uploaded by Admin) */}
-        <div className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-emerald-400 shadow-sm transition space-y-3 flex flex-col justify-between">
+        <div id="tour-trial-mocks" className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-emerald-400 shadow-sm transition space-y-3 flex flex-col justify-between">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
@@ -224,7 +274,7 @@ export default function JhsPortalPage() {
       </div>
 
       {/* Adaptive Weekly Exam Banner */}
-      <div className="p-5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div id="tour-weekly-exam" className="p-5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-bold uppercase tracking-wider">
             <Sparkles className="w-3 h-3" />
@@ -246,7 +296,7 @@ export default function JhsPortalPage() {
       </div>
 
       {/* Core Subjects Grid */}
-      <div className="space-y-4">
+      <div id="tour-curriculum-subjects" className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
             <GraduationCap className="w-5 h-5 text-blue-600" />
@@ -318,6 +368,100 @@ export default function JhsPortalPage() {
           })}
         </div>
       </div>
+
+      {/* WAEC & Study Journal Quick Access */}
+      <div id="tour-study-journal" className="space-y-4 pt-6 border-t border-slate-200">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <BookOpen className="w-5 h-5 text-indigo-600" />
+              WAEC Examiner Guides & Study Journal
+            </h2>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Chief examiner tips, revision blueprints, and academic announcements for BECE candidates
+            </p>
+          </div>
+          <Link
+            href="/blog"
+            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 hover:underline self-start sm:self-auto"
+          >
+            <span>View all articles</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {blogPosts.map((post) => (
+            <Link
+              key={post.id}
+              href={`/blog/${post.id}`}
+              className="group rounded-2xl bg-white border border-slate-200 hover:border-blue-400 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+            >
+              {post.mediaType && post.mediaUrl && (
+                <div className="relative aspect-video w-full overflow-hidden bg-slate-100 border-b border-slate-100 group/img">
+                  {post.mediaType === 'image' ? (
+                    <img
+                      src={post.mediaUrl}
+                      alt={post.title}
+                      className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-slate-950 relative flex items-center justify-center">
+                      <img
+                        src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80"
+                        alt=""
+                        className="w-full h-full object-cover opacity-50"
+                      />
+                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg">
+                          <Play className="w-3.5 h-3.5 fill-white text-white ml-0.5" />
+                        </div>
+                      </div>
+                      <span className="absolute bottom-2 right-2 px-1.5 py-0.5 rounded bg-black/80 text-white text-[9px] font-bold">
+                        VIDEO
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100 uppercase tracking-wider">
+                      {post.category}
+                    </span>
+                    <span className="text-[11px] text-slate-400 flex items-center gap-1 font-medium">
+                      <Clock className="w-3 h-3" />
+                      {post.readTimeMinutes} min read
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-2 leading-snug">
+                      {post.title}
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">
+                      {post.excerpt}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-blue-600 group-hover:translate-x-0.5 transition-transform">
+                  <span>Read Examiner Guide</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Interactive Platform Feature Tour Guide */}
+      <PlatformTourGuide isOpen={showTour} onClose={() => setShowTour(false)} />
+
+      {/* Polite Welcome Toast Inviting First-Time Visitors to Tour */}
+      <TourPromptToast onStartTour={() => setShowTour(true)} />
     </div>
   );
 }

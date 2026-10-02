@@ -13,73 +13,114 @@ import {
   Lock, 
   FileText,
   KeyRound,
-  GraduationCap
+  GraduationCap,
+  Calendar,
+  ChevronRight,
+  Compass,
+  Play
 } from 'lucide-react';
+import { BlogPost, BlogCategory, BLOG_CATEGORIES, INITIAL_BLOG_POSTS, fetchBlogPosts } from '@/lib/blogStore';
+import PlatformTourGuide, { HOMEPAGE_TOUR_STEPS } from '@/components/PlatformTourGuide';
+import TourPromptToast from '@/components/TourPromptToast';
 
 export default function HomePage() {
   const { student } = useAuth();
   const [mounted, setMounted] = useState(false);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>(INITIAL_BLOG_POSTS);
+  const [blogCategory, setBlogCategory] = useState<'ALL' | BlogCategory>('ALL');
+  const [showTour, setShowTour] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    fetchBlogPosts()
+      .then((posts) => {
+        if (Array.isArray(posts) && posts.length > 0) {
+          setBlogPosts(posts);
+        }
+      })
+      .catch(() => {});
+
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('tour') === '1' || urlParams.get('tour') === 'true') {
+        const timer = setTimeout(() => setShowTour(true), 400);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleOpenTour = () => setShowTour(true);
+    window.addEventListener('academicprep:open-tour', handleOpenTour);
+    return () => window.removeEventListener('academicprep:open-tour', handleOpenTour);
   }, []);
 
   return (
-    <div className="space-y-16 pb-20">
+    <div className="space-y-12 sm:space-y-16 pb-16 sm:pb-20 w-full max-w-full overflow-hidden">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-blue-900 via-indigo-950 to-slate-900 text-white pt-16 pb-20 sm:pb-28">
+      <section className="relative overflow-hidden bg-gradient-to-b from-blue-900 via-indigo-950 to-slate-900 text-white pt-12 pb-16 sm:pt-16 sm:pb-24">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/25 via-transparent to-transparent pointer-events-none" />
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-3xl mx-auto space-y-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/20 border border-blue-400/40 text-blue-200 text-xs font-semibold backdrop-blur-sm">
-              <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              Built for 8,000+ Online Students • AcademicPrep Portal
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="text-center max-w-3xl mx-auto space-y-5 sm:space-y-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/20 border border-blue-400/40 text-blue-200 text-xs font-semibold backdrop-blur-sm max-w-full">
+              <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+              <span className="truncate">Built for 8,000+ Online Students • AcademicPrep Portal</span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-white">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-white">
               Master Your Curriculum, <br />
               <span className="bg-gradient-to-r from-blue-300 via-indigo-200 to-teal-300 bg-clip-text text-transparent">
                 Topic by Topic, Week by Week.
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-200 max-w-2xl mx-auto leading-relaxed font-normal">
+            <p className="text-sm sm:text-base lg:text-lg text-slate-200 max-w-2xl mx-auto leading-relaxed font-normal px-2">
               Full JHS 1, 2, and 3 curriculum topics, instant quizzes with step-by-step explanations, and personalized weekly exams.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2 w-full max-w-md mx-auto sm:max-w-none">
               <Link
                 href="/jhs"
+                id="tour-home-launch"
                 className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 group"
               >
                 <span>Launch JHS Study Portal</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
+
+              <button
+                type="button"
+                onClick={() => setShowTour(true)}
+                className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm transition-all border border-white/20 backdrop-blur-sm flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+              >
+                <Compass className="w-4 h-4 text-blue-300" />
+                <span>Take 60s Tour</span>
+              </button>
               
               {mounted && !student && (
                 <Link
                   href="/login"
-                  className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm transition-all border border-slate-700 flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm transition-all border border-slate-700 flex items-center justify-center gap-2"
                 >
                   <KeyRound className="w-4 h-4 text-emerald-400" />
-                  <span>Student Login (Phone + PIN)</span>
+                  <span>Student Login</span>
                 </Link>
               )}
             </div>
 
             {/* Quick Demo Info Box */}
-            <div className="pt-4 max-w-md mx-auto">
-              <div className="bg-slate-800/80 backdrop-blur-md rounded-xl p-3.5 border border-slate-700 text-left text-xs text-slate-200 flex items-center justify-between shadow-md">
+            <div className="pt-3 max-w-md mx-auto w-full">
+              <div id="tour-home-demo" className="bg-slate-800/80 backdrop-blur-md rounded-xl p-3 sm:p-3.5 border border-slate-700 text-left text-xs text-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 shadow-md">
                 <div>
                   <span className="font-bold text-white block mb-0.5">Try Demo Student Account:</span>
-                  <span className="text-slate-300">
+                  <span className="text-slate-300 break-words">
                     Phone: <b className="text-emerald-300 font-mono">0241234567</b> • PIN: <b className="text-emerald-300 font-mono">1234</b>
                   </span>
                 </div>
                 <Link 
                   href="/login"
-                  className="px-3 py-1.5 rounded-lg bg-white text-slate-900 font-bold text-[11px] hover:bg-slate-100 shadow-sm shrink-0 ml-2"
+                  className="px-3 py-1.5 rounded-lg bg-white text-slate-900 font-bold text-[11px] hover:bg-slate-100 shadow-sm shrink-0 self-start sm:self-auto text-center"
                 >
                   Quick Fill
                 </Link>
@@ -89,23 +130,23 @@ export default function HomePage() {
         </div>
 
         {/* Live Counters */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-md">
-            <div className="text-center p-3">
-              <div className="text-2xl sm:text-3xl font-extrabold text-white">8,000+</div>
-              <div className="text-xs text-slate-200 font-medium mt-1">Community Students</div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-3.5 sm:p-5 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-md">
+            <div className="text-center p-2 sm:p-3">
+              <div className="text-xl sm:text-3xl font-extrabold text-white">8,000+</div>
+              <div className="text-[11px] sm:text-xs text-slate-200 font-medium mt-1">Community Students</div>
             </div>
-            <div className="text-center p-3">
-              <div className="text-2xl sm:text-3xl font-extrabold text-emerald-400">JHS 1, 2, 3</div>
-              <div className="text-xs text-slate-200 font-medium mt-1">Full Curriculum Live</div>
+            <div className="text-center p-2 sm:p-3">
+              <div className="text-xl sm:text-3xl font-extrabold text-emerald-400">JHS 1, 2, 3</div>
+              <div className="text-[11px] sm:text-xs text-slate-200 font-medium mt-1">Full Curriculum Live</div>
             </div>
-            <div className="text-center p-3">
-              <div className="text-2xl sm:text-3xl font-extrabold text-blue-300">100%</div>
-              <div className="text-xs text-slate-200 font-medium mt-1">Instant Auto-Grading</div>
+            <div className="text-center p-2 sm:p-3">
+              <div className="text-xl sm:text-3xl font-extrabold text-blue-300">100%</div>
+              <div className="text-[11px] sm:text-xs text-slate-200 font-medium mt-1">Instant Auto-Grading</div>
             </div>
-            <div className="text-center p-3">
-              <div className="text-2xl sm:text-3xl font-extrabold text-purple-300">Dynamic</div>
-              <div className="text-xs text-slate-200 font-medium mt-1">Weekly Exams by Progress</div>
+            <div className="text-center p-2 sm:p-3">
+              <div className="text-xl sm:text-3xl font-extrabold text-purple-300">Dynamic</div>
+              <div className="text-[11px] sm:text-xs text-slate-200 font-medium mt-1">Weekly Exams</div>
             </div>
           </div>
         </div>
@@ -120,9 +161,9 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Card 1: JHS (ACTIVE) */}
-          <div className="relative rounded-2xl bg-white border-2 border-blue-600 p-6 shadow-xl shadow-blue-500/5 flex flex-col justify-between overflow-hidden">
+          <div id="tour-home-jhs" className="relative rounded-2xl bg-white border-2 border-blue-600 p-6 shadow-xl shadow-blue-500/5 flex flex-col justify-between overflow-hidden">
             <div className="absolute top-0 right-0 bg-blue-600 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-1 rounded-bl-xl">
               Active & Live Now
             </div>
@@ -273,7 +314,7 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* BECE Past Questions Archive Card */}
-          <div className="rounded-2xl bg-gradient-to-br from-blue-900 to-indigo-950 text-white p-7 shadow-xl relative overflow-hidden flex flex-col justify-between">
+          <div id="tour-home-bece" className="rounded-2xl bg-gradient-to-br from-blue-900 to-indigo-950 text-white p-7 shadow-xl relative overflow-hidden flex flex-col justify-between">
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-semibold">
                 <FileText className="w-4 h-4 text-blue-400" />
@@ -316,7 +357,7 @@ export default function HomePage() {
           </div>
 
           {/* BECE Trial & Mock Exam Card */}
-          <div className="rounded-2xl bg-white border-2 border-emerald-500/40 p-7 shadow-xl shadow-emerald-500/5 flex flex-col justify-between">
+          <div id="tour-home-mocks" className="rounded-2xl bg-white border-2 border-emerald-500/40 p-7 shadow-xl shadow-emerald-500/5 flex flex-col justify-between">
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold">
                 <Sparkles className="w-4 h-4 text-emerald-600" />
@@ -362,7 +403,7 @@ export default function HomePage() {
 
       {/* Key Innovation: Dynamic Weekly Exam */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
+        <div id="tour-home-weekly" className="rounded-3xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
           <div className="max-w-2xl space-y-4 relative z-10">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-white font-bold text-xs backdrop-blur-sm">
               <Sparkles className="w-3.5 h-3.5" />
@@ -395,7 +436,197 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Study Journal & WAEC Strategy Articles */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div id="tour-home-blog" className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-8">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-100 pb-6">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold mb-2">
+                <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+                <span>Study Journal & WAEC Updates</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                Guidance from WAEC Examiners & Teachers
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-xl">
+                High-yield revision advice, formula recall tricks, and official BECE timetables to help you achieve raw 1s.
+              </p>
+            </div>
+
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition self-start sm:self-auto group shadow-xs"
+            >
+              <span>View All Articles</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+
+          {/* Category Filter Chips */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+            <button
+              onClick={() => setBlogCategory('ALL')}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap ${
+                blogCategory === 'ALL'
+                  ? 'bg-blue-600 text-white shadow-xs'
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+            >
+              All Topics
+            </button>
+            {BLOG_CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setBlogCategory(cat)}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap ${
+                  blogCategory === cat
+                    ? 'bg-blue-600 text-white shadow-xs'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {/* Featured & Side Articles Grid */}
+          {(() => {
+            const filtered = blogCategory === 'ALL'
+              ? blogPosts
+              : blogPosts.filter((p) => p.category === blogCategory);
+            const featured = filtered.find((p) => p.featured) || filtered[0];
+            const side = filtered.filter((p) => p.id !== featured?.id).slice(0, 3);
+
+            if (!featured) {
+              return (
+                <div className="p-8 text-center text-xs text-slate-500">
+                  No articles found in this category.
+                </div>
+              );
+            }
+
+            return (
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                {/* Featured Article Card (7 columns) */}
+                <div className="lg:col-span-7 flex flex-col justify-between rounded-2xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-8 shadow-md relative overflow-hidden group">
+                  <div className="space-y-4 relative z-10">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-500 text-white text-[10px] font-bold uppercase tracking-wider">
+                        Featured Guide
+                      </span>
+                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-white/20 text-white backdrop-blur-xs">
+                        {featured.category}
+                      </span>
+                      <span className="text-[11px] text-slate-300 flex items-center gap-1 font-medium">
+                        <Clock className="w-3 h-3" />
+                        {featured.readTimeMinutes} min read
+                      </span>
+                    </div>
+
+                    <Link href={`/blog/${featured.id}`}>
+                      <h3 className="text-xl sm:text-2xl font-extrabold text-white group-hover:text-blue-300 transition leading-snug">
+                        {featured.title}
+                      </h3>
+                    </Link>
+
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed line-clamp-3">
+                      {featured.excerpt}
+                    </p>
+                  </div>
+
+                  <div className="pt-6 mt-6 border-t border-white/10 flex items-center justify-between relative z-10">
+                    <div className="text-xs text-slate-300 font-medium">
+                      By <span className="text-white font-bold">{featured.author}</span>
+                    </div>
+
+                    <Link
+                      href={`/blog/${featured.id}`}
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition shadow-sm"
+                    >
+                      <span>Read Full Guide</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Side Articles List (5 columns) */}
+                <div className="lg:col-span-5 flex flex-col gap-4">
+                  {side.map((post) => (
+                    <Link
+                      key={post.id}
+                      href={`/blog/${post.id}`}
+                      className="p-4 rounded-2xl border border-slate-200 hover:border-blue-400 bg-slate-50 hover:bg-white transition-all shadow-2xs group flex flex-col justify-between"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="space-y-2 flex-1 min-w-0">
+                          <div className="flex items-center justify-between text-[11px]">
+                            <span className="px-2 py-0.5 rounded-full font-semibold bg-white border border-slate-200 text-slate-700">
+                              {post.category}
+                            </span>
+                            <span className="text-slate-400 font-medium flex items-center gap-1">
+                              <Clock className="w-3 h-3" />
+                              {post.readTimeMinutes} min
+                            </span>
+                          </div>
+
+                          <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition line-clamp-2 leading-snug">
+                            {post.title}
+                          </h4>
+
+                          <p className="text-xs text-slate-500 line-clamp-2">
+                            {post.excerpt}
+                          </p>
+                        </div>
+
+                        {post.mediaType && post.mediaUrl && (
+                          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden shrink-0 bg-slate-100 border border-slate-200">
+                            {post.mediaType === 'image' ? (
+                              <img
+                                src={post.mediaUrl}
+                                alt=""
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                loading="lazy"
+                              />
+                            ) : (
+                              <div className="w-full h-full bg-slate-950 flex items-center justify-center relative">
+                                <Play className="w-4 h-4 fill-white text-white" />
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="pt-2 mt-2 flex items-center justify-between text-[11px] text-slate-400 border-t border-slate-200/60">
+                        <span className="truncate max-w-[130px] font-medium text-slate-600">
+                          {post.author}
+                        </span>
+                        <span className="text-blue-600 font-bold flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform">
+                          <span>Read</span>
+                          <ChevronRight className="w-3.5 h-3.5" />
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
+        </div>
+      </section>
+
       {/* Bottom Spacer */}
+
+      {/* Interactive Platform Feature Tour Guide for Homepage */}
+      <PlatformTourGuide
+        isOpen={showTour}
+        onClose={() => setShowTour(false)}
+        steps={HOMEPAGE_TOUR_STEPS}
+        nextTourUrl="/jhs?tour=1"
+        nextTourLabel="Explore JHS Study Portal Tour →"
+      />
+
+      {/* Polite Welcome Toast Inviting First-Time Visitors to Tour */}
+      <TourPromptToast onStartTour={() => setShowTour(true)} />
     </div>
   );
 }
