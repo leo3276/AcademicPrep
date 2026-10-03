@@ -148,7 +148,7 @@ export default function PaystackPaymentModal({
             {featureName ? `Unlock ${featureName}` : 'VIP Access Pass'}
           </h2>
           <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-            Full access to all 9 subjects, quizzes, BECE past papers & mock exams.
+            Full 100% offline access to all JHS &amp; SHS subjects, quizzes, BECE &amp; WASSCE past papers.
           </p>
 
           {/* Simple Price Line */}

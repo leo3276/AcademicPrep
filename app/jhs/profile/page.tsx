@@ -52,6 +52,7 @@ export default function StudentProfilePage() {
   const [mounted, setMounted] = useState(false);
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [loadingLeaderboard, setLoadingLeaderboard] = useState(true);
+  const [daysRemaining, setDaysRemaining] = useState<number | null>(null);
 
   // PIN Redemption State
   const [pinInput, setPinInput] = useState('');
@@ -79,7 +80,11 @@ export default function StudentProfilePage() {
   useEffect(() => {
     setMounted(true);
     fetchLeaderboard();
-  }, []);
+    if (student?.accessExpiresAt) {
+      const msLeft = new Date(student.accessExpiresAt).getTime() - Date.now();
+      setDaysRemaining(Math.max(0, Math.ceil(msLeft / (1000 * 60 * 60 * 24))));
+    }
+  }, [student?.accessExpiresAt]);
 
   // Calculate student statistics
   const completedTopicsCount = useMemo(() => {
@@ -448,7 +453,7 @@ export default function StudentProfilePage() {
                     day: 'numeric',
                     year: 'numeric'
                   })}
-                  {' '}({Math.max(0, Math.ceil((new Date(student.accessExpiresAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24)))} days remaining)
+                  {daysRemaining !== null && ` (${daysRemaining} days remaining)`}
                 </span>
               </div>
             )}

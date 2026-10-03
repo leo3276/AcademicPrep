@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/authContext';
-import { CURRICULUM_SUBJECTS, JHS_CURRICULUM_TOPICS } from '@/lib/curriculumData';
+import { ALL_CURRICULUM_TOPICS } from '@/lib/curriculumData';
+import { CurriculumService } from '@/lib/curriculumService';
 import { 
   ArrowLeft, 
   ArrowRight, 
@@ -17,7 +18,7 @@ import {
   KeyRound, 
   Award, 
   AlertTriangle, 
-  Sparkles, 
+  GraduationCap, 
   ExternalLink, 
   Check, 
   ChevronRight, 
@@ -43,9 +44,9 @@ export default function DetailedTopicLessonPage() {
   const subjectId = params.subjectId as string;
   const topicId = params.topicId as string;
 
-  const subject = CURRICULUM_SUBJECTS.find((s) => s.id === subjectId);
-  const subjectTopics = JHS_CURRICULUM_TOPICS.filter((t) => t.subjectId === subjectId);
-  const topic = subjectTopics.find((t) => t.id === topicId);
+  const topic = ALL_CURRICULUM_TOPICS.find((t) => t.id === topicId);
+  const subject = CurriculumService.getSubjectById(subjectId, topic?.level);
+  const subjectTopics = ALL_CURRICULUM_TOPICS.filter((t) => t.subjectId === subjectId);
 
   useEffect(() => {
     setMounted(true);
@@ -373,7 +374,7 @@ export default function DetailedTopicLessonPage() {
               {/* Learning Objectives */}
               <div className="space-y-3">
                 <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-                  <Sparkles className="w-4 h-4 text-blue-600" />
+                  <CheckCircle2 className="w-4 h-4 text-blue-600" />
                   What You Will Master in This Lesson (NaCCA Objectives):
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
@@ -472,7 +473,7 @@ export default function DetailedTopicLessonPage() {
 
                     {sec.realWorldExample && (
                       <div className="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200/70 text-xs text-emerald-950 flex items-start gap-2">
-                        <Sparkles className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                        <BookOpen className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                         <div>
                           <span className="font-bold">Real-World Application: </span>
                           {sec.realWorldExample}
@@ -570,7 +571,7 @@ export default function DetailedTopicLessonPage() {
             {((notes.beceExamTips && notes.beceExamTips.length > 0) || (notes.examTips && notes.examTips.length > 0)) && !isVipLocked && (
               <div className="p-6 sm:p-8 rounded-3xl bg-amber-50/70 border border-amber-200 shadow-sm space-y-3">
                 <div className="flex items-center gap-2 text-amber-950 font-bold text-sm">
-                  <Sparkles className="w-5 h-5 text-amber-600 shrink-0" />
+                  <GraduationCap className="w-5 h-5 text-amber-600 shrink-0" />
                   <span>Teacher&apos;s BECE Exam Pro-Tips:</span>
                 </div>
                 <div className="space-y-2 pt-1">
@@ -579,7 +580,7 @@ export default function DetailedTopicLessonPage() {
                       key={tIdx}
                       className="flex items-start gap-2.5 text-xs text-amber-900 bg-white/80 p-3 rounded-xl border border-amber-200/80"
                     >
-                      <span className="font-bold text-amber-600 shrink-0 mt-0.5">⭐</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0 mt-1.5"></span>
                       <span className="leading-relaxed">{tip}</span>
                     </div>
                   ))}
@@ -723,7 +724,7 @@ export default function DetailedTopicLessonPage() {
       <div className="p-8 rounded-3xl bg-gradient-to-br from-blue-600 via-indigo-600 to-blue-700 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-1.5 max-w-xl">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold backdrop-blur-xs">
-            <Sparkles className="w-3.5 h-3.5" />
+            <HelpCircle className="w-3.5 h-3.5" />
             <span>Mastery Diagnostic Quiz</span>
           </div>
           <h2 className="text-2xl font-extrabold tracking-tight">

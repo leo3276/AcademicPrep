@@ -355,4 +355,10 @@ export const JHS_CURRICULUM_TOPICS: CurriculumTopic[] = BASE_JHS_TOPICS.map((top
     topic.quiz,
 }));
 
+export { SHS_CORE_SUBJECTS, SHS_CURRICULUM_TOPICS } from './curriculumShsData';
+import { SHS_CURRICULUM_TOPICS } from './curriculumShsData';
 
+export const ALL_CURRICULUM_TOPICS: CurriculumTopic[] = [
+  ...JHS_CURRICULUM_TOPICS,
+  ...SHS_CURRICULUM_TOPICS,
+];

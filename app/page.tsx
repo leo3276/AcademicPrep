@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { useAuth } from '@/lib/authContext';
 import { 
   BookOpenCheck, 
-  Sparkles, 
+  BookOpen,
+  Award,
   ArrowRight, 
   CheckCircle2, 
   Users, 
@@ -17,7 +18,8 @@ import {
   Calendar,
   ChevronRight,
   Compass,
-  Play
+  Play,
+  Crown
 } from 'lucide-react';
 import { BlogPost, BlogCategory, BLOG_CATEGORIES, INITIAL_BLOG_POSTS, fetchBlogPosts } from '@/lib/blogStore';
 import PlatformTourGuide, { HOMEPAGE_TOUR_STEPS } from '@/components/PlatformTourGuide';
@@ -76,7 +78,7 @@ export default function HomePage() {
             </h1>
 
             <p className="text-sm sm:text-base lg:text-lg text-slate-200 max-w-2xl mx-auto leading-relaxed font-normal px-2">
-              Full JHS 1, 2, and 3 curriculum topics, instant quizzes with step-by-step explanations, and personalized weekly exams.
+              Full JHS and SHS curriculum notes, instant WAEC-standard quizzes with step-by-step explanations, and 5 comprehensive elective programme strands.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2 w-full max-w-md mx-auto sm:max-w-none">
@@ -85,7 +87,15 @@ export default function HomePage() {
                 id="tour-home-launch"
                 className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 group"
               >
-                <span>Launch JHS Study Portal</span>
+                <span>Launch JHS Portal</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+
+              <Link
+                href="/shs"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm transition-all shadow-lg shadow-purple-500/30 flex items-center justify-center gap-2 group"
+              >
+                <span>Launch SHS (WASSCE) Portal</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
 
@@ -137,7 +147,7 @@ export default function HomePage() {
               <div className="text-[11px] sm:text-xs text-slate-200 font-medium mt-1">Community Students</div>
             </div>
             <div className="text-center p-2 sm:p-3">
-              <div className="text-xl sm:text-3xl font-extrabold text-emerald-400">JHS 1, 2, 3</div>
+              <div className="text-xl sm:text-3xl font-extrabold text-emerald-400">JHS & SHS</div>
               <div className="text-[11px] sm:text-xs text-slate-200 font-medium mt-1">Full Curriculum Live</div>
             </div>
             <div className="text-center p-2 sm:p-3">
@@ -148,6 +158,40 @@ export default function HomePage() {
               <div className="text-xl sm:text-3xl font-extrabold text-purple-300">Dynamic</div>
               <div className="text-[11px] sm:text-xs text-slate-200 font-medium mt-1">Weekly Exams</div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Public Announcement: VIP Offline Access vs Online Free Access */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2">
+        <div className="rounded-2xl bg-white border border-amber-200/90 p-4 sm:p-5 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="flex items-start gap-3.5">
+            <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center shrink-0 mt-0.5">
+              <Crown className="w-5 h-5 text-amber-600" />
+            </div>
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-2 py-0.5 rounded">
+                  Study Notice
+                </span>
+                <h3 className="text-sm font-bold text-slate-900">
+                  100% Offline VIP Study Access vs. Online Free Tier
+                </h3>
+              </div>
+              <p className="text-xs text-slate-600 leading-relaxed max-w-3xl">
+                <b>VIP Pass Members</b> can study lesson notes, review formula sheets, and take chapter quizzes <b>100% offline with zero internet or data consumption</b>. Free-tier users require an active internet connection to load lessons and questions.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0 self-end md:self-center">
+            <Link
+              href="/login"
+              className="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 text-xs font-bold transition flex items-center gap-1.5 border border-amber-200 shadow-2xs"
+            >
+              <span>Get VIP Pass (GH₵ 25)</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
       </section>
@@ -209,46 +253,51 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Card 2: SHS (Coming Soon) */}
-          <div className="rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between opacity-85">
+          {/* Card 2: SHS Section (Live) */}
+          <div className="rounded-2xl bg-white border-2 border-purple-300 p-6 flex flex-col justify-between shadow-md shadow-purple-500/5">
             <div className="space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
+              <div className="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold">
                 <BookOpenCheck className="w-6 h-6" />
               </div>
 
               <div>
                 <div className="flex items-center justify-between">
                   <h3 className="text-xl font-bold text-slate-900">Senior High School (SHS)</h3>
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
-                    Phase 2
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-purple-100 text-purple-800 border border-purple-200">
+                    Live Now
                   </span>
                 </div>
                 <p className="text-xs text-slate-500 font-medium mt-0.5">SHS 1, 2 & 3 • WASSCE Prep</p>
               </div>
 
               <p className="text-xs text-slate-600 leading-relaxed">
-                Core subjects (Core Math, English, Integrated Science, Social Studies) plus elective clusters (General Science, Business, General Arts, Home Economics).
+                Core subjects (Core Math, English, Integrated Science, Social Studies) plus 5 elective streams (General Arts, Business, Agriculture, Visual Arts, General Science).
               </p>
 
-              <div className="space-y-2 pt-2 border-t border-slate-100 text-slate-500">
-                <div className="flex items-center gap-2 text-xs">
-                  <Lock className="w-3.5 h-3.5" />
-                  <span>WASSCE Topic Banks</span>
+              <div className="space-y-2 pt-2 border-t border-slate-100 text-slate-700">
+                <div className="flex items-center gap-2 text-xs font-medium">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>All Core & Elective Lesson Notes</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs">
-                  <Lock className="w-3.5 h-3.5" />
-                  <span>Paper 1 & 2 Exam Simulations</span>
+                <div className="flex items-center gap-2 text-xs font-medium">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Topic Quizzes with Instant Explanations</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs font-medium">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>WAEC / WASSCE Syllabus Standard</span>
                 </div>
               </div>
             </div>
 
             <div className="pt-6">
-              <button
-                disabled
-                className="w-full py-2.5 px-4 rounded-xl bg-slate-100 text-slate-400 font-bold text-xs cursor-not-allowed text-center"
+              <Link
+                href="/shs"
+                className="w-full py-2.5 px-4 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors shadow-md shadow-purple-500/20"
               >
-                Available in Phase 2
-              </button>
+                <span>Enter SHS Section</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
 
@@ -301,7 +350,7 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-10">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold mb-3">
-            <Sparkles className="w-3.5 h-3.5" />
+            <GraduationCap className="w-3.5 h-3.5 text-emerald-600" />
             Ghana’s Premier BECE Hub
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
@@ -360,8 +409,8 @@ export default function HomePage() {
           <div id="tour-home-mocks" className="rounded-2xl bg-white border-2 border-emerald-500/40 p-7 shadow-xl shadow-emerald-500/5 flex flex-col justify-between">
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold">
-                <Sparkles className="w-4 h-4 text-emerald-600" />
-                2025 Candidates
+                <Award className="w-4 h-4 text-emerald-600" />
+                2026 Candidates
               </div>
               <h3 className="text-2xl font-bold text-slate-900">
                 BECE Trial, Mock Papers & Likely Questions
@@ -406,7 +455,7 @@ export default function HomePage() {
         <div id="tour-home-weekly" className="rounded-3xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
           <div className="max-w-2xl space-y-4 relative z-10">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-white font-bold text-xs backdrop-blur-sm">
-              <Sparkles className="w-3.5 h-3.5" />
+              <Clock className="w-3.5 h-3.5" />
               Progress-Adaptive Testing Engine
             </div>
 
@@ -442,7 +491,7 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-100 pb-6">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold mb-2">
-                <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+                <BookOpen className="w-3.5 h-3.5 text-blue-600" />
                 <span>Study Journal & WAEC Updates</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">

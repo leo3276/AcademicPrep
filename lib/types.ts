@@ -71,6 +71,7 @@ export interface DetailedNotes {
   sections: DetailedSection[];
   commonMistakes?: string[];
   beceExamTips?: string[];
+  wassceExamTips?: string[];
   examTips?: string[];
   summaryChecklist: string[];
 }

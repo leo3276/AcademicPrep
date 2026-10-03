@@ -16,7 +16,6 @@ import {
   Languages,
   BookA,
   Wrench,
-  Sparkles, 
   ArrowRight, 
   CheckCircle2, 
   KeyRound,
@@ -277,7 +276,7 @@ export default function JhsPortalPage() {
       <div id="tour-weekly-exam" className="p-5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-bold uppercase tracking-wider">
-            <Sparkles className="w-3 h-3" />
+            <Clock className="w-3 h-3" />
             Curriculum Adaptive Engine
           </div>
           <h3 className="text-base sm:text-lg font-bold">Personalized Weekly Revision Exam</h3>

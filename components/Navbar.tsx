@@ -13,7 +13,8 @@ import {
   Menu, 
   X,
   CheckCircle2,
-  Sparkles,
+  Crown,
+  Clock,
   Award,
   BookOpen,
   FileCheck,
@@ -79,10 +80,17 @@ export default function Navbar() {
                   <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
                   JHS Section
                 </Link>
-                <div className="px-3 py-1.5 rounded-lg text-slate-400 flex items-center gap-1.5 cursor-not-allowed whitespace-nowrap">
+                <Link 
+                  href="/shs"
+                  className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    pathname.startsWith('/shs')
+                      ? 'bg-white text-blue-700 shadow-sm font-bold'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  <span className="w-2 h-2 rounded-full bg-purple-500"></span>
                   <span>SHS Section</span>
-                  <span className="text-[9px] bg-slate-200 text-slate-500 px-1 rounded uppercase">Soon</span>
-                </div>
+                </Link>
                 <div className="px-3 py-1.5 rounded-lg text-slate-400 flex items-center gap-1.5 cursor-not-allowed whitespace-nowrap">
                   <span>University</span>
                   <span className="text-[9px] bg-slate-200 text-slate-500 px-1 rounded uppercase">Soon</span>
@@ -93,12 +101,24 @@ export default function Navbar() {
             {/* Desktop Navigation links & Actions (Visible on xl: 1280px+) */}
             <div id="tour-nav-links" className="hidden xl:flex items-center gap-1.5 2xl:gap-2">
               <Link
-                href={student ? "/jhs" : "/login?redirect=/jhs"}
+                href="/jhs"
                 className={`text-xs font-bold transition-colors whitespace-nowrap px-2 py-1.5 2xl:px-2.5 rounded-lg ${
-                  pathname === '/jhs' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  pathname.startsWith('/jhs') && pathname !== '/jhs/bece-past-questions' && pathname !== '/jhs/trial-questions' && pathname !== '/jhs/weekly-exam'
+                    ? 'text-blue-600 bg-blue-50' 
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                 }`}
               >
-                Curriculum
+                JHS Portal
+              </Link>
+              <Link
+                href="/shs"
+                className={`text-xs font-bold transition-colors whitespace-nowrap px-2 py-1.5 2xl:px-2.5 rounded-lg ${
+                  pathname.startsWith('/shs') 
+                    ? 'text-purple-600 bg-purple-50 font-bold' 
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                }`}
+              >
+                SHS Portal
               </Link>
               <Link
                 href="/jhs/bece-past-questions"
@@ -121,17 +141,6 @@ export default function Navbar() {
               >
                 <FileCheck className="w-3.5 h-3.5 text-emerald-600" />
                 <span>Trial Mocks</span>
-              </Link>
-              <Link
-                href="/jhs/weekly-exam"
-                className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 2xl:px-2.5 rounded-xl whitespace-nowrap ${
-                  pathname === '/jhs/weekly-exam' 
-                    ? 'bg-amber-100 text-amber-900 font-bold' 
-                    : 'text-amber-800 bg-amber-50 hover:bg-amber-100'
-                }`}
-              >
-                <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                <span>Weekly Exam</span>
               </Link>
 
               <Link
@@ -171,7 +180,7 @@ export default function Navbar() {
                 }}
                 className="text-xs font-bold px-2.5 py-1.5 2xl:px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-sm shadow-amber-500/20 transition-all flex items-center gap-1 whitespace-nowrap cursor-pointer"
               >
-                <Sparkles className="w-3.5 h-3.5 text-amber-200" />
+                <Crown className="w-3.5 h-3.5 text-amber-200" />
                 <span>VIP Pass</span>
               </button>
 
@@ -251,7 +260,7 @@ export default function Navbar() {
                 }}
                 className="text-xs font-bold px-2 py-1.5 sm:px-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-xs flex items-center gap-1 whitespace-nowrap cursor-pointer"
               >
-                <Sparkles className="w-3.5 h-3.5 text-amber-200" />
+                <Crown className="w-3.5 h-3.5 text-amber-200" />
                 <span className="hidden sm:inline">VIP Pass</span>
                 <span className="sm:hidden">VIP</span>
               </button>
@@ -296,13 +305,25 @@ export default function Navbar() {
                 <Link 
                   href="/jhs"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-center py-2 rounded-lg bg-blue-50 text-blue-700 font-bold text-xs border border-blue-200"
+                  className={`text-center py-2 rounded-lg font-bold text-xs border ${
+                    pathname.startsWith('/jhs')
+                      ? 'bg-blue-50 text-blue-700 border-blue-200'
+                      : 'bg-slate-50 text-slate-700 border-slate-200'
+                  }`}
                 >
                   JHS 1-3
                 </Link>
-                <div className="text-center py-2 rounded-lg bg-slate-100 text-slate-400 text-xs font-medium">
-                  SHS (Soon)
-                </div>
+                <Link 
+                  href="/shs"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`text-center py-2 rounded-lg font-bold text-xs border ${
+                    pathname.startsWith('/shs')
+                      ? 'bg-purple-50 text-purple-700 border-purple-200'
+                      : 'bg-slate-50 text-slate-700 border-slate-200'
+                  }`}
+                >
+                  SHS 1-3
+                </Link>
                 <div className="text-center py-2 rounded-lg bg-slate-100 text-slate-400 text-xs font-medium">
                   Uni (Soon)
                 </div>
@@ -329,6 +350,14 @@ export default function Navbar() {
                 JHS Curriculum Topics
               </Link>
               <Link
+                href="/shs"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2 text-sm font-semibold text-purple-700 flex items-center justify-between"
+              >
+                <span>SHS Lessons & Elective Quizzes</span>
+                <span className="text-[10px] font-bold bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full">WASSCE</span>
+              </Link>
+              <Link
                 href="/jhs/bece-past-questions"
                 onClick={() => setMobileMenuOpen(false)}
                 className="py-2 text-sm font-semibold text-blue-700 flex items-center gap-1.5"
@@ -349,7 +378,7 @@ export default function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
                 className="py-2 text-sm font-bold text-amber-800 flex items-center gap-1.5"
               >
-                <Sparkles className="w-4 h-4 text-amber-600" />
+                <Clock className="w-4 h-4 text-amber-600" />
                 Adaptive Weekly Exam
               </Link>
               <Link
@@ -370,7 +399,7 @@ export default function Navbar() {
                 className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold text-xs flex items-center justify-between shadow-xs mt-1 cursor-pointer"
               >
                 <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-amber-200" />
+                  <Crown className="w-4 h-4 text-amber-200" />
                   <span>VIP Pass (GHS 25/mo MoMo)</span>
                 </div>
                 <span className="text-[10px] bg-black/20 px-1.5 py-0.5 rounded font-black tracking-wider uppercase">30 DAYS</span>

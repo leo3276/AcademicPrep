@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/authContext';
 import { EducationLevel } from '@/lib/types';
@@ -73,6 +73,7 @@ export default function WeeklyExamPage() {
 
   // Final Completed Attempt
   const [completedAttempt, setCompletedAttempt] = useState<FullWeeklyExamAttempt | null>(null);
+  const handleProceedToGradingRef = useRef<() => void>(() => {});
 
   // Load progress summary and past attempts on mount or level change
   const reloadData = (lvl: EducationLevel) => {
@@ -125,7 +126,7 @@ export default function WeeklyExamPage() {
         if (prev <= 1) {
           clearInterval(interval);
           // Auto advance to grading
-          handleProceedToGrading();
+          handleProceedToGradingRef.current();
           return 0;
         }
         return prev - 1;
@@ -186,6 +187,10 @@ export default function WeeklyExamPage() {
     setTheorySelfMarks(initialMarks);
     setExamState('grading_review');
   };
+
+  useEffect(() => {
+    handleProceedToGradingRef.current = handleProceedToGrading;
+  });
 
   // Finalize Submission & Compute Composite Score
   const handleFinalizeSubmission = () => {
@@ -523,7 +528,7 @@ export default function WeeklyExamPage() {
                 </div>
                 <h4 className="text-xs font-bold text-slate-800">No Weekly Exams Taken Yet</h4>
                 <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                  Click the "Launch Weekly Examination" button above to take your first combined Paper 1 and Paper 2 exam.
+                  Click the &quot;Launch Weekly Examination&quot; button above to take your first combined Paper 1 and Paper 2 exam.
                 </p>
               </div>
             ) : (

@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/authContext';
-import { CURRICULUM_SUBJECTS, JHS_CURRICULUM_TOPICS } from '@/lib/curriculumData';
+import { ALL_CURRICULUM_TOPICS } from '@/lib/curriculumData';
+import { CurriculumService } from '@/lib/curriculumService';
 import { EducationLevel } from '@/lib/types';
 import { 
   ArrowLeft, 
@@ -73,10 +74,8 @@ export default function SubjectDetailPage() {
   const [pinLoading, setPinLoading] = useState(false);
   const [pinFeedback, setPinFeedback] = useState<{ success?: boolean; text?: string } | null>(null);
 
-  const subject = CURRICULUM_SUBJECTS.find((s) => s.id === subjectId);
-  const topics = JHS_CURRICULUM_TOPICS.filter(
-    (t) => t.subjectId === subjectId && t.level === currentLevel
-  );
+  const subject = CurriculumService.getSubjectById(subjectId, currentLevel);
+  const topics = CurriculumService.getTopics(currentLevel, subjectId);
 
   const handleRedeemPin = async (e: React.FormEvent) => {
     e.preventDefault();

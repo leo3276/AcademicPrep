@@ -66,15 +66,12 @@ import {
   Filter, 
   UserCheck, 
   ExternalLink,
-  ChevronRight,
   FileText,
   Flame,
   Edit,
-  Sparkles,
   Image as ImageIcon,
   Video as VideoIcon,
   UploadCloud,
-  Play,
   X
 } from 'lucide-react';
 import { parseVideoUrl } from '@/lib/mediaUtils';
@@ -93,7 +90,11 @@ export default function AdminDashboardPage() {
     refreshPins
   } = useAuth();
 
-  const [mounted, setMounted] = useState(false);
+  const mounted = React.useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
   // Sequential Two-Stage Authentication States
   const [authStep, setAuthStep] = useState<'primary' | 'secondary'>('primary');
   const [primaryPin, setPrimaryPin] = useState('');
@@ -116,7 +117,10 @@ export default function AdminDashboardPage() {
   const [activeTab, setActiveTab] = useState<'traffic' | 'paid_access' | 'completions' | 'trial_mocks' | 'pins' | 'blog'>('traffic');
 
   // Stores
-  const [trafficData, setTrafficData] = useState<WebTrafficData>(DEFAULT_TRAFFIC_DATA);
+  const [trafficData, setTrafficData] = useState<WebTrafficData>(() => {
+    if (typeof window !== 'undefined') return getStoredTrafficData();
+    return DEFAULT_TRAFFIC_DATA;
+  });
   const [students, setStudents] = useState<AdminStudentDetail[]>([]);
   // PDF Documents Store
   const [pdfDocuments, setPdfDocuments] = useState<UploadedPdfDocument[]>([]);
@@ -385,14 +389,12 @@ export default function AdminDashboardPage() {
   };
 
   useEffect(() => {
-    setMounted(true);
-    setTrafficData(getStoredTrafficData());
     clearStudentRosterCache();
     loadRealStudents();
     fetchUploadedDocuments().then(setPdfDocuments).catch(e => console.warn('Fetch docs warning:', e?.message || e));
     loadBlogPosts();
     if (isAdmin) refreshPins();
-  }, [activeTab, isAdmin]);
+  }, [activeTab, isAdmin, refreshPins]);
 
   if (!mounted) {
     return (
@@ -1084,7 +1086,7 @@ export default function AdminDashboardPage() {
                   </div>
                 </div>
                 <p className="text-[11px] text-slate-500 pt-2 border-t border-slate-100">
-                  Majority of candidates practice via parents' smartphones.
+                  Majority of candidates practice via parents&apos; smartphones.
                 </p>
               </div>
 
@@ -1792,7 +1794,7 @@ export default function AdminDashboardPage() {
                   <FileText className="w-10 h-10 text-slate-300 mx-auto" />
                   <h4 className="text-sm font-semibold text-slate-800">No PDF Documents Uploaded Yet</h4>
                   <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                    Click "Upload Local PDF" above to upload past question booklets, trial exams, or marking schemes directly from your local storage.
+                    Click &quot;Upload Local PDF&quot; above to upload past question booklets, trial exams, or marking schemes directly from your local storage.
                   </p>
                 </div>
               ) : (
@@ -2556,7 +2558,7 @@ export default function AdminDashboardPage() {
                 </div>
               ) : blogPosts.length === 0 ? (
                 <div className="p-8 text-center text-xs text-slate-500">
-                  No articles published yet. Click "New Article" to publish your first post.
+                  No articles published yet. Click &quot;New Article&quot; to publish your first post.
                 </div>
               ) : (
                 <div className="overflow-x-auto">

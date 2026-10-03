@@ -5,6 +5,7 @@ import { AuthProvider } from '@/lib/authContext';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import TrafficTracker from '@/components/TrafficTracker';
+import OfflineAccessGuard from '@/components/OfflineAccessGuard';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -23,6 +24,11 @@ export const metadata: Metadata = {
   title: {
     default: 'AcademicPrep Ghana | BECE Past Questions, Mock Exams & JHS Curriculum Notes',
     template: '%s | AcademicPrep Ghana',
+  },
+  icons: {
+    icon: '/icon.svg',
+    shortcut: '/icon.svg',
+    apple: '/icon.svg',
   },
   description:
     'Ghana’s premier online exam prep portal for JHS, SHS, and BECE candidates. Access BECE & WASSCE likely questions, Best Brain, CEPME & GES district mock papers, 30+ years of WAEC past questions with marking schemes, and free science & mathematics solutions.',
@@ -186,6 +192,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <AuthProvider>
+          <OfflineAccessGuard />
           <TrafficTracker />
           <Navbar />
           <main className="flex-1 w-full max-w-full overflow-x-hidden">

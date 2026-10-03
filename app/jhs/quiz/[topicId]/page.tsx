@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/authContext';
-import { JHS_CURRICULUM_TOPICS, CURRICULUM_SUBJECTS } from '@/lib/curriculumData';
+import { ALL_CURRICULUM_TOPICS } from '@/lib/curriculumData';
+import { CurriculumService } from '@/lib/curriculumService';
 import { logQuizMistakes } from '@/lib/weeklyProgressTracker';
 import { 
   ArrowLeft, 
@@ -14,7 +15,6 @@ import {
   HelpCircle, 
   Trophy, 
   RotateCcw, 
-  Sparkles, 
   ArrowRight,
   Crown,
   KeyRound,
@@ -39,8 +39,9 @@ export default function TopicQuizPage() {
   const [modalTab, setModalTab] = useState<'momo' | 'pin'>('momo');
 
   const topicId = params.topicId as string;
-  const topic = JHS_CURRICULUM_TOPICS.find((t) => t.id === topicId);
+  const topic = ALL_CURRICULUM_TOPICS.find((t) => t.id === topicId);
   const quiz = topic?.quiz;
+  const isShs = topic?.level?.startsWith('SHS') ?? false;
 
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, 'A' | 'B' | 'C' | 'D'>>({});
@@ -51,13 +52,17 @@ export default function TopicQuizPage() {
   useEffect(() => {
     setMounted(true);
     if (typeof window !== 'undefined' && topic?.level) {
-      localStorage.setItem('academicprep_jhs_level', topic.level);
+      if (isShs) {
+        localStorage.setItem('academicprep_shs_level', topic.level);
+      } else {
+        localStorage.setItem('academicprep_jhs_level', topic.level);
+      }
     }
-  }, [topic?.level]);
+  }, [topic?.level, isShs]);
 
   // Find next topic if available (scoped to same subject and level)
   const levelTopics = topic
-    ? JHS_CURRICULUM_TOPICS.filter((t) => t.subjectId === topic.subjectId && t.level === topic.level)
+    ? ALL_CURRICULUM_TOPICS.filter((t) => t.subjectId === topic.subjectId && (isShs ? true : t.level === topic.level))
     : [];
   const currentTopicIdx = topic ? levelTopics.findIndex((t) => t.id === topic.id) : -1;
   const nextTopic = currentTopicIdx >= 0 && currentTopicIdx < levelTopics.length - 1
@@ -77,6 +82,78 @@ export default function TopicQuizPage() {
       success: res.success,
       text: res.message,
     });
+  };
+
+  const calculateScore = () => {
+    if (!quiz?.questions) return { correct: 0, percentage: 0 };
+    let correct = 0;
+    quiz.questions.forEach((q) => {
+      if (selectedAnswers[q.id] === q.correctOption) {
+        correct++;
+      }
+    });
+    const total = quiz.questions.length;
+    const percentage = total > 0 ? Math.round((correct / total) * 100) : 0;
+    return { correct, percentage };
+  };
+
+  const handleSubmit = () => {
+    if (isSubmitted || !topic || !quiz) return;
+    setIsSubmitted(true);
+
+    const { percentage } = calculateScore();
+    recordQuizScore(topic.id, percentage);
+
+    // Track incorrect answers for adaptive weekly remediation
+    const mistakes: {
+      topicId: string;
+      topicTitle: string;
+      subjectId: string;
+      subjectName: string;
+      questionId: string;
+      questionText: string;
+      subConcept: string;
+      selectedOption: 'A' | 'B' | 'C' | 'D';
+      correctOption: 'A' | 'B' | 'C' | 'D';
+      explanation: string;
+      remediationTip?: string;
+    }[] = [];
+
+    quiz.questions.forEach((q) => {
+      const userAns = selectedAnswers[q.id];
+      if (userAns && userAns !== q.correctOption) {
+        const subName = CurriculumService.getSubjectById(topic.subjectId)?.name || topic.subjectId;
+        mistakes.push({
+          topicId: topic.id,
+          topicTitle: topic.title,
+          subjectId: topic.subjectId,
+          subjectName: subName,
+          questionId: q.id,
+          questionText: q.questionText,
+          subConcept: q.subConcept || topic.title,
+          selectedOption: userAns,
+          correctOption: q.correctOption,
+          explanation: q.explanation,
+          remediationTip: q.remediationTip,
+        });
+      }
+    });
+
+    if (mistakes.length > 0) {
+      logQuizMistakes(mistakes);
+    }
+
+    if (percentage >= quiz.passScorePercentage) {
+      try {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.6 },
+        });
+      } catch {
+        // Safe fallback if canvas not available
+      }
+    }
   };
 
   // Timer countdown
@@ -140,12 +217,12 @@ export default function TopicQuizPage() {
 
           <div className="p-4 rounded-2xl bg-amber-50/60 border border-amber-200/80 text-left space-y-2">
             <p className="text-xs font-bold text-amber-950 flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-amber-600" />
+              <Crown className="w-4 h-4 text-amber-600" />
               What VIP Pass Includes:
             </p>
             <ul className="text-xs text-amber-900 space-y-1 pl-5 list-disc">
-              <li>All 15 JHS 1 Mathematics topics, worked solutions & diagnostic quizzes</li>
-              <li>10 BECE-standard questions per topic with personalized weakness analysis</li>
+              <li>All curriculum topics, worked solutions & diagnostic quizzes</li>
+              <li>Official WAEC-standard questions per topic with step-by-step rationales</li>
               <li>Adaptive Weekly Exams tailored to your personal study progress</li>
               <li>Full uninterrupted access across all devices</li>
             </ul>
@@ -160,8 +237,8 @@ export default function TopicQuizPage() {
               }}
               className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white font-extrabold text-sm transition-all shadow-md shadow-amber-500/20 flex items-center justify-center gap-2 cursor-pointer"
             >
-              <Sparkles className="w-4 h-4 text-amber-200" />
-              <span>Buy VIP Pass via Mobile Money (GHS 20 / month)</span>
+              <Crown className="w-4 h-4 text-amber-200" />
+              <span>Buy VIP Pass via Mobile Money (GHS 25 / month)</span>
             </button>
             <p className="text-[11px] text-slate-500 text-center mt-1.5 font-medium">
               Instant activation via MTN MoMo, Telecel Cash, AT Money or Card
@@ -233,7 +310,7 @@ export default function TopicQuizPage() {
 
           <div className="pt-2 border-t border-slate-100 flex items-center justify-center gap-4 text-xs font-semibold">
             <Link
-              href={`/jhs/${topic.subjectId}?level=${encodeURIComponent(topic.level)}`}
+              href={isShs ? `/shs/${topic.subjectId}?level=${encodeURIComponent(topic.level)}` : `/jhs/${topic.subjectId}?level=${encodeURIComponent(topic.level)}`}
               className="text-slate-600 hover:text-slate-900 flex items-center gap-1"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
@@ -241,10 +318,10 @@ export default function TopicQuizPage() {
             </Link>
             <span className="text-slate-300">•</span>
             <Link
-              href={`/jhs?level=${encodeURIComponent(topic.level)}`}
+              href={isShs ? `/shs?level=${encodeURIComponent(topic.level)}` : `/jhs?level=${encodeURIComponent(topic.level)}`}
               className="text-blue-600 hover:text-blue-700"
             >
-              Browse Free Curriculum
+              Browse Curriculum
             </Link>
           </div>
         </div>
@@ -261,76 +338,6 @@ export default function TopicQuizPage() {
       ...prev,
       [currentQ.id]: opt,
     }));
-  };
-
-  const calculateScore = () => {
-    let correct = 0;
-    quiz.questions.forEach((q) => {
-      if (selectedAnswers[q.id] === q.correctOption) {
-        correct++;
-      }
-    });
-    const percentage = Math.round((correct / totalQuestions) * 100);
-    return { correct, percentage };
-  };
-
-  const handleSubmit = () => {
-    if (isSubmitted) return;
-    setIsSubmitted(true);
-
-    const { percentage } = calculateScore();
-    recordQuizScore(topic.id, percentage);
-
-    // Track incorrect answers for adaptive weekly remediation
-    const mistakes: {
-      topicId: string;
-      topicTitle: string;
-      subjectId: string;
-      subjectName: string;
-      questionId: string;
-      questionText: string;
-      subConcept: string;
-      selectedOption: 'A' | 'B' | 'C' | 'D';
-      correctOption: 'A' | 'B' | 'C' | 'D';
-      explanation: string;
-      remediationTip?: string;
-    }[] = [];
-
-    quiz.questions.forEach((q) => {
-      const userAns = selectedAnswers[q.id];
-      if (userAns && userAns !== q.correctOption) {
-        const subName = CURRICULUM_SUBJECTS.find(s => s.id === topic.subjectId)?.name || topic.subjectId;
-        mistakes.push({
-          topicId: topic.id,
-          topicTitle: topic.title,
-          subjectId: topic.subjectId,
-          subjectName: subName,
-          questionId: q.id,
-          questionText: q.questionText,
-          subConcept: q.subConcept || topic.title,
-          selectedOption: userAns,
-          correctOption: q.correctOption,
-          explanation: q.explanation,
-          remediationTip: q.remediationTip,
-        });
-      }
-    });
-
-    if (mistakes.length > 0) {
-      logQuizMistakes(mistakes);
-    }
-
-    if (percentage >= quiz.passScorePercentage) {
-      try {
-        confetti({
-          particleCount: 80,
-          spread: 70,
-          origin: { y: 0.6 },
-        });
-      } catch {
-        // Safe fallback if canvas not available
-      }
-    }
   };
 
   const handleRetake = () => {
@@ -380,49 +387,38 @@ export default function TopicQuizPage() {
   const gradeInfo = getGradeInfo(percentage);
 
   // Group missed questions by sub-concept to give diagnostic improvement recommendations
-  const incorrectQuestions = useMemo(() => {
-    return quiz.questions.filter((q) => selectedAnswers[q.id] !== q.correctOption);
-  }, [quiz.questions, selectedAnswers]);
+  const incorrectQuestions = quiz.questions.filter((q) => selectedAnswers[q.id] !== q.correctOption);
+  const correctQuestions = quiz.questions.filter((q) => selectedAnswers[q.id] === q.correctOption);
 
-  const correctQuestions = useMemo(() => {
-    return quiz.questions.filter((q) => selectedAnswers[q.id] === q.correctOption);
-  }, [quiz.questions, selectedAnswers]);
-
-  const weakSubConcepts = useMemo(() => {
-    const map = new Map<string, { count: number; tip?: string; questions: string[] }>();
-    incorrectQuestions.forEach((q) => {
-      const concept = q.subConcept || 'Core Concepts';
-      const existing = map.get(concept) || { count: 0, tip: q.remediationTip, questions: [] };
-      existing.count += 1;
-      if (!existing.tip && q.remediationTip) existing.tip = q.remediationTip;
-      existing.questions.push(q.questionText);
-      map.set(concept, existing);
-    });
-    return Array.from(map.entries()).map(([concept, data]) => ({
-      concept,
-      count: data.count,
-      tip: data.tip,
-      questions: data.questions,
-    }));
-  }, [incorrectQuestions]);
+  const weakSubConceptsMap = new Map<string, { count: number; tip?: string; questions: string[] }>();
+  incorrectQuestions.forEach((q) => {
+    const concept = q.subConcept || 'Core Concepts';
+    const existing = weakSubConceptsMap.get(concept) || { count: 0, tip: q.remediationTip, questions: [] };
+    existing.count += 1;
+    if (!existing.tip && q.remediationTip) existing.tip = q.remediationTip;
+    existing.questions.push(q.questionText);
+    weakSubConceptsMap.set(concept, existing);
+  });
+  const weakSubConcepts = Array.from(weakSubConceptsMap.entries()).map(([concept, data]) => ({
+    concept,
+    count: data.count,
+    tip: data.tip,
+    questions: data.questions,
+  }));
 
   // Filtered questions for review
-  const displayedQuestions = useMemo(() => {
-    if (reviewFilter === 'mistakes') {
-      return quiz.questions.filter((q) => selectedAnswers[q.id] !== q.correctOption);
-    }
-    if (reviewFilter === 'correct') {
-      return quiz.questions.filter((q) => selectedAnswers[q.id] === q.correctOption);
-    }
-    return quiz.questions;
-  }, [quiz.questions, reviewFilter, selectedAnswers]);
+  const displayedQuestions = reviewFilter === 'mistakes'
+    ? incorrectQuestions
+    : reviewFilter === 'correct'
+      ? correctQuestions
+      : quiz.questions;
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-6">
       {/* Top Header */}
       <div className="flex items-center justify-between">
         <Link
-          href={`/jhs/${topic.subjectId}?level=${encodeURIComponent(topic.level)}`}
+          href={isShs ? `/shs/${topic.subjectId}?level=${encodeURIComponent(topic.level)}` : `/jhs/${topic.subjectId}?level=${encodeURIComponent(topic.level)}`}
           className="text-xs font-medium text-slate-500 hover:text-slate-800 flex items-center gap-1 transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
@@ -443,11 +439,11 @@ export default function TopicQuizPage() {
         <div>
           <div className="flex flex-wrap items-center gap-2 mb-1">
             <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 uppercase">
-              {topic.level} • 10 Questions
+              {topic.level} • {quiz.questions.length} Questions
             </span>
             <span className="text-xs text-slate-500">Pass Mark: {quiz.passScorePercentage}%</span>
             <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-              GES / NaCCA Standard
+              {isShs ? 'WAEC / WASSCE Standard' : 'GES / NaCCA Standard'}
             </span>
           </div>
           <h1 className="text-xl font-bold text-slate-900">{quiz.title}</h1>
@@ -706,7 +702,7 @@ export default function TopicQuizPage() {
 
                       {/* Step-by-Step Explanation */}
                       <div className="pt-2 text-slate-800 bg-white p-3 rounded-xl border border-slate-200/70 text-[11px] leading-relaxed space-y-1">
-                        <span className="font-bold text-blue-700 block">Teacher's Step-by-Step Solution:</span>
+                        <span className="font-bold text-blue-700 block">Teacher&apos;s Step-by-Step Solution:</span>
                         <p>{q.explanation}</p>
                       </div>
 
@@ -757,7 +753,7 @@ export default function TopicQuizPage() {
                   href={`/jhs/weekly-exam?level=${encodeURIComponent(topic.level)}`}
                   className="w-full sm:w-auto py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1.5 ml-auto shadow-sm"
                 >
-                  <Sparkles className="w-3.5 h-3.5" />
+                  <Clock className="w-3.5 h-3.5" />
                   <span>Go to Weekly Exam</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
