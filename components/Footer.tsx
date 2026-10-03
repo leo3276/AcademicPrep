@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { GraduationCap, MessageCircle, ShieldCheck } from 'lucide-react';
+import { GraduationCap, MessageCircle, ExternalLink, Smartphone } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -28,8 +28,22 @@ export default function Footer() {
                   JHS 1, 2 & 3 (Active)
                 </Link>
               </li>
-              <li className="text-slate-400">SHS 1, 2 & 3 (WASSCE - Coming)</li>
-              <li className="text-slate-400">University & Tertiary (Coming)</li>
+              <li>
+                <Link href="/shs" className="text-slate-300 hover:text-white transition-colors flex items-center gap-1.5 font-medium">
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+                  SHS 1, 2 & 3 (WASSCE Live)
+                </Link>
+              </li>
+              <li>
+                <Link href="/#mobile-app" className="text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1.5 font-medium">
+                  <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Android App (APK)</span>
+                </Link>
+              </li>
+              <li className="text-slate-400 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+                University & Tertiary (Coming)
+              </li>
             </ul>
           </div>
 
@@ -73,15 +87,28 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-3">Student Community</h4>
             <div className="space-y-3">
-              <div className="p-3 rounded-xl bg-slate-800 border border-slate-700 flex items-center gap-2.5">
-                <MessageCircle className="w-5 h-5 text-emerald-400 shrink-0" />
-                <div>
-                  <p className="text-white font-bold text-[11px]">WhatsApp Study Group</p>
-                  <p className="text-[10px] text-slate-300 font-medium">8,000+ Active Students</p>
+              <a
+                href="https://whatsapp.com/channel/0029VagMXcm4yltRps7S2b2x"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 rounded-xl bg-emerald-950/40 hover:bg-emerald-900/50 border border-emerald-500/30 hover:border-emerald-500/60 flex items-center justify-between gap-2.5 transition-all group shadow-xs cursor-pointer block"
+                title="Join AcademicPrep Official WhatsApp Channel"
+              >
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                    <MessageCircle className="w-5 h-5 text-emerald-400" />
+                  </div>
+                  <div>
+                    <p className="text-white font-bold text-[11px] group-hover:text-emerald-300 transition-colors">
+                      WhatsApp Study Channel
+                    </p>
+                    <p className="text-[10px] text-slate-300 font-medium">8,000+ Active Students</p>
+                  </div>
                 </div>
-              </div>
-              <p className="text-[11px] text-slate-400">
-                Daily study reminders, homework help, and weekly exam announcements delivered on WhatsApp.
+                <ExternalLink className="w-3.5 h-3.5 text-emerald-400 opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0" />
+              </a>
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                Daily study reminders, homework help, and weekly exam announcements delivered on our official WhatsApp Channel.
               </p>
             </div>
           </div>

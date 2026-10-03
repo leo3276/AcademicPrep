@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/authContext';
 import { EducationLevel, AccessPin } from '@/lib/types';
@@ -26,6 +26,7 @@ import {
   BlogPost, 
   BlogCategory, 
   BLOG_CATEGORIES, 
+  INITIAL_BLOG_POSTS,
   fetchBlogPosts, 
   createBlogPost, 
   updateBlogPost, 
@@ -130,7 +131,20 @@ export default function AdminDashboardPage() {
   const [isUploadingPdf, setIsUploadingPdf] = useState(false);
 
   // Blog Management Store & Composer State
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const cached = localStorage.getItem('academicprep_blog_posts_v1');
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch {
+        // storage fallback
+      }
+    }
+    return INITIAL_BLOG_POSTS;
+  });
   const [loadingBlog, setLoadingBlog] = useState(false);
   const [blogSearch, setBlogSearch] = useState('');
   const [blogCategoryFilter, setBlogCategoryFilter] = useState<'ALL' | BlogCategory>('ALL');
@@ -196,17 +210,19 @@ export default function AdminDashboardPage() {
     setStudents(roster as AdminStudentDetail[]);
   };
 
-  const loadBlogPosts = async () => {
+  const loadBlogPosts = useCallback(async (silent = false) => {
     try {
-      setLoadingBlog(true);
+      if (!silent) setLoadingBlog(true);
       const data = await fetchBlogPosts();
-      setBlogPosts(data);
+      if (Array.isArray(data) && data.length > 0) {
+        setBlogPosts(data);
+      }
     } catch (err: any) {
       console.warn('Failed to load blog posts in admin:', err);
     } finally {
-      setLoadingBlog(false);
+      if (!silent) setLoadingBlog(false);
     }
-  };
+  }, []);
 
   const resetBlogForm = () => {
     setEditingPostId(null);
@@ -324,7 +340,7 @@ export default function AdminDashboardPage() {
         } else {
           setBlogBanner({ kind: 'ok', text: `Updated "${blogTitle}" successfully.` });
           resetBlogForm();
-          await loadBlogPosts();
+          await loadBlogPosts(true);
         }
       } else {
         const res = await createBlogPost({
@@ -343,7 +359,7 @@ export default function AdminDashboardPage() {
         } else {
           setBlogBanner({ kind: 'ok', text: `Published "${blogTitle}" successfully.` });
           resetBlogForm();
-          await loadBlogPosts();
+          await loadBlogPosts(true);
         }
       }
     } catch (err: any) {
@@ -358,43 +374,63 @@ export default function AdminDashboardPage() {
       return;
     }
 
+    // Optimistically update list so table doesn't jump or blink
+    setBlogPosts((prev) => prev.filter((p) => p.id !== post.id));
+
     try {
       const res = await deleteBlogPost(post.id);
       if (res.success) {
         setBlogBanner({ kind: 'ok', text: `Deleted "${post.title}".` });
-        await loadBlogPosts();
+        await loadBlogPosts(true);
       } else {
+        await loadBlogPosts(true);
         setBlogBanner({ kind: 'bad', text: res.error || 'Failed to delete article.' });
       }
     } catch (err: any) {
+      await loadBlogPosts(true);
       setBlogBanner({ kind: 'bad', text: err?.message || 'Error deleting article.' });
     }
   };
 
   const handleToggleFeatured = async (post: BlogPost) => {
+    const nextFeatured = !post.featured;
+    // Optimistic toggle: instantly update in UI without triggering full reload blink
+    setBlogPosts((prev) =>
+      prev.map((p) => {
+        if (p.id === post.id) return { ...p, featured: nextFeatured };
+        if (nextFeatured) return { ...p, featured: false };
+        return p;
+      })
+    );
+
     try {
-      const res = await updateBlogPost(post.id, { featured: !post.featured });
+      const res = await updateBlogPost(post.id, { featured: nextFeatured });
       if (res.success) {
         setBlogBanner({
           kind: 'ok',
-          text: !post.featured
+          text: nextFeatured
             ? `"${post.title}" is now featured on the homepage.`
             : `Un-featured "${post.title}".`,
         });
-        await loadBlogPosts();
+        await loadBlogPosts(true);
+      } else {
+        await loadBlogPosts(true);
+        setBlogBanner({ kind: 'bad', text: res.error || 'Failed to update feature status.' });
       }
     } catch (err: any) {
+      await loadBlogPosts(true);
       setBlogBanner({ kind: 'bad', text: err?.message || 'Error updating feature status.' });
     }
   };
 
   useEffect(() => {
+    if (!isAdmin) return;
     clearStudentRosterCache();
     loadRealStudents();
     fetchUploadedDocuments().then(setPdfDocuments).catch(e => console.warn('Fetch docs warning:', e?.message || e));
-    loadBlogPosts();
-    if (isAdmin) refreshPins();
-  }, [activeTab, isAdmin, refreshPins]);
+    loadBlogPosts(true);
+    refreshPins();
+  }, [isAdmin, refreshPins, loadBlogPosts]);
 
   if (!mounted) {
     return (
@@ -2544,15 +2580,22 @@ export default function AdminDashboardPage() {
             {/* Articles Table */}
             <div className="bg-white border border-slate-200/80 rounded-xl overflow-hidden shadow-sm">
               <div className="p-3.5 border-b border-slate-200/80 flex items-center justify-between">
-                <h3 className="text-xs font-semibold text-slate-900">
-                  Published Articles ({blogPosts.length})
-                </h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-xs font-semibold text-slate-900">
+                    Published Articles ({blogPosts.length})
+                  </h3>
+                  {loadingBlog && (
+                    <span className="text-[10px] text-blue-600 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full font-medium animate-pulse">
+                      Syncing...
+                    </span>
+                  )}
+                </div>
                 <span className="text-[11px] text-slate-500 font-mono">
-                  Synced across Next.js & Mobile App
+                  Synced across Next.js &amp; Mobile App
                 </span>
               </div>
 
-              {loadingBlog ? (
+              {loadingBlog && blogPosts.length === 0 ? (
                 <div className="p-8 text-center text-xs text-slate-500">
                   Loading articles...
                 </div>

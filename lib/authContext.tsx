@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import {
   Student,
   EducationLevel,
@@ -569,7 +569,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return result.pins;
   };
 
-  const refreshPins = async (): Promise<void> => {
+  const refreshPins = useCallback(async (): Promise<void> => {
     const livePins = await fetchAccessPins();
 
     setPins(livePins);
@@ -578,7 +578,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const derived = deriveTransactions(livePins);
     setTransactions(derived);
     writeLocalStorage(STORAGE_KEYS.TRANSACTIONS, derived);
-  };
+  }, []);
 
   const getAdminMetrics = (): AdminMetrics => {
     const totalCash = transactions.reduce((acc, curr) => acc + curr.amountGhs, 0);

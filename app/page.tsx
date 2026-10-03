@@ -19,11 +19,15 @@ import {
   ChevronRight,
   Compass,
   Play,
-  Crown
+  Crown,
+  Smartphone,
+  Download,
+  ExternalLink
 } from 'lucide-react';
 import { BlogPost, BlogCategory, BLOG_CATEGORIES, INITIAL_BLOG_POSTS, fetchBlogPosts } from '@/lib/blogStore';
 import PlatformTourGuide, { HOMEPAGE_TOUR_STEPS } from '@/components/PlatformTourGuide';
 import TourPromptToast from '@/components/TourPromptToast';
+import ApkDownloadModal from '@/components/ApkDownloadModal';
 
 export default function HomePage() {
   const { student } = useAuth();
@@ -31,6 +35,7 @@ export default function HomePage() {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>(INITIAL_BLOG_POSTS);
   const [blogCategory, setBlogCategory] = useState<'ALL' | BlogCategory>('ALL');
   const [showTour, setShowTour] = useState(false);
+  const [showApkModal, setShowApkModal] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -117,6 +122,15 @@ export default function HomePage() {
                   <span>Student Login</span>
                 </Link>
               )}
+
+              <button
+                type="button"
+                onClick={() => setShowApkModal(true)}
+                className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm transition-all shadow-lg shadow-emerald-600/25 flex items-center justify-center gap-2 cursor-pointer border border-emerald-400/30"
+              >
+                <Smartphone className="w-4 h-4 text-emerald-200" />
+                <span>Android App (APK)</span>
+              </button>
             </div>
 
             {/* Quick Demo Info Box */}
@@ -485,6 +499,148 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Android Mobile App (APK) Showcase Section */}
+      <section id="mobile-app" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-gradient-to-br from-slate-900 via-slate-950 to-indigo-950 rounded-3xl border border-slate-800 p-6 sm:p-10 shadow-xl relative overflow-hidden text-white">
+          {/* Subtle Ambient Radial Glow */}
+          <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+            {/* Left Content Column */}
+            <div className="lg:col-span-7 space-y-5">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-bold">
+                  <Smartphone className="w-3.5 h-3.5" />
+                  <span>Android Application Available</span>
+                </span>
+                <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-slate-300 text-[11px] font-mono">
+                  v1.0.0 • APK Direct Install
+                </span>
+              </div>
+
+              <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
+                Study Anywhere With Zero Data — Download AcademicPrep for Android
+              </h2>
+
+              <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl">
+                Install our official Android app directly onto your phone or tablet. Access the full JHS and SHS curriculum, past questions, and self-testing quizzes completely offline once VIP is active — no internet required.
+              </p>
+
+              {/* App Highlights Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="text-xs font-bold text-white">100% Offline VIP Access</h4>
+                    <p className="text-[11px] text-slate-400 mt-0.5">Revise all topics and answer questions even with mobile data turned off.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="text-xs font-bold text-white">Lightweight APK (~24 MB)</h4>
+                    <p className="text-[11px] text-slate-400 mt-0.5">Installs in seconds and runs smoothly even on entry-level Android devices.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="text-xs font-bold text-white">Direct Installation</h4>
+                    <p className="text-[11px] text-slate-400 mt-0.5">No Play Store signup needed; download and tap install right on your phone.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="text-xs font-bold text-white">Automatic Account Sync</h4>
+                    <p className="text-[11px] text-slate-400 mt-0.5">Log in with your existing student phone and PIN to restore your progress.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="pt-3 flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setShowApkModal(true)}
+                  className="px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all shadow-lg shadow-emerald-600/30 flex items-center gap-2 cursor-pointer"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Download Android APK File</span>
+                </button>
+
+                <a
+                  href="https://whatsapp.com/channel/0029VagMXcm4yltRps7S2b2x"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-xs transition-all border border-white/20 flex items-center gap-2 cursor-pointer"
+                >
+                  <span>WhatsApp APK Channel</span>
+                  <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                </a>
+              </div>
+            </div>
+
+            {/* Right Card Column - Mock Phone Card */}
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="w-full max-w-sm rounded-2xl bg-slate-800/90 border border-slate-700/80 p-5 shadow-2xl space-y-4">
+                <div className="flex items-center gap-3.5 pb-4 border-b border-slate-700/60">
+                  <div className="w-14 h-14 rounded-2xl overflow-hidden shadow-lg shadow-blue-500/25 shrink-0 border border-slate-600 bg-blue-600">
+                    <img 
+                      src="/android-icon.png" 
+                      alt="AcademicPrep App Icon" 
+                      className="w-full h-full object-cover" 
+                    />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-white">AcademicPrep</h3>
+                    <p className="text-xs text-slate-400">Offline Learning Companion</p>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-1.5 py-0.5 rounded">
+                        Android 6.0+
+                      </span>
+                      <span className="text-[10px] text-slate-400 font-mono">APK ~24 MB</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2 text-xs text-slate-300">
+                  <div className="flex items-center justify-between py-1 border-b border-slate-700/40 text-[11px]">
+                    <span className="text-slate-400">Curriculum</span>
+                    <span className="font-semibold text-white">BECE &amp; WASSCE (WAEC)</span>
+                  </div>
+                  <div className="flex items-center justify-between py-1 border-b border-slate-700/40 text-[11px]">
+                    <span className="text-slate-400">Offline Capability</span>
+                    <span className="font-semibold text-emerald-400">100% Offline VIP Engine</span>
+                  </div>
+                  <div className="flex items-center justify-between py-1 border-b border-slate-700/40 text-[11px]">
+                    <span className="text-slate-400">Past Questions</span>
+                    <span className="font-semibold text-white">1990 - 2025 Bank</span>
+                  </div>
+                  <div className="flex items-center justify-between py-1 text-[11px]">
+                    <span className="text-slate-400">Safety Verification</span>
+                    <span className="font-semibold text-blue-300">Official Signed Build</span>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setShowApkModal(true)}
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Get APK Download Details</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Study Journal & WAEC Strategy Articles */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div id="tour-home-blog" className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-8">
@@ -664,6 +820,12 @@ export default function HomePage() {
       </section>
 
       {/* Bottom Spacer */}
+
+      {/* Android APK Download Information Modal */}
+      <ApkDownloadModal
+        isOpen={showApkModal}
+        onClose={() => setShowApkModal(false)}
+      />
 
       {/* Interactive Platform Feature Tour Guide for Homepage */}
       <PlatformTourGuide

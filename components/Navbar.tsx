@@ -19,7 +19,8 @@ import {
   BookOpen,
   FileCheck,
   FileText,
-  Compass
+  Compass,
+  Smartphone
 } from 'lucide-react';
 import PaystackPaymentModal from './PaystackPaymentModal';
 
@@ -388,6 +389,18 @@ export default function Navbar() {
               >
                 <FileText className="w-4 h-4 text-blue-600" />
                 Study Journal & Guides
+              </Link>
+
+              <Link
+                href="/#mobile-app"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2 text-sm font-semibold text-emerald-700 flex items-center justify-between"
+              >
+                <div className="flex items-center gap-1.5">
+                  <Smartphone className="w-4 h-4 text-emerald-600" />
+                  <span>Android App (APK)</span>
+                </div>
+                <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">Offline VIP</span>
               </Link>
 
               <button
