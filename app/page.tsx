@@ -13,11 +13,9 @@ import {
   Clock, 
   Lock, 
   FileText,
-  KeyRound,
   GraduationCap,
   Calendar,
   ChevronRight,
-  Compass,
   Play,
   Crown,
   Smartphone,
@@ -104,24 +102,6 @@ export default function HomePage() {
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
 
-              <button
-                type="button"
-                onClick={() => setShowTour(true)}
-                className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm transition-all border border-white/20 backdrop-blur-sm flex items-center justify-center gap-2 cursor-pointer shadow-sm"
-              >
-                <Compass className="w-4 h-4 text-blue-300" />
-                <span>Take 60s Tour</span>
-              </button>
-              
-              {mounted && !student && (
-                <Link
-                  href="/login"
-                  className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm transition-all border border-slate-700 flex items-center justify-center gap-2"
-                >
-                  <KeyRound className="w-4 h-4 text-emerald-400" />
-                  <span>Student Login</span>
-                </Link>
-              )}
 
               <button
                 type="button"
