@@ -5,11 +5,11 @@ export const dynamic = 'force-dynamic';
 
 export async function GET() {
   return NextResponse.json({
-    latestVersion: APK_VERSION || '1.0.4',
-    latestVersionCode: 4,
+    latestVersion: APK_VERSION || '1.0.5',
+    latestVersionCode: 5,
     fileSize: APK_FILE_SIZE || '82.5 MB',
     downloadUrl: OFFICIAL_APK_DOWNLOAD_URL,
-    releaseNotes: 'Embedded in-app updater, compact UI scaling, Android font zoom fix, and trial restrictions.',
+    releaseNotes: 'Modern minimalist UI redesign, decluttered home layout, and full blog photo & video admin privileges.',
     mandatory: false,
   });
 }
