@@ -33,6 +33,10 @@ import {
   deleteBlogPost 
 } from '@/lib/blogStore';
 import { 
+  MomoClaim, 
+  OFFICIAL_MOMO_DETAILS 
+} from '@/lib/momoConfig';
+import { 
   ShieldCheck,
   EyeOff,
   Key,
@@ -73,7 +77,8 @@ import {
   Image as ImageIcon,
   Video as VideoIcon,
   UploadCloud,
-  X
+  X,
+  MessageCircle
 } from 'lucide-react';
 import { parseVideoUrl } from '@/lib/mediaUtils';
 
@@ -114,8 +119,8 @@ export default function AdminDashboardPage() {
   const [securityModalMsg, setSecurityModalMsg] = useState<string | null>(null);
   const [isSavingKeys, setIsSavingKeys] = useState(false);
   
-  // Navigation Tabs: traffic, paid_access, completions, trial_mocks, pins, blog
-  const [activeTab, setActiveTab] = useState<'traffic' | 'paid_access' | 'completions' | 'trial_mocks' | 'pins' | 'blog'>('traffic');
+  // Navigation Tabs: traffic, paid_access, momo_claims, completions, trial_mocks, pins, blog
+  const [activeTab, setActiveTab] = useState<'traffic' | 'paid_access' | 'momo_claims' | 'completions' | 'trial_mocks' | 'pins' | 'blog'>('traffic');
 
   // Stores
   const [trafficData, setTrafficData] = useState<WebTrafficData>(() => {
@@ -129,6 +134,16 @@ export default function AdminDashboardPage() {
   const [pdfFilterSubject, setPdfFilterSubject] = useState('ALL');
   const [showPdfUploadForm, setShowPdfUploadForm] = useState(false);
   const [isUploadingPdf, setIsUploadingPdf] = useState(false);
+
+  // MoMo Claims Store
+  const [momoClaims, setMomoClaims] = useState<MomoClaim[]>([]);
+  const [loadingClaims, setLoadingClaims] = useState(false);
+  const [momoClaimsFilter, setMomoClaimsFilter] = useState<'ALL' | 'PENDING' | 'APPROVED' | 'REJECTED'>('ALL');
+  const [momoSearch, setMomoSearch] = useState('');
+  const [momoActionMsg, setMomoActionMsg] = useState<{ kind: 'ok' | 'bad'; text: string } | null>(null);
+  const [processingClaimId, setProcessingClaimId] = useState<string | null>(null);
+  const [momoQuickPhone, setMomoQuickPhone] = useState('');
+  const [momoQuickMsg, setMomoQuickMsg] = useState<string | null>(null);
 
   // Blog Management Store & Composer State
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>(() => {
@@ -223,6 +238,90 @@ export default function AdminDashboardPage() {
       if (!silent) setLoadingBlog(false);
     }
   }, []);
+
+  const loadMomoClaims = useCallback(async () => {
+    try {
+      setLoadingClaims(true);
+      const res = await fetch('/api/momo/claim');
+      const data = await res.json();
+      if (data?.success && Array.isArray(data.claims)) {
+        setMomoClaims(data.claims);
+      }
+    } catch (e) {
+      console.warn('Failed to load momo claims in admin:', e);
+    } finally {
+      setLoadingClaims(false);
+    }
+  }, []);
+
+  const handleApproveMomoClaim = async (claimId: string) => {
+    setProcessingClaimId(claimId);
+    setMomoActionMsg(null);
+    try {
+      const res = await fetch('/api/momo/claim/approve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ claimId }),
+      });
+      const data = await res.json();
+      if (data?.success) {
+        setMomoActionMsg({ kind: 'ok', text: data.message || 'VIP Pass activated!' });
+        await loadMomoClaims();
+        await loadRealStudents();
+      } else {
+        setMomoActionMsg({ kind: 'bad', text: data.error || 'Failed to approve claim.' });
+      }
+    } catch (e: any) {
+      setMomoActionMsg({ kind: 'bad', text: e?.message || 'Network error approving claim.' });
+    } finally {
+      setProcessingClaimId(null);
+    }
+  };
+
+  const handleRejectMomoClaim = async (claimId: string) => {
+    if (!confirm('Are you sure you want to REVOKE this student VIP pass? Their access will be cancelled immediately.')) return;
+    setProcessingClaimId(claimId);
+    setMomoActionMsg(null);
+    try {
+      const res = await fetch('/api/momo/claim/reject', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ claimId, reason: 'Payment could not be verified on MTN MoMo' }),
+      });
+      const data = await res.json();
+      if (data?.success) {
+        setMomoActionMsg({ kind: 'ok', text: data.message || 'VIP Pass revoked successfully.' });
+        await loadMomoClaims();
+        await loadRealStudents();
+      } else {
+        setMomoActionMsg({ kind: 'bad', text: data.error || 'Failed to revoke pass.' });
+      }
+    } catch (e: any) {
+      setMomoActionMsg({ kind: 'bad', text: e?.message || 'Network error revoking pass.' });
+    } finally {
+      setProcessingClaimId(null);
+    }
+  };
+
+  const handleQuickGrantMoMo = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const phone = momoQuickPhone.trim().replace(/\s+/g, '');
+    if (!phone || phone.length < 10) {
+      setMomoQuickMsg('Please enter a valid phone number (e.g. 0241234567).');
+      return;
+    }
+
+    setMomoQuickMsg(null);
+    const result = await adminGrantAccess(phone, 30);
+    if (!result.success) {
+      setMomoQuickMsg(result.error || 'Could not grant access.');
+      return;
+    }
+
+    await loadRealStudents();
+    setMomoQuickPhone('');
+    setMomoActionMsg({ kind: 'ok', text: `Successfully granted 30-day VIP pass to ${phone}!` });
+  };
 
   const resetBlogForm = () => {
     setEditingPostId(null);
@@ -429,8 +528,9 @@ export default function AdminDashboardPage() {
     loadRealStudents();
     fetchUploadedDocuments().then(setPdfDocuments).catch(e => console.warn('Fetch docs warning:', e?.message || e));
     loadBlogPosts(true);
+    loadMomoClaims();
     refreshPins();
-  }, [isAdmin, refreshPins, loadBlogPosts]);
+  }, [isAdmin, refreshPins, loadBlogPosts, loadMomoClaims]);
 
   if (!mounted) {
     return (
@@ -921,6 +1021,27 @@ export default function AdminDashboardPage() {
               <span className="ml-1 text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-full font-mono">
                 {activePaidStudentsCount}
               </span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('momo_claims')}
+              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+                activeTab === 'momo_claims'
+                  ? 'border-emerald-600 text-emerald-800 font-bold'
+                  : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              <Smartphone className="w-4 h-4 text-emerald-600" />
+              <span>MoMo Claims</span>
+              {momoClaims.filter(c => c.status === 'PENDING').length > 0 ? (
+                <span className="ml-1 text-[10px] bg-amber-500 text-white font-bold px-1.5 py-0.5 rounded-full animate-pulse">
+                  {momoClaims.filter(c => c.status === 'PENDING').length} New
+                </span>
+              ) : (
+                <span className="ml-1 text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-full font-mono">
+                  {momoClaims.length}
+                </span>
+              )}
             </button>
 
             <button
@@ -1443,6 +1564,389 @@ export default function AdminDashboardPage() {
                 </div>
               </div>
             )}
+          </div>
+        )}
+
+        {/* ============================================================ */}
+        {/* TAB: DIRECT MOMO CLAIMS & APPROVALS (EMMANUEL KWEKU OSEI)    */}
+        {/* ============================================================ */}
+        {activeTab === 'momo_claims' && (
+          <div className="space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] font-bold uppercase tracking-wider mb-1">
+                  <Smartphone className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Direct MoMo Reconciliation</span>
+                </div>
+                <h2 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
+                  Direct MoMo Verifications &amp; Pass Management
+                </h2>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Students get instant 30-day VIP access upon entering their sender number. Cross-check your MTN MoMo SIM (<b>{OFFICIAL_MOMO_DETAILS.name} - {OFFICIAL_MOMO_DETAILS.number}</b>). If payment was not received, click <b>Revoke Pass</b> to cancel access immediately.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => loadMomoClaims()}
+                  disabled={loadingClaims}
+                  className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Activity className="w-3.5 h-3.5 text-slate-500" />
+                  <span>{loadingClaims ? 'Refreshing...' : 'Refresh Claims'}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Action Feedback Banner */}
+            {momoActionMsg && (
+              <div
+                className={`p-3.5 rounded-xl border text-xs font-semibold flex items-center justify-between ${
+                  momoActionMsg.kind === 'ok'
+                    ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                    : 'bg-red-50 text-red-800 border-red-200'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  {momoActionMsg.kind === 'ok' ? (
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  ) : (
+                    <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
+                  )}
+                  <span>{momoActionMsg.text}</span>
+                </div>
+                <button
+                  onClick={() => setMomoActionMsg(null)}
+                  className="text-slate-400 hover:text-slate-600 p-1"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
+
+            {/* Metric Stat Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs space-y-1">
+                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
+                  Designated MoMo SIM
+                </span>
+                <p className="text-base font-black font-mono text-slate-900">
+                  {OFFICIAL_MOMO_DETAILS.number}
+                </p>
+                <p className="text-xs font-bold text-emerald-700 truncate">
+                  {OFFICIAL_MOMO_DETAILS.name}
+                </p>
+              </div>
+
+              <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs space-y-1">
+                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
+                  Instant VIPs (Needs Audit)
+                </span>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-2xl font-black text-amber-600 font-mono">
+                    {momoClaims.filter((c) => c.status === 'PENDING').length}
+                  </span>
+                  <span className="text-xs text-slate-500">active, check MoMo</span>
+                </div>
+              </div>
+
+              <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs space-y-1">
+                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
+                  Confirmed &amp; Verified
+                </span>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-2xl font-black text-emerald-600 font-mono">
+                    {momoClaims.filter((c) => c.status === 'APPROVED').length}
+                  </span>
+                  <span className="text-xs text-slate-500">funds verified</span>
+                </div>
+              </div>
+
+              <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs space-y-1">
+                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
+                  Revoked Passes
+                </span>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-2xl font-black text-rose-600 font-mono">
+                    {momoClaims.filter((c) => c.status === 'REJECTED').length}
+                  </span>
+                  <span className="text-xs text-slate-500">no funds received</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Manual Grant Box (For WhatsApp / Offline Direct Transfer) */}
+            <div className="bg-gradient-to-br from-slate-900 to-indigo-950 p-5 rounded-2xl text-white shadow-md space-y-3">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="text-sm font-bold flex items-center gap-2">
+                    <Flame className="w-4 h-4 text-amber-400" />
+                    <span>Quick Direct VIP Activation</span>
+                  </h3>
+                  <p className="text-xs text-slate-300 mt-0.5">
+                    Did a student pay you directly on MoMo or send a WhatsApp screenshot? Enter their phone number to instantly grant 30-day VIP pass.
+                  </p>
+                </div>
+              </div>
+
+              <form onSubmit={handleQuickGrantMoMo} className="flex flex-col sm:flex-row items-center gap-2.5 pt-1">
+                <div className="relative w-full sm:w-80">
+                  <Smartphone className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="tel"
+                    value={momoQuickPhone}
+                    onChange={(e) => {
+                      setMomoQuickPhone(e.target.value);
+                      setMomoQuickMsg(null);
+                    }}
+                    placeholder="e.g. 0241234567"
+                    className="w-full pl-9 pr-3 py-2 bg-slate-800/90 border border-slate-700 rounded-xl text-xs font-mono text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-400"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full sm:w-auto px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition shadow-sm cursor-pointer whitespace-nowrap"
+                >
+                  Grant 30-Day VIP Pass
+                </button>
+              </form>
+
+              {momoQuickMsg && (
+                <p className="text-xs text-amber-300 bg-amber-950/60 p-2 rounded-lg border border-amber-800/50">
+                  {momoQuickMsg}
+                </p>
+              )}
+            </div>
+
+            {/* Filter & Search Bar */}
+            <div className="bg-white p-3.5 rounded-xl border border-slate-200/80 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="relative w-full sm:w-80">
+                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={momoSearch}
+                  onChange={(e) => setMomoSearch(e.target.value)}
+                  placeholder="Search by student phone, name, or TxID..."
+                  className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                />
+              </div>
+
+              <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto">
+                {(['ALL', 'PENDING', 'APPROVED', 'REJECTED'] as const).map((status) => (
+                  <button
+                    key={status}
+                    type="button"
+                    onClick={() => setMomoClaimsFilter(status)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition whitespace-nowrap cursor-pointer ${
+                      momoClaimsFilter === status
+                        ? 'bg-slate-900 text-white'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
+                  >
+                    {status === 'ALL'
+                      ? `All (${momoClaims.length})`
+                      : status === 'PENDING'
+                      ? `Pending (${momoClaims.filter((c) => c.status === 'PENDING').length})`
+                      : status === 'APPROVED'
+                      ? `Approved (${momoClaims.filter((c) => c.status === 'APPROVED').length})`
+                      : `Rejected (${momoClaims.filter((c) => c.status === 'REJECTED').length})`}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Claims Table */}
+            <div className="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-xs">
+              <div className="p-4 border-b border-slate-200/80 flex items-center justify-between">
+                <h3 className="text-xs font-bold text-slate-900 flex items-center gap-2">
+                  <span>Student MoMo Payment Claims</span>
+                  {loadingClaims && (
+                    <span className="text-[10px] text-blue-600 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full font-medium animate-pulse">
+                      Updating...
+                    </span>
+                  )}
+                </h3>
+                <span className="text-[11px] text-slate-500 font-mono">
+                  Target: {OFFICIAL_MOMO_DETAILS.number}
+                </span>
+              </div>
+
+              {momoClaims.length === 0 ? (
+                <div className="p-12 text-center text-xs text-slate-500 space-y-2">
+                  <Smartphone className="w-8 h-8 text-slate-300 mx-auto" />
+                  <p className="font-semibold text-slate-700">No payment claims recorded yet.</p>
+                  <p className="text-slate-400 max-w-sm mx-auto">
+                    When students transfer GH₵ 25 on MTN MoMo to {OFFICIAL_MOMO_DETAILS.name} ({OFFICIAL_MOMO_DETAILS.number}) and enter their sender number, their instant VIP pass activations will appear here.
+                  </p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead className="bg-slate-50/75 text-slate-500 font-medium uppercase tracking-wider border-b border-slate-200/80">
+                      <tr>
+                        <th className="px-4 py-3">Student Details</th>
+                        <th className="px-4 py-3">MoMo Sender Number</th>
+                        <th className="px-4 py-3">Amount</th>
+                        <th className="px-4 py-3">Activated At</th>
+                        <th className="px-4 py-3">VIP Pass Status</th>
+                        <th className="px-4 py-3 text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {momoClaims
+                        .filter((claim) => {
+                          const matchesStatus =
+                            momoClaimsFilter === 'ALL' || claim.status === momoClaimsFilter;
+                          const q = momoSearch.toLowerCase().trim();
+                          const matchesSearch =
+                            !q ||
+                            claim.studentPhone.toLowerCase().includes(q) ||
+                            claim.studentName.toLowerCase().includes(q) ||
+                            (claim.senderPhone && claim.senderPhone.toLowerCase().includes(q)) ||
+                            (claim.transactionId && claim.transactionId.toLowerCase().includes(q));
+                          return matchesStatus && matchesSearch;
+                        })
+                        .map((claim) => {
+                          const isProcessing = processingClaimId === claim.id;
+                          const senderNumber = claim.senderPhone || claim.studentPhone;
+                          return (
+                            <tr key={claim.id} className="hover:bg-slate-50/60 transition">
+                              <td className="px-4 py-3">
+                                <div>
+                                  <p className="font-bold text-slate-900">{claim.studentName}</p>
+                                  <div className="flex items-center gap-2 mt-0.5">
+                                    <span className="font-mono text-slate-600">{claim.studentPhone}</span>
+                                    <a
+                                      href={`https://wa.me/233${senderNumber.replace(/^0/, '')}?text=${encodeURIComponent(
+                                        `Hello ${claim.studentName}, this is ${OFFICIAL_MOMO_DETAILS.name} from AcademicPrep regarding your MoMo VIP activation.`
+                                      )}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-[10px] text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-1.5 py-0.5 rounded font-bold flex items-center gap-1 transition"
+                                      title="Open WhatsApp chat with student"
+                                    >
+                                      <MessageCircle className="w-3 h-3" />
+                                      <span>WhatsApp</span>
+                                    </a>
+                                  </div>
+                                </div>
+                              </td>
+
+                              <td className="px-4 py-3">
+                                <div className="flex items-center gap-1.5">
+                                  <span className="font-mono font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded border border-slate-200 select-all">
+                                    {senderNumber}
+                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      if (typeof navigator !== 'undefined') {
+                                        navigator.clipboard.writeText(senderNumber);
+                                      }
+                                    }}
+                                    className="p-1 text-slate-400 hover:text-slate-700 rounded transition cursor-pointer"
+                                    title="Copy MoMo Sender Number"
+                                  >
+                                    <Copy className="w-3.5 h-3.5" />
+                                  </button>
+                                </div>
+                              </td>
+
+                              <td className="px-4 py-3 font-bold text-slate-900">
+                                GH₵ {claim.amountGhs}
+                              </td>
+
+                              <td className="px-4 py-3 whitespace-nowrap text-slate-500 font-mono text-[11px]">
+                                {new Date(claim.createdAt).toLocaleDateString()} • {new Date(claim.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                              </td>
+
+                              <td className="px-4 py-3 whitespace-nowrap">
+                                {claim.status === 'PENDING' && (
+                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" />
+                                    <span>VIP ACTIVE (CHECK MOMO)</span>
+                                  </span>
+                                )}
+                                {claim.status === 'APPROVED' && (
+                                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                                    <CheckCircle2 className="w-3 h-3" />
+                                    <span>PAYMENT CONFIRMED</span>
+                                  </span>
+                                )}
+                                {claim.status === 'REJECTED' && (
+                                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800 border border-rose-200">
+                                    <XCircle className="w-3 h-3" />
+                                    <span>PASS REVOKED</span>
+                                  </span>
+                                )}
+                              </td>
+
+                              <td className="px-4 py-3 whitespace-nowrap text-right">
+                                {claim.status === 'PENDING' ? (
+                                  <div className="flex items-center justify-end gap-1.5">
+                                    <button
+                                      type="button"
+                                      disabled={isProcessing}
+                                      onClick={() => handleApproveMomoClaim(claim.id)}
+                                      className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-300 text-white font-bold text-xs transition shadow-xs flex items-center gap-1 cursor-pointer"
+                                      title="Confirmed payment arrived in MoMo"
+                                    >
+                                      <CheckCircle2 className="w-3.5 h-3.5" />
+                                      <span>{isProcessing ? 'Saving...' : 'Confirm Payment'}</span>
+                                    </button>
+
+                                    <button
+                                      type="button"
+                                      disabled={isProcessing}
+                                      onClick={() => handleRejectMomoClaim(claim.id)}
+                                      className="px-2.5 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 font-bold text-xs transition cursor-pointer flex items-center gap-1"
+                                      title="No payment found on MoMo - revoke VIP immediately"
+                                    >
+                                      <XCircle className="w-3.5 h-3.5 text-rose-600" />
+                                      <span>Revoke Pass</span>
+                                    </button>
+                                  </div>
+                                ) : claim.status === 'APPROVED' ? (
+                                  <div className="flex items-center justify-end gap-2">
+                                    <span className="text-[11px] text-emerald-700 font-semibold flex items-center gap-1">
+                                      <CheckCircle className="w-3.5 h-3.5" />
+                                      <span>Verified (VIP Active)</span>
+                                    </span>
+                                    <button
+                                      type="button"
+                                      disabled={isProcessing}
+                                      onClick={() => handleRejectMomoClaim(claim.id)}
+                                      className="px-2 py-1 rounded bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 text-[10px] font-semibold transition cursor-pointer"
+                                      title="Revoke pass if needed"
+                                    >
+                                      Revoke
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <div className="flex items-center justify-end gap-2">
+                                    <span className="text-[10px] text-rose-600 font-medium">Revoked</span>
+                                    <button
+                                      type="button"
+                                      disabled={isProcessing}
+                                      onClick={() => handleApproveMomoClaim(claim.id)}
+                                      className="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 text-xs font-semibold transition cursor-pointer"
+                                      title="Restore VIP pass"
+                                    >
+                                      Re-Grant VIP
+                                    </button>
+                                  </div>
+                                )}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
           </div>
         )}
 

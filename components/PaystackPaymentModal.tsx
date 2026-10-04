@@ -2,13 +2,25 @@
 
 import React, { useState } from 'react';
 import { useAuth } from '@/lib/authContext';
-import { X, Lock, CheckCircle2 } from 'lucide-react';
+import { 
+  X, 
+  Lock, 
+  CheckCircle2, 
+  Copy, 
+  Check, 
+  Smartphone, 
+  MessageCircle, 
+  AlertCircle 
+} from 'lucide-react';
 import { launchPaystackCheckout, PAYSTACK_VIP_PRICE_GHS } from '@/lib/paystackService';
+import { OFFICIAL_MOMO_DETAILS } from '@/lib/momoConfig';
+
+export type PaymentModalTab = 'direct_momo' | 'momo' | 'paystack' | 'pin';
 
 interface PaystackPaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
-  defaultTab?: 'momo' | 'pin';
+  defaultTab?: PaymentModalTab;
   featureName?: string;
   onSuccess?: () => void;
 }
@@ -16,15 +28,23 @@ interface PaystackPaymentModalProps {
 export default function PaystackPaymentModal({
   isOpen,
   onClose,
-  defaultTab = 'momo',
+  defaultTab = 'direct_momo',
   featureName,
   onSuccess
 }: PaystackPaymentModalProps) {
-  const { student, redeemPin } = useAuth();
-  const [activeTab, setActiveTab] = useState<'momo' | 'pin'>(defaultTab);
+  const { student, redeemPin, refreshStudent } = useAuth();
+  const initialTab = defaultTab === 'momo' || defaultTab === 'direct_momo' ? 'direct_momo' : defaultTab;
+  const [activeTab, setActiveTab] = useState<'direct_momo' | 'paystack' | 'pin'>(initialTab);
 
-  // MoMo State
-  const [phoneInput, setPhoneInput] = useState(student?.phoneNumber || '');
+  // Direct MoMo State
+  const [directPhone, setDirectPhone] = useState(student?.phoneNumber || '');
+  const [isSubmittingClaim, setIsSubmittingClaim] = useState(false);
+  const [claimSuccess, setClaimSuccess] = useState<boolean>(false);
+  const [claimError, setClaimError] = useState<string | null>(null);
+  const [copiedNumber, setCopiedNumber] = useState(false);
+
+  // Paystack Auto State
+  const [paystackPhone, setPaystackPhone] = useState(student?.phoneNumber || '');
   const [isPaying, setIsPaying] = useState(false);
   const [paySuccess, setPaySuccess] = useState(false);
   const [payError, setPayError] = useState<string | null>(null);
@@ -36,10 +56,65 @@ export default function PaystackPaymentModal({
 
   if (!isOpen) return null;
 
+  const handleCopyMomoNumber = () => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(OFFICIAL_MOMO_DETAILS.number);
+      setCopiedNumber(true);
+      setTimeout(() => setCopiedNumber(false), 2500);
+    }
+  };
+
+  // Submit Direct MoMo Payment (Instant VIP Grant)
+  const handleSubmitMomoClaim = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const cleanPhone = directPhone.trim().replace(/\s+/g, '');
+
+    if (!cleanPhone || cleanPhone.length < 10) {
+      setClaimError('Please enter a valid 10-digit Ghanaian mobile number.');
+      return;
+    }
+
+    setClaimError(null);
+    setIsSubmittingClaim(true);
+
+    try {
+      const res = await fetch('/api/momo/claim', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          studentPhone: cleanPhone,
+          studentName: student?.fullName || undefined,
+          amountGhs: OFFICIAL_MOMO_DETAILS.amountGhs,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        setClaimError(data.error || 'Failed to activate VIP pass. Please ensure your account is registered.');
+      } else {
+        if (refreshStudent) {
+          try {
+            await refreshStudent();
+          } catch {}
+        }
+        if (onSuccess) {
+          try {
+            onSuccess();
+          } catch {}
+        }
+        setClaimSuccess(true);
+      }
+    } catch (err: any) {
+      setClaimError('Network communication error. Please check your internet connection.');
+    } finally {
+      setIsSubmittingClaim(false);
+    }
+  };
+
   // Handle Paystack Checkout
   const handlePaystackPay = async (e: React.FormEvent) => {
     e.preventDefault();
-    const cleanPhone = phoneInput.trim().replace(/\s+/g, '');
+    const cleanPhone = paystackPhone.trim().replace(/\s+/g, '');
     if (!cleanPhone || cleanPhone.length < 10) {
       setPayError('Please enter a valid phone number (e.g. 0241234567).');
       return;
@@ -130,65 +205,190 @@ export default function PaystackPaymentModal({
     }
   };
 
+  const whatsappMessage = encodeURIComponent(
+    `Hello Emmanuel, I sent GH₵ 25 via MoMo for AcademicPrep VIP.\nMy Account Phone: ${directPhone || student?.phoneNumber || ''}\nPlease confirm my account.`
+  );
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-150">
-      <div className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-100 relative">
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
-          aria-label="Close"
-        >
-          <X className="w-4 h-4" />
-        </button>
-
-        {/* Minimal Header */}
-        <div className="pr-6">
-          <h2 className="text-base font-semibold text-slate-900 tracking-tight">
-            {featureName ? `Unlock ${featureName}` : 'VIP Access Pass'}
-          </h2>
-          <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-            Full 100% offline access to all JHS &amp; SHS subjects, quizzes, BECE &amp; WASSCE past papers.
-          </p>
-
-          {/* Simple Price Line */}
-          <div className="mt-3 flex items-baseline gap-1.5">
-            <span className="text-2xl font-bold text-slate-900 tracking-tight">
-              GH₵ {PAYSTACK_VIP_PRICE_GHS}
-            </span>
-            <span className="text-xs text-slate-500 font-medium">/ month</span>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-xs animate-in fade-in duration-150 overflow-y-auto">
+      <div className="bg-white rounded-2xl max-w-sm w-full p-5 shadow-xl border border-slate-100 relative my-auto text-left">
+        {/* Header */}
+        <div className="flex items-start justify-between">
+          <div>
+            <h2 className="text-base font-bold text-slate-900 tracking-tight">
+              {featureName ? `Unlock ${featureName}` : 'AcademicPrep VIP'}
+            </h2>
+            <p className="text-xs text-slate-500 mt-0.5">
+              GH₵ {PAYSTACK_VIP_PRICE_GHS} &middot; 30 days full access
+            </p>
           </div>
+          <button
+            onClick={onClose}
+            className="p-1 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition"
+            aria-label="Close"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
 
-        {/* Segmented Control */}
-        <div className="flex bg-slate-100 p-1 rounded-xl text-xs font-medium mt-5">
+        {/* Tabs */}
+        <div className="flex bg-slate-100 p-1 rounded-xl text-xs font-medium mt-4 gap-1">
           <button
             type="button"
-            onClick={() => setActiveTab('momo')}
-            className={`flex-1 py-1.5 rounded-lg transition text-center cursor-pointer ${
-              activeTab === 'momo'
-                ? 'bg-white text-slate-900 shadow-xs font-semibold'
-                : 'text-slate-600 hover:text-slate-900'
+            onClick={() => setActiveTab('direct_momo')}
+            className={`flex-1 py-1.5 px-2 rounded-lg transition text-center text-xs cursor-pointer ${
+              activeTab === 'direct_momo'
+                ? 'bg-white text-slate-900 font-semibold shadow-xs'
+                : 'text-slate-500 hover:text-slate-900'
             }`}
           >
-            Mobile Money
+            Direct MoMo
           </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('paystack')}
+            className={`flex-1 py-1.5 px-2 rounded-lg transition text-center text-xs cursor-pointer ${
+              activeTab === 'paystack'
+                ? 'bg-white text-slate-900 font-semibold shadow-xs'
+                : 'text-slate-500 hover:text-slate-900'
+            }`}
+          >
+            Paystack
+          </button>
+
           <button
             type="button"
             onClick={() => setActiveTab('pin')}
-            className={`flex-1 py-1.5 rounded-lg transition text-center cursor-pointer ${
+            className={`flex-1 py-1.5 px-2 rounded-lg transition text-center text-xs cursor-pointer ${
               activeTab === 'pin'
-                ? 'bg-white text-slate-900 shadow-xs font-semibold'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white text-slate-900 font-semibold shadow-xs'
+                : 'text-slate-500 hover:text-slate-900'
             }`}
           >
-            Redeem PIN
+            Voucher PIN
           </button>
         </div>
 
         {/* Tab Content */}
-        <div className="mt-5">
-          {activeTab === 'momo' ? (
+        <div className="mt-4">
+          {/* TAB 1: DIRECT MOMO TRANSFER (EMMANUEL KWEKU OSEI) */}
+          {activeTab === 'direct_momo' && (
+            claimSuccess ? (
+              <div className="text-center py-6 space-y-3">
+                <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+                  <CheckCircle2 className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-slate-900">VIP Pass Active</h3>
+                  <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto">
+                    Your 30-day VIP pass is active on <span className="font-mono text-slate-800">{directPhone}</span>.
+                  </p>
+                </div>
+                <div className="pt-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onClose();
+                      if (onSuccess) {
+                        try { onSuccess(); } catch (e) {}
+                      }
+                    }}
+                    className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-semibold transition cursor-pointer"
+                  >
+                    Start Studying
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-3 text-xs">
+                {/* Recipient Card */}
+                <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3 space-y-1.5">
+                  <div className="flex items-center justify-between text-[11px] text-slate-500">
+                    <span>Send GH₵ {OFFICIAL_MOMO_DETAILS.amountGhs} via MoMo (*170#)</span>
+                    <button
+                      type="button"
+                      onClick={handleCopyMomoNumber}
+                      className="font-medium text-slate-700 hover:text-black flex items-center gap-1 cursor-pointer"
+                    >
+                      {copiedNumber ? (
+                        <>
+                          <Check className="w-3 h-3 text-emerald-600" />
+                          <span className="text-emerald-700">Copied</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3 h-3" />
+                          <span>Copy</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                  <div className="flex items-baseline justify-between">
+                    <span className="text-base font-bold font-mono tracking-wide text-slate-900">
+                      {OFFICIAL_MOMO_DETAILS.number}
+                    </span>
+                    <span className="text-xs font-medium text-slate-600">
+                      {OFFICIAL_MOMO_DETAILS.name}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Notice in writing */}
+                <p className="text-[11px] text-slate-600 leading-relaxed bg-amber-50/70 border border-amber-200/70 rounded-xl px-3 py-2">
+                  <b className="text-amber-900 font-semibold">Pay before you input your number:</b> Transfer GH₵ 25 to the number above via *170# first. VIP activates immediately upon submitting, but will be revoked if payment is not received.
+                </p>
+
+                {/* Form */}
+                <form onSubmit={handleSubmitMomoClaim} className="space-y-3">
+                  <div>
+                    <label className="block text-xs font-medium text-slate-700 mb-1">
+                      Your MoMo Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      value={directPhone}
+                      onChange={(e) => {
+                        setDirectPhone(e.target.value);
+                        setClaimError(null);
+                      }}
+                      placeholder="024 123 4567"
+                      className="w-full px-3 py-2 rounded-xl border border-slate-200 font-mono text-xs text-slate-900 focus:outline-none focus:border-slate-900 transition"
+                      required
+                    />
+                  </div>
+
+                  {claimError && (
+                    <p className="text-xs text-red-600 bg-red-50 p-2 rounded-lg border border-red-100">
+                      {claimError}
+                    </p>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={isSubmittingClaim}
+                    className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-black disabled:bg-slate-300 text-white font-medium text-xs transition cursor-pointer shadow-xs"
+                  >
+                    {isSubmittingClaim ? 'Activating...' : 'Confirm & Activate VIP Pass'}
+                  </button>
+                </form>
+
+                <div className="text-center pt-0.5">
+                  <a
+                    href={`https://wa.me/233553906598?text=${whatsappMessage}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[11px] text-slate-400 hover:text-slate-700 transition"
+                  >
+                    Need help? WhatsApp Emmanuel
+                  </a>
+                </div>
+              </div>
+            )
+          )}
+
+          {/* TAB 2: AUTOMATED PAYSTACK */}
+          {activeTab === 'paystack' && (
             paySuccess ? (
               <div className="text-center py-6 space-y-2">
                 <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
@@ -200,7 +400,7 @@ export default function PaystackPaymentModal({
                 </p>
               </div>
             ) : (
-              <form onSubmit={handlePaystackPay} className="space-y-4">
+              <form onSubmit={handlePaystackPay} className="space-y-3.5">
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
                     <label className="block text-xs font-medium text-slate-700">
@@ -212,9 +412,9 @@ export default function PaystackPaymentModal({
                   </div>
                   <input
                     type="tel"
-                    value={phoneInput}
+                    value={paystackPhone}
                     onChange={(e) => {
-                      setPhoneInput(e.target.value);
+                      setPaystackPhone(e.target.value);
                       setPayError(null);
                     }}
                     placeholder="024 123 4567"
@@ -222,6 +422,14 @@ export default function PaystackPaymentModal({
                     autoFocus
                     required
                   />
+                </div>
+
+                {/* MTN Approval Reminder */}
+                <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-[11px] flex items-start gap-2">
+                  <Smartphone className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                  <p>
+                    <b>MTN Users:</b> If no popup appears on your phone, dial <b>*170#</b> &gt; <b>6) My Wallet</b> &gt; <b>3) My Approvals</b> to authorize the payment.
+                  </p>
                 </div>
 
                 {payError && (
@@ -235,16 +443,19 @@ export default function PaystackPaymentModal({
                   disabled={isPaying}
                   className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-black disabled:bg-slate-300 text-white font-medium text-xs transition flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
                 >
-                  {isPaying ? 'Connecting...' : `Pay GH₵ ${PAYSTACK_VIP_PRICE_GHS} with MoMo`}
+                  {isPaying ? 'Connecting to Paystack...' : `Pay GH₵ ${PAYSTACK_VIP_PRICE_GHS} with Paystack`}
                 </button>
 
                 <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400 pt-0.5">
                   <Lock className="w-3 h-3 text-slate-400" />
-                  <span>Secured by Paystack</span>
+                  <span>Secured by Paystack Gateway</span>
                 </div>
               </form>
             )
-          ) : (
+          )}
+
+          {/* TAB 3: VOUCHER PIN REDEMPTION */}
+          {activeTab === 'pin' && (
             <form onSubmit={handleRedeemPin} className="space-y-4">
               <div>
                 <label className="block text-xs font-medium text-slate-700 mb-1.5">
@@ -259,7 +470,7 @@ export default function PaystackPaymentModal({
                   autoFocus
                 />
                 <div className="flex items-center justify-between text-[11px] text-slate-400 mt-1.5">
-                  <span>Scratch-card vouchers are sold by your teacher.</span>
+                  <span>Scratch-card vouchers are issued directly by admin.</span>
                 </div>
               </div>
 

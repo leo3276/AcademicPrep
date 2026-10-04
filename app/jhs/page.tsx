@@ -33,6 +33,7 @@ import { fetchUploadedDocuments } from '@/lib/pdfStore';
 import { BlogPost, fetchBlogPosts, INITIAL_BLOG_POSTS } from '@/lib/blogStore';
 import PlatformTourGuide from '@/components/PlatformTourGuide';
 import TourPromptToast from '@/components/TourPromptToast';
+import PaystackPaymentModal from '@/components/PaystackPaymentModal';
 
 export default function JhsPortalPage() {
   const router = useRouter();
@@ -43,6 +44,7 @@ export default function JhsPortalPage() {
   const [uploadedBeceCount, setUploadedBeceCount] = useState(0);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>(INITIAL_BLOG_POSTS.slice(0, 3));
   const [showTour, setShowTour] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -206,9 +208,13 @@ export default function JhsPortalPage() {
                 <KeyRound className="w-3.5 h-3.5 text-amber-600 shrink-0" />
                 <span>Limited Free Access: {getCompletedTopicsCount()} of 3 topics used.</span>
               </span>
-              <Link href="/jhs/profile" className="font-bold underline text-amber-800 hover:text-amber-950 shrink-0">
+              <button
+                type="button"
+                onClick={() => setShowPaymentModal(true)}
+                className="font-bold underline text-amber-800 hover:text-amber-950 shrink-0 cursor-pointer"
+              >
                 Unlock VIP
-              </Link>
+              </button>
             </div>
           )}
         </div>
@@ -461,6 +467,13 @@ export default function JhsPortalPage() {
 
       {/* Polite Welcome Toast Inviting First-Time Visitors to Tour */}
       <TourPromptToast onStartTour={() => setShowTour(true)} />
+
+      {/* VIP Payment Modal */}
+      <PaystackPaymentModal
+        isOpen={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        featureName="AcademicPrep VIP (JHS)"
+      />
     </div>
   );
 }

@@ -22,9 +22,11 @@ import {
   Sprout,
   Palette,
   FlaskConical,
-  X
+  X,
+  Crown
 } from 'lucide-react';
 import SubjectIcon from '@/components/SubjectIcon';
+import PaystackPaymentModal from '@/components/PaystackPaymentModal';
 
 export default function ShsPortalPage() {
   const router = useRouter();
@@ -33,6 +35,7 @@ export default function ShsPortalPage() {
   const [selectedElectiveGroup, setSelectedElectiveGroup] = useState<string>('general-arts');
   const [searchQuery, setSearchQuery] = useState('');
   const [mounted, setMounted] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -146,6 +149,23 @@ export default function ShsPortalPage() {
           ))}
         </div>
       </div>
+
+      {/* Free Trial Banner */}
+      {!student?.hasFullAccess && (
+        <div className="p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200/80 text-xs text-amber-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+          <div className="flex items-center gap-2">
+            <Crown className="w-4 h-4 text-amber-600 shrink-0" />
+            <span>Limited Free Access. Upgrade to VIP to unlock all SHS Core &amp; Elective lesson notes and quizzes.</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowPaymentModal(true)}
+            className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-black text-white font-medium text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto"
+          >
+            Unlock VIP (GH₵ 25)
+          </button>
+        </div>
+      )}
 
       {/* Progress & Search Bar */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -410,6 +430,13 @@ export default function ShsPortalPage() {
           </div>
         </div>
       </section>
+
+      {/* VIP Payment Modal */}
+      <PaystackPaymentModal
+        isOpen={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        featureName="AcademicPrep VIP (SHS)"
+      />
     </div>
   );
 }

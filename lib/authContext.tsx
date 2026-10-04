@@ -49,6 +49,7 @@ interface AuthContextType {
     password?: string;
     accessPinCode?: string;
   }) => Promise<{ success: boolean; error?: string }>;
+  refreshStudent: () => Promise<Student | null>;
   logoutStudent: () => Promise<void>;
   canAccessTopic: (topicId: string) => { allowed: boolean; reason?: string; topicsUsed: number; maxFreeTopics: number };
   getCompletedTopicsCount: () => number;
@@ -569,6 +570,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return result.pins;
   };
 
+  const refreshStudent = useCallback(async (): Promise<Student | null> => {
+    if (!getSessionToken()) return null;
+    const liveStudent = await fetchCurrentStudent();
+    if (liveStudent) {
+      setStudent(liveStudent);
+      writeLocalStorage(STORAGE_KEYS.CURRENT_STUDENT, liveStudent);
+    }
+    return liveStudent;
+  }, []);
+
   const refreshPins = useCallback(async (): Promise<void> => {
     const livePins = await fetchAccessPins();
 
@@ -625,6 +636,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         recordWeeklyExamAttempt,
         generatePinBatch,
         refreshPins,
+        refreshStudent,
         getAdminMetrics,
       }}
     >

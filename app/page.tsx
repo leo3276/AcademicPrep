@@ -26,6 +26,7 @@ import { BlogPost, BlogCategory, BLOG_CATEGORIES, INITIAL_BLOG_POSTS, fetchBlogP
 import PlatformTourGuide, { HOMEPAGE_TOUR_STEPS } from '@/components/PlatformTourGuide';
 import TourPromptToast from '@/components/TourPromptToast';
 import ApkDownloadModal from '@/components/ApkDownloadModal';
+import { OFFICIAL_APK_DOWNLOAD_URL, APK_FILE_SIZE } from '@/lib/apkConfig';
 
 export default function HomePage() {
   const { student } = useAuth();
@@ -544,22 +545,31 @@ export default function HomePage() {
 
               {/* Action Buttons */}
               <div className="pt-3 flex flex-wrap items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => setShowApkModal(true)}
+                <a
+                  href={OFFICIAL_APK_DOWNLOAD_URL}
+                  download="AcademicPrep-v1.0.0.apk"
                   className="px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all shadow-lg shadow-emerald-600/30 flex items-center gap-2 cursor-pointer"
                 >
                   <Download className="w-4 h-4" />
-                  <span>Download Android APK File</span>
+                  <span>Install APK Directly ({APK_FILE_SIZE})</span>
+                </a>
+
+                <button
+                  type="button"
+                  onClick={() => setShowApkModal(true)}
+                  className="px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-xs transition-all border border-white/20 flex items-center gap-2 cursor-pointer"
+                >
+                  <Smartphone className="w-4 h-4 text-emerald-400" />
+                  <span>Installation Guide</span>
                 </button>
 
                 <a
                   href="https://whatsapp.com/channel/0029VagMXcm4yltRps7S2b2x"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-xs transition-all border border-white/20 flex items-center gap-2 cursor-pointer"
+                  className="px-4 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white font-medium text-xs transition-all border border-white/10 flex items-center gap-1.5 cursor-pointer"
                 >
-                  <span>WhatsApp APK Channel</span>
+                  <span>WhatsApp Channel</span>
                   <ExternalLink className="w-3.5 h-3.5 opacity-70" />
                 </a>
               </div>
@@ -607,14 +617,14 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => setShowApkModal(true)}
-                  className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"
+                <a
+                  href={OFFICIAL_APK_DOWNLOAD_URL}
+                  download="AcademicPrep-v1.0.0.apk"
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer text-center"
                 >
                   <Download className="w-4 h-4" />
-                  <span>Get APK Download Details</span>
-                </button>
+                  <span>Install APK Directly ({APK_FILE_SIZE})</span>
+                </a>
               </div>
             </div>
           </div>

@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Smartphone, Download, CheckCircle2, ShieldCheck, X, ExternalLink, AlertCircle } from 'lucide-react';
+import { Download, CheckCircle2, ShieldCheck, X, ExternalLink, AlertCircle } from 'lucide-react';
+import { OFFICIAL_APK_DOWNLOAD_URL, APK_FILE_SIZE, APK_VERSION } from '@/lib/apkConfig';
 
 interface ApkDownloadModalProps {
   isOpen: boolean;
@@ -22,7 +23,7 @@ export default function ApkDownloadModal({ isOpen, onClose }: ApkDownloadModalPr
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+          className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
           aria-label="Close"
         >
           <X className="w-4 h-4" />
@@ -42,7 +43,7 @@ export default function ApkDownloadModal({ isOpen, onClose }: ApkDownloadModalPr
               <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">
                 Official Release
               </span>
-              <span className="text-[10px] font-mono text-slate-500">v1.0.0 (APK)</span>
+              <span className="text-[10px] font-mono text-slate-500">v{APK_VERSION} (APK)</span>
             </div>
             <h2 id="apk-modal-title" className="text-base sm:text-lg font-bold text-slate-900 mt-0.5">
               AcademicPrep for Android
@@ -70,7 +71,7 @@ export default function ApkDownloadModal({ isOpen, onClose }: ApkDownloadModalPr
             </div>
             <div className="flex items-start gap-2">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-              <span><b>Instant Direct Download:</b> No Google Play delays; install directly in under 1 minute.</span>
+              <span><b>Instant Direct Download:</b> No Google Play delays; installs directly in seconds.</span>
             </div>
           </div>
         </div>
@@ -79,27 +80,37 @@ export default function ApkDownloadModal({ isOpen, onClose }: ApkDownloadModalPr
         <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-[11px] flex items-start gap-2">
           <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
           <p>
-            When downloading on Android, tap <b>&quot;Download anyway&quot;</b> and allow <b>&quot;Install Unknown Apps&quot;</b> in your browser settings if prompted.
+            When downloading on Android, tap <b>&quot;Download anyway&quot;</b> and tap the downloaded file to install. If prompted, toggle <b>&quot;Allow from this source&quot;</b> in settings.
           </p>
         </div>
 
         {/* Actions */}
         <div className="space-y-2.5 pt-1">
+          {/* Direct Install APK Button */}
+          <a
+            href={OFFICIAL_APK_DOWNLOAD_URL}
+            download="AcademicPrep-v1.0.0.apk"
+            className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-md shadow-emerald-600/25 transition-all cursor-pointer text-center"
+          >
+            <Download className="w-4 h-4" />
+            <span>Install APK Now ({APK_FILE_SIZE})</span>
+          </a>
+
+          {/* Secondary: WhatsApp Channel */}
           <a
             href="https://whatsapp.com/channel/0029VagMXcm4yltRps7S2b2x"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 transition-all cursor-pointer"
+            className="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer text-center"
           >
-            <Download className="w-4 h-4" />
-            <span>Get APK on Official WhatsApp Channel</span>
-            <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+            <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
+            <span>Get via WhatsApp Channel</span>
           </a>
 
           <button
             type="button"
             onClick={onClose}
-            className="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-colors cursor-pointer text-center"
+            className="w-full py-2 px-4 text-slate-400 hover:text-slate-600 font-medium text-xs transition-colors cursor-pointer text-center"
           >
             Continue Browsing Website
           </button>
