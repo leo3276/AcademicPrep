@@ -5,11 +5,11 @@ export const dynamic = 'force-dynamic';
 
 export async function GET() {
   return NextResponse.json({
-    latestVersion: APK_VERSION || '1.0.5',
-    latestVersionCode: 5,
+    latestVersion: APK_VERSION || '1.0.6',
+    latestVersionCode: 6,
     fileSize: APK_FILE_SIZE || '82.5 MB',
     downloadUrl: OFFICIAL_APK_DOWNLOAD_URL,
-    releaseNotes: 'Modern minimalist UI redesign, decluttered home layout, and full blog photo & video admin privileges.',
+    releaseNotes: '30-day unrestricted free trial with live countdown, calming student-friendly color palette, pastel quick tools, and unlocked curriculum.',
     mandatory: false,
   });
 }
