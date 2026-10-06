@@ -271,55 +271,55 @@ export const JHS1_COMPUTING_DETAILED_NOTES: Record<string, DetailedNotes> = {
   },
   "jhs1-ict-t6-cpumemory": {
     "topicId": "jhs1-ict-t6-cpumemory",
-    "realWorldContext": "Inside every smartphone, tablet, ATM, and desktop computer sits a microscopic silicon chip called the Central Processing Unit (CPU). It acts as the command center and primary brain of the machine. Working hand-in-hand with lightning-fast primary memory (RAM and ROM), the CPU executes billions of complex mathematical and logical instructions every single second.",
+    "realWorldContext": "Technology and computing tools have transformed every aspect of community life in Ghana. From mobile money transactions at local kiosks and biometric registration with the Ghana Card to computerized school placement (CSSPS) and digital hospital records, ICT simplifies daily living, expands access to education, and powers Ghanaian commerce.",
     "objectives": [
-      "Identify the CPU as the central brain of the computer and examine its core internal components (ALU, CU, Registers).",
-      "Explain the Machine Cycle: Fetch, Decode, Execute, and Store.",
-      "Differentiate between primary memory (RAM vs ROM) in terms of volatility, speed, and function.",
-      "Understand the role of high-speed Cache memory in optimizing CPU performance."
+      "Identify the role of computing tools in local Ghanaian communities.",
+      "Explain the application of technology across Education, Healthcare, Banking, and Agriculture.",
+      "Analyze the benefits and common challenges of technology in our community.",
+      "Explore digital community tools such as POS machines, smartphones, and biometric scanners."
     ],
     "sections": [
       {
-        "title": "1. The CPU: Architecture and Components",
-        "content": "The Central Processing Unit (CPU), housed on the motherboard as a microprocessor, interprets and executes all software instructions, performs calculations, and coordinates all peripheral hardware components.\n\n• The Three Fundamental Internal Sub-Units of the CPU:\n\n1. The Arithmetic and Logic Unit (ALU):\n- The computational powerhouse of the processor.\n- Arithmetic Operations: Executes mathematical calculations: Addition (+), Subtraction (-), Multiplication (*), and Division (/),\n- Logic Operations: Evaluates logical conditions and comparisons: Equal to (=), Greater than (>), Less than (<), NOT EQUAL TO, AND, OR.\n\n2. The Control Unit (CU):\n- The master manager or supervisor of the entire computer system.\n- It extracts instructions from memory, decodes what actions are required, generates timing and control pulses, and directs the ALU, registers, and I/O devices.\n\n3. Registers:\n- Extremely high-speed, tiny internal temporary storage cells inside the CPU chip itself.\n- Hold active data, immediate operands, current instructions, and memory addresses during execution (e.g. Program Counter, Instruction Register, Accumulator).",
-        "keyTakeaway": "The CPU contains the ALU (calculations and logic), Control Unit (supervises and directs), and Registers (high-speed temporary data holders).",
-        "realWorldExample": "When a student calculates 45 × 12 on a computer calculator, the Control Unit fetches the numbers and directs the ALU to multiply them."
+        "title": "1. Computing and Technology in Everyday Life",
+        "content": "Technology tools—including desktop computers, laptops, smartphones, point-of-sale (POS) terminals, and biometric devices—are now central to modern Ghanaian society.\n\n• What is Technology in the Community?\nThe application of scientific knowledge and computer tools to solve everyday challenges in towns, villages, and schools across Ghana.\n\n• Common Technological Devices in Our Community:\n1. Smartphones & Tablets: Used by students, parents, and teachers for learning, communication, and paying utility bills.\n2. POS (Point of Sale) Terminals: Handheld devices used by Mobile Money (MoMo) vendors, fuel stations, and supermarkets for cashless card and digital transactions.\n3. Biometric Fingerprint & Facial Scanners: Used by the National Identification Authority (NIA) for Ghana Card registration, banks for customer verification, and the Electoral Commission for voting.\n4. Automated Teller Machines (ATMs): Computerized banking kiosks that dispense cash 24/7 without needing a bank teller.",
+        "keyTakeaway": "Technology tools like smartphones, POS terminals, and biometric scanners solve practical daily problems in our community.",
+        "realWorldExample": "Buying electricity credit at an ECG vendor kiosk using a computerized smart card reader instead of standing in long bank queues."
       },
       {
-        "title": "2. The Machine Cycle (Instruction Cycle)",
-        "content": "Every single instruction processed by the CPU is executed through a continuous four-step cycle known as the Machine Cycle:\n\n1. FETCH:\nThe Control Unit retrieves the next instruction from the system RAM and places it into an internal CPU register.\n\n2. DECODE:\nThe Control Unit translates the fetched instruction into binary electronic signals and determines what operations must be carried out.\n\n3. EXECUTE:\nThe Arithmetic and Logic Unit (ALU) performs the designated mathematical computation or logical comparison.\n\n4. STORE (Writeback):\nThe result generated by the execution step is written back to an internal register or system memory (RAM) for later display or storage.\n\n• CPU Clock Speed:\nThe speed of the machine cycle is regulated by an internal quartz crystal clock. Measured in Gigahertz (GHz)—a 3.2 GHz processor executes 3.2 billion machine cycles every second!",
-        "keyTakeaway": "The machine cycle consists of 4 steps: Fetch → Decode → Execute → Store.",
-        "realWorldExample": "Typing a letter 'A' on a keyboard causes the CPU to fetch the keycode, decode it to ASCII, execute the font mapping, and store it in RAM."
+        "title": "2. Technology in Key Sectors: Education and Healthcare",
+        "content": "• 1. Education & Schooling:\n- Computerized School Selection & Placement System (CSSPS): WAEC and the Ministry of Education use computer systems to place thousands of BECE graduates into Senior High Schools automatically based on merit and choice.\n- E-Learning & Digital Libraries: Students access video lessons, past questions, and digital textbooks on tablets and smartphones.\n- School Management Systems: Teachers record terminal marks, generate report cards, and track attendance electronically.\n\n• 2. Healthcare & Hospitals:\n- Electronic Health Records (EHR): Hospitals in Accra, Kumasi, and district capitals store patient medical records digitally, so doctors can retrieve medical histories in seconds.\n- Computerized Medical Scans: Ultrasound, X-ray, and CT scan machines allow doctors to view inside the human body to diagnose illnesses accurately.\n- Health Insurance & Drug Tracking: The National Health Insurance Scheme (NHIS) uses biometric verification on mobile phones for instant renewal.",
+        "keyTakeaway": "Education uses CSSPS and digital learning; healthcare relies on electronic medical records and computerized diagnostic scans.",
+        "realWorldExample": "Checking your SHS placement status by sending an SMS index code or checking online on the CSSPS portal."
       },
       {
-        "title": "3. Primary Memory: RAM vs ROM",
-        "content": "Primary memory (main memory) communicates directly with the CPU via high-speed buses:\n\n• 1. RAM (Random Access Memory):\n- Volatile (Temporary): Its contents evaporate and are completely lost when electrical power is switched off.\n- Read and Write Memory: The CPU can both read data from RAM and write new data into RAM effortlessly.\n- Function: Acts as the immediate working desk for the computer, holding the active operating system kernel, open programs, and unsaved work.\n- Capacity: Measured in Gigabytes (e.g. 4 GB, 8 GB, 16 GB).\n\n• 2. ROM (Read-Only Memory):\n- Non-Volatile (Permanent): Retains its contents indefinitely even when the computer is completely unplugged.\n- Read Only: Data is permanently written during manufacturing and cannot be modified by ordinary users.\n- Function: Holds the computer's firmware—the BIOS (Basic Input/Output System) and the bootstrap loader instructions that wake up hardware when turned on.\n- Capacity: Typically small (a few Megabytes).",
-        "keyTakeaway": "RAM is volatile read/write working memory; ROM is non-volatile permanent startup storage holding BIOS.",
-        "realWorldExample": "If power cuts while typing an essay before saving, your work disappears because it was held in volatile RAM."
+        "title": "3. Technology in Banking, Commerce, and Agriculture",
+        "content": "• 1. Banking and Commerce:\n- Mobile Money (MoMo): Revolutionized payments in Ghana, allowing anyone with a phone to send money, receive wages, pay school fees, and buy food without visiting a physical bank branch.\n- Online Shopping: Ghanaians buy clothing, books, and farm produce on e-commerce platforms and pay via digital wallets.\n\n• 2. Agriculture and Farming:\n- Weather Forecasting: Cocoa and maize farmers receive SMS alerts about upcoming rainfall, helping them decide the right day to plant seeds or apply fertilizer.\n- Market Pricing Apps: Farmers check live crop prices in regional markets (e.g. Techiman, Agbogbloshie) to ensure middle-traders pay fair market rates.\n- Drones and Smart Irrigation: Agricultural drones spray pests on large farms and sensors monitor soil moisture levels.",
+        "keyTakeaway": "MoMo simplifies commerce and payments; SMS weather alerts and price tracking apps help Ghanaian farmers increase crop yields.",
+        "realWorldExample": "A tomato farmer in Akomadan checking vegetable prices in Accra via mobile phone before selling to traders."
       },
       {
-        "title": "4. Cache Memory and System Buses",
-        "content": "• Cache Memory:\n- An ultra-fast buffer of static RAM (SRAM) built directly onto the CPU chip itself (L1, L2, L3 cache).\n- Operating Speed: Much faster than regular RAM.\n- Purpose: Stores frequently used instructions and data so the ultra-fast CPU does not have to wait for slower system RAM.\n\n• The System Bus:\nA collection of parallel high-speed copper traces connecting the CPU to memory and peripherals:\n- Data Bus: Carries the actual binary data between CPU and memory.\n- Address Bus: Carries the physical memory address where data is located.\n- Control Bus: Transmits synchronization, read, and write command signals.",
-        "keyTakeaway": "Cache memory speeds up processing by holding frequently needed data right on the CPU chip.",
-        "realWorldExample": "Cache memory works like keeping your favorite pen in your pocket rather than walking to your locker every time you need to write."
+        "title": "4. Benefits, Challenges, and Safe Community Use",
+        "content": "• Major Benefits of Community Technology:\n1. Blazing Speed: Tasks that took days of travel now take seconds.\n2. Accuracy & Reliability: Reduces human calculation errors and lost paperwork.\n3. Better Communication: Connects family members across Ghana and the diaspora instantly.\n\n• Challenges Facing Technology in Ghanaian Communities:\n1. Unstable Power Supply (Dumsor): Frequent blackouts disrupt computer operations and damage unprotected equipment.\n2. High Internet Data Costs: Many rural students and schools struggle to afford expensive monthly internet packages.\n3. Digital Literacy Gap: Older community members may struggle to operate touchscreen ATMs or smartphone apps without assistance.\n4. Electronic Waste (E-waste): Old, broken electronics dumped in landfills (e.g., Agbogbloshie) release toxic chemicals if not recycled safely.",
+        "keyTakeaway": "Technology brings speed and convenience, but unstable electricity, data costs, and e-waste must be managed responsibly.",
+        "realWorldExample": "Schools install solar panels or UPS battery backups in computer labs to keep computers running during power outages."
       }
     ],
     "commonMistakes": [
-      "Confusing the roles of ALU and Control Unit (ALU calculates; CU directs and coordinates).",
-      "Believing that RAM stores files permanently (RAM is volatile and loses everything on power cut).",
-      "Thinking ROM can be upgraded by downloading more memory from the internet.",
-      "Confusing primary memory (RAM) with secondary storage (Hard disk/SSD)."
+      "Thinking technology only refers to expensive desktop computers (smartphones, ATMs, and POS machines are all technology).",
+      "Believing that technology removes the need for human learning (computers need skilled humans to operate and instruct them).",
+      "Assuming Mobile Money (MoMo) works without computer networks (MoMo relies heavily on telecommunications server computers).",
+      "Confusing CSSPS with general social media (CSSPS is a dedicated computerized placement system for BECE graduates)."
     ],
     "beceExamTips": [
-      "In BECE Section A, remember: ALU = Arithmetic and Logic Unit; CU = Control Unit; RAM = Random Access Memory; ROM = Read Only Memory.",
-      "Clearly explain volatility: Volatile memory (RAM) loses contents when power is off; Non-volatile memory (ROM) keeps data permanently.",
-      "List the four steps of the Machine Cycle in order: Fetch → Decode → Execute → Store."
+      "In BECE Section B, give practical Ghanaian examples: mention Mobile Money (MoMo), Ghana Card biometric registration, and CSSPS school placement.",
+      "State 2 ways technology assists Ghanaian farmers: 1. Weather forecasting alerts via SMS; 2. Checking market prices of crops on mobile phones.",
+      "List 2 challenges of technology in our community: 1. Erratic power supply (dumsor); 2. High cost of internet data."
     ],
     "summaryChecklist": [
-      "Understand the roles of the ALU, Control Unit, and Registers.",
-      "Can explain the 4 steps of the Machine Cycle (Fetch, Decode, Execute, Store).",
-      "Can contrast RAM and ROM across volatility, read/write ability, and purpose.",
-      "Know the role of Cache memory and system buses."
+      "Can explain how computing tools are used in Ghanaian communities.",
+      "Know applications in education (CSSPS), healthcare (digital records), and banking (MoMo).",
+      "Understand how mobile technology supports agriculture and market trade.",
+      "Can state benefits and challenges (dumsor, data costs, e-waste) of community technology."
     ]
   },
   "jhs1-ict-t7-storagedevices": {
@@ -589,161 +589,164 @@ export const JHS1_COMPUTING_DETAILED_NOTES: Record<string, DetailedNotes> = {
   },
   "jhs1-ict-t12-internetbasics": {
     "topicId": "jhs1-ict-t12-internetbasics",
-    "realWorldContext": "The Internet is the defining communication marvel of the 21st century. It links billions of computers, smartphones, and servers across continents via undersea fiber optic cables and satellite links. Whether doing homework research, checking exam results on the WAEC portal, or reading news on GhanaWeb, understanding web browsers, URLs, and search engines is fundamental for modern digital literacy.",
+    "realWorldContext": "Whether a teacher is calculating end-of-term student scores, an accountant is preparing a company payroll, or a supermarket manager is balancing daily sales, electronic spreadsheets make calculation effortless. Instead of spending hours adding numbers on paper, software like Microsoft Excel can calculate totals, averages, and grades instantly for thousands of records.",
     "objectives": [
-      "Define the Internet and distinguish it from the World Wide Web (WWW).",
-      "Contrast Web Browsers with Search Engines.",
-      "Deconstruct the architecture of a Uniform Resource Locator (URL).",
-      "Identify common Top-Level Domain extensions (.com, .edu, .gov, .org) and country codes (.gh, .uk)."
+      "Define an electronic spreadsheet and identify common spreadsheet applications (Microsoft Excel, Google Sheets).",
+      "Navigate the spreadsheet window: Title Bar, Ribbon, Columns, Rows, Cells, and the Formula Bar.",
+      "Understand cell addresses / cell references (e.g. A1, B5, D10).",
+      "Distinguish between Labels (text), Values (numbers), and Formulas (which always start with an equal sign '=')."
     ],
     "sections": [
       {
-        "title": "1. What is the Internet? Internet vs The World Wide Web",
-        "content": "• The Internet (International Network):\n- A massive global decentralized network of millions of interconnected computer networks communicating through standardized protocol suites (TCP/IP - Transmission Control Protocol / Internet Protocol).\n- The physical infrastructure: fiber optic undersea cables, satellite links, cellular cell towers, and routers that connect the world.\n\n• The World Wide Web (WWW / Web):\n- An information-sharing service that runs on top of the physical Internet infrastructure.\n- Consists of billions of interlinked multimedia web pages, images, and audio files written in HTML (Hypertext Markup Language) and connected via hyperlinks.\n- Invented in 1989 by British computer scientist Sir Tim Berners-Lee at CERN.\n\n• Analogy:\nThe Internet is the physical network of paved highways and tracks; the World Wide Web is the cars, trucks, and cargo traveling upon those highways.",
-        "keyTakeaway": "The Internet is the global physical network infrastructure; the World Wide Web (WWW) is the multimedia information service running on it.",
-        "realWorldExample": "Undersea fiber optic cables landing at the beach in Osu connect Ghana's telecom networks to the global Internet."
+        "title": "1. What is an Electronic Spreadsheet?",
+        "content": "An Electronic Spreadsheet is an application software program designed to store, organize, calculate, analyze, and present numerical data in a grid of rows and columns.\n\n• Why Spreadsheets are Powerful:\n- Automatic Calculation: When you change a number, all calculations (sums, averages) update automatically!\n- Neat Organization: Information is arranged cleanly in tables.\n- Visual Charts: Spreadsheets can turn boring tables of numbers into colorful bar charts and pie charts.\n\n• Common Spreadsheet Applications:\n- Microsoft Excel: The most popular spreadsheet program for Windows PCs and laptops.\n- Google Sheets: A free, web-based spreadsheet that saves work to Google Drive.\n- Apple Numbers: Spreadsheet application for Mac and iPad.\n- LibreOffice Calc: Free open-source spreadsheet software.",
+        "keyTakeaway": "An electronic spreadsheet organizes and calculates numerical data in rows and columns; Microsoft Excel is the standard example.",
+        "realWorldExample": "A JHS 1 class teacher using Microsoft Excel to calculate total marks, percentages, and class ranks for 40 students in seconds."
       },
       {
-        "title": "2. Web Browsers vs Search Engines",
-        "content": "Students frequently confuse these two distinct internet software concepts:\n\n• 1. Web Browser (Client Application):\n- An application software installed on a computer or phone used to locate, retrieve, interpret, and visually display web pages from the Internet.\n- Translates HTML code into human-readable text, graphics, and video.\n- Examples: Google Chrome, Mozilla Firefox, Microsoft Edge, Apple Safari, Opera.\n\n• 2. Search Engine (Web-Based Information Database):\n- A website program accessed through a browser that searches an immense indexed database of web pages based on keywords entered by the user, returning a list of relevant hyperlinks.\n- Examples: Google Search, Microsoft Bing, Yahoo Search, DuckDuckGo.\n\n• Key Distinction:\nYou must first launch a WEB BROWSER (e.g. Chrome) before you can visit a SEARCH ENGINE (e.g. Google.com) to search for information!",
-        "keyTakeaway": "A Web Browser is software used to view websites (Chrome, Edge); a Search Engine is an online tool used to find websites (Google, Bing).",
-        "realWorldExample": "Opening Mozilla Firefox on a lab PC (Browser) and typing 'Ghana cocoa production' into Google (Search Engine)."
+        "title": "2. Anatomy of the Spreadsheet Window",
+        "content": "A spreadsheet screen resembles a giant sheet of math grid paper:\n\n• Key Components of Microsoft Excel:\n1. Columns (Vertical):\n- Run vertically from top to bottom of the screen.\n- Identified by Alphabetical Letters (A, B, C, D ... Z, AA, AB...).\n\n2. Rows (Horizontal):\n- Run horizontally from left to right across the screen.\n- Identified by Numbers (1, 2, 3, 4, 5...).\n\n3. Cell:\n- The individual rectangular box formed at the intersection of a column and a row.\n- The basic unit where data, text, or numbers are typed.\n\n4. Active Cell:\n- The currently selected cell highlighted with a bold dark outline.\n- When you type on the keyboard, data enters into the active cell.\n\n5. Name Box:\n- Displays the cell address of the active cell (e.g., shows 'B4' when column B, row 4 is selected).\n\n6. Formula Bar:\n- Located above the grid; shows the contents or mathematical formula of the selected active cell.",
+        "keyTakeaway": "Columns are identified by letters (A, B, C); Rows are identified by numbers (1, 2, 3); their intersection is a Cell.",
+        "realWorldExample": "Clicking the box under Column D and along Row 5 selects cell D5, which appears in the Name Box."
       },
       {
-        "title": "3. The Anatomy of a Web Address (URL)",
-        "content": "A Uniform Resource Locator (URL) is the complete, unique digital address assigned to a specific web page or file on the Internet.\n\n• Breakdown of a URL:\nExample: https://www.waecgh.org/results/bece.html\n\n1. Protocol ('https://'):\nHypertext Transfer Protocol Secure. Dictates how data is encrypted and transferred between browser and server.\n\n2. Subdomain & Host ('www'):\nIndicates World Wide Web server service.\n\n3. Domain Name ('waecgh.org'):\nThe registered unique identifier of the organization's web server.\n\n4. Directory / Folder Path ('/results/'):\nThe specific folder on the server where the file is stored.\n\n5. Resource Filename ('bece.html'):\nThe exact web page document being opened.",
-        "keyTakeaway": "A URL consists of Protocol (https://) → Domain Name (waecgh.org) → Directory Path (/results/) → Filename (bece.html).",
-        "realWorldExample": "In 'https://www.ucc.edu.gh', 'https' is the protocol, 'ucc.edu.gh' is the domain, and '.gh' is the country code."
+        "title": "3. Cell Addresses and Navigating Worksheets",
+        "content": "Every single cell in a spreadsheet has its own unique coordinate called a Cell Address or Cell Reference.\n\n• How to Write a Cell Address:\n- Always write the Column Letter FIRST, followed by the Row Number SECOND.\n- Example: Column B intersecting Row 4 produces cell address B4.\n- Example: Column A intersecting Row 1 produces cell address A1 (the very first top-left cell).\n- Common Exam Trap: Never write '4B' or '1A'—letters always come before numbers!\n\n• Workbook vs. Worksheet:\n- Workbook: The complete Excel file saved on your computer (e.g., 'Term1_Grades.xlsx'). A workbook can contain multiple sheets.\n- Worksheet (Spreadsheet): A single page or tab within a workbook (e.g., 'Sheet1', 'Sheet2').",
+        "keyTakeaway": "A cell address always pairs the Column Letter first with the Row Number second (e.g., A1, C8, F12).",
+        "realWorldExample": "In an exam mark sheet, Kofi's Computing score is in cell B2, his Math score is in C2, and his English score is in D2."
       },
       {
-        "title": "4. Domain Name Extensions and Hyperlinks",
-        "content": "• Top-Level Domains (TLDs) indicate the organizational nature of a website:\n- .com: Commercial businesses and corporate enterprises (e.g. amazon.com).\n- .edu / .ac: Accredited educational institutions and universities (e.g. ug.edu.gh).\n- .gov: Government ministries, departments, and official agencies (e.g. ges.gov.gh).\n- .org: Non-profit organizations, charities, and NGOs (e.g. unicef.org).\n- .net: Network infrastructure providers.\n\n• Country-Code Top-Level Domains (ccTLDs):\nTwo-letter extensions designating geographic sovereign nations:\n- .gh = Ghana\n- .ng = Nigeria\n- .uk = United Kingdom\n- .za = South Africa\n- .ca = Canada\n\n• Hyperlinks:\nUnderlined text (usually blue) or images that, when clicked, immediately transport the web browser to another web page or download a file.",
-        "keyTakeaway": ".com = commercial; .edu = educational; .gov = government; .org = non-profit; .gh = Ghana.",
-        "realWorldExample": "The official website for the Ghana Education Service is 'ges.gov.gh' (.gov indicates a government agency, .gh indicates Ghana)."
+        "title": "4. Data Types and Writing Simple Formulas",
+        "content": "A spreadsheet recognizes three fundamental types of data entered into cells:\n\n• 1. Labels (Text):\n- Words, names, or titles that describe data (e.g., 'Student Name', 'Total', 'Ghana').\n- Default Alignment: Text labels automatically align to the LEFT side of the cell.\n- Cannot be used directly in mathematical calculations.\n\n• 2. Values (Numbers):\n- Digits and amounts used for math calculations (e.g., 75, 100, 450.50).\n- Default Alignment: Numerical values automatically align to the RIGHT side of the cell.\n\n• 3. Formulas (Calculations):\n- Mathematical instructions that tell Excel how to calculate numbers.\n- THE GOLDEN RULE OF SPREADSHEETS: Every formula MUST ALWAYS begin with an EQUAL SIGN (=)!\n- If you type 'A1 + B1' without the '=', Excel treats it as plain text label instead of doing math.\n\n• Basic Formula Arithmetic Operators:\n- Addition: =A1 + B1\n- Subtraction: =A1 - B1\n- Multiplication: =A1 * B1 (uses the asterisk symbol '* ')\n- Division: =A1 / B1 (uses the forward slash symbol '/')",
+        "keyTakeaway": "Labels are text (left-aligned); Values are numbers (right-aligned); Formulas MUST start with an equal sign (=).",
+        "realWorldExample": "To add 50 in cell A1 and 30 in cell B1, typing '=A1 + B1' in cell C1 displays the result 80 instantly."
       }
     ],
     "commonMistakes": [
-      "Using the terms 'Internet' and 'World Wide Web' as exact synonyms (the Internet is the hardware network; the Web is the information service).",
-      "Calling Google Chrome a search engine (Chrome is a browser; Google.com is the search engine).",
-      "Believing that an email address and a URL are the same thing (email addresses have '@'; URLs start with 'http://' or 'www').",
-      "Confusing domain extensions: e.g. thinking .gov is for private commercial shops."
+      "Writing row numbers before column letters in a cell address (writing '3C' instead of 'C3').",
+      "Forgetting the equal sign (=) at the beginning of a formula (typing 'A1+B1' displays text, not 80).",
+      "Confusing a workbook (the entire file) with a worksheet (a single sheet inside the file).",
+      "Using the letter 'x' for multiplication instead of the computer asterisk symbol (*)."
     ],
     "beceExamTips": [
-      "In BECE Section A, identify domain types: .gov (Government), .edu (Educational), .com (Commercial), .org (Non-profit).",
-      "Name 3 web browsers: Google Chrome, Mozilla Firefox, Microsoft Edge.",
-      "Deconstruct a sample URL: Protocol (http/https), Domain Name (host), and Filename."
+      "In BECE Section A: All formulas in Microsoft Excel MUST start with the '=' (equal sign).",
+      "The intersection of a row and a column is called a 'Cell'.",
+      "Identify cell addresses accurately: Column letter first, then row number (e.g., E10).",
+      "Remember default alignments: Text (labels) align LEFT; Numbers (values) align RIGHT."
     ],
     "summaryChecklist": [
-      "Can define the Internet and contrast it with the World Wide Web (WWW).",
-      "Know the difference between Web Browsers and Search Engines.",
-      "Understand the structural components of a URL.",
-      "Can identify common domain extensions (.com, .edu, .gov, .gh)."
+      "Can define an electronic spreadsheet and name 2 examples (Excel, Google Sheets).",
+      "Understand the roles of Columns (letters), Rows (numbers), and Cells.",
+      "Can identify and write valid cell addresses (e.g., B4, A1).",
+      "Know that formulas must begin with '=' and understand basic math operators (+, -, *, /)."
     ]
   },
   "jhs1-ict-t13-email": {
     "topicId": "jhs1-ict-t13-email",
-    "realWorldContext": "Sending a physical letter via postal mail (snail mail) from Accra to Tamale takes days, requires paper, envelopes, and postage stamps, and can easily get lost. In contrast, Electronic Mail (Email) delivers messages, photographs, spreadsheets, and PDF documents across the globe in milliseconds for virtually zero cost. Mastering email communication, data attachments, and Netiquette is an essential 21st-century skill.",
+    "realWorldContext": "In a school computer laboratory with 30 computers, buying 30 individual printers would be extremely expensive. By linking all 30 computers together into a computer network, all students can share a single printer and access learning materials from the teacher's computer. Networks allow devices to share resources, transfer files instantly, and access the Internet.",
     "objectives": [
-      "Define electronic mail (email) and compare its merits with traditional postal mail.",
-      "Analyze the structure of a valid email address.",
-      "Explain the key fields in an email composition window: To, CC, BCC, Subject, and Attachments.",
-      "Demonstrate proper email etiquette (Netiquette) in digital communications."
+      "Define a computer network and identify its main advantages in schools and businesses.",
+      "Distinguish between Local Area Networks (LAN) and Wide Area Networks (WAN).",
+      "Describe common network topologies: Star Topology, Bus Topology, and Ring Topology.",
+      "Identify basic network hardware: Network cables, Switches/Hubs, and Wireless routers."
     ],
     "sections": [
       {
-        "title": "1. What is Email? Email vs Traditional Postal Mail",
-        "content": "Electronic Mail (Email) is a digital telecommunication method of composing, sending, storing, and receiving messages over the Internet asynchronously.\n\n• Advantages of Email over Traditional Postal Mail ('Snail Mail'):\n1. Blazing Speed: Messages transmit across the globe in seconds, whereas physical post requires days or weeks.\n2. Low Cost: Sending emails incurs zero postage stamp fees, regardless of geographical distance.\n3. File Attachments: Users can transmit multimedia files (PDF certificates, high-resolution photos, spreadsheets) alongside the text.\n4. Mass Messaging: A single email can be transmitted to hundreds of recipients simultaneously with one click.\n5. Eco-Friendly: Saves paper, reducing deforestation and carbon footprint.\n6. Permanent Digital Archive: Sent and received messages are indexed and searchable for years.",
-        "keyTakeaway": "Email is instantaneous, virtually free, supports multimedia attachments, and reaches global recipients in seconds.",
-        "realWorldExample": "A student receives their SHS placement notification via digital email notification within seconds of release."
+        "title": "1. What is a Computer Network? Benefits of Networking",
+        "content": "A Computer Network is a collection of two or more computers and computing devices connected together using cables or wireless signals to share resources and communicate.\n\n• Why Do We Network Computers?\n1. Sharing Hardware Resources: Instead of buying a separate printer or scanner for every computer, multiple users share one central network printer, saving schools thousands of cedis.\n2. Sharing Software and Files: Teachers can place study notes in a shared folder on the main computer, and every student in the lab can open them without needing a USB drive.\n3. Internet Sharing: A single high-speed broadband internet subscription can be shared across all school laptops simultaneously.\n4. Fast Communication: Network users can send instant messages, emails, and notices to one another across classrooms or offices.",
+        "keyTakeaway": "A network links computers to share expensive hardware (printers), files, software, and internet connections.",
+        "realWorldExample": "In a school ICT lab, 25 student computers send their exam printouts to one shared laser printer."
       },
       {
-        "title": "2. Structure of an Email Address",
-        "content": "Every email address must follow a strict, standardized syntax:\n\n• Example: kwame.mensah@ges.gov.gh\n\n1. Username ('kwame.mensah'):\nThe unique identifier chosen by the individual or assigned by the organization.\n\n2. The '@' Symbol ('At'):\nA mandatory separator symbol connecting the username to the mail server domain.\n\n3. Mail Server Domain ('ges.gov.gh'):\nThe registered domain name of the email service provider hosting the mailbox (e.g. gmail.com, yahoo.com, outlook.com, or enterprise domains like ges.gov.gh).\n\n• Cardinal Syntax Rule:\nAn email address can NEVER contain blank spaces! (e.g. 'kwame mensah@gmail.com' is invalid and will fail to deliver).",
-        "keyTakeaway": "Structure: Username + @ + Domain Name. An email address must NEVER contain spaces.",
-        "realWorldExample": "In 'adjoa2026@gmail.com', 'adjoa2026' is the username, '@' is the separator, and 'gmail.com' is the mail service provider."
+        "title": "2. Types of Networks by Geographic Scope: LAN vs WAN",
+        "content": "Networks are classified according to the physical distance they cover:\n\n• 1. Local Area Network (LAN):\n- Covers a small, limited geographical area, such as a single classroom, a school computer laboratory, a home, or one office building.\n- Speed: Very high data transfer speeds with low error rates.\n- Ownership: Privately owned and controlled by the school or organization.\n- Connection: Connected using Ethernet cables (twisted pair) or local Wi-Fi (WLAN).\n\n• 2. Wide Area Network (WAN):\n- Spans a vast geographical distance across entire cities, regions, countries, or the whole world.\n- Uses telecommunications satellites, microwave links, and undersea fiber optic cables.\n- The Internet is the supreme, largest Wide Area Network in human history!",
+        "keyTakeaway": "LAN covers a single room or school; WAN spans whole regions, countries, or the globe (the Internet is the ultimate WAN).",
+        "realWorldExample": "The computers in your school lab form a LAN; the network connecting your school to WAEC servers across Ghana forms a WAN."
       },
       {
-        "title": "3. Anatomy of an Email Composition Window",
-        "content": "When drafting an email, specific fields control message routing:\n\n• 'To' Field:\nThe primary email address(es) of the intended direct recipient(s).\n\n• 'CC' (Carbon Copy) Field:\nSecondary recipients who receive a duplicate copy for informational transparency. Every recipient in the 'To' and 'CC' fields can see each other's email addresses.\n\n• 'BCC' (Blind Carbon Copy) Field (Crucial BECE Distinction!):\nSecret recipients who receive a copy of the email WITHOUT their email addresses being visible to anyone in the 'To' or 'CC' fields. Protects recipient privacy when sending newsletters to hundreds of people.\n\n• 'Subject' Line:\nA short, concise summary stating the specific purpose of the email (e.g. 'Application for Admission' or 'BECE Mock Exam Timetable'). An email should never be sent with a blank subject line!\n\n• 'Attachment' (Paperclip Icon):\nA tool that allows uploading computer files (documents, images, audio) stored on your hard drive to accompany the email message.",
-        "keyTakeaway": "To = main recipient; CC = visible copy; BCC = secret hidden copy for privacy; Attachment = uploaded files.",
-        "realWorldExample": "A school sending newsletters to 500 parents uses BCC so parents' private email addresses are not exposed to strangers."
+        "title": "3. Network Topologies: Star, Bus, and Ring",
+        "content": "Network Topology refers to the physical or geometric arrangement of computers and cables in a network:\n\n• 1. Star Topology (Most Popular in Modern Labs):\n- Every computer is connected individually to a central connection device called a Switch or Hub.\n- Advantage: If one computer cable breaks or gets unplugged, only that single computer goes offline; all other computers continue working normally!\n- Disadvantage: If the central switch/hub breaks, the entire network fails.\n\n• 2. Bus Topology:\n- All computers are connected in a line along a single shared central backbone cable with terminators at both ends.\n- Advantage: Simple to install and requires the least amount of cabling.\n- Disadvantage: If the main backbone cable breaks anywhere, the entire network shuts down immediately.\n\n• 3. Ring Topology:\n- Computers are connected in a closed circular loop. Data travels in one direction from computer to computer around the ring.",
+        "keyTakeaway": "Star topology connects each device to a central switch (most reliable); Bus uses a single central backbone cable.",
+        "realWorldExample": "Modern school ICT laboratories almost always use a Star topology so that one student's disconnected cable does not disrupt the class."
       },
       {
-        "title": "4. Netiquette: Professional Digital Etiquette",
-        "content": "Netiquette (Network Etiquette) is the code of polite, respectful, and professional conduct observed when communicating digitally:\n\n1. Never Type in All Capital Letters:\nTyping in all caps (e.g. 'SUBMIT YOUR PROJECT NOW!') is interpreted in digital culture as SHOUTING in anger. Use standard sentence capitalization.\n\n2. Clear Subject Line:\nAlways state a precise subject line so the recipient knows the message context before opening.\n\n3. Professional Salutation and Sign-Off:\nBegin with 'Dear Mr. Mensah,' or 'Hello Class,' and end courteously with 'Best regards,' followed by your full name.\n\n4. Avoid Forwarding Spam or Unverified Hoaxes:\nNever forward chain letters, fraudulent lottery claims, or unconfirmed political rumors.\n\n5. Proofread Before Sending:\nCheck grammar and tone, and ensure attachments are attached before clicking Send!",
-        "keyTakeaway": "Netiquette prohibits typing in all caps (shouting), mandates clear subject lines, and demands respectful language.",
-        "realWorldExample": "Writing 'Dear Sir, Please find attached my homework assignment. Respectfully, Ama' observes proper Netiquette."
+        "title": "4. Essential Network Hardware Components",
+        "content": "To build a functional computer network, specific hardware devices are required:\n\n• 1. Network Interface Card (NIC):\n- An internal chip or expansion card in every computer and phone that connects it to the network.\n\n• 2. Transmission Media (Cables & Wireless):\n- Twisted Pair (Ethernet / RJ-45) Cables: Blue or grey cables that plug into computer network ports.\n- Wi-Fi (Wireless): Connects laptops and smartphones using radio signals without physical cables.\n\n• 3. Switch / Hub:\n- The central junction box in a Star network that receives data packets and forwards them to the correct computer.\n\n• 4. Router:\n- An intelligent device that connects a local network (LAN) to an external network like the Internet.",
+        "keyTakeaway": "Key network hardware includes the NIC (network card), Ethernet cables, a central Switch/Hub, and a Router.",
+        "realWorldExample": "The Wi-Fi router in the school headteacher's office transmits wireless signals to teachers' laptops throughout the administration block."
       }
     ],
     "commonMistakes": [
-      "Typing blank spaces inside an email address (email addresses cannot have spaces).",
-      "Confusing CC (recipients see each other) with BCC (recipient addresses are hidden).",
-      "Writing the entire body message inside the short Subject line.",
-      "Typing emails entirely in capital letters (violates Netiquette by simulating shouting)."
+      "Confusing LAN with WAN (LAN is a single room/school; WAN connects across cities and countries).",
+      "Thinking that if one computer fails in a Star topology, the whole network stops (only the failed computer is affected).",
+      "Believing a network requires expensive servers to be useful (simple peer-to-peer sharing between two laptops is also a network).",
+      "Confusing a router with a printer (a router directs network data; a printer produces paper output)."
     ],
     "beceExamTips": [
-      "In BECE Section A, questions frequently ask for the meaning of CC ('Carbon Copy') and BCC ('Blind Carbon Copy').",
-      "Identify the symbol separating username from domain: the '@' (At) symbol.",
-      "State 2 advantages of email over postal mail: 1. Instantaneous speed, 2. No cost of postage stamps, 3. Supports digital attachments."
+      "In BECE Section A: LAN stands for 'Local Area Network'; WAN stands for 'Wide Area Network'.",
+      "Name the topology where all devices connect to a central hub/switch: Star Topology.",
+      "List 2 benefits of a school network: 1. Sharing hardware like printers; 2. Sharing files and internet access.",
+      "Identify the global network that is the largest WAN: The Internet."
     ],
     "summaryChecklist": [
-      "Can define email and state 4 advantages over traditional postal mail.",
-      "Know the syntax of an email address (Username, @, Domain).",
-      "Understand the difference between To, CC, BCC, and Attachments.",
-      "Can explain core Netiquette rules (no all-caps shouting, clear subject lines)."
+      "Can define a computer network and state 3 reasons why networks are useful.",
+      "Understand the difference between LAN (local) and WAN (wide area).",
+      "Can describe and compare Star, Bus, and Ring topologies.",
+      "Know basic network equipment: Ethernet cables, Switch/Hub, and Router."
     ]
   },
   "jhs1-ict-t14-cybersecurity": {
     "topicId": "jhs1-ict-t14-cybersecurity",
-    "realWorldContext": "As Ghana's economy becomes digitized through mobile money, online banking, social media, and digital school portals, cybercrime has emerged as a major national threat. Malicious software (malware), phishing scams, and identity theft cost individuals and businesses millions of cedis annually. Practicing cybersecurity, recognizing fraudulent scams, and safeguarding personal data protect our digital lives.",
+    "realWorldContext": "The Internet connects millions of people and devices worldwide, making learning, research, and communication accessible anywhere. However, just like walking on a busy city street, navigating the internet requires safety awareness. Knowing how to browse websites safely, spot fake messages (phishing scams), and protect your personal information ensures a secure digital life.",
     "objectives": [
-      "Define cybersecurity and analyze major types of malware: Viruses, Worms, Trojan Horses, Spyware, and Ransomware.",
-      "Identify social engineering and phishing tactics used by online scammers.",
-      "Formulate robust data protection habits: Strong passwords, two-factor authentication, firewalls, and regular backups.",
-      "Understand the legal and moral consequences of cyber fraud (sakawa) in Ghana."
+      "Define the Internet and understand the World Wide Web (WWW).",
+      "Differentiate between Web Browsers and Search Engines with clear examples.",
+      "Explain the anatomy of a Web Address (URL) and common domain extensions (.gh, .gov, .edu).",
+      "Practice safe digital living: Strong passwords, avoiding Mobile Money scams, and respecting Netiquette."
     ],
     "sections": [
       {
-        "title": "1. What is Cybersecurity? The Threat of Malware",
-        "content": "Cybersecurity is the discipline and practice of defending computer networks, devices, software programs, and electronic data from unauthorized access, digital attacks, theft, or damage.\n\n• What is Malware? (Malicious Software):\nAny software intentionally designed to cause damage to a computer, server, client, or computer network:\n\n1. Computer Virus:\n- A malicious program that attaches itself to legitimate host files or executable software. It activates and replicates only when the infected host program is executed by the user, corrupting files and degrading system performance.\n\n2. Computer Worm:\n- A standalone self-replicating malware program that spreads automatically across local networks and the Internet without needing to attach to a host file. Consumes network bandwidth and crashes servers.\n\n3. Trojan Horse:\n- Malware disguised as a harmless, desirable software application (e.g. a free game, screensaver, or media player). Once downloaded and installed, it secretly opens backdoors allowing hackers to access the victim's computer.\n\n4. Spyware & Keyloggers:\n- Software that secretly installs itself to monitor user activities, track browsing history, and record keystrokes (keylogger) to steal passwords and credit card credentials.\n\n5. Ransomware:\n- Dangerous malware that encrypts all files on a computer, demanding an extortion payment (ransom) in cryptocurrency before providing a decryption key.",
-        "keyTakeaway": "Viruses need a host file; Worms spread independently across networks; Trojans disguise as safe apps; Spyware steals passwords.",
-        "realWorldExample": "Plugging an infected USB flash drive into a school lab PC can spread a shortcut virus that hides all documents."
+        "title": "1. What is the Internet? Internet vs The World Wide Web",
+        "content": "• The Internet (International Network):\n- A vast global network of millions of interconnected computers, servers, and smartphones that communicate using standardized rules.\n- The physical infrastructure connecting humanity across undersea fiber optic cables, cell towers, and satellites.\n\n• The World Wide Web (WWW / The Web):\n- A collection of multimedia web pages (text, images, videos) that you view over the Internet using links called hyperlinks.\n- Invented in 1989 by Sir Tim Berners-Lee.\n\n• Simple Analogy:\nThe Internet is the physical highway system; the World Wide Web consists of the cars and buses traveling on that highway carrying information.",
+        "keyTakeaway": "The Internet is the global network of computers; the World Wide Web is the collection of web pages you browse on it.",
+        "realWorldExample": "Undersea fiber optic cables landing in Accra connect Ghana's network to the global Internet."
       },
       {
-        "title": "2. Social Engineering and Phishing Scams",
-        "content": "Not all cyber threats rely on complex code; many manipulate human psychology:\n\n• What is Phishing?\nA fraudulent technique where cybercriminals send deceptive SMS messages, emails, or fake web links impersonating trusted institutions (banks, MTN MoMo, WAEC) to trick victims into revealing sensitive personal data (PINs, passwords, Ghana Card numbers).\n\n• Telltale Signs of a Phishing Attempt:\n1. False Urgency: Demands immediate action ('Account will be blocked in 1 hour!').\n2. Suspicious Web Links: Misspelled domain URLs (e.g. 'www.momo-gh-verify.com' instead of official telecom portals).\n3. Requests for Confidential Credentials: Legitimate banks NEVER ask customers for secret PINs via phone calls, SMS, or emails!\n4. Poor Grammar and Spelling: Scams often feature awkward English phrasing.",
-        "keyTakeaway": "Phishing deceives victims into revealing secret PINs and passwords; legitimate banks never request PINs via SMS.",
-        "realWorldExample": "Receiving a text: 'You have won GHS 50,000! Send your MoMo PIN to claim prize' is an obvious phishing scam."
+        "title": "2. Web Browsers vs Search Engines",
+        "content": "Students often confuse these two essential internet tools:\n\n• 1. Web Browser (Application Software):\n- A computer or phone program used to locate, open, and display web pages on your screen.\n- Examples: Google Chrome, Microsoft Edge, Mozilla Firefox, Apple Safari, Opera Mini.\n\n• 2. Search Engine (Website Database):\n- A website accessed inside a browser to search for information across the web by typing keywords.\n- Examples: Google Search (Google.com), Microsoft Bing, Yahoo Search.\n\n• How They Work Together:\nYou must first OPEN a Web Browser (like Chrome), and then type the search engine website (Google.com) to search for homework answers!",
+        "keyTakeaway": "A Web Browser is the app you open (Chrome, Edge); a Search Engine is the website you visit to find information (Google.com).",
+        "realWorldExample": "Opening Google Chrome on a school laptop to search for 'Ghana Independence 1957' on Google.com."
       },
       {
-        "title": "3. Building Strong Passwords and Defensive Security",
-        "content": "Defending personal digital accounts requires proactive security hygiene:\n\n• 1. Strong Password Construction:\n- Length: At least 8 to 12 characters.\n- Complexity: A robust mixture of UPPERCASE letters, lowercase letters, numbers (0–9), and special symbols (@, #, $, %, !).\n- Unpredictability: Never use personal names, birth years ('kofi2008'), or sequential numbers ('123456').\n- Example of Strong Password: 'Tr0p!c@l#Accr@2026'.\n\n• 2. Two-Factor Authentication (2FA):\n- Requires two separate verification steps before logging in: 1. Password + 2. A temporary one-time SMS code (OTP) sent to your mobile phone.\n\n• 3. Antivirus Software & Firewalls:\n- Antivirus: Software that continuously scans hard drives, memory, and downloads to detect, quarantine, and eliminate malware (e.g. Windows Defender, Kaspersky).\n- Firewall: A security filter that monitors incoming and outgoing network traffic, blocking unauthorized hacking connections.\n\n• 4. Regular Data Backup:\n- Always maintain duplicate copies of essential files on an external hard drive or cloud storage (Google Drive). If ransomware attacks, files can be restored without paying a dime!",
-        "keyTakeaway": "Use complex passwords with symbols, enable 2FA, keep antivirus updated, and maintain regular backups.",
-        "realWorldExample": "Enabling two-factor authentication on a Google account blocks hackers even if they guess your password."
+        "title": "3. The Anatomy of a Web Address (URL) and Domains",
+        "content": "Every web page has a unique online address known as a Uniform Resource Locator (URL).\n\n• Example URL: https://www.ges.gov.gh\n1. 'https://' : The protocol (secure method of sending data).\n2. 'www' : World Wide Web service.\n3. 'ges.gov.gh' : The domain name of the website.\n\n• Common Domain Extensions (Top-Level Domains):\n- .com : Commercial business companies (e.g. google.com, amazon.com).\n- .edu / .ac : Educational schools, colleges, and universities (e.g. ug.edu.gh).\n- .gov : Official government ministries and agencies (e.g. ges.gov.gh).\n- .org : Non-profit charitable organizations (e.g. unicef.org).\n\n• Country Code Domains:\n- .gh = Ghana\n- .ng = Nigeria\n- .uk = United Kingdom",
+        "keyTakeaway": "A URL is a web address. .gh indicates Ghana, .gov indicates government, and .edu indicates educational schools.",
+        "realWorldExample": "The official Ghana Education Service website is 'ges.gov.gh' (.gov = government agency, .gh = Ghana)."
       },
       {
-        "title": "4. Legal and Ethical Responsibilities (Cybercrime Laws)",
-        "content": "Under Ghana's Cybersecurity Act (Act 1038) and the Electronic Transactions Act:\n- Engaging in cyber fraud (sakawa), hacking computer systems, stealing data, or circulating non-consensual private imagery is a severe felony carrying heavy prison sentences.\n- Good Digital Citizenship: Respecting others' intellectual property, avoiding pirated software, and protecting national cyber infrastructure.",
-        "keyTakeaway": "Cybercrime carries severe prison sentences under Ghanaian law; practice ethical digital citizenship.",
-        "realWorldExample": "The Cyber Security Authority (CSA) of Ghana monitors online threats and coordinates the arrest of cyber fraud syndicates."
+        "title": "4. Safe Digital Living: Passwords, Scams, and Netiquette",
+        "content": "Staying safe while browsing and communicating online requires good digital habits:\n\n• 1. Creating Strong Passwords:\n- A strong password should have at least 8 characters.\n- Combine UPPERCASE letters, lowercase letters, numbers, and symbols (e.g. 'Gh@na#2026!').\n- Never use simple words like 'password', your birthday, or '123456'!\n\n• 2. Beware of Phishing and MoMo Scams:\n- Scammers send fake SMS messages claiming your Mobile Money account is blocked and asking you to call a number or enter your PIN.\n- GOLDEN SAFETY RULE: Never share your secret PIN or password with anyone! Legitimate banks and telecoms will NEVER ask for your secret PIN.\n\n• 3. Netiquette (Online Manners):\n- Be kind and polite in online chats and emails.\n- Never type messages in ALL CAPITAL LETTERS—in internet communication, this is seen as SHOUTING in anger!",
+        "keyTakeaway": "Use strong passwords with symbols, never disclose your secret PIN, and avoid typing in all caps (shouting).",
+        "realWorldExample": "Ignoring a suspicious SMS that claims you have won GHS 20,000 and asks for your MoMo secret PIN."
       }
     ],
     "commonMistakes": [
-      "Using the same simple password ('123456' or your name) across all social media and email accounts.",
-      "Believing that an antivirus program never needs updating (it must be updated regularly to recognize new virus definitions).",
-      "Sharing your secret MoMo or banking PIN with someone claiming to call from the telecom office.",
-      "Assuming computer worms and viruses are identical (worms replicate across networks without host files; viruses require a host file)."
+      "Calling Google Chrome a search engine (Chrome is the browser program; Google.com is the search engine).",
+      "Using simple, easily guessed passwords like your first name or '123456'.",
+      "Sharing your secret MoMo or banking PIN with someone calling on the phone.",
+      "Typing in all capital letters online (violates Netiquette by simulating shouting)."
     ],
     "beceExamTips": [
-      "In BECE Section A, contrast Virus (requires human action and host file) with Worm (replicates independently across networks).",
-      "Name 3 types of malware: Virus, Worm, Trojan Horse, Spyware, Ransomware.",
-      "List 3 components of a strong password: Uppercase letters, lowercase letters, numbers, and special symbols."
+      "Identify domain name extensions: .gov (Government), .edu (Educational), .com (Commercial), .gh (Ghana).",
+      "Name 3 popular web browsers: Google Chrome, Microsoft Edge, Mozilla Firefox.",
+      "List 3 components of a strong password: Mixed uppercase and lowercase letters, numbers, and special symbols.",
+      "Explain why typing in all caps is discouraged in Netiquette: 'It is considered rude because it looks like shouting in anger.'"
     ],
     "summaryChecklist": [
-      "Can define cybersecurity and differentiate viruses, worms, and trojans.",
-      "Understand phishing scams and recognize suspicious indicators.",
-      "Know how to construct a strong password and explain Two-Factor Authentication (2FA).",
-      "Can explain the importance of antivirus software, firewalls, and regular backups."
+      "Can define the Internet and contrast it with the World Wide Web.",
+      "Know the difference between Web Browsers and Search Engines.",
+      "Can identify the parts of a URL and common domain extensions (.gh, .gov, .edu).",
+      "Understand online safety: strong passwords, phishing/MoMo scams, and Netiquette."
     ]
   },
   "jhs1-ict-t15-algorithms": {

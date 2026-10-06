@@ -1,564 +1,836 @@
-// Ghanaian JHS 1 Computing Curriculum Topics
-// Based on NaCCA / GES Common Core Programme (CCP) Curriculum
+// Ghanaian JHS 1 (Basic 7) Computing Curriculum Topics
+// Fully aligned with the official NaCCA / GES Common Core Programme (CCP) Curriculum
+// Appropriate for Basic 7 learners (Ages 11-13)
 
 import { CurriculumTopic } from './types';
 
 export const JHS1_COMPUTING_TOPICS: CurriculumTopic[] = [
+  // ==========================================
+  // TERM 1: INTRODUCTION TO COMPUTING & HARDWARE
+  // ==========================================
   {
-    "id": "jhs1-ict-t1-intro",
-    "subjectId": "ict",
-    "level": "JHS 1",
-    "term": 1,
-    "orderIndex": 1,
-    "title": "Introduction to Computing & Information Processing Cycle",
-    "description": "Understand what a computer is, distinguish data from information, and master the Input-Process-Output-Storage (IPOS) cycle.",
-    "isFreeTrial": true,
-    "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=mCq8-xTH7jA",
-    "youtubeId": "mCq8-xTH7jA",
-    "keyNotes": "• A Computer is an electronic device that operates under the control of instructions stored in its own memory. It accepts raw data as input, processes it according to specified rules, produces results as output, and stores the results for future use.\n• Data vs Information:\n  - Data: Raw, unorganized, unprocessed facts, figures, symbols, or observations that lack context (e.g. \"Kofi, 85, 72, 90\").\n  - Information: Processed, organized, meaningful, and structured data that is useful for decision-making (e.g. \"Kofi's terminal report card showing an average score of 82.3% and ranking 1st in class\").\n• The Information Processing Cycle (IPOS):\n  1. Input: Capturing or entering raw data into the computer using input devices (keyboard, mouse, barcode reader).\n  2. Processing: Manipulating, calculating, sorting, and transforming data into meaningful form using the CPU (Central Processing Unit).\n  3. Output: Presenting processed results to the user in a comprehensible format using output devices (monitors, printers, speakers).\n  4. Storage: Retaining data, instructions, and information permanently or temporarily for future retrieval (hard disk, SSD, flash drive).\n• Characteristics of Computers: High speed, accuracy (GIGO - Garbage In, Garbage Out), diligence (never gets tired or bored), versatility, and vast storage capacity.",
-    "examples": [
+    id: 'jhs1-ict-t1-intro',
+    subjectId: 'ict',
+    level: 'JHS 1',
+    term: 1,
+    orderIndex: 1,
+    title: 'Introduction to Computing & The IPOS Cycle',
+    description: 'Understand what a computer is, distinguish raw data from meaningful information, and learn the Input-Process-Output-Storage (IPOS) cycle.',
+    isFreeTrial: true,
+    isVip: false,
+    youtubeUrl: 'https://www.youtube.com/watch?v=mCq8-xTH7jA',
+    youtubeId: 'mCq8-xTH7jA',
+    keyNotes: `• What is a Computer?
+  - An electronic device that accepts raw data, processes it according to stored instructions, produces meaningful output, and stores the results for future use.
+  - A computer system is made of two main parts: Hardware (physical parts you can touch) and Software (programs and instructions).
+
+• Data vs. Information:
+  - Data: Raw, unorganized facts, numbers, or symbols that have not been processed (e.g., 'Kofi, 85, 72, 90').
+  - Information: Data that has been sorted, organized, and given meaning so that people can understand it (e.g., 'Kofi's school report card showing an average score of 82.3%').
+
+• The Information Processing Cycle (IPOS):
+  1. Input: Entering data into the computer using input devices like a keyboard or mouse.
+  2. Processing: The CPU works on the data (calculating, comparing, or sorting).
+  3. Output: Presenting the finished results on a screen or paper (monitor, printer).
+  4. Storage: Saving the work so it is not lost when the computer is turned off (flash drive, hard disk).
+
+• Why Computers are Helpful:
+  - Speed: They perform calculations in seconds.
+  - Accuracy: They do not make math mistakes unless the person typing enters the wrong data (Garbage In, Garbage Out - GIGO).
+  - Storage: They can store thousands of school books and notes in a small drive.`,
+    examples: [
       {
-        "id": "ex-ict-intro-1",
-        "title": "Applying the IPOS Cycle to Mobile Money Transactions",
-        "problem": "Explain how a Mobile Money (MoMo) cash withdrawal in Ghana follows the four stages of the Information Processing Cycle.",
-        "stepByStepSolution": [
-          "Step 1 (Input): The customer dials *170# on their mobile phone keypad, enters the merchant ID, amount, and their secret 4-digit PIN.",
-          "Step 2 (Processing): The telecommunication network server (CPU) verifies the account balance, validates the secret PIN against the database, and deducts the cash amount plus transaction levy.",
-          "Step 3 (Output): Both customer and vendor receive an instant confirmation SMS receipt displaying the new account balance and transaction ID.",
-          "Step 4 (Storage): The complete transaction log is permanently archived in the bank's secure cloud database for auditing."
+        id: 'ex-ict-intro-1',
+        title: 'Understanding the IPOS Cycle with a Mobile Money Transaction',
+        problem: 'Explain how sending Mobile Money (MoMo) on a phone follows the four steps of the IPOS cycle.',
+        stepByStepSolution: [
+          'Step 1 (Input): You dial *170#, type the recipient number, the amount, and enter your secret PIN.',
+          'Step 2 (Processing): The phone network computer checks your balance and confirms your secret PIN.',
+          'Step 3 (Output): You and the recipient receive an SMS message confirming the money has been sent.',
+          'Step 4 (Storage): The transaction is saved in your phone history and the bank database.'
         ],
-        "keyTakeaway": "Every digital transaction follows the IPOS cycle: Input → Process → Output → Storage."
+        keyTakeaway: 'Input (typing details) → Processing (checking PIN) → Output (SMS message) → Storage (saved history).'
       },
       {
-        "id": "ex-ict-intro-2",
-        "title": "Differentiating Data from Information",
-        "problem": "Given the items: 'Akosua, 14, JHS 1, 98%', identify which is data and formulate an example of information.",
-        "stepByStepSolution": [
-          "Step 1: The isolated values 'Akosua', '14', 'JHS 1', and '98%' represent raw, uninterpreted DATA.",
-          "Step 2: Processing and adding context creates INFORMATION: \"Akosua, a 14-year-old JHS 1 student, scored 98% in the Computing mock examination, earning the highest mark in the school.\""
+        id: 'ex-ict-intro-2',
+        title: 'Differentiating Data from Information',
+        problem: 'Classify the following: (a) The numbers 12, 14, 11; (b) "The average age of JHS 1 students is 12 years".',
+        stepByStepSolution: [
+          'Step 1: The isolated numbers 12, 14, 11 are raw numbers without meaning. Therefore, they are DATA.',
+          'Step 2: "The average age of JHS 1 students is 12 years" is organized and gives a clear fact. Therefore, it is INFORMATION.'
         ],
-        "keyTakeaway": "Data becomes information when organized, contextualized, and given meaning."
+        keyTakeaway: 'Data is raw and unorganized; information is processed and meaningful.'
       }
     ]
   },
   {
-    "id": "jhs1-ict-t2-generations",
-    "subjectId": "ict",
-    "level": "JHS 1",
-    "term": 1,
-    "orderIndex": 2,
-    "title": "History and Generations of Computers",
-    "description": "Trace early calculating devices (Abacus, Pascaline, Analytical Engine) through the First to Fifth computer generations.",
-    "isFreeTrial": true,
-    "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=AkFi90lZ3rk",
-    "youtubeId": "AkFi90lZ3rk",
-    "keyNotes": "• Pioneers of Computing:\n  - Abacus: Earliest mechanical counting tool invented in Asia for addition and subtraction.\n  - Blaise Pascal (1642): Invented the Pascaline, the first mechanical adding machine using gears and wheels.\n  - Charles Babbage (1791–1871): The \"Father of the Computer\", who conceptualized the Difference Engine and the Analytical Engine (which featured an input, store/mill, and output mechanism).\n  - Ada Lovelace: Regarded as the world's first computer programmer for writing algorithms for Babbage's Analytical Engine.\n• The Five Computer Generations:\n  1. First Generation (1940–1956): Used VACUUM TUBES as the core electronic circuitry and magnetic drums for memory. Massive size (took up entire rooms), generated enormous heat, broke down constantly, and used machine code (e.g. ENIAC, UNIVAC).\n  2. Second Generation (1956–1963): Used TRANSISTORS (invented at Bell Labs). Smaller, faster, cheaper, more energy-efficient, and introduced assembly and early high-level languages (FORTRAN, COBOL).\n  3. Third Generation (1964–1971): Used INTEGRATED CIRCUITS (ICs / silicon chips), placing thousands of transistors on a single quartz crystal. Introduced keyboards, monitors, and primitive operating systems (e.g. IBM 360).\n  4. Fourth Generation (1971–Present): Used VERY LARGE SCALE INTEGRATION (VLSI) and MICROPROCESSORS (Intel 4004), placing an entire CPU on a single tiny microchip. Introduced personal computers (PCs), laptops, the Internet, and GUIs.\n  5. Fifth Generation (Present and Beyond): Based on ULTRA LARGE SCALE INTEGRATION (ULSI), ARTIFICIAL INTELLIGENCE (AI), parallel processing, neural networks, voice recognition, and quantum computing.",
-    "examples": [
+    id: 'jhs1-ict-t2-generations',
+    subjectId: 'ict',
+    level: 'JHS 1',
+    term: 1,
+    orderIndex: 2,
+    title: 'Generations of Computers (Evolution of Technology)',
+    description: 'Learn how computers developed from early room-sized machines to modern smartphones and laptops.',
+    isFreeTrial: true,
+    isVip: false,
+    youtubeUrl: 'https://www.youtube.com/watch?v=AkFi90lZ3rk',
+    youtubeId: 'AkFi90lZ3rk',
+    keyNotes: `• Early Counting Tools:
+  - Abacus: One of the earliest counting frames with beads, used for simple addition and subtraction.
+  - Charles Babbage: Known as the "Father of the Computer" because he designed the first mechanical computer concepts (Difference Engine and Analytical Engine).
+
+• The 5 Computer Generations:
+  1. First Generation (1940s–1950s):
+     - Main Technology: Vacuum Tubes (glass bulbs like old light bulbs).
+     - Features: Very huge (filled an entire classroom), used a lot of electricity, produced great heat, and broke down easily (e.g., ENIAC).
+  2. Second Generation (1950s–1960s):
+     - Main Technology: Transistors.
+     - Features: Smaller, faster, cheaper, and more reliable than vacuum tubes.
+  3. Third Generation (1960s–1970s):
+     - Main Technology: Integrated Circuits (ICs / Silicon Chips).
+     - Features: Hundreds of transistors packed onto tiny silicon chips. Keyboards and screens were introduced.
+  4. Fourth Generation (1970s–Present):
+     - Main Technology: Microprocessors (VLSI).
+     - Features: An entire CPU built on a single tiny chip. Made personal computers (PCs), laptops, and smartphones possible.
+  5. Fifth Generation (Present & Future):
+     - Main Technology: Artificial Intelligence (AI) and Smart Devices.
+     - Features: Voice recognition (Siri, Google Assistant), robots, and smart self-driving cars.`,
+    examples: [
       {
-        "id": "ex-ict-gen-1",
-        "title": "Comparing First and Second Generation Computers",
-        "problem": "State two distinct technological differences between First Generation and Second Generation computers.",
-        "stepByStepSolution": [
-          "1. Core Electronic Component: First Generation computers used delicate, bulky VACUUM TUBES that generated excessive heat; Second Generation computers replaced them with reliable, compact solid-state TRANSISTORS.",
-          "2. Programming Language: First Generation computers relied on binary machine code (0s and 1s); Second Generation computers utilized assembly language and early high-level languages like FORTRAN and COBOL."
+        id: 'ex-ict-gen-1',
+        title: 'Comparing First and Second Generation Computers',
+        problem: 'State two reasons why second generation computers were better than first generation computers.',
+        stepByStepSolution: [
+          'Reason 1: Second generation computers used transistors instead of fragile glass vacuum tubes.',
+          'Reason 2: They were much smaller in size, consumed less electricity, and did not overheat quickly.'
         ],
-        "keyTakeaway": "Vacuum tubes defined Generation 1; Transistors defined Generation 2."
+        keyTakeaway: 'Transistors made computers smaller, faster, and cooler than vacuum tubes.'
       },
       {
-        "id": "ex-ict-gen-2",
-        "title": "Why Charles Babbage is the Father of Computing",
-        "problem": "Explain why Charles Babbage is celebrated worldwide as the 'Father of the Computer'.",
-        "stepByStepSolution": [
-          "Step 1: In the 1830s, Charles Babbage designed the Analytical Engine, a mechanical calculating machine.",
-          "Step 2: Although never completed during his lifetime, his design incorporated the exact architectural components of modern digital computers: an Input device (punched cards), a Processing unit (the Mill), a Memory storage unit (the Store), and an Output mechanism (printed plates)."
+        id: 'ex-ict-gen-2',
+        title: 'Identifying Modern Computer Technology',
+        problem: 'Which generation of computers do our modern laptops and smartphones belong to, and what chip powers them?',
+        stepByStepSolution: [
+          'Step 1: Modern laptops and smartphones belong to the Fourth Generation (with Fifth Generation AI capabilities).',
+          'Step 2: They are powered by microprocessors (a single tiny silicon chip acting as the CPU).'
         ],
-        "keyTakeaway": "Babbage originated the fundamental architectural design (input, store, processor, output) used in all modern computers."
+        keyTakeaway: 'The microprocessor is the foundation of 4th generation computers, including laptops and phones.'
       }
     ]
   },
   {
-    "id": "jhs1-ict-t3-inputdevices",
-    "subjectId": "ict",
-    "level": "JHS 1",
-    "term": 1,
-    "orderIndex": 3,
-    "title": "Input Devices & Data Capture",
-    "description": "Explore manual and automated input devices: keyboards, optical mouse, scanners, barcode readers, RFID, and biometric sensors.",
-    "isFreeTrial": true,
-    "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=sKq_O7a8Wv8",
-    "youtubeId": "sKq_O7a8Wv8",
-    "keyNotes": "• An Input Device is any hardware peripheral component that allows a user to enter raw data, commands, and instructions into a computer system.\n• Classification of Input Devices:\n  1. Manual Input Devices (require direct human manipulation):\n     - Keyboard: Primary text input device; uses standard QWERTY layout.\n     - Pointing Devices: Mouse (optical/laser), touchpad (on laptops), trackball, and joystick (used in gaming).\n     - Touchscreen: Dual input/output device that detects finger touches (smartphones, tablets, ATMs).\n     - Microphone: Captures analog sound waves and converts them into digital audio signals.\n     - Graphic Tablet & Stylus: Used by digital artists and architects to draw freehand sketches.\n  2. Direct Data Capture (Automated / Optical Input Devices):\n     - Optical Scanner: Converts physical paper documents and photographs into digital image formats.\n     - Barcode Reader: Uses laser light to scan printed parallel zebra lines encoding product prices and batch numbers in supermarkets.\n     - Quick Response (QR) Code Scanner: Decodes two-dimensional matrix barcodes using smartphone cameras for mobile payments and web links.\n     - Optical Mark Recognition (OMR): Scans shaded pencil marks on standardized test answer sheets (used by WAEC to mark BECE objective answer sheets!).\n     - Optical Character Recognition (OCR): Software that converts scanned physical text images into editable digital word documents.\n     - Biometric Scanners: Fingerprint scanners, facial recognition cameras, and iris scanners (used by the Electoral Commission of Ghana and the National Identification Authority for the Ghana Card).",
-    "examples": [
+    id: 'jhs1-ict-t3-inputdevices',
+    subjectId: 'ict',
+    level: 'JHS 1',
+    term: 1,
+    orderIndex: 3,
+    title: 'Input Devices: Entering Data into Computers',
+    description: 'Explore the keyboard, mouse, touchscreens, optical scanners, and microphones used to give instructions to computers.',
+    isFreeTrial: true,
+    isVip: false,
+    youtubeUrl: 'https://www.youtube.com/watch?v=sKq_O7a8Wv8',
+    youtubeId: 'sKq_O7a8Wv8',
+    keyNotes: `• What is an Input Device?
+  - Any hardware equipment used to enter raw data, text, sound, images, or commands into a computer system.
+
+• Common Input Devices in Everyday Use:
+  1. Keyboard: The main text-entry device containing letters, numbers, and command keys.
+  2. Mouse: A pointing device used to click, double-click, drag, and point to items on the screen.
+  3. Touchpad: The smooth touch-sensitive pad on laptops that does the work of a mouse.
+  4. Touchscreen: Allows users to touch the screen directly with their fingers (e.g., smartphones, tablets, bank ATMs).
+  5. Microphone: Captures voice and sound and sends it into the computer.
+  6. Digital Camera / Webcam: Captures pictures and video for video calls and class lessons.
+  7. Optical Scanner: Copies pictures or paper documents and turns them into digital copies on the computer.
+  8. Barcode Reader: A handheld scanner that reads black-and-white striped product codes at supermarket checkouts.`,
+    examples: [
       {
-        "id": "ex-ict-inp-1",
-        "title": "How WAEC Marks BECE Answer Sheets Using OMR",
-        "problem": "Explain how an Optical Mark Reader (OMR) is used by the West African Examinations Council (WAEC) during BECE grading.",
-        "stepByStepSolution": [
-          "Step 1: Candidates shade candidate index numbers and answers (A, B, C, D) using 2B graphite pencils on standardized scannable cards.",
-          "Step 2: The high-speed OMR machine passes an infrared beam of light across the card. Graphite pencil marks reflect less light than blank areas.",
-          "Step 3: The OMR instantly detects the coordinates of shaded marks, matches them against the computerized answer scoring key, and records scores for thousands of candidates per hour without human marking errors."
+        id: 'ex-ict-inp-1',
+        title: 'Choosing Input Devices for Specific Tasks',
+        problem: 'Which input device should be used for: (a) Recording a teacher speaking in class; (b) Scanning a printed passport photo onto a computer?',
+        stepByStepSolution: [
+          '(a) Recording a voice lesson: Use a Microphone.',
+          '(b) Copying a physical paper passport picture: Use an Optical Scanner.'
         ],
-        "keyTakeaway": "OMR technology reads shaded pencil marks, enabling fast, objective examination grading."
+        keyTakeaway: 'Microphones input audio; scanners input physical photos and documents.'
       },
       {
-        "id": "ex-ict-inp-2",
-        "title": "Barcode Readers in Supermarket Checkout",
-        "problem": "Why do supermarkets in Accra and Kumasi prefer barcode scanners over manual typing of prices?",
-        "stepByStepSolution": [
-          "1. Speed and Efficiency: A barcode laser reads universal product codes in less than a second, dramatically reducing customer queue times.",
-          "2. Accuracy: Eliminates human cashier typographical errors and prevents wrong price entries.",
-          "3. Automatic Inventory Updates: Each scanned item automatically deducts stock levels from the central inventory database."
+        id: 'ex-ict-inp-2',
+        title: 'Why Supermarkets Use Barcode Readers',
+        problem: 'Why do Ghanaian supermarkets use barcode scanners instead of typing the price of each item by hand?',
+        stepByStepSolution: [
+          'Reason 1 (Speed): A barcode reader scans a product in less than a second, making checkout lines faster.',
+          'Reason 2 (Accuracy): It prevents human typing mistakes and ensures the customer is charged the exact right price.'
         ],
-        "keyTakeaway": "Automated data capture eliminates typographical errors and speeds up checkout processing."
+        keyTakeaway: 'Barcode readers are faster and eliminate manual typing errors at shopping counters.'
       }
     ]
   },
   {
-    "id": "jhs1-ict-t4-outputdevices",
-    "subjectId": "social",
-    "level": "JHS 1",
-    "term": 1,
-    "orderIndex": 4,
-    "title": "Output Devices: Softcopy vs Hardcopy",
-    "description": "Master monitors (CRT, LCD, LED, OLED), printers (impact vs non-impact: inkjet, laser), plotters, speakers, and multimedia projectors.",
-    "isFreeTrial": true,
-    "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=2Tz8-6e9K2Y",
-    "youtubeId": "2Tz8-6e9K2Y",
-    "keyNotes": "• An Output Device is any hardware peripheral that conveys information and processed results from the computer to one or more human users.\n• Softcopy vs Hardcopy Output:\n  - Softcopy Output: Intangible, transient, electronic display or audio sound that can only be viewed on a screen or heard via speakers. Disappears when power is switched off (e.g. video on a monitor, spoken speech from headphones).\n  - Hardcopy Output: Tangible, permanent physical output printed on paper or solid materials that can be held and read without electricity (e.g. printed BECE certificate, paper receipt, architectural blueprint).\n• Visual Display Units (Monitors / Screens):\n  - CRT (Cathode Ray Tube): Bulky, heavy, power-hungry, emits high heat, uses electron guns.\n  - LCD (Liquid Crystal Display): Flat-screen, uses liquid crystals illuminated by fluorescent cold cathode backlighting.\n  - LED (Light Emitting Diode): Thinner, brighter colors, uses tiny light-emitting diodes, highly energy-efficient.\n• Printers (Impact vs Non-Impact):\n  - Impact Printers: Form characters by physically striking an inked ribbon against paper with pins or hammers (e.g. Dot Matrix printers used for utility bills and carbon-copy receipts; noisy, slow, but produce duplicates).\n  - Non-Impact Printers: Form characters without physical striking, using heat, laser beams, or liquid ink droplets:\n    * Inkjet Printers: Sprays microscopic droplets of liquid ink onto paper; affordable for home color photo printing.\n    * Laser Printers: Uses a laser beam, static electricity, and dry powdered ink (toner) fused onto paper with hot rollers; extremely fast, high resolution, quiet, ideal for school and office printing.\n• Other Output Devices: Multimedia Projectors (enlarging computer screens on large whiteboards), Plotters (vector graphics printers for large architectural blueprints and road maps), and Audio Speakers/Headphones.",
-    "examples": [
+    id: 'jhs1-ict-t4-outputdevices',
+    subjectId: 'ict',
+    level: 'JHS 1',
+    term: 1,
+    orderIndex: 4,
+    title: 'Output Devices: Softcopy vs. Hardcopy',
+    description: 'Learn how computers show results: computer screens (monitors), printers, speakers, and multimedia classroom projectors.',
+    isFreeTrial: true,
+    isVip: false,
+    youtubeUrl: 'https://www.youtube.com/watch?v=2Tz8-6e9K2Y',
+    youtubeId: '2Tz8-6e9K2Y',
+    keyNotes: `• What is an Output Device?
+  - Any hardware device that shows or presents processed information to the user in a way they can see, hear, or read.
+
+• Softcopy vs. Hardcopy Output:
+  - Softcopy: Output that is shown on a screen or heard through speakers. You cannot hold it in your hands, and it disappears when power goes off (e.g., video on a monitor, voice on a speaker).
+  - Hardcopy: Output printed permanently on paper that you can physically touch and hold (e.g., printed terminal report card, printed BECE certificate).
+
+• Common Output Devices:
+  1. Monitor (Screen / Visual Display Unit):
+     - Displays text, photos, and videos. Modern monitors use flat LCD or LED screens.
+  2. Printer:
+     - Inkjet Printer: Sprays tiny droplets of liquid ink. Great for color pictures and home use.
+     - Laser Printer: Uses dry powdered ink (toner) and heat. Very fast, neat, and ideal for school exam printing.
+  3. Speakers & Headphones:
+     - Produce sound, audio notes, and music.
+  4. Multimedia Projector:
+     - Projects the computer screen onto a large wall or whiteboard so an entire classroom of students can watch together.`,
+    examples: [
       {
-        "id": "ex-ict-out-1",
-        "title": "Choosing Between Inkjet and Laser Printers for a School Lab",
-        "problem": "A school administrator wants to print 5,000 copies of terminal examination papers. Recommend between an Inkjet and a Laser printer with two justifications.",
-        "stepByStepSolution": [
-          "Recommendation: The administrator should choose a LASER PRINTER.",
-          "Justification 1 (Speed): Laser printers print between 30 to 60 pages per minute, whereas inkjet printers print slowly (10 to 15 ppm).",
-          "Justification 2 (Cost per Page & Durability): Laser toner cartridges print thousands of crisp black-and-white pages at a far lower cost per page than liquid ink, and laser toner does not smudge if exam papers get damp."
+        id: 'ex-ict-out-1',
+        title: 'Identifying Softcopy and Hardcopy',
+        problem: 'Classify each of the following as Softcopy or Hardcopy: (a) An SMS message displayed on a phone; (b) A printed school receipt; (c) A voice note playing from WhatsApp.',
+        stepByStepSolution: [
+          '(a) SMS message on screen: Softcopy (electronic display).',
+          '(b) Printed school receipt: Hardcopy (printed on paper).',
+          '(c) Voice note playing from a speaker: Softcopy (audio output).'
         ],
-        "keyTakeaway": "Laser printers excel in high-speed, high-volume, smudge-free document printing."
+        keyTakeaway: 'Screen and audio outputs are softcopy; paper prints are hardcopy.'
       },
       {
-        "id": "ex-ict-out-2",
-        "title": "Softcopy vs Hardcopy Comparison",
-        "problem": "Classify the following outputs as Softcopy or Hardcopy: (a) A WhatsApp voice note, (b) A printed birth certificate, (c) A PDF displayed on a tablet, (d) An architectural plan on a sheet of paper.",
-        "stepByStepSolution": [
-          "(a) WhatsApp voice note: Softcopy (transient audio output).",
-          "(b) Printed birth certificate: Hardcopy (permanent tangible paper output).",
-          "(c) PDF displayed on a tablet: Softcopy (electronic visual display).",
-          "(d) Architectural plan on paper: Hardcopy (printed physical document)."
+        id: 'ex-ict-out-2',
+        title: 'Choosing the Right Printer for a School',
+        problem: 'A headteacher needs to print 2,000 copies of end-of-term exam papers quickly. Should the school use an Inkjet or a Laser printer?',
+        stepByStepSolution: [
+          'Step 1: The school should choose a Laser Printer.',
+          'Step 2: Laser printers print much faster (up to 40 pages per minute) and cost less per page than liquid inkjet cartridges.'
         ],
-        "keyTakeaway": "Softcopy is digital/electronic; hardcopy is physically printed on paper."
+        keyTakeaway: 'Laser printers are faster, cost less per page, and are best for large school exam printing.'
       }
     ]
   },
   {
-    "id": "jhs1-ict-t5-safetyhygiene",
-    "subjectId": "ict",
-    "level": "JHS 1",
-    "term": 1,
-    "orderIndex": 5,
-    "title": "Health, Safety & Ergonomics in the Computer Laboratory",
-    "description": "Learn computer lab safety regulations, ergonomic seating, avoiding repetitive strain injuries (RSI), and proper booting and shutdown procedures.",
-    "isFreeTrial": true,
-    "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=k5qP8uYQ2kY",
-    "youtubeId": "k5qP8uYQ2kY",
-    "keyNotes": "• Computer Laboratory Safety Rules:\n  - No food, drinks, or liquid beverages allowed near computers (spills cause short-circuits and destroy sensitive keyboards and motherboards).\n  - Do not overload electrical sockets or touch loose, exposed power cables.\n  - Never open the casing of a system unit or monitor while plugged into mains electricity.\n  - Avoid running or horseplay in the lab to prevent tripping over trailing network cables.\n  - Always use an Uninterruptible Power Supply (UPS) and voltage surge protector to protect hardware from abrupt electrical blackouts and spikes.\n• Ergonomics (Workplace Posture and Human Health):\n  - Ergonomics is the science of designing equipment and workplaces to fit the user's natural body posture comfortably, maximizing productivity while reducing physical injury.\n  - Ideal Ergonomic Posture:\n    * Feet flat on the floor or supported by a footrest.\n    * Knees bent at a comfortable 90-degree angle.\n    * Back straight, fully supported by an adjustable lumbar office chair.\n    * Forearms horizontal, wrists in a neutral straight position while typing.\n    * Monitor positioned at arm's length (50–70 cm), with the top of the screen at or slightly below eye level.\n• Common Health Hazards and Mitigations:\n  - Repetitive Strain Injury (RSI) / Carpal Tunnel Syndrome: Caused by continuous, repetitive typing and mouse clicking. Remedy: Take regular 5-minute wrist breaks and use ergonomic wrist rests.\n  - Computer Vision Syndrome (Eye Strain): Caused by staring at glare screens for hours. Remedy: Observe the 20-20-20 Rule (every 20 minutes, look at an object 20 feet away for at least 20 seconds); use anti-glare screen filters.\n  - Chronic Back and Neck Pain: Caused by slouching over unadjusted chairs.\n• Proper Computer Startup (Booting) and Shutdown Procedures:\n  - Cold Booting: Starting a computer from a completely powered-off state by pressing the hardware Power button.\n  - Warm Booting (Rebooting): Restarting a running computer without switching off the main electricity (via Start → Restart or pressing Ctrl + Alt + Delete).\n  - Proper Shutdown: Click Start → Power → Shut Down. Never pull the plug directly from the wall socket (causes operating system file corruption and disk head crashes!).",
-    "examples": [
+    id: 'jhs1-ict-t5-safetyhygiene',
+    subjectId: 'ict',
+    level: 'JHS 1',
+    term: 1,
+    orderIndex: 5,
+    title: 'Health, Safety & Lab Hygiene (Ergonomics)',
+    description: 'Learn good sitting posture, how to protect your eyes, computer lab rules, and proper ways to turn computers on and off.',
+    isFreeTrial: true,
+    isVip: false,
+    youtubeUrl: 'https://www.youtube.com/watch?v=k5qP8uYQ2kY',
+    youtubeId: 'k5qP8uYQ2kY',
+    keyNotes: `• Computer Lab Safety Rules:
+  - No food or drinks near computers: Spilled water or juice causes electrical shocks and damages keyboards.
+  - Do not touch loose cables or open sockets: Prevents electric shock.
+  - No running or playing in the lab: Prevents tripping over power cables.
+  - Keep the computer room clean and dust-free: Dust blocks air vents and causes computers to overheat.
+
+• Ergonomics (Healthy Sitting Posture):
+  - Ergonomics is the science of arranging work equipment so that people can work safely and comfortably without hurting their bodies.
+  - Correct Sitting Posture:
+    * Sit up straight with your back supported by the chair.
+    * Keep both feet flat on the floor.
+    * Keep your arms and knees at about a 90-degree angle.
+    * Keep the top of the computer monitor at or slightly below your eye level.
+
+• Protecting Your Eyes (The 20-20-20 Rule):
+  - Every 20 minutes of screen time, look away at an object 20 feet (about 6 meters) away for at least 20 seconds. This relaxes eye muscles and stops eye strain and headaches.
+
+• Turning Computers On and Off Properly:
+  - Cold Booting: Turning on a computer that is completely switched off by pressing the Power button.
+  - Warm Booting (Restarting): Restarting a computer using software (Start → Restart) without turning off the wall socket.
+  - Shut Down: Always click Start → Power → Shut Down. Never pull the plug out of the wall while the computer is running!`,
+    examples: [
       {
-        "id": "ex-ict-safe-1",
-        "title": "Cold Booting vs Warm Booting",
-        "problem": "Distinguish between cold booting and warm booting with practical examples of when each is used.",
-        "stepByStepSolution": [
-          "Step 1: Cold Booting occurs when the computer is completely turned off and power is switched on via the physical Power button on the system unit. (Example: Powering on the school lab computer first thing in the morning).",
-          "Step 2: Warm Booting (Restarting) occurs when the computer is already on and is restarted through software commands (Start → Restart) without cutting main power. (Example: Restarting the computer after installing new antivirus software or when a program freezes)."
+        id: 'ex-ict-safe-1',
+        title: 'Practicing the 20-20-20 Rule',
+        problem: 'Ama has been studying on her laptop for 40 minutes and her eyes feel tired. What should she do according to the 20-20-20 rule?',
+        stepByStepSolution: [
+          'Step 1: Ama should stop looking at the screen.',
+          'Step 2: She should look out the window at a tree or object at least 20 feet away for at least 20 seconds.',
+          'Step 3: This gives her eye muscles a rest and prevents eye strain.'
         ],
-        "keyTakeaway": "Cold boot starts from off; warm boot restarts an already running machine."
+        keyTakeaway: 'Every 20 minutes, look 20 feet away for 20 seconds to prevent screen eye strain.'
       },
       {
-        "id": "ex-ict-safe-2",
-        "title": "Applying the 20-20-20 Rule to Prevent Eye Strain",
-        "problem": "Explain the ergonomic '20-20-20 rule' and how it protects students during prolonged computer laboratory work.",
-        "stepByStepSolution": [
-          "Step 1: The Rule: Every 20 minutes of continuous screen time, shift your eyes to gaze at an object at least 20 feet (about 6 meters) away for at least 20 seconds.",
-          "Step 2: Benefit: Looking into the distance relaxes the ciliary muscles of the eyes, stimulates natural blinking to re-lubricate the corneas, and prevents digital eye strain, blurry vision, and tension headaches."
+        id: 'ex-ict-safe-2',
+        title: 'Proper Computer Shutdown',
+        problem: 'Why is it wrong to switch off the computer directly from the wall socket without clicking Shut Down first?',
+        stepByStepSolution: [
+          'Reason 1: Unsaved school files can be permanently lost or damaged.',
+          'Reason 2: The operating system files may become corrupted, preventing the computer from turning on next time.'
         ],
-        "keyTakeaway": "The 20-20-20 rule relaxes eye muscles and prevents computer vision syndrome."
+        keyTakeaway: 'Always use Start → Shut Down to let the computer close files safely before turning off power.'
       }
     ]
   },
   {
-    "id": "jhs1-ict-t6-cpumemory",
-    "subjectId": "ict",
-    "level": "JHS 1",
-    "term": 2,
-    "orderIndex": 6,
-    "title": "The Central Processing Unit (CPU) & Primary Memory",
-    "description": "Examine the architecture of the CPU (ALU, Control Unit, Registers), system buses, RAM vs ROM, and cache memory hierarchy.",
-    "isFreeTrial": true,
-    "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=AkFi90lZ3rk",
-    "youtubeId": "AkFi90lZ3rk",
-    "keyNotes": "• The Central Processing Unit (CPU) / Microprocessor:\n  - Regarded as the \"brain\" of the computer system. It interprets, coordinates, and executes all software instructions and controls data flow between all peripheral components.\n• Internal Architecture of the CPU:\n  1. Arithmetic and Logic Unit (ALU):\n     - Arithmetic Operations: Performs fundamental mathematical computations (addition, subtraction, multiplication, division).\n     - Logic Operations: Evaluates logical conditions and comparisons (AND, OR, NOT, greater than '>', less than '<', equal to '=').\n  2. Control Unit (CU):\n     - The supervisor of the CPU. It directs and coordinates all operations within the computer. It executes the Machine Cycle (Fetch, Decode, Execute, Store).\n  3. Registers:\n     - High-speed, tiny internal storage cells located directly inside the CPU that hold data, instructions, and memory addresses temporarily during execution (e.g. Program Counter, Accumulator).\n  4. System Bus:\n     - High-speed electrical pathways connecting the CPU to memory and peripherals: Data Bus (carries actual data), Address Bus (carries memory locations), Control Bus (carries synchronization signals).\n• Primary Memory (Main Memory):\n  - RAM (Random Access Memory):\n    * Volatile (temporary): Its contents are completely wiped out when power is turned off.\n    * Read and Write: The CPU can read from and write new data to RAM.\n    * Function: Holds currently running operating system files, open applications, and unsaved documents.\n  - ROM (Read-Only Memory):\n    * Non-Volatile (permanent): Retains its contents even when electrical power is switched off.\n    * Read Only: Data is permanently written by manufacturers and cannot be easily modified.\n    * Function: Contains the BIOS (Basic Input/Output System) and firmware startup instructions (bootstrap loader) needed to initialize hardware when the computer is turned on.\n• Cache Memory: Extremely high-speed static RAM (SRAM) located on or near the CPU that stores frequently used instructions to prevent CPU idle time.",
-    "examples": [
+    id: 'jhs1-ict-t6-cpumemory',
+    subjectId: 'ict',
+    level: 'JHS 1',
+    term: 1,
+    orderIndex: 6,
+    title: 'Technology in the Community & Everyday Life (NaCCA B7.1.2)',
+    description: 'Explore how computers and technology tools transform Ghanaian communities in education, healthcare, banking, and agriculture.',
+    isFreeTrial: true,
+    isVip: false,
+    youtubeUrl: 'https://www.youtube.com/watch?v=tyDN4pXkYCY',
+    youtubeId: 'tyDN4pXkYCY',
+    keyNotes: `• How Technology Helps Our Community:
+  - Technology tools (computers, smartphones, tablets, biometric machines) are used every day across Ghana to make work faster, easier, and more reliable.
+
+• Key Areas of Technology in Ghana:
+  1. Education & Schools:
+     - Online learning portals, digital textbooks, virtual classrooms, and computerized school selection (CSSPS) for BECE candidates entering SHS.
+  2. Banking & Commerce:
+     - Mobile Money (MoMo), ATMs, online banking, and electronic payment points in shops and fuel stations.
+  3. Healthcare & Hospitals:
+     - Digital patient records, ultrasound scans, computerized laboratory tests, and tracking medicines.
+  4. Governance & Civic Life:
+     - The Ghana Card (National Identification Authority biometric registration), computerized voter registration, and electronic passports.
+  5. Agriculture & Farming:
+     - Farmers checking weather forecasts on mobile phones, drone spraying of crops, and mobile apps to check market crop prices in Accra, Kumasi, and Tamale.
+
+• Digital Tools Used in the Community:
+  - Smart phones, POS (point-of-sale) machines, biometric fingerprint scanners, computerized hospital monitors, and solar-powered weather stations.`,
+    examples: [
       {
-        "id": "ex-ict-cpu-1",
-        "title": "Comparing RAM and ROM",
-        "problem": "State three fundamental differences between Random Access Memory (RAM) and Read Only Memory (ROM).",
-        "stepByStepSolution": [
-          "1. Volatility: RAM is volatile (loses its contents when power is turned off); ROM is non-volatile (retains data permanently without electricity).",
-          "2. Modifiability: RAM allows both reading and writing operations (read/write); ROM can only be read by the CPU and cannot be easily altered.",
-          "3. Purpose: RAM stores currently running programs and unsaved user files; ROM stores the BIOS firmware and bootstrap startup instructions."
+        id: 'ex-ict-comm-1',
+        title: 'How Technology Helps Farmers in Ghana',
+        problem: 'Give two practical ways a maize farmer in the Bono Region can use mobile technology to improve their farming business.',
+        stepByStepSolution: [
+          '1. Weather Information: The farmer can receive SMS weather alerts to know the best week to plant seeds before heavy rains.',
+          '2. Market Selling: The farmer can check grain prices in Techiman market by phone and receive customer payments directly via Mobile Money.'
         ],
-        "keyTakeaway": "RAM is volatile read/write workspace; ROM is non-volatile permanent startup storage."
+        keyTakeaway: 'Mobile phones help farmers check market prices, receive payments, and monitor weather forecasts.'
       },
       {
-        "id": "ex-ict-cpu-2",
-        "title": "The Machine Cycle of the CPU",
-        "problem": "Describe the four sequential steps executed by the CPU during a single Machine Cycle.",
-        "stepByStepSolution": [
-          "Step 1 (Fetch): The Control Unit retrieves an instruction from the system RAM.",
-          "Step 2 (Decode): The Control Unit translates the instruction into binary machine signals.",
-          "Step 3 (Execute): The ALU performs the mathematical calculation or logical comparison.",
-          "Step 4 (Store): The result is written back to registers or RAM for subsequent use."
+        id: 'ex-ict-comm-2',
+        title: 'Technology in Ghanaian Healthcare',
+        problem: 'How do computer records help a hospital in Kumasi care for patients better than old paper cards?',
+        stepByStepSolution: [
+          'Benefit 1: Doctors can search and retrieve a patient medical history in seconds on a computer screen.',
+          'Benefit 2: Computerized records cannot easily get lost, water-damaged, or eaten by insects like old paper files.'
         ],
-        "keyTakeaway": "The CPU executes the machine cycle repeatedly: Fetch → Decode → Execute → Store."
+        keyTakeaway: 'Electronic health records are fast, secure, and easily accessible across hospital departments.'
+      }
+    ]
+  },
+
+  // ==========================================
+  // TERM 2: STORAGE, OS, KEYBOARDING & WORD PROCESSING
+  // ==========================================
+  {
+    id: 'jhs1-ict-t7-storagedevices',
+    subjectId: 'ict',
+    level: 'JHS 1',
+    term: 2,
+    orderIndex: 7,
+    title: 'Storage Devices & Measuring Memory Capacity',
+    description: 'Learn primary memory (RAM vs ROM), secondary storage (hard drives, flash drives, memory cards, cloud storage), and memory units (Byte, KB, MB, GB).',
+    isFreeTrial: true,
+    isVip: false,
+    youtubeUrl: 'https://www.youtube.com/watch?v=sKq_O7a8Wv8',
+    youtubeId: 'sKq_O7a8Wv8',
+    keyNotes: `• What is Storage?
+  - The hardware parts where computers keep programs, pictures, videos, and files so they can be opened again later.
+
+• Two Main Types of Computer Memory:
+  1. Primary Memory (Inside the computer):
+     - RAM (Random Access Memory): The temporary work space. Holds files you are currently using. When electricity goes off, unsaved work in RAM is lost (Volatile).
+     - ROM (Read-Only Memory): Permanent memory built by the manufacturer. Holds the startup instructions that turn on the computer. Cannot be easily erased (Non-volatile).
+  2. Secondary Storage (Permanent storage):
+     - Hard Disk Drive (HDD) & Solid State Drive (SSD): The main storage inside laptops and desktops holding all apps and files.
+     - USB Flash Drive (Pen Drive): Small, portable drive that plugs into USB ports to carry school work.
+     - Memory Card (MicroSD): Tiny memory cards used in smartphones and digital cameras.
+     - Cloud Storage: Saving files over the internet (e.g., Google Drive) so you can open them from any phone or computer.
+
+• Measuring Memory Units:
+  - Bit: The smallest unit (either a 0 or a 1).
+  - Byte: 8 bits grouped together. 1 Byte stores one letter (like 'A').
+  - Kilobyte (KB): About 1,000 Bytes (stores a short paragraph).
+  - Megabyte (MB): About 1,000 KB (stores an MP3 song or photo).
+  - Gigabyte (GB): About 1,000 MB (stores a whole video movie or game).
+  - Terabyte (TB): About 1,000 GB (stores thousands of movies).`,
+    examples: [
+      {
+        id: 'ex-ict-sto-1',
+        title: 'Comparing RAM and ROM in Simple Terms',
+        problem: 'State the main difference between RAM and ROM when electricity is switched off.',
+        stepByStepSolution: [
+          'Step 1: RAM is temporary (volatile) — whatever was not saved is erased when power cuts off.',
+          'Step 2: ROM is permanent (non-volatile) — its startup instructions remain safely stored even without electricity.'
+        ],
+        keyTakeaway: 'RAM loses data when power goes off; ROM keeps its instructions permanently.'
+      },
+      {
+        id: 'ex-ict-sto-2',
+        title: 'Arranging Storage Units by Size',
+        problem: 'Arrange the following storage units from smallest to largest: Gigabyte (GB), Byte, Kilobyte (KB), Megabyte (MB).',
+        stepByStepSolution: [
+          '1. Byte (smallest — stores 1 character)',
+          '2. Kilobyte (KB)',
+          '3. Megabyte (MB)',
+          '4. Gigabyte (GB — largest)'
+        ],
+        keyTakeaway: 'Byte < KB < MB < GB < TB.'
       }
     ]
   },
   {
-    "id": "jhs1-ict-t7-storagedevices",
-    "subjectId": "ict",
-    "level": "JHS 1",
-    "term": 2,
-    "orderIndex": 7,
-    "title": "Secondary Storage Devices & Media",
-    "description": "Explore magnetic, optical, and solid-state storage technologies, cloud storage, and units of digital storage capacity (Bit, Byte, KB, MB, GB, TB).",
-    "isFreeTrial": true,
-    "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=sKq_O7a8Wv8",
-    "youtubeId": "sKq_O7a8Wv8",
-    "keyNotes": "• Secondary Storage (Auxiliary Storage):\n  - Non-volatile, permanent storage media used to preserve programs, documents, audio, videos, and operating systems indefinitely when electrical power is switched off.\n• Categories of Secondary Storage Media:\n  1. Magnetic Storage Media:\n     - Uses magnetic read/write heads to magnetize tiny iron oxide particles on spinning platters (representing 1s and 0s).\n     - Examples: Hard Disk Drive (HDD - primary internal storage for desktops), Magnetic Tape (used for long-term archiving).\n  2. Optical Storage Media:\n     - Uses a laser beam to burn microscopic pits (depressions) and lands (flat surfaces) on reflective polycarbonate plastic discs:\n     - CD (Compact Disc): Holds approximately 700 MB of data.\n     - DVD (Digital Versatile Disc): Holds approximately 4.7 GB (single layer) to 8.5 GB.\n     - Blu-ray Disc (BD): Uses a precise blue-violet laser, holding 25 GB to 50 GB of high-definition video.\n  3. Solid-State Storage Media (Flash Memory):\n     - Uses electronic flash microchips with zero moving parts. Fast, shock-resistant, silent, and highly portable:\n     - Solid-State Drive (SSD): Replaces mechanical HDDs in modern laptops; boots Windows in seconds.\n     - USB Flash Drive (Pen Drive): Highly portable plug-and-play storage.\n     - SD Memory Card: Used in smartphones, digital cameras, and tablets.\n  4. Cloud Storage:\n     - Storing data on remote server farms accessible over the Internet (e.g. Google Drive, Microsoft OneDrive, Dropbox).\n• Hierarchy of Digital Storage Measurement Units:\n  - Bit (Binary Digit): Smallest unit of digital data, holding either a 0 or a 1.\n  - Nibble: A group of 4 bits.\n  - Byte: A group of 8 bits. Represents a single character (e.g. the letter 'A').\n  - Kilobyte (KB): 1,024 Bytes.\n  - Megabyte (MB): 1,024 Kilobytes.\n  - Gigabyte (GB): 1,024 Megabytes.\n  - Terabyte (TB): 1,024 Gigabytes.",
-    "examples": [
+    id: 'jhs1-ict-t8-operatingsystems',
+    subjectId: 'ict',
+    level: 'JHS 1',
+    term: 2,
+    orderIndex: 8,
+    title: 'Operating Systems & The Desktop Interface',
+    description: 'Learn what Windows, Android, and macOS do, and explore the Desktop, icons, taskbar, files, and folders.',
+    isFreeTrial: true,
+    isVip: false,
+    youtubeUrl: 'https://www.youtube.com/watch?v=4Ym5B5I2PqA',
+    youtubeId: '4Ym5B5I2PqA',
+    keyNotes: `• What is an Operating System (OS)?
+  - The master software that controls the computer hardware and lets you run programs like games, word processors, and browsers.
+  - Without an operating system, a computer or smartphone cannot start or work!
+
+• Examples of Operating Systems:
+  - For Computers/Laptops: Microsoft Windows, Apple macOS, Linux.
+  - For Smartphones/Tablets: Google Android, Apple iOS.
+
+• Parts of the Graphical User Interface (GUI):
+  - Desktop: The main screen that appears after the computer boots up.
+  - Icons: Small clickable pictures on the desktop representing programs, files, or folders (e.g., Recycle Bin, Chrome).
+  - Taskbar: The long bar along the bottom of the screen showing open programs, the clock, and the Start button.
+  - Start Button: The button at the bottom-left corner used to open all programs and turn off the computer.
+
+• Files vs. Folders:
+  - File: A single saved document, picture, or song with a name (e.g., 'english_essay.docx').
+  - Folder (Directory): A yellow digital container used to group and organize related files neatly together.`,
+    examples: [
       {
-        "id": "ex-ict-sto-1",
-        "title": "Comparing Solid-State Drives (SSD) with Hard Disk Drives (HDD)",
-        "problem": "Give two reasons why modern computers prefer Solid-State Drives (SSDs) over mechanical Hard Disk Drives (HDDs).",
-        "stepByStepSolution": [
-          "1. Read/Write Speed: SSDs have zero moving mechanical parts and read/write data electronically, making them up to 5 to 10 times faster than HDDs. Booting operating systems and launching applications takes only a few seconds.",
-          "2. Physical Durability & Shock Resistance: Because HDDs rely on fragile spinning magnetic platters and mechanical read heads, dropping an HDD often causes a fatal head crash. SSDs use durable silicon chips that resist physical vibration and drops."
+        id: 'ex-ict-os-1',
+        title: 'Why Computers Need an Operating System',
+        problem: 'Can a brand-new laptop open a typing program if it has no operating system installed? Explain why.',
+        stepByStepSolution: [
+          'Step 1: No, the computer cannot open any program.',
+          'Step 2: The operating system is the foundation that manages the screen, keyboard, and memory. Without it, the computer cannot even display a menu.'
         ],
-        "keyTakeaway": "SSDs are dramatically faster, silent, and more shock-resistant than mechanical HDDs."
+        keyTakeaway: 'The operating system is the essential master program that makes computer hardware work.'
       },
       {
-        "id": "ex-ict-sto-2",
-        "title": "Calculating Storage Capacities in Bytes",
-        "problem": "How many bits are contained in a 4-byte text word?",
-        "stepByStepSolution": [
-          "Step 1: 1 Byte = 8 bits.",
-          "Step 2: 4 Bytes = 4 × 8 bits = 32 bits.",
-          "Conclusion: A 4-byte text word contains 32 binary bits."
+        id: 'ex-ict-os-2',
+        title: 'Folders Keep Files Organized',
+        problem: 'A student has 30 homework files scattered across the desktop. How can folders solve this problem?',
+        stepByStepSolution: [
+          'Step 1: The student can create subject folders named "Science", "Maths", and "Computing".',
+          'Step 2: Drag and drop the homework files into their matching folders to keep the desktop clean and easy to navigate.'
         ],
-        "keyTakeaway": "1 Byte = 8 bits; multiply bytes by 8 to determine total bits."
+        keyTakeaway: 'Folders organize files into neat, categorized groups.'
       }
     ]
   },
   {
-    "id": "jhs1-ict-t8-operatingsystems",
-    "subjectId": "ict",
-    "level": "JHS 1",
-    "term": 2,
-    "orderIndex": 8,
-    "title": "Operating Systems & The Graphical User Interface",
-    "description": "Explore the functions of operating systems (Windows, macOS, Linux, Android) and master GUI elements: Desktop, Icons, Taskbar, Files & Folders.",
-    "isFreeTrial": true,
-    "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=4Ym5B5I2PqA",
-    "youtubeId": "4Ym5B5I2PqA",
-    "keyNotes": "• What is an Operating System (OS)?\n  - An Operating System is the master system software that manages computer hardware components, allocates memory, provides a platform for application software, and offers a user interface for human communication.\n  - Without an operating system, computer hardware is entirely unusable!\n• Examples of Operating Systems:\n  - Desktop / Laptop OS: Microsoft Windows (Windows 10, 11), Apple macOS, Linux (Ubuntu, Fedora), ChromeOS.\n  - Mobile OS: Google Android, Apple iOS.\n• Core Functions of an Operating System:\n  1. Processor Management: Allocates CPU time to competing programs (multitasking).\n  2. Memory Management: Coordinates RAM allocation to active applications and prevents programs from overwriting each other.\n  3. File & Disk Management: Organizes files in hierarchical directories (folders), handles copying, renaming, and deleting files.\n  4. Device (I/O) Management: Communicates with peripherals via device drivers (printers, keyboards, webcams).\n  5. Security & Access Control: Enforces passwords, user permissions, and safeguards against unauthorized access.\n• User Interfaces (CLI vs GUI):\n  - Command Line Interface (CLI): Requires users to type cryptic text commands on a black terminal screen (e.g. MS-DOS).\n  - Graphical User Interface (GUI): Uses visual elements based on the WIMP metaphor (Windows, Icons, Menus, Pointers):\n    * Desktop: The primary on-screen workspace displayed after booting.\n    * Icons: Small pictorial graphic symbols representing programs, files, or folders (e.g. Recycle Bin, This PC).\n    * Taskbar: The horizontal strip at the bottom of the screen containing the Start button, active program icons, and the system tray (clock, network status).\n    * Files & Folders: A file is a collection of related data stored under a unique name with an extension (e.g. 'notes.docx'); a folder is a digital container used to organize and group files.",
-    "examples": [
+    id: 'jhs1-ict-t9-keyboarding',
+    subjectId: 'ict',
+    level: 'JHS 1',
+    term: 2,
+    orderIndex: 9,
+    title: 'Keyboarding & Mouse Skills (Touch Typing)',
+    description: 'Master the QWERTY keyboard layout, the home row keys (ASDF JKL;), special command keys, and mouse clicking techniques.',
+    isFreeTrial: true,
+    isVip: false,
+    youtubeUrl: 'https://www.youtube.com/watch?v=0hV1h7p-y0Y',
+    youtubeId: '0hV1h7p-y0Y',
+    keyNotes: `• The Standard Keyboard (QWERTY):
+  - The layout is named "QWERTY" after the first six letters on the top letter row.
+
+• Special Keys and Their Uses:
+  - Spacebar: The longest key on the keyboard; adds a space between words.
+  - Enter Key: Moves the cursor to the next line or confirms a selection.
+  - Backspace: Deletes characters to the LEFT of the cursor.
+  - Delete Key: Deletes characters to the RIGHT of the cursor.
+  - Caps Lock: When turned on, all letters typed become CAPITAL LETTERS.
+  - Shift Key: Hold down with a letter key to make a single capital letter, or to type upper symbols (like Shift + 1 for '!').
+  - Arrow Keys: Move the cursor Up, Down, Left, or Right on the screen.
+
+• Touch Typing & The Home Row:
+  - Touch typing means typing smoothly with all fingers without looking down at the keyboard.
+  - The Home Row Keys (where fingers rest):
+    * Left Hand Fingers: A, S, D, F
+    * Right Hand Fingers: J, K, L, ; (semicolon)
+    * Both Thumbs: Rest lightly on the Spacebar.
+  - The 'F' and 'J' keys have small raised bumps so you can feel where to place your index fingers without looking down!
+
+• Mouse Techniques:
+  - Click (Left-click): Selects an item.
+  - Double-click: Quickly clicks the left button twice to open a folder or program.
+  - Right-click: Opens a shortcut menu of options (like Copy, Rename, Delete).
+  - Drag and Drop: Hold the left button down while moving an item to a new spot, then let go.`,
+    examples: [
       {
-        "id": "ex-ict-os-1",
-        "title": "CLI vs GUI Interfaces",
-        "problem": "State two distinct advantages of a Graphical User Interface (GUI) over a Command Line Interface (CLI) for beginners.",
-        "stepByStepSolution": [
-          "1. User-Friendliness: A GUI allows users to simply point and click on visual icons and menus using a mouse, whereas a CLI requires memorizing and typing complex text syntax without typographical errors.",
-          "2. Multitasking Visualization: A GUI displays multiple running applications in overlapping movable windows on the desktop, making it easy to switch between programs visually."
+        id: 'ex-ict-key-1',
+        title: 'Backspace vs. Delete Key',
+        problem: 'Given the word "BO|OK" where "|" is the blinking cursor, what happens when you press: (a) Backspace; (b) Delete?',
+        stepByStepSolution: [
+          '(a) Pressing Backspace removes the letter to the left ("O"), leaving "B|OK".',
+          '(b) Pressing Delete removes the letter to the right ("O"), leaving "BO|K".'
         ],
-        "keyTakeaway": "GUIs use visual icons and mouse clicks; CLIs require typing text commands from memory."
+        keyTakeaway: 'Backspace deletes to the left; Delete removes characters to the right.'
       },
       {
-        "id": "ex-ict-os-2",
-        "title": "Managing Files and Folders",
-        "problem": "Explain the purpose of a file extension and identify the file types for: (a) 'exam.docx', (b) 'song.mp3', (c) 'photo.jpg'.",
-        "stepByStepSolution": [
-          "Step 1: A file extension is a 3 or 4 letter suffix separated by a period at the end of a filename that informs the operating system which software program created and can open the file.",
-          "Step 2: (a) 'exam.docx' = Microsoft Word text document; (b) 'song.mp3' = Digital audio file; (c) 'photo.jpg' = Digital photograph / image file."
+        id: 'ex-ict-key-2',
+        title: 'Finding the Home Row by Touch',
+        problem: 'How can a student find the correct home row finger position on a keyboard without looking at the keys?',
+        stepByStepSolution: [
+          'Step 1: Feel for the raised bumps on the "F" key with the left index finger and the "J" key with the right index finger.',
+          'Step 2: Rest the remaining fingers naturally along A-S-D on the left and K-L-; on the right.'
         ],
-        "keyTakeaway": "File extensions (e.g. .docx, .mp3, .jpg) identify the format and associated software for a file."
+        keyTakeaway: 'The raised bumps on "F" and "J" guide index fingers to the home row.'
       }
     ]
   },
   {
-    "id": "jhs1-ict-t9-keyboarding",
-    "subjectId": "ict",
-    "level": "JHS 1",
-    "term": 2,
-    "orderIndex": 9,
-    "title": "Keyboarding & Typing Skills",
-    "description": "Master the QWERTY keyboard layout, home row positioning (ASDF JKL;), specialized command keys, and touch typing techniques.",
-    "isFreeTrial": true,
-    "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0hV1h7p-y0Y",
-    "youtubeId": "0hV1h7p-y0Y",
-    "keyNotes": "• The Standard Keyboard Layout (QWERTY):\n  - Named after the first six letters on the top alphabetic row. Designed originally for mechanical typewriters to prevent jammed levers.\n• Key Sections on a Computer Keyboard:\n  1. Alphanumeric Keys: Alphabet letters (A–Z), number digits (0–9), and punctuation marks.\n  2. Function Keys (F1–F12): Located along the very top row; perform dedicated shortcuts (e.g. F1 displays Help, F5 refreshes a webpage, F7 runs spellcheck in Word).\n  3. Cursor / Navigation Keys: Arrow keys (Up, Down, Left, Right), Home, End, Page Up, Page Down.\n  4. Numeric Keypad: Clustered on the far right like a calculator, used for rapid numerical data entry (activated by the Num Lock key).\n  5. Special & Modifier Keys:\n     - Shift: Toggles uppercase letters and accesses upper symbols (e.g. Shift + 1 produces '!').\n     - Caps Lock: Locks all alphabetic letters into CAPITAL LETTERS when toggled on.\n     - Ctrl (Control) & Alt (Alternate): Modifier keys used in combinations to execute shortcuts (Ctrl + C = Copy, Ctrl + V = Paste, Ctrl + S = Save).\n     - Enter / Return: Executes commands, confirms selections, or moves the cursor to the beginning of a new line in word processing.\n     - Backspace vs Delete: Backspace deletes characters to the LEFT of the cursor; Delete removes characters to the RIGHT of the cursor.\n     - Spacebar: Inserts a single blank space between words.\n• Touch Typing & The Home Row Keys:\n  - Touch typing is typing without looking down at the keyboard keys.\n  - The Home Row Keys: The resting position for eight fingers:\n    * Left Hand: A (little finger), S (ring), D (middle), F (index).\n    * Right Hand: J (index), K (middle), L (ring), ; (little).\n    * Both Thumbs: Rest lightly on the Spacebar.\n    * Raised Ridges: The letters 'F' and 'J' have tactile raised bumps to help typists orient their index fingers without glancing down!",
-    "examples": [
+    id: 'jhs1-ict-t10-wordprocessing',
+    subjectId: 'ict',
+    level: 'JHS 1',
+    term: 2,
+    orderIndex: 10,
+    title: 'Introduction to Word Processing (NaCCA B7.2.1)',
+    description: 'Learn to use Microsoft Word and Google Docs: typing, selecting text, copy, cut, paste, undo, and saving files.',
+    isFreeTrial: true,
+    isVip: false,
+    youtubeUrl: 'https://www.youtube.com/watch?v=Fj0X7-wP9sI',
+    youtubeId: 'Fj0X7-wP9sI',
+    keyNotes: `• What is a Word Processor?
+  - A computer application used to create, edit, format, check spelling, and print written text documents (e.g., Microsoft Word, Google Docs).
+
+• Main Parts of the Word Window:
+  - Title Bar: Shows the name of your document at the very top.
+  - Ribbon: The wide strip at the top containing tool tabs (Home, Insert, Page Layout).
+  - Blinking Cursor (Insertion Point): The vertical line '|' showing where the next letter you type will appear.
+  - Status Bar: Shows page numbers and word count at the bottom.
+
+• Basic Editing Commands:
+  - Selecting Text: Click and drag your mouse over words to highlight them before making changes.
+  - Copy (Ctrl + C): Makes a duplicate copy of selected text in the computer memory.
+  - Cut (Ctrl + X): Removes selected text from its current spot so you can move it.
+  - Paste (Ctrl + V): Places the copied or cut text into the new spot where your cursor is blinking.
+  - Undo (Ctrl + Z): Cancels your last mistake and puts things back the way they were.
+  - Redo (Ctrl + Y): Repeats the action you just canceled.
+
+• Saving Your Work:
+  - Save (Ctrl + S): Keeps your work safely on the disk so it is not lost. Always save regularly!`,
+    examples: [
       {
-        "id": "ex-ict-key-1",
-        "title": "Backspace vs Delete Keys",
-        "problem": "Given the word 'SCHO|OL' where '|' represents the blinking text cursor, state what happens when you press: (a) Backspace, (b) Delete.",
-        "stepByStepSolution": [
-          "(a) Pressing Backspace deletes the character immediately to the LEFT of the cursor, removing the letter 'O' to leave 'SCH|OL'.",
-          "(b) Pressing Delete deletes the character immediately to the RIGHT of the cursor, removing the second letter 'O' to leave 'SCHO|L'."
+        id: 'ex-ict-wp-1',
+        title: 'Copy vs. Cut in Word Processing',
+        problem: 'Kwame wrote a paragraph and wants to move the first sentence to the end of his essay. Should he use Copy or Cut?',
+        stepByStepSolution: [
+          'Step 1: Kwame should highlight the sentence and choose CUT (Ctrl + X). This removes it from the top.',
+          'Step 2: He should click at the end of the essay and choose PASTE (Ctrl + V) to place it there.'
         ],
-        "keyTakeaway": "Backspace deletes to the left; Delete deletes to the right."
+        keyTakeaway: 'Cut moves text to a new place; Copy makes a duplicate while leaving the original.'
       },
       {
-        "id": "ex-ict-key-2",
-        "title": "The Home Row Tactile Bumps on 'F' and 'J'",
-        "problem": "Why do standard computer keyboards feature small raised tactile bumps or ridges on the 'F' and 'J' keys?",
-        "stepByStepSolution": [
-          "Step 1: In touch typing, the typist must position both index fingers on the home row without looking down at the keys.",
-          "Step 2: The physical ridges on 'F' (left index finger) and 'J' (right index finger) provide tactile feedback, allowing the typist to locate the home row position purely by touch."
+        id: 'ex-ict-wp-2',
+        title: 'The Magic of the Undo Command',
+        problem: 'Akua accidentally deleted an entire paragraph she typed in MS Word. How can she recover it in one second?',
+        stepByStepSolution: [
+          'Step 1: Akua should press Ctrl + Z (or click the curved Undo arrow at the top left).',
+          'Step 2: The deleted paragraph instantly reappears exactly as it was.'
         ],
-        "keyTakeaway": "The tactile bumps on 'F' and 'J' guide home-row finger placement for touch typing."
+        keyTakeaway: 'Ctrl + Z (Undo) reverses accidental mistakes immediately.'
+      }
+    ]
+  },
+
+  // ==========================================
+  // TERM 3: FORMATTING, SPREADSHEETS, NETWORKS & ALGORITHMS
+  // ==========================================
+  {
+    id: 'jhs1-ict-t11-documentformatting',
+    subjectId: 'ict',
+    level: 'JHS 1',
+    term: 3,
+    orderIndex: 11,
+    title: 'Document Formatting: Fonts, Paragraphs & Tables',
+    description: 'Format documents with Bold, Italics, Underline, text alignments (left, center, right, justify), bullet lists, and simple tables.',
+    isFreeTrial: true,
+    isVip: false,
+    youtubeUrl: 'https://www.youtube.com/watch?v=3uG7zC4p3rQ',
+    youtubeId: '3uG7zC4p3rQ',
+    keyNotes: `• What is Formatting?
+  - Changing the appearance, color, size, and layout of text to make a document look neat, professional, and easy to read.
+
+• Font Formatting Tools:
+  - Font Size: Changes how big or small letters are (e.g., 12 pt for body text, 16 pt for headings).
+  - Bold (Ctrl + B): Makes letters thicker and darker for emphasis.
+  - Italics (Ctrl + I): Slants letters slightly to the right (used for book titles).
+  - Underline (Ctrl + U): Puts a straight line under words.
+  - Font Color: Changes the color of text.
+
+• Paragraph Alignments:
+  - Align Left (Ctrl + L): Aligns text straight against the left margin (normal for letters and paragraphs).
+  - Center (Ctrl + E): Places text right in the middle between left and right margins (ideal for titles and headings).
+  - Align Right (Ctrl + R): Pushes text straight against the right margin (used for dates and sign-offs).
+  - Justify (Ctrl + J): Stretches text so both the left and right sides are straight and neat like in textbooks.
+
+• Bulleted and Numbered Lists:
+  - Bulleted List: Uses dots or symbols for items where order does not matter (shopping list).
+  - Numbered List: Uses 1, 2, 3 for step-by-step instructions (cooking recipes, science steps).
+
+• Simple Tables:
+  - A grid made of horizontal Rows and vertical Columns.
+  - Cell: The little box where a row meets a column.`,
+    examples: [
+      {
+        id: 'ex-ict-fmt-1',
+        title: 'Choosing Text Alignments',
+        problem: 'Which text alignment is best for: (a) The title of a school composition; (b) A regular paragraph in an essay?',
+        stepByStepSolution: [
+          '(a) School composition title: CENTER alignment (Ctrl + E) so the heading sits neatly in the middle.',
+          '(b) Regular paragraph: LEFT alignment (Ctrl + L) or JUSTIFIED alignment (Ctrl + J) for clean, readable edges.'
+        ],
+        keyTakeaway: 'Center is for headings; Left or Justified is for body paragraphs.'
+      },
+      {
+        id: 'ex-ict-fmt-2',
+        title: 'Counting Cells in a Table',
+        problem: 'A teacher creates a table with 4 columns and 5 rows for class test marks. How many cells are in this table?',
+        stepByStepSolution: [
+          'Step 1: Total cells = Number of Columns × Number of Rows.',
+          'Step 2: Total cells = 4 × 5 = 20 cells.'
+        ],
+        keyTakeaway: 'Number of cells in a table equals rows multiplied by columns.'
       }
     ]
   },
   {
-    "id": "jhs1-ict-t10-wordprocessing",
-    "subjectId": "ict",
-    "level": "JHS 1",
-    "term": 2,
-    "orderIndex": 10,
-    "title": "Word Processing Basics (Microsoft Word)",
-    "description": "Navigate the Microsoft Word interface, create, save, and edit documents, and apply font formatting, text alignment, and clipboard operations.",
-    "isFreeTrial": true,
-    "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Fj0X7-wP9sI",
-    "youtubeId": "Fj0X7-wP9sI",
-    "keyNotes": "• What is a Word Processor?\n  - An application software package specifically designed for creating, editing, formatting, checking spelling, and printing text-based documents (e.g. Microsoft Word, Google Docs, LibreOffice Writer).\n• The Microsoft Word Interface Elements:\n  - Title Bar: Displays document name (e.g. 'Document1 - Word') and window control buttons (Minimize, Maximize/Restore, Close).\n  - Quick Access Toolbar: Customizable icons for frequent commands (Save, Undo, Redo).\n  - The Ribbon: Tabbed banner grouping tools into logical tabs (Home, Insert, Page Layout, References).\n  - Insertion Point (Cursor): The blinking vertical line '|' indicating where typed text will appear.\n  - Status Bar: Displays page number, word count, proofing language, and zoom slider at the bottom.\n• Essential Text Editing & Clipboard Operations:\n  - Copy (Ctrl + C): Duplicates selected text into the computer's temporary memory (the Clipboard) while leaving the original intact.\n  - Cut (Ctrl + X): Removes selected text from its current position and places it in the Clipboard.\n  - Paste (Ctrl + V): Inserts text from the Clipboard into the current cursor location.\n  - Undo (Ctrl + Z): Reverses the most recent action.\n  - Redo (Ctrl + Y): Repeats the action that was undone.\n• Basic Character Formatting:\n  - Font Style (typeface: Times New Roman, Calibri, Arial) and Font Size (measured in points, e.g. 12 pt).\n  - Font Attributes: Bold (Ctrl + B - heavy lettering), Italics (Ctrl + I - slanted lettering), Underline (Ctrl + U - line beneath text).\n• Paragraph Alignment:\n  - Align Left (Ctrl + L): Flushes text against left margin (standard for letters).\n  - Center (Ctrl + E): Centers text between margins (used for document headings and titles).\n  - Align Right (Ctrl + R): Flushes text against right margin (used for dates and sender addresses).\n  - Justify (Ctrl + J): Aligns text evenly along BOTH left and right margins, adding subtle spaces between words (used in textbooks and newspapers).",
-    "examples": [
+    id: 'jhs1-ict-t12-internetbasics',
+    subjectId: 'ict',
+    level: 'JHS 1',
+    term: 3,
+    orderIndex: 12,
+    title: 'Introduction to Electronic Spreadsheets (MS Excel) (NaCCA B7.2.3)',
+    description: 'Learn what spreadsheets are, understand rows, columns, and cell addresses (like A1, B5), and see how numbers are organized in Excel.',
+    isFreeTrial: true,
+    isVip: false,
+    youtubeUrl: 'https://www.youtube.com/watch?v=0kFj7f8v-7U',
+    youtubeId: '0kFj7f8v-7U',
+    keyNotes: `• What is an Electronic Spreadsheet?
+  - A computer software application designed to organize, calculate, and analyze numbers and data in rows and columns (e.g., Microsoft Excel, Google Sheets).
+  - Used by teachers to calculate exam grades, shopkeepers to calculate daily sales, and accountants in banks.
+
+• Parts of a Spreadsheet Window:
+  - Columns: Vertical sections identified by LETTERS (A, B, C, D...).
+  - Rows: Horizontal lines identified by NUMBERS (1, 2, 3, 4...).
+  - Cell: The intersection box where a column meets a row.
+  - Cell Address / Reference: The unique name of a cell given by its column letter followed by its row number (e.g., cell B3 is in Column B, Row 3).
+  - Active Cell: The currently selected cell outlined with a thick border.
+  - Formula Bar: The area at the top where you can see the content or math formula of the selected cell.
+
+• Types of Data in a Spreadsheet:
+  - Labels: Text words like names or headings (e.g., "Student Name", "Total Score").
+  - Values: Numbers used for calculations (e.g., 85, 92, 100).
+  - Formulas: Math instructions that always begin with an EQUAL SIGN (=) (e.g., =A1 + B1).`,
+    examples: [
       {
-        "id": "ex-ict-wp-1",
-        "title": "Cut vs Copy in Document Editing",
-        "problem": "Explain the difference between 'Cutting' text and 'Copying' text in Microsoft Word.",
-        "stepByStepSolution": [
-          "Step 1: 'Copying' (Ctrl + C) creates an exact duplicate of the highlighted text in the Clipboard while keeping the original text in its starting position.",
-          "Step 2: 'Cutting' (Ctrl + X) removes the highlighted text from its original position and stores it in the Clipboard so it can be moved to a new destination via 'Paste'."
+        id: 'ex-ict-ss-1',
+        title: 'Finding a Cell Address in Excel',
+        problem: 'What is the cell address of the box located in Column C and Row 8?',
+        stepByStepSolution: [
+          'Step 1: Always write the Column Letter first: C.',
+          'Step 2: Follow with the Row Number: 8.',
+          'Step 3: The cell address is C8.'
         ],
-        "keyTakeaway": "Copy duplicates text; Cut moves text from one location to another."
+        keyTakeaway: 'A cell address combines the column letter and row number (e.g., C8, A1).'
       },
       {
-        "id": "ex-ict-wp-2",
-        "title": "Choosing Paragraph Alignments for Official Documents",
-        "problem": "Which text alignments should be applied to: (a) An essay title, (b) A formal letter date, (c) A textbook paragraph?",
-        "stepByStepSolution": [
-          "(a) Essay title: CENTER Alignment (Ctrl + E) to position the heading symmetrically in the middle.",
-          "(b) Formal letter date: RIGHT Alignment (Ctrl + R) to flush the date against the right-hand margin.",
-          "(c) Textbook paragraph: JUSTIFIED Alignment (Ctrl + J) to produce clean, professional straight edges on both left and right margins."
+        id: 'ex-ict-ss-2',
+        title: 'How Formulas Begin in Spreadsheets',
+        problem: 'A student wants Excel to add two numbers in cell A1 and cell B1. How must the formula begin?',
+        stepByStepSolution: [
+          'Step 1: Every spreadsheet formula must always begin with an equal sign (=).',
+          'Step 2: The student should type: =A1 + B1.'
         ],
-        "keyTakeaway": "Center for titles, Right for dates/addresses, Justified for formal book paragraphs."
+        keyTakeaway: 'All formulas in Microsoft Excel and Google Sheets must start with an equal sign (=).'
       }
     ]
   },
   {
-    "id": "jhs1-ict-t11-documentformatting",
-    "subjectId": "ict",
-    "level": "JHS 1",
-    "term": 3,
-    "orderIndex": 11,
-    "title": "Word Processing Formatting: Lists, Tables & Graphics",
-    "description": "Format documents with bulleted/numbered lists, insert and format tables, add headers, footers, page borders, and insert images.",
-    "isFreeTrial": true,
-    "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=3uG7zC4p3rQ",
-    "youtubeId": "3uG7zC4p3rQ",
-    "keyNotes": "• Bulleted and Numbered Lists:\n  - Bulleted Lists: Used for unordered items where sequence does not matter (e.g. shopping list, ingredients). Displayed with geometric dots, checkmarks, or squares.\n  - Numbered Lists: Used for ordered items where chronological or priority sequence is vital (e.g. step-by-step science experiments, cooking recipes, rankings).\n• Inserting and Formatting Tables:\n  - A Table is a structured grid of horizontal ROWS and vertical COLUMNS.\n  - Cell: The individual intersection of a row and a column where text or numbers are typed.\n  - Merging Cells: Combining two or more adjacent cells into a single larger cell (frequently used for table headings).\n  - Splitting Cells: Dividing a single cell into multiple sub-cells.\n• Page Layout & Margins:\n  - Margins: The blank white border space separating the edge of the physical paper from document text (Top, Bottom, Left, Right). Standard margin is 1 inch (2.54 cm).\n  - Page Orientation:\n    * Portrait: Vertical page orientation where height is greater than width (standard for letters and essays).\n    * Landscape: Horizontal page orientation where width is greater than height (used for wide financial tables, certificates, and brochures).\n• Headers and Footers:\n  - Header: Repetitive text or graphics that automatically appear in the top margin of every page (e.g. document title, chapter name).\n  - Footer: Repetitive text that appears in the bottom margin of every page (e.g. page numbers, author name).\n• Inserting Graphics and Clipart:\n  - Illustrations tab allows inserting digital pictures, shapes (rectangles, arrows), and SmartArt diagrams.\n  - Text Wrapping: Controls how body text flows around an inserted picture (e.g. In Line with Text, Square, Tight, Behind Text).",
-    "examples": [
+    id: 'jhs1-ict-t13-email',
+    subjectId: 'ict',
+    level: 'JHS 1',
+    term: 3,
+    orderIndex: 13,
+    title: 'Computer Networks & Network Topologies (NaCCA B7.3.1)',
+    description: 'Learn what a computer network is, the difference between LAN and WAN, and basic network shapes (Bus, Star, Ring).',
+    isFreeTrial: true,
+    isVip: false,
+    youtubeUrl: 'https://www.youtube.com/watch?v=2Tz8-6e9K2Y',
+    youtubeId: '2Tz8-6e9K2Y',
+    keyNotes: `• What is a Computer Network?
+  - Two or more computers connected together so that they can share resources, files, and communicate with each other.
+
+• Benefits of a Computer Network:
+  - Sharing Hardware: All computers in a school lab can print using just ONE shared printer.
+  - Sharing Files & Software: Students can open files from the teacher's central computer without needing flash drives.
+  - Fast Communication: Send instant messages and emails between computers.
+
+• Types of Networks by Size:
+  - Local Area Network (LAN): Connects computers in a small area, like a single room, school lab, or office building.
+  - Wide Area Network (WAN): Connects computers across whole towns, countries, or the entire world (the Internet is the biggest WAN in the world!).
+
+• Network Topologies (How Computers are Connected):
+  1. Star Topology:
+     - All computers are connected individually to a central box called a Switch or Hub.
+     - Advantage: If one computer cable breaks, all other computers keep working!
+  2. Bus Topology:
+     - All computers are connected along a single central cable (the backbone).
+     - Simple and cheap, but if the main backbone cable breaks, the whole network stops.
+  3. Ring Topology:
+     - Each computer is connected to two neighbors, forming a closed circular loop.`,
+    examples: [
       {
-        "id": "ex-ict-fmt-1",
-        "title": "Portrait vs Landscape Page Orientation",
-        "problem": "A student is designing: (a) A formal application letter, (b) An inter-schools football tournament fixture table with 12 columns. Recommend the appropriate page orientation for each.",
-        "stepByStepSolution": [
-          "(a) Formal application letter: PORTRAIT orientation (vertical layout is standard for letters and essays).",
-          "(b) 12-column football fixture table: LANDSCAPE orientation (horizontal wider layout accommodates numerous columns across the page without squashing text)."
+        id: 'ex-ict-net-1',
+        title: 'LAN vs. WAN in Real Life',
+        problem: 'Classify the following networks: (a) 20 computers connected inside your school ICT laboratory; (b) The worldwide Internet network.',
+        stepByStepSolution: [
+          '(a) Computers inside one school lab: Local Area Network (LAN).',
+          '(b) The worldwide network across countries: Wide Area Network (WAN).'
         ],
-        "keyTakeaway": "Portrait is taller than wide (standard letters); Landscape is wider than tall (wide tables)."
+        keyTakeaway: 'LAN covers a small building; WAN connects computers across cities or the world.'
       },
       {
-        "id": "ex-ict-fmt-2",
-        "title": "Table Terminology: Rows, Columns, and Cells",
-        "problem": "If a teacher creates a table with 5 columns and 8 rows, calculate: (a) The total number of cells in the table, (b) Explain what happens when two cells are merged.",
-        "stepByStepSolution": [
-          "(a) Total cells = Number of Columns × Number of Rows = 5 × 8 = 40 cells.",
-          "(b) Merging cells combines the selected adjacent cells into one continuous single cell, commonly used across the top row to hold a centered table title."
+        id: 'ex-ict-net-2',
+        title: 'Why Star Topology is Most Popular in Schools',
+        problem: 'Why do most modern school computer labs use a Star Topology instead of a Bus Topology?',
+        stepByStepSolution: [
+          'Reason: In a Star Topology, if one student computer cable is unplugged, all other computers continue working without interruption.',
+          'In a Bus Topology, a break in the main line shuts down the entire classroom.'
         ],
-        "keyTakeaway": "Cells = Rows × Columns. Merging combines adjacent cells into one."
+        keyTakeaway: 'In a Star topology, one broken cable does not stop other computers from working.'
       }
     ]
   },
   {
-    "id": "jhs1-ict-t12-internetbasics",
-    "subjectId": "ict",
-    "level": "JHS 1",
-    "term": 3,
-    "orderIndex": 12,
-    "title": "Introduction to the Internet, World Wide Web & Web Browsers",
-    "description": "Understand the Internet vs World Wide Web, web browsers, search engines, URLs, hyperlinks, and country/domain extensions (.gh, .edu, .gov).",
-    "isFreeTrial": true,
-    "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0kFj7f8v-7U",
-    "youtubeId": "0kFj7f8v-7U",
-    "keyNotes": "• What is the Internet?\n  - The Internet (International Network) is the vast, global decentralized network of millions of interconnected computer networks communicating through standardized protocol suites (TCP/IP).\n• Internet vs World Wide Web (WWW):\n  - The Internet is the physical networking infrastructure (fiber optic cables, satellites, routers).\n  - The World Wide Web (WWW) is an information service operating on the Internet consisting of interconnected multimedia web pages linked by hyperlinks (invented by Sir Tim Berners-Lee in 1989).\n• Web Browsers vs Search Engines:\n  - Web Browser: An application software used to locate, retrieve, and render web pages from web servers (e.g. Google Chrome, Microsoft Edge, Mozilla Firefox, Apple Safari, Opera).\n  - Search Engine: An internet-based database program that searches web pages for specified keywords and returns a list of matching websites (e.g. Google Search, Bing, Yahoo).\n• Structure of a Uniform Resource Locator (URL):\n  - A URL is the global unique web address of a specific document on the Internet.\n  - Example: https://www.ges.gov.gh/curriculum/jhs1.html\n    * https:// → Protocol (Hypertext Transfer Protocol Secure).\n    * www.ges.gov.gh → Domain Name / Web Server address.\n    * /curriculum/ → Directory folder path.\n    * jhs1.html → Specific web page filename.\n• Common Top-Level Domains (TLDs) and Country Codes:\n  - .com: Commercial businesses.\n  - .edu or .ac: Educational institutions (schools, universities).\n  - .gov: Government ministries, departments, and state agencies.\n  - .org: Non-profit organizations and NGOs.\n  - Country-code TLDs: .gh (Ghana), .ng (Nigeria), .uk (United Kingdom), .za (South Africa).\n• Hyperlink: An underlined word, phrase, or graphic on a web page that, when clicked, immediately transports the user to another linked web document.",
-    "examples": [
+    id: 'jhs1-ict-t14-cybersecurity',
+    subjectId: 'ict',
+    level: 'JHS 1',
+    term: 3,
+    orderIndex: 14,
+    title: 'The Internet, Web Browsers & Safe Digital Living',
+    description: 'Explore the World Wide Web, web browsers (Chrome, Edge), web addresses (URLs), creating strong passwords, and avoiding online scams.',
+    isFreeTrial: true,
+    isVip: false,
+    youtubeUrl: 'https://www.youtube.com/watch?v=k5qP8uYQ2kY',
+    youtubeId: 'k5qP8uYQ2kY',
+    keyNotes: `• What is the Internet?
+  - A global network of millions of computers connected together worldwide.
+
+• Web Browsers vs. Search Engines:
+  - Web Browser: A program used to open and look at websites on your screen (e.g., Google Chrome, Microsoft Edge, Safari, Firefox).
+  - Search Engine: A website inside the browser used to find information by typing keywords (e.g., Google.com, Bing).
+
+• Web Addresses (URL):
+  - The unique address of a website (e.g., https://www.ges.gov.gh).
+  - Country code for Ghana: .gh
+  - Educational site: .edu or .ac
+  - Government agency: .gov
+
+• Staying Safe Online (Cyber Hygiene):
+  - Strong Passwords: Use at least 8 characters with a mix of capital letters, small letters, numbers, and symbols (e.g., "Gh@na#2026"). Never use your birthday or "123456"!
+  - Beware of Phishing Scams: Fake messages or fake calls claiming your MoMo account is blocked and asking for your secret PIN. Real banks never ask for your PIN!
+  - Netiquette: Be polite online; never type in ALL CAPITAL LETTERS because it looks like you are shouting in anger.`,
+    examples: [
       {
-        "id": "ex-ict-net-1",
-        "title": "Web Browser vs Search Engine",
-        "problem": "Explain why Google Chrome is classified as a Web Browser while Google.com is classified as a Search Engine.",
-        "stepByStepSolution": [
-          "Step 1: Google Chrome is an application program installed on your device whose duty is to open, interpret HTML code, and visually display web pages.",
-          "Step 2: Google.com is an online website and database engine accessed inside a browser that indexes billions of websites and returns search results based on user queries."
+        id: 'ex-ict-sec-1',
+        title: 'Web Browser vs. Search Engine',
+        problem: 'Explain why Google Chrome is a Web Browser while Google.com is a Search Engine.',
+        stepByStepSolution: [
+          'Step 1: Google Chrome is the application program you tap to open websites.',
+          'Step 2: Google.com is a search website you visit inside the browser to look up homework answers.'
         ],
-        "keyTakeaway": "You use a Web Browser (Chrome) to open and visit a Search Engine (Google.com)."
+        keyTakeaway: 'You open a browser (Chrome) to visit a search engine (Google.com).'
       },
       {
-        "id": "ex-ict-net-2",
-        "title": "Deconstructing a Web Address (URL)",
-        "problem": "Deconstruct the URL 'https://www.ucc.edu.gh' into its protocol, institution type, and country code.",
-        "stepByStepSolution": [
-          "1. Protocol: 'https' (Hypertext Transfer Protocol Secure, indicating encrypted communication).",
-          "2. Subdomain & Domain Name: 'www.ucc' (World Wide Web, University of Cape Coast).",
-          "3. Domain Extension: '.edu' (Educational institution).",
-          "4. Country Code: '.gh' (Ghana)."
+        id: 'ex-ict-sec-2',
+        title: 'Creating a Strong Password',
+        problem: 'Is the password "kofi2012" safe? How can a student make it much stronger?',
+        stepByStepSolution: [
+          'Step 1: "kofi2012" is weak because it uses a simple name and year that anyone can guess.',
+          'Step 2: Make it strong by mixing letters, numbers, and symbols: "K0f!#Accra26".'
         ],
-        "keyTakeaway": ".edu denotes an educational body; .gh denotes the country domain for Ghana."
+        keyTakeaway: 'Strong passwords mix uppercase letters, lowercase letters, numbers, and symbols.'
       }
     ]
   },
   {
-    "id": "jhs1-ict-t13-email",
-    "subjectId": "ict",
-    "level": "JHS 1",
-    "term": 3,
-    "orderIndex": 13,
-    "title": "Electronic Mail (Email) & Digital Communication",
-    "description": "Master the structure of email addresses, composing, CC vs BCC, file attachments, email etiquette (Netiquette), and benefits over postal mail.",
-    "isFreeTrial": true,
-    "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=2Tz8-6e9K2Y",
-    "youtubeId": "2Tz8-6e9K2Y",
-    "keyNotes": "• What is Electronic Mail (Email)?\n  - A digital transmission system that allows individuals to compose, send, store, and receive text messages, images, and documents over the Internet asynchronously.\n• Structure of an Email Address:\n  - Example: kwame.mensah@ges.gov.gh\n    * kwame.mensah → Username (unique identity chosen by the user).\n    * @ → The \"At\" symbol separating username from domain.\n    * ges.gov.gh → Domain name of the email service provider / organization.\n  - Important Rule: An email address must contain NO spaces!\n• Key Components of an Email Message:\n  - To: Primary recipient(s) for whom the message is intended.\n  - CC (Carbon Copy): Secondary recipients who receive a copy for informational purposes. All recipients can see who else was CC'd.\n  - BCC (Blind Carbon Copy): Secret recipients who receive a copy without their email address being visible to anyone in the 'To' or 'CC' fields.\n  - Subject: A concise summary describing the purpose of the email.\n  - Body: The actual text message.\n  - Attachment (Paperclip icon): Uploading external files (PDFs, pictures, Word documents, spreadsheets) to accompany the email.\n• Advantages of Email over Traditional Postal Mail (Snail Mail):\n  1. Incredible Speed: Arrives across continents within seconds, compared to days or weeks for physical post.\n  2. Cost-Effective: Virtually free beyond basic internet connectivity.\n  3. Multimedia Attachments: Can transmit documents, pictures, audio, and videos simultaneously.\n  4. Global Convenience: Accessible from any smartphone, laptop, or cybercafé worldwide.\n• Netiquette (Internet & Email Etiquette):\n  - Never write an entire email in CAPITAL LETTERS (typing in all caps is interpreted as rude shouting!).\n  - Always include a polite salutation, concise subject line, and formal sign-off.\n  - Never forward unverified rumors or chain spam messages.",
-    "examples": [
+    id: 'jhs1-ict-t15-algorithms',
+    subjectId: 'ict',
+    level: 'JHS 1',
+    term: 3,
+    orderIndex: 15,
+    title: 'Computational Thinking & Simple Algorithms (NaCCA B7.4.1)',
+    description: 'Learn step-by-step problem solving, everyday algorithms, and basic flowchart symbols (Oval, Rectangle, Parallelogram, Diamond).',
+    isFreeTrial: true,
+    isVip: false,
+    youtubeUrl: 'https://www.youtube.com/watch?v=AkFi90lZ3rk',
+    youtubeId: 'AkFi90lZ3rk',
+    keyNotes: `• What is an Algorithm?
+  - A clear, step-by-step list of instructions to solve a problem or complete a task.
+  - Everyday Example: A recipe for cooking jollof rice is an algorithm — it lists ingredients first, followed by steps to cook in order.
+
+• Rules of a Good Algorithm:
+  - Must have a clear START and a clear STOP.
+  - Every step must be clear and easy to follow.
+  - The steps must be in the correct logical order.
+
+• Ways to Show an Algorithm:
+  1. Pseudocode: An informal description of steps written in simple plain English (START, INPUT, CALCULATE, DISPLAY, STOP).
+  2. Flowchart: A diagram that shows the steps using standard shapes connected with arrows.
+
+• Basic Flowchart Shapes:
+  - OVAL: Start or Stop (the beginning or end of the steps).
+  - PARALLELOGRAM: Input or Output (getting data in or showing results out).
+  - RECTANGLE: Process (a calculation or action step like adding two numbers).
+  - DIAMOND: Decision (asking a Yes/No question, like "Is mark greater than 50?").
+  - ARROWS: Show the direction to go next.`,
+    examples: [
       {
-        "id": "ex-ict-em-1",
-        "title": "CC vs BCC in Official Email Sending",
-        "problem": "A headmaster wants to send an exam reminder to 50 parents simultaneously without revealing parents' private email addresses to one another. Should he use CC or BCC?",
-        "stepByStepSolution": [
-          "Recommendation: The headmaster must use BCC (Blind Carbon Copy).",
-          "Explanation: If CC (Carbon Copy) is used, all 50 parents will see everyone else's email address on their screens, violating personal data privacy. In BCC, each parent receives the email privately without seeing any other recipient's contact details."
+        id: 'ex-ict-alg-1',
+        title: 'Writing an Algorithm in Plain English',
+        problem: 'Write a simple 5-step algorithm to add two numbers and display the total.',
+        stepByStepSolution: [
+          'Step 1: START',
+          'Step 2: INPUT First Number and Second Number',
+          'Step 3: CALCULATE Total = First Number + Second Number',
+          'Step 4: DISPLAY Total',
+          'Step 5: STOP'
         ],
-        "keyTakeaway": "BCC hides recipient addresses; CC reveals recipient addresses to all."
+        keyTakeaway: 'An algorithm follows: START → INPUT → CALCULATE → DISPLAY → STOP.'
       },
       {
-        "id": "ex-ict-em-2",
-        "title": "Netiquette: The Capital Letters Rule",
-        "problem": "Why is sending an email written entirely in CAPITAL LETTERS considered poor Netiquette?",
-        "stepByStepSolution": [
-          "Step 1: In digital communications, words typed entirely in uppercase (e.g. 'SUBMIT YOUR ASSIGNMENT TODAY!') represent shouting or screaming in anger.",
-          "Step 2: Proper Netiquette requires standard sentence capitalization to maintain a respectful, professional, and courteous tone."
+        id: 'ex-ict-alg-2',
+        title: 'Matching Flowchart Shapes',
+        problem: 'Which flowchart shape represents: (a) START; (b) Adding two numbers; (c) Asking if Score >= 50?',
+        stepByStepSolution: [
+          '(a) START: OVAL (Terminal shape).',
+          '(b) Adding two numbers: RECTANGLE (Process shape).',
+          '(c) Asking if Score >= 50: DIAMOND (Decision shape with Yes/No paths).'
         ],
-        "keyTakeaway": "Typing in all capital letters is interpreted as shouting and violates Netiquette."
-      }
-    ]
-  },
-  {
-    "id": "jhs1-ict-t14-cybersecurity",
-    "subjectId": "ict",
-    "level": "JHS 1",
-    "term": 3,
-    "orderIndex": 14,
-    "title": "Cybersecurity, Malware & Data Protection",
-    "description": "Understand malware types (viruses, worms, trojans, spyware, ransomware), phishing scams, strong password construction, and data backup.",
-    "isFreeTrial": true,
-    "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=k5qP8uYQ2kY",
-    "youtubeId": "k5qP8uYQ2kY",
-    "keyNotes": "• What is Cybersecurity?\n  - The practice of protecting computer networks, servers, mobile devices, and sensitive personal data from malicious digital attacks, unauthorized access, theft, or damage.\n• Types of Malicious Software (Malware):\n  1. Computer Virus: A malicious program that attaches itself to legitimate files or programs and replicates when the infected program is run, corrupting files and slowing performance.\n  2. Computer Worm: A standalone program that replicates independently across networks without needing a host file, consuming bandwidth and crashing systems.\n  3. Trojan Horse: Malware disguised as an innocent or attractive software program (e.g. a free game) that secretly creates backdoors for hackers once installed.\n  4. Spyware: Software that secretly monitors a user's browsing activity and logs keystrokes (keylogger) to steal credit card numbers and passwords.\n  5. Ransomware: Encrypts a victim's files, locking them until a monetary ransom is paid to the cybercriminals.\n• Phishing:\n  - Deceptive fraudulent emails, SMS messages, or fake websites pretending to be legitimate institutions (e.g. a bank or MTN MoMo) to trick victims into revealing PINs, passwords, and banking credentials.\n• Preventative Cybersecurity Measures:\n  1. Antivirus Software: Installing and updating reputable security programs (Windows Defender, Kaspersky, Norton) to scan and quarantine malware.\n  2. Strong Passwords: At least 8–12 characters combining uppercase letters, lowercase letters, numbers, and special symbols (e.g. 'Gh@na#2026!'). Avoid names or birth years.\n  3. Firewalls: A hardware or software barrier that monitors incoming and outgoing network traffic, blocking unauthorized connections.\n  4. Regular Data Backup: Copying critical files onto external hard drives or secure cloud storage (Google Drive).\n  5. Safe Surfing Habits: Never clicking on suspicious email links or downloading software from unverified websites.",
-    "examples": [
-      {
-        "id": "ex-ict-sec-1",
-        "title": "Recognizing a Phishing Scam",
-        "problem": "A student receives an SMS: \"Urgent! Your MoMo account has been blocked. Click http://bit.ly/momo-fix to enter your 4-digit PIN immediately.\" Identify two indicators that this is a phishing scam.",
-        "stepByStepSolution": [
-          "Indicator 1: Creating false urgency and panic ('Urgent! Account blocked') to prompt hasty action without thinking.",
-          "Indicator 2: Requesting private security credentials (PIN). Legitimate financial institutions and telecommunication providers NEVER ask customers to provide secret PINs via web links."
-        ],
-        "keyTakeaway": "Never share secret PINs or passwords through SMS or unsolicited web links."
-      },
-      {
-        "id": "ex-ict-sec-2",
-        "title": "Designing a Strong Password",
-        "problem": "Evaluate the password 'kofi123' and explain how to transform it into a highly secure password.",
-        "stepByStepSolution": [
-          "Step 1 (Evaluation): 'kofi123' is extremely weak because it uses a common first name, predictable sequential numbers, and lacks uppercase letters or symbols.",
-          "Step 2 (Transformation): Apply complexity rules: combine uppercase, lowercase, numbers, and symbols: 'K0f!#Accr@2026'. This resists brute-force dictionary attacks."
-        ],
-        "keyTakeaway": "Strong passwords combine uppercase, lowercase, numbers, and symbols without predictable names."
-      }
-    ]
-  },
-  {
-    "id": "jhs1-ict-t15-algorithms",
-    "subjectId": "ict",
-    "level": "JHS 1",
-    "term": 3,
-    "orderIndex": 15,
-    "title": "Computational Thinking, Algorithms & Flowcharts",
-    "description": "Learn algorithm step-by-step problem solving, pseudocode, and standard flowchart symbols (terminal oval, input/output parallelogram, process rectangle, decision diamond).",
-    "isFreeTrial": true,
-    "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=AkFi90lZ3rk",
-    "youtubeId": "AkFi90lZ3rk",
-    "keyNotes": "• What is an Algorithm?\n  - A finite, unambiguous, step-by-step set of well-defined logical instructions designed to solve a specific problem or complete a task.\n• Characteristics of a Good Algorithm:\n  - Finite: Must terminate after a specific number of steps.\n  - Unambiguous: Each instruction must be crystal clear with only one possible interpretation.\n  - Feasible: Each step must be realistically executable.\n  - Has defined inputs and produces at least one clear output.\n• Methods of Representing Algorithms:\n  1. Pseudocode: An informal, high-level description of an algorithm written in plain English mimicking program code without strict programming syntax (using keywords like START, INPUT, IF, THEN, ELSE, OUTPUT, STOP).\n  2. Flowchart: A visual, graphic diagram representing an algorithm using standardized geometric symbols connected by directional flowlines.\n• Standard Flowchart Symbols (ANSI Standard):\n  - Oval (Terminal): Indicates the START or STOP / END of an algorithm.\n  - Parallelogram: Represents an INPUT operation (e.g. \"Input length and breadth\") or an OUTPUT operation (e.g. \"Display Area\").\n  - Rectangle: Represents a PROCESS or calculation operation (e.g. \"Area = length × breadth\").\n  - Diamond (Rhombus): Represents a DECISION or conditional test (e.g. \"Is Score >= 50?\"), with two exit paths labeled 'Yes' and 'No' (or 'True' and 'False').\n  - Flowlines (Arrows): Shows the sequential direction of process execution.",
-    "examples": [
-      {
-        "id": "ex-ict-alg-1",
-        "title": "Writing an Algorithm to Calculate the Area of a Rectangle",
-        "problem": "Write a step-by-step algorithm in pseudocode to calculate and display the area of a rectangle given its length and breadth.",
-        "stepByStepSolution": [
-          "Step 1: START",
-          "Step 2: INPUT length (L) and breadth (B)",
-          "Step 3: CALCULATE Area = L * B",
-          "Step 4: OUTPUT Area",
-          "Step 5: STOP"
-        ],
-        "keyTakeaway": "Algorithms follow a logical sequence: Start → Input → Calculate → Output → Stop."
-      },
-      {
-        "id": "ex-ict-alg-2",
-        "title": "Selecting Flowchart Symbols for Problem Solving",
-        "problem": "Which flowchart symbols should be used to represent: (a) Starting a program, (b) Checking if Age is greater than 18, (c) Calculating Total = Price + Tax?",
-        "stepByStepSolution": [
-          "(a) Starting a program: OVAL (Terminal symbol).",
-          "(b) Checking if Age is greater than 18: DIAMOND (Decision symbol with Yes/No exit paths).",
-          "(c) Calculating Total = Price + Tax: RECTANGLE (Process/Calculation symbol)."
-        ],
-        "keyTakeaway": "Oval = Start/End; Diamond = Decision; Rectangle = Process/Calculation."
+        keyTakeaway: 'Oval = Start/Stop; Rectangle = Process/Math; Diamond = Yes/No Decision.'
       }
     ]
   }
