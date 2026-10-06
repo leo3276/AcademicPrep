@@ -27,7 +27,7 @@ import PaystackPaymentModal from './PaystackPaymentModal';
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { student, isAdmin, logoutStudent, logoutAdmin } = useAuth();
+  const { student, isAdmin, logoutStudent, logoutAdmin, isTrialActive, trialDaysRemaining } = useAuth();
   
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [pinModalOpen, setPinModalOpen] = useState(false);
@@ -187,6 +187,14 @@ export default function Navbar() {
 
               <div className="h-5 w-px bg-slate-200 shrink-0 mx-0.5" />
 
+              {/* 30-Day Free Trial Banner Pill */}
+              {mounted && isTrialActive && (
+                <div className="hidden 2xl:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-blue-50/90 border border-blue-200/80 text-blue-700 text-xs font-bold whitespace-nowrap shadow-2xs">
+                  <span>🎁 30-Day Free Trial:</span>
+                  <span className="text-blue-900 font-extrabold bg-blue-100/80 px-1.5 py-0.5 rounded-md">{trialDaysRemaining}d left</span>
+                </div>
+              )}
+
               {/* Student Profile Pill */}
               {!mounted ? (
                 <div className="w-24 sm:w-28 h-8 rounded-xl bg-slate-100 animate-pulse shrink-0" />
@@ -205,13 +213,17 @@ export default function Navbar() {
                           {student.currentLevel}
                         </span>
                         <span className="text-[10px] text-slate-300">•</span>
-                        {student.hasFullAccess ? (
+                        {student.accessType === 'Full Pass' ? (
                           <span className="text-[9px] font-bold text-emerald-800 bg-emerald-100 px-1.5 py-0.2 rounded-full inline-flex items-center gap-0.5 whitespace-nowrap">
                             <CheckCircle2 className="w-2.5 h-2.5" /> VIP
                           </span>
+                        ) : isTrialActive ? (
+                          <span className="text-[9px] font-bold text-blue-700 bg-blue-100 px-1.5 py-0.2 rounded-full whitespace-nowrap inline-flex items-center gap-0.5">
+                            🎁 Trial ({trialDaysRemaining}d)
+                          </span>
                         ) : (
                           <span className="text-[9px] font-bold text-amber-800 bg-amber-100/90 px-1.5 py-0.2 rounded-full whitespace-nowrap">
-                            {student.accessType === 'Expired' ? 'VIP Expired' : `${student.topicsCompletedCount || 0}/3 Free`}
+                            {student.accessType === 'Expired' ? 'VIP Expired' : 'Trial Expired'}
                           </span>
                         )}
                       </div>
@@ -332,6 +344,21 @@ export default function Navbar() {
             </div>
 
             <div className="pt-2 border-t border-slate-100 flex flex-col gap-2">
+              {mounted && isTrialActive && (
+                <div className="p-3 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">🎁</span>
+                    <div>
+                      <p className="font-bold text-blue-950">30-Day Free Trial Active</p>
+                      <p className="text-[11px] text-blue-700">All subjects & quizzes unlocked</p>
+                    </div>
+                  </div>
+                  <span className="font-black text-blue-800 bg-blue-100/90 px-2 py-0.5 rounded-lg text-[11px] whitespace-nowrap">
+                    {trialDaysRemaining}d left
+                  </span>
+                </div>
+              )}
+
               <button
                 type="button"
                 onClick={handleOpenGuide}

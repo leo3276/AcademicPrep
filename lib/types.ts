@@ -12,6 +12,8 @@ export interface Student {
   hasFullAccess: boolean;
   accessType?: 'Full Pass' | 'Free Trial' | 'Expired';
   accessExpiresAt?: string;
+  trialStartedAt?: string;
+  trialExpiresAt?: string;
   completedTopicIds?: string[];
   topicsCompletedCount?: number;
   password?: string;

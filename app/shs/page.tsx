@@ -30,7 +30,7 @@ import PaystackPaymentModal from '@/components/PaystackPaymentModal';
 
 export default function ShsPortalPage() {
   const router = useRouter();
-  const { student, isLoading, topicProgress } = useAuth();
+  const { student, isLoading, topicProgress, isTrialActive, trialDaysRemaining, hasFullAccess } = useAuth();
   const [selectedLevel, setSelectedLevel] = useState<EducationLevel>('SHS 1');
   const [selectedElectiveGroup, setSelectedElectiveGroup] = useState<string>('general-arts');
   const [searchQuery, setSearchQuery] = useState('');
@@ -151,11 +151,26 @@ export default function ShsPortalPage() {
       </div>
 
       {/* Free Trial Banner */}
-      {!student?.hasFullAccess && (
+      {mounted && isTrialActive && (
+        <div className="p-3.5 rounded-2xl bg-blue-50 border border-blue-200/80 text-xs text-blue-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+          <div className="flex items-center gap-2">
+            <span className="text-base">🎁</span>
+            <span className="font-semibold">30-Day Free Trial Active: {trialDaysRemaining} days remaining of full access across all SHS Core &amp; Electives!</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowPaymentModal(true)}
+            className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-blue-200 text-blue-700 font-bold text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto shadow-2xs"
+          >
+            VIP Pass
+          </button>
+        </div>
+      )}
+      {mounted && !hasFullAccess && !isTrialActive && (
         <div className="p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200/80 text-xs text-amber-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
           <div className="flex items-center gap-2">
             <Crown className="w-4 h-4 text-amber-600 shrink-0" />
-            <span>Limited Free Access. Upgrade to VIP to unlock all SHS Core &amp; Elective lesson notes and quizzes.</span>
+            <span>Your 30-day free trial has expired. Upgrade to VIP to unlock all SHS Core &amp; Elective lesson notes and quizzes.</span>
           </div>
           <button
             type="button"

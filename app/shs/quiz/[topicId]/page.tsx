@@ -30,7 +30,7 @@ import PaystackPaymentModal from '@/components/PaystackPaymentModal';
 
 export default function ShsTopicQuizPage() {
   const params = useParams();
-  const { recordQuizScore, student, redeemPin, canAccessTopic } = useAuth();
+  const { recordQuizScore, student, redeemPin, canAccessTopic, isTrialActive, trialDaysRemaining, hasFullAccess } = useAuth();
   
   const [mounted, setMounted] = useState(false);
   const [pinInput, setPinInput] = useState('');
@@ -153,7 +153,7 @@ export default function ShsTopicQuizPage() {
   // Timer countdown
   useEffect(() => {
     if (!mounted || isSubmitted || timeLeftSeconds <= 0) return;
-    const isLocked = !student?.hasFullAccess && (topic?.isVip || !topic?.isFreeTrial);
+    const isLocked = !hasFullAccess;
     if (isLocked) return;
 
     const timer = setInterval(() => {
@@ -168,7 +168,7 @@ export default function ShsTopicQuizPage() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [isSubmitted, timeLeftSeconds, mounted, student, topic]);
+  }, [isSubmitted, timeLeftSeconds, mounted, hasFullAccess]);
 
   if (!topic || !quiz || !quiz.questions || quiz.questions.length === 0) {
     return (
@@ -189,7 +189,7 @@ export default function ShsTopicQuizPage() {
   }
 
   // VIP / Lock Verification
-  const isLocked = mounted && !student?.hasFullAccess && (topic.isVip || !topic.isFreeTrial);
+  const isLocked = mounted && !hasFullAccess;
 
   if (isLocked) {
     return (
@@ -201,13 +201,13 @@ export default function ShsTopicQuizPage() {
 
           <div className="space-y-2">
             <span className="text-[11px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
-              VIP Topic Quiz • {topic.level}
+              30-Day Free Trial Ended • {topic.level}
             </span>
             <h2 className="text-2xl font-black text-slate-900 tracking-tight">
               {topic.title}
             </h2>
             <p className="text-xs text-slate-600 leading-relaxed max-w-md mx-auto">
-              This interactive quiz is part of our full WASSCE curriculum. Free access includes preview topics — unlock all core and elective practice quizzes today.
+              Your 30-day free trial has expired. To unlock all core and elective practice quizzes and the full WASSCE curriculum, please upgrade to VIP or enter an Access PIN.
             </p>
           </div>
 

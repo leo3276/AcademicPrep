@@ -46,7 +46,10 @@ export default function StudentProfilePage() {
     weeklyExamAttempts, 
     redeemPin, 
     getCompletedTopicsCount,
-    logoutStudent
+    logoutStudent,
+    hasFullAccess,
+    isTrialActive,
+    trialDaysRemaining
   } = useAuth();
 
   const [mounted, setMounted] = useState(false);
@@ -267,20 +270,25 @@ export default function StudentProfilePage() {
                   <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
                     {student.fullName}
                   </h1>
-                  {isFullPass ? (
+                  {student.accessType === 'Full Pass' ? (
                     <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                       VIP Full Pass
                     </span>
-                  ) : student.accessType === 'Expired' ? (
+                  ) : isTrialActive ? (
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-900 border border-blue-200">
+                      <span>🎁</span>
+                      30-Day Free Trial Active ({trialDaysRemaining}d remaining)
+                    </span>
+                  ) : student.accessType === 'Expired' || !hasFullAccess ? (
                     <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-900 border border-rose-200">
                       <AlertCircle className="w-3.5 h-3.5 text-rose-600" />
-                      VIP Pass Expired
+                      Free Trial Expired
                     </span>
                   ) : (
                     <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-200">
                       <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
-                      Limited Free Access ({freeTopicsUsed}/3 Free Topics)
+                      Trial Expired
                     </span>
                   )}
                 </div>
@@ -334,42 +342,120 @@ export default function StudentProfilePage() {
         {/* ============================================================ */}
         {/* 2. ACCESS TIER & PRIVILEGES BANNER                           */}
         {/* ============================================================ */}
-        {!isFullPass ? (
+        {isTrialActive && !isFullPass ? (
+          <div className="bg-gradient-to-r from-blue-50/90 to-indigo-50/90 border border-blue-200 rounded-2xl p-5 sm:p-6 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h3 className="text-sm font-bold text-blue-950 flex items-center gap-2">
+                  <span className="text-base">🎁</span>
+                  <span>30-Day Free Trial Active</span>
+                </h3>
+                <p className="text-xs text-blue-900/80 mt-0.5">
+                  You have full, unrestricted access to all curriculum topics, video lessons, BECE past papers, diagnostic mocks, and weekly exams! ({trialDaysRemaining} days remaining)
+                </p>
+              </div>
+              <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-blue-100 text-blue-900 shrink-0">
+                {trialDaysRemaining} Days Left
+              </span>
+            </div>
+
+            {/* Feature Access Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-xs">
+              <div className="p-3 bg-white/80 rounded-xl border border-blue-200/60 flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="font-bold text-slate-800">All Topics</p>
+                  <p className="text-[10px] text-emerald-700 font-semibold">100% Unlocked</p>
+                </div>
+              </div>
+
+              <div className="p-3 bg-white/80 rounded-xl border border-blue-200/60 flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="font-bold text-slate-800">BECE Past Papers</p>
+                  <p className="text-[10px] text-emerald-700 font-semibold">100% Unlocked</p>
+                </div>
+              </div>
+
+              <div className="p-3 bg-white/80 rounded-xl border border-blue-200/60 flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="font-bold text-slate-800">Trial Mocks</p>
+                  <p className="text-[10px] text-emerald-700 font-semibold">100% Unlocked</p>
+                </div>
+              </div>
+
+              <div className="p-3 bg-white/80 rounded-xl border border-blue-200/60 flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="font-bold text-slate-800">Weekly CBT Exams</p>
+                  <p className="text-[10px] text-emerald-700 font-semibold">100% Unlocked</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick PIN Redemption Form */}
+            <form onSubmit={handleRedeemPin} className="pt-2 flex flex-col sm:flex-row gap-2 items-stretch">
+              <input
+                type="text"
+                placeholder="Have a VIP Pass PIN? (e.g. PREP-XXXX-XXXX)"
+                value={pinInput}
+                onChange={(e) => setPinInput(e.target.value.toUpperCase())}
+                className="flex-1 px-4 py-2 text-xs border border-blue-300 rounded-xl bg-white font-mono uppercase focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                type="submit"
+                disabled={pinLoading || !pinInput.trim()}
+                className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold text-xs transition whitespace-nowrap cursor-pointer"
+              >
+                {pinLoading ? 'Verifying...' : 'Redeem PIN'}
+              </button>
+            </form>
+
+            {pinFeedback && (
+              <div
+                className={`p-2.5 rounded-lg text-xs font-medium ${
+                  pinFeedback.success ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
+                }`}
+              >
+                {pinFeedback.text}
+              </div>
+            )}
+          </div>
+        ) : !isFullPass ? (
           <div className="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 sm:p-6 space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <h3 className="text-sm font-bold text-amber-950 flex items-center gap-2">
-                  {student.accessType === 'Expired' ? (
-                    <AlertCircle className="w-4 h-4 text-amber-600" />
-                  ) : (
-                    <Zap className="w-4 h-4 text-amber-600" />
-                  )}
-                  <span>
-                    {student.accessType === 'Expired'
-                      ? 'VIP Monthly Pass Expired'
-                      : `Free Trial Status: ${freeTopicsUsed} of ${maxFreeTopics} Topics Completed`}
-                  </span>
+                  <AlertCircle className="w-4 h-4 text-amber-600" />
+                  <span>30-Day Free Trial Ended</span>
                 </h3>
                 <p className="text-xs text-amber-900/80 mt-0.5">
-                  {student.accessType === 'Expired'
-                    ? 'Your 30-day VIP pass has expired. Renew for GH₵ 25/mo via Mobile Money or enter an Access PIN to restore full unlimited access.'
-                    : <>You have <b>{remainingFreeTopics} free {remainingFreeTopics === 1 ? 'topic' : 'topics'}</b> remaining. Once the 4th topic is triggered, an Access PIN is required to continue.</>}
+                  Your 30-day free trial has expired. Upgrade to VIP for GH₵ 25/mo via Mobile Money or enter an Access PIN to restore full unlimited access.
                 </p>
               </div>
               <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-amber-200/80 text-amber-900 shrink-0">
-                {student.accessType === 'Expired' ? 'Expired' : `${Math.round((freeTopicsUsed / maxFreeTopics) * 100)}% Used`}
+                Expired
               </span>
             </div>
 
             {/* Feature Access Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-xs">
               <div className="p-3 bg-white/80 rounded-xl border border-amber-200/60 flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
-                  <CheckCircle2 className="w-4 h-4" />
+                <div className="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center shrink-0">
+                  <Lock className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="font-bold text-slate-800">3 Free Topics</p>
-                  <p className="text-[10px] text-emerald-700 font-semibold">{remainingFreeTopics} left</p>
+                  <p className="font-bold text-slate-800">Curriculum Topics</p>
+                  <p className="text-[10px] text-rose-600 font-medium">PIN Required</p>
                 </div>
               </div>
 
@@ -416,7 +502,7 @@ export default function StudentProfilePage() {
               <button
                 type="submit"
                 disabled={pinLoading || !pinInput.trim()}
-                className="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 disabled:bg-slate-300 text-white font-bold text-xs transition whitespace-nowrap"
+                className="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 disabled:bg-slate-300 text-white font-bold text-xs transition whitespace-nowrap cursor-pointer"
               >
                 {pinLoading ? 'Verifying...' : 'Unlock VIP Access'}
               </button>

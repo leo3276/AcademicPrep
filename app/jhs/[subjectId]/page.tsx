@@ -33,7 +33,7 @@ import SubjectIcon from '@/components/SubjectIcon';
 export default function SubjectDetailPage() {
   const params = useParams();
   const searchParams = useSearchParams();
-  const { student, topicProgress, redeemPin } = useAuth();
+  const { student, topicProgress, redeemPin, isTrialActive, trialDaysRemaining, hasFullAccess } = useAuth();
 
   const [mounted, setMounted] = useState(false);
 
@@ -164,8 +164,31 @@ export default function SubjectDetailPage() {
         </div>
       </div>
 
-      {/* VIP Access Banner if student is on free trial */}
-      {mounted && !student?.hasFullAccess && (
+      {/* Free Trial / VIP Access Banner */}
+      {mounted && isTrialActive && !student?.hasFullAccess ? (
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-blue-500/10 border border-blue-200/90 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold shrink-0 shadow-xs">
+              <span className="text-base">🎁</span>
+            </div>
+            <div>
+              <p className="text-xs font-bold text-blue-950">
+                30-Day Free Trial Active • All {currentLevel} Topics & Quizzes Unlocked!
+              </p>
+              <p className="text-[11px] text-blue-800">
+                You have {trialDaysRemaining} days remaining of unrestricted access to all video lessons, worked examples, and quizzes.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => setPinModalOpen(true)}
+            className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-blue-200 text-blue-700 font-bold text-xs whitespace-nowrap self-start sm:self-auto flex items-center gap-1.5 cursor-pointer shadow-2xs"
+          >
+            <KeyRound className="w-3.5 h-3.5" />
+            <span>Have a VIP PIN?</span>
+          </button>
+        </div>
+      ) : mounted && !student?.hasFullAccess && !isTrialActive ? (
         <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/10 border border-amber-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold shrink-0 shadow-xs">
@@ -173,10 +196,10 @@ export default function SubjectDetailPage() {
             </div>
             <div>
               <p className="text-xs font-bold text-amber-950">
-                Unlock VIP Access for All {currentLevel} Topics & Video Lessons
+                Free Trial Ended • Upgrade to VIP Access for All {currentLevel} Topics
               </p>
               <p className="text-[11px] text-amber-800">
-                Topic 1 is free for everyone. Subsequent topics, step-by-step worked examples, and full quizzes require a VIP Pass.
+                Your 30-day free trial has expired. Enter an Access PIN or get a pass to unlock unlimited learning.
               </p>
             </div>
           </div>
@@ -188,7 +211,7 @@ export default function SubjectDetailPage() {
             <span>Redeem Access PIN</span>
           </button>
         </div>
-      )}
+      ) : null}
 
       {/* Topics List */}
       <div className="space-y-4">
@@ -212,7 +235,7 @@ export default function SubjectDetailPage() {
             {topics.map((topic, index) => {
               const progress = topicProgress[topic.id];
               const isCompleted = progress?.completed;
-              const isLocked = mounted && !student?.hasFullAccess && (topic.isVip || !topic.isFreeTrial);
+              const isLocked = mounted && !hasFullAccess;
 
               return (
                 <div
@@ -234,9 +257,10 @@ export default function SubjectDetailPage() {
                         <span className="text-[10px] font-semibold text-slate-500">
                           Term {topic.term}
                         </span>
-                        {topic.isFreeTrial ? (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700">
-                            Free Trial
+                        {topic.isFreeTrial || isTrialActive ? (
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200/80 flex items-center gap-1">
+                            <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                            {isTrialActive ? 'Free Trial' : 'Free Topic'}
                           </span>
                         ) : (
                           <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800 flex items-center gap-1">

@@ -31,7 +31,7 @@ import {
 import AccessPinModal from '@/components/AccessPinModal';
 
 export default function TrialQuestionsPage() {
-  const { student } = useAuth();
+  const { student, hasFullAccess, isTrialActive, trialDaysRemaining } = useAuth();
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
   const [documents, setDocuments] = useState<UploadedPdfDocument[]>([]);
@@ -39,7 +39,7 @@ export default function TrialQuestionsPage() {
   const [selectedDocForPin, setSelectedDocForPin] = useState<UploadedPdfDocument | null>(null);
 
   const handleDocumentAction = (e: React.MouseEvent, doc: UploadedPdfDocument) => {
-    if (!student?.hasFullAccess) {
+    if (!hasFullAccess) {
       e.preventDefault();
       setSelectedDocForPin(doc);
       setIsPinModalOpen(true);
@@ -166,6 +166,15 @@ export default function TrialQuestionsPage() {
             </p>
           </div>
         </div>
+
+        {mounted && isTrialActive && !student?.hasFullAccess && (
+          <div className="p-3.5 rounded-2xl bg-blue-50 border border-blue-200/80 text-xs text-blue-900 flex items-center justify-between shadow-2xs">
+            <span className="flex items-center gap-2 font-semibold">
+              <span className="text-base">🎁</span>
+              <span>30-Day Free Trial: All Diagnostic Mock Papers unlocked for viewing & download! ({trialDaysRemaining}d remaining)</span>
+            </span>
+          </div>
+        )}
 
         {/* Filter & Search Bar */}
         <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-xs space-y-4">

@@ -25,7 +25,7 @@ function LoginFormContent() {
   const redirectUrl = searchParams.get('redirect') || '/jhs/profile';
   const initialMode = searchParams.get('mode') === 'register' ? 'register' : 'signin';
 
-  const { student, signInStudent, registerStudent, logoutStudent } = useAuth();
+  const { student, signInStudent, registerStudent, logoutStudent, isTrialActive, trialDaysRemaining } = useAuth();
 
   const [activeTab, setActiveTab] = useState<'signin' | 'register'>(initialMode);
 
@@ -70,7 +70,11 @@ function LoginFormContent() {
                 {student.currentLevel}
               </span>
               <span>
-                {student.hasFullAccess ? '🟢 VIP Pass' : `🟡 Free (${student.topicsCompletedCount || 0}/3)`}
+                {student.accessType === 'Full Pass'
+                  ? '🟢 VIP Pass'
+                  : isTrialActive
+                  ? `🎁 30-Day Free Trial (${trialDaysRemaining}d left)`
+                  : '🟡 Trial Expired'}
               </span>
             </div>
           </div>
@@ -400,7 +404,7 @@ function LoginFormContent() {
                   <KeyRound className="w-3.5 h-3.5 text-amber-600" />
                   <span>Access PIN Code (Optional)</span>
                 </label>
-                <span className="text-[10px] text-slate-500 font-medium">Leave blank for Free Trial</span>
+                <span className="text-[10px] text-slate-500 font-medium">Leave blank for 30-Day Free Trial</span>
               </div>
               <input
                 type="text"
@@ -410,7 +414,7 @@ function LoginFormContent() {
                 className="w-full px-3 py-2.5 rounded-xl border border-amber-300 bg-amber-50/40 text-xs font-mono tracking-wider text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500 uppercase placeholder:normal-case placeholder:font-sans"
               />
               <p className="text-[11px] text-slate-500 leading-normal">
-                If you have an Access Pass, enter it for instant VIP access. Otherwise, leave it blank to start right away with 3 free trial topics!
+                If you have an Access Pass, enter it for instant permanent VIP access. Otherwise, leave it blank to start right away with your 30-day unrestricted free trial!
               </p>
             </div>
 

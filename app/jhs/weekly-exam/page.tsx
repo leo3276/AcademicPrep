@@ -44,7 +44,7 @@ import confetti from 'canvas-confetti';
 import AccessPinModal from '@/components/AccessPinModal';
 
 export default function WeeklyExamPage() {
-  const { student, topicProgress } = useAuth();
+  const { student, topicProgress, hasFullAccess, isTrialActive, trialDaysRemaining } = useAuth();
   const [mounted, setMounted] = useState(false);
   const [currentLevel, setCurrentLevel] = useState<EducationLevel>(student?.currentLevel || 'JHS 1');
   const [isPinModalOpen, setIsPinModalOpen] = useState(false);
@@ -139,7 +139,7 @@ export default function WeeklyExamPage() {
 
   // Start Exam
   const handleStartExam = () => {
-    if (!student?.hasFullAccess) {
+    if (!hasFullAccess) {
       setIsPinModalOpen(true);
       return;
     }
@@ -348,8 +348,24 @@ export default function WeeklyExamPage() {
               </p>
             </div>
 
-            {/* VIP Lock Notice */}
-            {mounted && !student?.hasFullAccess && (
+            {/* Free Trial / VIP Lock Notice */}
+            {mounted && isTrialActive && !student?.hasFullAccess ? (
+              <div className="mt-4 p-4 rounded-2xl bg-blue-50 border border-blue-200 text-blue-950 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center shrink-0">
+                    <span className="text-lg">🎁</span>
+                  </div>
+                  <div className="space-y-0.5">
+                    <p className="text-xs font-bold text-blue-950">
+                      30-Day Free Trial: Full CBT Adaptive Weekly Exam Unlocked!
+                    </p>
+                    <p className="text-[11px] text-blue-800">
+                      You have full access to timed objectives and theory marking rubrics ({trialDaysRemaining} days remaining of free trial).
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ) : mounted && !hasFullAccess && !isTrialActive ? (
               <div className="mt-4 p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-950 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
@@ -357,10 +373,10 @@ export default function WeeklyExamPage() {
                   </div>
                   <div className="space-y-0.5">
                     <p className="text-xs font-bold text-amber-950">
-                      Weekly Adaptive Examination Requires VIP Access Pass
+                      Free Trial Ended • Weekly Adaptive Examination Requires VIP Pass
                     </p>
                     <p className="text-[11px] text-amber-800">
-                      Free accounts allow studying up to 3 curriculum topics. An Access PIN unlocks full CBT weekly examinations featuring timed objectives and theory marking rubrics.
+                      Your 30-day free trial has expired. An Access PIN unlocks full CBT weekly examinations featuring timed objectives and theory marking rubrics.
                     </p>
                   </div>
                 </div>
@@ -372,7 +388,7 @@ export default function WeeklyExamPage() {
                   <span>Enter PIN to Unlock</span>
                 </button>
               </div>
-            )}
+            ) : null}
 
             {/* Exam Launch CTA */}
             <div className="mt-6 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
@@ -387,12 +403,12 @@ export default function WeeklyExamPage() {
               <button
                 onClick={handleStartExam}
                 className={`py-3 px-6 rounded-xl text-xs font-bold transition shadow-xs flex items-center justify-center gap-2 shrink-0 cursor-pointer ${
-                  !student?.hasFullAccess
+                  !hasFullAccess
                     ? 'bg-amber-600 hover:bg-amber-700 text-white'
                     : 'bg-slate-900 hover:bg-slate-800 text-white'
                 }`}
               >
-                {!student?.hasFullAccess ? (
+                {!hasFullAccess ? (
                   <>
                     <Lock className="w-4 h-4" />
                     <span>Unlock Weekly Exam (Enter PIN)</span>

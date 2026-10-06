@@ -30,7 +30,7 @@ import {
 
 export default function DetailedTopicLessonPage() {
   const params = useParams();
-  const { student, topicProgress, redeemPin, canAccessTopic } = useAuth();
+  const { student, topicProgress, redeemPin, canAccessTopic, isTrialActive, trialDaysRemaining, hasFullAccess } = useAuth();
 
   const [mounted, setMounted] = useState(false);
   const [activeSectionTab, setActiveSectionTab] = useState<'notes' | 'video' | 'examples'>('notes');
@@ -119,13 +119,13 @@ export default function DetailedTopicLessonPage() {
 
           <div className="space-y-2">
             <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-200">
-              Free Trial Limit Reached (3 of 3 Topics Used)
+              30-Day Free Trial Ended
             </span>
             <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">
               {topic.title}
             </h1>
             <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
-              {accessCheck.reason || 'You have completed your 3 free trial topics across all subjects. To unlock this 4th topic and the full curriculum, please enter or buy an Access PIN.'}
+              {accessCheck.reason || 'Your 30-day free trial has expired. To unlock this topic and the full curriculum, please enter or buy an Access PIN.'}
             </p>
           </div>
 
@@ -224,9 +224,9 @@ export default function DetailedTopicLessonPage() {
           <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">
             Topic {topic.orderIndex}
           </span>
-          {topic.isFreeTrial ? (
+          {topic.isFreeTrial || isTrialActive ? (
             <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200">
-              Free Trial Lesson
+              {isTrialActive ? `Free Trial (${trialDaysRemaining}d left)` : 'Free Trial Lesson'}
             </span>
           ) : (
             <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200 flex items-center gap-1">

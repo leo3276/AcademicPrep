@@ -37,7 +37,7 @@ import PaystackPaymentModal from '@/components/PaystackPaymentModal';
 
 export default function JhsPortalPage() {
   const router = useRouter();
-  const { student, isLoading, topicProgress, getCompletedTopicsCount } = useAuth();
+  const { student, isLoading, topicProgress, getCompletedTopicsCount, isTrialActive, trialDaysRemaining, hasFullAccess } = useAuth();
   const [selectedLevel, setSelectedLevel] = useState<EducationLevel>('JHS 1');
   const [mounted, setMounted] = useState(false);
   const [uploadedMocksCount, setUploadedMocksCount] = useState(0);
@@ -202,11 +202,26 @@ export default function JhsPortalPage() {
             </div>
           </div>
 
-          {!student?.hasFullAccess && (
+          {mounted && isTrialActive && (
+            <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-200/80 text-[11px] text-blue-900 flex items-center justify-between">
+              <span className="flex items-center gap-1.5 font-semibold">
+                <span className="text-xs">🎁</span>
+                <span>30-Day Free Trial: {trialDaysRemaining} days remaining of full access!</span>
+              </span>
+              <button
+                type="button"
+                onClick={() => setShowPaymentModal(true)}
+                className="font-bold text-blue-700 hover:text-blue-900 shrink-0 cursor-pointer text-[10px] uppercase tracking-wider bg-white px-2 py-0.5 rounded-md border border-blue-200 shadow-2xs"
+              >
+                VIP Pass
+              </button>
+            </div>
+          )}
+          {mounted && !hasFullAccess && !isTrialActive && (
             <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200/80 text-[11px] text-amber-900 flex items-center justify-between">
               <span className="flex items-center gap-1.5">
                 <KeyRound className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                <span>Limited Free Access: {getCompletedTopicsCount()} of 3 topics used.</span>
+                <span>Free Trial Ended. Upgrade to VIP to unlock all curriculum topics.</span>
               </span>
               <button
                 type="button"

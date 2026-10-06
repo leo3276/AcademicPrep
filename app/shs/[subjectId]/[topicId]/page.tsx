@@ -29,7 +29,7 @@ import PaystackPaymentModal from '@/components/PaystackPaymentModal';
 
 export default function ShsDetailedTopicLessonPage() {
   const params = useParams();
-  const { student, topicProgress } = useAuth();
+  const { student, topicProgress, isTrialActive, trialDaysRemaining, hasFullAccess } = useAuth();
 
   const [mounted, setMounted] = useState(false);
   const [activeSectionTab, setActiveSectionTab] = useState<'notes' | 'examples'>('notes');
@@ -74,7 +74,7 @@ export default function ShsDetailedTopicLessonPage() {
   }
 
   const isCompleted = mounted && topicProgress[topic.id]?.completed;
-  const isLocked = mounted && !student?.hasFullAccess && (topic.isVip || !topic.isFreeTrial);
+  const isLocked = mounted && !hasFullAccess;
   const detailedNotes = topic.detailedNotes;
   const examTips = detailedNotes?.wassceExamTips || detailedNotes?.examTips || detailedNotes?.beceExamTips;
 
@@ -136,9 +136,9 @@ export default function ShsDetailedTopicLessonPage() {
           <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-100 text-purple-800">
             WAEC / WASSCE Syllabus
           </span>
-          {topic.isFreeTrial ? (
+          {topic.isFreeTrial || isTrialActive ? (
             <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
-              Free Trial Topic
+              {isTrialActive ? `Free Trial (${trialDaysRemaining}d left)` : 'Free Trial Topic'}
             </span>
           ) : (
             <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800 flex items-center gap-1">

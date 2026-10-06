@@ -29,7 +29,7 @@ import PaystackPaymentModal from '@/components/PaystackPaymentModal';
 
 export default function TopicQuizPage() {
   const params = useParams();
-  const { recordQuizScore, student, redeemPin, canAccessTopic } = useAuth();
+  const { recordQuizScore, student, redeemPin, canAccessTopic, isTrialActive, trialDaysRemaining, hasFullAccess } = useAuth();
   
   const [mounted, setMounted] = useState(false);
   const [pinInput, setPinInput] = useState('');
@@ -159,7 +159,7 @@ export default function TopicQuizPage() {
   // Timer countdown
   useEffect(() => {
     if (!mounted || isSubmitted || timeLeftSeconds <= 0) return;
-    const isLocked = !student?.hasFullAccess && (topic?.isVip || !topic?.isFreeTrial);
+    const isLocked = !hasFullAccess;
     if (isLocked) return;
 
     const timer = setInterval(() => {
@@ -174,7 +174,7 @@ export default function TopicQuizPage() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [isSubmitted, timeLeftSeconds, mounted, student, topic]);
+  }, [isSubmitted, timeLeftSeconds, mounted, hasFullAccess]);
 
   if (!topic || !quiz || !quiz.questions || quiz.questions.length === 0) {
     return (
@@ -191,7 +191,7 @@ export default function TopicQuizPage() {
     );
   }
 
-  // 3-Topic Free Tier Check
+  // Access Check
   const accessCheck = mounted ? canAccessTopic(topic.id) : { allowed: true, topicsUsed: 0, maxFreeTopics: 3 };
   const isLocked = !accessCheck.allowed;
 
@@ -205,13 +205,13 @@ export default function TopicQuizPage() {
 
           <div className="space-y-2">
             <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-200">
-              Free Trial Limit Reached (3 of 3 Topics Used)
+              30-Day Free Trial Ended
             </span>
             <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">
               {quiz.title}
             </h1>
             <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
-              {accessCheck.reason || 'You have completed your 3 free trial topics across all subjects. To unlock this 4th topic and all 9 subjects, please enter or buy an Access PIN.'}
+              {accessCheck.reason || 'Your 30-day free trial has expired. To unlock unlimited practice quizzes and all subjects, please enter or buy an Access PIN.'}
             </p>
           </div>
 

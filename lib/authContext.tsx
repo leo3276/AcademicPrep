@@ -36,6 +36,9 @@ interface AuthContextType {
   student: Student | null;
   isAdmin: boolean;
   isLoading: boolean;
+  isTrialActive: boolean;
+  trialDaysRemaining: number;
+  hasFullAccess: boolean;
   topicProgress: Record<string, StudentTopicProgress>;
   pins: AccessPin[];
   transactions: CashFlowTransaction[];
@@ -75,6 +78,8 @@ const STORAGE_KEYS = {
   ACCESS_PINS: 'academicprep_access_pins',
   TRANSACTIONS: 'academicprep_cash_flow',
   EXAM_ATTEMPTS: 'academicprep_exam_attempts',
+  TRIAL_STARTED_AT: 'academicprep_trial_started_at',
+  TRIAL_EXPIRES_AT: 'academicprep_trial_expires_at',
 };
 
 // Credentials and admin flags must never live in the browser any more. These
@@ -131,6 +136,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [student, setStudent] = useState<Student | null>(null);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [trialDaysRemaining, setTrialDaysRemaining] = useState<number>(30);
+  const [isTrialActive, setIsTrialActive] = useState<boolean>(true);
   const [topicProgress, setTopicProgress] = useState<Record<string, StudentTopicProgress>>({});
   const [pins, setPins] = useState<AccessPin[]>([]);
   const [transactions, setTransactions] = useState<CashFlowTransaction[]>([]);
@@ -144,6 +151,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (typeof window !== 'undefined') {
           RETIRED_STORAGE_KEYS.forEach((key) => window.localStorage.removeItem(key));
           window.sessionStorage.removeItem('academicprep_is_admin');
+
+          let trialStarted = window.localStorage.getItem(STORAGE_KEYS.TRIAL_STARTED_AT);
+          let trialExpires = window.localStorage.getItem(STORAGE_KEYS.TRIAL_EXPIRES_AT);
+          if (!trialStarted || !trialExpires) {
+            trialStarted = new Date().toISOString();
+            trialExpires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+            window.localStorage.setItem(STORAGE_KEYS.TRIAL_STARTED_AT, trialStarted);
+            window.localStorage.setItem(STORAGE_KEYS.TRIAL_EXPIRES_AT, trialExpires);
+          }
+          const diff = new Date(trialExpires).getTime() - Date.now();
+          const daysLeft = Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+          if (isMounted) {
+            setTrialDaysRemaining(daysLeft);
+            setIsTrialActive(daysLeft > 0);
+          }
         }
 
         // Administrator state comes from the server session cookie, never from a
@@ -395,34 +417,40 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return Object.keys(topicProgress).filter((id) => topicProgress[id]?.completed).length;
   };
 
+  const isPaidVip = Boolean(
+    student?.hasFullAccess &&
+    student.accessType !== 'Free Trial' &&
+    (!student.accessExpiresAt || new Date(student.accessExpiresAt).getTime() > Date.now())
+  );
+
+  const hasFullAccess = Boolean(isPaidVip || isTrialActive);
+
+  const effectiveStudent: Student | null = student
+    ? {
+        ...student,
+        hasFullAccess: isPaidVip || isTrialActive,
+        accessType: isPaidVip ? 'Full Pass' : (isTrialActive ? 'Free Trial' : 'Expired'),
+      }
+    : null;
+
   const canAccessTopic = (topicId: string): { allowed: boolean; reason?: string; topicsUsed: number; maxFreeTopics: number } => {
-    const maxFreeTopics = 3;
-    const isExpired = student?.accessExpiresAt
-      ? new Date(student.accessExpiresAt).getTime() <= Date.now()
-      : false;
-    const isVip = Boolean(student?.hasFullAccess) && !isExpired;
-
-    if (isVip) {
-      return { allowed: true, topicsUsed: 0, maxFreeTopics };
-    }
-
     const completedIds = Object.keys(topicProgress).filter((id) => topicProgress[id]?.completed);
     const topicsUsed = completedIds.length;
 
+    if (hasFullAccess) {
+      return { allowed: true, topicsUsed, maxFreeTopics: 999 };
+    }
+
     if (completedIds.includes(topicId)) {
-      return { allowed: true, topicsUsed, maxFreeTopics };
+      return { allowed: true, topicsUsed, maxFreeTopics: 3 };
     }
 
-    if (topicsUsed >= maxFreeTopics) {
-      return {
-        allowed: false,
-        reason: `You have completed your ${maxFreeTopics} free trial topics across all subjects. To unlock this topic and unlimited learning, please enter or buy an Access PIN.`,
-        topicsUsed,
-        maxFreeTopics,
-      };
-    }
-
-    return { allowed: true, topicsUsed, maxFreeTopics };
+    return {
+      allowed: false,
+      reason: 'Your 30-Day Free Trial has ended. To unlock unlimited learning, please enter or buy an Access PIN.',
+      topicsUsed,
+      maxFreeTopics: 3,
+    };
   };
 
   const loginAdmin = async (primaryPin: string, secondaryPin: string): Promise<boolean> => {
@@ -615,9 +643,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   return (
     <AuthContext.Provider
       value={{
-        student,
+        student: effectiveStudent,
         isAdmin,
         isLoading,
+        isTrialActive,
+        trialDaysRemaining,
+        hasFullAccess,
         topicProgress,
         pins,
         transactions,

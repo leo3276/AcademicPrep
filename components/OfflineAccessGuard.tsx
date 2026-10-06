@@ -40,7 +40,7 @@ export default function OfflineAccessGuard() {
 
   if (!mounted) return null;
 
-  const isVip = Boolean(student?.hasFullAccess);
+  const isVip = Boolean(student?.accessType === 'Full Pass');
 
   // If user just reconnected
   if (justCameOnline) {
@@ -92,7 +92,7 @@ export default function OfflineAccessGuard() {
               You Are Currently Offline
             </h2>
             <p className="text-xs text-slate-600 leading-relaxed">
-              AcademicPrep requires an active internet connection for free-tier students. 
+              AcademicPrep requires an active internet connection during the free trial. 
               Only verified <b>VIP Pass</b> holders can access curriculum notes and quizzes <b>100% offline</b> without internet.
             </p>
           </div>

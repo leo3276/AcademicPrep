@@ -28,7 +28,7 @@ import PaystackPaymentModal from '@/components/PaystackPaymentModal';
 export default function ShsSubjectDetailPage() {
   const params = useParams();
   const searchParams = useSearchParams();
-  const { student, topicProgress, redeemPin } = useAuth();
+  const { student, topicProgress, redeemPin, isTrialActive, trialDaysRemaining, hasFullAccess } = useAuth();
 
   const [mounted, setMounted] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -185,6 +185,49 @@ export default function ShsSubjectDetailPage() {
         </div>
       </div>
 
+      {/* 30-Day Free Trial / VIP Banner */}
+      {mounted && isTrialActive && !student?.hasFullAccess ? (
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 border border-blue-200/90 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center font-bold shrink-0 shadow-xs">
+              <span className="text-base">🎁</span>
+            </div>
+            <div>
+              <p className="text-xs font-bold text-slate-900">
+                30-Day Free Trial Active • All SHS Topics & Quizzes Unlocked!
+              </p>
+              <p className="text-[11px] text-slate-600">
+                You have {trialDaysRemaining} days remaining of full, unrestricted access to all syllabus notes, worked examples, and practice quizzes.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => {
+              setModalTab('pin');
+              setShowPaymentModal(true);
+            }}
+            className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-purple-700 font-bold text-xs whitespace-nowrap self-start sm:self-auto flex items-center gap-1.5 cursor-pointer shadow-2xs"
+          >
+            <KeyRound className="w-3.5 h-3.5" />
+            <span>Have a VIP PIN?</span>
+          </button>
+        </div>
+      ) : mounted && !student?.hasFullAccess && !isTrialActive ? (
+        <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200 text-xs text-amber-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <Crown className="w-4 h-4 text-amber-600 shrink-0" />
+            <span>Your 30-day free trial has expired. Upgrade to VIP to unlock all SHS lessons and quizzes.</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowPaymentModal(true)}
+            className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-black text-white font-medium text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto"
+          >
+            Unlock VIP (GH₵ 25)
+          </button>
+        </div>
+      ) : null}
+
       {/* Topics List */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
@@ -206,7 +249,7 @@ export default function ShsSubjectDetailPage() {
             {topics.map((topic, index) => {
               const progress = topicProgress[topic.id];
               const isCompleted = progress?.completed;
-              const isLocked = mounted && !student?.hasFullAccess && (topic.isVip || !topic.isFreeTrial);
+              const isLocked = mounted && !hasFullAccess;
 
               return (
                 <div
@@ -228,9 +271,10 @@ export default function ShsSubjectDetailPage() {
                         <span className="text-[10px] font-semibold text-slate-500">
                           Term {topic.term}
                         </span>
-                        {topic.isFreeTrial ? (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700">
-                            Free Trial
+                        {topic.isFreeTrial || isTrialActive ? (
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200/80 flex items-center gap-1">
+                            <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                            {isTrialActive ? 'Free Trial' : 'Free Topic'}
                           </span>
                         ) : (
                           <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800 flex items-center gap-1">
