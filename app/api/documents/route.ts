@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
-import { UploadedPdfDocument } from '@/lib/pdfStore';
+import { UploadedPdfDocument, PdfCategory } from '@/lib/pdfStore';
 import { supabaseAdmin } from '@/lib/supabaseClient';
 import { requireAdmin } from '@/lib/adminAuth';
 
@@ -168,7 +168,7 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const file = formData.get('file') as File | null;
     const title = formData.get('title') as string | null;
-    const category = formData.get('category') as 'bece_past_question' | 'trial_mock' | null;
+    const category = formData.get('category') as PdfCategory | null;
     const subjectId = formData.get('subjectId') as string | null;
     const subjectName = formData.get('subjectName') as string | null;
     const yearRaw = formData.get('year') as string | null;

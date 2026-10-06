@@ -121,28 +121,57 @@ export default function Navbar() {
               >
                 SHS Portal
               </Link>
-              <Link
-                href="/jhs/bece-past-questions"
-                className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 2xl:px-2.5 rounded-lg whitespace-nowrap ${
-                  pathname === '/jhs/bece-past-questions' 
-                    ? 'text-blue-600 bg-blue-50 font-bold' 
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                }`}
-              >
-                <BookOpen className="w-3.5 h-3.5 text-blue-600" />
-                <span>BECE Past Questions</span>
-              </Link>
-              <Link
-                href="/jhs/trial-questions"
-                className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 2xl:px-2.5 rounded-lg whitespace-nowrap ${
-                  pathname === '/jhs/trial-questions' 
-                    ? 'text-emerald-700 bg-emerald-50 font-bold' 
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                }`}
-              >
-                <FileCheck className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Trial Mocks</span>
-              </Link>
+              {pathname.startsWith('/shs') ? (
+                <>
+                  <Link
+                    href="/shs/wassce-past-questions"
+                    className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 2xl:px-2.5 rounded-lg whitespace-nowrap ${
+                      pathname === '/shs/wassce-past-questions' 
+                        ? 'text-purple-600 bg-purple-50 font-bold' 
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    }`}
+                  >
+                    <BookOpen className="w-3.5 h-3.5 text-purple-600" />
+                    <span>WASSCE Past Questions</span>
+                  </Link>
+                  <Link
+                    href="/shs/trial-questions"
+                    className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 2xl:px-2.5 rounded-lg whitespace-nowrap ${
+                      pathname === '/shs/trial-questions' 
+                        ? 'text-amber-800 bg-amber-50 font-bold' 
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    }`}
+                  >
+                    <FileCheck className="w-3.5 h-3.5 text-amber-600" />
+                    <span>SHS Mocks</span>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/jhs/bece-past-questions"
+                    className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 2xl:px-2.5 rounded-lg whitespace-nowrap ${
+                      pathname === '/jhs/bece-past-questions' 
+                        ? 'text-blue-600 bg-blue-50 font-bold' 
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    }`}
+                  >
+                    <BookOpen className="w-3.5 h-3.5 text-blue-600" />
+                    <span>BECE Past Questions</span>
+                  </Link>
+                  <Link
+                    href="/jhs/trial-questions"
+                    className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 2xl:px-2.5 rounded-lg whitespace-nowrap ${
+                      pathname === '/jhs/trial-questions' 
+                        ? 'text-emerald-700 bg-emerald-50 font-bold' 
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    }`}
+                  >
+                    <FileCheck className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Trial Mocks</span>
+                  </Link>
+                </>
+              )}
 
               <Link
                 href="/blog"
@@ -384,6 +413,22 @@ export default function Navbar() {
               >
                 <span>SHS Lessons & Elective Quizzes</span>
                 <span className="text-[10px] font-bold bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full">WASSCE</span>
+              </Link>
+              <Link
+                href="/shs/wassce-past-questions"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2 text-sm font-semibold text-purple-700 flex items-center gap-1.5"
+              >
+                <BookOpen className="w-4 h-4 text-purple-600" />
+                WASSCE Past Questions (2008–2026)
+              </Link>
+              <Link
+                href="/shs/trial-questions"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2 text-sm font-semibold text-amber-800 flex items-center gap-1.5"
+              >
+                <FileCheck className="w-4 h-4 text-amber-600" />
+                SHS Trial Questions &amp; Mocks
               </Link>
               <Link
                 href="/jhs/bece-past-questions"

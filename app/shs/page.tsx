@@ -23,10 +23,12 @@ import {
   Palette,
   FlaskConical,
   X,
-  Crown
+  Crown,
+  FileCheck
 } from 'lucide-react';
 import SubjectIcon from '@/components/SubjectIcon';
 import PaystackPaymentModal from '@/components/PaystackPaymentModal';
+import { fetchUploadedDocuments } from '@/lib/pdfStore';
 
 export default function ShsPortalPage() {
   const router = useRouter();
@@ -36,6 +38,15 @@ export default function ShsPortalPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [mounted, setMounted] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [uploadedWassceCount, setUploadedWassceCount] = useState(0);
+  const [uploadedShsMockCount, setUploadedShsMockCount] = useState(0);
+
+  useEffect(() => {
+    fetchUploadedDocuments().then((docs) => {
+      setUploadedWassceCount(docs.filter(d => d.category === 'wassce_past_question').length);
+      setUploadedShsMockCount(docs.filter(d => d.category === 'shs_trial_mock').length);
+    }).catch(() => {});
+  }, []);
 
   useEffect(() => {
     setMounted(true);
@@ -263,6 +274,69 @@ export default function ShsPortalPage() {
               )}
             </div>
           )}
+        </div>
+      </div>
+
+      {/* ======================================================== */}
+      {/* WASSCE PAST QUESTIONS & TRIAL MOCKS QUICK CARDS          */}
+      {/* ======================================================== */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* WASSCE Past Questions Card */}
+        <div className="p-6 rounded-3xl bg-white border border-slate-200 hover:border-purple-400 shadow-sm transition space-y-3 flex flex-col justify-between">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded-full border border-purple-200">
+                WAEC Official
+              </span>
+              <span className="text-[11px] font-mono text-slate-500 font-semibold">
+                {uploadedWassceCount > 0 ? `${uploadedWassceCount} PDFs Available` : 'Admin Upload Archive'}
+              </span>
+            </div>
+            <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <BookOpen className="w-4 h-4 text-purple-600" />
+              WASSCE Past Questions (2008 – 2026)
+            </h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Authentic WAEC WASSCE question papers, objective tests, theory booklets, and marking schemes across Core and Elective subjects.
+            </p>
+          </div>
+          <Link
+            href="/shs/wassce-past-questions"
+            className="w-full py-2.5 px-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs"
+          >
+            <BookOpen className="w-3.5 h-3.5" />
+            <span>Open WASSCE Past Questions</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        {/* SHS Trial Questions Card */}
+        <div className="p-6 rounded-3xl bg-white border border-slate-200 hover:border-amber-400 shadow-sm transition space-y-3 flex flex-col justify-between">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
+                Mock Examinations
+              </span>
+              <span className="text-[11px] font-mono text-slate-500 font-semibold">
+                {uploadedShsMockCount > 0 ? `${uploadedShsMockCount} PDFs Available` : 'Diagnostic Papers'}
+              </span>
+            </div>
+            <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <FileCheck className="w-4 h-4 text-amber-600" />
+              SHS Trial Questions &amp; Mock Exams
+            </h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Diagnostic terminal tests, inter-school trial mocks, and preparation papers uploaded by faculty for SHS 1, SHS 2, and SHS 3.
+            </p>
+          </div>
+          <Link
+            href="/shs/trial-questions"
+            className="w-full py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs"
+          >
+            <FileCheck className="w-3.5 h-3.5" />
+            <span>Open SHS Trial Mocks</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
         </div>
       </div>
 

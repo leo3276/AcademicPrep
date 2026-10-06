@@ -4,7 +4,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/authContext';
 import { EducationLevel, AccessPin } from '@/lib/types';
-import { CURRICULUM_SUBJECTS, JHS_CURRICULUM_TOPICS } from '@/lib/curriculumData';
+import { CURRICULUM_SUBJECTS, JHS_CURRICULUM_TOPICS, SHS_CORE_SUBJECTS } from '@/lib/curriculumData';
+import { SHS_ELECTIVE_GROUPS } from '@/lib/curriculumShsElectives';
 import {
   getStoredTrafficData,
   clearStudentRosterCache,
@@ -12,7 +13,7 @@ import {
 } from '@/lib/adminStore';
 import { fetchStudents, adminGrantAccess, adminRevokeAccess } from '@/lib/apiClient';
 import { AdminStudentDetail, WebTrafficData } from '@/lib/types';
-import { getAllBeceYears } from '@/lib/becePastQuestionsData';
+import { getAllBeceYears, getAllWassceYears } from '@/lib/becePastQuestionsData';
 import { 
   UploadedPdfDocument, 
   fetchUploadedDocuments, 
@@ -20,7 +21,9 @@ import {
   deletePdfDocument, 
   formatFileSize,
   PdfCategory,
-  PdfPaperType
+  PdfPaperType,
+  getPdfCategoryLabel,
+  isShsCategory
 } from '@/lib/pdfStore';
 import { 
   BlogPost, 
@@ -824,7 +827,14 @@ export default function AdminDashboardPage() {
 
     try {
       setIsUploadingPdf(true);
-      const subName = CURRICULUM_SUBJECTS.find(s => s.id === pdfSubject)?.name || pdfSubject;
+      const allShsSubjects = [
+        ...SHS_CORE_SUBJECTS,
+        ...SHS_ELECTIVE_GROUPS.flatMap(g => g.subjects),
+      ];
+      const isShs = isShsCategory(pdfCategory);
+      const subName = isShs
+        ? (allShsSubjects.find(s => s.id === pdfSubject)?.name || pdfSubject)
+        : (CURRICULUM_SUBJECTS.find(s => s.id === pdfSubject)?.name || pdfSubject);
 
       const formData = new FormData();
       formData.append('file', pdfFile);
@@ -834,7 +844,7 @@ export default function AdminDashboardPage() {
       formData.append('subjectName', subName);
       formData.append('paperType', pdfPaperType);
 
-      if (pdfCategory === 'bece_past_question') {
+      if (pdfCategory === 'bece_past_question' || pdfCategory === 'wassce_past_question') {
         formData.append('year', String(pdfYear));
       } else {
         formData.append('level', pdfLevel);
@@ -914,6 +924,13 @@ export default function AdminDashboardPage() {
     a.download = `academicprep_students_${Date.now()}.csv`;
     a.click();
   };
+
+  // Deduplicated SHS Elective Subjects
+  const uniqueShsElectives = Array.from(
+    new Map(
+      SHS_ELECTIVE_GROUPS.flatMap(g => g.subjects).map(s => [s.id, s])
+    ).values()
+  );
 
   // Filtered Students
   const filteredStudents = students.filter(s => {
@@ -2081,8 +2098,22 @@ export default function AdminDashboardPage() {
               <div>
                 <h2 className="text-base font-semibold text-slate-900">PDF Document Management Hub</h2>
                 <p className="text-xs text-slate-500">
-                  Upload local PDF examination papers from your computer for BECE Past Questions and Trial Mocks.
+                  Upload local PDF examination papers from your computer for BECE &amp; WASSCE Past Questions, plus JHS &amp; SHS Trial Mocks.
                 </p>
+                <div className="flex items-center gap-2 mt-2 flex-wrap">
+                  <span className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200">
+                    BECE: {pdfDocuments.filter(d => d.category === 'bece_past_question').length} papers
+                  </span>
+                  <span className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-purple-50 text-purple-700 border border-purple-200">
+                    WASSCE: {pdfDocuments.filter(d => d.category === 'wassce_past_question').length} papers
+                  </span>
+                  <span className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    JHS Mocks: {pdfDocuments.filter(d => d.category === 'trial_mock').length} papers
+                  </span>
+                  <span className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200">
+                    SHS Mocks: {pdfDocuments.filter(d => d.category === 'shs_trial_mock').length} papers
+                  </span>
+                </div>
               </div>
 
               <div className="flex items-center gap-2">
@@ -2109,7 +2140,7 @@ export default function AdminDashboardPage() {
                 <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
                   <div>
                     <h3 className="text-sm font-semibold text-slate-900">Upload PDF Past Paper or Mock</h3>
-                    <p className="text-xs text-slate-500">Select a PDF file from your local computer and set the subject/year tags.</p>
+                    <p className="text-xs text-slate-500">Select a PDF file from your local computer and set the subject, examination category, and year/grade tags.</p>
                   </div>
                   <span className="text-[11px] font-mono text-slate-400">PDF Format Only</span>
                 </div>
@@ -2156,7 +2187,7 @@ export default function AdminDashboardPage() {
                             Click here to browse your computer for a PDF file
                           </p>
                           <p className="text-[11px] text-slate-500 mt-0.5">
-                            Supports official WAEC question papers, marking guides, and trial mocks.
+                            Supports official WAEC BECE/WASSCE question papers, marking guides, and trial mocks.
                           </p>
                         </div>
                       )}
@@ -2174,7 +2205,15 @@ export default function AdminDashboardPage() {
                       type="text"
                       value={pdfTitle}
                       onChange={(e) => setPdfTitle(e.target.value)}
-                      placeholder="e.g. BECE 2024 Integrated Science Paper 1 & 2 with Solutions"
+                      placeholder={
+                        pdfCategory === 'wassce_past_question'
+                          ? 'e.g. WASSCE 2024 Core Mathematics Paper 1 & 2 with Solutions'
+                          : pdfCategory === 'shs_trial_mock'
+                          ? 'e.g. SHS 3 Diagnostic Mock Exam - Elective Mathematics'
+                          : pdfCategory === 'bece_past_question'
+                          ? 'e.g. BECE 2024 Integrated Science Paper 1 & 2 with Solutions'
+                          : 'e.g. JHS 3 National Mock Examination - Social Studies'
+                      }
                       className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                       required
                     />
@@ -2182,52 +2221,122 @@ export default function AdminDashboardPage() {
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Document Category *
+                      Examination / Category *
                     </label>
                     <select
                       value={pdfCategory}
-                      onChange={(e) => setPdfCategory(e.target.value as PdfCategory)}
-                      className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900"
+                      onChange={(e) => {
+                        const nextCat = e.target.value as PdfCategory;
+                        setPdfCategory(nextCat);
+                        if (isShsCategory(nextCat)) {
+                          const allShs = [...SHS_CORE_SUBJECTS, ...SHS_ELECTIVE_GROUPS.flatMap(g => g.subjects)];
+                          if (!allShs.some(s => s.id === pdfSubject)) {
+                            setPdfSubject('math');
+                          }
+                          if (!pdfLevel.startsWith('SHS')) {
+                            setPdfLevel('SHS 3');
+                          }
+                        } else {
+                          if (!CURRICULUM_SUBJECTS.some(s => s.id === pdfSubject)) {
+                            setPdfSubject('math');
+                          }
+                          if (!pdfLevel.startsWith('JHS')) {
+                            setPdfLevel('JHS 3');
+                          }
+                        }
+                      }}
+                      className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900 font-medium"
                     >
-                      <option value="bece_past_question">BECE Past Question (2008 – 2026)</option>
-                      <option value="trial_mock">Trial Question / Mock Exam</option>
+                      <option value="bece_past_question">BECE Past Question (JHS · 2008 – 2026)</option>
+                      <option value="trial_mock">JHS Trial Mock / Diagnostic Exam</option>
+                      <option value="wassce_past_question">WASSCE Past Question (SHS · 2008 – 2026)</option>
+                      <option value="shs_trial_mock">SHS Trial Mock / Diagnostic Exam</option>
                     </select>
                   </div>
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Subject *
+                      Subject ({isShsCategory(pdfCategory) ? 'SHS' : 'JHS'}) *
                     </label>
                     <select
                       value={pdfSubject}
                       onChange={(e) => setPdfSubject(e.target.value)}
                       className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900"
                     >
-                      {CURRICULUM_SUBJECTS.map((s) => (
-                        <option key={s.id} value={s.id}>{s.name}</option>
-                      ))}
+                      {isShsCategory(pdfCategory) ? (
+                        <>
+                          <optgroup label="SHS Compulsory Core Subjects">
+                            {SHS_CORE_SUBJECTS.map((s) => (
+                              <option key={`shs-core-${s.id}`} value={s.id}>{s.name} (Core)</option>
+                            ))}
+                          </optgroup>
+                          {SHS_ELECTIVE_GROUPS.map((group) => (
+                            <optgroup key={`shs-grp-${group.id}`} label={`${group.name} Electives`}>
+                              {group.subjects.map((s) => (
+                                <option key={`shs-${group.id}-${s.id}`} value={s.id}>{s.name}</option>
+                              ))}
+                            </optgroup>
+                          ))}
+                        </>
+                      ) : (
+                        <>
+                          {CURRICULUM_SUBJECTS.map((s) => (
+                            <option key={s.id} value={s.id}>{s.name}</option>
+                          ))}
+                        </>
+                      )}
                     </select>
                   </div>
 
                   {pdfCategory === 'bece_past_question' ? (
                     <div>
                       <label className="block text-xs font-semibold text-slate-700 mb-1">
-                        Exam Year (2008 – 2026) *
+                        BECE Exam Year (2008 – 2026) *
                       </label>
                       <select
                         value={pdfYear}
                         onChange={(e) => setPdfYear(Number(e.target.value))}
-                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900"
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900 font-mono"
                       >
                         {getAllBeceYears().map((yr) => (
                           <option key={yr} value={yr}>BECE {yr}</option>
                         ))}
                       </select>
                     </div>
+                  ) : pdfCategory === 'wassce_past_question' ? (
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1">
+                        WASSCE Exam Year (2008 – 2026) *
+                      </label>
+                      <select
+                        value={pdfYear}
+                        onChange={(e) => setPdfYear(Number(e.target.value))}
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900 font-mono"
+                      >
+                        {getAllWassceYears().map((yr) => (
+                          <option key={yr} value={yr}>WASSCE {yr}</option>
+                        ))}
+                      </select>
+                    </div>
+                  ) : pdfCategory === 'shs_trial_mock' ? (
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1">
+                        Target SHS Grade Level *
+                      </label>
+                      <select
+                        value={pdfLevel}
+                        onChange={(e) => setPdfLevel(e.target.value as EducationLevel)}
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900"
+                      >
+                        <option value="SHS 1">SHS 1 (Year 1)</option>
+                        <option value="SHS 2">SHS 2 (Year 2)</option>
+                        <option value="SHS 3">SHS 3 (Year 3 - WASSCE Candidate)</option>
+                      </select>
+                    </div>
                   ) : (
                     <div>
                       <label className="block text-xs font-semibold text-slate-700 mb-1">
-                        Target Grade Level *
+                        Target JHS Grade Level *
                       </label>
                       <select
                         value={pdfLevel}
@@ -2250,7 +2359,7 @@ export default function AdminDashboardPage() {
                       onChange={(e) => setPdfPaperType(e.target.value as PdfPaperType)}
                       className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900"
                     >
-                      <option value="Combined Paper">Combined Paper (Section A & B)</option>
+                      <option value="Combined Paper">Combined Paper (Section A &amp; B)</option>
                       <option value="Paper 1">Paper 1 (Objectives)</option>
                       <option value="Paper 2">Paper 2 (Theory / Written)</option>
                       <option value="Marking Scheme">Official Marking Scheme</option>
@@ -2282,7 +2391,7 @@ export default function AdminDashboardPage() {
             {/* DOCUMENT REPOSITORY TABLE */}
             <div className="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm">
               <div className="p-4 border-b border-slate-200/80 flex flex-wrap items-center justify-between gap-3">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <button
                     onClick={() => setPdfFilterCategory('ALL')}
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
@@ -2297,21 +2406,41 @@ export default function AdminDashboardPage() {
                     onClick={() => setPdfFilterCategory('bece_past_question')}
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
                       pdfFilterCategory === 'bece_past_question'
-                        ? 'bg-slate-900 text-white'
+                        ? 'bg-blue-600 text-white font-bold'
                         : 'bg-slate-100 text-slate-600 hover:text-slate-900'
                     }`}
                   >
-                    BECE Past Questions ({pdfDocuments.filter(d => d.category === 'bece_past_question').length})
+                    BECE Past ({pdfDocuments.filter(d => d.category === 'bece_past_question').length})
+                  </button>
+                  <button
+                    onClick={() => setPdfFilterCategory('wassce_past_question')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                      pdfFilterCategory === 'wassce_past_question'
+                        ? 'bg-purple-600 text-white font-bold'
+                        : 'bg-slate-100 text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    WASSCE Past ({pdfDocuments.filter(d => d.category === 'wassce_past_question').length})
                   </button>
                   <button
                     onClick={() => setPdfFilterCategory('trial_mock')}
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
                       pdfFilterCategory === 'trial_mock'
-                        ? 'bg-slate-900 text-white'
+                        ? 'bg-emerald-600 text-white font-bold'
                         : 'bg-slate-100 text-slate-600 hover:text-slate-900'
                     }`}
                   >
-                    Trial Mocks ({pdfDocuments.filter(d => d.category === 'trial_mock').length})
+                    JHS Mocks ({pdfDocuments.filter(d => d.category === 'trial_mock').length})
+                  </button>
+                  <button
+                    onClick={() => setPdfFilterCategory('shs_trial_mock')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                      pdfFilterCategory === 'shs_trial_mock'
+                        ? 'bg-amber-600 text-white font-bold'
+                        : 'bg-slate-100 text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    SHS Mocks ({pdfDocuments.filter(d => d.category === 'shs_trial_mock').length})
                   </button>
                 </div>
 
@@ -2322,9 +2451,21 @@ export default function AdminDashboardPage() {
                     className="bg-slate-50 border border-slate-200 rounded-md px-2.5 py-1 text-xs text-slate-700"
                   >
                     <option value="ALL">All Subjects</option>
-                    {CURRICULUM_SUBJECTS.map(s => (
-                      <option key={s.id} value={s.id}>{s.name}</option>
-                    ))}
+                    <optgroup label="JHS Subjects">
+                      {CURRICULUM_SUBJECTS.map(s => (
+                        <option key={`f-jhs-${s.id}`} value={s.id}>{s.name} (JHS)</option>
+                      ))}
+                    </optgroup>
+                    <optgroup label="SHS Core Subjects">
+                      {SHS_CORE_SUBJECTS.map(s => (
+                        <option key={`f-shs-c-${s.id}`} value={s.id}>{s.name} (SHS Core)</option>
+                      ))}
+                    </optgroup>
+                    <optgroup label="SHS Elective Subjects">
+                      {uniqueShsElectives.map(s => (
+                        <option key={`f-shs-e-${s.id}`} value={s.id}>{s.name}</option>
+                      ))}
+                    </optgroup>
                   </select>
                 </div>
               </div>
@@ -2370,16 +2511,24 @@ export default function AdminDashboardPage() {
                               <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                                 doc.category === 'bece_past_question'
                                   ? 'bg-blue-50 text-blue-800 border border-blue-200'
+                                  : doc.category === 'wassce_past_question'
+                                  ? 'bg-purple-50 text-purple-800 border border-purple-200'
+                                  : doc.category === 'shs_trial_mock'
+                                  ? 'bg-amber-50 text-amber-800 border border-amber-200'
                                   : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                               }`}>
-                                {doc.category === 'bece_past_question' ? 'BECE Past Paper' : 'Trial Mock'}
+                                {getPdfCategoryLabel(doc.category)}
                               </span>
                             </td>
                             <td className="px-4 py-3 text-slate-700 font-medium">
                               {doc.subjectName}
                             </td>
                             <td className="px-4 py-3 font-mono text-slate-700">
-                              {doc.category === 'bece_past_question' ? `BECE ${doc.year}` : doc.level}
+                              {doc.category === 'bece_past_question'
+                                ? `BECE ${doc.year}`
+                                : doc.category === 'wassce_past_question'
+                                ? `WASSCE ${doc.year}`
+                                : (doc.level || 'All Levels')}
                             </td>
                             <td className="px-4 py-3 text-slate-600">
                               {doc.paperType}

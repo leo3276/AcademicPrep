@@ -3,8 +3,31 @@
 
 import { EducationLevel } from './types';
 
-export type PdfCategory = 'bece_past_question' | 'trial_mock';
+export type PdfCategory =
+  | 'bece_past_question'
+  | 'trial_mock'
+  | 'wassce_past_question'
+  | 'shs_trial_mock';
 export type PdfPaperType = 'Paper 1' | 'Paper 2' | 'Combined Paper' | 'Marking Scheme';
+
+export function getPdfCategoryLabel(category: PdfCategory): string {
+  switch (category) {
+    case 'bece_past_question':
+      return 'BECE Past Paper';
+    case 'trial_mock':
+      return 'JHS Trial Mock';
+    case 'wassce_past_question':
+      return 'WASSCE Past Paper';
+    case 'shs_trial_mock':
+      return 'SHS Trial Mock';
+    default:
+      return 'Document';
+  }
+}
+
+export function isShsCategory(category: PdfCategory): boolean {
+  return category === 'wassce_past_question' || category === 'shs_trial_mock';
+}
 
 export interface UploadedPdfDocument {
   id: string;
