@@ -20,12 +20,15 @@ import {
   Crown,
   Smartphone,
   Download,
-  ExternalLink
+  ExternalLink,
+  Flame,
+  Sparkles
 } from 'lucide-react';
 import { BlogPost, BlogCategory, BLOG_CATEGORIES, INITIAL_BLOG_POSTS, fetchBlogPosts } from '@/lib/blogStore';
 import PlatformTourGuide, { HOMEPAGE_TOUR_STEPS } from '@/components/PlatformTourGuide';
 import TourPromptToast from '@/components/TourPromptToast';
 import ApkDownloadModal from '@/components/ApkDownloadModal';
+import NewBlogNotificationToast from '@/components/NewBlogNotificationToast';
 import { OFFICIAL_APK_DOWNLOAD_URL, APK_FILE_SIZE } from '@/lib/apkConfig';
 
 export default function HomePage() {
@@ -61,6 +64,12 @@ export default function HomePage() {
     return () => window.removeEventListener('academicprep:open-tour', handleOpenTour);
   }, []);
 
+  const latestPost = [...blogPosts].sort(
+    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  )[0];
+
+  const featuredPosts = blogPosts.filter((p) => p.featured);
+
   return (
     <div className="space-y-12 sm:space-y-16 pb-16 sm:pb-20 w-full max-w-full overflow-hidden">
       {/* Hero Section */}
@@ -69,9 +78,23 @@ export default function HomePage() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="text-center max-w-3xl mx-auto space-y-5 sm:space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/20 border border-blue-400/40 text-blue-200 text-xs font-semibold backdrop-blur-sm max-w-full">
-              <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
-              <span className="truncate">Built for 8,000+ Online Students • AcademicPrep Portal</span>
+            <div className="flex flex-wrap items-center justify-center gap-2 max-w-full">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/20 border border-blue-400/40 text-blue-200 text-xs font-semibold backdrop-blur-sm max-w-full">
+                <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+                <span className="truncate">Built for 8,000+ Online Students • AcademicPrep Portal</span>
+              </div>
+
+              {latestPost && (
+                <Link
+                  href={`/blog/${latestPost.id}`}
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 hover:border-amber-300 text-amber-200 text-xs font-medium backdrop-blur-sm transition-all group max-w-full shadow-sm"
+                >
+                  <span className="flex h-2 w-2 rounded-full bg-amber-400 animate-ping shrink-0" />
+                  <span className="px-1.5 py-0.2 rounded bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 text-[10px] font-black uppercase tracking-wider">NEW BLOG</span>
+                  <span className="truncate max-w-[200px] sm:max-w-xs md:max-w-sm text-white font-medium">{latestPost.title}</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-amber-300 group-hover:translate-x-0.5 transition-transform shrink-0" />
+                </Link>
+              )}
             </div>
 
             <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-white">
@@ -689,10 +712,17 @@ export default function HomePage() {
             const filtered = blogCategory === 'ALL'
               ? blogPosts
               : blogPosts.filter((p) => p.category === blogCategory);
-            const featured = filtered.find((p) => p.featured) || filtered[0];
-            const side = filtered.filter((p) => p.id !== featured?.id).slice(0, 3);
+            
+            // Collect all featured articles in current view
+            const featuredList = blogCategory === 'ALL'
+              ? blogPosts.filter((p) => p.featured)
+              : filtered.filter((p) => p.featured);
+            
+            // If none marked featured in current view, fallback to first article
+            const primaryFeatured = featuredList[0] || filtered[0];
+            const remainingPosts = filtered.filter((p) => p.id !== primaryFeatured?.id);
 
-            if (!featured) {
+            if (!primaryFeatured) {
               return (
                 <div className="p-8 text-center text-xs text-slate-500">
                   No articles found in this category.
@@ -700,42 +730,172 @@ export default function HomePage() {
               );
             }
 
+            // Case A: Multiple featured posts in "ALL" view -> Multi-card Featured Spotlight
+            if (blogCategory === 'ALL' && featuredList.length > 1) {
+              return (
+                <div className="space-y-8">
+                  {/* Featured Spotlight Grid */}
+                  <div>
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="p-1 rounded-md bg-amber-100 text-amber-700">
+                        <Flame className="w-4 h-4 fill-amber-500 text-amber-500" />
+                      </span>
+                      <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+                        Featured by Editors & Examiners ({featuredList.length})
+                      </h3>
+                    </div>
+
+                    <div className={`grid grid-cols-1 ${featuredList.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-3'} gap-6`}>
+                      {featuredList.map((post) => (
+                        <div
+                          key={post.id}
+                          className="rounded-2xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-5 sm:p-6 shadow-md relative overflow-hidden group flex flex-col justify-between"
+                        >
+                          {/* Media Thumbnail */}
+                          {post.mediaType && post.mediaUrl && (
+                            <div className="w-full h-40 sm:h-44 rounded-xl overflow-hidden mb-4 bg-slate-950 relative border border-white/10 shrink-0">
+                              {post.mediaType === 'image' ? (
+                                <img
+                                  src={post.mediaUrl}
+                                  alt=""
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                  loading="lazy"
+                                />
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center">
+                                  <Play className="w-8 h-8 fill-white text-white" />
+                                </div>
+                              )}
+                            </div>
+                          )}
+
+                          <div className="space-y-3 relative z-10 flex-1">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-500 text-white text-[10px] font-black uppercase tracking-wider shadow-xs">
+                                <Flame className="w-2.5 h-2.5 fill-white" /> Featured
+                              </span>
+                              <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/20 text-white backdrop-blur-xs">
+                                {post.category}
+                              </span>
+                              <span className="text-[11px] text-slate-300 flex items-center gap-1 font-medium">
+                                <Clock className="w-3 h-3" />
+                                {post.readTimeMinutes} min
+                              </span>
+                            </div>
+
+                            <Link href={`/blog/${post.id}`}>
+                              <h3 className="text-base sm:text-lg font-extrabold text-white group-hover:text-blue-300 transition leading-snug line-clamp-2">
+                                {post.title}
+                              </h3>
+                            </Link>
+
+                            <p className="text-xs text-slate-300 leading-relaxed line-clamp-3">
+                              {post.excerpt}
+                            </p>
+                          </div>
+
+                          <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between relative z-10 text-xs">
+                            <span className="text-slate-300 text-[11px] truncate max-w-[140px]">
+                              By <b className="text-white">{post.author}</b>
+                            </span>
+
+                            <Link
+                              href={`/blog/${post.id}`}
+                              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition shadow-xs"
+                            >
+                              <span>Read Guide</span>
+                              <ArrowRight className="w-3 h-3" />
+                            </Link>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* More Recent Guides Strip */}
+                  {remainingPosts.length > 0 && (
+                    <div className="pt-4 border-t border-slate-100">
+                      <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">
+                        More Study Guides & Analysis
+                      </h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {remainingPosts.slice(0, 6).map((post) => (
+                          <Link
+                            key={post.id}
+                            href={`/blog/${post.id}`}
+                            className="p-4 rounded-xl border border-slate-200 hover:border-blue-400 bg-slate-50 hover:bg-white transition-all group flex flex-col justify-between"
+                          >
+                            <div className="space-y-1.5">
+                              <div className="flex items-center justify-between text-[11px]">
+                                <span className="px-2 py-0.5 rounded-full font-semibold bg-white border border-slate-200 text-slate-700">
+                                  {post.category}
+                                </span>
+                                <span className="text-slate-400 font-medium">
+                                  {post.readTimeMinutes} min
+                                </span>
+                              </div>
+                              <h5 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition line-clamp-2">
+                                {post.title}
+                              </h5>
+                              <p className="text-xs text-slate-500 line-clamp-2">
+                                {post.excerpt}
+                              </p>
+                            </div>
+                            <div className="pt-2 mt-2 flex items-center justify-between text-[11px] text-slate-400 border-t border-slate-200/60">
+                              <span className="truncate max-w-[120px]">{post.author}</span>
+                              <span className="text-blue-600 font-bold flex items-center gap-0.5">
+                                <span>Read</span>
+                                <ChevronRight className="w-3.5 h-3.5" />
+                              </span>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
+            // Case B: Single featured post or filtered view -> 7-col / 5-col Split
+            const side = remainingPosts.slice(0, 3);
+
             return (
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 {/* Featured Article Card (7 columns) */}
                 <div className="lg:col-span-7 flex flex-col justify-between rounded-2xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-8 shadow-md relative overflow-hidden group">
                   <div className="space-y-4 relative z-10">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-500 text-white text-[10px] font-bold uppercase tracking-wider">
-                        Featured Guide
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-500 text-white text-[10px] font-bold uppercase tracking-wider shadow-xs">
+                        <Flame className="w-2.5 h-2.5 fill-white" /> Featured Guide
                       </span>
                       <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-white/20 text-white backdrop-blur-xs">
-                        {featured.category}
+                        {primaryFeatured.category}
                       </span>
                       <span className="text-[11px] text-slate-300 flex items-center gap-1 font-medium">
                         <Clock className="w-3 h-3" />
-                        {featured.readTimeMinutes} min read
+                        {primaryFeatured.readTimeMinutes} min read
                       </span>
                     </div>
 
-                    <Link href={`/blog/${featured.id}`}>
+                    <Link href={`/blog/${primaryFeatured.id}`}>
                       <h3 className="text-xl sm:text-2xl font-extrabold text-white group-hover:text-blue-300 transition leading-snug">
-                        {featured.title}
+                        {primaryFeatured.title}
                       </h3>
                     </Link>
 
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed line-clamp-3">
-                      {featured.excerpt}
+                      {primaryFeatured.excerpt}
                     </p>
                   </div>
 
                   <div className="pt-6 mt-6 border-t border-white/10 flex items-center justify-between relative z-10">
                     <div className="text-xs text-slate-300 font-medium">
-                      By <span className="text-white font-bold">{featured.author}</span>
+                      By <span className="text-white font-bold">{primaryFeatured.author}</span>
                     </div>
 
                     <Link
-                      href={`/blog/${featured.id}`}
+                      href={`/blog/${primaryFeatured.id}`}
                       className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition shadow-sm"
                     >
                       <span>Read Full Guide</span>
@@ -809,8 +969,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Bottom Spacer */}
-
       {/* Android APK Download Information Modal */}
       <ApkDownloadModal
         isOpen={showApkModal}
@@ -825,6 +983,9 @@ export default function HomePage() {
         nextTourUrl="/jhs?tour=1"
         nextTourLabel="Explore JHS Study Portal Tour →"
       />
+
+      {/* Visitor Notification Alert for Newly Published Blog Posts */}
+      <NewBlogNotificationToast initialPosts={blogPosts} />
 
       {/* Polite Welcome Toast Inviting First-Time Visitors to Tour */}
       <TourPromptToast onStartTour={() => setShowTour(true)} />

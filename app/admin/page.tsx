@@ -498,11 +498,7 @@ export default function AdminDashboardPage() {
     const nextFeatured = !post.featured;
     // Optimistic toggle: instantly update in UI without triggering full reload blink
     setBlogPosts((prev) =>
-      prev.map((p) => {
-        if (p.id === post.id) return { ...p, featured: nextFeatured };
-        if (nextFeatured) return { ...p, featured: false };
-        return p;
-      })
+      prev.map((p) => (p.id === post.id ? { ...p, featured: nextFeatured } : p))
     );
 
     try {

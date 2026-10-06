@@ -167,12 +167,7 @@ export async function POST(req: NextRequest) {
       mediaCaption: body.mediaCaption ? body.mediaCaption.trim() : null,
     };
 
-    let updatedList = posts;
-    if (newPost.featured) {
-      updatedList = updatedList.map((p) => ({ ...p, featured: false }));
-    }
-
-    updatedList = [newPost, ...updatedList];
+    let updatedList = [newPost, ...posts];
     await saveStoredBlogPosts(updatedList);
 
     return NextResponse.json({ success: true, post: newPost });
@@ -217,9 +212,6 @@ export async function PUT(req: NextRequest) {
     }
 
     let updatedList = [...posts];
-    if (updates.featured) {
-      updatedList = updatedList.map((p) => ({ ...p, featured: false }));
-    }
 
     const updatedPost: BlogPost = {
       ...updatedList[index],

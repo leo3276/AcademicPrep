@@ -23,6 +23,7 @@ import {
   Smartphone
 } from 'lucide-react';
 import PaystackPaymentModal from './PaystackPaymentModal';
+import { fetchBlogPosts } from '@/lib/blogStore';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -33,9 +34,26 @@ export default function Navbar() {
   const [pinModalOpen, setPinModalOpen] = useState(false);
   const [modalTab, setModalTab] = useState<'momo' | 'pin'>('momo');
   const [mounted, setMounted] = useState(false);
+  const [hasNewBlog, setHasNewBlog] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    fetchBlogPosts()
+      .then((posts) => {
+        if (Array.isArray(posts) && posts.length > 0) {
+          const sorted = [...posts].sort(
+            (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+          );
+          const newest = sorted[0];
+          if (newest) {
+            const diffDays = (Date.now() - new Date(newest.publishedAt).getTime()) / (1000 * 60 * 60 * 24);
+            if (diffDays <= 14) {
+              setHasNewBlog(true);
+            }
+          }
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const handleOpenGuide = () => {
@@ -175,7 +193,7 @@ export default function Navbar() {
 
               <Link
                 href="/blog"
-                className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 2xl:px-2.5 rounded-lg whitespace-nowrap ${
+                className={`text-xs font-bold transition-colors flex items-center gap-1.5 px-2 py-1.5 2xl:px-2.5 rounded-lg whitespace-nowrap ${
                   pathname.startsWith('/blog')
                     ? 'text-blue-600 bg-blue-50 font-bold'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
@@ -183,6 +201,11 @@ export default function Navbar() {
               >
                 <FileText className="w-3.5 h-3.5 text-blue-600" />
                 <span>Journal & Guides</span>
+                {hasNewBlog && (
+                  <span className="px-1.5 py-0.2 rounded-full bg-amber-500 text-slate-950 text-[9px] font-black uppercase tracking-wider animate-pulse shadow-xs">
+                    NEW
+                  </span>
+                )}
               </Link>
 
               {/* Platform Feature Tour Guide Link */}
@@ -457,10 +480,17 @@ export default function Navbar() {
               <Link
                 href="/blog"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2 text-sm font-semibold text-slate-800 flex items-center gap-1.5"
+                className="py-2 text-sm font-semibold text-slate-800 flex items-center justify-between"
               >
-                <FileText className="w-4 h-4 text-blue-600" />
-                Study Journal & Guides
+                <div className="flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-blue-600" />
+                  <span>Study Journal & Guides</span>
+                </div>
+                {hasNewBlog && (
+                  <span className="px-2 py-0.5 rounded-full bg-amber-500 text-slate-950 text-[10px] font-black uppercase tracking-wider shadow-xs">
+                    NEW
+                  </span>
+                )}
               </Link>
 
               <Link
