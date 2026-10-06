@@ -81,7 +81,8 @@ import {
   Video as VideoIcon,
   UploadCloud,
   X,
-  MessageCircle
+  MessageCircle,
+  Check
 } from 'lucide-react';
 import { parseVideoUrl } from '@/lib/mediaUtils';
 
@@ -519,6 +520,27 @@ export default function AdminDashboardPage() {
       await loadBlogPosts(true);
       setBlogBanner({ kind: 'bad', text: err?.message || 'Error updating feature status.' });
     }
+  };
+
+  const [copiedPostId, setCopiedPostId] = useState<string | null>(null);
+
+  const handleCopyPostLink = (post: BlogPost) => {
+    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://academicprep.com';
+    const url = `${origin}/blog/${post.id}`;
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(url);
+      setCopiedPostId(post.id);
+      setTimeout(() => setCopiedPostId(null), 2500);
+    }
+  };
+
+  const handleSharePostWhatsApp = (post: BlogPost) => {
+    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://academicprep.com';
+    const url = `${origin}/blog/${post.id}`;
+    const text = encodeURIComponent(
+      `🎓 *${post.title}*\n\n${post.excerpt}\n\n👉 Read full post on AcademicPrep:\n${url}`
+    );
+    window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
   };
 
   useEffect(() => {
@@ -3327,6 +3349,36 @@ export default function AdminDashboardPage() {
                                   <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
                                     {post.excerpt}
                                   </p>
+                                  <div className="flex items-center gap-2 mt-1">
+                                    <button
+                                      type="button"
+                                      onClick={() => handleCopyPostLink(post)}
+                                      className="inline-flex items-center gap-1 text-[10px] text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-2 py-0.5 rounded font-mono transition cursor-pointer"
+                                      title="Click to copy direct URL"
+                                    >
+                                      {copiedPostId === post.id ? (
+                                        <>
+                                          <Check className="w-3 h-3 text-emerald-600" />
+                                          <span className="text-emerald-700 font-bold">Copied!</span>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <Copy className="w-3 h-3 text-blue-500" />
+                                          <span>academicprep.com/blog/{post.id}</span>
+                                        </>
+                                      )}
+                                    </button>
+
+                                    <button
+                                      type="button"
+                                      onClick={() => handleSharePostWhatsApp(post)}
+                                      className="inline-flex items-center gap-1 text-[10px] text-emerald-700 hover:text-emerald-900 bg-emerald-50 hover:bg-emerald-100 px-2 py-0.5 rounded font-semibold transition cursor-pointer"
+                                      title="Broadcast on WhatsApp"
+                                    >
+                                      <MessageCircle className="w-3 h-3 text-emerald-600" />
+                                      <span>WhatsApp</span>
+                                    </button>
+                                  </div>
                                 </div>
                               </div>
                             </td>
@@ -3351,6 +3403,29 @@ export default function AdminDashboardPage() {
 
                             <td className="px-4 py-3 whitespace-nowrap text-right space-x-1">
                               <button
+                                type="button"
+                                onClick={() => handleSharePostWhatsApp(post)}
+                                className="p-1.5 rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition cursor-pointer"
+                                title="Share to WhatsApp"
+                              >
+                                <MessageCircle className="w-3.5 h-3.5" />
+                              </button>
+
+                              <button
+                                type="button"
+                                onClick={() => handleCopyPostLink(post)}
+                                className="p-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition cursor-pointer"
+                                title="Copy direct public link"
+                              >
+                                {copiedPostId === post.id ? (
+                                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                                ) : (
+                                  <Copy className="w-3.5 h-3.5" />
+                                )}
+                              </button>
+
+                              <button
+                                type="button"
                                 onClick={() => handleToggleFeatured(post)}
                                 className={`p-1.5 rounded-lg border transition ${
                                   post.featured

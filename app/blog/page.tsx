@@ -369,16 +369,32 @@ export default function BlogIndexPage() {
                     <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
                       <div className="flex items-center gap-2 text-[11px] text-slate-500">
                         <User className="w-3.5 h-3.5 text-slate-400" />
-                        <span className="font-medium truncate max-w-[120px]">{post.author}</span>
+                        <span className="font-medium truncate max-w-[100px]">{post.author}</span>
                       </div>
 
-                      <Link
-                        href={`/blog/${post.id}`}
-                        className="text-xs font-bold text-blue-600 group-hover:text-blue-700 flex items-center gap-1 transition-colors"
-                      >
-                        <span>Read</span>
-                        <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                      </Link>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const origin = typeof window !== 'undefined' ? window.location.origin : 'https://academicprep.com';
+                            const url = `${origin}/blog/${post.id}`;
+                            const text = encodeURIComponent(`🎓 *${post.title}*\n\n${post.excerpt}\n\n👉 Read full post: ${url}`);
+                            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+                          }}
+                          className="p-1 rounded-md text-emerald-600 hover:bg-emerald-50 transition cursor-pointer"
+                          title="Share on WhatsApp"
+                        >
+                          <MessageCircle className="w-3.5 h-3.5" />
+                        </button>
+
+                        <Link
+                          href={`/blog/${post.id}`}
+                          className="text-xs font-bold text-blue-600 group-hover:text-blue-700 flex items-center gap-1 transition-colors"
+                        >
+                          <span>Read</span>
+                          <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </article>
