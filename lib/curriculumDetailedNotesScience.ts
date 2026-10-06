@@ -258,16 +258,16 @@ export const JHS1_SCIENCE_DETAILED_NOTES: Record<string, DetailedNotes> = {
         "realWorldExample": "Medical lab technicians at Korle-Bu Teaching Hospital use light microscopes to identify malaria parasites inside human red blood cells."
       },
       {
-        "title": "2. Major Cell Organelles and Their Vital Functions",
-        "content": "Organelles are specialized subcellular structures performing specific metabolic tasks:\n\n• Organelles Present in BOTH Plant and Animal Cells:\n  1. Nucleus:\n     - Structure: Spherical organelle enclosed by a double nuclear membrane containing chromatin threads (DNA) and a nucleolus.\n     - Function: The \"control center\" of the cell; regulates all metabolic activities, cell growth, protein synthesis, and carries genetic hereditary information.\n  2. Cell Membrane (Plasma Membrane):\n     - Structure: Thin, flexible, selectively (semi) permeable membrane composed of a phospholipid bilayer and proteins.\n     - Function: Encloses cell contents and regulates the transport of substances into and out of the cell.\n  3. Cytoplasm:\n     - Structure: Transparent, jelly-like fluid (cytosol) filling the interior of the cell.\n     - Function: Matrix where cell organelles are suspended; site where numerous metabolic enzymatic reactions (such as glycolysis) take place.\n  4. Mitochondrion (Plural: Mitochondria):\n     - Structure: Rod-shaped organelle with an inner folded membrane (cristae).\n     - Function: Known as the \"powerhouse of the cell\"; site of aerobic cellular respiration where glucose is broken down to release energy in the form of ATP (adenosine triphosphate).",
-        "keyTakeaway": "Nucleus = controls cell activities; Membrane = regulates entry/exit; Mitochondria = cellular respiration & ATP energy.",
-        "realWorldExample": "Active sperm cells and heart muscle cells contain thousands of mitochondria to supply continuous energy for movement and contraction."
+        "title": "2. Major Cell Structures and Their Functions",
+        "content": "A cell contains distinct functional structures called organelles that keep it alive:\n\n• Structures Present in BOTH Plant and Animal Cells:\n  1. Nucleus:\n     - The \"control center\" of the cell.\n     - Function: Regulates all cell activities and stores genetic instructions (DNA) passed from parents to offspring.\n  2. Cell Membrane:\n     - A thin, flexible barrier enclosing the cell.\n     - Function: Protects the cell contents and regulates the movement of substances (water, oxygen, nutrients, waste) into and out of the cell.\n  3. Cytoplasm:\n     - A clear, jelly-like fluid filling the space inside the cell.\n     - Function: The medium where cell parts float and where vital chemical reactions take place.\n  4. Mitochondrion (Plural: Mitochondria):\n     - Known as the \"powerhouse of the cell\".\n     - Function: Breaks down food substances to release energy for the cell to carry out life processes.",
+        "keyTakeaway": "Nucleus = controls cell activities; Cell Membrane = controls entry and exit; Cytoplasm = jelly where reactions happen; Mitochondria = releases energy.",
+        "realWorldExample": "Muscle cells that do active physical work contain many mitochondria to supply continuous energy."
       },
       {
         "title": "3. Plant Cell Specific Structures vs Animal Cells",
-        "content": "Plant cells have three unique structural features not found in typical animal cells:\n\n• Plant-Only Structures:\n  1. Cell Wall:\n     - A tough, rigid outer protective layer surrounding the cell membrane, made of cellulose fibers.\n     - Function: Gives the plant cell a fixed, rigid rectangular shape; provides mechanical support and prevents the plant cell from bursting when it absorbs water (turgor pressure). Fully permeable.\n  2. Chloroplasts:\n     - Disc-shaped organelles containing the green photosynthetic pigment chlorophyll.\n     - Function: Absorbs solar light energy and synthesizes glucose during photosynthesis.\n  3. Large Central Permanent Vacuole:\n     - A large fluid-filled cavity enclosed by a membrane called the tonoplast, filled with cell sap (water, dissolved sugars, and mineral salts).\n     - Function: Maintains internal osmotic pressure and turgidity to keep non-woody plant stems upright.\n\n• Direct Structural Comparison Table:\n\n| Feature | Plant Cell | Animal Cell |\n| :--- | :--- | :--- |\n| **Shape** | Regular, fixed rectangular shape | Irregular, flexible, rounded shape |\n| **Cell Wall** | Present (composed of cellulose) | Completely absent |\n| **Chloroplasts** | Present in green photosynthetic cells | Absent |\n| **Vacuole** | One large permanent central vacuole | Small, temporary vacuoles (if present) |\n| **Nucleus Position** | Pushed to the side (periphery) by vacuole | Usually centrally located |\n| **Food Storage** | Stored as Starch granules | Stored as Glycogen granules |",
+        "content": "Plant cells have three unique structural features not found in animal cells:\n\n• Plant-Only Structures:\n  1. Cell Wall:\n     - A tough, rigid outer protective boundary made of cellulose fibers.\n     - Function: Gives the plant cell a fixed, rectangular shape and provides structural strength so trees and crops stand upright.\n  2. Chloroplasts:\n     - Green disc-shaped structures containing the pigment chlorophyll.\n     - Function: Traps solar energy from the sun to make food (glucose) through photosynthesis.\n  3. Large Central Permanent Vacuole:\n     - A large fluid-filled space containing cell sap (water, dissolved sugars, and minerals).\n     - Function: Keeps the plant cell firm (turgid) and prevents plant leaves from wilting.\n\n• Direct Comparison Table:\n\n| Feature | Plant Cell | Animal Cell |\n| :--- | :--- | :--- |\n| **Shape** | Regular, fixed rectangular shape | Irregular, flexible rounded shape |\n| **Cell Wall** | Present (made of cellulose) | Completely absent |\n| **Chloroplasts** | Present in green parts (leaves) | Completely absent |\n| **Vacuole** | One large central permanent vacuole | Small, temporary vacuoles (if any) |\n| **Nucleus Position** | Pushed to the side by large vacuole | Usually near the center |",
         "keyTakeaway": "Remember the 3 Cs of Plant Cells: Cell Wall, Chloroplasts, and Central Vacuole. Animal cells have none of these three.",
-        "realWorldExample": "Wilted cassava leaves stand upright again after rain because water fills the plant cell vacuoles, restoring firm turgor pressure against the cell walls."
+        "realWorldExample": "Wilted cassava leaves stand upright again after rain because water fills the plant cell vacuoles, restoring firm pressure against the cell walls."
       }
     ],
     "commonMistakes": [
@@ -564,48 +564,49 @@ export const JHS1_SCIENCE_DETAILED_NOTES: Record<string, DetailedNotes> = {
   },
   "jhs1-sci-t13-energy": {
     "topicId": "jhs1-sci-t13-energy",
-    "realWorldContext": "Ghana's industrial development depends heavily on energy—from the mighty Akosombo Hydroelectric Dam on the Volta River to solar farms in the Northern Region and fuel powering commercial tro-tros. Mastering energy concepts enables efficient energy use and sustainable development.",
+    "realWorldContext": "Ghana's national growth depends heavily on energy—from the mighty Akosombo Hydroelectric Dam on the Volta River to solar streetlights in Northern Ghana and fuels powering commercial vehicles. Understanding energy forms, conversions, and conservation helps us use power wisely and sustainably.",
     "objectives": [
-      "Define energy, state its SI unit, and state the Law of Conservation of Energy.",
-      "Differentiate between potential energy and kinetic energy, and calculate gravitational potential energy (PE = mgh).",
-      "Trace energy transformations in everyday appliances, power stations, and biological systems.",
-      "Classify energy resources into renewable and non-renewable sources."
+      "Define energy, state its SI unit (Joule), and state the Law of Conservation of Energy.",
+      "Distinguish between kinetic energy and potential energy with everyday examples.",
+      "Trace energy transformations in household appliances and power stations.",
+      "Classify energy sources into renewable and non-renewable categories in Ghana."
     ],
     "sections": [
       {
         "title": "1. What is Energy? The Law of Conservation of Energy",
-        "content": "• Energy Definition:\n  Energy is defined as the capacity or ability to do work.\n  - The standard SI unit of energy is the JOULE (J).\n  - 1 Kilojoule (kJ) = 1,000 Joules.\n\n• The Law of Conservation of Energy:\n  \"Energy cannot be created, nor can it be destroyed; it can only be transformed (converted) from one form to another. The total quantity of energy in an isolated system remains constant.\"\n\n• Two Primary States of Mechanical Energy:\n  1. Potential Energy (PE):\n     - Stored energy possessed by a body due to its position, height, shape, or chemical state.\n     - Gravitational Potential Energy: Stored when an object is lifted above the ground against gravity.\n       * Formula: PE = Mass (m) × acceleration due to gravity (g) × Height (h)\n       * PE = m × g × h (where g ≈ 10 m/s² on Earth).\n     - Elastic Potential Energy: Stored in a stretched catapult rubber or compressed coil spring.\n     - Chemical Potential Energy: Stored in the chemical bonds of food, batteries, and fuels (petrol, firewood).\n  2. Kinetic Energy (KE):\n     - Energy possessed by a body due to its MOTION. Any moving mass has kinetic energy.\n     - Formula: KE = 1/2 × Mass (m) × Velocity² (v²)\n     - A speeding vehicle, running student, or rotating wind turbine blade possesses kinetic energy.",
-        "keyTakeaway": "Energy is the capacity to do work (unit: Joule). Energy cannot be created or destroyed, only transformed. PE = mgh; KE = 1/2 mv².",
-        "realWorldExample": "A stone held in a stretched catapult has Elastic Potential Energy; when released, it converts instantly into Kinetic Energy."
+        "content": "• Definition of Energy:\n  Energy is defined as the capacity or ability to do work.\n  - The standard SI unit of energy is the JOULE (J).\n  - 1 Kilojoule (kJ) = 1,000 Joules.\n\n• The Law of Conservation of Energy:\n  \"Energy cannot be created, nor can it be destroyed; it can only be transformed (converted) from one form to another. The total amount of energy remains constant.\"\n\n• Kinetic vs Potential Energy:\n  1. Kinetic Energy (KE):\n     - Energy possessed by a body due to its MOTION.\n     - Examples: A running athlete, a rolling football, moving wind, flowing river water.\n  2. Potential Energy (PE):\n     - Energy stored in a body due to its position, state, or chemical composition.\n     - Gravitational Potential Energy: Stored in an object lifted above the ground (e.g. water held in the Akosombo Dam reservoir, a coconut high up in a tree).\n     - Elastic Potential Energy: Stored in stretched or compressed materials (e.g. a stretched rubber catapult, a compressed mattress spring).\n     - Chemical Potential Energy: Stored in the bonds of substances (e.g. food, firewood, dry cell batteries, petrol).",
+        "keyTakeaway": "Energy is the ability to do work (unit: Joule). Energy cannot be created or destroyed, only transformed.",
+        "realWorldExample": "A stone held in a stretched catapult has Elastic Potential Energy; when released, it instantly converts into Kinetic Energy as it flies."
       },
       {
         "title": "2. Major Forms of Energy and Energy Transformations",
-        "content": "Energy exists in various interconnected forms:\n• Forms of Energy: Light, Sound, Thermal (Heat), Electrical, Chemical, Nuclear, and Mechanical (PE + KE).\n\n• Common Everyday Energy Transformations:\n  1. Battery-Powered Torch (Flashlight):\n     Chemical energy (battery) → Electrical energy (wires) → Light energy + Thermal energy (lamp).\n  2. Mobile Phone:\n     Chemical energy (lithium battery) → Electrical energy → Light energy (screen) + Sound energy (speaker) + Radio waves.\n  3. Electric Flat Iron / Electric Kettle:\n     Electrical energy → Heat (thermal) energy.\n  4. Photosynthesis in Plants:\n     Solar (light) energy → Chemical potential energy stored in glucose molecules.\n  5. Human Metabolism (Eating food and running):\n     Chemical energy (food) → Mechanical/Kinetic energy (muscle movement) + Heat energy.\n  6. Akosombo Hydroelectric Power Station:\n     Potential Energy of elevated dam water → Kinetic Energy of falling rushing water → Mechanical Energy of rotating turbine blades → Electrical Energy generated by electromagnetic dynamos → Sent through National Grid.",
-        "keyTakeaway": "Trace energy transformations step by step: Identify starting energy form → intermediary form → final energy output.",
-        "realWorldExample": "At Akosombo Dam, water held behind the dam wall has huge Gravitational Potential Energy, which turns into Kinetic Energy as it rushes down the penstocks."
+        "content": "Energy exists in several everyday forms:\n• Forms of Energy: Light, Sound, Thermal (Heat), Electrical, Chemical (in food, batteries, fuel), and Mechanical (Potential + Kinetic).\n\n• Common Everyday Energy Transformations:\n  1. Torch / Flashlight:\n     Chemical energy (dry cells) → Electrical energy (wires) → Light energy + Thermal energy (bulb).\n  2. Electric Flat Iron:\n     Electrical energy → Thermal (heat) energy.\n  3. Radio / Mobile Phone Speaker:\n     Electrical energy → Sound energy.\n  4. Photosynthesis in Green Plants:\n     Solar (light) energy from the sun → Chemical energy stored in food (glucose).\n  5. Human Body (Eating and Walking):\n     Chemical energy (food) → Kinetic energy (muscle motion) + Heat energy.\n  6. Akosombo Hydroelectric Dam:\n     Potential Energy (dammed water) → Kinetic Energy (rushing water) → Mechanical Energy (spinning turbines) → Electrical Energy (generators).",
+        "keyTakeaway": "Energy transformations follow step-by-step conversions: Start with input energy → trace intermediate form → final output form.",
+        "realWorldExample": "At Akosombo Dam, water stored high behind the dam wall has potential energy, which turns into kinetic energy as it rushes down to spin generators."
       },
       {
-        "title": "3. Renewable vs Non-Renewable Energy Sources",
-        "content": "Energy resources are categorized by sustainability and environmental impact:\n\n• 1. Renewable Energy Sources:\n  - Energy sources that are replenished naturally over short timescales and CANNOT be exhausted by human consumption. They produce little to no greenhouse gas emissions.\n  - Examples:\n    * Solar Energy: Sunlight converted directly to electricity via photovoltaic (PV) solar panels or used for solar water heating.\n    * Hydroelectric Energy: Flowing river water turning turbines (e.g. Akosombo and Bui dams).\n    * Wind Energy: Wind turbines generating electricity from atmospheric air currents.\n    * Biomass Energy: Organic plant and animal waste, biogas digesters.\n    * Tidal and Wave Energy: Ocean currents and tides.\n\n• 2. Non-Renewable Energy Sources:\n  - Finite natural resources that exist in limited quantities and CANNOT be replaced once depleted, because they take millions of years to form.\n  - Examples:\n    * Fossil Fuels: Crude oil (petroleum / petrol / diesel), Coal, and Natural Gas.\n    * Nuclear Energy: Uranium mineral ores.\n  - Environmental Impact: Burning fossil fuels releases carbon dioxide (driving global warming and climate change), sulfur dioxide (causing acid rain), and particulate soot.",
-        "keyTakeaway": "Renewable energy (Solar, Hydro, Wind) cannot run out; Non-renewable energy (Petroleum, Coal, Gas) is finite and polluting.",
-        "realWorldExample": "Solar streetlights along highways in Tamale and Accra harness renewable solar energy by day and illuminate streets by night."
+        "title": "3. Renewable vs Non-Renewable Energy Sources in Ghana",
+        "content": "Energy sources are classified by whether they can be naturally replaced:\n\n• 1. Renewable Energy Sources:\n  - Energy sources that are replenished naturally and CANNOT run out through human use. They are clean and environmentally friendly.\n  - Examples in Ghana:\n    * Solar Energy: Abundant sunlight used for solar streetlights and solar home systems.\n    * Hydroelectric Energy: Flowing river water at Akosombo, Kpong, and Bui dams.\n    * Wind Energy: Wind along coastal and upland areas.\n    * Biomass: Plant and animal organic waste, biogas digesters.\n\n• 2. Non-Renewable Energy Sources:\n  - Finite natural resources that exist in limited amounts and CAN be exhausted because they take millions of years to form.\n  - Examples:\n    * Fossil Fuels: Crude petroleum (petrol, diesel, kerosene), Coal, and Natural Gas.\n  - Environmental Impact: Burning fossil fuels produces smoke, soot, and carbon dioxide, contributing to air pollution and climate change.",
+        "keyTakeaway": "Renewable energy (Solar, Hydro, Wind) never runs out; Non-renewable energy (Petrol, Coal, Gas) is limited and polluting.",
+        "realWorldExample": "Using solar-powered traffic lights in Accra and Kumasi ensures traffic signals stay functional during power cuts."
       }
     ],
     "commonMistakes": [
-      "Saying energy is \"used up\" or \"destroyed\"—energy is never destroyed; it merely degrades into less useful forms like low-grade heat and sound.",
-      "Confusing Potential Energy (position/height) with Kinetic Energy (movement).",
-      "Forgetting to state units in calculation: Joules (J) for energy.",
-      "Claiming that nuclear energy is renewable—uranium ore is a finite mineral."
+      "Saying energy is \"used up\" or \"destroyed\"—energy is never destroyed; it merely changes into heat or sound.",
+      "Confusing Potential Energy (stored energy) with Kinetic Energy (energy of motion).",
+      "Forgetting the standard unit of energy: Joules (J).",
+      "Thinking crude oil or petrol can be renewed quickly (they take millions of years to form)."
     ],
     "beceExamTips": [
-      "In energy transformation questions, always write the sequence using arrows: Chemical → Electrical → Light + Heat.",
-      "Calculate PE accurately: PE = m × g × h. Double check that mass is in kg and height in metres before multiplying."
+      "In energy transformation questions, always write the sequence clearly using arrows: Chemical → Electrical → Light + Heat.",
+      "Remember that Akosombo Dam transforms: Potential Energy → Kinetic Energy → Mechanical Energy → Electrical Energy.",
+      "Name 2 renewable energy sources used in Ghana: Solar energy and Hydroelectric energy."
     ],
     "summaryChecklist": [
-      "Know the Law of Conservation of Energy.",
-      "Can calculate PE = mgh.",
-      "Can trace energy transformations in household appliances and power dams.",
-      "Can classify energy sources into renewable and non-renewable."
+      "Can state the Law of Conservation of Energy and SI unit (Joule).",
+      "Understand the difference between Potential Energy and Kinetic Energy.",
+      "Can trace energy transformations in household appliances (iron, torch, radio).",
+      "Can classify energy sources into renewable and non-renewable in Ghana."
     ]
   },
   "jhs1-sci-t14-circuits": {

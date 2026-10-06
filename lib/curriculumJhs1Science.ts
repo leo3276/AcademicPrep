@@ -205,7 +205,7 @@ export const JHS1_SCIENCE_TOPICS: CurriculumTopic[] = [
     "isVip": false,
     "youtubeUrl": "https://www.youtube.com/watch?v=URUJD5NEXC8",
     "youtubeId": "URUJD5NEXC8",
-    "keyNotes": "The cell is the basic structural and functional unit of all living organisms.\n• Key Organelles & Functions:\n  - Nucleus: Contains chromosomes (DNA) and controls all metabolic and reproductive activities of the cell.\n  - Cell Membrane: Selectively permeable barrier that controls the movement of substances into and out of the cell.\n  - Cytoplasm: Jelly-like fluid containing cytosol and organelles; site of many cellular chemical reactions.\n  - Mitochondrion (Plural: Mitochondria): \"Powerhouse of the cell\" where cellular respiration occurs to release energy (ATP).\n  - Vacuole: Fluid-filled sac storing cell sap, water, and waste products.\n• Plant Cell Specific Structures:\n  - Cell Wall: Rigid outer boundary made of cellulose providing structural support, rigidity, and protection.\n  - Chloroplasts: Contain the green pigment chlorophyll which absorbs sunlight for photosynthesis.\n  - Large Central Permanent Vacuole: Helps maintain turgor pressure.\n• Comparison Table:\n  - Plant Cell: Regular fixed rectangular shape, cellulose cell wall present, chloroplasts present, large central vacuole.\n  - Animal Cell: Irregular flexible shape, cell wall absent, chloroplasts absent, small temporary vacuoles.",
+    "keyNotes": "The cell is the basic building block and functional unit of all living things.\n• Main Parts of a Cell:\n  - Nucleus: The control center of the cell; directs all activities and contains genetic information.\n  - Cell Membrane: A thin, flexible outer skin that controls what enters and leaves the cell.\n  - Cytoplasm: The jelly-like substance where cell parts float and chemical reactions happen.\n  - Mitochondrion: Often called the powerhouse of the cell because it releases energy from food.\n  - Vacuole: A fluid-filled sac that stores water, cell sap, and nutrients.\n• Extra Parts Found ONLY in Plant Cells:\n  - Cell Wall: A tough outer layer made of cellulose that gives plant cells support and a firm rectangular shape.\n  - Chloroplasts: Contain green chlorophyll which absorbs sunlight to make food (photosynthesis).\n  - Large Central Vacuole: Helps the plant cell stay firm and upright.\n• Differences Between Plant and Animal Cells:\n  - Plant Cell: Regular rectangular shape, has a cell wall, has chloroplasts, has one large central vacuole.\n  - Animal Cell: Irregular rounded shape, NO cell wall, NO chloroplasts, only small temporary vacuoles.",
     "examples": [
       {
         "id": "ex-sci-cell-1",
@@ -221,14 +221,13 @@ export const JHS1_SCIENCE_TOPICS: CurriculumTopic[] = [
       },
       {
         "id": "ex-sci-cell-2",
-        "title": "Explaining the Function of the Mitochondria",
-        "problem": "Why do muscle cells in the human heart have a significantly greater number of mitochondria than skin epithelial cells?",
+        "title": "Comparing Plant and Animal Cell Shapes",
+        "problem": "Why do plant cells have a regular, fixed box-like shape while animal cells have flexible, irregular shapes?",
         "stepByStepSolution": [
-          "Step 1: Mitochondria are responsible for aerobic cellular respiration, which produces adenosine triphosphate (ATP) energy.",
-          "Step 2: Heart muscle cells are constantly contracting without rest throughout life, requiring large quantities of continuous energy.",
-          "Step 3: Skin cells are primarily protective and have comparatively low metabolic energy demands."
+          "Step 1: Plant cells have a tough, rigid outer cell wall made of cellulose that maintains their fixed rectangular structure.",
+          "Step 2: Animal cells have only a thin, flexible cell membrane without any rigid cell wall, allowing them to change shape easily."
         ],
-        "keyTakeaway": "The density of mitochondria in a cell directly reflects its metabolic energy requirements."
+        "keyTakeaway": "The cellulose cell wall gives plant cells their rigid, fixed structure."
       }
     ]
   },
@@ -471,29 +470,29 @@ export const JHS1_SCIENCE_TOPICS: CurriculumTopic[] = [
     "isVip": false,
     "youtubeUrl": "https://www.youtube.com/watch?v=jCrOtF4y2HY",
     "youtubeId": "jCrOtF4y2HY",
-    "keyNotes": "Energy is defined as the capacity or ability to do work. The SI unit of energy is the Joule (J).\n• Two Main States of Mechanical Energy:\n  - Potential Energy (PE): Stored energy due to position or state. Formula: PE = m × g × h.\n  - Kinetic Energy (KE): Energy possessed by a moving object. Formula: KE = 1/2 × m × v².\n• Forms of Energy: Light, Sound, Thermal (Heat), Chemical (in food, batteries, fuel), Electrical, Nuclear.\n• The Law of Conservation of Energy:\n  - Energy cannot be created or destroyed; it can only be transformed from one form to another. Total energy in an isolated system remains constant.\n• Common Energy Transformations:\n  - Torch / Flashlight: Chemical energy (battery) → Electrical energy → Light energy + Heat energy.\n  - Akosombo Hydroelectric Dam: Potential energy of dammed water → Kinetic energy of flowing water → Mechanical energy of turbine → Electrical energy in generator.\n  - Photosynthesis: Solar (light) energy → Chemical energy stored in glucose.\n• Energy Sources:\n  - Renewable (cannot be exhausted): Solar, Wind, Hydroelectric, Biomass, Geothermal.\n  - Non-Renewable (finite reserves): Crude oil (petroleum), Coal, Natural gas.",
+    "keyNotes": "Energy is defined as the capacity or ability to do work. The SI unit of energy is the Joule (J).\n• Forms of Energy:\n  - Kinetic Energy: Energy possessed by any moving body (e.g. running student, moving vehicle, rolling ball).\n  - Potential Energy: Stored energy due to position, condition, or chemical state (e.g. stretched catapult rubber, stone held up high, energy stored in food or dry cells).\n  - Other Forms: Light, Sound, Thermal (Heat), Chemical (in food, batteries, charcoal), and Electrical energy.\n• The Law of Conservation of Energy:\n  - Energy cannot be created or destroyed; it can only be transformed from one form to another.\n• Everyday Energy Transformations:\n  - Torch / Flashlight: Chemical energy (battery) → Electrical energy → Light energy + Heat energy.\n  - Electric Iron: Electrical energy → Heat (thermal) energy.\n  - Radio / Phone Speaker: Electrical energy → Sound energy.\n  - Akosombo Dam: Potential energy (dam water) → Kinetic energy (falling water) → Mechanical energy (turbine) → Electrical energy (generator).\n• Sources of Energy in Ghana:\n  - Renewable (naturally replaced, cannot run out): Solar (sunlight), Wind, Hydroelectric (Akosombo and Bui dams), Biomass.\n  - Non-Renewable (finite, can be used up): Petroleum (crude oil, petrol, diesel), Coal, Natural gas.",
     "examples": [
       {
         "id": "ex-sci-eng-1",
         "title": "Tracing Energy Transformations in an Electric Iron",
         "problem": "State the energy changes that occur when an electric flat iron plugged into a wall socket is used to press clothes.",
         "stepByStepSolution": [
-          "Step 1: Electrical energy from the mains socket flows through the heating element (nichrome wire).",
-          "Step 2: The high resistance of the element transforms the electrical energy into Heat (thermal) energy.",
-          "Step 3: A small portion of energy may be converted into light energy (if an indicator lamp is lit)."
+          "Step 1: Electrical energy from the mains socket flows into the heating wire of the iron.",
+          "Step 2: The heating element converts the electrical energy into Thermal (heat) energy.",
+          "Step 3: A small fraction may convert into light energy if the power indicator lamp turns on."
         ],
-        "keyTakeaway": "Primary transformation in heating appliances: Electrical energy → Thermal (heat) energy."
+        "keyTakeaway": "In heating appliances: Electrical energy transforms into Thermal (heat) energy."
       },
       {
         "id": "ex-sci-eng-2",
-        "title": "Calculating Gravitational Potential Energy",
-        "problem": "A mango fruit of mass 0.5 kg hangs from a tree branch 4 meters above the ground. Calculate its gravitational potential energy. (Take acceleration due to gravity g = 10 m/s²).",
+        "title": "Classifying Energy Sources in Ghana",
+        "problem": "Classify the following Ghanaian energy sources as RENEWABLE or NON-RENEWABLE: (a) Solar panels in Navrongo; (b) Petrol used in tro-tros; (c) Flowing water at Akosombo Dam.",
         "stepByStepSolution": [
-          "Step 1: Identify given quantities: Mass m = 0.5 kg, Height h = 4 m, g = 10 m/s².",
-          "Step 2: State formula: Potential Energy PE = m × g × h.",
-          "Step 3: Substitute values: PE = 0.5 kg × 10 m/s² × 4 m = 20 Joules (J)."
+          "Step 1: Solar energy from sunlight is naturally replenished and never runs out -> RENEWABLE.",
+          "Step 2: Petrol comes from crude oil deposits that cannot be replaced once pumped out -> NON-RENEWABLE.",
+          "Step 3: River water flow is continuously replenished by the water cycle -> RENEWABLE."
         ],
-        "keyTakeaway": "Gravitational potential energy depends directly on mass, gravity, and vertical height: PE = mgh."
+        "keyTakeaway": "Renewable sources (sunlight, flowing water) replenish naturally; fossil fuels (petrol, diesel) can be exhausted."
       }
     ]
   },

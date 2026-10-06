@@ -723,15 +723,15 @@ export const JHS1_SCIENCE_QUIZZES: Record<string, TopicQuiz> = {
       {
         "id": "q-sc-ce-2",
         "quizId": "quiz-jhs1-sci-cells",
-        "questionText": "Which organelle is called the \"powerhouse of the cell\" where cellular respiration produces ATP energy?",
+        "questionText": "Which cell organelle is known as the \"powerhouse of the cell\" because it releases energy from food?",
         "optionA": "Chloroplast",
         "optionB": "Mitochondrion",
-        "optionC": "Endoplasmic reticulum",
-        "optionD": "Golgi body",
+        "optionC": "Cell wall",
+        "optionD": "Vacuole",
         "correctOption": "B",
         "subConcept": "Mitochondria Function",
-        "explanation": "Mitochondria perform aerobic cellular respiration, breaking down glucose to generate ATP energy.",
-        "remediationTip": "Mitochondria = Powerhouse of the cell (respiration & ATP energy)."
+        "explanation": "The mitochondrion is called the powerhouse of the cell because it breaks down nutrients to release energy for cellular activities.",
+        "remediationTip": "Mitochondrion = Powerhouse of the cell (releases energy)."
       },
       {
         "id": "q-sc-ce-3",
@@ -1709,15 +1709,15 @@ export const JHS1_SCIENCE_QUIZZES: Record<string, TopicQuiz> = {
       {
         "id": "q-sc-en-3",
         "quizId": "quiz-jhs1-sci-energy",
-        "questionText": "Calculate the gravitational potential energy of a 2 kg stone held at a height of 5 meters above the ground. (Take g = 10 m/s²).",
-        "optionA": "10 J",
-        "optionB": "25 J",
-        "optionC": "100 J",
-        "optionD": "200 J",
+        "questionText": "Which form of energy is stored inside the food we eat, firewood, and dry cell batteries?",
+        "optionA": "Light energy",
+        "optionB": "Sound energy",
+        "optionC": "Chemical energy",
+        "optionD": "Nuclear energy",
         "correctOption": "C",
-        "subConcept": "Calculating Potential Energy (PE = mgh)",
-        "explanation": "PE = m × g × h = 2 kg × 10 m/s² × 5 m = 100 Joules (J).",
-        "remediationTip": "Formula: PE = m × g × h."
+        "subConcept": "Chemical Energy Sources",
+        "explanation": "Chemical energy is stored inside the molecules of food, dry cells, petrol, and firewood, and is released when metabolized or burned.",
+        "remediationTip": "Food, fuels, and batteries all store Chemical Energy."
       },
       {
         "id": "q-sc-en-4",

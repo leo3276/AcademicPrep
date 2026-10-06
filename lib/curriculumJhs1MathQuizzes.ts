@@ -2091,3 +2091,8 @@ export const JHS1_MATH_QUIZZES: Record<string, TopicQuiz> = {
     ]
   }
 };
+
+// Aliases for topic ID consistency across curriculum files
+JHS1_MATH_QUIZZES['jhs1-math-t4-bases'] = JHS1_MATH_QUIZZES['jhs1-math-t4-numberbases'];
+JHS1_MATH_QUIZZES['jhs1-math-t7-linearequations'] = JHS1_MATH_QUIZZES['jhs1-math-t7-equations'];
+JHS1_MATH_QUIZZES['jhs1-math-t8-ratios'] = JHS1_MATH_QUIZZES['jhs1-math-t8-ratio'];
