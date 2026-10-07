@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import SubjectIcon from '@/components/SubjectIcon';
 import PaystackPaymentModal from '@/components/PaystackPaymentModal';
+import TopicShareButtons from '@/components/TopicShareButtons';
 
 export default function ShsSubjectDetailPage() {
   const params = useParams();
@@ -324,6 +325,15 @@ export default function ShsSubjectDetailPage() {
 
                     {/* Action Buttons */}
                     <div className="flex items-center gap-2 flex-wrap shrink-0">
+                      <TopicShareButtons
+                        topicTitle={topic.title}
+                        subjectName={subject?.name || 'Subject'}
+                        level={topic.level || currentLevel}
+                        urlPath={`/shs/${subjectId}/${topic.id}?level=${encodeURIComponent(topic.level || currentLevel)}`}
+                        quizCount={topic.quiz?.questions?.length}
+                        variant="compact"
+                      />
+
                       <Link
                         href={`/shs/${subjectId}/${topic.id}?level=${encodeURIComponent(topic.level || currentLevel)}`}
                         className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-sm shadow-blue-500/20 flex items-center gap-1.5"

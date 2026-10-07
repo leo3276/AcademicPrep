@@ -26,6 +26,7 @@ import {
   Compass
 } from 'lucide-react';
 import PaystackPaymentModal from '@/components/PaystackPaymentModal';
+import TopicShareButtons from '@/components/TopicShareButtons';
 
 export default function ShsDetailedTopicLessonPage() {
   const params = useParams();
@@ -154,13 +155,27 @@ export default function ShsDetailedTopicLessonPage() {
           )}
         </div>
 
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-          {topic.title}
-        </h1>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              {topic.title}
+            </h1>
+            <p className="text-sm text-slate-600 leading-relaxed max-w-3xl mt-1.5">
+              {topic.description}
+            </p>
+          </div>
 
-        <p className="text-sm text-slate-600 leading-relaxed max-w-3xl">
-          {topic.description}
-        </p>
+          <div className="shrink-0 self-start sm:self-center">
+            <TopicShareButtons
+              topicTitle={topic.title}
+              subjectName={subject?.name || 'Subject'}
+              level={topic.level}
+              urlPath={`/shs/${subjectId}/${topic.id}?level=${encodeURIComponent(topic.level)}`}
+              quizCount={topic.quiz?.questions?.length}
+              variant="full"
+            />
+          </div>
+        </div>
 
         {/* Tab Navigation: Study Notes vs Worked Examples */}
         <div className="flex items-center gap-2 pt-2 border-t border-slate-100">

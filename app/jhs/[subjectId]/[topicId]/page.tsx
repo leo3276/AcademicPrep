@@ -27,6 +27,7 @@ import {
   FileText,
   Lock
 } from 'lucide-react';
+import TopicShareButtons from '@/components/TopicShareButtons';
 
 export default function DetailedTopicLessonPage() {
   const params = useParams();
@@ -242,13 +243,26 @@ export default function DetailedTopicLessonPage() {
           )}
         </div>
 
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            {topic.title}
-          </h1>
-          <p className="text-sm text-slate-600 mt-1.5 leading-relaxed max-w-3xl">
-            {topic.description}
-          </p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              {topic.title}
+            </h1>
+            <p className="text-sm text-slate-600 mt-1.5 leading-relaxed max-w-3xl">
+              {topic.description}
+            </p>
+          </div>
+
+          <div className="shrink-0 self-start sm:self-center">
+            <TopicShareButtons
+              topicTitle={topic.title}
+              subjectName={subject?.name || 'Subject'}
+              level={topic.level}
+              urlPath={`/jhs/${subjectId}/${topic.id}?level=${encodeURIComponent(topic.level)}`}
+              quizCount={topic.quiz?.questions?.length}
+              variant="full"
+            />
+          </div>
         </div>
 
         {/* Quick Navigation Jump Tabs */}

@@ -4,8 +4,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/authContext';
 import { EducationLevel, AccessPin } from '@/lib/types';
-import { CURRICULUM_SUBJECTS, JHS_CURRICULUM_TOPICS, SHS_CORE_SUBJECTS } from '@/lib/curriculumData';
+import { CURRICULUM_SUBJECTS, JHS_CURRICULUM_TOPICS, SHS_CORE_SUBJECTS, ALL_CURRICULUM_TOPICS } from '@/lib/curriculumData';
 import { SHS_ELECTIVE_GROUPS } from '@/lib/curriculumShsElectives';
+import TopicShareButtons from '@/components/TopicShareButtons';
 import {
   getStoredTrafficData,
   clearStudentRosterCache,
@@ -197,6 +198,9 @@ export default function AdminDashboardPage() {
   // Search & Filters
   const [studentSearch, setStudentSearch] = useState('');
   const [studentAccessFilter, setStudentAccessFilter] = useState<'ALL' | 'Full Pass' | 'Free Trial' | 'Expired'>('ALL');
+  const [topicSearchQuery, setTopicSearchQuery] = useState('');
+  const [topicLevelFilter, setTopicLevelFilter] = useState<'ALL' | 'JHS 1' | 'JHS 2' | 'JHS 3' | 'SHS 1' | 'SHS 2' | 'SHS 3'>('ALL');
+  const [topicSubjectFilter, setTopicSubjectFilter] = useState('ALL');
 
 
   // Grant Access Modal
@@ -2099,6 +2103,168 @@ export default function AdminDashboardPage() {
                           <td className="px-4 py-2.5 font-mono font-medium text-slate-900">{st.avgScorePercentage}%</td>
                         </tr>
                       ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Topic WhatsApp Directory & Direct Links for Teachers */}
+            <div className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
+                <div>
+                  <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <BookOpen className="w-4 h-4 text-blue-600" />
+                    <span>Topic Direct Links Directory & WhatsApp Sharing for Teachers</span>
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Copy direct links or share any lesson to WhatsApp groups for students to learn on AcademicPrep.
+                  </p>
+                </div>
+                <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 self-start sm:self-auto">
+                  {ALL_CURRICULUM_TOPICS.length} Total Platform Topics
+                </span>
+              </div>
+
+              {/* Filters */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="relative">
+                  <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+                  <input
+                    type="text"
+                    placeholder="Search by topic title or keyword..."
+                    value={topicSearchQuery}
+                    onChange={(e) => setTopicSearchQuery(e.target.value)}
+                    className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <select
+                    value={topicLevelFilter}
+                    onChange={(e) => setTopicLevelFilter(e.target.value as any)}
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  >
+                    <option value="ALL">All Grade Levels</option>
+                    <option value="JHS 1">JHS 1</option>
+                    <option value="JHS 2">JHS 2</option>
+                    <option value="JHS 3">JHS 3 (BECE)</option>
+                    <option value="SHS 1">SHS 1</option>
+                    <option value="SHS 2">SHS 2</option>
+                    <option value="SHS 3">SHS 3 (WASSCE)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <select
+                    value={topicSubjectFilter}
+                    onChange={(e) => setTopicSubjectFilter(e.target.value)}
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  >
+                    <option value="ALL">All Subjects</option>
+                    <optgroup label="JHS Common Core">
+                      {CURRICULUM_SUBJECTS.map((s) => (
+                        <option key={`jhs-opt-${s.id}`} value={s.id}>{s.name} (JHS)</option>
+                      ))}
+                    </optgroup>
+                    <optgroup label="SHS Core Subjects">
+                      {SHS_CORE_SUBJECTS.map((s) => (
+                        <option key={`shs-core-${s.id}`} value={s.id}>{s.name} (SHS)</option>
+                      ))}
+                    </optgroup>
+                  </select>
+                </div>
+              </div>
+
+              {/* Topics Table */}
+              <div className="overflow-x-auto border border-slate-200/80 rounded-lg">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-50/75 text-slate-500 font-semibold uppercase tracking-wider border-b border-slate-200/80">
+                    <tr>
+                      <th className="px-4 py-2.5">Topic & Subject</th>
+                      <th className="px-4 py-2.5">Level & Term</th>
+                      <th className="px-4 py-2.5">Content Features</th>
+                      <th className="px-4 py-2.5 text-right">Teacher Share Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {ALL_CURRICULUM_TOPICS
+                      .filter((t) => {
+                        const matchesQuery = !topicSearchQuery || 
+                          t.title.toLowerCase().includes(topicSearchQuery.toLowerCase()) ||
+                          t.description.toLowerCase().includes(topicSearchQuery.toLowerCase());
+                        const matchesLevel = topicLevelFilter === 'ALL' || t.level === topicLevelFilter;
+                        const matchesSubj = topicSubjectFilter === 'ALL' || t.subjectId === topicSubjectFilter;
+                        return matchesQuery && matchesLevel && matchesSubj;
+                      })
+                      .slice(0, 50)
+                      .map((topicItem) => {
+                        const isShsTopic = topicItem.level?.startsWith('SHS');
+                        const urlPath = isShsTopic
+                          ? `/shs/${topicItem.subjectId}/${topicItem.id}?level=${encodeURIComponent(topicItem.level)}`
+                          : `/jhs/${topicItem.subjectId}/${topicItem.id}?level=${encodeURIComponent(topicItem.level)}`;
+                        const subjectName = CURRICULUM_SUBJECTS.find(s => s.id === topicItem.subjectId)?.name ||
+                          SHS_CORE_SUBJECTS.find(s => s.id === topicItem.subjectId)?.name ||
+                          topicItem.subjectId;
+
+                        return (
+                          <tr key={topicItem.id} className="hover:bg-slate-50/70 transition">
+                            <td className="px-4 py-3">
+                              <div className="font-semibold text-slate-900">{topicItem.title}</div>
+                              <div className="text-[11px] text-slate-500 flex items-center gap-1.5 mt-0.5">
+                                <span className="font-medium text-slate-700">{subjectName}</span>
+                                <span>•</span>
+                                <span className="font-mono text-[10px] text-slate-400">/{topicItem.id}</span>
+                              </div>
+                            </td>
+                            <td className="px-4 py-3">
+                              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700">
+                                {topicItem.level}
+                              </span>
+                              <div className="text-[11px] text-slate-500 mt-0.5">
+                                Term {topicItem.term} • Topic #{topicItem.orderIndex}
+                              </div>
+                            </td>
+                            <td className="px-4 py-3">
+                              <div className="flex items-center gap-1.5 flex-wrap">
+                                <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-blue-50 text-blue-700 border border-blue-200">
+                                  Notes
+                                </span>
+                                {topicItem.examples && topicItem.examples.length > 0 && (
+                                  <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-amber-50 text-amber-700 border border-amber-200">
+                                    {topicItem.examples.length} Examples
+                                  </span>
+                                )}
+                                {topicItem.quiz?.questions && (
+                                  <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-purple-50 text-purple-700 border border-purple-200">
+                                    {topicItem.quiz.questions.length} MCQs
+                                  </span>
+                                )}
+                              </div>
+                            </td>
+                            <td className="px-4 py-3 text-right">
+                              <div className="flex items-center justify-end gap-2">
+                                <Link
+                                  href={urlPath}
+                                  target="_blank"
+                                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-100 font-bold text-[11px] flex items-center gap-1"
+                                  title="Preview topic lesson in new tab"
+                                >
+                                  <span>View</span>
+                                  <ExternalLink className="w-3 h-3" />
+                                </Link>
+                                <TopicShareButtons
+                                  topicTitle={topicItem.title}
+                                  subjectName={subjectName}
+                                  level={topicItem.level}
+                                  urlPath={urlPath}
+                                  quizCount={topicItem.quiz?.questions?.length}
+                                  variant="compact"
+                                />
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
                   </tbody>
                 </table>
               </div>

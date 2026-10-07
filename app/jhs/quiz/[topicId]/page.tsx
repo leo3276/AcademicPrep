@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import PaystackPaymentModal from '@/components/PaystackPaymentModal';
+import TopicShareButtons from '@/components/TopicShareButtons';
 
 export default function TopicQuizPage() {
   const params = useParams();
@@ -436,18 +437,31 @@ export default function TopicQuizPage() {
 
       {/* Quiz Card */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
-        <div>
-          <div className="flex flex-wrap items-center gap-2 mb-1">
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 uppercase">
-              {topic.level} • {quiz.questions.length} Questions
-            </span>
-            <span className="text-xs text-slate-500">Pass Mark: {quiz.passScorePercentage}%</span>
-            <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-              {isShs ? 'WAEC / WASSCE Standard' : 'GES / NaCCA Standard'}
-            </span>
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+          <div>
+            <div className="flex flex-wrap items-center gap-2 mb-1">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 uppercase">
+                {topic.level} • {quiz.questions.length} Questions
+              </span>
+              <span className="text-xs text-slate-500">Pass Mark: {quiz.passScorePercentage}%</span>
+              <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                {isShs ? 'WAEC / WASSCE Standard' : 'GES / NaCCA Standard'}
+              </span>
+            </div>
+            <h1 className="text-xl font-bold text-slate-900">{quiz.title}</h1>
+            <p className="text-xs text-slate-500 mt-0.5">{topic.title}</p>
           </div>
-          <h1 className="text-xl font-bold text-slate-900">{quiz.title}</h1>
-          <p className="text-xs text-slate-500 mt-0.5">{topic.title}</p>
+
+          <div className="shrink-0">
+            <TopicShareButtons
+              topicTitle={topic.title}
+              subjectName={CurriculumService.getSubjectById(topic.subjectId)?.name || topic.subjectId}
+              level={topic.level}
+              urlPath={isShs ? `/shs/${topic.subjectId}/${topic.id}?level=${encodeURIComponent(topic.level)}` : `/jhs/${topic.subjectId}/${topic.id}?level=${encodeURIComponent(topic.level)}`}
+              quizCount={quiz.questions.length}
+              variant="compact"
+            />
+          </div>
         </div>
 
         {/* Result Screen if Submitted */}
