@@ -1,0 +1,57 @@
+[
+  {
+    "id": "comm-init-1",
+    "topicId": "sci-jhs1-intro-science",
+    "subjectId": "science",
+    "level": "JHS 1",
+    "studentId": "seed-st-1",
+    "studentName": "Emmanuel Mensah",
+    "studentPhoneMasked": "024****812",
+    "isVip": true,
+    "content": "The step-by-step notes on the scientific method made this so clear. Remember to memorize: Observation, Hypothesis, Experiment, and Conclusion for the IAs!",
+    "likesCount": 14,
+    "likedByStudents": [
+      "seed-st-2",
+      "seed-st-3"
+    ],
+    "isPinned": true,
+    "createdAt": "2026-10-06T17:43:12.860Z",
+    "status": "active"
+  },
+  {
+    "id": "comm-init-2",
+    "topicId": "sci-jhs1-intro-science",
+    "subjectId": "science",
+    "level": "JHS 1",
+    "studentId": "seed-st-2",
+    "studentName": "Abigail Osei",
+    "studentPhoneMasked": "055****409",
+    "isVip": false,
+    "content": "I just scored 10/10 on the diagnostic quiz! Question 4 on lab hazards is definitely coming in our end of term exams.",
+    "likesCount": 9,
+    "likedByStudents": [
+      "seed-st-1"
+    ],
+    "createdAt": "2026-10-07T17:43:12.861Z",
+    "status": "active"
+  },
+  {
+    "id": "comm-init-3",
+    "topicId": "jhs1-math-sets",
+    "subjectId": "math",
+    "level": "JHS 1",
+    "studentId": "seed-st-3",
+    "studentName": "Kwesi Appiah",
+    "studentPhoneMasked": "020****932",
+    "isVip": true,
+    "content": "Always draw the Venn diagram first before writing equations. It saved me 5 minutes during the timed quiz!",
+    "likesCount": 19,
+    "likedByStudents": [
+      "seed-st-1",
+      "seed-st-2"
+    ],
+    "isPinned": true,
+    "createdAt": "2026-10-08T05:43:12.861Z",
+    "status": "active"
+  }
+]

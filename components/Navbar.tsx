@@ -20,7 +20,8 @@ import {
   FileCheck,
   FileText,
   Compass,
-  Smartphone
+  Smartphone,
+  MessageSquare
 } from 'lucide-react';
 import PaystackPaymentModal from './PaystackPaymentModal';
 import { fetchBlogPosts } from '@/lib/blogStore';
@@ -122,7 +123,7 @@ export default function Navbar() {
               <Link
                 href="/jhs"
                 className={`text-xs font-bold transition-colors whitespace-nowrap px-2 py-1.5 2xl:px-2.5 rounded-lg ${
-                  pathname.startsWith('/jhs') && pathname !== '/jhs/bece-past-questions' && pathname !== '/jhs/trial-questions' && pathname !== '/jhs/weekly-exam'
+                  pathname.startsWith('/jhs') && pathname !== '/jhs/weekly-exam'
                     ? 'text-blue-600 bg-blue-50' 
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                 }`}
@@ -139,7 +140,7 @@ export default function Navbar() {
               >
                 SHS Portal
               </Link>
-              {pathname.startsWith('/shs') ? (
+              {pathname.startsWith('/shs') && (
                 <>
                   <Link
                     href="/shs/wassce-past-questions"
@@ -164,31 +165,6 @@ export default function Navbar() {
                     <span>SHS Mocks</span>
                   </Link>
                 </>
-              ) : (
-                <>
-                  <Link
-                    href="/jhs/bece-past-questions"
-                    className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 2xl:px-2.5 rounded-lg whitespace-nowrap ${
-                      pathname === '/jhs/bece-past-questions' 
-                        ? 'text-blue-600 bg-blue-50 font-bold' 
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                    }`}
-                  >
-                    <BookOpen className="w-3.5 h-3.5 text-blue-600" />
-                    <span>BECE Past Questions</span>
-                  </Link>
-                  <Link
-                    href="/jhs/trial-questions"
-                    className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 2xl:px-2.5 rounded-lg whitespace-nowrap ${
-                      pathname === '/jhs/trial-questions' 
-                        ? 'text-emerald-700 bg-emerald-50 font-bold' 
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                    }`}
-                  >
-                    <FileCheck className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Trial Mocks</span>
-                  </Link>
-                </>
               )}
 
               <Link
@@ -206,6 +182,18 @@ export default function Navbar() {
                     NEW
                   </span>
                 )}
+              </Link>
+
+              <Link
+                href="/chat"
+                className={`text-xs font-bold transition-colors flex items-center gap-1.5 px-2 py-1.5 2xl:px-2.5 rounded-lg whitespace-nowrap ${
+                  pathname.startsWith('/chat')
+                    ? 'text-indigo-600 bg-indigo-50 font-bold'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                }`}
+              >
+                <MessageSquare className="w-3.5 h-3.5 text-indigo-600" />
+                <span>Study Lounge</span>
               </Link>
 
               {/* Platform Feature Tour Guide Link */}
@@ -454,22 +442,6 @@ export default function Navbar() {
                 SHS Trial Questions &amp; Mocks
               </Link>
               <Link
-                href="/jhs/bece-past-questions"
-                onClick={() => setMobileMenuOpen(false)}
-                className="py-2 text-sm font-semibold text-blue-700 flex items-center gap-1.5"
-              >
-                <BookOpen className="w-4 h-4 text-blue-600" />
-                BECE Past Questions (2020-2024)
-              </Link>
-              <Link
-                href="/jhs/trial-questions"
-                onClick={() => setMobileMenuOpen(false)}
-                className="py-2 text-sm font-semibold text-emerald-700 flex items-center gap-1.5"
-              >
-                <FileCheck className="w-4 h-4 text-emerald-600" />
-                Trial Questions & Mocks
-              </Link>
-              <Link
                 href="/jhs/weekly-exam"
                 onClick={() => setMobileMenuOpen(false)}
                 className="py-2 text-sm font-bold text-amber-800 flex items-center gap-1.5"
@@ -491,6 +463,18 @@ export default function Navbar() {
                     NEW
                   </span>
                 )}
+              </Link>
+
+              <Link
+                href="/chat"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2 text-sm font-semibold text-indigo-700 flex items-center justify-between"
+              >
+                <div className="flex items-center gap-2">
+                  <MessageSquare className="w-4 h-4 text-indigo-600" />
+                  <span>Student Study Lounge</span>
+                </div>
+                <span className="text-[10px] font-bold bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full">Community Chat</span>
               </Link>
 
               <Link

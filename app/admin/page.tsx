@@ -7,6 +7,7 @@ import { EducationLevel, AccessPin } from '@/lib/types';
 import { CURRICULUM_SUBJECTS, JHS_CURRICULUM_TOPICS, SHS_CORE_SUBJECTS, ALL_CURRICULUM_TOPICS } from '@/lib/curriculumData';
 import { SHS_ELECTIVE_GROUPS } from '@/lib/curriculumShsElectives';
 import TopicShareButtons from '@/components/TopicShareButtons';
+import { LessonComment } from '@/lib/commentsTypes';
 import {
   getStoredTrafficData,
   clearStudentRosterCache,
@@ -83,6 +84,9 @@ import {
   UploadCloud,
   X,
   MessageCircle,
+  MessageSquare,
+  Pin,
+  Crown,
   Check
 } from 'lucide-react';
 import { parseVideoUrl } from '@/lib/mediaUtils';
@@ -124,8 +128,8 @@ export default function AdminDashboardPage() {
   const [securityModalMsg, setSecurityModalMsg] = useState<string | null>(null);
   const [isSavingKeys, setIsSavingKeys] = useState(false);
   
-  // Navigation Tabs: traffic, paid_access, momo_claims, completions, trial_mocks, pins, blog
-  const [activeTab, setActiveTab] = useState<'traffic' | 'paid_access' | 'momo_claims' | 'completions' | 'trial_mocks' | 'pins' | 'blog'>('traffic');
+  // Navigation Tabs: traffic, paid_access, momo_claims, completions, trial_mocks, pins, blog, comments
+  const [activeTab, setActiveTab] = useState<'traffic' | 'paid_access' | 'momo_claims' | 'completions' | 'trial_mocks' | 'pins' | 'blog' | 'comments'>('traffic');
 
   // Stores
   const [trafficData, setTrafficData] = useState<WebTrafficData>(() => {
@@ -185,6 +189,11 @@ export default function AdminDashboardPage() {
   const [blogMediaUploadError, setBlogMediaUploadError] = useState<string | null>(null);
   const [isSavingBlog, setIsSavingBlog] = useState(false);
   const [blogBanner, setBlogBanner] = useState<{ kind: 'ok' | 'bad'; text: string } | null>(null);
+
+  // Community Comments Moderation State
+  const [adminComments, setAdminComments] = useState<LessonComment[]>([]);
+  const [loadingComments, setLoadingComments] = useState(false);
+  const [commentSearch, setCommentSearch] = useState('');
 
   // PDF Upload Form State
   const [pdfFile, setPdfFile] = useState<File | null>(null);
@@ -261,6 +270,52 @@ export default function AdminDashboardPage() {
       setLoadingClaims(false);
     }
   }, []);
+
+  const loadComments = useCallback(async () => {
+    try {
+      setLoadingComments(true);
+      const res = await fetch('/api/comments');
+      const data = await res.json();
+      if (data?.success && Array.isArray(data.comments)) {
+        setAdminComments(data.comments);
+      }
+    } catch (e) {
+      console.warn('Failed to load comments in admin:', e);
+    } finally {
+      setLoadingComments(false);
+    }
+  }, []);
+
+  const handleDeleteComment = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this study note?')) return;
+    try {
+      const res = await fetch(`/api/comments?id=${id}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) {
+        setAdminComments((prev) => prev.filter((c) => c.id !== id));
+      }
+    } catch (err) {
+      console.warn('Failed to delete comment:', err);
+    }
+  };
+
+  const handleTogglePinComment = async (id: string, currentPinned: boolean) => {
+    try {
+      const res = await fetch('/api/comments', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, isPinned: !currentPinned }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setAdminComments((prev) =>
+          prev.map((c) => (c.id === id ? { ...c, isPinned: !currentPinned } : c))
+        );
+      }
+    } catch (err) {
+      console.warn('Failed to pin comment:', err);
+    }
+  };
 
   const handleApproveMomoClaim = async (claimId: string) => {
     setProcessingClaimId(claimId);
@@ -554,8 +609,9 @@ export default function AdminDashboardPage() {
     fetchUploadedDocuments().then(setPdfDocuments).catch(e => console.warn('Fetch docs warning:', e?.message || e));
     loadBlogPosts(true);
     loadMomoClaims();
+    loadComments();
     refreshPins();
-  }, [isAdmin, refreshPins, loadBlogPosts, loadMomoClaims]);
+  }, [isAdmin, refreshPins, loadBlogPosts, loadMomoClaims, loadComments]);
 
   if (!mounted) {
     return (
@@ -1137,6 +1193,21 @@ export default function AdminDashboardPage() {
               <span>App Blog & Articles</span>
               <span className="ml-1 text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-full font-mono">
                 {blogPosts.length}
+              </span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('comments')}
+              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+                activeTab === 'comments'
+                  ? 'border-slate-900 text-slate-900 font-semibold'
+                  : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              <MessageSquare className="w-4 h-4" />
+              <span>Student Discussions</span>
+              <span className="ml-1 text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full font-mono font-bold">
+                {adminComments.length}
               </span>
             </button>
           </nav>
@@ -3618,6 +3689,191 @@ export default function AdminDashboardPage() {
                               >
                                 <Trash2 className="w-3.5 h-3.5" />
                               </button>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* ============================================================ */}
+        {/* TAB 8: STUDENT DISCUSSIONS & COMMUNITY NOTES MODERATION     */}
+        {/* ============================================================ */}
+        {activeTab === 'comments' && (
+          <div className="space-y-6">
+            <div className="flex flex-wrap items-center justify-between gap-4 pb-3 border-b border-slate-200">
+              <div>
+                <h2 className="text-base font-semibold text-slate-900">Student Discussion Notes & Moderation</h2>
+                <p className="text-xs text-slate-500">
+                  Manage student revision comments, pin high-value study explanations, or remove inappropriate posts.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={loadComments}
+                  disabled={loadingComments}
+                  className="px-3.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold transition flex items-center gap-1.5"
+                >
+                  <Activity className="w-3.5 h-3.5" />
+                  <span>{loadingComments ? 'Refreshing...' : 'Refresh Notes'}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-xs">
+                <span className="text-xs text-slate-500 font-medium">Total Community Notes</span>
+                <span className="text-2xl font-bold text-slate-900 mt-1 block font-mono">
+                  {adminComments.length}
+                </span>
+                <span className="text-[11px] text-slate-400 mt-1 block">Across all JHS & SHS lessons</span>
+              </div>
+
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-xs">
+                <span className="text-xs text-slate-500 font-medium">Pinned Top Explanations</span>
+                <span className="text-2xl font-bold text-amber-600 mt-1 block font-mono">
+                  {adminComments.filter((c) => c.isPinned).length}
+                </span>
+                <span className="text-[11px] text-slate-400 mt-1 block">Featured at the top of lessons</span>
+              </div>
+
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-xs">
+                <span className="text-xs text-slate-500 font-medium">VIP Scholar Contributions</span>
+                <span className="text-2xl font-bold text-emerald-600 mt-1 block font-mono">
+                  {adminComments.filter((c) => c.isVip).length}
+                </span>
+                <span className="text-[11px] text-slate-400 mt-1 block">Notes from active VIP subscribers</span>
+              </div>
+            </div>
+
+            {/* Filter Search */}
+            <div className="bg-white border border-slate-200/80 rounded-xl p-4 shadow-xs">
+              <div className="relative max-w-md">
+                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+                <input
+                  type="text"
+                  placeholder="Search by student name, topic, or comment text..."
+                  value={commentSearch}
+                  onChange={(e) => setCommentSearch(e.target.value)}
+                  className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                />
+              </div>
+            </div>
+
+            {/* Comments Table */}
+            <div className="bg-white border border-slate-200/80 rounded-xl shadow-xs overflow-hidden">
+              {loadingComments ? (
+                <div className="py-12 text-center text-xs text-slate-400">Loading discussion threads...</div>
+              ) : adminComments.length === 0 ? (
+                <div className="py-12 text-center space-y-1">
+                  <p className="text-sm font-semibold text-slate-700">No community discussion notes yet</p>
+                  <p className="text-xs text-slate-400">Student comments will appear here as they study.</p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead className="bg-slate-50/75 text-slate-500 font-semibold uppercase tracking-wider border-b border-slate-200/80">
+                      <tr>
+                        <th className="px-4 py-3">Student</th>
+                        <th className="px-4 py-3">Topic / Subject</th>
+                        <th className="px-4 py-3">Comment Content</th>
+                        <th className="px-4 py-3">Likes</th>
+                        <th className="px-4 py-3">Date</th>
+                        <th className="px-4 py-3 text-right">Moderation Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {adminComments
+                        .filter((c) => {
+                          if (!commentSearch.trim()) return true;
+                          const q = commentSearch.toLowerCase();
+                          return (
+                            c.studentName.toLowerCase().includes(q) ||
+                            c.topicId.toLowerCase().includes(q) ||
+                            c.content.toLowerCase().includes(q)
+                          );
+                        })
+                        .map((comment) => (
+                          <tr key={comment.id} className="hover:bg-slate-50/70 transition">
+                            <td className="px-4 py-3">
+                              <div className="font-semibold text-slate-900 flex items-center gap-1.5">
+                                <span>{comment.studentName}</span>
+                                {comment.isVip && (
+                                  <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 flex items-center gap-0.5">
+                                    <Crown className="w-2.5 h-2.5 text-amber-600" />
+                                    VIP
+                                  </span>
+                                )}
+                              </div>
+                              <div className="text-[10px] text-slate-400 font-mono mt-0.5">
+                                {comment.studentPhoneMasked}
+                              </div>
+                            </td>
+
+                            <td className="px-4 py-3">
+                              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700">
+                                {comment.level}
+                              </span>
+                              <div className="text-[11px] text-slate-600 mt-0.5 truncate max-w-[140px]">
+                                {comment.topicId}
+                              </div>
+                            </td>
+
+                            <td className="px-4 py-3">
+                              <p className="text-xs text-slate-800 max-w-md line-clamp-2">
+                                {comment.content}
+                              </p>
+                              {comment.isPinned && (
+                                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200 mt-1">
+                                  <Pin className="w-2.5 h-2.5 text-amber-600" />
+                                  Pinned
+                                </span>
+                              )}
+                            </td>
+
+                            <td className="px-4 py-3 font-mono font-semibold text-slate-700">
+                              ❤️ {comment.likesCount}
+                            </td>
+
+                            <td className="px-4 py-3 text-slate-500 font-mono text-[11px]">
+                              {new Date(comment.createdAt).toLocaleDateString('en-GB', {
+                                day: 'numeric',
+                                month: 'short',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })}
+                            </td>
+
+                            <td className="px-4 py-3 text-right">
+                              <div className="flex items-center justify-end gap-1.5">
+                                <button
+                                  type="button"
+                                  onClick={() => handleTogglePinComment(comment.id, Boolean(comment.isPinned))}
+                                  className={`p-1.5 rounded-lg border transition ${
+                                    comment.isPinned
+                                      ? 'bg-amber-100 text-amber-800 border-amber-300'
+                                      : 'border-slate-200 text-slate-500 hover:bg-slate-100 hover:text-slate-800'
+                                  }`}
+                                  title={comment.isPinned ? 'Unpin Note' : 'Pin Note to Top'}
+                                >
+                                  <Pin className="w-3.5 h-3.5" />
+                                </button>
+
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteComment(comment.id)}
+                                  className="p-1.5 rounded-lg border border-slate-200 text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition"
+                                  title="Delete Note"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
                             </td>
                           </tr>
                         ))}

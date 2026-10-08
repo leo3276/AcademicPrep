@@ -28,6 +28,7 @@ import {
   Lock
 } from 'lucide-react';
 import TopicShareButtons from '@/components/TopicShareButtons';
+import LessonCommentsSection from '@/components/LessonCommentsSection';
 
 export default function DetailedTopicLessonPage() {
   const params = useParams();
@@ -771,7 +772,15 @@ export default function DetailedTopicLessonPage() {
         </div>
       </div>
 
-      {/* 7. Bottom Topic-to-Topic Navigation */}
+      {/* 7. Student Discussion & Study Notes Section */}
+      <LessonCommentsSection
+        topicId={topic.id}
+        topicTitle={topic.title}
+        subjectId={subject.id}
+        level={topic.level}
+      />
+
+      {/* 8. Bottom Topic-to-Topic Navigation */}
       <div className="flex items-center justify-between gap-4 pt-4 border-t border-slate-200">
         {prevTopic ? (
           <Link

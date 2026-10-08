@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import PaystackPaymentModal from '@/components/PaystackPaymentModal';
 import TopicShareButtons from '@/components/TopicShareButtons';
+import LessonCommentsSection from '@/components/LessonCommentsSection';
 
 export default function ShsDetailedTopicLessonPage() {
   const params = useParams();
@@ -446,6 +447,14 @@ export default function ShsDetailedTopicLessonPage() {
           </div>
         </div>
       )}
+
+      {/* Student Discussion & Study Notes Section */}
+      <LessonCommentsSection
+        topicId={topic.id}
+        topicTitle={topic.title}
+        subjectId={subjectId}
+        level={topic.level}
+      />
 
       {/* Prev / Next Footer Navigation */}
       <div className="flex items-center justify-between pt-4 border-t border-slate-200 text-xs font-bold">
