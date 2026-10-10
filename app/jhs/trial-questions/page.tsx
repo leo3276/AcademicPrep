@@ -26,9 +26,11 @@ import {
   RefreshCw,
   Info,
   Lock,
-  KeyRound
+  KeyRound,
+  Share2
 } from 'lucide-react';
 import AccessPinModal from '@/components/AccessPinModal';
+import MockShareButtons from '@/components/MockShareButtons';
 
 export default function TrialQuestionsPage() {
   const { student, hasFullAccess, isTrialActive, trialDaysRemaining } = useAuth();
@@ -68,6 +70,26 @@ export default function TrialQuestionsPage() {
     setMounted(true);
     loadDocuments();
   }, []);
+
+  // Handle deep link to specific shared mock document
+  useEffect(() => {
+    if (!loading && documents.length > 0 && typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const targetDocId = urlParams.get('doc') || window.location.hash.replace('#doc-', '').replace('#', '');
+      if (targetDocId) {
+        setTimeout(() => {
+          const el = document.getElementById(`doc-${targetDocId}`);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            el.classList.add('ring-3', 'ring-emerald-500', 'ring-offset-2');
+            setTimeout(() => {
+              el.classList.remove('ring-3', 'ring-emerald-500', 'ring-offset-2');
+            }, 3000);
+          }
+        }, 350);
+      }
+    }
+  }, [loading, documents]);
 
   // Filtered documents
   const filteredDocuments = useMemo(() => {
@@ -152,8 +174,8 @@ export default function TrialQuestionsPage() {
       {/* Main Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         {/* Hero Section */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs">
-          <div className="max-w-3xl space-y-3">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="max-w-2xl space-y-3">
             <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-bold uppercase tracking-wider">
               <FileCheck className="w-3.5 h-3.5 text-emerald-600" />
               <span>Diagnostic Mock Assessments</span>
@@ -164,6 +186,18 @@ export default function TrialQuestionsPage() {
             <p className="text-slate-600 text-sm leading-relaxed">
               Official school diagnostic mock exams, end-of-term assessment booklets, and marking guides uploaded directly by your administrator. View files in your browser or download them for offline practice.
             </p>
+          </div>
+
+          <div className="shrink-0 flex flex-col items-start md:items-end gap-2 border-t md:border-t-0 md:border-l border-slate-100 pt-4 md:pt-0 md:pl-6">
+            <div className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+              <Share2 className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Broadcast Mocks:</span>
+            </div>
+            <MockShareButtons
+              basePath="/jhs/trial-questions"
+              level="JHS (BECE Candidates)"
+              variant="header"
+            />
           </div>
         </div>
 
@@ -340,7 +374,8 @@ export default function TrialQuestionsPage() {
             {filteredDocuments.map((doc) => (
               <div
                 key={doc.id}
-                className="bg-white border border-slate-200 hover:border-slate-300 rounded-2xl p-5 shadow-xs hover:shadow-md transition flex flex-col justify-between group"
+                id={`doc-${doc.id}`}
+                className="bg-white border border-slate-200 hover:border-slate-300 rounded-2xl p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
               >
                 <div className="space-y-4">
                   {/* Card Header: Icon & Level Tag */}
@@ -384,44 +419,57 @@ export default function TrialQuestionsPage() {
                   </div>
                 </div>
 
-                {/* Actions: View PDF & Download */}
-                <div className="grid grid-cols-2 gap-2 mt-5 pt-3 border-t border-slate-100">
-                  <a
-                    href={doc.fileUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => handleDocumentAction(e, doc)}
-                    className={`py-2 px-3 rounded-xl border text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-2xs ${
-                      !student?.hasFullAccess
-                        ? 'border-amber-200 bg-amber-50/70 hover:bg-amber-100 text-amber-900'
-                        : 'border-slate-200 hover:border-slate-300 bg-slate-50/50 hover:bg-slate-100 text-slate-800'
-                    }`}
-                  >
-                    {!student?.hasFullAccess ? (
-                      <Lock className="w-3.5 h-3.5 text-amber-600" />
-                    ) : (
-                      <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
-                    )}
-                    <span>{!student?.hasFullAccess ? 'Unlock PDF' : 'View PDF'}</span>
-                  </a>
+                {/* Actions: View PDF, Download & Share */}
+                <div className="space-y-2 mt-5 pt-3 border-t border-slate-100">
+                  <div className="grid grid-cols-2 gap-2">
+                    <a
+                      href={doc.fileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => handleDocumentAction(e, doc)}
+                      className={`py-2 px-3 rounded-xl border text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-2xs ${
+                        !student?.hasFullAccess
+                          ? 'border-amber-200 bg-amber-50/70 hover:bg-amber-100 text-amber-900'
+                          : 'border-slate-200 hover:border-slate-300 bg-slate-50/50 hover:bg-slate-100 text-slate-800'
+                      }`}
+                    >
+                      {!student?.hasFullAccess ? (
+                        <Lock className="w-3.5 h-3.5 text-amber-600" />
+                      ) : (
+                        <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
+                      )}
+                      <span>{!student?.hasFullAccess ? 'Unlock PDF' : 'View PDF'}</span>
+                    </a>
 
-                  <a
-                    href={doc.fileUrl}
-                    download={doc.fileName}
-                    onClick={(e) => handleDocumentAction(e, doc)}
-                    className={`py-2 px-3 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-2xs ${
-                      !student?.hasFullAccess
-                        ? 'bg-amber-600 hover:bg-amber-700 text-white'
-                        : 'bg-slate-900 hover:bg-slate-800 text-white'
-                    }`}
-                  >
-                    {!student?.hasFullAccess ? (
-                      <KeyRound className="w-3.5 h-3.5" />
-                    ) : (
-                      <Download className="w-3.5 h-3.5" />
-                    )}
-                    <span>{!student?.hasFullAccess ? 'Unlock Access' : 'Download'}</span>
-                  </a>
+                    <a
+                      href={doc.fileUrl}
+                      download={doc.fileName}
+                      onClick={(e) => handleDocumentAction(e, doc)}
+                      className={`py-2 px-3 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-2xs ${
+                        !student?.hasFullAccess
+                          ? 'bg-amber-600 hover:bg-amber-700 text-white'
+                          : 'bg-slate-900 hover:bg-slate-800 text-white'
+                      }`}
+                    >
+                      {!student?.hasFullAccess ? (
+                        <KeyRound className="w-3.5 h-3.5" />
+                      ) : (
+                        <Download className="w-3.5 h-3.5" />
+                      )}
+                      <span>{!student?.hasFullAccess ? 'Unlock Access' : 'Download'}</span>
+                    </a>
+                  </div>
+
+                  {/* 1-Tap WhatsApp Share & Link Copy for this Mock Paper */}
+                  <MockShareButtons
+                    docTitle={doc.title}
+                    subjectName={doc.subjectName}
+                    level={doc.level || 'JHS'}
+                    paperType={doc.paperType}
+                    docId={doc.id}
+                    basePath="/jhs/trial-questions"
+                    variant="card"
+                  />
                 </div>
               </div>
             ))}
