@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { GraduationCap, MessageCircle, ExternalLink, Smartphone } from 'lucide-react';
+import { GraduationCap, MessageCircle, ExternalLink, Smartphone, ShieldAlert, Scale } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -17,6 +17,16 @@ export default function Footer() {
             <p className="text-slate-300 text-[11px] leading-relaxed font-normal">
               Ghana and West Africa’s premier online learning companion. Built for over 8,000+ students transitioning from WhatsApp classes to structured academic mastery.
             </p>
+            <div className="pt-2 flex flex-col gap-1.5 text-[10px] text-slate-400">
+              <Link href="/copyright" className="hover:text-amber-400 transition-colors flex items-center gap-1.5 text-slate-300 font-medium">
+                <ShieldAlert className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                <span>Copyright &amp; Anti-Piracy Policy (Act 690)</span>
+              </Link>
+              <Link href="/terms" className="hover:text-blue-400 transition-colors flex items-center gap-1.5 text-slate-300 font-medium">
+                <Scale className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                <span>Terms of Use &amp; Student License</span>
+              </Link>
+            </div>
           </div>
 
           <div>
@@ -115,11 +125,23 @@ export default function Footer() {
         </div>
 
         <div className="pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-400">
-          <p>© {new Date().getFullYear()} AcademicPrep (academicprep.com). All rights reserved.</p>
-          <div className="flex items-center gap-4">
-            <span className="text-slate-300">Powered by Next.js & Supabase</span>
-            <span>•</span>
-            <span className="text-emerald-400 font-bold">99.9% Uptime High-Concurrency Engine</span>
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 text-center sm:text-left">
+            <p>© {new Date().getFullYear()} AcademicPrep (academicprep.com). All rights reserved.</p>
+            <span className="hidden sm:inline text-slate-600">•</span>
+            <div className="flex items-center gap-2.5 text-[11px]">
+              <Link href="/copyright" className="text-amber-400 hover:text-amber-300 font-semibold underline underline-offset-2 transition-colors">
+                Copyright Policy (Act 690)
+              </Link>
+              <span className="text-slate-600">•</span>
+              <Link href="/terms" className="text-slate-300 hover:text-white transition-colors">
+                Terms of Use
+              </Link>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 text-center sm:text-right">
+            <span className="text-slate-400">Protected under Berne Convention</span>
+            <span className="text-slate-600">•</span>
+            <span className="text-emerald-400 font-bold">99.9% Uptime Engine</span>
           </div>
         </div>
       </div>
