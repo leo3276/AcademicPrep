@@ -301,6 +301,8 @@ export async function sendBulkWhatsApp(
   if (metaAccessToken && metaPhoneId) {
     let sent = 0;
     let failed = 0;
+    let lastError: any = null;
+
     for (const rec of validRecipients) {
       try {
         const res = await fetch(`https://graph.facebook.com/v20.0/${metaPhoneId}/messages`, {
@@ -317,18 +319,32 @@ export async function sendBulkWhatsApp(
             text: { preview_url: true, body: messageText },
           }),
         });
-        if (res.ok) sent++;
-        else failed++;
-      } catch {
+
+        const data = await res.json().catch(() => ({}));
+        if (res.ok) {
+          sent++;
+        } else {
+          failed++;
+          lastError = data?.error || data;
+          console.error(`[Meta WhatsApp] Dispatch failed for ${rec.international}:`, JSON.stringify(data));
+        }
+      } catch (err: any) {
         failed++;
+        lastError = err?.message || err;
+        console.error(`[Meta WhatsApp] Network error for ${rec.international}:`, err);
       }
     }
+
     return {
       success: sent > 0,
       provider: 'meta_cloud',
       sentCount: sent,
       failedCount: failed,
-      message: `Directly delivered 1-click WhatsApp message to ${sent} students via Meta Cloud API (${failed} failed).`,
+      message:
+        sent > 0
+          ? `Directly delivered 1-click WhatsApp message to ${sent} students via Meta Cloud API (${failed} failed).`
+          : `Meta WhatsApp API error: ${lastError?.message || JSON.stringify(lastError) || 'Failed to dispatch messages.'}`,
+      details: lastError ? { lastError } : undefined,
     };
   }
 
