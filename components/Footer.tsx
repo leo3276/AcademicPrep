@@ -133,6 +133,10 @@ export default function Footer() {
                 Copyright Policy (Act 690)
               </Link>
               <span className="text-slate-600">•</span>
+              <Link href="/privacy" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+                Privacy Policy
+              </Link>
+              <span className="text-slate-600">•</span>
               <Link href="/terms" className="text-slate-300 hover:text-white transition-colors">
                 Terms of Use
               </Link>
