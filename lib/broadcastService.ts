@@ -317,36 +317,42 @@ export async function sendBulkWhatsApp(
     let failed = 0;
     let lastError: any = null;
 
-    for (const rec of validRecipients) {
-      try {
-        const res = await fetch(`https://graph.facebook.com/v20.0/${metaPhoneId}/messages`, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${metaAccessToken}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            messaging_product: 'whatsapp',
-            recipient_type: 'individual',
-            to: rec.international,
-            type: 'text',
-            text: { preview_url: true, body: messageText },
-          }),
-        });
+    const CHUNK_SIZE = 15;
+    for (let i = 0; i < validRecipients.length; i += CHUNK_SIZE) {
+      const chunk = validRecipients.slice(i, i + CHUNK_SIZE);
+      await Promise.allSettled(
+        chunk.map(async (rec) => {
+          try {
+            const res = await fetch(`https://graph.facebook.com/v20.0/${metaPhoneId}/messages`, {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${metaAccessToken}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                messaging_product: 'whatsapp',
+                recipient_type: 'individual',
+                to: rec.international,
+                type: 'text',
+                text: { preview_url: true, body: messageText },
+              }),
+            });
 
-        const data = await res.json().catch(() => ({}));
-        if (res.ok) {
-          sent++;
-        } else {
-          failed++;
-          lastError = data?.error || data;
-          console.error(`[Meta WhatsApp] Dispatch failed for ${rec.international}:`, JSON.stringify(data));
-        }
-      } catch (err: any) {
-        failed++;
-        lastError = err?.message || err;
-        console.error(`[Meta WhatsApp] Network error for ${rec.international}:`, err);
-      }
+            const data = await res.json().catch(() => ({}));
+            if (res.ok) {
+              sent++;
+            } else {
+              failed++;
+              lastError = data?.error || data;
+              console.error(`[Meta WhatsApp] Dispatch failed for ${rec.international}:`, JSON.stringify(data));
+            }
+          } catch (err: any) {
+            failed++;
+            lastError = err?.message || err;
+            console.error(`[Meta WhatsApp] Network error for ${rec.international}:`, err);
+          }
+        })
+      );
     }
 
     return {

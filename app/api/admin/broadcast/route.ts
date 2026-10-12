@@ -13,6 +13,7 @@ import {
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
 
 function getActiveSmsProvider(): SmsProviderName {
   if (process.env.ARKESEL_API_KEY) return 'arkesel';
