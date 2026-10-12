@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import {
   Student,
   EducationLevel,
@@ -417,11 +417,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return Object.keys(topicProgress).filter((id) => topicProgress[id]?.completed).length;
   };
 
-  const isPaidVip = Boolean(
-    student?.hasFullAccess &&
-    student.accessType !== 'Free Trial' &&
-    (!student.accessExpiresAt || new Date(student.accessExpiresAt).getTime() > Date.now())
-  );
+  const isPaidVip = useMemo(() => {
+    return Boolean(
+      student?.hasFullAccess &&
+      student.accessType !== 'Free Trial' &&
+      (!student.accessExpiresAt || new Date(student.accessExpiresAt).getTime() > Date.now())
+    );
+  }, [student]);
 
   const hasFullAccess = Boolean(isPaidVip || isTrialActive);
 
