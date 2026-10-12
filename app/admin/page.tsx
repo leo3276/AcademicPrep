@@ -87,9 +87,11 @@ import {
   MessageSquare,
   Pin,
   Crown,
-  Check
+  Check,
+  Radio
 } from 'lucide-react';
 import { parseVideoUrl } from '@/lib/mediaUtils';
+import BroadcastModal from '@/components/BroadcastModal';
 
 
 export default function AdminDashboardPage() {
@@ -189,6 +191,11 @@ export default function AdminDashboardPage() {
   const [blogMediaUploadError, setBlogMediaUploadError] = useState<string | null>(null);
   const [isSavingBlog, setIsSavingBlog] = useState(false);
   const [blogBanner, setBlogBanner] = useState<{ kind: 'ok' | 'bad'; text: string } | null>(null);
+  const [blogBroadcastOnPublish, setBlogBroadcastOnPublish] = useState(false);
+
+  // Broadcast to Students Modal State
+  const [broadcastPost, setBroadcastPost] = useState<BlogPost | null>(null);
+  const [isBroadcastModalOpen, setIsBroadcastModalOpen] = useState(false);
 
   // Community Comments Moderation State
   const [adminComments, setAdminComments] = useState<LessonComment[]>([]);
@@ -399,6 +406,7 @@ export default function AdminDashboardPage() {
     setBlogMediaUrl('');
     setBlogMediaCaption('');
     setBlogMediaUploadError(null);
+    setBlogBroadcastOnPublish(false);
     setShowBlogComposer(false);
   };
 
@@ -520,8 +528,14 @@ export default function AdminDashboardPage() {
           setBlogBanner({ kind: 'bad', text: res.error || 'Failed to publish article.' });
         } else {
           setBlogBanner({ kind: 'ok', text: `Published "${blogTitle}" successfully.` });
+          const newPost = res.post;
+          const shouldBroadcast = blogBroadcastOnPublish;
           resetBlogForm();
           await loadBlogPosts(true);
+          if (shouldBroadcast && newPost) {
+            setBroadcastPost(newPost);
+            setIsBroadcastModalOpen(true);
+          }
         }
       }
     } catch (err: any) {
@@ -3415,17 +3429,33 @@ export default function AdminDashboardPage() {
                   </div>
 
 
-                  <div className="flex items-center gap-2 pt-1">
-                    <input
-                      type="checkbox"
-                      id="blogFeatured"
-                      checked={blogFeatured}
-                      onChange={(e) => setBlogFeatured(e.target.checked)}
-                      className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer"
-                    />
-                    <label htmlFor="blogFeatured" className="text-xs text-slate-700 font-medium cursor-pointer">
-                      Feature this article prominently on Homepage & Blog header
-                    </label>
+                  <div className="space-y-2 pt-1">
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        id="blogFeatured"
+                        checked={blogFeatured}
+                        onChange={(e) => setBlogFeatured(e.target.checked)}
+                        className="rounded border-slate-300 text-amber-600 focus:ring-amber-500 w-4 h-4 cursor-pointer"
+                      />
+                      <label htmlFor="blogFeatured" className="text-xs text-slate-700 font-medium cursor-pointer">
+                        Feature this article prominently on Homepage &amp; Blog header
+                      </label>
+                    </div>
+
+                    <div className="flex items-center gap-2 p-2.5 rounded-lg bg-blue-50/70 border border-blue-200/80">
+                      <input
+                        type="checkbox"
+                        id="blogBroadcastOnPublish"
+                        checked={blogBroadcastOnPublish}
+                        onChange={(e) => setBlogBroadcastOnPublish(e.target.checked)}
+                        className="rounded border-blue-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer"
+                      />
+                      <label htmlFor="blogBroadcastOnPublish" className="text-xs text-blue-900 font-bold cursor-pointer flex items-center gap-1.5">
+                        <Radio className="w-3.5 h-3.5 text-blue-600 animate-pulse" />
+                        <span>Broadcast this announcement directly to students (SMS &amp; WhatsApp) upon publishing</span>
+                      </label>
+                    </div>
                   </div>
 
                   <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
@@ -3615,6 +3645,19 @@ export default function AdminDashboardPage() {
                                       <MessageCircle className="w-3 h-3 text-emerald-600" />
                                       <span>WhatsApp</span>
                                     </button>
+
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setBroadcastPost(post);
+                                        setIsBroadcastModalOpen(true);
+                                      }}
+                                      className="inline-flex items-center gap-1 text-[10px] text-blue-700 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 px-2 py-0.5 rounded font-semibold transition cursor-pointer"
+                                      title="Broadcast directly to students via SMS or WhatsApp"
+                                    >
+                                      <Radio className="w-3 h-3 text-blue-600 animate-pulse" />
+                                      <span>Broadcast (SMS/WA)</span>
+                                    </button>
                                   </div>
                                 </div>
                               </div>
@@ -3639,6 +3682,18 @@ export default function AdminDashboardPage() {
                             </td>
 
                             <td className="px-4 py-3 whitespace-nowrap text-right space-x-1">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setBroadcastPost(post);
+                                  setIsBroadcastModalOpen(true);
+                                }}
+                                className="p-1.5 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition cursor-pointer"
+                                title="Broadcast to Students (SMS &amp; WhatsApp)"
+                              >
+                                <Radio className="w-3.5 h-3.5" />
+                              </button>
+
                               <button
                                 type="button"
                                 onClick={() => handleSharePostWhatsApp(post)}
@@ -4007,6 +4062,16 @@ export default function AdminDashboardPage() {
           </div>
         </div>
       )}
+
+      {/* Multi-Channel Student Broadcast Modal (SMS & WhatsApp) */}
+      <BroadcastModal
+        isOpen={isBroadcastModalOpen}
+        onClose={() => {
+          setIsBroadcastModalOpen(false);
+          setBroadcastPost(null);
+        }}
+        post={broadcastPost}
+      />
     </div>
   );
 }
