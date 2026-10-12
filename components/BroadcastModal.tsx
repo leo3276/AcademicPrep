@@ -60,6 +60,7 @@ export default function BroadcastModal({ isOpen, onClose, post }: BroadcastModal
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedNumbers, setCopiedNumbers] = useState(false);
   const [vcfDownloaded, setVcfDownloaded] = useState(false);
+  const [isSendingWhatsAppServer, setIsSendingWhatsAppServer] = useState(false);
 
   // WhatsApp Sequential Queue Runner State
   const [isQueueRunning, setIsQueueRunning] = useState(false);
@@ -242,6 +243,52 @@ export default function BroadcastModal({ isOpen, onClose, post }: BroadcastModal
     setTimeout(() => setVcfDownloaded(false), 4000);
   };
 
+  // 1-Click Automated Server-Side WhatsApp Send to All Students
+  const handle1ClickWhatsAppSendAll = async () => {
+    if (!whatsAppMessage.trim()) return;
+
+    const confirmMsg = `Send WhatsApp announcement to all ${recipientCount} registered ${targetLevel} students simultaneously in 1 click?`;
+    if (!window.confirm(confirmMsg)) return;
+
+    setIsSendingWhatsAppServer(true);
+    setSmsResultBanner(null);
+
+    try {
+      const res = await fetch('/api/admin/broadcast', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: post.title,
+          excerpt: post.excerpt,
+          url: postUrl,
+          channel: 'whatsapp_server',
+          targetLevel,
+          customMessage: whatsAppMessage,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setSmsResultBanner({
+          kind: 'ok',
+          text: data.statusMessage || `Dispatched 1-click WhatsApp message to all ${data.sentCount} ${targetLevel} students!`,
+        });
+      } else {
+        setSmsResultBanner({
+          kind: 'err',
+          text: data.error || 'Failed to dispatch 1-click WhatsApp broadcast.',
+        });
+      }
+    } catch (err: any) {
+      setSmsResultBanner({
+        kind: 'err',
+        text: err?.message || 'Network error sending 1-click WhatsApp.',
+      });
+    } finally {
+      setIsSendingWhatsAppServer(false);
+    }
+  };
+
   // WhatsApp Queue Runner Handlers
   const currentStudentInQueue = filteredStudents[queueIndex] || null;
 
@@ -418,7 +465,42 @@ export default function BroadcastModal({ isOpen, onClose, post }: BroadcastModal
           {activeChannel === 'whatsapp' && (
             <div className="space-y-4">
 
-              {/* Sequential Queue Runner Box */}
+              {/* ⚡ 1-CLICK ALL STUDENTS RECEIVE IT HERO BOX */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-linear-to-r from-emerald-600 to-teal-700 text-white shadow-md space-y-3">
+                <div className="space-y-1">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-extrabold uppercase tracking-wider">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                    <span>Instant 1-Click Multi-Recipient Delivery</span>
+                  </div>
+                  <h3 className="text-base sm:text-lg font-black tracking-tight">
+                    Send to All {recipientCount} {targetLevel} Students Simultaneously
+                  </h3>
+                  <p className="text-xs text-emerald-100 leading-relaxed">
+                    Sends the announcement directly from the server to every registered {targetLevel} student's WhatsApp number in one click — no one-by-one sending required.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handle1ClickWhatsAppSendAll}
+                  disabled={isSendingWhatsAppServer || recipientCount === 0 || !whatsAppMessage.trim()}
+                  className="w-full py-3.5 px-4 bg-white hover:bg-emerald-50 text-emerald-900 rounded-xl text-xs sm:text-sm font-black transition shadow-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                >
+                  {isSendingWhatsAppServer ? (
+                    <>
+                      <RefreshCw className="w-4 h-4 animate-spin text-emerald-700" />
+                      <span>Sending WhatsApp to All {recipientCount} {targetLevel} Students...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4 text-emerald-700" />
+                      <span>⚡ 1-Click Send WhatsApp to All {recipientCount} {targetLevel} Students</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* Sequential Queue Runner Box (Alternative) */}
               <div className="bg-emerald-950/5 border border-emerald-500/25 rounded-2xl p-4 sm:p-5 space-y-3.5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">

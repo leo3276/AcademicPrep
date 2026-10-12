@@ -6,6 +6,7 @@ import {
   formatAnnouncementSms,
   formatAnnouncementWhatsApp,
   sendBulkSms,
+  sendBulkWhatsApp,
   SmsProviderName,
 } from '@/lib/broadcastService';
 
@@ -143,8 +144,28 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // 2. Channel: WhatsApp Broadcast Hub
     const whatsAppMessage = formatAnnouncementWhatsApp(title, excerpt, url, customMessage);
+
+    // 2. Channel: 1-Click Server-Side Automated WhatsApp Dispatch
+    if (channel === 'whatsapp_server') {
+      const phoneList = validStudents.map((s) => s.cleaned.international);
+      const waResult = await sendBulkWhatsApp(phoneList, whatsAppMessage);
+
+      return NextResponse.json({
+        success: true,
+        channel: 'whatsapp_server',
+        provider: waResult.provider,
+        targetLevel,
+        totalRecipients: validStudents.length,
+        sentCount: waResult.sentCount,
+        failedCount: waResult.failedCount,
+        messagePreview: whatsAppMessage,
+        statusMessage: waResult.message,
+        details: waResult.details,
+      });
+    }
+
+    // 3. Channel: WhatsApp Broadcast Hub (Client Links & VCF)
     const encodedMessage = encodeURIComponent(whatsAppMessage);
 
     // Generate direct click-to-chat links for each student

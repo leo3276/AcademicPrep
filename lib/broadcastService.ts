@@ -260,3 +260,126 @@ export async function sendBulkSms(
     },
   };
 }
+
+export type WhatsAppProviderName = 'meta_cloud' | 'twilio' | 'simulated';
+
+export interface SendWhatsAppResult {
+  success: boolean;
+  provider: WhatsAppProviderName;
+  sentCount: number;
+  failedCount: number;
+  message: string;
+  details?: any;
+}
+
+/**
+ * 1-Click Server-Side Automated WhatsApp Dispatcher.
+ * Automatically delivers WhatsApp messages directly to all target student numbers in the background
+ * via Meta WhatsApp Business Cloud API or Twilio WhatsApp API.
+ */
+export async function sendBulkWhatsApp(
+  recipients: string[],
+  messageText: string
+): Promise<SendWhatsAppResult> {
+  const validRecipients = recipients
+    .map(cleanPhoneNumber)
+    .filter((p) => p.isValid);
+
+  if (validRecipients.length === 0) {
+    return {
+      success: false,
+      provider: 'simulated',
+      sentCount: 0,
+      failedCount: 0,
+      message: 'No valid phone numbers found to deliver WhatsApp message.',
+    };
+  }
+
+  // 1. Meta WhatsApp Business Cloud API (Official Meta API)
+  const metaAccessToken = process.env.WHATSAPP_ACCESS_TOKEN;
+  const metaPhoneId = process.env.WHATSAPP_PHONE_NUMBER_ID;
+  if (metaAccessToken && metaPhoneId) {
+    let sent = 0;
+    let failed = 0;
+    for (const rec of validRecipients) {
+      try {
+        const res = await fetch(`https://graph.facebook.com/v20.0/${metaPhoneId}/messages`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${metaAccessToken}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            messaging_product: 'whatsapp',
+            recipient_type: 'individual',
+            to: rec.international,
+            type: 'text',
+            text: { preview_url: true, body: messageText },
+          }),
+        });
+        if (res.ok) sent++;
+        else failed++;
+      } catch {
+        failed++;
+      }
+    }
+    return {
+      success: sent > 0,
+      provider: 'meta_cloud',
+      sentCount: sent,
+      failedCount: failed,
+      message: `Directly delivered 1-click WhatsApp message to ${sent} students via Meta Cloud API (${failed} failed).`,
+    };
+  }
+
+  // 2. Twilio WhatsApp API
+  const twilioSid = process.env.TWILIO_ACCOUNT_SID;
+  const twilioAuth = process.env.TWILIO_AUTH_TOKEN;
+  const twilioWaFrom = process.env.TWILIO_WHATSAPP_FROM || 'whatsapp:+14155238886';
+  if (twilioSid && twilioAuth) {
+    let sent = 0;
+    let failed = 0;
+    const authHeader = `Basic ${Buffer.from(`${twilioSid}:${twilioAuth}`).toString('base64')}`;
+    for (const rec of validRecipients) {
+      try {
+        const params = new URLSearchParams();
+        params.append('From', twilioWaFrom);
+        params.append('To', `whatsapp:+${rec.international}`);
+        params.append('Body', messageText);
+
+        const res = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${twilioSid}/Messages.json`, {
+          method: 'POST',
+          headers: {
+            Authorization: authHeader,
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: params.toString(),
+        });
+        if (res.ok) sent++;
+        else failed++;
+      } catch {
+        failed++;
+      }
+    }
+    return {
+      success: sent > 0,
+      provider: 'twilio',
+      sentCount: sent,
+      failedCount: failed,
+      message: `Directly delivered 1-click WhatsApp message to ${sent} students via Twilio (${failed} failed).`,
+    };
+  }
+
+  // 3. Fallback / Simulation Mode
+  return {
+    success: true,
+    provider: 'simulated',
+    sentCount: validRecipients.length,
+    failedCount: 0,
+    message: `1-Click WhatsApp broadcast processed for ${validRecipients.length} students (Simulation Mode). To connect live automated delivery without opening chats, add WHATSAPP_ACCESS_TOKEN and WHATSAPP_PHONE_NUMBER_ID in .env.local.`,
+    details: {
+      recipientCount: validRecipients.length,
+      sampleRecipients: validRecipients.slice(0, 5).map((p) => p.international),
+    },
+  };
+}
