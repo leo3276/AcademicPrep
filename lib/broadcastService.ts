@@ -272,6 +272,17 @@ export interface SendWhatsAppResult {
   details?: any;
 }
 
+export function getActiveWhatsAppProvider(): WhatsAppProviderName {
+  const metaAccessToken = process.env.WHATSAPP_ACCESS_TOKEN || process.env.WHATSAPP_TOKEN;
+  const metaPhoneId =
+    process.env.WHATSAPP_PHONE_NUMBER_ID ||
+    process.env.WHATSAPP_PHONE_ID ||
+    process.env.WHATSAPP_NUMBER_ID;
+  if (metaAccessToken && metaPhoneId) return 'meta_cloud';
+  if (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) return 'twilio';
+  return 'simulated';
+}
+
 /**
  * 1-Click Server-Side Automated WhatsApp Dispatcher.
  * Automatically delivers WhatsApp messages directly to all target student numbers in the background
@@ -296,8 +307,11 @@ export async function sendBulkWhatsApp(
   }
 
   // 1. Meta WhatsApp Business Cloud API (Official Meta API)
-  const metaAccessToken = process.env.WHATSAPP_ACCESS_TOKEN;
-  const metaPhoneId = process.env.WHATSAPP_PHONE_NUMBER_ID;
+  const metaAccessToken = process.env.WHATSAPP_ACCESS_TOKEN || process.env.WHATSAPP_TOKEN;
+  const metaPhoneId =
+    process.env.WHATSAPP_PHONE_NUMBER_ID ||
+    process.env.WHATSAPP_PHONE_ID ||
+    process.env.WHATSAPP_NUMBER_ID;
   if (metaAccessToken && metaPhoneId) {
     let sent = 0;
     let failed = 0;

@@ -49,6 +49,7 @@ export default function BroadcastModal({ isOpen, onClose, post }: BroadcastModal
   const [jhsCount, setJhsCount] = useState(0);
   const [shsCount, setShsCount] = useState(0);
   const [activeSmsProvider, setActiveSmsProvider] = useState<string>('simulated');
+  const [activeWhatsAppProvider, setActiveWhatsAppProvider] = useState<string>('simulated');
   const [students, setStudents] = useState<StudentRecipient[]>([]);
   const [searchRoster, setSearchRoster] = useState('');
 
@@ -96,6 +97,7 @@ export default function BroadcastModal({ isOpen, onClose, post }: BroadcastModal
             setJhsCount(data.jhsCount || 0);
             setShsCount(data.shsCount || 0);
             setActiveSmsProvider(data.activeSmsProvider || 'simulated');
+            setActiveWhatsAppProvider(data.activeWhatsAppProvider || 'simulated');
             setStudents(data.students || []);
           }
         }
@@ -478,6 +480,19 @@ export default function BroadcastModal({ isOpen, onClose, post }: BroadcastModal
                   <p className="text-xs text-emerald-100 leading-relaxed">
                     Sends the announcement directly from the server to every registered {targetLevel} student's WhatsApp number in one click — no one-by-one sending required.
                   </p>
+                  <div className="pt-1">
+                    {activeWhatsAppProvider === 'meta_cloud' ? (
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/40 text-emerald-100 text-[11px] font-semibold border border-emerald-300/30">
+                        <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse" />
+                        Meta WhatsApp Cloud API Live (+233 59 311 9669)
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-950/40 text-amber-200 text-[11px] font-semibold border border-amber-300/30">
+                        <span className="w-2 h-2 rounded-full bg-amber-300" />
+                        Simulation Mode (Awaiting Vercel Redeployment with Keys)
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 <button

@@ -7,6 +7,7 @@ import {
   formatAnnouncementWhatsApp,
   sendBulkSms,
   sendBulkWhatsApp,
+  getActiveWhatsAppProvider,
   SmsProviderName,
 } from '@/lib/broadcastService';
 
@@ -58,6 +59,7 @@ export async function GET(req: NextRequest) {
       jhsCount,
       shsCount,
       activeSmsProvider: getActiveSmsProvider(),
+      activeWhatsAppProvider: getActiveWhatsAppProvider(),
       students,
     });
   } catch (err: any) {
