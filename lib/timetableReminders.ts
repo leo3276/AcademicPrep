@@ -146,6 +146,18 @@ export function downloadTimetableIcs(timetable: PersonalTimetable): void {
     Sunday: 'SU',
   };
 
+  const dayToBaseDate: Record<string, string> = {
+    Monday: '20261019',
+    Tuesday: '20261020',
+    Wednesday: '20261021',
+    Thursday: '20261022',
+    Friday: '20261023',
+    Saturday: '20261024',
+    Sunday: '20261025',
+  };
+
+  const cleanIcsText = (str: string) => (str || '').replace(/[\r\n]+/g, ' ').replace(/[;,]/g, ' ').trim();
+
   const isShs = timetable.level.startsWith('SHS');
   const examName = isShs ? 'WASSCE' : 'BECE';
   const portalUrl = isShs ? 'https://academicprep.com/shs' : 'https://academicprep.com/jhs';
@@ -164,6 +176,7 @@ export function downloadTimetableIcs(timetable: PersonalTimetable): void {
 
   Object.entries(timetable.weeklySchedule).forEach(([day, sessions]) => {
     const icsDay = dayToIcsDay[day];
+    const baseDate = dayToBaseDate[day] || '20261019';
     if (!icsDay) return;
 
     sessions.forEach((sess, idx) => {
@@ -178,17 +191,17 @@ export function downloadTimetableIcs(timetable: PersonalTimetable): void {
       const endH = String(Math.floor(endMin / 60)).padStart(2, '0');
       const endM = String(endMin % 60).padStart(2, '0');
 
-      const eventSummary = `Study: ${sess.subjectName} - ${sess.topicTitle}`;
-      const eventDescription = `Topic: ${sess.topicTitle}\\nObjective: ${sess.learningObjective}\\nStudy Mode: ${sess.studyMode}\\nPractice on AcademicPrep: ${portalUrl}/${sess.subjectId}`;
+      const eventSummary = cleanIcsText(`Study: ${sess.subjectName} - ${sess.topicTitle}`);
+      const eventDescription = cleanIcsText(`Topic: ${sess.topicTitle} | Focus: ${sess.learningObjective} | Mode: ${sess.studyMode} | Open: ${portalUrl}/${sess.subjectId}`);
 
       icsContent.push(
         'BEGIN:VEVENT',
         `UID:academicprep-${sess.id}-${idx}@academicprep.com`,
         `DTSTAMP:${nowStr}`,
-        // Set recurring weekly rule
+        // Set recurring weekly rule aligned to exact weekday
         `RRULE:FREQ=WEEKLY;BYDAY=${icsDay}`,
-        `DTSTART:20261019T${startH}${startM}00`,
-        `DTEND:20261019T${endH}${endM}00`,
+        `DTSTART:${baseDate}T${startH}${startM}00`,
+        `DTEND:${baseDate}T${endH}${endM}00`,
         `SUMMARY:${eventSummary}`,
         `DESCRIPTION:${eventDescription}`,
         'LOCATION:Home Desk / AcademicPrep Portal',
@@ -197,7 +210,7 @@ export function downloadTimetableIcs(timetable: PersonalTimetable): void {
         'BEGIN:VALARM',
         'TRIGGER:-PT10M',
         'ACTION:DISPLAY',
-        `DESCRIPTION:Reminder: Time to study ${sess.subjectName} (${sess.topicTitle})!`,
+        `DESCRIPTION:Reminder: Time to study ${cleanIcsText(sess.subjectName)}!`,
         'END:VALARM',
         'END:VEVENT'
       );

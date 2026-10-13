@@ -399,7 +399,7 @@ export default function StudentProfilePage() {
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
-              <Calendar className="w-4 h-4 shrink-0 text-blue-500" />
+              <Calendar className={`w-4 h-4 shrink-0 ${activeTab === 'timetable' ? 'text-white' : 'text-blue-500'}`} />
               <span className="hidden sm:inline">Study Timetable</span>
               <span className="sm:hidden">Timetable</span>
               <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-extrabold uppercase shrink-0 ${
@@ -418,7 +418,7 @@ export default function StudentProfilePage() {
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
-              <Trophy className="w-4 h-4 text-amber-400 shrink-0" />
+              <Trophy className={`w-4 h-4 shrink-0 ${activeTab === 'leaderboard' ? 'text-amber-300' : 'text-amber-500'}`} />
               <span className="hidden sm:inline">Leaderboard</span>
               <span className="sm:hidden">Ranks</span>
               <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-mono font-bold shrink-0 ${
@@ -438,7 +438,7 @@ export default function StudentProfilePage() {
               }`}
             >
               <KeyRound className="w-4 h-4 shrink-0" />
-              <span className="hidden sm:inline">VIP &amp; Access PIN</span>
+              <span className="hidden sm:inline">VIP & Access PIN</span>
               <span className="sm:hidden">VIP PIN</span>
               {!isFullPass && (
                 <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse shrink-0" />
@@ -648,7 +648,7 @@ export default function StudentProfilePage() {
                 </div>
                 <div>
                   <h3 className="text-base font-bold text-slate-900">National Academic Leaderboard</h3>
-                  <p className="text-xs text-slate-500">Live rankings of all registered candidates across Ghana based on completed topics &amp; diagnostic accuracy.</p>
+                  <p className="text-xs text-slate-500">Live rankings of all registered candidates across Ghana based on completed topics & diagnostic accuracy.</p>
                 </div>
               </div>
 
