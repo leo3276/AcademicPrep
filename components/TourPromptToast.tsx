@@ -30,6 +30,7 @@ export default function TourPromptToast({ onStartTour }: TourPromptToastProps) {
     setVisible(false);
     if (typeof window !== 'undefined') {
       localStorage.setItem('academicprep_tour_prompt_dismissed', 'true');
+      window.dispatchEvent(new Event('academicprep_tour_dismissed'));
     }
   };
 
@@ -37,6 +38,7 @@ export default function TourPromptToast({ onStartTour }: TourPromptToastProps) {
     setVisible(false);
     if (typeof window !== 'undefined') {
       localStorage.setItem('academicprep_tour_prompt_dismissed', 'true');
+      window.dispatchEvent(new Event('academicprep_tour_dismissed'));
     }
     onStartTour();
   };

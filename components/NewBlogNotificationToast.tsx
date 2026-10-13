@@ -41,11 +41,19 @@ export default function NewBlogNotificationToast({ initialPosts }: NewBlogNotifi
           return;
         }
 
-        // Show toast with smooth 1.5s entrance delay
+        // Check if tour prompt is currently active for first-time visitors
+        // Never clash or overlap with the tour prompt!
+        const tourDismissed = localStorage.getItem('academicprep_tour_prompt_dismissed');
+        const tourCompleted = localStorage.getItem('academicprep_account_tour_completed');
+        if (!tourDismissed && !tourCompleted) {
+          return;
+        }
+
+        // Show toast with smooth 2.5s entrance delay
         setLatestPost(newest);
         const timer = setTimeout(() => {
           if (isMounted) setIsVisible(true);
-        }, 1500);
+        }, 2500);
 
         return () => clearTimeout(timer);
       } catch (err) {
@@ -55,8 +63,18 @@ export default function NewBlogNotificationToast({ initialPosts }: NewBlogNotifi
 
     checkLatestPost();
 
+    // Listen for tour dismissal event so blog toast can appear afterwards if appropriate
+    const handleTourDismissed = () => {
+      setTimeout(() => {
+        if (isMounted) checkLatestPost();
+      }, 3000);
+    };
+
+    window.addEventListener('academicprep_tour_dismissed', handleTourDismissed);
+
     return () => {
       isMounted = false;
+      window.removeEventListener('academicprep_tour_dismissed', handleTourDismissed);
     };
   }, [initialPosts]);
 
@@ -79,28 +97,24 @@ export default function NewBlogNotificationToast({ initialPosts }: NewBlogNotifi
   return (
     <aside
       aria-label="New blog post notification"
-      className="fixed bottom-4 right-4 z-50 max-w-sm sm:max-w-md w-[calc(100vw-2rem)] animate-in slide-in-from-bottom-5 fade-in duration-300 pointer-events-auto"
+      className="fixed bottom-5 right-4 sm:right-6 z-40 max-w-sm sm:max-w-md w-[calc(100vw-32px)] animate-in slide-in-from-bottom-5 fade-in duration-300 pointer-events-auto"
     >
-      <div className="bg-slate-900/95 backdrop-blur-md text-white rounded-2xl p-4 sm:p-4.5 border border-slate-700/80 shadow-2xl shadow-black/40 relative overflow-hidden group">
-        {/* Glow ambient background accent */}
-        <div className="absolute -top-10 -right-10 w-28 h-28 bg-blue-500/20 rounded-full blur-2xl pointer-events-none" />
-        <div className="absolute -bottom-10 -left-10 w-28 h-28 bg-amber-500/15 rounded-full blur-2xl pointer-events-none" />
-
+      <div className="bg-white/95 backdrop-blur-md text-slate-900 rounded-2xl p-4 sm:p-4.5 border border-slate-200/90 shadow-2xl shadow-slate-900/10 relative overflow-hidden group">
         <div className="flex items-start justify-between gap-3 relative z-10">
           <div className="flex items-center gap-2">
-            <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 text-[10px] font-black uppercase tracking-wider shadow-xs">
-              <Sparkles className="w-2.5 h-2.5 fill-slate-950" />
-              New Blog Post
+            <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-[10px] font-bold uppercase tracking-wider">
+              <Sparkles className="w-2.5 h-2.5 text-amber-600" />
+              New Study Guide
             </span>
-            <span className="text-[11px] text-slate-400 font-medium">
+            <span className="text-[11px] text-slate-500 font-medium">
               {latestPost.category}
             </span>
           </div>
 
           <button
             onClick={handleDismiss}
-            className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer"
+            className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition cursor-pointer"
             aria-label="Dismiss notification"
           >
             <X className="w-4 h-4" />
@@ -112,30 +126,30 @@ export default function NewBlogNotificationToast({ initialPosts }: NewBlogNotifi
           <Link
             href={`/blog/${latestPost.id}`}
             onClick={handleRead}
-            className="block font-bold text-sm sm:text-base text-white hover:text-blue-300 transition leading-snug line-clamp-2"
+            className="block font-bold text-sm sm:text-base text-slate-900 hover:text-blue-600 transition leading-snug line-clamp-2"
           >
             {latestPost.title}
           </Link>
-          <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
+          <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
             {latestPost.excerpt}
           </p>
         </div>
 
         {/* Footer actions */}
-        <div className="mt-3.5 pt-3 border-t border-slate-800 flex items-center justify-between relative z-10 text-xs">
+        <div className="mt-3.5 pt-3 border-t border-slate-100 flex items-center justify-between relative z-10 text-xs">
           <div className="flex items-center gap-2 text-[11px] text-slate-400">
             <span className="flex items-center gap-1">
               <Clock className="w-3 h-3 text-slate-400" />
               {latestPost.readTimeMinutes} min read
             </span>
             <span>&middot;</span>
-            <span className="truncate max-w-[120px]">{latestPost.author}</span>
+            <span className="truncate max-w-[130px] text-slate-500 font-medium">{latestPost.author}</span>
           </div>
 
           <Link
             href={`/blog/${latestPost.id}`}
             onClick={handleRead}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition shadow-sm group/btn"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition shadow-2xs group/btn"
           >
             <span>Read Post</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />

@@ -707,261 +707,109 @@ export default function HomePage() {
             ))}
           </div>
 
-          {/* Featured & Side Articles Grid */}
+          {/* Curated Top 3 Articles Grid (Blends harmoniously into white background) */}
           {(() => {
             const filtered = blogCategory === 'ALL'
               ? blogPosts
               : blogPosts.filter((p) => p.category === blogCategory);
-            
-            // Collect all featured articles in current view
-            const featuredList = blogCategory === 'ALL'
-              ? blogPosts.filter((p) => p.featured)
-              : filtered.filter((p) => p.featured);
-            
-            // If none marked featured in current view, fallback to first article
-            const primaryFeatured = featuredList[0] || filtered[0];
-            const remainingPosts = filtered.filter((p) => p.id !== primaryFeatured?.id);
 
-            if (!primaryFeatured) {
+            const featuredList = filtered.filter((p) => p.featured);
+            // Prioritize featured posts, fallback to most recent, limit to 3 for the homepage
+            const candidatePosts = featuredList.length > 0 ? featuredList : filtered;
+            const displayPosts = candidatePosts.slice(0, 3);
+
+            if (displayPosts.length === 0) {
               return (
-                <div className="p-8 text-center text-xs text-slate-500">
+                <div className="p-8 text-center text-xs text-slate-500 bg-slate-50 rounded-2xl border border-slate-200">
                   No articles found in this category.
                 </div>
               );
             }
 
-            // Case A: Multiple featured posts in "ALL" view -> Multi-card Featured Spotlight
-            if (blogCategory === 'ALL' && featuredList.length > 1) {
-              return (
-                <div className="space-y-8">
-                  {/* Featured Spotlight Grid */}
-                  <div>
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className="p-1 rounded-md bg-amber-100 text-amber-700">
-                        <Flame className="w-4 h-4 fill-amber-500 text-amber-500" />
-                      </span>
-                      <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                        Featured by Editors & Examiners ({featuredList.length})
-                      </h3>
-                    </div>
-
-                    <div className={`grid grid-cols-1 ${featuredList.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-3'} gap-6`}>
-                      {featuredList.map((post) => (
-                        <div
-                          key={post.id}
-                          className="rounded-2xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-5 sm:p-6 shadow-md relative overflow-hidden group flex flex-col justify-between"
-                        >
-                          {/* Media Thumbnail */}
-                          {post.mediaType && post.mediaUrl && (
-                            <div className="w-full h-40 sm:h-44 rounded-xl overflow-hidden mb-4 bg-slate-950 relative border border-white/10 shrink-0">
-                              {post.mediaType === 'image' ? (
-                                <img
-                                  src={post.mediaUrl}
-                                  alt=""
-                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                  loading="lazy"
-                                />
-                              ) : (
-                                <div className="w-full h-full flex items-center justify-center">
-                                  <Play className="w-8 h-8 fill-white text-white" />
-                                </div>
-                              )}
-                            </div>
-                          )}
-
-                          <div className="space-y-3 relative z-10 flex-1">
-                            <div className="flex flex-wrap items-center gap-2">
-                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-500 text-white text-[10px] font-black uppercase tracking-wider shadow-xs">
-                                <Flame className="w-2.5 h-2.5 fill-white" /> Featured
-                              </span>
-                              <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/20 text-white backdrop-blur-xs">
-                                {post.category}
-                              </span>
-                              <span className="text-[11px] text-slate-300 flex items-center gap-1 font-medium">
-                                <Clock className="w-3 h-3" />
-                                {post.readTimeMinutes} min
-                              </span>
-                            </div>
-
-                            <Link href={`/blog/${post.id}`}>
-                              <h3 className="text-base sm:text-lg font-extrabold text-white group-hover:text-blue-300 transition leading-snug line-clamp-2">
-                                {post.title}
-                              </h3>
-                            </Link>
-
-                            <p className="text-xs text-slate-300 leading-relaxed line-clamp-3">
-                              {post.excerpt}
-                            </p>
-                          </div>
-
-                          <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between relative z-10 text-xs">
-                            <span className="text-slate-300 text-[11px] truncate max-w-[140px]">
-                              By <b className="text-white">{post.author}</b>
-                            </span>
-
-                            <Link
-                              href={`/blog/${post.id}`}
-                              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition shadow-xs"
-                            >
-                              <span>Read Guide</span>
-                              <ArrowRight className="w-3 h-3" />
-                            </Link>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* More Recent Guides Strip */}
-                  {remainingPosts.length > 0 && (
-                    <div className="pt-4 border-t border-slate-100">
-                      <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">
-                        More Study Guides & Analysis
-                      </h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {remainingPosts.slice(0, 6).map((post) => (
-                          <Link
-                            key={post.id}
-                            href={`/blog/${post.id}`}
-                            className="p-4 rounded-xl border border-slate-200 hover:border-blue-400 bg-slate-50 hover:bg-white transition-all group flex flex-col justify-between"
-                          >
-                            <div className="space-y-1.5">
-                              <div className="flex items-center justify-between text-[11px]">
-                                <span className="px-2 py-0.5 rounded-full font-semibold bg-white border border-slate-200 text-slate-700">
-                                  {post.category}
-                                </span>
-                                <span className="text-slate-400 font-medium">
-                                  {post.readTimeMinutes} min
-                                </span>
-                              </div>
-                              <h5 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition line-clamp-2">
-                                {post.title}
-                              </h5>
-                              <p className="text-xs text-slate-500 line-clamp-2">
-                                {post.excerpt}
-                              </p>
-                            </div>
-                            <div className="pt-2 mt-2 flex items-center justify-between text-[11px] text-slate-400 border-t border-slate-200/60">
-                              <span className="truncate max-w-[120px]">{post.author}</span>
-                              <span className="text-blue-600 font-bold flex items-center gap-0.5">
-                                <span>Read</span>
-                                <ChevronRight className="w-3.5 h-3.5" />
-                              </span>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            }
-
-            // Case B: Single featured post or filtered view -> 7-col / 5-col Split
-            const side = remainingPosts.slice(0, 3);
-
             return (
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                {/* Featured Article Card (7 columns) */}
-                <div className="lg:col-span-7 flex flex-col justify-between rounded-2xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-8 shadow-md relative overflow-hidden group">
-                  <div className="space-y-4 relative z-10">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-500 text-white text-[10px] font-bold uppercase tracking-wider shadow-xs">
-                        <Flame className="w-2.5 h-2.5 fill-white" /> Featured Guide
-                      </span>
-                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-white/20 text-white backdrop-blur-xs">
-                        {primaryFeatured.category}
-                      </span>
-                      <span className="text-[11px] text-slate-300 flex items-center gap-1 font-medium">
-                        <Clock className="w-3 h-3" />
-                        {primaryFeatured.readTimeMinutes} min read
-                      </span>
-                    </div>
-
-                    <Link href={`/blog/${primaryFeatured.id}`}>
-                      <h3 className="text-xl sm:text-2xl font-extrabold text-white group-hover:text-blue-300 transition leading-snug">
-                        {primaryFeatured.title}
-                      </h3>
-                    </Link>
-
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed line-clamp-3">
-                      {primaryFeatured.excerpt}
-                    </p>
-                  </div>
-
-                  <div className="pt-6 mt-6 border-t border-white/10 flex items-center justify-between relative z-10">
-                    <div className="text-xs text-slate-300 font-medium">
-                      By <span className="text-white font-bold">{primaryFeatured.author}</span>
-                    </div>
-
-                    <Link
-                      href={`/blog/${primaryFeatured.id}`}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition shadow-sm"
-                    >
-                      <span>Read Full Guide</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Side Articles List (5 columns) */}
-                <div className="lg:col-span-5 flex flex-col gap-4">
-                  {side.map((post) => (
-                    <Link
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {displayPosts.map((post) => (
+                    <article
                       key={post.id}
-                      href={`/blog/${post.id}`}
-                      className="p-4 rounded-2xl border border-slate-200 hover:border-blue-400 bg-slate-50 hover:bg-white transition-all shadow-2xs group flex flex-col justify-between"
+                      className="rounded-2xl bg-white border border-slate-200/90 hover:border-slate-300 p-5 sm:p-5.5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between group"
                     >
-                      <div className="flex items-start gap-3">
-                        <div className="space-y-2 flex-1 min-w-0">
-                          <div className="flex items-center justify-between text-[11px]">
-                            <span className="px-2 py-0.5 rounded-full font-semibold bg-white border border-slate-200 text-slate-700">
+                      <div>
+                        {/* Media Thumbnail */}
+                        {post.mediaType && post.mediaUrl ? (
+                          <div className="w-full h-44 rounded-xl overflow-hidden mb-4 bg-slate-100 relative border border-slate-100 shrink-0">
+                            {post.mediaType === 'image' ? (
+                              <img
+                                src={post.mediaUrl}
+                                alt={post.title}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                loading="lazy"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center bg-slate-900">
+                                <Play className="w-8 h-8 fill-white text-white" />
+                              </div>
+                            )}
+                          </div>
+                        ) : null}
+
+                        <div className="space-y-2.5">
+                          <div className="flex flex-wrap items-center gap-2">
+                            {post.featured && (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-bold uppercase tracking-wider">
+                                <Flame className="w-2.5 h-2.5 fill-amber-500 text-amber-500" /> Featured
+                              </span>
+                            )}
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-700">
                               {post.category}
                             </span>
-                            <span className="text-slate-400 font-medium flex items-center gap-1">
+                            <span className="text-[11px] text-slate-400 flex items-center gap-1 font-medium ml-auto">
                               <Clock className="w-3 h-3" />
                               {post.readTimeMinutes} min
                             </span>
                           </div>
 
-                          <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition line-clamp-2 leading-snug">
-                            {post.title}
-                          </h4>
+                          <Link href={`/blog/${post.id}`}>
+                            <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-blue-600 transition leading-snug line-clamp-2">
+                              {post.title}
+                            </h3>
+                          </Link>
 
-                          <p className="text-xs text-slate-500 line-clamp-2">
+                          <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">
                             {post.excerpt}
                           </p>
                         </div>
-
-                        {post.mediaType && post.mediaUrl && (
-                          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden shrink-0 bg-slate-100 border border-slate-200">
-                            {post.mediaType === 'image' ? (
-                              <img
-                                src={post.mediaUrl}
-                                alt=""
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                loading="lazy"
-                              />
-                            ) : (
-                              <div className="w-full h-full bg-slate-950 flex items-center justify-center relative">
-                                <Play className="w-4 h-4 fill-white text-white" />
-                              </div>
-                            )}
-                          </div>
-                        )}
                       </div>
 
-                      <div className="pt-2 mt-2 flex items-center justify-between text-[11px] text-slate-400 border-t border-slate-200/60">
-                        <span className="truncate max-w-[130px] font-medium text-slate-600">
-                          {post.author}
+                      <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <span className="text-slate-500 text-[11px] truncate max-w-[130px]">
+                          By <b className="text-slate-800">{post.author}</b>
                         </span>
-                        <span className="text-blue-600 font-bold flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform">
-                          <span>Read</span>
-                          <ChevronRight className="w-3.5 h-3.5" />
-                        </span>
+
+                        <Link
+                          href={`/blog/${post.id}`}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 group-hover:bg-blue-600 text-white font-semibold text-xs transition shadow-2xs"
+                        >
+                          <span>Read Guide</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
                       </div>
-                    </Link>
+                    </article>
                   ))}
+                </div>
+
+                {/* Clean Bottom Navigation Bar */}
+                <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                  <p className="text-slate-500">
+                    Showing 3 featured guides. Access complete past question solutions and exam analyses in the journal.
+                  </p>
+                  <Link
+                    href="/blog"
+                    className="inline-flex items-center gap-1.5 font-bold text-blue-600 hover:text-blue-700 hover:underline shrink-0"
+                  >
+                    <span>View All Articles ({blogPosts.length})</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
                 </div>
               </div>
             );
