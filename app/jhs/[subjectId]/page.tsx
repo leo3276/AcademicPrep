@@ -24,7 +24,6 @@ import {
   Video,
   PlayCircle,
   Crown,
-  Sparkles,
   ExternalLink,
   Award,
   X

@@ -11,7 +11,6 @@ import {
   Share2, 
   Check, 
   BookOpen, 
-  Sparkles,
   ChevronRight,
   MessageCircle,
   FileText
@@ -309,7 +308,7 @@ export default function BlogPostDetailPage() {
           <div className="pt-8 border-t border-slate-100">
             <div className="rounded-2xl bg-slate-900 text-white p-6 sm:p-8 space-y-4">
               <div className="flex items-center gap-2 text-emerald-400 font-bold text-xs">
-                <Sparkles className="w-4 h-4" />
+                <BookOpen className="w-4 h-4" />
                 <span>Ready to Put This Strategy into Practice?</span>
               </div>
               <h3 className="text-xl sm:text-2xl font-bold text-white">

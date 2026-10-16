@@ -104,11 +104,142 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    // 1b. Action: Like a Reply
+    if (action === 'like-reply') {
+      const commentId = String(body?.commentId || '');
+      const replyId = String(body?.replyId || '');
+      const studentId = String(body?.studentId || '');
+
+      if (!commentId || !replyId || !studentId) {
+        return NextResponse.json({ success: false, error: 'Missing commentId, replyId, or studentId.' }, { status: 400 });
+      }
+
+      const commentIndex = allComments.findIndex((c) => c.id === commentId);
+      if (commentIndex === -1) {
+        return NextResponse.json({ success: false, error: 'Parent comment not found.' }, { status: 404 });
+      }
+
+      const parent = allComments[commentIndex];
+      const replies = parent.replies || [];
+      const replyIndex = replies.findIndex((r) => r.id === replyId);
+      if (replyIndex === -1) {
+        return NextResponse.json({ success: false, error: 'Reply not found.' }, { status: 404 });
+      }
+
+      const reply = replies[replyIndex];
+      const alreadyLiked = reply.likedByStudents?.includes(studentId);
+
+      if (alreadyLiked) {
+        reply.likedByStudents = reply.likedByStudents.filter((id) => id !== studentId);
+        reply.likesCount = Math.max(0, reply.likesCount - 1);
+      } else {
+        reply.likedByStudents = [...(reply.likedByStudents || []), studentId];
+        reply.likesCount = (reply.likesCount || 0) + 1;
+      }
+
+      replies[replyIndex] = reply;
+      parent.replies = replies;
+      allComments[commentIndex] = parent;
+      await saveStoredComments(allComments);
+
+      return NextResponse.json({
+        success: true,
+        liked: !alreadyLiked,
+        likesCount: reply.likesCount,
+      });
+    }
+
+    // 1c. Action: Post Reply to a Comment
+    if (action === 'reply') {
+      const commentId = String(body?.commentId || '');
+      const rawContent = typeof body?.content === 'string' ? body.content.trim() : '';
+
+      if (!commentId) {
+        return NextResponse.json({ success: false, error: 'Missing commentId.' }, { status: 400 });
+      }
+
+      if (!rawContent) {
+        return NextResponse.json({ success: false, error: 'Reply content cannot be empty.' }, { status: 400 });
+      }
+
+      if (rawContent.length > 500) {
+        return NextResponse.json({ success: false, error: 'Reply is too long (maximum 500 characters).' }, { status: 400 });
+      }
+
+      if (containsInappropriateContent(rawContent)) {
+        return NextResponse.json(
+          { success: false, error: 'Your reply contains inappropriate or restricted language.' },
+          { status: 400 }
+        );
+      }
+
+      const commentIndex = allComments.findIndex((c) => c.id === commentId);
+      if (commentIndex === -1) {
+        return NextResponse.json({ success: false, error: 'Parent comment not found.' }, { status: 404 });
+      }
+
+      const token = getBearerToken(req);
+      const sessionStudentId = await resolveSession(token);
+      const isAdmin = requireAdmin(req);
+
+      let studentName = 'Student Scholar';
+      let studentPhoneMasked = '024****000';
+      let isVip = false;
+      let authorId = sessionStudentId || `guest-${Date.now()}`;
+      let isTeacherReply = false;
+
+      if (sessionStudentId) {
+        const dbStudent = await findStudentById(sessionStudentId);
+        if (dbStudent) {
+          studentName = dbStudent.full_name || 'Student';
+          studentPhoneMasked = maskPhone(dbStudent.phone_number);
+          isVip = Boolean(dbStudent.has_full_access);
+        }
+      } else if (isAdmin) {
+        studentName = 'AcademicPrep Teacher / Admin';
+        studentPhoneMasked = 'Official';
+        isVip = true;
+        isTeacherReply = true;
+      } else if (typeof body?.authorName === 'string' && body.authorName.trim()) {
+        studentName = body.authorName.trim().slice(0, 40);
+      }
+
+      const newReply = {
+        id: `rep-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+        commentId,
+        studentId: authorId,
+        studentName,
+        studentPhoneMasked,
+        isVip,
+        content: rawContent,
+        likesCount: 0,
+        likedByStudents: [],
+        isTeacherReply,
+        teacherTitle: isTeacherReply ? 'Verified AcademicPrep Instructor' : undefined,
+        createdAt: new Date().toISOString(),
+        status: 'active' as const,
+      };
+
+      const parent = allComments[commentIndex];
+      parent.replies = [...(parent.replies || []), newReply];
+      allComments[commentIndex] = parent;
+      await saveStoredComments(allComments);
+
+      return NextResponse.json({
+        success: true,
+        reply: newReply,
+        comment: parent,
+      });
+    }
+
     // 2. Action: Create Comment
     const rawContent = typeof body?.content === 'string' ? body.content.trim() : '';
     const topicId = typeof body?.topicId === 'string' ? body.topicId.trim() : '';
     const subjectId = typeof body?.subjectId === 'string' ? body.subjectId.trim() : '';
     const level = typeof body?.level === 'string' ? body.level.trim() : 'JHS 1';
+    const replyToId = typeof body?.replyToId === 'string' ? body.replyToId.trim() : undefined;
+    const replyToName = typeof body?.replyToName === 'string' ? body.replyToName.trim() : undefined;
+    const replyToSnippet = typeof body?.replyToSnippet === 'string' ? body.replyToSnippet.trim().slice(0, 80) : undefined;
 
     if (!rawContent) {
       return NextResponse.json({ success: false, error: 'Comment content cannot be empty.' }, { status: 400 });
@@ -169,6 +300,10 @@ export async function POST(req: NextRequest) {
       teacherTitle: isTeacherReply ? 'Verified AcademicPrep Instructor' : undefined,
       createdAt: new Date().toISOString(),
       status: 'active',
+      replies: [],
+      replyToId,
+      replyToName,
+      replyToSnippet,
     };
 
     allComments.unshift(newComment);

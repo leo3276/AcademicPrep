@@ -3,27 +3,29 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/authContext';
-import { LessonComment } from '@/lib/commentsTypes';
+import { LessonComment, LessonCommentReply } from '@/lib/commentsTypes';
 import { 
   MessageSquare, 
   Send, 
   Heart, 
   Crown, 
   ShieldCheck, 
-  Sparkles, 
   User, 
   Clock, 
   AlertCircle,
   CheckCircle2,
   Users,
   Search,
-  Filter,
-  Flame,
-  ArrowRight,
   BookOpen,
-  Share2,
   RefreshCw,
-  MessageCircle
+  MessageCircle,
+  CornerDownRight,
+  ChevronDown,
+  ChevronUp,
+  X,
+  Reply,
+  Smile,
+  Loader2
 } from 'lucide-react';
 
 const CHAT_ROOMS = [
@@ -46,10 +48,20 @@ export default function StudentCommunityChatPage() {
   const [feedback, setFeedback] = useState<{ kind: 'ok' | 'bad'; msg: string } | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const chatEndRef = useRef<HTMLDivElement>(null);
+  // Thread reply states
+  const [expandedThreads, setExpandedThreads] = useState<Record<string, boolean>>({});
+  const [replyInputs, setReplyInputs] = useState<Record<string, string>>({});
+  const [submittingReplyId, setSubmittingReplyId] = useState<string | null>(null);
+  const [replyingQuote, setReplyingQuote] = useState<{ commentId: string; studentName: string; snippet: string } | null>(null);
+
+  const composerRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     setMounted(true);
+    if (typeof window !== 'undefined') {
+      const savedName = localStorage.getItem('academicprep_guest_name');
+      if (savedName) setGuestName(savedName);
+    }
   }, []);
 
   const loadMessages = async (silent = false) => {
@@ -76,6 +88,19 @@ export default function StudentCommunityChatPage() {
     return () => clearInterval(interval);
   }, []);
 
+  const getEffectiveAuthorName = () => {
+    if (student) return student.fullName;
+    const trimmed = guestName.trim();
+    if (trimmed) {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('academicprep_guest_name', trimmed);
+      }
+      return trimmed;
+    }
+    return 'Student Scholar';
+  };
+
+  // Submit top-level comment (with optional quote metadata)
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!content.trim()) return;
@@ -83,7 +108,7 @@ export default function StudentCommunityChatPage() {
     setIsSubmitting(true);
     setFeedback(null);
 
-    const roomMeta = CHAT_ROOMS.find((r) => r.id === activeRoom) || CHAT_ROOMS[0];
+    const authorName = getEffectiveAuthorName();
 
     try {
       const res = await fetch('/api/comments', {
@@ -95,7 +120,10 @@ export default function StudentCommunityChatPage() {
           subjectId: activeRoom,
           level: student?.currentLevel || (activeRoom === 'shs' ? 'SHS' : 'JHS'),
           content: content.trim(),
-          authorName: student ? student.fullName : guestName.trim() || 'Student Scholar',
+          authorName,
+          replyToId: replyingQuote?.commentId,
+          replyToName: replyingQuote?.studentName,
+          replyToSnippet: replyingQuote?.snippet,
         }),
       });
 
@@ -105,6 +133,7 @@ export default function StudentCommunityChatPage() {
         setFeedback({ kind: 'bad', msg: data.error || 'Failed to post message.' });
       } else {
         setContent('');
+        setReplyingQuote(null);
         if (data.comment) {
           setComments((prev) => [data.comment, ...prev]);
         }
@@ -116,6 +145,7 @@ export default function StudentCommunityChatPage() {
     }
   };
 
+  // Toggle Like on a Parent Comment
   const handleLike = async (commentId: string) => {
     const studentIdentifier = student?.id || (typeof window !== 'undefined' ? localStorage.getItem('guest_student_id') || 'guest' : 'guest');
     if (!student && typeof window !== 'undefined' && !localStorage.getItem('guest_student_id')) {
@@ -153,6 +183,119 @@ export default function StudentCommunityChatPage() {
     }
   };
 
+  // Toggle Like on a Reply
+  const handleLikeReply = async (commentId: string, replyId: string) => {
+    const studentIdentifier = student?.id || (typeof window !== 'undefined' ? localStorage.getItem('guest_student_id') || 'guest' : 'guest');
+    if (!student && typeof window !== 'undefined' && !localStorage.getItem('guest_student_id')) {
+      localStorage.setItem('guest_student_id', `guest-${Date.now()}`);
+    }
+
+    setComments((prev) =>
+      prev.map((c) => {
+        if (c.id === commentId && c.replies) {
+          const updatedReplies = c.replies.map((r) => {
+            if (r.id === replyId) {
+              const already = r.likedByStudents?.includes(studentIdentifier);
+              return {
+                ...r,
+                likesCount: already ? Math.max(0, r.likesCount - 1) : (r.likesCount || 0) + 1,
+                likedByStudents: already
+                  ? r.likedByStudents.filter((id) => id !== studentIdentifier)
+                  : [...(r.likedByStudents || []), studentIdentifier],
+              };
+            }
+            return r;
+          });
+          return { ...c, replies: updatedReplies };
+        }
+        return c;
+      })
+    );
+
+    try {
+      await fetch('/api/comments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'like-reply',
+          commentId,
+          replyId,
+          studentId: studentIdentifier,
+        }),
+      });
+    } catch (err) {
+      console.warn('Like reply sync error:', err);
+    }
+  };
+
+  // Submit an inline reply to a specific comment
+  const handleSendReply = async (commentId: string) => {
+    const text = (replyInputs[commentId] || '').trim();
+    if (!text) return;
+
+    setSubmittingReplyId(commentId);
+    const authorName = getEffectiveAuthorName();
+
+    try {
+      const res = await fetch('/api/comments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'reply',
+          commentId,
+          content: text,
+          authorName,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data?.success && data?.reply) {
+        setComments((prev) =>
+          prev.map((c) => {
+            if (c.id === commentId) {
+              return {
+                ...c,
+                replies: [...(c.replies || []), data.reply],
+              };
+            }
+            return c;
+          })
+        );
+        // Clear input for this thread
+        setReplyInputs((prev) => ({ ...prev, [commentId]: '' }));
+        // Ensure thread stays expanded to show the new reply
+        setExpandedThreads((prev) => ({ ...prev, [commentId]: true }));
+      } else {
+        alert(data?.error || 'Failed to post reply. Please try again.');
+      }
+    } catch (err: any) {
+      alert(err?.message || 'Network error sending reply.');
+    } finally {
+      setSubmittingReplyId(null);
+    }
+  };
+
+  const toggleThread = (commentId: string) => {
+    setExpandedThreads((prev) => ({
+      ...prev,
+      [commentId]: !prev[commentId],
+    }));
+  };
+
+  const handleStartQuote = (comment: LessonComment) => {
+    setReplyingQuote({
+      commentId: comment.id,
+      studentName: comment.studentName,
+      snippet: comment.content.slice(0, 80),
+    });
+    // Scroll to composer smoothly and focus
+    if (composerRef.current) {
+      composerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      composerRef.current.focus();
+    }
+  };
+
   const formatTimeAgo = (isoString: string) => {
     if (!mounted) return 'Recently';
     const diffSeconds = Math.floor((Date.now() - new Date(isoString).getTime()) / 1000);
@@ -169,7 +312,11 @@ export default function StudentCommunityChatPage() {
   const filteredMessages = comments.filter((c) => {
     const matchesSearch = !searchQuery.trim() || 
       c.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.studentName.toLowerCase().includes(searchQuery.toLowerCase());
+      c.studentName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      c.replies?.some((r) => 
+        r.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r.studentName.toLowerCase().includes(searchQuery.toLowerCase())
+      );
     
     if (activeRoom === 'all') return matchesSearch;
     if (activeRoom === 'jhs') return matchesSearch && (c.topicId.includes('jhs') || c.level.includes('JHS'));
@@ -183,7 +330,7 @@ export default function StudentCommunityChatPage() {
     <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-6">
 
-        {/* Top Hero Banner (Clean Minimalist) */}
+        {/* Top Hero Banner */}
         <div className="p-6 sm:p-7 rounded-2xl bg-white border border-slate-200 text-slate-900 shadow-2xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="space-y-1.5">
@@ -195,7 +342,7 @@ export default function StudentCommunityChatPage() {
                 AcademicPrep Study Lounge
               </h1>
               <p className="text-xs sm:text-sm text-slate-500 max-w-2xl leading-relaxed">
-                Connect with thousands of JHS and SHS students across Ghana. Share what you studied today, discuss exam questions, ask tutors, and keep each other accountable.
+                Connect with thousands of JHS and SHS students across Ghana. Share what you studied today, discuss exam questions, ask tutors, and reply to each other in real time.
               </p>
             </div>
 
@@ -252,7 +399,7 @@ export default function StudentCommunityChatPage() {
               </div>
             </div>
 
-            {/* Community Standards Box (Clean Minimalist) */}
+            {/* Community Standards Box */}
             <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs space-y-2 text-slate-700">
               <div className="flex items-center gap-1.5 font-semibold text-slate-900">
                 <ShieldCheck className="w-4 h-4 text-slate-600" />
@@ -262,7 +409,7 @@ export default function StudentCommunityChatPage() {
                 <li>Keep discussions strictly educational.</li>
                 <li>Respect fellow candidates and teachers.</li>
                 <li>No spamming, swearing, or promoting leaks.</li>
-                <li>Help others solve tricky questions!</li>
+                <li>Help others solve tricky questions & reply with explanations!</li>
               </ul>
             </div>
           </div>
@@ -286,7 +433,7 @@ export default function StudentCommunityChatPage() {
                 <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
                 <input
                   type="text"
-                  placeholder="Search messages..."
+                  placeholder="Search messages & replies..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -303,19 +450,48 @@ export default function StudentCommunityChatPage() {
                     type="text"
                     placeholder="Enter your name (e.g. Samuel Adjei)"
                     value={guestName}
-                    onChange={(e) => setGuestName(e.target.value)}
+                    onChange={(e) => {
+                      setGuestName(e.target.value);
+                      if (typeof window !== 'undefined') {
+                        localStorage.setItem('academicprep_guest_name', e.target.value);
+                      }
+                    }}
                     className="w-full sm:max-w-xs px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500"
                   />
                   <span className="text-[11px] text-slate-400 hidden sm:inline">• Log in to show your VIP badge</span>
                 </div>
               )}
 
+              {/* Replying Quote Banner */}
+              {replyingQuote && (
+                <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-blue-50/90 border border-blue-200/80 text-xs text-blue-900">
+                  <div className="flex items-center gap-2 truncate pr-2">
+                    <CornerDownRight className="w-4 h-4 text-blue-600 shrink-0" />
+                    <span className="font-bold truncate">Replying to @{replyingQuote.studentName}:</span>
+                    <span className="text-slate-600 italic truncate">&ldquo;{replyingQuote.snippet}&rdquo;</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setReplyingQuote(null)}
+                    className="p-1 hover:bg-blue-100 rounded-lg text-slate-500 hover:text-slate-800 transition cursor-pointer shrink-0"
+                    title="Remove quoted reference"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              )}
+
               <div className="relative">
                 <textarea
+                  ref={composerRef}
                   rows={2}
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
-                  placeholder="Share a study tip, ask a difficult past question, or encourage your fellow candidates..."
+                  placeholder={
+                    replyingQuote
+                      ? `Write your response to @${replyingQuote.studentName}...`
+                      : 'Share a study tip, ask a difficult past question, or encourage your fellow candidates...'
+                  }
                   maxLength={500}
                   className="w-full px-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800 placeholder:text-slate-400 resize-none"
                 />
@@ -371,16 +547,27 @@ export default function StudentCommunityChatPage() {
                 filteredMessages.map((msg) => {
                   const studentIdentifier = student?.id || (typeof window !== 'undefined' ? localStorage.getItem('guest_student_id') || 'guest' : 'guest');
                   const hasLiked = msg.likedByStudents?.includes(studentIdentifier);
+                  const isExpanded = Boolean(expandedThreads[msg.id]);
+                  const replyCount = msg.replies?.length || 0;
 
                   return (
                     <div
                       key={msg.id}
-                      className={`p-4 rounded-2xl border transition-all ${
+                      className={`p-4 sm:p-5 rounded-2xl border transition-all ${
                         msg.isPinned
-                          ? 'bg-amber-50/50 border-amber-200/90 shadow-2xs'
+                          ? 'bg-amber-50/40 border-amber-200/90 shadow-2xs'
                           : 'bg-white border-slate-200/80 shadow-2xs hover:border-slate-300'
                       }`}
                     >
+                      {/* Quoted Message Reference (if this top-level comment was a reply quote) */}
+                      {msg.replyToName && (
+                        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100/90 border-l-2 border-blue-500 text-[11px] text-slate-700 mb-2.5">
+                          <CornerDownRight className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                          <span className="font-semibold text-slate-900">Replying to @{msg.replyToName}:</span>
+                          <span className="text-slate-600 italic truncate">&ldquo;{msg.replyToSnippet}&rdquo;</span>
+                        </div>
+                      )}
+
                       <div className="flex items-start justify-between gap-3">
                         <div className="space-y-1 flex-1">
                           <div className="flex items-center gap-2 flex-wrap">
@@ -416,7 +603,7 @@ export default function StudentCommunityChatPage() {
                           </p>
                         </div>
 
-                        {/* Like Button */}
+                        {/* Top-Right Like Button */}
                         <button
                           type="button"
                           onClick={() => handleLike(msg.id)}
@@ -432,16 +619,180 @@ export default function StudentCommunityChatPage() {
                         </button>
                       </div>
 
-                      <div className="flex items-center justify-between text-[10px] text-slate-400 pt-2 border-t border-slate-100 mt-2">
-                        <span className="flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
-                          <span>{formatTimeAgo(msg.createdAt)}</span>
-                        </span>
+                      {/* Card Footer: Metadata + Reply & Quote Actions */}
+                      <div className="flex items-center justify-between text-[11px] text-slate-500 pt-2.5 border-t border-slate-100 mt-2.5 flex-wrap gap-2">
+                        <div className="flex items-center gap-2">
+                          <span className="flex items-center gap-1 text-slate-400 text-[10px]">
+                            <Clock className="w-3 h-3" />
+                            <span>{formatTimeAgo(msg.createdAt)}</span>
+                          </span>
 
-                        <span className="font-mono text-[10px] text-slate-400">
-                          {msg.topicId.startsWith('room-') ? msg.topicId.replace('room-', '#') : `#${msg.topicId}`}
-                        </span>
+                          <span className="text-slate-300">•</span>
+
+                          <span className="font-mono text-[10px] text-slate-400">
+                            {msg.topicId.startsWith('room-') ? msg.topicId.replace('room-', '#') : `#${msg.topicId}`}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-1.5">
+                          {/* Quote action (puts snippet in top composer) */}
+                          <button
+                            type="button"
+                            onClick={() => handleStartQuote(msg)}
+                            className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-medium text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition cursor-pointer"
+                            title="Quote this message in the main composer"
+                          >
+                            <Reply className="w-3 h-3 text-slate-400" />
+                            <span>Quote</span>
+                          </button>
+
+                          {/* Inline Thread Toggle Button */}
+                          <button
+                            type="button"
+                            onClick={() => toggleThread(msg.id)}
+                            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-semibold transition cursor-pointer ${
+                              isExpanded || replyCount > 0
+                                ? 'bg-blue-50 text-blue-700 border border-blue-200/60 hover:bg-blue-100/70'
+                                : 'text-slate-600 hover:text-blue-600 hover:bg-slate-100'
+                            }`}
+                          >
+                            <MessageCircle className="w-3.5 h-3.5" />
+                            <span>
+                              {replyCount > 0
+                                ? `${replyCount} ${replyCount === 1 ? 'Reply' : 'Replies'}`
+                                : 'Reply'}
+                            </span>
+                            {isExpanded ? (
+                              <ChevronUp className="w-3 h-3 opacity-70" />
+                            ) : (
+                              <ChevronDown className="w-3 h-3 opacity-70" />
+                            )}
+                          </button>
+                        </div>
                       </div>
+
+                      {/* Thread Replies Section (Collapsible) */}
+                      {isExpanded && (
+                        <div className="mt-3 pt-3 border-t border-slate-100/80 space-y-3">
+                          {/* Connector container */}
+                          <div className="border-l-2 border-blue-200 pl-3 sm:pl-4 space-y-2.5">
+                            {/* Render existing replies */}
+                            {msg.replies && msg.replies.length > 0 ? (
+                              msg.replies.map((reply) => {
+                                const replyHasLiked = reply.likedByStudents?.includes(studentIdentifier);
+
+                                return (
+                                  <div
+                                    key={reply.id}
+                                    className="p-3 rounded-xl bg-slate-50/90 border border-slate-200/70 text-slate-800 space-y-1.5 text-xs transition hover:border-slate-300"
+                                  >
+                                    <div className="flex items-center justify-between gap-2 flex-wrap">
+                                      <div className="flex items-center gap-1.5 flex-wrap">
+                                        <span className="font-bold text-slate-900 text-[11px]">
+                                          {reply.studentName}
+                                        </span>
+
+                                        {reply.isTeacherReply && (
+                                          <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-800 border border-blue-200 flex items-center gap-0.5">
+                                            <ShieldCheck className="w-2.5 h-2.5 text-blue-600" />
+                                            <span>Instructor</span>
+                                          </span>
+                                        )}
+
+                                        {reply.isVip && !reply.isTeacherReply && (
+                                          <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-800 flex items-center gap-0.5">
+                                            <Crown className="w-2.5 h-2.5 text-amber-600" />
+                                            <span>VIP</span>
+                                          </span>
+                                        )}
+
+                                        <span className="text-[10px] text-slate-400 font-mono">
+                                          {reply.studentPhoneMasked}
+                                        </span>
+                                      </div>
+
+                                      <div className="flex items-center gap-2">
+                                        <span className="text-[10px] text-slate-400">
+                                          {formatTimeAgo(reply.createdAt)}
+                                        </span>
+
+                                        {/* Reply Like Button */}
+                                        <button
+                                          type="button"
+                                          onClick={() => handleLikeReply(msg.id, reply.id)}
+                                          className={`flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-bold transition cursor-pointer ${
+                                            replyHasLiked
+                                              ? 'bg-rose-100/70 text-rose-600'
+                                              : 'bg-white hover:bg-slate-200 text-slate-500 border border-slate-200'
+                                          }`}
+                                          title="Like reply"
+                                        >
+                                          <Heart className={`w-3 h-3 ${replyHasLiked ? 'fill-rose-500 text-rose-500' : ''}`} />
+                                          <span>{reply.likesCount || 0}</span>
+                                        </button>
+                                      </div>
+                                    </div>
+
+                                    <p className="text-xs text-slate-700 leading-relaxed whitespace-pre-line pl-0.5">
+                                      {reply.content}
+                                    </p>
+                                  </div>
+                                );
+                              })
+                            ) : (
+                              <div className="p-2.5 rounded-xl bg-slate-50/60 border border-dashed border-slate-200 text-[11px] text-slate-400 text-center">
+                                No replies yet. Start the conversation below!
+                              </div>
+                            )}
+
+                            {/* Inline Reply Composer */}
+                            <div className="pt-1.5">
+                              <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-xl p-1.5 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500 transition shadow-2xs">
+                                <input
+                                  type="text"
+                                  value={replyInputs[msg.id] || ''}
+                                  onChange={(e) =>
+                                    setReplyInputs((prev) => ({
+                                      ...prev,
+                                      [msg.id]: e.target.value,
+                                    }))
+                                  }
+                                  onKeyDown={(e) => {
+                                    if (e.key === 'Enter' && !e.shiftKey) {
+                                      e.preventDefault();
+                                      handleSendReply(msg.id);
+                                    }
+                                  }}
+                                  placeholder={`Reply to ${msg.studentName}... (Press Enter)`}
+                                  maxLength={400}
+                                  disabled={submittingReplyId === msg.id}
+                                  className="w-full text-xs text-slate-800 placeholder:text-slate-400 bg-transparent px-2.5 py-1 focus:outline-none"
+                                />
+
+                                <button
+                                  type="button"
+                                  onClick={() => handleSendReply(msg.id)}
+                                  disabled={submittingReplyId === msg.id || !(replyInputs[msg.id] || '').trim()}
+                                  className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-slate-200 text-white font-bold text-xs flex items-center gap-1 transition cursor-pointer shrink-0"
+                                >
+                                  {submittingReplyId === msg.id ? (
+                                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                  ) : (
+                                    <Send className="w-3.5 h-3.5" />
+                                  )}
+                                  <span className="hidden sm:inline">Reply</span>
+                                </button>
+                              </div>
+                              <div className="flex items-center justify-between px-1 pt-1 text-[10px] text-slate-400">
+                                <span>Posting as <b className="text-slate-600">{getEffectiveAuthorName()}</b></span>
+                                <span>{(replyInputs[msg.id] || '').length}/400 chars</span>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      )}
+
                     </div>
                   );
                 })

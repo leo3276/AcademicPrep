@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { BlogPost, fetchBlogPosts } from '@/lib/blogStore';
-import { Sparkles, X, ArrowRight, Clock, BookOpen } from 'lucide-react';
+import { X, ArrowRight, Clock, BookOpen } from 'lucide-react';
 
 const LAST_DISMISSED_BLOG_KEY = 'academicprep_dismissed_blog_id';
 
@@ -104,7 +104,7 @@ export default function NewBlogNotificationToast({ initialPosts }: NewBlogNotifi
           <div className="flex items-center gap-2">
             <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-[10px] font-bold uppercase tracking-wider">
-              <Sparkles className="w-2.5 h-2.5 text-amber-600" />
+              <BookOpen className="w-2.5 h-2.5 text-amber-600" />
               New Study Guide
             </span>
             <span className="text-[11px] text-slate-500 font-medium">

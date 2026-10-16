@@ -21,7 +21,6 @@ import {
   FileText, 
   Calendar,
   Layers,
-  Sparkles,
   BookOpen,
   RefreshCw,
   Info,

@@ -15,7 +15,6 @@ import {
   HelpCircle, 
   Trophy, 
   RotateCcw, 
-  Sparkles, 
   ArrowRight,
   Crown,
   KeyRound,

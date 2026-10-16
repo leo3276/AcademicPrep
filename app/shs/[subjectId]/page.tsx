@@ -20,7 +20,6 @@ import {
   Lightbulb,
   Video,
   Crown,
-  Sparkles,
   Trophy
 } from 'lucide-react';
 import SubjectIcon from '@/components/SubjectIcon';
@@ -155,7 +154,7 @@ export default function ShsSubjectDetailPage() {
         ) : (
           <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1 shrink-0">
             <div className="font-semibold flex items-center gap-1.5 text-slate-900">
-              <Sparkles className="w-3.5 h-3.5 text-slate-600" />
+              <CheckCircle2 className="w-3.5 h-3.5 text-slate-600" />
               <span>Full 3-Year Strand Covered</span>
             </div>
             <div className="text-[11px] text-slate-500">

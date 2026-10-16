@@ -10,7 +10,6 @@ import {
   Crown, 
   ShieldCheck, 
   Pin, 
-  Sparkles, 
   User, 
   Clock, 
   AlertCircle,
@@ -249,7 +248,7 @@ export default function LessonCommentsSection({
           </div>
         ) : comments.length === 0 ? (
           <div className="py-8 text-center space-y-1.5 border border-dashed border-slate-200 rounded-2xl">
-            <Sparkles className="w-6 h-6 text-amber-500 mx-auto" />
+            <MessageSquare className="w-6 h-6 text-slate-400 mx-auto" />
             <p className="text-xs font-semibold text-slate-700">Be the first student to leave a study tip!</p>
             <p className="text-[11px] text-slate-400">Share what helped you understand this topic best.</p>
           </div>

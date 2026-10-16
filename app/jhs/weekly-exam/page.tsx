@@ -22,7 +22,6 @@ import {
   Clock, 
   CheckCircle2, 
   Trophy, 
-  Sparkles, 
   Target, 
   Award, 
   RotateCcw, 
@@ -337,7 +336,7 @@ export default function WeeklyExamPage() {
           <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden">
             <div className="max-w-3xl space-y-3">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-[11px] font-bold uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+                <Target className="w-3.5 h-3.5 text-blue-600" />
                 <span>Curriculum Adaptive Assessment</span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">

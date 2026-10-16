@@ -21,8 +21,7 @@ import {
   Smartphone,
   Download,
   ExternalLink,
-  Flame,
-  Sparkles
+  Flame
 } from 'lucide-react';
 import { BlogPost, BlogCategory, BLOG_CATEGORIES, INITIAL_BLOG_POSTS, fetchBlogPosts } from '@/lib/blogStore';
 import PlatformTourGuide, { HOMEPAGE_TOUR_STEPS } from '@/components/PlatformTourGuide';
@@ -219,7 +218,7 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-10">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 text-xs font-bold mb-3 backdrop-blur-sm shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-cyan-300" />
+            <BookOpen className="w-3.5 h-3.5 text-cyan-300" />
             <span>Curriculum Pathways</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight drop-shadow-sm">

@@ -154,16 +154,6 @@ interface Diploma3D {
   trailIdx: number;
 }
 
-interface Sparkle3D {
-  x: number;
-  y: number;
-  z: number;
-  size: number;
-  alpha: number;
-  pulsePhase: number;
-  color: string;
-}
-
 interface Particle3D {
   x: number;
   y: number;
@@ -592,20 +582,7 @@ export default function Books3DBackground() {
     });
 
     // ========================================================================
-    // 9. GENERATE TWINKLING 3D SPARKLES (✦)
-    // ========================================================================
-    const sparkles: Sparkle3D[] = Array.from({ length: 24 }).map((_, i) => ({
-      x: (Math.random() - 0.5) * 880,
-      y: (Math.random() - 0.5) * 580,
-      z: 200 + Math.random() * 480,
-      size: 4 + Math.random() * 6.5,
-      alpha: 0.4 + Math.random() * 0.6,
-      pulsePhase: Math.random() * Math.PI * 2,
-      color: i % 2 === 0 ? '#38bdf8' : '#fbbf24',
-    }));
-
-    // ========================================================================
-    // 10. GENERATE FLOATING AMBIENT GLOW DUST
+    // 9. GENERATE FLOATING AMBIENT GLOW DUST
     // ========================================================================
     const particles: Particle3D[] = Array.from({ length: 65 }).map(() => ({
       x: (Math.random() - 0.5) * 950,
@@ -645,34 +622,6 @@ export default function Books3DBackground() {
       const z3 = z2;
 
       return { x: x3, y: y3, z: z3 };
-    };
-
-    // Helper: Draw 4-point Diamond Starburst
-    const drawDiamondStar = (cx: number, cy: number, size: number, color: string, alpha: number) => {
-      ctx.save();
-      ctx.globalAlpha = Math.max(0, Math.min(1, alpha));
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.moveTo(cx, cy - size);
-      ctx.quadraticCurveTo(cx, cy, cx + size * 0.3, cy);
-      ctx.quadraticCurveTo(cx, cy, cx, cy + size);
-      ctx.quadraticCurveTo(cx, cy, cx - size * 0.3, cy);
-      ctx.closePath();
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.moveTo(cx - size, cy);
-      ctx.quadraticCurveTo(cx, cy, cx, cy - size * 0.3);
-      ctx.quadraticCurveTo(cx, cy, cx + size, cy);
-      ctx.quadraticCurveTo(cx, cy, cx, cy + size * 0.3);
-      ctx.closePath();
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.arc(cx, cy, size * 0.22, 0, Math.PI * 2);
-      ctx.fillStyle = '#ffffff';
-      ctx.fill();
-      ctx.restore();
     };
 
     // Helper: Color interpolation
@@ -802,14 +751,6 @@ export default function Books3DBackground() {
         ctx.beginPath();
         ctx.arc(mx, my, 140, 0, Math.PI * 2);
         ctx.fill();
-
-        // Magnetic trailing ripple ring
-        const rippleR = 25 + (Math.sin(time * 4) + 1) * 20;
-        ctx.beginPath();
-        ctx.arc(mx, my, rippleR, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(251, 191, 36, 0.45)';
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
       }
 
       // Helper function to update an item following the trail snake with sub-node continuous interpolation
@@ -923,19 +864,7 @@ export default function Books3DBackground() {
         ctx.fill();
       });
 
-      // ── 2. DRAW TWINKLING 3D SPARKLES (✦) ──
-      sparkles.forEach((s) => {
-        if (mouseIsActive) {
-          s.x += (targetWorld.x - s.x) * 0.10;
-          s.y += (targetWorld.y - s.y) * 0.10;
-        }
-        const pulse = Math.sin(time * 3 + s.pulsePhase);
-        const currentAlpha = (s.alpha + pulse * 0.3) * 0.85;
-        const proj = project(s.x, s.y, s.z, camX * 0.4, camY * 0.4);
-        drawDiamondStar(proj.x, proj.y, s.size * proj.scale * (1 + pulse * 0.2), s.color, currentAlpha * proj.scale);
-      });
-
-      // ── 3. DRAW 3D SACRED POLYHEDRA / CRYSTALS (FACE 1: STEM & MATH GEOMETRY) ──
+      // ── 2. DRAW 3D SACRED POLYHEDRA / CRYSTALS (FACE 1: STEM & MATH GEOMETRY) ──
       polyhedra.forEach((poly) => {
         updateTrailMotion(poly, wFace1);
         poly.rotX += poly.vRotX * (0.8 + 0.6 * wFace1);

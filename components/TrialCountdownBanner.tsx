@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/authContext';
-import { Clock, Sparkles, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { Clock, CheckCircle2, ShieldCheck } from 'lucide-react';
 
 interface TimeLeft {
   days: number;

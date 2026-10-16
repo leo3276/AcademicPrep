@@ -4,7 +4,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { 
   BookOpen, 
-  Sparkles, 
   Clock, 
   ArrowRight, 
   Search, 
@@ -97,7 +96,7 @@ export default function BlogIndexPage() {
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl space-y-3">
             <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
-              <Sparkles className="w-3.5 h-3.5 text-slate-600" />
+              <BookOpen className="w-3.5 h-3.5 text-slate-600" />
               <span>AcademicPrep Study Journal &amp; WAEC Guides</span>
             </div>
 

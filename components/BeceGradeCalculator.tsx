@@ -4,7 +4,6 @@ import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   Calculator, 
-  Sparkles, 
   GraduationCap, 
   CheckCircle2, 
   AlertTriangle, 

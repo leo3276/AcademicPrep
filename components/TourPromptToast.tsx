@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Compass, Sparkles, X, ArrowRight } from 'lucide-react';
+import { Compass, X, ArrowRight } from 'lucide-react';
 
 interface TourPromptToastProps {
   onStartTour: () => void;
@@ -99,7 +99,7 @@ export default function TourPromptToast({ onStartTour }: TourPromptToastProps) {
             onClick={handleStart}
             className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-sm shadow-blue-500/20 cursor-pointer"
           >
-            <Sparkles className="w-3.5 h-3.5 text-white" />
+            <Compass className="w-3.5 h-3.5 text-white" />
             <span>Take Tour</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>

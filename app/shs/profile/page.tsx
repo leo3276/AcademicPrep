@@ -25,7 +25,6 @@ import {
   TrendingUp, 
   TrendingDown, 
   BookOpen, 
-  Sparkles, 
   ArrowRight, 
   RefreshCw, 
   Lock, 

@@ -20,7 +20,6 @@ import {
   FileText, 
   Calendar,
   Layers,
-  Sparkles,
   BookOpen,
   RefreshCw,
   Info,
@@ -185,7 +184,7 @@ export default function ShsTrialQuestionsPage() {
         <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="max-w-2xl space-y-3">
             <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-[11px] font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+              <FileText className="w-3.5 h-3.5 text-amber-600" />
               <span>Diagnostic Mock Papers &amp; School Terminals</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">

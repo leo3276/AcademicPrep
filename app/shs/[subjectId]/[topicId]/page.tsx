@@ -16,7 +16,6 @@ import {
   KeyRound, 
   Award, 
   AlertTriangle, 
-  Sparkles, 
   ExternalLink, 
   Check, 
   ChevronRight, 
@@ -304,7 +303,7 @@ export default function ShsDetailedTopicLessonPage() {
           {examTips && examTips.length > 0 && (
             <div className="p-6 rounded-3xl bg-amber-50/60 border border-amber-200 space-y-3">
               <div className="flex items-center gap-2 text-amber-900 font-bold text-sm">
-                <Sparkles className="w-4 h-4 text-amber-600" />
+                <Lightbulb className="w-4 h-4 text-amber-600" />
                 <span>WAEC / WASSCE Examiner Tips</span>
               </div>
               <ul className="space-y-2 text-xs text-amber-950">

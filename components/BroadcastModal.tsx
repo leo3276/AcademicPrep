@@ -12,7 +12,6 @@ import {
   ExternalLink, 
   AlertCircle, 
   CheckCircle2, 
-  Sparkles,
   RefreshCw,
   Search,
   Radio,
@@ -471,7 +470,7 @@ export default function BroadcastModal({ isOpen, onClose, post }: BroadcastModal
               <div className="p-4 sm:p-5 rounded-2xl bg-slate-900 text-white shadow-xs space-y-3">
                 <div className="space-y-1">
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-200 border border-slate-700 text-[10px] font-bold uppercase tracking-wider">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                     <span>Instant 1-Click Multi-Recipient Delivery</span>
                   </div>
                   <h3 className="text-base sm:text-lg font-bold tracking-tight">

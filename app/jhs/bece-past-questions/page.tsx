@@ -20,7 +20,6 @@ import {
   Filter, 
   FileText, 
   Calendar,
-  Sparkles,
   RefreshCw,
   Info,
   Layers,

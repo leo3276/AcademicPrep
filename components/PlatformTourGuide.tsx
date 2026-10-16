@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { ArrowRight, ArrowLeft, X, Check, Compass, Sparkles, Lightbulb } from 'lucide-react';
+import { ArrowRight, ArrowLeft, X, Check, Compass, Lightbulb } from 'lucide-react';
 
 export interface TourStep {
   id: string;
@@ -421,7 +421,7 @@ export default function PlatformTourGuide({
                 Step {step.stepNumber} of {steps.length}
               </span>
               <span className="flex items-center gap-1 text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
-                <Sparkles className="w-3 h-3" />
+                <Check className="w-3 h-3" />
                 Live Feature
               </span>
             </div>
