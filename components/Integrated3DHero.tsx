@@ -486,7 +486,7 @@ export default function Integrated3DHero({ latestPost, onOpenApkModal }: Integra
                 href="/jhs"
                 id="tour-home-launch"
                 data-hot="true"
-                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm transition shadow-xs flex items-center justify-center gap-2 group cursor-pointer"
+                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition shadow-sm shadow-blue-500/20 flex items-center justify-center gap-2 group cursor-pointer"
               >
                 <span>Launch JHS Portal</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -526,7 +526,7 @@ export default function Integrated3DHero({ latestPost, onOpenApkModal }: Integra
                 <Link 
                   href="/login"
                   data-hot="true"
-                  className="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-semibold text-[10px] hover:bg-slate-800 shadow-xs shrink-0"
+                  className="px-2.5 py-1 rounded-lg bg-blue-600 text-white font-semibold text-[10px] hover:bg-blue-500 shadow-sm shadow-blue-500/20 shrink-0"
                 >
                   Quick Fill
                 </Link>

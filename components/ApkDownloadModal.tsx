@@ -90,7 +90,7 @@ export default function ApkDownloadModal({ isOpen, onClose }: ApkDownloadModalPr
           <a
             href={OFFICIAL_APK_DOWNLOAD_URL}
             download="AcademicPrep-v1.0.0.apk"
-            className="w-full py-3.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer text-center"
+            className="w-full py-3.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm shadow-blue-500/20 transition-colors cursor-pointer text-center"
           >
             <Download className="w-4 h-4" />
             <span>Install APK Now ({APK_FILE_SIZE})</span>

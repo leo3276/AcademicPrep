@@ -686,7 +686,7 @@ export default function BroadcastModal({ isOpen, onClose, post }: BroadcastModal
                 <button
                   type="button"
                   onClick={handleCopyWhatsAppText}
-                  className="py-2 px-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2"
+                  className="py-2 px-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-sm shadow-blue-500/20"
                 >
                   <Copy className="w-3.5 h-3.5" />
                   <span>{copiedLink ? 'Text Copied!' : 'Copy Formatted Text'}</span>

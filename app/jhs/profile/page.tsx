@@ -369,7 +369,7 @@ export default function StudentProfilePage() {
               <button
                 type="button"
                 onClick={() => setActiveTab('calculator')}
-                className="py-2 px-3.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold transition shrink-0 flex items-center gap-1.5 cursor-pointer self-start sm:self-auto"
+                className="py-2 px-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-semibold transition shrink-0 flex items-center gap-1.5 cursor-pointer self-start sm:self-auto shadow-sm shadow-blue-500/20"
               >
                 <span>Open BECE Calculator</span>
                 <ArrowRight className="w-3.5 h-3.5" />

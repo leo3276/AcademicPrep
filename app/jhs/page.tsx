@@ -199,7 +199,7 @@ export default function JhsPortalPage() {
           </div>
           <Link
             href="/shs"
-            className="px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition whitespace-nowrap self-start sm:self-auto shrink-0"
+            className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition whitespace-nowrap self-start sm:self-auto shrink-0 shadow-sm shadow-blue-500/20"
           >
             Return to SHS Portal &rarr;
           </Link>
@@ -238,7 +238,7 @@ export default function JhsPortalPage() {
             <div className="space-y-1.5">
               <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
                 <div
-                  className="bg-slate-900 h-full rounded-full transition-all duration-500"
+                  className="bg-blue-600 h-full rounded-full transition-all duration-500"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
@@ -319,7 +319,7 @@ export default function JhsPortalPage() {
           </div>
           <Link
             href="/jhs/trial-questions"
-            className="w-full py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs"
+            className="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-sm shadow-blue-500/20"
           >
             <FileCheck className="w-3.5 h-3.5" />
             <span>Open Trial Questions</span>
@@ -343,7 +343,7 @@ export default function JhsPortalPage() {
 
         <Link
           href="/jhs/weekly-exam"
-          className="w-full sm:w-auto px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs shrink-0 transition shadow-xs flex items-center justify-center gap-1.5 whitespace-nowrap"
+          className="w-full sm:w-auto px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs shrink-0 transition shadow-sm shadow-blue-500/20 flex items-center justify-center gap-1.5 whitespace-nowrap"
         >
           <span>Start Weekly Exam</span>
           <ArrowRight className="w-3.5 h-3.5" />

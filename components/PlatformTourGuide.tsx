@@ -487,7 +487,7 @@ export default function PlatformTourGuide({
                 <a
                   href={nextTourUrl}
                   onClick={onClose}
-                  className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer shadow-xs"
+                  className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer shadow-sm shadow-blue-500/20"
                 >
                   <span>{nextTourLabel}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -496,7 +496,7 @@ export default function PlatformTourGuide({
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer shadow-xs"
+                  className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer shadow-sm shadow-blue-500/20"
                 >
                   <span>{isLastStep ? 'Complete Tour' : 'Next'}</span>
                   {isLastStep ? (

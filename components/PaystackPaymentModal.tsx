@@ -434,7 +434,7 @@ export default function PaystackPaymentModal({
                 <button
                   type="submit"
                   disabled={isSendingPrompt}
-                  className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-black disabled:bg-slate-300 text-white font-medium text-xs transition flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                  className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:bg-slate-300 text-white font-medium text-xs transition flex items-center justify-center gap-1.5 cursor-pointer shadow-sm shadow-blue-500/20"
                 >
                   {isSendingPrompt ? (
                     <>
@@ -476,7 +476,7 @@ export default function PaystackPaymentModal({
                         try { onSuccess(); } catch (e) {}
                       }
                     }}
-                    className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-semibold transition cursor-pointer"
+                    className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition cursor-pointer shadow-sm shadow-blue-500/20"
                   >
                     Start Studying
                   </button>
@@ -547,7 +547,7 @@ export default function PaystackPaymentModal({
                   <button
                     type="submit"
                     disabled={isSubmittingClaim}
-                    className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-black disabled:bg-slate-300 text-white font-medium text-xs transition cursor-pointer shadow-xs"
+                    className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:bg-slate-300 text-white font-medium text-xs transition cursor-pointer shadow-sm shadow-blue-500/20"
                   >
                     {isSubmittingClaim ? 'Activating...' : 'Confirm & Activate VIP Pass'}
                   </button>
@@ -579,7 +579,7 @@ export default function PaystackPaymentModal({
                   placeholder="e.g. PREP-XXXX-XXXX"
                   value={pinInput}
                   onChange={(e) => setPinInput(e.target.value.toUpperCase())}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 font-mono text-center tracking-wider text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-400 uppercase transition"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 font-mono text-center tracking-wider text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 uppercase transition"
                   autoFocus
                 />
                 <div className="flex items-center justify-between text-[11px] text-slate-400 mt-1.5">
@@ -602,7 +602,7 @@ export default function PaystackPaymentModal({
               <button
                 type="submit"
                 disabled={pinLoading || !pinInput.trim()}
-                className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-black disabled:bg-slate-300 text-white font-medium text-xs transition cursor-pointer shadow-xs"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:bg-slate-300 text-white font-medium text-xs transition cursor-pointer shadow-sm shadow-blue-500/20"
               >
                 {pinLoading ? 'Verifying...' : 'Activate Pass'}
               </button>

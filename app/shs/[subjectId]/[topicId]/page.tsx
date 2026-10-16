@@ -429,7 +429,7 @@ export default function ShsDetailedTopicLessonPage() {
                   setModalTab('momo');
                   setShowPaymentModal(true);
                 }}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition shadow-xs flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition shadow-sm shadow-blue-500/20 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Lock className="w-4 h-4" />
                 <span>Unlock VIP Quiz</span>
@@ -437,7 +437,7 @@ export default function ShsDetailedTopicLessonPage() {
             ) : (
               <Link
                 href={`/shs/quiz/${topic.id}`}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition shadow-xs flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition shadow-sm shadow-blue-500/20 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <HelpCircle className="w-4 h-4" />
                 <span>Start Quiz Now</span>

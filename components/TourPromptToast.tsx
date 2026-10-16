@@ -97,9 +97,9 @@ export default function TourPromptToast({ onStartTour }: TourPromptToastProps) {
           <button
             type="button"
             onClick={handleStart}
-            className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-xs cursor-pointer"
+            className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-sm shadow-blue-500/20 cursor-pointer"
           >
-            <Sparkles className="w-3.5 h-3.5 text-slate-300" />
+            <Sparkles className="w-3.5 h-3.5 text-white" />
             <span>Take Tour</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>

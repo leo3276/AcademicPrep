@@ -723,7 +723,7 @@ function ShsProfileContent() {
                 <button
                   type="submit"
                   disabled={pinLoading || !pinInput.trim()}
-                  className="py-2 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white font-bold text-xs transition cursor-pointer shrink-0"
+                  className="py-2 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-bold text-xs transition cursor-pointer shrink-0 shadow-sm shadow-blue-500/20"
                 >
                   {pinLoading ? 'Activating...' : 'Activate PIN'}
                 </button>

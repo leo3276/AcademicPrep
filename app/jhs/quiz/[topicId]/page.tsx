@@ -242,7 +242,7 @@ export default function TopicQuizPage() {
                 setModalTab('momo');
                 setShowPaymentModal(true);
               }}
-              className="w-full py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm transition shadow-xs flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition shadow-sm shadow-blue-500/20 flex items-center justify-center gap-2 cursor-pointer"
             >
               <Crown className="w-4 h-4 text-slate-300" />
               <span>Buy VIP Pass via Mobile Money (GHS 25 / month)</span>
@@ -276,7 +276,7 @@ export default function TopicQuizPage() {
                 <button
                   type="submit"
                   disabled={pinLoading || !pinInput.trim()}
-                  className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:bg-slate-300 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 whitespace-nowrap"
+                  className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:bg-slate-300 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 whitespace-nowrap shadow-sm shadow-blue-500/20"
                 >
                   {pinLoading ? (
                     <span>Verifying...</span>
@@ -547,7 +547,7 @@ export default function TopicQuizPage() {
               <div className="p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-sm shadow-blue-500/20">
                       <Target className="w-4 h-4" />
                     </div>
                     <div>

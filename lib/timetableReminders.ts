@@ -220,12 +220,31 @@ export function downloadTimetableIcs(timetable: PersonalTimetable): void {
   icsContent.push('END:VCALENDAR');
 
   const blob = new Blob([icsContent.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
+  const filename = `${(timetable.studentName || 'Candidate').replace(/[^a-zA-Z0-9]/g, '_')}_Study_Reminders.ics`;
+
+  if (typeof navigator !== 'undefined' && typeof File !== 'undefined' && typeof navigator.canShare === 'function') {
+    try {
+      const file = new File([blob], filename, { type: 'text/calendar' });
+      if (navigator.canShare({ files: [file] })) {
+        navigator.share({
+          files: [file],
+          title: filename,
+        }).catch(() => {});
+        return;
+      }
+    } catch {}
+  }
+
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.download = `${timetable.studentName.replace(/[^a-zA-Z0-9]/g, '_')}_Study_Reminders.ics`;
+  link.download = filename;
   document.body.appendChild(link);
   link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+  setTimeout(() => {
+    try {
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch {}
+  }, 60000);
 }

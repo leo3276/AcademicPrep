@@ -321,7 +321,7 @@ export default function WeeklyExamPage() {
                   onClick={() => handleLevelChange(lvl)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                     currentLevel === lvl
-                      ? 'bg-slate-900 text-white shadow-xs'
+                      ? 'bg-blue-600 text-white shadow-xs'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
@@ -405,7 +405,7 @@ export default function WeeklyExamPage() {
                 className={`py-3 px-6 rounded-xl text-xs font-bold transition shadow-xs flex items-center justify-center gap-2 shrink-0 cursor-pointer ${
                   !hasFullAccess
                     ? 'bg-amber-600 hover:bg-amber-700 text-white'
-                    : 'bg-slate-900 hover:bg-slate-800 text-white'
+                    : 'bg-blue-600 hover:bg-blue-500 text-white shadow-sm shadow-blue-500/20'
                 }`}
               >
                 {!hasFullAccess ? (
@@ -627,7 +627,7 @@ export default function WeeklyExamPage() {
 
               <button
                 onClick={handleProceedToPaper2}
-                className="py-1.5 px-3 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-lg transition shadow-xs flex items-center gap-1.5 cursor-pointer"
+                className="py-1.5 px-3 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg transition shadow-sm shadow-blue-500/20 flex items-center gap-1.5 cursor-pointer"
               >
                 <span>Go to Paper 2 (Theory)</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -687,7 +687,7 @@ export default function WeeklyExamPage() {
                     onClick={() => handleSelectPaper1Option(currentQ.id, opt)}
                     className={`w-full text-left p-4 rounded-xl border text-xs sm:text-sm font-medium transition flex items-center gap-3 cursor-pointer ${
                       isSelected
-                        ? 'border-slate-900 bg-slate-900 text-white shadow-xs'
+                        ? 'border-blue-600 bg-blue-600 text-white shadow-xs'
                         : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-800'
                     }`}
                   >
@@ -727,7 +727,7 @@ export default function WeeklyExamPage() {
               {paper1CurrentIdx < totalP1 - 1 ? (
                 <button
                   onClick={() => setPaper1CurrentIdx(prev => Math.min(totalP1 - 1, prev + 1))}
-                  className="py-2 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition shadow-xs"
+                  className="py-2 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm shadow-blue-500/20"
                 >
                   Next Question
                 </button>
@@ -760,7 +760,7 @@ export default function WeeklyExamPage() {
                     onClick={() => setPaper1CurrentIdx(idx)}
                     className={`w-8 h-8 rounded-lg text-xs font-bold font-mono transition flex items-center justify-center ${
                       isCur
-                        ? 'ring-2 ring-blue-600 bg-slate-900 text-white'
+                        ? 'ring-2 ring-blue-600 bg-blue-600 text-white'
                         : isAns
                         ? 'bg-slate-200 text-slate-800'
                         : 'border border-slate-200 text-slate-500 hover:bg-slate-100'
@@ -806,7 +806,7 @@ export default function WeeklyExamPage() {
 
               <button
                 onClick={handleProceedToGrading}
-                className="py-1.5 px-4 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-lg transition shadow-xs flex items-center gap-1.5 cursor-pointer"
+                className="py-1.5 px-4 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg transition shadow-sm shadow-blue-500/20 flex items-center gap-1.5 cursor-pointer"
               >
                 <span>Submit & View Marking Guide</span>
                 <Check className="w-3.5 h-3.5" />
@@ -831,7 +831,7 @@ export default function WeeklyExamPage() {
               {/* Question Header */}
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div className="flex items-center gap-2">
-                  <span className="w-7 h-7 rounded-lg bg-slate-900 text-white font-bold font-mono text-xs flex items-center justify-center">
+                  <span className="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold font-mono text-xs flex items-center justify-center shadow-xs">
                     {q.questionNumber}
                   </span>
                   <div>
@@ -896,7 +896,7 @@ export default function WeeklyExamPage() {
             </span>
             <button
               onClick={handleProceedToGrading}
-              className="py-2.5 px-6 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition shadow-xs cursor-pointer flex items-center gap-2"
+              className="py-2.5 px-6 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm shadow-blue-500/20 cursor-pointer flex items-center gap-2"
             >
               <span>Submit & Review Marking Rubrics</span>
               <ArrowRight className="w-4 h-4" />
@@ -926,7 +926,7 @@ export default function WeeklyExamPage() {
 
             <button
               onClick={handleFinalizeSubmission}
-              className="py-2 px-5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition shadow-xs flex items-center gap-1.5 cursor-pointer"
+              className="py-2 px-5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm shadow-blue-500/20 flex items-center gap-1.5 cursor-pointer"
             >
               <span>Calculate Final Stanine Grade</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -1009,7 +1009,7 @@ export default function WeeklyExamPage() {
                               }}
                               className={`w-8 h-8 rounded-lg font-bold font-mono text-xs transition cursor-pointer ${
                                 currentAwarded === pt
-                                  ? 'bg-slate-900 text-white shadow-xs'
+                                  ? 'bg-blue-600 text-white shadow-xs'
                                   : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
                               }`}
                             >
@@ -1028,7 +1028,7 @@ export default function WeeklyExamPage() {
           <div className="flex justify-end pt-4">
             <button
               onClick={handleFinalizeSubmission}
-              className="py-3 px-8 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition shadow-xs flex items-center gap-2 cursor-pointer"
+              className="py-3 px-8 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm shadow-blue-500/20 flex items-center gap-2 cursor-pointer"
             >
               <span>Calculate Final Stanine Grade & View Report</span>
               <ArrowRight className="w-4 h-4" />
@@ -1050,8 +1050,8 @@ export default function WeeklyExamPage() {
           <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs space-y-8 text-center">
             {/* Top Grade Badge */}
             <div className="space-y-3">
-              <div className="w-16 h-16 rounded-2xl bg-slate-900 text-white flex items-center justify-center mx-auto shadow-md">
-                <Trophy className="w-8 h-8 text-amber-400" />
+              <div className="w-16 h-16 rounded-2xl bg-blue-600 text-white flex items-center justify-center mx-auto shadow-md shadow-blue-500/30">
+                <Trophy className="w-8 h-8 text-amber-300" />
               </div>
 
               <div>
@@ -1123,7 +1123,7 @@ export default function WeeklyExamPage() {
                   setExamState('dashboard');
                   reloadData(currentLevel);
                 }}
-                className="w-full sm:w-auto py-2.5 px-6 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition shadow-xs"
+                className="w-full sm:w-auto py-2.5 px-6 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm shadow-blue-500/20"
               >
                 Back to Weekly Exam Hub
               </button>

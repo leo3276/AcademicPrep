@@ -358,7 +358,7 @@ export default function TrialQuestionsPage() {
             {hasActiveFilters ? (
               <button
                 onClick={resetFilters}
-                className="px-4 py-2 rounded-xl bg-slate-900 text-white font-medium text-xs hover:bg-slate-800 transition"
+                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition shadow-sm shadow-blue-500/20"
               >
                 Clear all filters
               </button>
@@ -448,7 +448,7 @@ export default function TrialQuestionsPage() {
                       className={`py-2 px-3 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-2xs ${
                         !student?.hasFullAccess
                           ? 'bg-amber-600 hover:bg-amber-700 text-white'
-                          : 'bg-slate-900 hover:bg-slate-800 text-white'
+                          : 'bg-blue-600 hover:bg-blue-500 text-white shadow-sm shadow-blue-500/20'
                       }`}
                     >
                       {!student?.hasFullAccess ? (

@@ -154,7 +154,7 @@ export default function SubjectDetailPage() {
               onClick={() => handleLevelChange(lvl)}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
                 currentLevel === lvl
-                  ? 'bg-slate-900 text-white shadow-xs'
+                  ? 'bg-blue-600 text-white shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -179,7 +179,7 @@ export default function SubjectDetailPage() {
           </div>
           <button
             onClick={() => setPinModalOpen(true)}
-            className="px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-black text-white font-medium text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto"
+            className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto shadow-sm shadow-blue-500/20"
           >
             Redeem Access PIN
           </button>
@@ -390,7 +390,7 @@ export default function SubjectDetailPage() {
               <button
                 type="submit"
                 disabled={pinLoading || !pinInput.trim()}
-                className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:bg-slate-300 text-white font-bold text-xs transition-colors shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:bg-slate-300 text-white font-bold text-xs transition-colors shadow-sm shadow-blue-500/20 flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 {pinLoading ? (
                   <span>Verifying PIN...</span>

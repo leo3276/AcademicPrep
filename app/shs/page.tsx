@@ -180,7 +180,7 @@ export default function ShsPortalPage() {
           <div className="flex items-center gap-2 shrink-0">
             <Link
               href={`/login?mode=register&redirect=/shs&level=${encodeURIComponent(selectedLevel)}`}
-              className="px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition"
+              className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition shadow-sm shadow-blue-500/20"
             >
               Create Account
             </Link>
@@ -211,7 +211,7 @@ export default function ShsPortalPage() {
           <button
             type="button"
             onClick={() => setShowPaymentModal(true)}
-            className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-black text-white font-medium text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto"
+            className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto shadow-sm shadow-blue-500/20"
           >
             Unlock VIP (GH₵ 25)
           </button>
@@ -356,7 +356,7 @@ export default function ShsPortalPage() {
           </div>
           <Link
             href="/shs/trial-questions"
-            className="w-full py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs"
+            className="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-sm shadow-blue-500/20"
           >
             <FileCheck className="w-3.5 h-3.5" />
             <span>Open SHS Trial Mocks</span>

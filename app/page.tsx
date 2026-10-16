@@ -227,7 +227,7 @@ export default function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Card 1: JHS (ACTIVE) */}
           <div id="tour-home-jhs" className="relative rounded-2xl bg-white border border-slate-300 p-6 shadow-xs flex flex-col justify-between overflow-hidden">
-            <div className="absolute top-0 right-0 bg-slate-900 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-1 rounded-bl-xl">
+            <div className="absolute top-0 right-0 bg-blue-600 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-1 rounded-bl-xl shadow-xs">
               Active & Live Now
             </div>
 

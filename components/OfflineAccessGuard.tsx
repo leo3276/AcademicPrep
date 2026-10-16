@@ -130,7 +130,7 @@ export default function OfflineAccessGuard() {
                   }
                 }
               }}
-              className="w-full py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer"
+              className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm shadow-blue-500/20"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               <span>Retry Internet Connection</span>

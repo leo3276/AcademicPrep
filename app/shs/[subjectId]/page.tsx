@@ -143,7 +143,7 @@ export default function ShsSubjectDetailPage() {
                   onClick={() => handleLevelChange(lvl)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                     currentLevel === lvl
-                      ? 'bg-slate-900 text-white shadow-xs'
+                      ? 'bg-blue-600 text-white shadow-xs'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
@@ -178,7 +178,7 @@ export default function ShsSubjectDetailPage() {
           <span className="font-bold text-slate-900">{progressPercent}%</span>
           <div className="w-24 bg-slate-100 rounded-full h-2 overflow-hidden">
             <div
-              className="bg-slate-900 h-full rounded-full transition-all duration-300"
+              className="bg-blue-600 h-full rounded-full transition-all duration-300"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
@@ -201,7 +201,7 @@ export default function ShsSubjectDetailPage() {
           <button
             type="button"
             onClick={() => setShowPaymentModal(true)}
-            className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-black text-white font-medium text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto"
+            className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto shadow-sm shadow-blue-500/20"
           >
             Unlock VIP (GH₵ 25)
           </button>

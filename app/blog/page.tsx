@@ -189,7 +189,7 @@ export default function BlogIndexPage() {
                 setSelectedCategory('ALL');
                 setSearchQuery('');
               }}
-              className="px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-semibold hover:bg-slate-800 transition"
+              className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition shadow-sm shadow-blue-500/20"
             >
               Reset Filters
             </button>
@@ -419,7 +419,7 @@ export default function BlogIndexPage() {
                 href="https://chat.whatsapp.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition shadow-xs"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition shadow-sm shadow-blue-500/20"
               >
                 <MessageCircle className="w-4 h-4 text-slate-300" />
                 <span>Join Study Group (Free)</span>

@@ -889,7 +889,7 @@ export default function KinoriaHeroStage() {
                   <Link
                     href={selectedLevel === 'JHS' ? '/jhs/weekly-exam' : '/shs/weekly-exam'}
                     data-hot="true"
-                    className="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-850 border border-slate-700 text-white font-mono text-xs font-bold transition flex items-center justify-center gap-2 group shadow-sm"
+                    className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 border border-blue-500 text-white font-mono text-xs font-bold transition flex items-center justify-center gap-2 group shadow-sm shadow-blue-500/20"
                   >
                     <span>ENTER EXAM ROOM</span>
                     <ArrowRight className="w-3.5 h-3.5 text-blue-400 group-hover:translate-x-1 transition-transform" />

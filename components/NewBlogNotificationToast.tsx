@@ -149,7 +149,7 @@ export default function NewBlogNotificationToast({ initialPosts }: NewBlogNotifi
           <Link
             href={`/blog/${latestPost.id}`}
             onClick={handleRead}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition shadow-2xs group/btn"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition shadow-sm shadow-blue-500/20 group/btn"
           >
             <span>Read Post</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />

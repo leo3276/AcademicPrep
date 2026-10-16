@@ -48,9 +48,13 @@ export async function exportTimetablePdf(timetable: PersonalTimetable): Promise<
     color: rgb(0.2, 0.25, 0.35),
   });
 
-  const dateStr = `Generated: ${new Date(timetable.createdAt).toLocaleDateString(undefined, { dateStyle: 'medium' })}`;
-  page.drawText(sanitize(dateStr), {
-    x: pageWidth - marginX - fontRegular.widthOfTextAtSize(dateStr, 8),
+  const rawDate = timetable.createdAt ? new Date(timetable.createdAt) : new Date();
+  const validDate = isNaN(rawDate.getTime()) ? new Date() : rawDate;
+  const dateStr = `Generated: ${validDate.toLocaleDateString('en-GB', { dateStyle: 'medium' })}`;
+  const cleanDateStr = sanitize(dateStr);
+  const dateWidth = fontRegular.widthOfTextAtSize(cleanDateStr, 8);
+  page.drawText(cleanDateStr, {
+    x: pageWidth - marginX - dateWidth,
     y,
     size: 8,
     font: fontRegular,
@@ -58,7 +62,7 @@ export async function exportTimetablePdf(timetable: PersonalTimetable): Promise<
   });
 
   y -= 18;
-  const isShs = timetable.level.startsWith('SHS');
+  const isShs = Boolean(timetable.level?.startsWith('SHS'));
   const examType = isShs ? 'WASSCE' : 'BECE';
   page.drawText(`Personal ${examType} Study Timetable & Topic Revision Plan`, {
     x: marginX,
@@ -92,9 +96,11 @@ export async function exportTimetablePdf(timetable: PersonalTimetable): Promise<
     borderWidth: 0.5,
   });
 
-  const candidateText = truncate(`Candidate: ${timetable.studentName}`, 32);
-  const levelText = `Level: ${timetable.level}`;
-  const planText = `Plan: ${timetable.preferences.intensity} (${timetable.totalWeeklyHours} hrs/wk)`;
+  const candidateText = truncate(`Candidate: ${timetable.studentName || 'Candidate'}`, 32);
+  const levelText = sanitize(`Level: ${timetable.level || (isShs ? 'SHS' : 'JHS')}`);
+  const planIntensity = timetable.preferences?.intensity || 'BALANCED';
+  const planHours = timetable.totalWeeklyHours ?? 0;
+  const planText = sanitize(`Plan: ${planIntensity} (${planHours} hrs/wk)`);
 
   page.drawText(candidateText, {
     x: marginX + 8,
@@ -285,19 +291,68 @@ export async function exportTimetablePdf(timetable: PersonalTimetable): Promise<
     color: rgb(0.5, 0.55, 0.6),
   });
 
-  // Save PDF and trigger download
+  // Save PDF and trigger mobile share or browser download
   const pdfBytes = await doc.save();
   const blob = new Blob([pdfBytes as unknown as BlobPart], { type: 'application/pdf' });
-  const downloadUrl = URL.createObjectURL(blob);
 
-  const cleanName = timetable.studentName.replace(/[^a-zA-Z0-9]/g, '_');
+  const cleanName = sanitize(timetable.studentName || 'Candidate').replace(/[^a-zA-Z0-9]/g, '_') || 'Candidate';
   const filename = `${cleanName}_${examType}_Study_Timetable.pdf`;
 
-  const link = document.createElement('a');
-  link.href = downloadUrl;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(downloadUrl);
+  // 1. Mobile Native Web Share API (Primary for iOS Safari and modern Android)
+  if (typeof navigator !== 'undefined' && typeof File !== 'undefined' && typeof navigator.canShare === 'function') {
+    try {
+      const file = new File([blob], filename, { type: 'application/pdf' });
+      if (navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: filename,
+          text: `AcademicPrep Ghana ${examType} Personal Study Timetable & Revision Plan`,
+        });
+        return;
+      }
+    } catch (shareErr: any) {
+      if (shareErr?.name === 'AbortError') {
+        // User intentionally dismissed the share sheet; do not fail or download duplicate
+        return;
+      }
+      console.warn('Native share failed or dismissed, proceeding with browser download fallback:', shareErr);
+    }
+  }
+
+  // 2. Browser Blob URL handling
+  const downloadUrl = URL.createObjectURL(blob);
+
+  const isIOS = typeof navigator !== 'undefined' && (
+    /iPad|iPhone|iPod/.test(navigator.userAgent || '') ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+  );
+
+  if (isIOS) {
+    // iOS Safari does not support the download attribute on blob URLs.
+    // Opening the blob directly opens Safari's built-in PDF reader with native Share/Save to Files.
+    const newTab = window.open(downloadUrl, '_blank');
+    if (!newTab || newTab.closed || typeof newTab.closed === 'undefined') {
+      window.location.href = downloadUrl;
+    }
+  } else {
+    // Android Chrome & Desktop: Standard anchor click
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = filename;
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => {
+      try {
+        document.body.removeChild(link);
+      } catch {}
+    }, 1000);
+  }
+
+  // Retain object URL for 60 seconds so mobile OS download managers can finish reading the stream
+  setTimeout(() => {
+    try {
+      URL.revokeObjectURL(downloadUrl);
+    } catch {}
+  }, 60000);
 }

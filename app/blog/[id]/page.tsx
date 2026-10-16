@@ -120,7 +120,7 @@ export default function BlogPostDetailPage() {
           </p>
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 text-white font-semibold text-xs hover:bg-slate-800 transition"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 text-white font-semibold text-xs hover:bg-blue-500 transition shadow-sm shadow-blue-500/20"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to All Articles</span>

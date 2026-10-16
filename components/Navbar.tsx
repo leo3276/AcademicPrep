@@ -211,7 +211,7 @@ export default function Navbar() {
                     setModalTab('momo');
                     setPinModalOpen(true);
                   }}
-                  className="text-xs font-semibold px-2.5 py-1.5 2xl:px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white shadow-xs transition flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
+                  className="text-xs font-semibold px-2.5 py-1.5 2xl:px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white shadow-sm shadow-blue-500/20 transition flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
                 >
                   <Crown className="w-3.5 h-3.5 text-slate-300" />
                   <span>VIP Pass</span>
@@ -299,7 +299,7 @@ export default function Navbar() {
                     setModalTab('momo');
                     setPinModalOpen(true);
                   }}
-                  className="hidden sm:flex text-xs font-semibold px-2 py-1.5 sm:px-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white shadow-xs items-center gap-1 whitespace-nowrap cursor-pointer"
+                  className="hidden sm:flex text-xs font-semibold px-2 py-1.5 sm:px-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white shadow-sm shadow-blue-500/20 items-center gap-1 whitespace-nowrap cursor-pointer"
                 >
                   <Crown className="w-3.5 h-3.5 text-slate-300" />
                   <span>VIP Pass</span>
@@ -492,13 +492,13 @@ export default function Navbar() {
                     setModalTab('momo');
                     setPinModalOpen(true);
                   }}
-                  className="py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs flex items-center justify-between shadow-xs mt-1 cursor-pointer"
+                  className="py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center justify-between shadow-sm shadow-blue-500/20 mt-1 cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
-                    <Crown className="w-4 h-4 text-slate-300" />
+                    <Crown className="w-4 h-4 text-white" />
                     <span>VIP Pass</span>
                   </div>
-                  <span className="text-[10px] bg-slate-800 px-1.5 py-0.5 rounded font-semibold tracking-wider uppercase">Upgrade</span>
+                  <span className="text-[10px] bg-blue-700/60 px-1.5 py-0.5 rounded font-semibold tracking-wider uppercase">Upgrade</span>
                 </button>
               ) : null}
             </div>

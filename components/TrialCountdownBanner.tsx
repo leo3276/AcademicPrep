@@ -123,7 +123,7 @@ export default function TrialCountdownBanner({
           </div>
           <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
             <div
-              className="bg-slate-900 h-1.5 rounded-full transition-all duration-500"
+              className="bg-blue-600 h-1.5 rounded-full transition-all duration-500"
               style={{ width: `${100 - progressPercent}%` }}
             />
           </div>

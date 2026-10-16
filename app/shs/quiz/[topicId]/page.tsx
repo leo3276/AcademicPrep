@@ -218,10 +218,10 @@ export default function ShsTopicQuizPage() {
                 setModalTab('momo');
                 setShowPaymentModal(true);
               }}
-              className="w-full p-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-colors flex flex-col items-center justify-center gap-1 shadow-xs"
+              className="w-full p-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-colors flex flex-col items-center justify-center gap-1 shadow-sm shadow-blue-500/20 cursor-pointer"
             >
               <span>Pay Online via MoMo</span>
-              <span className="text-[10px] text-slate-300 font-normal">GH₵ 25 / Month</span>
+              <span className="text-[10px] text-white/80 font-normal">GH₵ 25 / Month</span>
             </button>
 
             <button
@@ -230,10 +230,10 @@ export default function ShsTopicQuizPage() {
                 setModalTab('pin');
                 setShowPaymentModal(true);
               }}
-              className="w-full p-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-all flex flex-col items-center justify-center gap-1"
+              className="w-full p-4 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-all flex flex-col items-center justify-center gap-1 shadow-sm shadow-blue-500/20 cursor-pointer"
             >
               <span>Redeem Voucher PIN</span>
-              <span className="text-[10px] text-slate-400 font-normal">Instant Access</span>
+              <span className="text-[10px] text-white/80 font-normal">Instant Access</span>
             </button>
           </div>
 

@@ -321,7 +321,7 @@ export default function WasscePastQuestionsPage() {
             {hasActiveFilters && (
               <button
                 onClick={resetFilters}
-                className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold transition"
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-semibold transition shadow-sm shadow-blue-500/20"
               >
                 Clear All Filters
               </button>
@@ -382,7 +382,7 @@ export default function WasscePastQuestionsPage() {
                       href={doc.fileUrl}
                       download={doc.fileName}
                       onClick={(e) => handleDocumentAction(e, doc)}
-                      className="flex-1 py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition shadow-xs"
+                      className="flex-1 py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition shadow-sm shadow-blue-500/20"
                     >
                       {!hasFullAccess ? <Lock className="w-3.5 h-3.5 text-amber-400" /> : <Download className="w-3.5 h-3.5" />}
                       <span>Download</span>
