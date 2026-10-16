@@ -30,6 +30,7 @@ import TourPromptToast from '@/components/TourPromptToast';
 import ApkDownloadModal from '@/components/ApkDownloadModal';
 import NewBlogNotificationToast from '@/components/NewBlogNotificationToast';
 import { OFFICIAL_APK_DOWNLOAD_URL, APK_FILE_SIZE } from '@/lib/apkConfig';
+import Books3DBackground from '@/components/Books3DBackground';
 
 export default function HomePage() {
   const { student } = useAuth();
@@ -72,10 +73,15 @@ export default function HomePage() {
 
   return (
     <div className="space-y-12 sm:space-y-16 pb-16 sm:pb-20 w-full max-w-full overflow-hidden">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-blue-900 via-indigo-950 to-slate-900 text-white pt-12 pb-16 sm:pt-16 sm:pb-24">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/25 via-transparent to-transparent pointer-events-none" />
+      {/* Hero Section with Interactive 3D Educational Canvas Background */}
+      <section className="relative overflow-hidden text-white pt-12 pb-16 sm:pt-16 sm:pb-24">
+        {/* Interactive 3D Floating Books, Quiz Sheets & Ambient Particles Canvas */}
+        <Books3DBackground />
+
+        {/* Ambient Top Glow Overlay */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent pointer-events-none" />
         
+        {/* The Exact Original Content & Layout */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="text-center max-w-3xl mx-auto space-y-5 sm:space-y-6">
             <div className="flex flex-wrap items-center justify-center gap-2 max-w-full">
@@ -90,21 +96,21 @@ export default function HomePage() {
                   className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 hover:border-amber-300 text-amber-200 text-xs font-medium backdrop-blur-sm transition-all group max-w-full shadow-sm"
                 >
                   <span className="flex h-2 w-2 rounded-full bg-amber-400 animate-ping shrink-0" />
-                  <span className="px-1.5 py-0.2 rounded bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 text-[10px] font-black uppercase tracking-wider">NEW BLOG</span>
+                  <span className="px-1.5 py-0.5 rounded bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 text-[10px] font-black uppercase tracking-wider">NEW BLOG</span>
                   <span className="truncate max-w-[200px] sm:max-w-xs md:max-w-sm text-white font-medium">{latestPost.title}</span>
                   <ArrowRight className="w-3.5 h-3.5 text-amber-300 group-hover:translate-x-0.5 transition-transform shrink-0" />
                 </Link>
               )}
             </div>
 
-            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-white">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-white drop-shadow-sm">
               Master Your Curriculum, <br />
               <span className="bg-gradient-to-r from-blue-300 via-indigo-200 to-teal-300 bg-clip-text text-transparent">
                 Topic by Topic, Week by Week.
               </span>
             </h1>
 
-            <p className="text-sm sm:text-base lg:text-lg text-slate-200 max-w-2xl mx-auto leading-relaxed font-normal px-2">
+            <p className="text-sm sm:text-base lg:text-lg text-slate-200 max-w-2xl mx-auto leading-relaxed font-normal px-2 drop-shadow-xs">
               Full JHS and SHS curriculum notes, instant WAEC-standard quizzes with step-by-step explanations, and 5 comprehensive elective programme strands.
             </p>
 
@@ -112,7 +118,7 @@ export default function HomePage() {
               <Link
                 href="/jhs"
                 id="tour-home-launch"
-                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 group"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 group cursor-pointer"
               >
                 <span>Launch JHS Portal</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -120,12 +126,11 @@ export default function HomePage() {
 
               <Link
                 href="/shs"
-                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm transition-all shadow-lg shadow-purple-500/30 flex items-center justify-center gap-2 group"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm transition-all shadow-lg shadow-purple-500/30 flex items-center justify-center gap-2 group cursor-pointer"
               >
                 <span>Launch SHS (WASSCE) Portal</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
-
 
               <button
                 type="button"
@@ -139,65 +144,66 @@ export default function HomePage() {
 
             {/* Quick Demo Info Box */}
             <div className="pt-3 max-w-md mx-auto w-full">
-              <div id="tour-home-demo" className="bg-slate-800/80 backdrop-blur-md rounded-xl p-3 sm:p-3.5 border border-slate-700 text-left text-xs text-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 shadow-md">
+              <div id="tour-home-demo" className="bg-slate-900/80 backdrop-blur-md rounded-xl p-3 sm:p-3.5 border border-slate-700/80 text-left text-xs text-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 shadow-md">
                 <div>
-                  <span className="font-bold text-white block mb-0.5">Try Demo Student Account:</span>
+                  <span className="font-semibold text-white block mb-0.5">Try Demo Student Account:</span>
                   <span className="text-slate-300 break-words">
-                    Phone: <b className="text-emerald-300 font-mono">0241234567</b> • PIN: <b className="text-emerald-300 font-mono">1234</b>
+                    Phone: <b className="text-blue-300 font-mono">0241234567</b> • PIN: <b className="text-blue-300 font-mono">1234</b>
                   </span>
                 </div>
                 <Link 
                   href="/login"
-                  className="px-3 py-1.5 rounded-lg bg-white text-slate-900 font-bold text-[11px] hover:bg-slate-100 shadow-sm shrink-0 self-start sm:self-auto text-center"
+                  className="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-semibold text-[11px] hover:bg-blue-500 shadow-xs shrink-0 self-start sm:self-auto text-center transition"
                 >
                   Quick Fill
                 </Link>
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* Live Counters */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-3.5 sm:p-5 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-md">
-            <div className="text-center p-2 sm:p-3">
-              <div className="text-xl sm:text-3xl font-extrabold text-white">8,000+</div>
-              <div className="text-[11px] sm:text-xs text-slate-200 font-medium mt-1">Community Students</div>
-            </div>
-            <div className="text-center p-2 sm:p-3">
-              <div className="text-xl sm:text-3xl font-extrabold text-emerald-400">JHS & SHS</div>
-              <div className="text-[11px] sm:text-xs text-slate-200 font-medium mt-1">Full Curriculum Live</div>
-            </div>
-            <div className="text-center p-2 sm:p-3">
-              <div className="text-xl sm:text-3xl font-extrabold text-blue-300">100%</div>
-              <div className="text-[11px] sm:text-xs text-slate-200 font-medium mt-1">Instant Auto-Grading</div>
-            </div>
-            <div className="text-center p-2 sm:p-3">
-              <div className="text-xl sm:text-3xl font-extrabold text-purple-300">Dynamic</div>
-              <div className="text-[11px] sm:text-xs text-slate-200 font-medium mt-1">Weekly Exams</div>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Public Announcement: VIP Offline Access vs Online Free Access */}
+        {/* Live Counters (Clean Minimalist) */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-3.5 sm:p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs">
+            <div className="text-center p-2 sm:p-3">
+              <div className="text-xl sm:text-3xl font-black text-slate-900">8,000+</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1">Community Students</div>
+            </div>
+            <div className="text-center p-2 sm:p-3">
+              <div className="text-xl sm:text-3xl font-black text-slate-900">JHS &amp; SHS</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1">Full Curriculum Live</div>
+            </div>
+            <div className="text-center p-2 sm:p-3">
+              <div className="text-xl sm:text-3xl font-black text-slate-900">100%</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1">Instant Auto-Grading</div>
+            </div>
+            <div className="text-center p-2 sm:p-3">
+              <div className="text-xl sm:text-3xl font-black text-slate-900">Adaptive</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1">Weekly Exams</div>
+            </div>
+          </div>
+        </div>
+
+      {/* Public Announcement: 30-Day Free Trial Notice */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2">
-        <div className="rounded-2xl bg-white border border-amber-200/90 p-4 sm:p-5 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="rounded-2xl bg-white border border-blue-200/90 p-4 sm:p-5 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center shrink-0 mt-0.5">
-              <Crown className="w-5 h-5 text-amber-600" />
+            <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-700 flex items-center justify-center shrink-0 mt-0.5">
+              <Sparkles className="w-5 h-5 text-blue-600" />
             </div>
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-2 py-0.5 rounded">
-                  Study Notice
+                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-800 bg-blue-100 px-2 py-0.5 rounded">
+                  Special Promotion
                 </span>
                 <h3 className="text-sm font-bold text-slate-900">
-                  100% Offline VIP Study Access vs. Online Free Tier
+                  🎁 30-Day Free Trial: All Topics, Quizzes &amp; Offline Tools 100% Unlocked
                 </h3>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed max-w-3xl">
-                <b>VIP Pass Members</b> can study lesson notes, review formula sheets, and take chapter quizzes <b>100% offline with zero internet or data consumption</b>. Free-tier users require an active internet connection to load lessons and questions.
+                Every newly registered student enjoys a <b>complimentary 30-Day Free Trial</b> with full unrestricted access to all JHS &amp; SHS lesson notes, diagnostic quizzes, past papers, and timetables. <b>Zero payment required.</b>
               </p>
             </div>
           </div>
@@ -205,9 +211,9 @@ export default function HomePage() {
           <div className="flex items-center gap-2 shrink-0 self-end md:self-center">
             <Link
               href="/login"
-              className="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 text-xs font-bold transition flex items-center gap-1.5 border border-amber-200 shadow-2xs"
+              className="px-3.5 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-900 text-xs font-bold transition flex items-center gap-1.5 border border-blue-200 shadow-2xs"
             >
-              <span>Get VIP Pass (GH₵ 25)</span>
+              <span>Start Free Trial</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -225,13 +231,13 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Card 1: JHS (ACTIVE) */}
-          <div id="tour-home-jhs" className="relative rounded-2xl bg-white border-2 border-blue-600 p-6 shadow-xl shadow-blue-500/5 flex flex-col justify-between overflow-hidden">
-            <div className="absolute top-0 right-0 bg-blue-600 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-1 rounded-bl-xl">
+          <div id="tour-home-jhs" className="relative rounded-2xl bg-white border border-slate-300 p-6 shadow-xs flex flex-col justify-between overflow-hidden">
+            <div className="absolute top-0 right-0 bg-slate-900 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-1 rounded-bl-xl">
               Active & Live Now
             </div>
 
             <div className="space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
+              <div className="w-11 h-11 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 flex items-center justify-center font-bold">
                 <GraduationCap className="w-6 h-6" />
               </div>
 
@@ -263,7 +269,7 @@ export default function HomePage() {
             <div className="pt-6">
               <Link
                 href="/jhs"
-                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors shadow-md shadow-blue-500/20"
+                className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition-colors shadow-xs"
               >
                 <span>Enter JHS Section</span>
                 <ArrowRight className="w-4 h-4" />
@@ -272,9 +278,9 @@ export default function HomePage() {
           </div>
 
           {/* Card 2: SHS Section (Live) */}
-          <div className="rounded-2xl bg-white border-2 border-purple-300 p-6 flex flex-col justify-between shadow-md shadow-purple-500/5">
+          <div className="rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between shadow-xs">
             <div className="space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold">
+              <div className="w-11 h-11 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 flex items-center justify-center font-bold">
                 <BookOpenCheck className="w-6 h-6" />
               </div>
 
@@ -311,7 +317,7 @@ export default function HomePage() {
             <div className="pt-6">
               <Link
                 href="/shs"
-                className="w-full py-2.5 px-4 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors shadow-md shadow-purple-500/20"
+                className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition-colors shadow-xs"
               >
                 <span>Enter SHS Section</span>
                 <ArrowRight className="w-4 h-4" />
@@ -322,7 +328,7 @@ export default function HomePage() {
           {/* Card 3: University (Coming Soon) */}
           <div className="rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between opacity-85">
             <div className="space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold">
+              <div className="w-11 h-11 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 flex items-center justify-center font-bold">
                 <Users className="w-6 h-6" />
               </div>
 
@@ -380,34 +386,34 @@ export default function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* BECE Past Questions Archive Card */}
-          <div id="tour-home-bece" className="rounded-2xl bg-gradient-to-br from-blue-900 to-indigo-950 text-white p-7 shadow-xl relative overflow-hidden flex flex-col justify-between">
+          {/* BECE Past Questions Archive Card (Clean Minimalist) */}
+          <div id="tour-home-bece" className="rounded-2xl bg-white border border-slate-200 text-slate-900 p-6 sm:p-7 shadow-2xs flex flex-col justify-between">
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-semibold">
-                <FileText className="w-4 h-4 text-blue-400" />
-                1990 – 2025 Archive
+              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
+                <FileText className="w-3.5 h-3.5 text-slate-600" />
+                <span>1990 – 2025 Archive</span>
               </div>
-              <h3 className="text-2xl font-bold text-white">
-                WAEC BECE Past Questions & Marking Schemes
+              <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
+                WAEC BECE Past Questions &amp; Marking Schemes
               </h3>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
                 Access over 30+ years of official WAEC BECE past examination questions with complete marking schemes for all 9 subjects, including Mathematics, Integrated Science, English, Social Studies, ICT, and RME.
               </p>
-              <div className="grid grid-cols-2 gap-2 text-xs text-slate-300 pt-2">
+              <div className="grid grid-cols-2 gap-2 text-xs text-slate-600 pt-2">
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>Paper 1 (Obj) & Paper 2</span>
+                  <CheckCircle2 className="w-4 h-4 text-slate-800 shrink-0" />
+                  <span>Paper 1 (Obj) &amp; Paper 2</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-slate-800 shrink-0" />
                   <span>Verified Marking Schemes</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-slate-800 shrink-0" />
                   <span>All 9 JHS Subjects</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-slate-800 shrink-0" />
                   <span>Instant PDF Downloads</span>
                 </div>
               </div>
@@ -415,7 +421,7 @@ export default function HomePage() {
             <div className="pt-6">
               <Link
                 href="/jhs/bece-past-questions"
-                className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md shadow-blue-500/30"
+                className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs"
               >
                 <span>Browse BECE Past Questions (1990 - 2025)</span>
                 <ArrowRight className="w-4 h-4" />
@@ -423,44 +429,44 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* BECE Trial & Mock Exam Card */}
-          <div id="tour-home-mocks" className="rounded-2xl bg-white border-2 border-emerald-500/40 p-7 shadow-xl shadow-emerald-500/5 flex flex-col justify-between">
+          {/* BECE Trial & Mock Exam Card (Clean Minimalist) */}
+          <div id="tour-home-mocks" className="rounded-2xl bg-white border border-slate-200 text-slate-900 p-6 sm:p-7 shadow-2xs flex flex-col justify-between">
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold">
-                <Award className="w-4 h-4 text-emerald-600" />
-                2026 Candidates
+              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
+                <Award className="w-3.5 h-3.5 text-slate-600" />
+                <span>2026 Candidates</span>
               </div>
-              <h3 className="text-2xl font-bold text-slate-900">
-                BECE Trial, Mock Papers & Likely Questions
+              <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
+                BECE Trial, Mock Papers &amp; Likely Questions
               </h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
                 Access BECE likely questions, Best Brain mock papers, CEPME, GBat, Metro and GES district mock exams prepared to test candidate readiness with verified marking schemes.
               </p>
-              <div className="grid grid-cols-2 gap-2 text-xs text-slate-700 pt-2">
+              <div className="grid grid-cols-2 gap-2 text-xs text-slate-600 pt-2">
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Best Brain & GES Mocks</span>
+                  <CheckCircle2 className="w-4 h-4 text-slate-800 shrink-0" />
+                  <span>Best Brain &amp; GES Mocks</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-slate-800 shrink-0" />
                   <span>Official Marking Schemes</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-slate-800 shrink-0" />
                   <span>BECE Likely Questions</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Step-by-Step Math & Science</span>
+                  <CheckCircle2 className="w-4 h-4 text-slate-800 shrink-0" />
+                  <span>Step-by-Step Math &amp; Science</span>
                 </div>
               </div>
             </div>
             <div className="pt-6">
               <Link
                 href="/jhs/trial-questions"
-                className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md shadow-emerald-600/20"
+                className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs"
               >
-                <span>Practice BECE Trial & Mock Papers</span>
+                <span>Practice BECE Trial &amp; Mock Papers</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -468,33 +474,33 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Key Innovation: Dynamic Weekly Exam */}
+      {/* Key Innovation: Dynamic Weekly Exam (Clean Minimalist) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div id="tour-home-weekly" className="rounded-3xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
-          <div className="max-w-2xl space-y-4 relative z-10">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-white font-bold text-xs backdrop-blur-sm">
-              <Clock className="w-3.5 h-3.5" />
-              Progress-Adaptive Testing Engine
+        <div id="tour-home-weekly" className="rounded-2xl bg-white border border-slate-200 p-6 sm:p-9 text-slate-900 shadow-2xs">
+          <div className="max-w-2xl space-y-4">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
+              <Clock className="w-3.5 h-3.5 text-slate-600" />
+              <span>Progress-Adaptive Testing Engine</span>
             </div>
 
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
+            <h2 className="text-xl sm:text-3xl font-bold tracking-tight text-slate-900">
               A Weekly Exam That Only Tests What You Have Actually Studied
             </h2>
 
-            <p className="text-sm sm:text-base text-amber-50 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
               No generic test papers. The AcademicPrep engine queries your completed chapter quizzes and dynamically generates a personalized 15-minute weekly test. Finish more topics during the week, unlock richer tests on the weekend.
             </p>
 
-            <div className="pt-2 flex flex-wrap gap-4">
+            <div className="pt-2 flex flex-wrap gap-3">
               <Link
                 href="/jhs/weekly-exam"
-                className="px-6 py-3 rounded-xl bg-white text-amber-900 font-bold text-xs hover:bg-amber-50 transition-colors shadow-lg"
+                className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition shadow-xs"
               >
                 Try Dynamic Weekly Exam
               </Link>
               <Link
                 href="/jhs"
-                className="px-6 py-3 rounded-xl bg-amber-700/60 hover:bg-amber-700 text-white font-semibold text-xs transition-colors border border-white/30"
+                className="px-5 py-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs transition"
               >
                 Study Topics First
               </Link>
@@ -505,16 +511,12 @@ export default function HomePage() {
 
       {/* Android Mobile App (APK) Showcase Section */}
       <section id="mobile-app" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-br from-slate-900 via-slate-950 to-indigo-950 rounded-3xl border border-slate-800 p-6 sm:p-10 shadow-xl relative overflow-hidden text-white">
-          {/* Subtle Ambient Radial Glow */}
-          <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+        <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 sm:p-9 text-white shadow-xs">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left Content Column */}
             <div className="lg:col-span-7 space-y-5">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-bold">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-xs font-semibold">
                   <Smartphone className="w-3.5 h-3.5" />
                   <span>Android Application Available</span>
                 </span>
@@ -600,9 +602,9 @@ export default function HomePage() {
 
             {/* Right Card Column - Mock Phone Card */}
             <div className="lg:col-span-5 flex justify-center">
-              <div className="w-full max-w-sm rounded-2xl bg-slate-800/90 border border-slate-700/80 p-5 shadow-2xl space-y-4">
+              <div className="w-full max-w-sm rounded-2xl bg-slate-800 border border-slate-700 p-5 shadow-md space-y-4">
                 <div className="flex items-center gap-3.5 pb-4 border-b border-slate-700/60">
-                  <div className="w-14 h-14 rounded-2xl overflow-hidden shadow-lg shadow-blue-500/25 shrink-0 border border-slate-600 bg-blue-600">
+                  <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-slate-700 bg-blue-600">
                     <img 
                       src="/android-icon.png" 
                       alt="AcademicPrep App Icon" 
@@ -643,7 +645,7 @@ export default function HomePage() {
                 <a
                   href={OFFICIAL_APK_DOWNLOAD_URL}
                   download="AcademicPrep-v1.0.0.apk"
-                  className="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer text-center"
+                  className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs cursor-pointer text-center"
                 >
                   <Download className="w-4 h-4" />
                   <span>Install APK Directly ({APK_FILE_SIZE})</span>

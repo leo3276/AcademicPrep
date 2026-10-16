@@ -38,20 +38,20 @@ export default function PrivacyPage() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="bg-linear-to-b from-slate-900 via-slate-900 to-slate-800 text-white py-14 px-4 sm:px-6 lg:px-8 border-b border-slate-700">
+      {/* Header Banner (Clean Minimalist) */}
+      <section className="bg-white border-b border-slate-200 text-slate-900 py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto space-y-4 text-center sm:text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold uppercase tracking-wider">
-            <Lock className="w-4 h-4 text-emerald-400" />
+          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold">
+            <Lock className="w-3.5 h-3.5 text-emerald-600" />
             <span>Student Privacy &amp; Data Protection</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
             AcademicPrep Privacy Policy
           </h1>
-          <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-3xl">
+          <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">
             AcademicPrep (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) is committed to protecting the privacy and personal data of our students, parents, and educators. This Privacy Policy outlines how we collect, use, store, and safeguard your personal information in compliance with the Ghana Data Protection Act, 2012 (Act 843) and international privacy frameworks.
           </p>
-          <div className="pt-2 text-xs text-slate-400">
+          <div className="pt-2 text-xs text-slate-500 font-medium">
             Effective Date: October 2026 &bull; Domain: www.acadmicprep.com
           </div>
         </div>

@@ -183,39 +183,37 @@ export default function StudentCommunityChatPage() {
     <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-6">
 
-        {/* Top Hero Banner */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white shadow-xl relative overflow-hidden">
-          <div className="absolute right-0 top-0 translate-x-12 -translate-y-8 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
-          
-          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-200 border border-blue-400/30 text-xs font-bold">
-                <Users className="w-3.5 h-3.5" />
+        {/* Top Hero Banner (Clean Minimalist) */}
+        <div className="p-6 sm:p-7 rounded-2xl bg-white border border-slate-200 text-slate-900 shadow-2xs">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="space-y-1.5">
+              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
+                <Users className="w-3.5 h-3.5 text-slate-600" />
                 <span>Live Student Study Community</span>
               </div>
-              <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
+              <h1 className="text-xl sm:text-3xl font-bold tracking-tight text-slate-900">
                 AcademicPrep Study Lounge
               </h1>
-              <p className="text-xs sm:text-sm text-blue-100/90 max-w-2xl leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-500 max-w-2xl leading-relaxed">
                 Connect with thousands of JHS and SHS students across Ghana. Share what you studied today, discuss exam questions, ask tutors, and keep each other accountable.
               </p>
             </div>
 
-            <div className="flex items-center gap-3 shrink-0">
+            <div className="flex items-center gap-2.5 shrink-0">
               <button
                 onClick={() => loadMessages()}
-                className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition flex items-center gap-1.5 backdrop-blur-xs cursor-pointer border border-white/20"
+                className="px-3.5 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
-                <span>Refresh Live Feed</span>
+                <span>Refresh Feed</span>
               </button>
 
               <Link
                 href="/jhs"
-                className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-md shadow-blue-500/30"
+                className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-xs"
               >
                 <BookOpen className="w-3.5 h-3.5" />
-                <span>Go to Curriculum</span>
+                <span>Curriculum</span>
               </Link>
             </div>
           </div>
@@ -254,13 +252,13 @@ export default function StudentCommunityChatPage() {
               </div>
             </div>
 
-            {/* Community Standards Box */}
-            <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200/80 rounded-2xl p-4 text-xs space-y-2 text-amber-950">
-              <div className="flex items-center gap-1.5 font-bold text-amber-900">
-                <ShieldCheck className="w-4 h-4 text-amber-600" />
+            {/* Community Standards Box (Clean Minimalist) */}
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs space-y-2 text-slate-700">
+              <div className="flex items-center gap-1.5 font-semibold text-slate-900">
+                <ShieldCheck className="w-4 h-4 text-slate-600" />
                 <span>Community Standards</span>
               </div>
-              <ul className="space-y-1 text-[11px] text-amber-900/90 pl-4 list-disc leading-relaxed">
+              <ul className="space-y-1 text-[11px] text-slate-500 pl-4 list-disc leading-relaxed">
                 <li>Keep discussions strictly educational.</li>
                 <li>Respect fellow candidates and teachers.</li>
                 <li>No spamming, swearing, or promoting leaks.</li>

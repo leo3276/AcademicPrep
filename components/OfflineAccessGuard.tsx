@@ -6,7 +6,7 @@ import { WifiOff, Wifi, Crown, RefreshCw, CheckCircle2 } from 'lucide-react';
 import PaystackPaymentModal from './PaystackPaymentModal';
 
 export default function OfflineAccessGuard() {
-  const { student } = useAuth();
+  const { student, isTrialActive } = useAuth();
   const [isOffline, setIsOffline] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -77,9 +77,9 @@ export default function OfflineAccessGuard() {
         role="dialog"
         aria-modal="true"
         aria-labelledby="offline-guard-title"
-        className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200"
+        className="fixed inset-0 z-50 bg-slate-900/50 flex items-center justify-center p-4 animate-in fade-in duration-200"
       >
-        <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 text-center space-y-6 shadow-2xl border border-slate-200">
+        <div className="bg-white rounded-2xl max-w-md w-full p-6 sm:p-8 text-center space-y-6 shadow-xl border border-slate-200">
           <div className="w-16 h-16 rounded-2xl bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center mx-auto">
             <WifiOff className="w-8 h-8" />
           </div>
@@ -136,14 +136,16 @@ export default function OfflineAccessGuard() {
               <span>Retry Internet Connection</span>
             </button>
 
-            <button
-              type="button"
-              onClick={() => setShowPaymentModal(true)}
-              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-amber-500/20 transition-all cursor-pointer"
-            >
-              <Crown className="w-4 h-4 text-amber-200" />
-              <span>Unlock VIP Offline Pass (GH₵ 25)</span>
-            </button>
+            {!isTrialActive && (
+              <button
+                type="button"
+                onClick={() => setShowPaymentModal(true)}
+                className="w-full py-3 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
+              >
+                <Crown className="w-4 h-4 text-white" />
+                <span>Unlock VIP Offline Pass</span>
+              </button>
+            )}
           </div>
         </div>
       </div>

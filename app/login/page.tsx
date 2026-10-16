@@ -22,7 +22,9 @@ import Link from 'next/link';
 function LoginFormContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectUrl = searchParams.get('redirect') || '/jhs/profile';
+  const redirectUrl = searchParams.get('redirect') || '';
+  const levelParam = searchParams.get('level') as EducationLevel | null;
+  const isShsIntent = redirectUrl.startsWith('/shs') || (levelParam && levelParam.startsWith('SHS'));
   const initialMode = searchParams.get('mode') === 'register' ? 'register' : 'signin';
 
   const { student, signInStudent, registerStudent, logoutStudent, isTrialActive, trialDaysRemaining } = useAuth();
@@ -39,7 +41,12 @@ function LoginFormContent() {
   // Register Form States
   const [regFullName, setRegFullName] = useState('');
   const [regPhone, setRegPhone] = useState('');
-  const [regLevel, setRegLevel] = useState<EducationLevel>('JHS 1');
+  const [regLevel, setRegLevel] = useState<EducationLevel>(() => {
+    if (levelParam && ['JHS 1', 'JHS 2', 'JHS 3', 'SHS 1', 'SHS 2', 'SHS 3'].includes(levelParam)) {
+      return levelParam;
+    }
+    return isShsIntent ? 'SHS 1' : 'JHS 1';
+  });
   const [regPassword, setRegPassword] = useState('');
   const [showRegPass, setShowRegPass] = useState(false);
   const [regAccessPin, setRegAccessPin] = useState('');
@@ -50,11 +57,15 @@ function LoginFormContent() {
 
   // If already logged in, show status & option to switch account or sign out
   if (student) {
+    const isShsStudent = student.currentLevel?.startsWith('SHS');
+    const continueUrl = isShsStudent ? '/shs' : '/jhs';
+    const profileUrl = isShsStudent ? '/shs' : '/jhs/profile';
+
     return (
       <div className="max-w-md mx-auto my-14 px-4">
-        <div className="p-8 bg-white rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 text-center space-y-5">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white mx-auto flex items-center justify-center font-bold shadow-md shadow-blue-500/20">
-            <GraduationCap className="w-7 h-7" />
+        <div className="p-8 bg-white rounded-2xl border border-slate-200 shadow-sm text-center space-y-5">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white mx-auto flex items-center justify-center font-bold shadow-xs">
+            <GraduationCap className="w-6 h-6" />
           </div>
 
           <div className="space-y-1">
@@ -66,7 +77,9 @@ function LoginFormContent() {
           <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 flex items-center justify-between">
             <span className="font-medium">Class & Tier:</span>
             <div className="flex items-center gap-1.5 font-bold text-slate-900">
-              <span className="px-2 py-0.5 rounded-md bg-blue-100 text-blue-700 text-[11px]">
+              <span className={`px-2 py-0.5 rounded-md text-[11px] ${
+                isShsStudent ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'
+              }`}>
                 {student.currentLevel}
               </span>
               <span>
@@ -81,15 +94,17 @@ function LoginFormContent() {
 
           <div className="pt-2 flex flex-col gap-2.5">
             <Link
-              href="/jhs/profile"
-              className="w-full py-2.5 rounded-xl bg-blue-600 text-white font-bold text-xs hover:bg-blue-700 transition flex items-center justify-center gap-1.5 shadow-sm shadow-blue-500/20"
+              href={profileUrl}
+              className={`w-full py-2.5 rounded-xl ${
+                isShsStudent ? 'bg-purple-600 hover:bg-purple-700 shadow-purple-500/20' : 'bg-blue-600 hover:bg-blue-700 shadow-blue-500/20'
+              } text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-sm`}
             >
               <User className="w-4 h-4" />
-              <span>Go to Student Profile Dashboard</span>
+              <span>{isShsStudent ? 'Go to SHS Learning Portal' : 'Go to Student Profile Dashboard'}</span>
             </Link>
             
             <Link
-              href="/jhs"
+              href={continueUrl}
               className="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs transition flex items-center justify-center gap-1.5"
             >
               <span>Continue Learning</span>
@@ -132,7 +147,21 @@ function LoginFormContent() {
       return;
     }
 
-    router.push(redirectUrl);
+    const explicitRedirect = searchParams.get('redirect');
+    const isShs = res.student?.currentLevel?.startsWith('SHS');
+    if (explicitRedirect) {
+      if (isShs && explicitRedirect.startsWith('/jhs')) {
+        router.push('/shs');
+      } else if (!isShs && explicitRedirect.startsWith('/shs')) {
+        router.push('/jhs/profile');
+      } else {
+        router.push(explicitRedirect);
+      }
+    } else if (isShs) {
+      router.push('/shs');
+    } else {
+      router.push('/jhs/profile');
+    }
   };
 
   // Handle Registration submission
@@ -157,19 +186,39 @@ function LoginFormContent() {
 
     if (typeof window !== 'undefined') {
       localStorage.setItem('academicprep_show_new_account_tour', 'true');
+      if (regLevel.startsWith('SHS')) {
+        localStorage.setItem('academicprep_shs_level', regLevel);
+      } else {
+        localStorage.setItem('academicprep_jhs_level', regLevel);
+      }
     }
 
-    const destination = searchParams.get('redirect') || '/jhs';
+    const isShs = regLevel.startsWith('SHS');
+    let destination = isShs ? '/shs' : '/jhs';
+    const explicitRedirect = searchParams.get('redirect');
+    if (explicitRedirect) {
+      if (isShs) {
+        // If user registered for SHS, ignore any incoming redirect to JHS
+        if (!explicitRedirect.startsWith('/jhs')) {
+          destination = explicitRedirect;
+        }
+      } else {
+        // If user registered for JHS, ignore any incoming redirect to SHS
+        if (!explicitRedirect.startsWith('/shs')) {
+          destination = explicitRedirect;
+        }
+      }
+    }
     router.push(destination);
   };
 
   return (
     <div className="max-w-md mx-auto my-8 sm:my-12 px-4">
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 p-6 sm:p-8 space-y-6">
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
         
         {/* Brand Header */}
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 mx-auto flex items-center justify-center shadow-xs">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white mx-auto flex items-center justify-center shadow-xs">
             <GraduationCap className="w-6 h-6" />
           </div>
           <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
@@ -178,7 +227,7 @@ function LoginFormContent() {
           <p className="text-xs text-slate-500 leading-relaxed">
             {activeTab === 'signin' 
               ? 'Access your individual dashboard, weakness reports, and exam records.' 
-              : 'Sign up to start with 3 free topics, or enter a PIN for immediate VIP access.'}
+              : 'Sign up for JHS or SHS to start your 30-day unrestricted free trial, or enter a PIN for immediate VIP access.'}
           </p>
         </div>
 
@@ -366,9 +415,16 @@ function LoginFormContent() {
                 onChange={(e) => setRegLevel(e.target.value as EducationLevel)}
                 className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="JHS 1">Junior High School 1 (JHS 1)</option>
-                <option value="JHS 2">Junior High School 2 (JHS 2)</option>
-                <option value="JHS 3">Junior High School 3 (JHS 3 / BECE Candidate)</option>
+                <optgroup label="Senior High School (SHS)">
+                  <option value="SHS 1">Senior High School 1 (SHS 1)</option>
+                  <option value="SHS 2">Senior High School 2 (SHS 2)</option>
+                  <option value="SHS 3">Senior High School 3 (SHS 3 / WASSCE Candidate)</option>
+                </optgroup>
+                <optgroup label="Junior High School (JHS)">
+                  <option value="JHS 1">Junior High School 1 (JHS 1)</option>
+                  <option value="JHS 2">Junior High School 2 (JHS 2)</option>
+                  <option value="JHS 3">Junior High School 3 (JHS 3 / BECE Candidate)</option>
+                </optgroup>
               </select>
             </div>
 

@@ -43,29 +43,29 @@ export default function CopyrightPage() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="bg-linear-to-b from-slate-900 via-slate-900 to-slate-800 text-white py-14 px-4 sm:px-6 lg:px-8 border-b border-slate-700">
+      {/* Header Banner (Clean Minimalist) */}
+      <section className="bg-white border-b border-slate-200 text-slate-900 py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto space-y-4 text-center sm:text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/20 text-red-300 border border-red-500/30 text-xs font-bold uppercase tracking-wider">
-            <ShieldAlert className="w-4 h-4 text-red-400" />
+          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-rose-50 text-rose-700 border border-rose-200 text-xs font-semibold">
+            <ShieldAlert className="w-3.5 h-3.5 text-rose-600" />
             <span>Strict Anti-Piracy &amp; Intellectual Property Protection</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
             Copyright, Anti-Piracy &amp; Licensing Notice
           </h1>
-          <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-3xl">
+          <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">
             AcademicPrep holds full legal copyright and compilation rights over all examination papers, 
             marking schemes, curriculum summaries, interactive quizzes, and software solutions published 
-            under the <span className="text-white font-semibold">academicprep.com</span> platform. 
+            under the <span className="text-slate-900 font-semibold">academicprep.com</span> platform. 
             Unauthorized replication, scraping, reselling, or redistribution is strictly prosecuted.
           </p>
-          <div className="pt-2 flex flex-wrap gap-3 text-xs text-slate-300">
-            <span className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
-              <Scale className="w-3.5 h-3.5 text-amber-400" />
+          <div className="pt-2 flex flex-wrap gap-2 text-xs text-slate-600">
+            <span className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 font-medium">
+              <Scale className="w-3.5 h-3.5 text-slate-700" />
               Governed by Copyright Act, 2005 (Act 690)
             </span>
-            <span className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <span className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 font-medium">
+              <ShieldCheck className="w-3.5 h-3.5 text-slate-700" />
               Berne Convention (181 Member Nations)
             </span>
           </div>

@@ -14,7 +14,7 @@ import {
   SHS_CORE_SUBJECTS, 
   SHS_CURRICULUM_TOPICS 
 } from '@/lib/curriculumData';
-import { SHS_ELECTIVE_SUBJECTS } from '@/lib/curriculumShsElectives';
+import { SHS_ELECTIVE_GROUPS, SHS_ELECTIVE_SUBJECTS } from '@/lib/curriculumShsElectives';
 import { 
   TimetablePreferences, 
   TimetableGoal, 
@@ -71,22 +71,56 @@ export default function TimetableSurveyModal({
   );
   const [includeWeekendMock, setIncludeWeekendMock] = useState<boolean>(true);
 
-  // Available subjects based on level
+  const [selectedElectiveGroup, setSelectedElectiveGroup] = useState<string>('all');
+
+  // Available subjects based on level and elective strand
   const availableSubjects = useMemo(() => {
     if (isShs) {
-      return [...SHS_CORE_SUBJECTS, ...SHS_ELECTIVE_SUBJECTS];
+      let subjectsList = [...SHS_CORE_SUBJECTS];
+      if (selectedElectiveGroup === 'all') {
+        subjectsList = [...subjectsList, ...SHS_ELECTIVE_SUBJECTS];
+      } else {
+        const grp = SHS_ELECTIVE_GROUPS.find((g) => g.id === selectedElectiveGroup);
+        if (grp) {
+          subjectsList = [...subjectsList, ...grp.subjects];
+        } else {
+          subjectsList = [...subjectsList, ...SHS_ELECTIVE_SUBJECTS];
+        }
+      }
+      // Deduplicate subjects by ID
+      const seen = new Set<string>();
+      return subjectsList.filter((s) => {
+        if (seen.has(s.id)) return false;
+        seen.add(s.id);
+        return true;
+      });
     }
     return CURRICULUM_SUBJECTS;
-  }, [isShs]);
+  }, [isShs, selectedElectiveGroup]);
 
   // Available topics for student's level
   const availableTopicsForLevel = useMemo(() => {
     if (isShs) {
-      return SHS_CURRICULUM_TOPICS.filter((t) => t.level === selectedLevel);
+      const byLevel = SHS_CURRICULUM_TOPICS.filter((t) => t.level === selectedLevel);
+      return byLevel;
     }
     const validJhs = selectedLevel.startsWith('JHS') ? selectedLevel : 'JHS 3';
     return JHS_CURRICULUM_TOPICS.filter((t) => t.level === validJhs);
   }, [isShs, selectedLevel]);
+
+  // Synchronize modal state with student level whenever opened
+  useEffect(() => {
+    if (isOpen) {
+      const initialLvl = studentLevel || 'JHS 3';
+      setSelectedLevel(initialLvl);
+      const shsMode = initialLvl.startsWith('SHS');
+      setTargetGoal(shsMode ? 'WASSCE_PREP' : 'BECE_PREP');
+      setWeakSubjectIds(initialWeakSubjects.length > 0 ? initialWeakSubjects : ['math', 'science']);
+      setWeakTopicIds(initialWeakTopics);
+      setStrongSubjectIds(shsMode ? ['english', 'physics'] : ['english', 'ict']);
+      setStep(1);
+    }
+  }, [isOpen, studentLevel]);
 
   // Keep active weak subject tab synchronized when subjects change
   useEffect(() => {
@@ -98,8 +132,14 @@ export default function TimetableSurveyModal({
   // Topics solely for the currently selected active weak subject
   const currentSubjectTopics = useMemo(() => {
     if (!activeWeakSubjectTab) return [];
-    return availableTopicsForLevel.filter((t) => t.subjectId === activeWeakSubjectTab);
-  }, [availableTopicsForLevel, activeWeakSubjectTab]);
+    const forLevel = availableTopicsForLevel.filter((t) => t.subjectId === activeWeakSubjectTab);
+    if (forLevel.length > 0) return forLevel;
+    // Fallback to all topics for this subject
+    if (isShs) {
+      return SHS_CURRICULUM_TOPICS.filter((t) => t.subjectId === activeWeakSubjectTab);
+    }
+    return JHS_CURRICULUM_TOPICS.filter((t) => t.subjectId === activeWeakSubjectTab);
+  }, [availableTopicsForLevel, activeWeakSubjectTab, isShs]);
 
   if (!isOpen) return null;
 
@@ -181,7 +221,7 @@ export default function TimetableSurveyModal({
       ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-xs animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/50 animate-in fade-in duration-150">
       <div className="bg-white border border-slate-200 rounded-2xl shadow-xl w-full max-w-xl max-h-[90vh] flex flex-col overflow-hidden animate-in zoom-in-98 duration-150">
         
         {/* Minimal Header */}
@@ -284,6 +324,41 @@ export default function TimetableSurveyModal({
                     </button>
                   ))}
                 </div>
+
+                {/* WASSCE Programme Strand (for SHS) */}
+                {isShs && (
+                  <div className="space-y-1.5 pt-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-semibold text-slate-700">
+                        WASSCE Programme Strand
+                      </span>
+                      <span className="text-[10px] text-slate-400">Tailors elective subjects</span>
+                    </div>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+                      {[
+                        { id: 'all', name: 'All Programmes' },
+                        { id: 'general-science', name: 'General Science' },
+                        { id: 'business', name: 'Business' },
+                        { id: 'general-arts', name: 'General Arts' },
+                        { id: 'visual-arts', name: 'Visual Arts' },
+                        { id: 'agriculture', name: 'Agriculture' },
+                      ].map((grp) => (
+                        <button
+                          key={grp.id}
+                          type="button"
+                          onClick={() => setSelectedElectiveGroup(grp.id)}
+                          className={`py-1.5 px-2 rounded-lg text-xs font-medium text-center transition cursor-pointer border ${
+                            selectedElectiveGroup === grp.id
+                              ? 'bg-slate-900 text-white border-slate-900 font-semibold shadow-2xs'
+                              : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                          }`}
+                        >
+                          {grp.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Examination Target */}
@@ -468,6 +543,33 @@ export default function TimetableSurveyModal({
                     {weakSubjectIds.length}/3 chosen
                   </span>
                 </div>
+
+                {/* Quick Strand Filter for SHS */}
+                {isShs && (
+                  <div className="flex items-center gap-1 overflow-x-auto pb-0.5 no-scrollbar text-[11px]">
+                    {[
+                      { id: 'all', name: 'All' },
+                      { id: 'general-science', name: 'Science' },
+                      { id: 'business', name: 'Business' },
+                      { id: 'general-arts', name: 'Arts' },
+                      { id: 'visual-arts', name: 'Visual' },
+                      { id: 'agriculture', name: 'Agric' },
+                    ].map((grp) => (
+                      <button
+                        key={grp.id}
+                        type="button"
+                        onClick={() => setSelectedElectiveGroup(grp.id)}
+                        className={`px-2 py-0.5 rounded-md whitespace-nowrap transition cursor-pointer font-medium ${
+                          selectedElectiveGroup === grp.id
+                            ? 'bg-slate-900 text-white font-semibold'
+                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                        }`}
+                      >
+                        {grp.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 max-h-48 overflow-y-auto pr-0.5">
                   {availableSubjects.map((s) => {
                     const isSelected = weakSubjectIds.includes(s.id);

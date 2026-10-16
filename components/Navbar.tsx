@@ -24,6 +24,7 @@ import {
   MessageSquare
 } from 'lucide-react';
 import PaystackPaymentModal from './PaystackPaymentModal';
+import TrialCountdownBadge from './TrialCountdownBadge';
 import { fetchBlogPosts } from '@/lib/blogStore';
 
 export default function Navbar() {
@@ -36,6 +37,12 @@ export default function Navbar() {
   const [modalTab, setModalTab] = useState<'momo' | 'pin'>('momo');
   const [mounted, setMounted] = useState(false);
   const [hasNewBlog, setHasNewBlog] = useState(false);
+
+  const isShsStudent = Boolean(student?.currentLevel?.startsWith('SHS'));
+  const isShsPage = pathname.startsWith('/shs');
+  const profileHref = isShsStudent ? '/shs/profile' : '/jhs/profile';
+  const isProfilePage = pathname.includes('/profile');
+  const loginHref = `/login?redirect=${encodeURIComponent(isShsPage ? '/shs' : '/jhs')}`;
 
   useEffect(() => {
     setMounted(true);
@@ -69,13 +76,13 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+      <header className="sticky top-0 z-40 w-full bg-white border-b border-slate-200 shadow-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="flex items-center justify-between h-16 w-full gap-2 sm:gap-4">
             {/* Logo */}
             <div className="flex items-center gap-4 shrink-0">
               <Link href="/" id="tour-nav-logo" className="flex items-center gap-2.5 group shrink-0">
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform shrink-0">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-xs group-hover:scale-105 transition-transform shrink-0">
                   <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
                 <div className="flex flex-col">
@@ -87,161 +94,139 @@ export default function Navbar() {
                 </div>
               </Link>
 
-              {/* Education Level Switcher - Shown on extra wide screens */}
-              <div className="hidden 2xl:flex items-center bg-slate-100 p-1 rounded-xl text-xs font-semibold shrink-0">
-                <Link 
-                  href={student ? "/jhs" : "/login?redirect=/jhs"}
-                  className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                    pathname.startsWith('/jhs') || pathname === '/'
-                      ? 'bg-white text-blue-700 shadow-sm font-bold'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                  JHS Section
-                </Link>
-                <Link 
-                  href="/shs"
-                  className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                    pathname.startsWith('/shs')
-                      ? 'bg-white text-blue-700 shadow-sm font-bold'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  <span className="w-2 h-2 rounded-full bg-purple-500"></span>
-                  <span>SHS Section</span>
-                </Link>
-                <div className="px-3 py-1.5 rounded-lg text-slate-400 flex items-center gap-1.5 cursor-not-allowed whitespace-nowrap">
-                  <span>University</span>
-                  <span className="text-[9px] bg-slate-200 text-slate-500 px-1 rounded uppercase">Soon</span>
+              {/* Education Level Switcher - Shown on extra wide screens when not on profile page */}
+              {!isProfilePage && (
+                <div className="hidden 2xl:flex items-center bg-slate-100 p-1 rounded-xl text-xs font-semibold shrink-0">
+                  <Link 
+                    href={student ? (isShsStudent ? "/jhs?browse=1" : "/jhs") : "/login?redirect=/jhs"}
+                    className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                      pathname.startsWith('/jhs') || pathname === '/'
+                        ? 'bg-white text-blue-700 shadow-sm font-bold'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    JHS Section
+                  </Link>
+                  <Link 
+                    href="/shs"
+                    className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                      pathname.startsWith('/shs')
+                        ? 'bg-white text-blue-700 shadow-sm font-bold'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    <span className="w-2 h-2 rounded-full bg-purple-500"></span>
+                    <span>SHS Section</span>
+                  </Link>
+                  <div className="px-3 py-1.5 rounded-lg text-slate-400 flex items-center gap-1.5 cursor-not-allowed whitespace-nowrap">
+                    <span>University</span>
+                    <span className="text-[9px] bg-slate-200 text-slate-500 px-1 rounded uppercase">Soon</span>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Desktop Navigation links & Actions (Visible on xl: 1280px+) */}
             <div id="tour-nav-links" className="hidden xl:flex items-center gap-1.5 2xl:gap-2">
-              <Link
-                href="/jhs"
-                className={`text-xs font-bold transition-colors whitespace-nowrap px-2 py-1.5 2xl:px-2.5 rounded-lg ${
-                  pathname.startsWith('/jhs') && pathname !== '/jhs/weekly-exam'
-                    ? 'text-blue-600 bg-blue-50' 
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                }`}
-              >
-                JHS Portal
-              </Link>
-              <Link
-                href="/shs"
-                className={`text-xs font-bold transition-colors whitespace-nowrap px-2 py-1.5 2xl:px-2.5 rounded-lg ${
-                  pathname.startsWith('/shs') 
-                    ? 'text-purple-600 bg-purple-50 font-bold' 
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                }`}
-              >
-                SHS Portal
-              </Link>
-              {pathname.startsWith('/shs') && (
+              {isProfilePage ? (
                 <>
                   <Link
-                    href="/shs/wassce-past-questions"
-                    className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 2xl:px-2.5 rounded-lg whitespace-nowrap ${
-                      pathname === '/shs/wassce-past-questions' 
+                    href={isShsStudent ? "/shs" : "/jhs"}
+                    className="text-xs font-semibold text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-lg hover:bg-slate-100 transition flex items-center gap-1.5"
+                  >
+                    <span>&larr; Return to {isShsStudent ? "SHS Portal" : "JHS Portal"}</span>
+                  </Link>
+                  <Link
+                    href="/chat"
+                    className="text-xs font-medium text-slate-600 hover:text-slate-900 px-2.5 py-1.5 rounded-lg hover:bg-slate-100 transition"
+                  >
+                    Study Lounge
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/jhs"
+                    className={`text-xs font-semibold transition-colors whitespace-nowrap px-2.5 py-1.5 rounded-lg ${
+                      pathname.startsWith('/jhs') && pathname !== '/jhs/weekly-exam'
+                        ? 'text-blue-600 bg-blue-50 font-bold' 
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    }`}
+                  >
+                    JHS Portal
+                  </Link>
+                  <Link
+                    href="/shs"
+                    className={`text-xs font-semibold transition-colors whitespace-nowrap px-2.5 py-1.5 rounded-lg ${
+                      pathname.startsWith('/shs') 
                         ? 'text-purple-600 bg-purple-50 font-bold' 
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
-                    <BookOpen className="w-3.5 h-3.5 text-purple-600" />
-                    <span>WASSCE Past Questions</span>
+                    SHS Portal
                   </Link>
                   <Link
-                    href="/shs/trial-questions"
-                    className={`text-xs font-bold transition-colors flex items-center gap-1 px-2 py-1.5 2xl:px-2.5 rounded-lg whitespace-nowrap ${
-                      pathname === '/shs/trial-questions' 
-                        ? 'text-amber-800 bg-amber-50 font-bold' 
+                    href="/blog"
+                    className={`text-xs font-semibold transition-colors flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg whitespace-nowrap ${
+                      pathname.startsWith('/blog')
+                        ? 'text-blue-600 bg-blue-50 font-bold'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
-                    <FileCheck className="w-3.5 h-3.5 text-amber-600" />
-                    <span>SHS Mocks</span>
+                    <FileText className="w-3.5 h-3.5 text-blue-600" />
+                    <span>Journal</span>
                   </Link>
+                  <Link
+                    href="/chat"
+                    className={`text-xs font-semibold transition-colors flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg whitespace-nowrap ${
+                      pathname.startsWith('/chat')
+                        ? 'text-indigo-600 bg-indigo-50 font-bold'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    }`}
+                  >
+                    <MessageSquare className="w-3.5 h-3.5 text-indigo-600" />
+                    <span>Study Lounge</span>
+                  </Link>
+                  <button
+                    type="button"
+                    id="tour-nav-guide"
+                    onClick={handleOpenGuide}
+                    className="text-xs font-semibold transition-all flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50 whitespace-nowrap cursor-pointer"
+                    title="Interactive Guide"
+                  >
+                    <Compass className="w-3.5 h-3.5 text-slate-500" />
+                    <span>Guide</span>
+                  </button>
                 </>
               )}
 
-              <Link
-                href="/blog"
-                className={`text-xs font-bold transition-colors flex items-center gap-1.5 px-2 py-1.5 2xl:px-2.5 rounded-lg whitespace-nowrap ${
-                  pathname.startsWith('/blog')
-                    ? 'text-blue-600 bg-blue-50 font-bold'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                }`}
-              >
-                <FileText className="w-3.5 h-3.5 text-blue-600" />
-                <span>Journal & Guides</span>
-                {hasNewBlog && (
-                  <span className="px-1.5 py-0.2 rounded-full bg-amber-500 text-slate-950 text-[9px] font-black uppercase tracking-wider animate-pulse shadow-xs">
-                    NEW
-                  </span>
-                )}
-              </Link>
-
-              <Link
-                href="/chat"
-                className={`text-xs font-bold transition-colors flex items-center gap-1.5 px-2 py-1.5 2xl:px-2.5 rounded-lg whitespace-nowrap ${
-                  pathname.startsWith('/chat')
-                    ? 'text-indigo-600 bg-indigo-50 font-bold'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                }`}
-              >
-                <MessageSquare className="w-3.5 h-3.5 text-indigo-600" />
-                <span>Study Lounge</span>
-              </Link>
-
-              {/* Platform Feature Tour Guide Link */}
-              <button
-                type="button"
-                id="tour-nav-guide"
-                onClick={handleOpenGuide}
-                className="text-xs font-bold transition-all flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-blue-700 bg-blue-50 hover:bg-blue-100 hover:text-blue-800 border border-blue-200/80 shadow-2xs whitespace-nowrap cursor-pointer relative"
-                title="Interactive Guide to Platform Features"
-              >
-                <Compass className="w-3.5 h-3.5 text-blue-600 animate-spin-slow" />
-                <span>Guide</span>
-                <span className="flex h-1.5 w-1.5 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-600"></span>
-                </span>
-              </button>
-
-              <button
-                type="button"
-                id="tour-nav-vip"
-                onClick={() => {
-                  setModalTab('momo');
-                  setPinModalOpen(true);
-                }}
-                className="text-xs font-bold px-2.5 py-1.5 2xl:px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-sm shadow-amber-500/20 transition-all flex items-center gap-1 whitespace-nowrap cursor-pointer"
-              >
-                <Crown className="w-3.5 h-3.5 text-amber-200" />
-                <span>VIP Pass</span>
-              </button>
+              {mounted && isTrialActive ? (
+                <TrialCountdownBadge />
+              ) : mounted && !student?.hasFullAccess ? (
+                <button
+                  type="button"
+                  id="tour-nav-vip"
+                  onClick={() => {
+                    setModalTab('momo');
+                    setPinModalOpen(true);
+                  }}
+                  className="text-xs font-semibold px-2.5 py-1.5 2xl:px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white shadow-xs transition flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
+                >
+                  <Crown className="w-3.5 h-3.5 text-slate-300" />
+                  <span>VIP Pass</span>
+                </button>
+              ) : null}
 
               <div className="h-5 w-px bg-slate-200 shrink-0 mx-0.5" />
-
-              {/* 30-Day Free Trial Banner Pill */}
-              {mounted && isTrialActive && (
-                <div className="hidden 2xl:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-blue-50/90 border border-blue-200/80 text-blue-700 text-xs font-bold whitespace-nowrap shadow-2xs">
-                  <span>🎁 30-Day Free Trial:</span>
-                  <span className="text-blue-900 font-extrabold bg-blue-100/80 px-1.5 py-0.5 rounded-md">{trialDaysRemaining}d left</span>
-                </div>
-              )}
 
               {/* Student Profile Pill */}
               {!mounted ? (
                 <div className="w-24 sm:w-28 h-8 rounded-xl bg-slate-100 animate-pulse shrink-0" />
               ) : student ? (
                 <div id="tour-nav-profile" className="flex items-center gap-2 pl-2 pr-1.5 py-1 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 shrink-0 transition">
-                  <Link href="/jhs/profile" className="flex items-center gap-2 text-left leading-tight shrink-0 group">
-                    <div className="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform">
+                  <Link href={profileHref} className="flex items-center gap-2 text-left leading-tight shrink-0 group">
+                    <div className={`w-7 h-7 rounded-lg ${isShsStudent ? 'bg-purple-600' : 'bg-blue-600'} text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform`}>
                       {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
                     </div>
                     <div className="flex flex-col text-left leading-tight shrink-0">
@@ -249,7 +234,7 @@ export default function Navbar() {
                         {student.fullName}
                       </span>
                       <div className="flex items-center gap-1 mt-0.5 whitespace-nowrap">
-                        <span className="text-[10px] text-slate-600 font-bold whitespace-nowrap">
+                        <span className={`text-[10px] font-bold whitespace-nowrap ${isShsStudent ? 'text-purple-700' : 'text-slate-600'}`}>
                           {student.currentLevel}
                         </span>
                         <span className="text-[10px] text-slate-300">•</span>
@@ -279,7 +264,7 @@ export default function Navbar() {
                 </div>
               ) : (
                 <Link
-                  href="/login?redirect=/jhs"
+                  href={loginHref}
                   id="tour-nav-profile"
                   className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 xl:px-3.5 xl:py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-sm shadow-blue-500/20 whitespace-nowrap"
                 >
@@ -306,21 +291,25 @@ export default function Navbar() {
                 </span>
               </button>
 
-              <button
-                onClick={() => {
-                  setModalTab('momo');
-                  setPinModalOpen(true);
-                }}
-                className="text-xs font-bold px-2 py-1.5 sm:px-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-xs flex items-center gap-1 whitespace-nowrap cursor-pointer"
-              >
-                <Crown className="w-3.5 h-3.5 text-amber-200" />
-                <span className="hidden sm:inline">VIP Pass</span>
-                <span className="sm:hidden">VIP</span>
-              </button>
+              {mounted && isTrialActive ? (
+                <TrialCountdownBadge />
+              ) : mounted && !student?.hasFullAccess ? (
+                <button
+                  onClick={() => {
+                    setModalTab('momo');
+                    setPinModalOpen(true);
+                  }}
+                  className="text-xs font-semibold px-2 py-1.5 sm:px-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white shadow-xs flex items-center gap-1 whitespace-nowrap cursor-pointer"
+                >
+                  <Crown className="w-3.5 h-3.5 text-slate-300" />
+                  <span className="hidden sm:inline">VIP Pass</span>
+                  <span className="sm:hidden">VIP</span>
+                </button>
+              ) : null}
 
               {mounted && !student && (
                 <Link
-                  href="/login?redirect=/jhs"
+                  href={loginHref}
                   className="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-1 whitespace-nowrap shadow-xs"
                 >
                   <User className="w-3.5 h-3.5" />
@@ -330,8 +319,8 @@ export default function Navbar() {
 
               {mounted && student && (
                 <Link
-                  href="/jhs/profile"
-                  className="w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-xs"
+                  href={profileHref}
+                  className={`w-8 h-8 rounded-lg ${isShsStudent ? 'bg-purple-600' : 'bg-blue-600'} text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-xs`}
                   title={student.fullName}
                 >
                   {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
@@ -385,15 +374,15 @@ export default function Navbar() {
 
             <div className="pt-2 border-t border-slate-100 flex flex-col gap-2">
               {mounted && isTrialActive && (
-                <div className="p-3 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 flex items-center justify-between text-xs">
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
-                    <span className="text-base">🎁</span>
+                    <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
                     <div>
-                      <p className="font-bold text-blue-950">30-Day Free Trial Active</p>
-                      <p className="text-[11px] text-blue-700">All subjects & quizzes unlocked</p>
+                      <p className="font-semibold text-slate-900">30-Day Free Trial Active</p>
+                      <p className="text-[11px] text-slate-500">All subjects & quizzes unlocked</p>
                     </div>
                   </div>
-                  <span className="font-black text-blue-800 bg-blue-100/90 px-2 py-0.5 rounded-lg text-[11px] whitespace-nowrap">
+                  <span className="font-mono font-semibold text-slate-700 bg-slate-200/80 px-2 py-0.5 rounded text-[11px] whitespace-nowrap">
                     {trialDaysRemaining}d left
                   </span>
                 </div>
@@ -489,20 +478,30 @@ export default function Navbar() {
                 <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">Offline VIP</span>
               </Link>
 
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setModalTab('momo');
-                  setPinModalOpen(true);
-                }}
-                className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold text-xs flex items-center justify-between shadow-xs mt-1 cursor-pointer"
-              >
-                <div className="flex items-center gap-2">
-                  <Crown className="w-4 h-4 text-amber-200" />
-                  <span>VIP Pass (GHS 25/mo MoMo)</span>
+              {mounted && isTrialActive ? (
+                <div className="py-2.5 px-3 rounded-xl bg-blue-50 border border-blue-200/90 text-blue-950 font-bold text-xs flex items-center justify-between shadow-2xs mt-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">🎁</span>
+                    <span>30-Day Free Trial</span>
+                  </div>
+                  <span className="text-[11px] font-mono text-blue-900 bg-blue-100/90 px-2 py-0.5 rounded-md font-extrabold">{trialDaysRemaining}d remaining</span>
                 </div>
-                <span className="text-[10px] bg-black/20 px-1.5 py-0.5 rounded font-black tracking-wider uppercase">30 DAYS</span>
-              </button>
+              ) : mounted && !student?.hasFullAccess ? (
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setModalTab('momo');
+                    setPinModalOpen(true);
+                  }}
+                  className="py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs flex items-center justify-between shadow-xs mt-1 cursor-pointer"
+                >
+                  <div className="flex items-center gap-2">
+                    <Crown className="w-4 h-4 text-slate-300" />
+                    <span>VIP Pass</span>
+                  </div>
+                  <span className="text-[10px] bg-slate-800 px-1.5 py-0.5 rounded font-semibold tracking-wider uppercase">Upgrade</span>
+                </button>
+              ) : null}
             </div>
 
             <div className="pt-2 border-t border-slate-100">
@@ -537,17 +536,17 @@ export default function Navbar() {
                     </button>
                   </div>
                   <Link
-                    href="/jhs/profile"
+                    href={profileHref}
                     onClick={() => setMobileMenuOpen(false)}
                     className="w-full py-2 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold flex items-center justify-center gap-1.5"
                   >
-                    <User className="w-3.5 h-3.5 text-blue-600" />
-                    <span>View Student Profile & Leaderboard</span>
+                    <User className={`w-3.5 h-3.5 ${isShsStudent ? 'text-purple-600' : 'text-blue-600'}`} />
+                    <span>{isShsStudent ? "SHS Learning Portal" : "View Student Profile & Leaderboard"}</span>
                   </Link>
                 </div>
               ) : (
                 <Link
-                  href="/login?redirect=/jhs"
+                  href={loginHref}
                   onClick={() => setMobileMenuOpen(false)}
                   className="w-full block text-center py-2.5 rounded-xl bg-blue-600 text-white font-bold text-xs shadow-md"
                 >

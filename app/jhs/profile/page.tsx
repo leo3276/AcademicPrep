@@ -10,6 +10,7 @@ import { CURRICULUM_SUBJECTS, JHS_CURRICULUM_TOPICS } from '@/lib/curriculumData
 import { getStudentQuizMistakes, QuizMistakeRecord } from '@/lib/weeklyProgressTracker';
 import BeceGradeCalculator from '@/components/BeceGradeCalculator';
 import StudentTimetablePlanner from '@/components/StudentTimetablePlanner';
+import TrialCountdownBanner from '@/components/TrialCountdownBanner';
 import { 
   User, 
   Phone, 
@@ -238,212 +239,84 @@ export default function StudentProfilePage() {
 
   return (
     <div className="min-h-screen bg-slate-50/70 pb-20">
-      {/* Top Header Bar */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <Link
-              href="/jhs"
-              className="text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1.5 p-1.5 rounded-lg hover:bg-slate-100 transition"
-            >
-              <span>&larr; Back to JHS Portal</span>
-            </Link>
-            <div className="h-4 w-px bg-slate-200" />
-            <span className="text-xs font-bold text-slate-800">Student Profile</span>
-          </div>
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        {/* ============================================================ */}
+        {/* 1. STUDENT HEADER & NAVIGATION (MINIMALIST)                  */}
+        {/* ============================================================ */}
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5">
+              <div className="w-11 h-11 rounded-xl bg-slate-900 text-white font-bold text-sm flex items-center justify-center shrink-0">
+                {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
+              </div>
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h1 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
+                    {student.fullName}
+                  </h1>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-700">
+                    {student.currentLevel}
+                  </span>
+                  {isTrialActive ? (
+                    <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-blue-50 text-blue-800 border border-blue-200/80">
+                      Free Trial ({trialDaysRemaining}d remaining)
+                    </span>
+                  ) : hasFullAccess ? (
+                    <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                      VIP Active
+                    </span>
+                  ) : (
+                    <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                      Trial Expired
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center gap-2 text-xs text-slate-400 font-mono">
+                  <span>{student.phoneNumber}</span>
+                  <span>•</span>
+                  <span>BECE Portal</span>
+                </div>
+              </div>
+            </div>
 
-          <div className="flex items-center gap-2">
-            <Link
-              href="/jhs"
-              className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition shadow-2xs"
-            >
-              Study Curriculum
-            </Link>
             <button
+              type="button"
               onClick={async () => {
                 await logoutStudent();
                 router.push('/login');
               }}
-              className="px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-red-600 hover:bg-red-50 text-xs font-semibold transition flex items-center gap-1 cursor-pointer"
-              title="Sign Out of Account"
+              className="py-1 px-2.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-500 hover:text-slate-800 font-medium text-xs transition flex items-center gap-1.5 cursor-pointer self-start sm:self-auto shrink-0"
             >
               <LogOut className="w-3.5 h-3.5 text-slate-400" />
-              <span className="hidden sm:inline">Sign Out</span>
+              <span>Sign Out</span>
             </button>
           </div>
-        </div>
-      </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-        
-        {/* ============================================================ */}
-        {/* 1. STUDENT IDENTITY BANNER (Clean, Modern, Compact)          */}
-        {/* ============================================================ */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-xs">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-linear-to-tr from-blue-600 to-indigo-600 text-white font-black text-xl flex items-center justify-center shadow-md shadow-blue-500/20 shrink-0">
-                {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
-              </div>
-              <div className="space-y-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">
-                    {student.fullName}
-                  </h1>
-                  {student.accessType === 'Full Pass' ? (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
-                      <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                      VIP Full Pass
-                    </span>
-                  ) : isTrialActive ? (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-blue-100 text-blue-900 border border-blue-200">
-                      <span>🎁</span>
-                      Trial Active ({trialDaysRemaining}d left)
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-900 border border-amber-200">
-                      <AlertCircle className="w-3 h-3 text-amber-600" />
-                      Trial Ended
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex flex-wrap items-center gap-2.5 text-xs text-slate-500">
-                  <span className="flex items-center gap-1">
-                    <GraduationCap className="w-3.5 h-3.5 text-blue-600" />
-                    <span className="font-semibold text-slate-700">{student.currentLevel}</span>
-                  </span>
-                  <span>&bull;</span>
-                  <span className="flex items-center gap-1 font-mono">
-                    <Phone className="w-3.5 h-3.5 text-slate-400" />
-                    {student.phoneNumber}
-                  </span>
-                  <span>&bull;</span>
-                  <span>Member since {new Date(student.createdAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Action Button */}
-            <div className="flex items-center gap-2 self-start md:self-auto w-full md:w-auto">
-              {!isFullPass ? (
+          {/* Minimalist Underline Navigation Tabs */}
+          <div className="flex items-center gap-6 overflow-x-auto border-b border-slate-200 mt-6 no-scrollbar">
+            {[
+              { id: 'overview', label: 'Overview' },
+              { id: 'timetable', label: 'Timetable' },
+              { id: 'calculator', label: 'BECE Calculator' },
+              { id: 'leaderboard', label: 'Leaderboard' },
+              { id: 'access', label: isTrialActive ? 'Trial & PIN' : 'Access & PIN' },
+            ].map((tab) => {
+              const isTabActive = activeTab === tab.id;
+              return (
                 <button
+                  key={tab.id}
                   type="button"
-                  onClick={() => {
-                    setModalTab('momo');
-                    setShowBuyModal(true);
-                  }}
-                  className="w-full sm:w-auto justify-center py-2 px-3.5 rounded-xl bg-linear-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-xs shadow-sm shadow-amber-500/20 transition flex items-center gap-1.5 cursor-pointer"
+                  onClick={() => setActiveTab(tab.id as any)}
+                  className={`pb-3 text-xs sm:text-sm font-semibold whitespace-nowrap transition cursor-pointer border-b-2 -mb-px ${
+                    isTabActive
+                      ? 'border-slate-900 text-slate-900'
+                      : 'border-transparent text-slate-400 hover:text-slate-700'
+                  }`}
                 >
-                  <Sparkles className="w-3.5 h-3.5 text-amber-200" />
-                  <span>Upgrade to VIP (GH₵ 25/mo)</span>
+                  {tab.label}
                 </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setActiveTab('access')}
-                  className="w-full sm:w-auto justify-center py-2 px-3 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold text-xs flex items-center gap-1.5 hover:bg-emerald-100 transition cursor-pointer"
-                >
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>View Pass Details</span>
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* ============================================================ */}
-        {/* 2. SECTION TABS NAVIGATION (Uncluttered, Highly Organized)    */}
-        {/* ============================================================ */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-1.5 shadow-2xs">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5">
-            <button
-              type="button"
-              onClick={() => setActiveTab('overview')}
-              className={`py-2.5 px-2 sm:px-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer ${
-                activeTab === 'overview'
-                  ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              <BarChart3 className="w-4 h-4 shrink-0" />
-              <span className="hidden sm:inline">Academic Overview</span>
-              <span className="sm:hidden">Overview</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveTab('calculator')}
-              className={`py-2.5 px-2 sm:px-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1 sm:gap-1.5 cursor-pointer ${
-                activeTab === 'calculator'
-                  ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              <Calculator className="w-4 h-4 shrink-0" />
-              <span className="hidden sm:inline">BECE Calculator</span>
-              <span className="sm:hidden">Calculator</span>
-              <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-extrabold uppercase shrink-0 ${
-                activeTab === 'calculator' ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-800'
-              }`}>
-                WAEC
-              </span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveTab('timetable')}
-              className={`py-2.5 px-2 sm:px-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1 sm:gap-1.5 cursor-pointer ${
-                activeTab === 'timetable'
-                  ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              <Calendar className={`w-4 h-4 shrink-0 ${activeTab === 'timetable' ? 'text-white' : 'text-blue-500'}`} />
-              <span className="hidden sm:inline">Study Timetable</span>
-              <span className="sm:hidden">Timetable</span>
-              <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-extrabold uppercase shrink-0 ${
-                activeTab === 'timetable' ? 'bg-white/20 text-white' : 'bg-blue-100 text-blue-800'
-              }`}>
-                Planner
-              </span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveTab('leaderboard')}
-              className={`py-2.5 px-2 sm:px-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1 sm:gap-1.5 cursor-pointer ${
-                activeTab === 'leaderboard'
-                  ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              <Trophy className={`w-4 h-4 shrink-0 ${activeTab === 'leaderboard' ? 'text-amber-300' : 'text-amber-500'}`} />
-              <span className="hidden sm:inline">Leaderboard</span>
-              <span className="sm:hidden">Ranks</span>
-              <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-mono font-bold shrink-0 ${
-                activeTab === 'leaderboard' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'
-              }`}>
-                {leaderboard.length}
-              </span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveTab('access')}
-              className={`py-2.5 px-2 sm:px-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer col-span-2 sm:col-span-1 ${
-                activeTab === 'access'
-                  ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              <KeyRound className="w-4 h-4 shrink-0" />
-              <span className="hidden sm:inline">VIP & Access PIN</span>
-              <span className="sm:hidden">VIP PIN</span>
-              {!isFullPass && (
-                <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse shrink-0" />
-              )}
-            </button>
+              );
+            })}
           </div>
         </div>
 
@@ -481,25 +354,25 @@ export default function StudentProfilePage() {
               </div>
             </div>
 
-            {/* Shortcut Card to Calculator */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-linear-to-r from-blue-900 via-indigo-900 to-slate-900 text-white shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            {/* Shortcut Card to Calculator (Clean Minimalist) */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 text-slate-900 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="space-y-1">
-                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/10 text-blue-200 text-[10px] font-bold uppercase tracking-wider">
-                  <Calculator className="w-3.5 h-3.5 text-amber-300" />
+                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 text-[10px] font-semibold uppercase tracking-wider">
+                  <Calculator className="w-3.5 h-3.5 text-slate-600" />
                   <span>WAEC Ghana BECE Predictor</span>
                 </div>
-                <h3 className="text-base font-black tracking-tight">Want to simulate your BECE Aggregate?</h3>
-                <p className="text-xs text-slate-300 max-w-xl">
+                <h3 className="text-base font-bold text-slate-900 tracking-tight">Want to simulate your BECE Aggregate?</h3>
+                <p className="text-xs text-slate-500 max-w-xl">
                   Calculate your Best 6 subjects and see which Senior High Schools (Category A, B, C) you qualify for right now.
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setActiveTab('calculator')}
-                className="py-2.5 px-4 bg-white hover:bg-slate-100 text-slate-900 rounded-xl text-xs font-black transition shrink-0 flex items-center gap-1.5 cursor-pointer"
+                className="py-2 px-3.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold transition shrink-0 flex items-center gap-1.5 cursor-pointer self-start sm:self-auto"
               >
                 <span>Open BECE Calculator</span>
-                <ArrowRight className="w-3.5 h-3.5 text-blue-600" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
 
@@ -818,35 +691,7 @@ export default function StudentProfilePage() {
                 )}
               </div>
             ) : isTrialActive ? (
-              <div className="bg-linear-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-5 sm:p-6 space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <div>
-                    <h3 className="text-base font-bold text-blue-950 flex items-center gap-2">
-                      <span className="text-lg">🎁</span>
-                      <span>30-Day Free Trial Active</span>
-                    </h3>
-                    <p className="text-xs text-blue-900/80 mt-1">
-                      Enjoy unrestricted access to all curriculum topics, mock papers, and diagnostics during your trial period.
-                    </p>
-                  </div>
-                  <span className="text-xs font-mono font-bold px-3 py-1 rounded-lg bg-blue-100 text-blue-900 shrink-0">
-                    {trialDaysRemaining} Days Left
-                  </span>
-                </div>
-
-                <div className="pt-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setModalTab('momo');
-                      setShowBuyModal(true);
-                    }}
-                    className="py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-2xs"
-                  >
-                    Lock in VIP Pass Early (GH₵ 25/mo)
-                  </button>
-                </div>
-              </div>
+              <TrialCountdownBanner variant="card" />
             ) : (
               <div className="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 sm:p-6 space-y-4">
                 <div className="flex items-center justify-between">

@@ -258,7 +258,7 @@ export default function PaystackPaymentModal({
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-xs animate-in fade-in duration-150 overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/50 animate-in fade-in duration-150 overflow-y-auto">
       <div className="bg-white rounded-2xl max-w-sm w-full p-5 shadow-xl border border-slate-100 relative my-auto text-left">
         {/* Header */}
         <div className="flex items-start justify-between">

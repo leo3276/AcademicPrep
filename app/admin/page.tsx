@@ -1615,7 +1615,7 @@ export default function AdminDashboardPage() {
 
             {/* Clean Grant Access Modal */}
             {showGrantModal && (
-              <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
+              <div className="fixed inset-0 z-50 bg-slate-900/50 flex items-center justify-center p-4">
                 <div className="bg-white border border-slate-200 rounded-2xl p-6 max-w-sm w-full shadow-lg space-y-4">
                   <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                     <h4 className="text-sm font-semibold text-slate-900">
@@ -1801,7 +1801,7 @@ export default function AdminDashboardPage() {
             </div>
 
             {/* Quick Manual Grant Box (For WhatsApp / Offline Direct Transfer) */}
-            <div className="bg-gradient-to-br from-slate-900 to-indigo-950 p-5 rounded-2xl text-white shadow-md space-y-3">
+            <div className="bg-slate-900 p-5 rounded-2xl text-white shadow-xs space-y-3">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h3 className="text-sm font-bold flex items-center gap-2">
@@ -3944,8 +3944,8 @@ export default function AdminDashboardPage() {
 
       {/* Security Credentials Management Modal */}
       {showSecurityModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 backdrop-blur-xs p-4">
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 max-w-md w-full shadow-2xl space-y-5">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4">
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 max-w-md w-full shadow-xl space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600">

@@ -24,10 +24,12 @@ import {
   FlaskConical,
   X,
   Crown,
-  FileCheck
+  FileCheck,
+  Calendar
 } from 'lucide-react';
 import SubjectIcon from '@/components/SubjectIcon';
 import PaystackPaymentModal from '@/components/PaystackPaymentModal';
+import TrialCountdownBanner from '@/components/TrialCountdownBanner';
 import { fetchUploadedDocuments } from '@/lib/pdfStore';
 
 export default function ShsPortalPage() {
@@ -125,34 +127,34 @@ export default function ShsPortalPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-      {/* Top Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-950 text-white shadow-lg">
-        <div className="space-y-2 max-w-2xl">
+      {/* Top Header / Portal Title (Clean Minimalist) */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 sm:p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs">
+        <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-300">
-              WAEC / WASSCE Standard Syllabus
+            <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+              WAEC / WASSCE Syllabus
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-            Senior High School (SHS) Learning Portal
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+            Senior High School (SHS) Portal
           </h1>
-          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            Master the 4 Compulsory Core Subjects and 5 Elective Programme Strands with detailed lesson notes, worked examples, and interactive WASSCE-standard quizzes.
+          <p className="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-2xl">
+            Core subjects and elective programme strands with lesson notes, worked examples, and diagnostic quizzes.
           </p>
         </div>
 
         {/* Level Switcher (SHS 1, 2, 3) */}
-        <div className="flex items-center gap-2 bg-white/10 p-1.5 rounded-2xl border border-white/15 backdrop-blur-md self-start md:self-auto">
+        <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl self-start md:self-auto shrink-0">
           {(['SHS 1', 'SHS 2', 'SHS 3'] as EducationLevel[]).map((lvl) => (
             <button
               key={lvl}
               type="button"
               onClick={() => handleLevelSelect(lvl)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition ${
                 selectedLevel === lvl
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-500/30'
-                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+                  ? 'bg-white text-slate-900 shadow-2xs'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               {lvl}
@@ -161,23 +163,46 @@ export default function ShsPortalPage() {
         </div>
       </div>
 
-      {/* Free Trial Banner */}
-      {mounted && isTrialActive && (
-        <div className="p-3.5 rounded-2xl bg-blue-50 border border-blue-200/80 text-xs text-blue-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
-          <div className="flex items-center gap-2">
-            <span className="text-base">🎁</span>
-            <span className="font-semibold">30-Day Free Trial Active: {trialDaysRemaining} days remaining of full access across all SHS Core &amp; Electives!</span>
+      {/* Guest Account Callout (Clean Minimalist) */}
+      {mounted && !student && (
+        <div className="p-4 rounded-xl bg-white border border-slate-200 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+              <GraduationCap className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="font-semibold text-slate-900">Create a Free SHS Account</p>
+              <p className="text-slate-500 text-[11px]">
+                Track your WASSCE topics, save quiz scores, and activate 30 days of free trial.
+              </p>
+            </div>
           </div>
-          <button
-            type="button"
-            onClick={() => setShowPaymentModal(true)}
-            className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-blue-200 text-blue-700 font-bold text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto shadow-2xs"
-          >
-            VIP Pass
-          </button>
+          <div className="flex items-center gap-2 shrink-0">
+            <Link
+              href={`/login?mode=register&redirect=/shs&level=${encodeURIComponent(selectedLevel)}`}
+              className="px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition"
+            >
+              Create Account
+            </Link>
+            <Link
+              href="/login?redirect=/shs"
+              className="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 font-medium text-xs transition"
+            >
+              Sign In
+            </Link>
+          </div>
         </div>
       )}
-      {mounted && !hasFullAccess && !isTrialActive && (
+
+      {/* Free Trial Banner with Live Countdown (Minimalist) */}
+      {mounted && isTrialActive && (
+        <TrialCountdownBanner
+          variant="full"
+          title="Senior High (SHS / WASSCE) 30-Day Free Trial"
+          subtitle="Full unrestricted access to all 4 Core Subjects and 5 Elective Programme Strands with zero payment required."
+        />
+      )}
+      {mounted && student && !hasFullAccess && !isTrialActive && (
         <div className="p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200/80 text-xs text-amber-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
           <div className="flex items-center gap-2">
             <Crown className="w-4 h-4 text-amber-600 shrink-0" />
@@ -241,7 +266,7 @@ export default function ShsPortalPage() {
 
           {/* Live Search Results Popup */}
           {searchQuery.trim().length > 0 && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl border border-slate-200 shadow-xl max-h-96 overflow-y-auto z-30 p-2 space-y-1">
+            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl border border-slate-200 shadow-md max-h-96 overflow-y-auto z-30 p-2 space-y-1">
               {searchResults.length === 0 ? (
                 <div className="p-4 text-center text-xs text-slate-500">
                   No matching topics found for &quot;{searchQuery}&quot;.
@@ -278,9 +303,9 @@ export default function ShsPortalPage() {
       </div>
 
       {/* ======================================================== */}
-      {/* WASSCE PAST QUESTIONS & TRIAL MOCKS QUICK CARDS          */}
+      {/* WASSCE PAST QUESTIONS, TRIAL MOCKS & TIMETABLE QUICK CARDS */}
       {/* ======================================================== */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* WASSCE Past Questions Card */}
         <div className="p-6 rounded-3xl bg-white border border-slate-200 hover:border-purple-400 shadow-sm transition space-y-3 flex flex-col justify-between">
           <div className="space-y-2">
@@ -338,6 +363,35 @@ export default function ShsPortalPage() {
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
+
+        {/* Personal Study Timetable Card */}
+        <div className="p-6 rounded-3xl bg-white border border-slate-200 hover:border-blue-400 shadow-sm transition space-y-3 flex flex-col justify-between">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200">
+                Smart Planner
+              </span>
+              <span className="text-[11px] font-mono text-slate-500 font-semibold">
+                PDF &amp; Calendar Export
+              </span>
+            </div>
+            <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-blue-600" />
+              Personal Study Timetable
+            </h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Generate a structured WASSCE revision schedule covering your weak subjects, daily topic assignments, and active recall reminders.
+            </p>
+          </div>
+          <Link
+            href="/shs/profile?tab=timetable"
+            className="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs"
+          >
+            <Calendar className="w-3.5 h-3.5" />
+            <span>Open Study Timetable</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
       </div>
 
       {/* ======================================================== */}
@@ -373,14 +427,12 @@ export default function ShsPortalPage() {
               <Link
                 key={subject.id}
                 href={`/shs/${subject.id}?level=${encodeURIComponent(selectedLevel)}`}
-                className="group rounded-2xl bg-white border border-slate-200 hover:border-blue-400 p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+                className="group rounded-2xl bg-white border border-slate-200 hover:border-slate-300 p-5 shadow-2xs hover:shadow-xs transition flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div
-                      className={`w-12 h-12 rounded-xl bg-gradient-to-tr ${subject.color} text-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform`}
-                    >
-                      <SubjectIcon subjectId={subject.id} className="w-6 h-6" />
+                    <div className="w-11 h-11 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 flex items-center justify-center shrink-0">
+                      <SubjectIcon subjectId={subject.id} className="w-5 h-5" />
                     </div>
                     <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-600">
                       {subject.code}

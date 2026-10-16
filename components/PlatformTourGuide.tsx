@@ -325,26 +325,7 @@ export default function PlatformTourGuide({
 
   return (
     <>
-      {/* 1. Frosted Glass Blur Mask that blurs the entire website EXCEPT the spotlighted function */}
-      {highlightRect && (
-        <div
-          className="fixed inset-0 z-40 backdrop-blur-md pointer-events-none transition-all duration-300"
-          style={{
-            maskImage: `radial-gradient(ellipse ${highlightRect.width / 2 + 10}px ${
-              highlightRect.height / 2 + 10
-            }px at ${highlightRect.left + highlightRect.width / 2}px ${
-              highlightRect.top + highlightRect.height / 2
-            }px, transparent 94%, black 100%)`,
-            WebkitMaskImage: `radial-gradient(ellipse ${highlightRect.width / 2 + 10}px ${
-              highlightRect.height / 2 + 10
-            }px at ${highlightRect.left + highlightRect.width / 2}px ${
-              highlightRect.top + highlightRect.height / 2
-            }px, transparent 94%, black 100%)`,
-          }}
-        />
-      )}
-
-      {/* 2. Darkening SVG Cutout Mask that dims everything EXCEPT the spotlighted function */}
+      {/* Darkening SVG Cutout Mask that dims everything EXCEPT the spotlighted function */}
       {highlightRect ? (
         <svg
           className="fixed inset-0 z-40 w-full h-full pointer-events-none transition-all duration-300"
@@ -374,7 +355,7 @@ export default function PlatformTourGuide({
       ) : (
         /* Fallback dark blur backdrop if target element is not found */
         <div
-          className="fixed inset-0 z-40 bg-slate-950/75 backdrop-blur-md transition-opacity duration-300 pointer-events-auto"
+          className="fixed inset-0 z-40 bg-slate-900/50 transition-opacity duration-300 pointer-events-auto"
           onClick={onClose}
         />
       )}
@@ -506,7 +487,7 @@ export default function PlatformTourGuide({
                 <a
                   href={nextTourUrl}
                   onClick={onClose}
-                  className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-md shadow-blue-500/20"
+                  className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer shadow-xs"
                 >
                   <span>{nextTourLabel}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -515,7 +496,7 @@ export default function PlatformTourGuide({
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-md shadow-blue-500/20"
+                  className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer shadow-xs"
                 >
                   <span>{isLastStep ? 'Complete Tour' : 'Next'}</span>
                   {isLastStep ? (

@@ -20,9 +20,13 @@ export function generatePersonalTimetable(
   const isShs = level.startsWith('SHS');
   const validLevel = isShs ? level : level.startsWith('JHS') ? level : 'JHS 3';
 
-  const relevantSubjects = isShs
+  const rawSubjects = isShs
     ? [...SHS_CORE_SUBJECTS, ...SHS_ELECTIVE_SUBJECTS]
     : CURRICULUM_SUBJECTS;
+
+  const relevantSubjects = Array.from(
+    new Map(rawSubjects.map((s) => [s.id, s])).values()
+  );
 
   const relevantTopicsSource = isShs ? SHS_CURRICULUM_TOPICS : JHS_CURRICULUM_TOPICS;
   const levelTopics = relevantTopicsSource.filter((t) => t.level === validLevel);
@@ -30,11 +34,12 @@ export function generatePersonalTimetable(
   // Group topics by subjectId
   const topicsBySubject: Record<string, typeof levelTopics> = {};
   relevantSubjects.forEach((s) => {
-    topicsBySubject[s.id] = levelTopics.filter((t) => t.subjectId === s.id);
+    let subTopics = levelTopics.filter((t) => t.subjectId === s.id);
     // If no topics found for level, fallback to any available for that subject
-    if (topicsBySubject[s.id].length === 0) {
-      topicsBySubject[s.id] = relevantTopicsSource.filter((t) => t.subjectId === s.id);
+    if (subTopics.length === 0) {
+      subTopics = relevantTopicsSource.filter((t) => t.subjectId === s.id);
     }
+    topicsBySubject[s.id] = subTopics;
   });
 
   // 2. Identify weak and prioritized topics
@@ -181,6 +186,19 @@ export function generatePersonalTimetable(
           chosenTopic = availableTopics[idx];
           topicCursor[chosenSubjectId] = (topicCursor[chosenSubjectId] || 0) + 1;
         }
+      } else {
+        chosenTopic = {
+          id: `${chosenSubjectId}-rev-${sessionCounter}`,
+          subjectId: subjectMeta.id,
+          level: validLevel,
+          term: 1,
+          orderIndex: sessionCounter,
+          title: `${subjectMeta.name} Syllabus Review`,
+          description: `Core syllabus revision for ${subjectMeta.name}.`,
+          keyNotes: `Review core concept notes and worked examples for ${subjectMeta.name}.`,
+          isFreeTrial: true,
+          isVip: false,
+        };
       }
 
       // Pedagogical study mode
@@ -243,25 +261,94 @@ export function generatePersonalTimetable(
 
 export const LOCAL_STORAGE_TIMETABLE_KEY = 'academicprep_personal_timetable';
 
-export function saveTimetableToStorage(timetable: PersonalTimetable): void {
+export function getTimetableStorageKey(studentId?: string): string {
+  if (!studentId || studentId === 'guest') {
+    return 'academicprep_timetable_guest';
+  }
+  return `academicprep_timetable_${studentId}`;
+}
+
+export function saveTimetableToStorage(timetable: PersonalTimetable, studentId?: string): void {
   if (typeof window === 'undefined') return;
   try {
-    localStorage.setItem(LOCAL_STORAGE_TIMETABLE_KEY, JSON.stringify(timetable));
-    // Also dispatch custom event for instant cross-component updates
-    window.dispatchEvent(new CustomEvent('academicprep:timetable-updated', { detail: timetable }));
+    const targetStudentId = studentId || timetable.studentId;
+    const key = getTimetableStorageKey(targetStudentId);
+    localStorage.setItem(key, JSON.stringify(timetable));
+
+    // Also dispatch custom event for instant cross-component updates scoped to this student
+    window.dispatchEvent(
+      new CustomEvent('academicprep:timetable-updated', {
+        detail: { timetable, studentId: targetStudentId },
+      })
+    );
   } catch (e) {
     console.error('Failed to save timetable to localStorage', e);
   }
 }
 
-export function loadTimetableFromStorage(): PersonalTimetable | null {
+export function loadTimetableFromStorage(
+  studentId?: string,
+  expectedLevel?: EducationLevel
+): PersonalTimetable | null {
   if (typeof window === 'undefined') return null;
   try {
-    const raw = localStorage.getItem(LOCAL_STORAGE_TIMETABLE_KEY);
+    const key = getTimetableStorageKey(studentId);
+    let raw = localStorage.getItem(key);
+
+    // Backward compatibility: if scoped key not found, check legacy key ONLY IF the studentId matches
+    if (!raw && studentId) {
+      const legacyRaw = localStorage.getItem(LOCAL_STORAGE_TIMETABLE_KEY);
+      if (legacyRaw) {
+        try {
+          const parsed = JSON.parse(legacyRaw) as PersonalTimetable;
+          if (parsed && parsed.studentId === studentId) {
+            raw = legacyRaw;
+            // Migrate to student-scoped key
+            localStorage.setItem(key, legacyRaw);
+          }
+        } catch {
+          // ignore
+        }
+      }
+    }
+
     if (!raw) return null;
-    return JSON.parse(raw) as PersonalTimetable;
+    const parsed = JSON.parse(raw) as PersonalTimetable;
+    if (!parsed) return null;
+
+    // Strict account isolation: if a studentId was provided, ensure the timetable belongs to this account
+    if (studentId && parsed.studentId && parsed.studentId !== studentId) {
+      return null;
+    }
+
+    // Strand compatibility: if expectedLevel was provided, ensure the timetable matches the strand (SHS vs JHS)
+    if (expectedLevel) {
+      const expectedIsShs = expectedLevel.startsWith('SHS');
+      const timetableIsShs = parsed.level ? parsed.level.startsWith('SHS') : false;
+      if (expectedIsShs !== timetableIsShs) {
+        return null;
+      }
+    }
+
+    return parsed;
   } catch (e) {
     console.warn('Failed to parse timetable from localStorage', e);
     return null;
   }
 }
+
+export function clearTimetableFromStorage(studentId?: string): void {
+  if (typeof window === 'undefined') return;
+  try {
+    const key = getTimetableStorageKey(studentId);
+    localStorage.removeItem(key);
+    window.dispatchEvent(
+      new CustomEvent('academicprep:timetable-cleared', {
+        detail: { studentId },
+      })
+    );
+  } catch (e) {
+    console.error('Failed to clear timetable from localStorage', e);
+  }
+}
+

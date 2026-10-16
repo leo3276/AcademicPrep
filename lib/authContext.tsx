@@ -31,6 +31,8 @@ import {
   clearSessionToken,
   ALLOWED_LEVELS,
 } from './apiClient';
+import { JHS_CURRICULUM_TOPICS } from './curriculumData';
+import { SHS_CURRICULUM_TOPICS } from './curriculumShsData';
 
 interface AuthContextType {
   student: Student | null;
@@ -38,20 +40,21 @@ interface AuthContextType {
   isLoading: boolean;
   isTrialActive: boolean;
   trialDaysRemaining: number;
+  trialExpiresAt: string | null;
   hasFullAccess: boolean;
   topicProgress: Record<string, StudentTopicProgress>;
   pins: AccessPin[];
   transactions: CashFlowTransaction[];
   weeklyExamAttempts: WeeklyExamAttempt[];
   loginStudent: (phoneNumber: string, fullNameOrPin: string, levelOrFullName?: EducationLevel | string, accessPinCode?: string) => Promise<{ success: boolean; error?: string }>;
-  signInStudent: (phoneNumber: string, password?: string) => Promise<{ success: boolean; error?: string }>;
+  signInStudent: (phoneNumber: string, password?: string) => Promise<{ success: boolean; student?: Student; error?: string }>;
   registerStudent: (params: {
     phoneNumber: string;
     fullName: string;
     currentLevel: EducationLevel;
     password?: string;
     accessPinCode?: string;
-  }) => Promise<{ success: boolean; error?: string }>;
+  }) => Promise<{ success: boolean; student?: Student; error?: string }>;
   refreshStudent: () => Promise<Student | null>;
   logoutStudent: () => Promise<void>;
   canAccessTopic: (topicId: string) => { allowed: boolean; reason?: string; topicsUsed: number; maxFreeTopics: number };
@@ -137,6 +140,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [trialDaysRemaining, setTrialDaysRemaining] = useState<number>(30);
+  const [trialExpiresAt, setTrialExpiresAt] = useState<string | null>(null);
   const [isTrialActive, setIsTrialActive] = useState<boolean>(true);
   const [topicProgress, setTopicProgress] = useState<Record<string, StudentTopicProgress>>({});
   const [pins, setPins] = useState<AccessPin[]>([]);
@@ -163,6 +167,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           const diff = new Date(trialExpires).getTime() - Date.now();
           const daysLeft = Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
           if (isMounted) {
+            setTrialExpiresAt(trialExpires);
             setTrialDaysRemaining(daysLeft);
             setIsTrialActive(daysLeft > 0);
           }
@@ -264,7 +269,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     currentLevel: EducationLevel;
     password?: string;
     accessPinCode?: string;
-  }): Promise<{ success: boolean; error?: string }> => {
+  }): Promise<{ success: boolean; student?: Student; error?: string }> => {
     const cleanPhone = params.phoneNumber.trim().replace(/\s+/g, '');
     if (cleanPhone.length < 10) {
       return { success: false, error: 'Please enter a valid phone number (at least 10 digits).' };
@@ -303,16 +308,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (typeof window !== 'undefined') window.localStorage.removeItem(STORAGE_KEYS.TOPIC_PROGRESS);
 
     if (result.pinMessage && !newStudent.hasFullAccess) {
-      return { success: true, error: result.pinMessage };
+      return { success: true, student: newStudent, error: result.pinMessage };
     }
 
-    return { success: true };
+    return { success: true, student: newStudent };
   };
 
   const signInStudent = async (
     phoneNumber: string,
     password?: string
-  ): Promise<{ success: boolean; error?: string }> => {
+  ): Promise<{ success: boolean; student?: Student; error?: string }> => {
     const cleanPhone = phoneNumber.trim().replace(/\s+/g, '');
     if (cleanPhone.length < 10) {
       return { success: false, error: 'Please enter a valid phone number (at least 10 digits).' };
@@ -357,7 +362,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     writeLocalStorage(STORAGE_KEYS.CURRENT_STUDENT, authenticatedStudent);
     writeLocalStorage(`academicprep_progress_${cleanPhone}`, mergedProgress);
 
-    return { success: true };
+    return { success: true, student: authenticatedStudent };
   };
 
   const loginStudent = async (
@@ -521,6 +526,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const recordQuizScore = (topicId: string, scorePercentage: number) => {
+    // Cross-level view-only guard:
+    // If student is SHS, they cannot record progress on JHS topics (view-only mode)
+    if (student?.currentLevel?.startsWith('SHS')) {
+      const isShsTopic = SHS_CURRICULUM_TOPICS.some((t) => t.id === topicId);
+      if (!isShsTopic) {
+        console.info('[AuthContext] Quiz progress ignored: Student is registered under SHS and viewing JHS in view-only mode.');
+        return;
+      }
+    } else if (student?.currentLevel?.startsWith('JHS')) {
+      const isJhsTopic = JHS_CURRICULUM_TOPICS.some((t) => t.id === topicId);
+      if (!isJhsTopic) {
+        console.info('[AuthContext] Quiz progress ignored: Student is registered under JHS and viewing SHS in view-only mode.');
+        return;
+      }
+    }
+
     const prev = topicProgress[topicId];
     const isCompleted = scorePercentage >= 60 || (prev ? prev.completed : false);
     const updated: StudentTopicProgress = {
@@ -571,6 +592,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const recordWeeklyExamAttempt = (attemptData: Omit<WeeklyExamAttempt, 'id' | 'createdAt'>) => {
+    // SHS students cannot submit JHS weekly exams to their student record
+    if (student?.currentLevel?.startsWith('SHS')) {
+      console.info('[AuthContext] Weekly exam ignored: SHS student in JHS view-only mode.');
+      return;
+    }
+
     const newAttempt: WeeklyExamAttempt = {
       ...attemptData,
       id: `exam-${Date.now()}`,
@@ -650,6 +677,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isLoading,
         isTrialActive,
         trialDaysRemaining,
+        trialExpiresAt,
         hasFullAccess,
         topicProgress,
         pins,

@@ -92,33 +92,28 @@ export default function BlogIndexPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
-      {/* Header Banner */}
-      <section className="bg-gradient-to-b from-slate-900 via-indigo-950 to-slate-900 text-white pt-12 pb-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-semibold backdrop-blur-sm">
-              <Sparkles className="w-3.5 h-3.5 text-blue-300" />
-              <span>AcademicPrep Study Journal & WAEC Guides</span>
+      {/* Header Banner (Clean Minimalist) */}
+      <section className="bg-white border-b border-slate-200 text-slate-900 pt-8 pb-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="max-w-3xl space-y-3">
+            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
+              <Sparkles className="w-3.5 h-3.5 text-slate-600" />
+              <span>AcademicPrep Study Journal &amp; WAEC Guides</span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
-              Exam Insights, Study Strategies <br />
-              <span className="bg-gradient-to-r from-blue-300 via-indigo-200 to-teal-300 bg-clip-text text-transparent">
-                & Official WAEC Updates
-              </span>
+            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
+              Exam Insights, Study Strategies &amp; WAEC Updates
             </h1>
 
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal max-w-2xl">
-              Curated articles written by experienced Ghanaian teachers and WAEC examiners. Master memory retention, understand scoring rubrics, and stay ahead in your BECE & WASSCE preparations.
+            <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal max-w-2xl">
+              Curated articles written by experienced Ghanaian teachers and WAEC examiners. Master memory retention, understand scoring rubrics, and stay ahead in your BECE &amp; WASSCE preparations.
             </p>
           </div>
         </div>
       </section>
 
       {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
         {/* Search & Filter Toolbar */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5 space-y-4">
           <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
@@ -403,19 +398,19 @@ export default function BlogIndexPage() {
           </div>
         )}
 
-        {/* WhatsApp Community Callout */}
-        <div className="mt-16 rounded-3xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 p-8 sm:p-10 text-white shadow-lg relative overflow-hidden">
-          <div className="max-w-2xl space-y-4 relative z-10">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-white font-bold text-xs backdrop-blur-sm">
-              <MessageCircle className="w-3.5 h-3.5" />
+        {/* WhatsApp Community Callout (Clean Minimalist) */}
+        <div className="mt-12 rounded-2xl bg-white border border-slate-200 p-6 sm:p-8 text-slate-900 shadow-2xs">
+          <div className="max-w-2xl space-y-3">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
+              <MessageCircle className="w-3.5 h-3.5 text-slate-600" />
               <span>8,000+ Online Students</span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-              Get Daily Revision Tips & WAEC Advice Directly on WhatsApp
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+              Get Daily Revision Tips &amp; WAEC Advice Directly on WhatsApp
             </h2>
 
-            <p className="text-xs sm:text-sm text-emerald-100 leading-relaxed font-normal">
+            <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal">
               Join thousands of JHS candidates across Ghana for daily question drills, chief examiner alerts, and instant homework discussions.
             </p>
 
@@ -424,9 +419,9 @@ export default function BlogIndexPage() {
                 href="https://chat.whatsapp.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-emerald-900 font-bold text-xs hover:bg-emerald-50 transition-colors shadow-md"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition shadow-xs"
               >
-                <MessageCircle className="w-4 h-4 text-emerald-600" />
+                <MessageCircle className="w-4 h-4 text-slate-300" />
                 <span>Join Study Group (Free)</span>
               </a>
             </div>

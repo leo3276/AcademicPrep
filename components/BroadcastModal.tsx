@@ -331,7 +331,7 @@ export default function BroadcastModal({ isOpen, onClose, post }: BroadcastModal
   const smsPages = Math.ceil(smsCharCount / 160) || 1;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-xs overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/50 overflow-y-auto">
       <div 
         className="bg-white rounded-2xl max-w-2xl w-full border border-slate-200 shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-150 flex flex-col max-h-[92vh]"
         onClick={(e) => e.stopPropagation()}
@@ -468,26 +468,26 @@ export default function BroadcastModal({ isOpen, onClose, post }: BroadcastModal
             <div className="space-y-4">
 
               {/* ⚡ 1-CLICK ALL STUDENTS RECEIVE IT HERO BOX */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-linear-to-r from-emerald-600 to-teal-700 text-white shadow-md space-y-3">
+              <div className="p-4 sm:p-5 rounded-2xl bg-slate-900 text-white shadow-xs space-y-3">
                 <div className="space-y-1">
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-extrabold uppercase tracking-wider">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-200 border border-slate-700 text-[10px] font-bold uppercase tracking-wider">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                     <span>Instant 1-Click Multi-Recipient Delivery</span>
                   </div>
-                  <h3 className="text-base sm:text-lg font-black tracking-tight">
+                  <h3 className="text-base sm:text-lg font-bold tracking-tight">
                     Send to All {recipientCount} {targetLevel} Students Simultaneously
                   </h3>
-                  <p className="text-xs text-emerald-100 leading-relaxed">
+                  <p className="text-xs text-slate-300 leading-relaxed">
                     Sends the announcement directly from the server to every registered {targetLevel} student's WhatsApp number in one click — no one-by-one sending required.
                   </p>
                   <div className="pt-1">
                     {activeWhatsAppProvider === 'meta_cloud' ? (
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/40 text-emerald-100 text-[11px] font-semibold border border-emerald-300/30">
-                        <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse" />
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800 text-emerald-400 text-[11px] font-semibold border border-slate-700">
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                         Meta WhatsApp Cloud API Live (+233 59 311 9669)
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-950/40 text-amber-200 text-[11px] font-semibold border border-amber-300/30">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800 text-amber-300 text-[11px] font-semibold border border-slate-700">
                         <span className="w-2 h-2 rounded-full bg-amber-300" />
                         Simulation Mode (Awaiting Vercel Redeployment with Keys)
                       </span>

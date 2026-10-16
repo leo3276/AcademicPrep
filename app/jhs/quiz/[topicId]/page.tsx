@@ -98,50 +98,56 @@ export default function TopicQuizPage() {
     return { correct, percentage };
   };
 
+  const isShsGuest = Boolean(student?.currentLevel?.startsWith('SHS'));
+
   const handleSubmit = () => {
     if (isSubmitted || !topic || !quiz) return;
     setIsSubmitted(true);
 
     const { percentage } = calculateScore();
-    recordQuizScore(topic.id, percentage);
+    
+    // Only record progression if the student is in JHS
+    if (!isShsGuest) {
+      recordQuizScore(topic.id, percentage);
 
-    // Track incorrect answers for adaptive weekly remediation
-    const mistakes: {
-      topicId: string;
-      topicTitle: string;
-      subjectId: string;
-      subjectName: string;
-      questionId: string;
-      questionText: string;
-      subConcept: string;
-      selectedOption: 'A' | 'B' | 'C' | 'D';
-      correctOption: 'A' | 'B' | 'C' | 'D';
-      explanation: string;
-      remediationTip?: string;
-    }[] = [];
+      // Track incorrect answers for adaptive weekly remediation
+      const mistakes: {
+        topicId: string;
+        topicTitle: string;
+        subjectId: string;
+        subjectName: string;
+        questionId: string;
+        questionText: string;
+        subConcept: string;
+        selectedOption: 'A' | 'B' | 'C' | 'D';
+        correctOption: 'A' | 'B' | 'C' | 'D';
+        explanation: string;
+        remediationTip?: string;
+      }[] = [];
 
-    quiz.questions.forEach((q) => {
-      const userAns = selectedAnswers[q.id];
-      if (userAns && userAns !== q.correctOption) {
-        const subName = CurriculumService.getSubjectById(topic.subjectId)?.name || topic.subjectId;
-        mistakes.push({
-          topicId: topic.id,
-          topicTitle: topic.title,
-          subjectId: topic.subjectId,
-          subjectName: subName,
-          questionId: q.id,
-          questionText: q.questionText,
-          subConcept: q.subConcept || topic.title,
-          selectedOption: userAns,
-          correctOption: q.correctOption,
-          explanation: q.explanation,
-          remediationTip: q.remediationTip,
-        });
+      quiz.questions.forEach((q) => {
+        const userAns = selectedAnswers[q.id];
+        if (userAns && userAns !== q.correctOption) {
+          const subName = CurriculumService.getSubjectById(topic.subjectId)?.name || topic.subjectId;
+          mistakes.push({
+            topicId: topic.id,
+            topicTitle: topic.title,
+            subjectId: topic.subjectId,
+            subjectName: subName,
+            questionId: q.id,
+            questionText: q.questionText,
+            subConcept: q.subConcept || topic.title,
+            selectedOption: userAns,
+            correctOption: q.correctOption,
+            explanation: q.explanation,
+            remediationTip: q.remediationTip,
+          });
+        }
+      });
+
+      if (mistakes.length > 0) {
+        logQuizMistakes(mistakes);
       }
-    });
-
-    if (mistakes.length > 0) {
-      logQuizMistakes(mistakes);
     }
 
     if (percentage >= quiz.passScorePercentage) {
@@ -199,29 +205,29 @@ export default function TopicQuizPage() {
   if (isLocked) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-12">
-        <div className="p-8 rounded-3xl bg-white border border-amber-200 shadow-xl space-y-6 text-center">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-600 text-white flex items-center justify-center mx-auto shadow-lg shadow-amber-500/30">
-            <Lock className="w-8 h-8" />
+        <div className="p-8 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-6 text-center">
+          <div className="w-12 h-12 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 flex items-center justify-center mx-auto">
+            <Lock className="w-6 h-6" />
           </div>
 
           <div className="space-y-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-200">
+            <span className="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-800 border border-slate-200">
               30-Day Free Trial Ended
             </span>
-            <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">
+            <h1 className="text-xl font-bold text-slate-900 tracking-tight">
               {quiz.title}
             </h1>
-            <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
+            <p className="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
               {accessCheck.reason || 'Your 30-day free trial has expired. To unlock unlimited practice quizzes and all subjects, please enter or buy an Access PIN.'}
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-amber-50/60 border border-amber-200/80 text-left space-y-2">
-            <p className="text-xs font-bold text-amber-950 flex items-center gap-1.5">
-              <Crown className="w-4 h-4 text-amber-600" />
+          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-left space-y-2">
+            <p className="text-xs font-semibold text-slate-900 flex items-center gap-1.5">
+              <Crown className="w-4 h-4 text-slate-700" />
               What VIP Pass Includes:
             </p>
-            <ul className="text-xs text-amber-900 space-y-1 pl-5 list-disc">
+            <ul className="text-xs text-slate-600 space-y-1 pl-5 list-disc">
               <li>All curriculum topics, worked solutions & diagnostic quizzes</li>
               <li>Official WAEC-standard questions per topic with step-by-step rationales</li>
               <li>Adaptive Weekly Exams tailored to your personal study progress</li>
@@ -236,9 +242,9 @@ export default function TopicQuizPage() {
                 setModalTab('momo');
                 setShowPaymentModal(true);
               }}
-              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white font-extrabold text-sm transition-all shadow-md shadow-amber-500/20 flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm transition shadow-xs flex items-center justify-center gap-2 cursor-pointer"
             >
-              <Crown className="w-4 h-4 text-amber-200" />
+              <Crown className="w-4 h-4 text-slate-300" />
               <span>Buy VIP Pass via Mobile Money (GHS 25 / month)</span>
             </button>
             <p className="text-[11px] text-slate-500 text-center mt-1.5 font-medium">
@@ -416,6 +422,24 @@ export default function TopicQuizPage() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-6">
+      {/* SHS Student Practice Notice */}
+      {isShsGuest && (
+        <div className="p-3.5 rounded-xl bg-white border border-slate-200 text-xs shadow-2xs flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-slate-400"></span>
+            <span className="font-semibold text-slate-900">
+              SHS Student Practice Mode:
+            </span>
+            <span className="text-slate-500">
+              Scores and mistakes will not be recorded to JHS progression.
+            </span>
+          </div>
+          <Link href="/shs" className="text-slate-900 font-semibold hover:underline text-[11px] shrink-0">
+            Return to SHS &rarr;
+          </Link>
+        </div>
+      )}
+
       {/* Top Header */}
       <div className="flex items-center justify-between">
         <Link
@@ -429,22 +453,22 @@ export default function TopicQuizPage() {
         {/* Timer */}
         {!isSubmitted && (
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-mono font-bold">
-            <Clock className="w-3.5 h-3.5 text-blue-600" />
+            <Clock className="w-3.5 h-3.5 text-slate-600" />
             <span>{timeFormatted}</span>
           </div>
         )}
       </div>
 
       {/* Quiz Card */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs p-6 sm:p-8 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-1">
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 uppercase">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-800 uppercase">
                 {topic.level} • {quiz.questions.length} Questions
               </span>
               <span className="text-xs text-slate-500">Pass Mark: {quiz.passScorePercentage}%</span>
-              <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+              <span className="text-xs font-medium text-slate-700 bg-slate-100 px-2 py-0.5 rounded-full border border-slate-200">
                 {isShs ? 'WAEC / WASSCE Standard' : 'GES / NaCCA Standard'}
               </span>
             </div>
@@ -467,54 +491,52 @@ export default function TopicQuizPage() {
         {/* Result Screen if Submitted */}
         {isSubmitted ? (
           <div className="space-y-6">
-            {/* Primary Score Banner */}
-            <div
-              className={`p-6 sm:p-8 rounded-3xl text-center space-y-4 border ${
-                hasPassed
-                  ? 'bg-gradient-to-b from-emerald-50/80 to-teal-50/40 border-emerald-200 text-emerald-950'
-                  : 'bg-gradient-to-b from-amber-50/80 to-orange-50/40 border-amber-200 text-amber-950'
-              }`}
-            >
-              <div className="w-14 h-14 rounded-2xl mx-auto flex items-center justify-center font-bold shadow-md bg-white">
+            {/* Primary Score Banner (Clean Minimalist) */}
+            <div className="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 text-center space-y-4 shadow-2xs text-slate-900">
+              <div className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center font-bold bg-slate-100 border border-slate-200">
                 {hasPassed ? (
-                  <Trophy className="w-8 h-8 text-emerald-600" />
+                  <Trophy className="w-6 h-6 text-slate-900" />
                 ) : (
-                  <RotateCcw className="w-8 h-8 text-amber-600" />
+                  <RotateCcw className="w-6 h-6 text-slate-600" />
                 )}
               </div>
 
               <div className="space-y-1">
-                <span className={`inline-block text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full border ${gradeInfo.badgeColor}`}>
+                <span className={`inline-block text-[11px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${gradeInfo.badgeColor}`}>
                   {gradeInfo.label}
                 </span>
-                <h2 className="text-2xl sm:text-3xl font-black tracking-tight">
+                <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
                   {hasPassed ? 'Congratulations! Quiz Passed' : 'Keep Going! Practice Makes Perfect'}
                 </h2>
-                <p className="text-xs max-w-md mx-auto leading-relaxed pt-1">
+                <p className="text-xs max-w-md mx-auto leading-relaxed pt-1 text-slate-500">
                   {gradeInfo.summary}
                 </p>
               </div>
 
               {/* Numerical Score Display */}
-              <div className="flex items-center justify-center gap-6 pt-2">
-                <div className="p-3 bg-white/90 rounded-2xl border border-slate-200/80 text-center min-w-[100px]">
-                  <span className="block text-2xl font-black text-slate-900">{correct} / {totalQuestions}</span>
-                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Correct Answers</span>
+              <div className="flex items-center justify-center gap-4 pt-2">
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center min-w-[100px]">
+                  <span className="block text-2xl font-bold text-slate-900">{correct} / {totalQuestions}</span>
+                  <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Correct Answers</span>
                 </div>
-                <div className="p-3 bg-white/90 rounded-2xl border border-slate-200/80 text-center min-w-[100px]">
-                  <span className={`block text-2xl font-black ${hasPassed ? 'text-emerald-600' : 'text-amber-600'}`}>
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center min-w-[100px]">
+                  <span className={`block text-2xl font-bold ${hasPassed ? 'text-slate-900' : 'text-slate-700'}`}>
                     {percentage}%
                   </span>
-                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Percentage</span>
+                  <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Percentage</span>
                 </div>
               </div>
 
-              {hasPassed ? (
-                <div className="text-[11px] text-emerald-800 bg-white/80 py-2 px-4 rounded-xl inline-block font-semibold border border-emerald-200/80">
+              {isShsGuest ? (
+                <div className="text-[11px] text-slate-600 bg-slate-50 py-2 px-4 rounded-xl inline-block font-medium border border-slate-200">
+                  ✓ Practice test completed. As an SHS student, this result does not modify your JHS progress.
+                </div>
+              ) : hasPassed ? (
+                <div className="text-[11px] text-emerald-800 bg-emerald-50 py-2 px-4 rounded-xl inline-block font-semibold border border-emerald-200/80">
                   ✓ This topic is marked completed and incorporated into your Weekly Exam diagnostic pool!
                 </div>
               ) : (
-                <div className="text-[11px] text-amber-800 bg-white/80 py-2 px-4 rounded-xl inline-block font-semibold border border-amber-200/80">
+                <div className="text-[11px] text-amber-800 bg-amber-50 py-2 px-4 rounded-xl inline-block font-semibold border border-amber-200/80">
                   ⚠️ Review your personalized improvement plan below and retake the quiz to reach the 60% pass mark.
                 </div>
               )}
@@ -522,10 +544,10 @@ export default function TopicQuizPage() {
 
             {/* DIAGNOSTIC ENGINE: WHAT TO IMPROVE ON */}
             {weakSubConcepts.length > 0 ? (
-              <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-indigo-50/70 via-blue-50/50 to-slate-50 border border-indigo-100 space-y-4">
+              <div className="p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-sm">
+                    <div className="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center">
                       <Target className="w-4 h-4" />
                     </div>
                     <div>

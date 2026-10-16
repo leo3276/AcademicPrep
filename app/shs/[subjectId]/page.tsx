@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useAuth } from '@/lib/authContext';
 import { CurriculumService } from '@/lib/curriculumService';
 import { EducationLevel } from '@/lib/types';
+import TrialCountdownBanner from '@/components/TrialCountdownBanner';
 import { 
   ArrowLeft, 
   ArrowRight,
@@ -105,19 +106,17 @@ export default function ShsSubjectDetailPage() {
       </div>
 
       {/* Header Banner */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="flex items-start gap-4">
-          <div
-            className={`w-16 h-16 rounded-2xl bg-gradient-to-tr ${subject.color || 'from-blue-600 to-indigo-700'} text-white flex items-center justify-center shadow-md shrink-0`}
-          >
-            <SubjectIcon subjectId={subject.id} className="w-8 h-8" />
+          <div className="w-12 h-12 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 flex items-center justify-center shrink-0">
+            <SubjectIcon subjectId={subject.id} className="w-6 h-6" />
           </div>
           <div className="space-y-1">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800 uppercase font-mono">
+              <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-800 uppercase font-mono">
                 {subject.code}
               </span>
-              <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-purple-100 text-purple-800">
+              <span className="text-[11px] font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-700">
                 {isElective ? 'Elective Strand' : 'Compulsory Core'}
               </span>
               <span className="text-xs text-slate-500">WAEC / WASSCE Syllabus</span>
@@ -144,7 +143,7 @@ export default function ShsSubjectDetailPage() {
                   onClick={() => handleLevelChange(lvl)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                     currentLevel === lvl
-                      ? 'bg-blue-600 text-white shadow-xs'
+                      ? 'bg-slate-900 text-white shadow-xs'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
@@ -154,12 +153,12 @@ export default function ShsSubjectDetailPage() {
             </div>
           </div>
         ) : (
-          <div className="p-3.5 rounded-2xl bg-purple-50 border border-purple-100 text-xs text-purple-900 space-y-1 shrink-0">
-            <div className="font-bold flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-purple-600" />
+          <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1 shrink-0">
+            <div className="font-semibold flex items-center gap-1.5 text-slate-900">
+              <Sparkles className="w-3.5 h-3.5 text-slate-600" />
               <span>Full 3-Year Strand Covered</span>
             </div>
-            <div className="text-[11px] text-purple-700">
+            <div className="text-[11px] text-slate-500">
               All topics required for the WASSCE paper
             </div>
           </div>
@@ -167,52 +166,32 @@ export default function ShsSubjectDetailPage() {
       </div>
 
       {/* Progress Card */}
-      <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+      <div className="p-4 rounded-xl bg-white border border-slate-200 flex items-center justify-between text-xs shadow-2xs">
         <div className="flex items-center gap-2">
-          <Trophy className="w-4 h-4 text-amber-500" />
+          <Trophy className="w-4 h-4 text-slate-700" />
           <span className="font-semibold text-slate-700">Topic Completion:</span>
           <span className="font-bold text-slate-900">
             {completedCount} of {topics.length} completed
           </span>
         </div>
         <div className="flex items-center gap-3">
-          <span className="font-bold text-blue-600">{progressPercent}%</span>
-          <div className="w-24 bg-slate-200 rounded-full h-2 overflow-hidden">
+          <span className="font-bold text-slate-900">{progressPercent}%</span>
+          <div className="w-24 bg-slate-100 rounded-full h-2 overflow-hidden">
             <div
-              className="bg-blue-600 h-full rounded-full transition-all duration-300"
+              className="bg-slate-900 h-full rounded-full transition-all duration-300"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
         </div>
       </div>
 
-      {/* 30-Day Free Trial / VIP Banner */}
-      {mounted && isTrialActive && !student?.hasFullAccess ? (
-        <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 border border-blue-200/90 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center font-bold shrink-0 shadow-xs">
-              <span className="text-base">🎁</span>
-            </div>
-            <div>
-              <p className="text-xs font-bold text-slate-900">
-                30-Day Free Trial Active • All SHS Topics & Quizzes Unlocked!
-              </p>
-              <p className="text-[11px] text-slate-600">
-                You have {trialDaysRemaining} days remaining of full, unrestricted access to all syllabus notes, worked examples, and practice quizzes.
-              </p>
-            </div>
-          </div>
-          <button
-            onClick={() => {
-              setModalTab('pin');
-              setShowPaymentModal(true);
-            }}
-            className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-purple-700 font-bold text-xs whitespace-nowrap self-start sm:self-auto flex items-center gap-1.5 cursor-pointer shadow-2xs"
-          >
-            <KeyRound className="w-3.5 h-3.5" />
-            <span>Have a VIP PIN?</span>
-          </button>
-        </div>
+      {/* 30-Day Free Trial / VIP Banner (Clean Minimalist) */}
+      {mounted && isTrialActive ? (
+        <TrialCountdownBanner
+          variant="compact"
+          title={`30-Day Free Trial • All ${subject.name} Lessons & Quizzes Unlocked`}
+          subtitle="All lesson notes, worked examples, and diagnostic quizzes are 100% unlocked."
+        />
       ) : mounted && !student?.hasFullAccess && !isTrialActive ? (
         <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200 text-xs text-amber-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2">

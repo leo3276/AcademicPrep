@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { EducationLevel } from '@/lib/types';
 import { CURRICULUM_SUBJECTS } from '@/lib/curriculumData';
+import { CurriculumService } from '@/lib/curriculumService';
 import { 
   PersonalTimetable, 
   TimetablePreferences, 
@@ -63,16 +64,34 @@ export default function StudentTimetablePlanner({
   const [hasNotificationPermission, setHasNotificationPermission] = useState(false);
   const [nextSession, setNextSession] = useState<NextSessionInfo | null>(null);
 
-  // Load saved timetable from localStorage on mount
+  // Load saved timetable from localStorage scoped to this account and level
   useEffect(() => {
-    const saved = loadTimetableFromStorage();
-    if (saved) {
-      setTimetable(saved);
-    }
+    const saved = loadTimetableFromStorage(studentId, studentLevel);
+    setTimetable(saved);
     if (typeof window !== 'undefined' && 'Notification' in window) {
       setHasNotificationPermission(Notification.permission === 'granted');
     }
-  }, []);
+  }, [studentId, studentLevel]);
+
+  // Listen for storage updates scoped to this student
+  useEffect(() => {
+    const handleUpdate = (e: any) => {
+      if (e.detail?.studentId && e.detail.studentId !== studentId) return;
+      if (e.detail?.timetable) {
+        setTimetable(e.detail.timetable);
+      }
+    };
+    const handleClear = (e: any) => {
+      if (e.detail?.studentId && e.detail.studentId !== studentId) return;
+      setTimetable(null);
+    };
+    window.addEventListener('academicprep:timetable-updated', handleUpdate);
+    window.addEventListener('academicprep:timetable-cleared', handleClear);
+    return () => {
+      window.removeEventListener('academicprep:timetable-updated', handleUpdate);
+      window.removeEventListener('academicprep:timetable-cleared', handleClear);
+    };
+  }, [studentId]);
 
   // Compute upcoming session & periodic check for live reminders
   useEffect(() => {
@@ -132,7 +151,7 @@ export default function StudentTimetablePlanner({
       preferences
     );
     setTimetable(newTimetable);
-    saveTimetableToStorage(newTimetable);
+    saveTimetableToStorage(newTimetable, studentId);
   };
 
   const handleToggleSessionComplete = (sessionId: string) => {
@@ -149,7 +168,7 @@ export default function StudentTimetablePlanner({
       completedSessionIds: Array.from(completedSet),
     };
     setTimetable(updated);
-    saveTimetableToStorage(updated);
+    saveTimetableToStorage(updated, studentId);
   };
 
   const handleDownloadPdf = async () => {
@@ -234,7 +253,7 @@ export default function StudentTimetablePlanner({
             <div className="p-3.5 rounded-xl border border-slate-200/80 bg-slate-50/50 space-y-1">
               <p className="text-xs font-semibold text-slate-800">Specific Syllabus Topics</p>
               <p className="text-[11px] text-slate-500 leading-relaxed">
-                Every study session specifies an exact topic from your JHS syllabus.
+                Every study session specifies an exact topic from your {studentLevel?.startsWith('SHS') ? 'WASSCE / SHS' : 'JHS'} syllabus.
               </p>
             </div>
 
@@ -421,7 +440,7 @@ export default function StudentTimetablePlanner({
               <div className="flex flex-wrap items-center gap-1.5 text-xs pt-1">
                 <span className="text-[11px] text-slate-400 font-medium">Prioritizing:</span>
                 {timetable.preferences.weakSubjectIds.map((sid) => {
-                  const subj = CURRICULUM_SUBJECTS.find((s) => s.id === sid);
+                  const subj = CurriculumService.getSubjectById(sid, timetable.level);
                   return (
                     <span
                       key={sid}

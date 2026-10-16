@@ -99,7 +99,7 @@ export default function NewBlogNotificationToast({ initialPosts }: NewBlogNotifi
       aria-label="New blog post notification"
       className="fixed bottom-5 right-4 sm:right-6 z-40 max-w-sm sm:max-w-md w-[calc(100vw-32px)] animate-in slide-in-from-bottom-5 fade-in duration-300 pointer-events-auto"
     >
-      <div className="bg-white/95 backdrop-blur-md text-slate-900 rounded-2xl p-4 sm:p-4.5 border border-slate-200/90 shadow-2xl shadow-slate-900/10 relative overflow-hidden group">
+      <div className="bg-white text-slate-900 rounded-2xl p-4 sm:p-4.5 border border-slate-200 shadow-md relative overflow-hidden group">
         <div className="flex items-start justify-between gap-3 relative z-10">
           <div className="flex items-center gap-2">
             <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />

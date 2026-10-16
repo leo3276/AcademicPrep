@@ -34,6 +34,7 @@ import { BlogPost, fetchBlogPosts, INITIAL_BLOG_POSTS } from '@/lib/blogStore';
 import PlatformTourGuide from '@/components/PlatformTourGuide';
 import TourPromptToast from '@/components/TourPromptToast';
 import PaystackPaymentModal from '@/components/PaystackPaymentModal';
+import TrialCountdownBanner from '@/components/TrialCountdownBanner';
 
 export default function JhsPortalPage() {
   const router = useRouter();
@@ -100,10 +101,14 @@ export default function JhsPortalPage() {
   }, []);
 
   useEffect(() => {
-    if (mounted && !isLoading && !student) {
-      router.push('/login?redirect=/jhs');
+    if (mounted && !isLoading) {
+      if (!student) {
+        router.push('/login?redirect=/jhs');
+      }
     }
   }, [mounted, isLoading, student, router]);
+
+  const isShsStudent = Boolean(student?.currentLevel?.startsWith('SHS'));
 
   const handleLevelSelect = (lvl: EducationLevel) => {
     setSelectedLevel(lvl);
@@ -176,46 +181,76 @@ export default function JhsPortalPage() {
         </div>
       </div>
 
+      {/* SHS Student Cross-Level View-Only Notice (Clean Minimalist) */}
+      {mounted && isShsStudent && (
+        <div className="p-4 rounded-xl bg-white border border-slate-200 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+              <BookOpen className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="font-semibold text-slate-900">
+                Viewing JHS Portal as an {student?.currentLevel} Student (View-Only Mode)
+              </p>
+              <p className="text-slate-500 text-[11px]">
+                You have full access to view all JHS curriculum notes, worked examples, and past papers. Quiz scores and progress tracking are only recorded for your SHS account.
+              </p>
+            </div>
+          </div>
+          <Link
+            href="/shs"
+            className="px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition whitespace-nowrap self-start sm:self-auto shrink-0"
+          >
+            Return to SHS Portal &rarr;
+          </Link>
+        </div>
+      )}
+
       {/* Progress & Dynamic Exam Trigger Row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Progress Card */}
-        <div id="tour-topic-mastery" className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+        <div id="tour-topic-mastery" className="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-4">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-600">
-              {selectedLevel} Topic Mastery
+              {isShsStudent ? 'Curriculum Reference' : `${selectedLevel} Topic Mastery`}
             </span>
-            <span className="text-xs font-bold text-blue-600 font-mono">
-              {completedTopicsCount} / {levelTopics.length} Done
-            </span>
+            {!isShsStudent && (
+              <span className="text-xs font-bold text-slate-900 font-mono">
+                {completedTopicsCount} / {levelTopics.length} Done
+              </span>
+            )}
           </div>
 
-          <div className="space-y-1.5">
-            <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
-              <div
-                className="bg-blue-600 h-full rounded-full transition-all duration-500"
-                style={{ width: `${progressPercent}%` }}
-              />
+          {isShsStudent ? (
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-600 space-y-2">
+              <p>
+                As an {student?.currentLevel} student, your progress tracking, quizzes, and revision timetable are anchored to your SHS Portal.
+              </p>
+              <Link
+                href="/shs"
+                className="text-xs font-semibold text-slate-900 hover:underline inline-flex items-center gap-1"
+              >
+                <span>Track my SHS progress</span>
+                <ArrowRight className="w-3 h-3" />
+              </Link>
             </div>
-            <div className="flex justify-between text-[11px] text-slate-500">
-              <span>{progressPercent}% Completed</span>
-              <span>Pass score: 60%+ per quiz</span>
+          ) : (
+            <div className="space-y-1.5">
+              <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+                <div
+                  className="bg-slate-900 h-full rounded-full transition-all duration-500"
+                  style={{ width: `${progressPercent}%` }}
+                />
+              </div>
+              <div className="flex justify-between text-[11px] text-slate-500">
+                <span>{progressPercent}% Completed</span>
+                <span>Pass score: 60%+ per quiz</span>
+              </div>
             </div>
-          </div>
+          )}
 
           {mounted && isTrialActive && (
-            <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-200/80 text-[11px] text-blue-900 flex items-center justify-between">
-              <span className="flex items-center gap-1.5 font-semibold">
-                <span className="text-xs">🎁</span>
-                <span>30-Day Free Trial: {trialDaysRemaining} days remaining of full access!</span>
-              </span>
-              <button
-                type="button"
-                onClick={() => setShowPaymentModal(true)}
-                className="font-bold text-blue-700 hover:text-blue-900 shrink-0 cursor-pointer text-[10px] uppercase tracking-wider bg-white px-2 py-0.5 rounded-md border border-blue-200 shadow-2xs"
-              >
-                VIP Pass
-              </button>
-            </div>
+            <TrialCountdownBanner variant="compact" />
           )}
           {mounted && !hasFullAccess && !isTrialActive && (
             <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200/80 text-[11px] text-amber-900 flex items-center justify-between">
@@ -293,25 +328,25 @@ export default function JhsPortalPage() {
         </div>
       </div>
 
-      {/* Adaptive Weekly Exam Banner */}
-      <div id="tour-weekly-exam" className="p-5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+      {/* Adaptive Weekly Exam Banner (Clean Minimalist) */}
+      <div id="tour-weekly-exam" className="p-5 rounded-2xl bg-white border border-slate-200 text-slate-900 shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="space-y-1">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-bold uppercase tracking-wider">
-            <Clock className="w-3 h-3" />
-            Curriculum Adaptive Engine
+          <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 text-[10px] font-semibold uppercase tracking-wider">
+            <Clock className="w-3 h-3 text-slate-500" />
+            <span>Curriculum Adaptive Engine</span>
           </div>
-          <h3 className="text-base sm:text-lg font-bold">Personalized Weekly Revision Exam</h3>
-          <p className="text-xs text-amber-50 max-w-xl leading-relaxed">
-            Generates a timed CBT examination based solely on the topics you have completed in {selectedLevel}.
+          <h3 className="text-base font-bold text-slate-900">Personalized Weekly Revision Exam</h3>
+          <p className="text-xs text-slate-500 max-w-xl leading-relaxed">
+            Generates a timed CBT examination based on your completed topics in {selectedLevel}.
           </p>
         </div>
 
         <Link
           href="/jhs/weekly-exam"
-          className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white hover:bg-amber-50 text-amber-900 font-bold text-xs shrink-0 transition-colors shadow-sm flex items-center justify-center gap-2 whitespace-nowrap"
+          className="w-full sm:w-auto px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs shrink-0 transition shadow-xs flex items-center justify-center gap-1.5 whitespace-nowrap"
         >
           <span>Start Weekly Exam</span>
-          <ArrowRight className="w-4 h-4" />
+          <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>
 
@@ -319,7 +354,7 @@ export default function JhsPortalPage() {
       <div id="tour-curriculum-subjects" className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-            <GraduationCap className="w-5 h-5 text-blue-600" />
+            <GraduationCap className="w-5 h-5 text-slate-700" />
             Core {selectedLevel} Subjects
           </h2>
           <span className="text-xs text-slate-500">{CURRICULUM_SUBJECTS.length} GES Accredited Subjects</span>
@@ -333,14 +368,12 @@ export default function JhsPortalPage() {
             return (
               <div
                 key={subject.id}
-                className="group rounded-2xl bg-white border border-slate-200 hover:border-blue-400 p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+                className="group rounded-2xl bg-white border border-slate-200 hover:border-slate-300 p-6 shadow-2xs hover:shadow-xs transition flex flex-col justify-between space-y-4"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <div
-                      className={`w-12 h-12 rounded-xl bg-gradient-to-tr ${subject.color} text-white flex items-center justify-center shadow-md`}
-                    >
-                      <SubjectIcon subjectId={subject.id} className="w-6 h-6" />
+                    <div className="w-11 h-11 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 flex items-center justify-center shrink-0">
+                      <SubjectIcon subjectId={subject.id} className="w-5 h-5" />
                     </div>
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 uppercase font-mono">
                       {subject.code}

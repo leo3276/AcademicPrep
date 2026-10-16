@@ -194,16 +194,16 @@ export default function ShsTopicQuizPage() {
   if (isLocked) {
     return (
       <div className="max-w-xl mx-auto py-12 px-4 sm:px-6">
-        <div className="bg-white rounded-3xl border border-slate-200 shadow-xl p-6 sm:p-8 text-center space-y-6">
-          <div className="w-16 h-16 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center mx-auto shadow-inner">
-            <Lock className="w-8 h-8" />
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs p-6 sm:p-8 text-center space-y-6">
+          <div className="w-14 h-14 rounded-xl bg-amber-50 text-amber-700 border border-amber-200 flex items-center justify-center mx-auto">
+            <Lock className="w-7 h-7" />
           </div>
 
           <div className="space-y-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
               30-Day Free Trial Ended • {topic.level}
             </span>
-            <h2 className="text-2xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
               {topic.title}
             </h2>
             <p className="text-xs text-slate-600 leading-relaxed max-w-md mx-auto">
@@ -218,10 +218,10 @@ export default function ShsTopicQuizPage() {
                 setModalTab('momo');
                 setShowPaymentModal(true);
               }}
-              className="w-full p-4 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-all shadow-md shadow-blue-500/20 flex flex-col items-center justify-center gap-1"
+              className="w-full p-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-colors flex flex-col items-center justify-center gap-1 shadow-xs"
             >
               <span>Pay Online via MoMo</span>
-              <span className="text-[10px] text-blue-200 font-normal">GH₵ 25 / Month</span>
+              <span className="text-[10px] text-slate-300 font-normal">GH₵ 25 / Month</span>
             </button>
 
             <button
@@ -374,32 +374,26 @@ export default function ShsTopicQuizPage() {
         {/* Results Screen if Submitted */}
         {isSubmitted ? (
           <div className="space-y-6">
-            <div
-              className={`p-6 sm:p-8 rounded-3xl text-center space-y-4 border ${
-                hasPassed
-                  ? 'bg-gradient-to-b from-emerald-50/80 to-teal-50/40 border-emerald-200 text-emerald-950'
-                  : 'bg-gradient-to-b from-amber-50/80 to-orange-50/40 border-amber-200 text-amber-950'
-              }`}
-            >
-              <div className="w-14 h-14 rounded-2xl mx-auto flex items-center justify-center font-bold shadow-md bg-white">
+            <div className="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 text-center space-y-4 shadow-2xs text-slate-900">
+              <div className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center font-bold bg-slate-100 border border-slate-200">
                 {hasPassed ? (
-                  <Trophy className="w-8 h-8 text-emerald-600" />
+                  <Trophy className="w-6 h-6 text-slate-900" />
                 ) : (
-                  <Target className="w-8 h-8 text-amber-600" />
+                  <Target className="w-6 h-6 text-slate-600" />
                 )}
               </div>
 
               <div>
                 <span
-                  className={`inline-block px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider mb-2 border ${gradeInfo.badgeColor}`}
+                  className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2 border ${gradeInfo.badgeColor}`}
                 >
                   {gradeInfo.label}
                 </span>
-                <h2 className="text-3xl font-black tracking-tight">{percentage}%</h2>
-                <p className="text-xs font-semibold mt-1">
+                <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">{percentage}%</h2>
+                <p className="text-xs font-semibold text-slate-700 mt-1">
                   You scored {correct} out of {totalQuestions} questions correct.
                 </p>
-                <p className="text-xs text-slate-600 mt-2 max-w-md mx-auto leading-relaxed">
+                <p className="text-xs text-slate-500 mt-2 max-w-md mx-auto leading-relaxed">
                   {gradeInfo.summary}
                 </p>
               </div>

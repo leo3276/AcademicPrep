@@ -7,6 +7,7 @@ import { useAuth } from '@/lib/authContext';
 import { ALL_CURRICULUM_TOPICS } from '@/lib/curriculumData';
 import { CurriculumService } from '@/lib/curriculumService';
 import { EducationLevel } from '@/lib/types';
+import TrialCountdownBanner from '@/components/TrialCountdownBanner';
 import { 
   ArrowLeft, 
   ArrowRight,
@@ -128,14 +129,12 @@ export default function SubjectDetailPage() {
       {/* Header Banner */}
       <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-start gap-4">
-          <div
-            className={`w-14 h-14 rounded-2xl bg-gradient-to-tr ${subject.color} text-white flex items-center justify-center shadow-md shrink-0 mt-0.5`}
-          >
-            <SubjectIcon subjectId={subject.id} className="w-7 h-7" />
+          <div className="w-12 h-12 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 flex items-center justify-center shrink-0 mt-0.5">
+            <SubjectIcon subjectId={subject.id} className="w-6 h-6" />
           </div>
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800 uppercase font-mono">
+              <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-800 uppercase font-mono">
                 {subject.code}
               </span>
               <span className="text-xs text-slate-500 font-medium">NaCCA Curriculum</span>
@@ -155,7 +154,7 @@ export default function SubjectDetailPage() {
               onClick={() => handleLevelChange(lvl)}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
                 currentLevel === lvl
-                  ? 'bg-blue-600 text-white shadow-sm'
+                  ? 'bg-slate-900 text-white shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -165,51 +164,24 @@ export default function SubjectDetailPage() {
         </div>
       </div>
 
-      {/* Free Trial / VIP Access Banner */}
-      {mounted && isTrialActive && !student?.hasFullAccess ? (
-        <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-blue-500/10 border border-blue-200/90 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold shrink-0 shadow-xs">
-              <span className="text-base">🎁</span>
-            </div>
-            <div>
-              <p className="text-xs font-bold text-blue-950">
-                30-Day Free Trial Active • All {currentLevel} Topics & Quizzes Unlocked!
-              </p>
-              <p className="text-[11px] text-blue-800">
-                You have {trialDaysRemaining} days remaining of unrestricted access to all video lessons, worked examples, and quizzes.
-              </p>
-            </div>
-          </div>
-          <button
-            onClick={() => setPinModalOpen(true)}
-            className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-blue-200 text-blue-700 font-bold text-xs whitespace-nowrap self-start sm:self-auto flex items-center gap-1.5 cursor-pointer shadow-2xs"
-          >
-            <KeyRound className="w-3.5 h-3.5" />
-            <span>Have a VIP PIN?</span>
-          </button>
-        </div>
+      {/* Free Trial / VIP Access Banner (Clean Minimalist) */}
+      {mounted && isTrialActive ? (
+        <TrialCountdownBanner
+          variant="compact"
+          title={`30-Day Free Trial • All ${currentLevel} Topics & Quizzes Unlocked`}
+          subtitle="All video lessons, worked examples, and diagnostic quizzes are 100% unlocked."
+        />
       ) : mounted && !student?.hasFullAccess && !isTrialActive ? (
-        <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/10 border border-amber-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold shrink-0 shadow-xs">
-              <Crown className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="text-xs font-bold text-amber-950">
-                Free Trial Ended • Upgrade to VIP Access for All {currentLevel} Topics
-              </p>
-              <p className="text-[11px] text-amber-800">
-                Your 30-day free trial has expired. Enter an Access PIN or get a pass to unlock unlimited learning.
-              </p>
-            </div>
+        <div className="p-4 rounded-xl bg-amber-50/80 border border-amber-200/80 text-xs text-amber-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+          <div className="flex items-center gap-2">
+            <Crown className="w-4 h-4 text-amber-600 shrink-0" />
+            <span>Your 30-day free trial has expired. Upgrade to VIP to unlock all {currentLevel} topics and quizzes.</span>
           </div>
           <button
             onClick={() => setPinModalOpen(true)}
-            className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-xs shadow-sm shadow-amber-500/20 whitespace-nowrap self-start sm:self-auto flex items-center gap-1.5"
+            className="px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-black text-white font-medium text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto"
           >
-            <KeyRound className="w-3.5 h-3.5" />
-            <span>Redeem Access PIN</span>
+            Redeem Access PIN
           </button>
         </div>
       ) : null}
@@ -363,20 +335,20 @@ export default function SubjectDetailPage() {
 
       {/* Redeem PIN VIP Modal */}
       {pinModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-150">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-100 relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 animate-in fade-in duration-150">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-slate-200 relative">
             <button
               onClick={() => {
                 setPinModalOpen(false);
                 setPinFeedback(null);
               }}
-              className="absolute top-4 right-4 p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+              className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-600 text-white flex items-center justify-center font-bold shadow-md shadow-amber-500/20">
+              <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 border border-amber-200 flex items-center justify-center font-bold">
                 <Crown className="w-5 h-5" />
               </div>
               <div>
@@ -395,7 +367,7 @@ export default function SubjectDetailPage() {
                   placeholder="e.g. PREP-XXXX-XXXX"
                   value={pinInput}
                   onChange={(e) => setPinInput(e.target.value.toUpperCase())}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 font-mono text-center tracking-widest text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 uppercase text-sm"
+                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 font-mono text-center tracking-widest text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-slate-900 uppercase text-sm shadow-xs"
                   autoFocus
                 />
                 <div className="flex items-center justify-between text-[11px] text-slate-500 mt-1.5">
@@ -418,7 +390,7 @@ export default function SubjectDetailPage() {
               <button
                 type="submit"
                 disabled={pinLoading || !pinInput.trim()}
-                className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 disabled:bg-slate-300 text-white font-bold text-xs transition-all shadow-md shadow-amber-500/20 flex items-center justify-center gap-1.5"
+                className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:bg-slate-300 text-white font-bold text-xs transition-colors shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 {pinLoading ? (
                   <span>Verifying PIN...</span>

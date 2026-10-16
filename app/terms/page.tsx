@@ -40,22 +40,22 @@ export default function TermsPage() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="bg-linear-to-b from-slate-900 via-slate-900 to-slate-800 text-white py-14 px-4 sm:px-6 lg:px-8 border-b border-slate-700">
+      {/* Header Banner (Clean Minimalist) */}
+      <section className="bg-white border-b border-slate-200 text-slate-900 py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto space-y-4 text-center sm:text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 text-xs font-bold uppercase tracking-wider">
-            <Scale className="w-4 h-4 text-blue-400" />
+          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold">
+            <Scale className="w-3.5 h-3.5 text-blue-600" />
             <span>Student &amp; User License Agreement</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
             Terms of Use &amp; Service Agreement
           </h1>
-          <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-3xl">
+          <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">
             Please read these terms carefully before accessing or using AcademicPrep (academicprep.com). 
             By accessing our mock papers, curriculum study guides, quizzes, or creating an account, 
             you agree to be bound by these legal terms.
           </p>
-          <div className="pt-2 text-xs text-slate-400">
+          <div className="pt-2 text-xs text-slate-500 font-medium">
             Last Revised: October 2026 • Valid for JHS, SHS &amp; Examination Candidates
           </div>
         </div>

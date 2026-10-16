@@ -34,7 +34,7 @@ const GUIDE_STEPS: GuideStep[] = [
     targetId: 'guide-step-level',
     stepNumber: 3,
     title: 'Class Level',
-    text: 'Select your current grade (JHS 1, JHS 2, or JHS 3) to load the appropriate NaCCA syllabus topics.',
+    text: 'Select your current grade (SHS 1-3 or JHS 1-3) to load the appropriate WAEC / NaCCA syllabus topics.',
   },
   {
     id: 'password',
@@ -185,7 +185,7 @@ export default function OnboardingGuide({
     <>
       {/* Light, non-intrusive backdrop */}
       <div 
-        className="fixed inset-0 z-30 bg-slate-900/20 backdrop-blur-[1px] transition-opacity duration-200 pointer-events-auto"
+        className="fixed inset-0 z-30 bg-slate-900/20 transition-opacity duration-200 pointer-events-auto"
         onClick={onClose}
       />
 

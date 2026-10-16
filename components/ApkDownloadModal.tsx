@@ -17,9 +17,9 @@ export default function ApkDownloadModal({ isOpen, onClose }: ApkDownloadModalPr
       role="dialog"
       aria-modal="true"
       aria-labelledby="apk-modal-title"
-      className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 bg-slate-900/50 flex items-center justify-center p-4 animate-in fade-in duration-200"
     >
-      <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-slate-200 relative text-left space-y-5">
+      <div className="bg-white rounded-2xl max-w-md w-full p-6 sm:p-7 shadow-xl border border-slate-200 relative text-left space-y-5">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -31,7 +31,7 @@ export default function ApkDownloadModal({ isOpen, onClose }: ApkDownloadModalPr
 
         {/* Header */}
         <div className="flex items-start gap-3.5 pr-6">
-          <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-md shadow-blue-500/20 shrink-0 border border-slate-200 bg-blue-600">
+          <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-slate-200 bg-blue-600">
             <img 
               src="/android-icon.png" 
               alt="AcademicPrep App Icon" 
@@ -90,7 +90,7 @@ export default function ApkDownloadModal({ isOpen, onClose }: ApkDownloadModalPr
           <a
             href={OFFICIAL_APK_DOWNLOAD_URL}
             download="AcademicPrep-v1.0.0.apk"
-            className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-md shadow-emerald-600/25 transition-all cursor-pointer text-center"
+            className="w-full py-3.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer text-center"
           >
             <Download className="w-4 h-4" />
             <span>Install APK Now ({APK_FILE_SIZE})</span>
