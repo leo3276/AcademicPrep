@@ -161,43 +161,32 @@ By replacing passive reading with active testing, you will remember facts effort
 
 const BLOG_LOCAL_STORAGE_KEY = 'academicprep_blog_posts_v1';
 
+let inMemoryBlogCache: BlogPost[] | null = null;
+let activeBlogFetchPromise: Promise<BlogPost[]> | null = null;
+
 /**
- * Client-side fetcher: grabs all blog posts from /api/blog with local cache fallback
+ * Client-side fetcher: grabs all blog posts with immediate local cache return & background revalidation
  */
 export async function fetchBlogPosts(category?: string): Promise<BlogPost[]> {
-  const url = category && category !== 'ALL'
-    ? `/api/blog?category=${encodeURIComponent(category)}`
-    : '/api/blog';
-
-  try {
-    const res = await fetch(url, { cache: 'no-store' });
-    if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data)) {
-        if (typeof window !== 'undefined' && (!category || category === 'ALL')) {
-          try {
-            localStorage.setItem(BLOG_LOCAL_STORAGE_KEY, JSON.stringify(data));
-          } catch {
-            // storage quota fallback
-          }
-        }
-        return data;
-      }
-    }
-  } catch (err) {
-    console.warn('Failed to fetch from /api/blog, checking local storage:', err);
+  // 1. If in-memory cache exists and no category filter, return immediately (0ms)
+  if (inMemoryBlogCache && (!category || category === 'ALL')) {
+    return inMemoryBlogCache;
   }
 
-  // Fallback to local cache or defaults
-  if (typeof window !== 'undefined') {
+  // 2. Read local storage cache first to return instantly
+  if (typeof window !== 'undefined' && !inMemoryBlogCache) {
     try {
       const cached = localStorage.getItem(BLOG_LOCAL_STORAGE_KEY);
       if (cached) {
         const parsed = JSON.parse(cached);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return category && category !== 'ALL'
-            ? parsed.filter((p) => p.category === category)
-            : parsed;
+          inMemoryBlogCache = parsed;
+          if (!category || category === 'ALL') {
+            // Trigger background fetch to stay fresh, but return instantly
+            refreshBlogInBackground();
+            return parsed;
+          }
+          return parsed.filter((p) => p.category === category);
         }
       }
     } catch {
@@ -205,9 +194,55 @@ export async function fetchBlogPosts(category?: string): Promise<BlogPost[]> {
     }
   }
 
+  // 3. Deduplicate active network fetch across components
+  if (!activeBlogFetchPromise) {
+    activeBlogFetchPromise = (async () => {
+      try {
+        const res = await fetch('/api/blog', { cache: 'default' });
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data) && data.length > 0) {
+            inMemoryBlogCache = data;
+            if (typeof window !== 'undefined') {
+              try {
+                localStorage.setItem(BLOG_LOCAL_STORAGE_KEY, JSON.stringify(data));
+              } catch {}
+            }
+            return data;
+          }
+        }
+      } catch (err) {
+        console.warn('Network blog fetch note:', err);
+      } finally {
+        activeBlogFetchPromise = null;
+      }
+      return inMemoryBlogCache || INITIAL_BLOG_POSTS;
+    })();
+  }
+
+  const posts = await activeBlogFetchPromise;
   return category && category !== 'ALL'
-    ? INITIAL_BLOG_POSTS.filter((p) => p.category === category)
-    : INITIAL_BLOG_POSTS;
+    ? posts.filter((p) => p.category === category)
+    : posts;
+}
+
+function refreshBlogInBackground() {
+  if (activeBlogFetchPromise) return;
+  activeBlogFetchPromise = fetch('/api/blog', { cache: 'default' })
+    .then((r) => r.ok ? r.json() : null)
+    .then((data) => {
+      if (Array.isArray(data) && data.length > 0) {
+        inMemoryBlogCache = data;
+        try {
+          localStorage.setItem(BLOG_LOCAL_STORAGE_KEY, JSON.stringify(data));
+        } catch {}
+      }
+      return inMemoryBlogCache || INITIAL_BLOG_POSTS;
+    })
+    .catch(() => inMemoryBlogCache || INITIAL_BLOG_POSTS)
+    .finally(() => {
+      activeBlogFetchPromise = null;
+    });
 }
 
 /**

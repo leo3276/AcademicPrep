@@ -72,17 +72,18 @@ export default function HomePage() {
   const featuredPosts = blogPosts.filter((p) => p.featured);
 
   return (
-    <div className="space-y-12 sm:space-y-16 pb-16 sm:pb-20 w-full max-w-full overflow-hidden">
-      {/* Hero Section with Interactive 3D Educational Canvas Background */}
-      <section className="relative overflow-hidden text-white pt-12 pb-16 sm:pt-16 sm:pb-24">
-        {/* Interactive 3D Floating Books, Quiz Sheets & Ambient Particles Canvas */}
-        <Books3DBackground />
+    <div className="relative w-full max-w-full">
+      {/* Dynamic Multi-Face 3D Background Canvas spanning across the whole homepage */}
+      <Books3DBackground />
 
-        {/* Ambient Top Glow Overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent pointer-events-none" />
-        
-        {/* The Exact Original Content & Layout */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+      <div className="relative z-10 space-y-12 sm:space-y-16 pb-16 sm:pb-20 w-full max-w-full">
+        {/* Hero Section */}
+        <section className="relative overflow-hidden text-white pt-12 pb-16 sm:pt-16 sm:pb-24">
+          {/* Ambient Top Glow Overlay */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent pointer-events-none" />
+          
+          {/* The Exact Original Content & Layout */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="text-center max-w-3xl mx-auto space-y-5 sm:space-y-6">
             {latestPost && (
               <div className="flex flex-wrap items-center justify-center gap-2 max-w-full">
@@ -159,31 +160,31 @@ export default function HomePage() {
         </div>
       </section>
 
-        {/* Live Counters (Clean Minimalist) */}
+        {/* Live Counters */}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-3.5 sm:p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-3.5 sm:p-5 rounded-2xl bg-white/95 backdrop-blur-md border border-white/20 shadow-xl">
             <div className="text-center p-2 sm:p-3">
               <div className="text-xl sm:text-3xl font-black text-slate-900">8,000+</div>
-              <div className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1">Community Students</div>
+              <div className="text-[11px] sm:text-xs text-slate-600 font-medium mt-1">Community Students</div>
             </div>
             <div className="text-center p-2 sm:p-3">
               <div className="text-xl sm:text-3xl font-black text-slate-900">JHS &amp; SHS</div>
-              <div className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1">Full Curriculum Live</div>
+              <div className="text-[11px] sm:text-xs text-slate-600 font-medium mt-1">Full Curriculum Live</div>
             </div>
             <div className="text-center p-2 sm:p-3">
               <div className="text-xl sm:text-3xl font-black text-slate-900">100%</div>
-              <div className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1">Instant Auto-Grading</div>
+              <div className="text-[11px] sm:text-xs text-slate-600 font-medium mt-1">Instant Auto-Grading</div>
             </div>
             <div className="text-center p-2 sm:p-3">
               <div className="text-xl sm:text-3xl font-black text-slate-900">Adaptive</div>
-              <div className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1">Weekly Exams</div>
+              <div className="text-[11px] sm:text-xs text-slate-600 font-medium mt-1">Weekly Exams</div>
             </div>
           </div>
         </div>
 
       {/* Public Announcement: 30-Day Free Trial Notice */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2">
-        <div className="rounded-2xl bg-white border border-blue-200/90 p-4 sm:p-5 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="rounded-2xl bg-white/95 backdrop-blur-md border border-blue-200/90 p-4 sm:p-5 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
             <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-700 flex items-center justify-center shrink-0 mt-0.5">
               <Sparkles className="w-5 h-5 text-blue-600" />
@@ -218,15 +219,21 @@ export default function HomePage() {
       {/* Sections Architecture (JHS, SHS, University) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-10">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-blue-600 mb-2">Platform Structure</h2>
-          <p className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 text-xs font-bold mb-3 backdrop-blur-sm shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-cyan-300" />
+            <span>Curriculum Pathways</span>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight drop-shadow-sm">
             Academic Portals Designed for Every Stage
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-300 mt-2 font-normal">
+            Aligned with Ghana Education Service (GES) &amp; NaCCA standards for BECE and WASSCE candidates.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Card 1: JHS (ACTIVE) */}
-          <div id="tour-home-jhs" className="relative rounded-2xl bg-white border border-slate-300 p-6 shadow-xs flex flex-col justify-between overflow-hidden">
+          <div id="tour-home-jhs" className="relative rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 p-6 shadow-xl flex flex-col justify-between overflow-hidden">
             <div className="absolute top-0 right-0 bg-blue-600 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-1 rounded-bl-xl shadow-xs">
               Active & Live Now
             </div>
@@ -273,7 +280,7 @@ export default function HomePage() {
           </div>
 
           {/* Card 2: SHS Section (Live) */}
-          <div className="rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between shadow-xs">
+          <div className="rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 p-6 flex flex-col justify-between shadow-xl">
             <div className="space-y-4">
               <div className="w-11 h-11 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 flex items-center justify-center font-bold">
                 <BookOpenCheck className="w-6 h-6" />
@@ -321,7 +328,7 @@ export default function HomePage() {
           </div>
 
           {/* Card 3: University (Coming Soon) */}
-          <div className="rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between opacity-85">
+          <div className="rounded-2xl bg-white/90 backdrop-blur-md border border-slate-200 p-6 flex flex-col justify-between opacity-85 shadow-lg">
             <div className="space-y-4">
               <div className="w-11 h-11 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 flex items-center justify-center font-bold">
                 <Users className="w-6 h-6" />
@@ -368,21 +375,21 @@ export default function HomePage() {
       {/* High-Intent SEO & Study Resources Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold mb-3">
-            <GraduationCap className="w-3.5 h-3.5 text-emerald-600" />
-            Ghana’s Premier BECE Hub
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-xs font-bold mb-3 backdrop-blur-sm shadow-xs">
+            <GraduationCap className="w-3.5 h-3.5 text-emerald-300" />
+            <span>Ghana’s Premier BECE Hub</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            BECE Past Questions, Mock Exams & NaCCA Curriculum Notes
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight drop-shadow-sm">
+            BECE Past Questions, Mock Exams &amp; NaCCA Curriculum Notes
           </h2>
-          <p className="text-sm sm:text-base text-slate-600 mt-3 leading-relaxed">
+          <p className="text-sm sm:text-base text-slate-300 mt-3 leading-relaxed">
             Everything Ghanaian Junior High School students (JHS 1, 2, and 3) need to prepare for WAEC BECE success, with step-by-step solutions and verified marking schemes.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* BECE Past Questions Archive Card (Clean Minimalist) */}
-          <div id="tour-home-bece" className="rounded-2xl bg-white border border-slate-200 text-slate-900 p-6 sm:p-7 shadow-2xs flex flex-col justify-between">
+          {/* BECE Past Questions Archive Card */}
+          <div id="tour-home-bece" className="rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 text-slate-900 p-6 sm:p-7 shadow-xl flex flex-col justify-between">
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
                 <FileText className="w-3.5 h-3.5 text-slate-600" />
@@ -424,8 +431,8 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* BECE Trial & Mock Exam Card (Clean Minimalist) */}
-          <div id="tour-home-mocks" className="rounded-2xl bg-white border border-slate-200 text-slate-900 p-6 sm:p-7 shadow-2xs flex flex-col justify-between">
+          {/* BECE Trial & Mock Exam Card */}
+          <div id="tour-home-mocks" className="rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 text-slate-900 p-6 sm:p-7 shadow-xl flex flex-col justify-between">
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
                 <Award className="w-3.5 h-3.5 text-slate-600" />
@@ -469,9 +476,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Key Innovation: Dynamic Weekly Exam (Clean Minimalist) */}
+      {/* Key Innovation: Dynamic Weekly Exam */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div id="tour-home-weekly" className="rounded-2xl bg-white border border-slate-200 p-6 sm:p-9 text-slate-900 shadow-2xs">
+        <div id="tour-home-weekly" className="rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 p-6 sm:p-9 text-slate-900 shadow-xl">
           <div className="max-w-2xl space-y-4">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
               <Clock className="w-3.5 h-3.5 text-slate-600" />
@@ -653,7 +660,7 @@ export default function HomePage() {
 
       {/* Study Journal & WAEC Strategy Articles */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div id="tour-home-blog" className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-8">
+        <div id="tour-home-blog" className="bg-white/95 backdrop-blur-md rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-xl space-y-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-100 pb-6">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold mb-2">
@@ -834,6 +841,7 @@ export default function HomePage() {
 
       {/* Polite Welcome Toast Inviting First-Time Visitors to Tour */}
       <TourPromptToast onStartTour={() => setShowTour(true)} />
+      </div>
     </div>
   );
 }

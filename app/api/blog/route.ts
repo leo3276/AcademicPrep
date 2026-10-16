@@ -12,7 +12,16 @@ const DATA_FILE = path.join(process.cwd(), 'data', 'blog_posts.json');
 const MANIFEST_FILE_NAME = 'blog_posts_manifest.json';
 const DOCUMENTS_BUCKET = 'documents';
 
+let memoryCache: BlogPost[] | null = null;
+let lastCacheTime = 0;
+const CACHE_TTL_MS = 60 * 1000; // 60s memory cache
+
 async function getStoredBlogPosts(): Promise<BlogPost[]> {
+  // Return in-memory cache if within 60s window (0ms response)
+  if (memoryCache && Date.now() - lastCacheTime < CACHE_TTL_MS) {
+    return memoryCache;
+  }
+
   // 1. Primary: Fetch from Supabase Storage CDN
   try {
     const { data: pubData } = supabaseAdmin.storage
@@ -20,10 +29,12 @@ async function getStoredBlogPosts(): Promise<BlogPost[]> {
       .getPublicUrl(MANIFEST_FILE_NAME);
 
     if (pubData?.publicUrl) {
-      const res = await fetch(`${pubData.publicUrl}?t=${Date.now()}`, { cache: 'no-store' });
+      const res = await fetch(`${pubData.publicUrl}?t=${Math.floor(Date.now() / 60000)}`, { cache: 'default' });
       if (res.ok) {
         const parsed = await res.json();
         if (Array.isArray(parsed) && parsed.length > 0) {
+          memoryCache = parsed;
+          lastCacheTime = Date.now();
           return parsed;
         }
       }
@@ -67,6 +78,10 @@ async function getStoredBlogPosts(): Promise<BlogPost[]> {
 }
 
 async function saveStoredBlogPosts(posts: BlogPost[]): Promise<void> {
+  // Invalidate in-memory cache
+  memoryCache = posts;
+  lastCacheTime = Date.now();
+
   // 1. Primary: Save to Supabase Storage
   try {
     const { error } = await supabaseAdmin.storage
@@ -112,7 +127,7 @@ export async function GET(req: NextRequest) {
     }
     return NextResponse.json(post, {
       headers: {
-        'Cache-Control': 'no-store, max-age=0',
+        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
       },
     });
   }
@@ -124,7 +139,7 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json(results, {
     headers: {
-      'Cache-Control': 'no-store, max-age=0',
+      'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
     },
   });
 }

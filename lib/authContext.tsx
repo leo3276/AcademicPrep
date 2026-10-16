@@ -173,85 +173,106 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           }
         }
 
-        // Administrator state comes from the server session cookie, never from a
-        // browser flag that any visitor could set in devtools.
-        const adminSession = await fetchAdminSession();
-        if (isMounted) setIsAdmin(adminSession);
-
+        // 1. INSTANT HYDRATION: Read local cached student, progress, and exams synchronously (0ms)
         const cachedStudent = readLocalStorage<Student | null>(STORAGE_KEYS.CURRENT_STUDENT, null);
-        if (cachedStudent && isMounted) setStudent(cachedStudent);
-
-        if (getSessionToken()) {
-          const liveStudent = await fetchCurrentStudent();
-
-          if (!liveStudent) {
-            // Token rejected or expired: drop it and the cached profile so the
-            // paywall cannot be driven by stale local data.
-            clearSessionToken();
-            if (typeof window !== 'undefined') window.localStorage.removeItem(STORAGE_KEYS.CURRENT_STUDENT);
-            if (isMounted) setStudent(null);
-          } else if (isMounted) {
-            setStudent(liveStudent);
-            writeLocalStorage(STORAGE_KEYS.CURRENT_STUDENT, liveStudent);
-
-            const phone = liveStudent.phoneNumber;
-
-            const scopedProgress = readLocalStorage<Record<string, StudentTopicProgress>>(
-              `academicprep_progress_${phone}`,
-              {}
-            );
-            const cloudProgress = await fetchStudentProgress();
-            const mergedProgress = { ...scopedProgress, ...cloudProgress };
-
-            if (isMounted) {
-              setTopicProgress(mergedProgress);
-              writeLocalStorage(`academicprep_progress_${phone}`, mergedProgress);
-            }
-
-            const exams = await fetchWeeklyExams();
-            if (isMounted && Array.isArray(exams)) {
-              setWeeklyExamAttempts(
-                exams.map((exam: any) => ({
-                  id: exam.id,
-                  studentId: exam.student_phone || phone,
-                  level: exam.level,
-                  coveredTopicIds: [],
-                  totalQuestions: exam.paper1_total || 20,
-                  correctAnswers: exam.paper1_score || 0,
-                  scorePercentage: exam.composite_total_percentage || 0,
-                  timeSpentSeconds: 1200,
-                  createdAt: exam.completed_at,
-                }))
-              );
-            }
-          }
+        if (cachedStudent && isMounted) {
+          setStudent(cachedStudent);
+          const phone = cachedStudent.phoneNumber;
+          const scopedProgress = readLocalStorage<Record<string, StudentTopicProgress>>(
+            `academicprep_progress_${phone}`,
+            {}
+          );
+          setTopicProgress(scopedProgress);
+          setWeeklyExamAttempts(readLocalStorage<WeeklyExamAttempt[]>(STORAGE_KEYS.EXAM_ATTEMPTS, []));
         } else if (isMounted) {
-          const fallbackProgress = cachedStudent?.phoneNumber
-            ? readLocalStorage<Record<string, StudentTopicProgress>>(
-                `academicprep_progress_${cachedStudent.phoneNumber}`,
-                {}
-              )
-            : readLocalStorage<Record<string, StudentTopicProgress>>(STORAGE_KEYS.TOPIC_PROGRESS, {});
-
+          const fallbackProgress = readLocalStorage<Record<string, StudentTopicProgress>>(STORAGE_KEYS.TOPIC_PROGRESS, {});
           setTopicProgress(fallbackProgress);
           setWeeklyExamAttempts(readLocalStorage<WeeklyExamAttempt[]>(STORAGE_KEYS.EXAM_ATTEMPTS, []));
         }
 
-        // Voucher codes are worth money, so they are only loaded for admins.
-        if (adminSession) {
-          const livePins = await fetchAccessPins();
-          if (isMounted) {
-            setPins(livePins);
-            writeLocalStorage(STORAGE_KEYS.ACCESS_PINS, livePins);
-
-            const derived = deriveTransactions(livePins);
-            setTransactions(derived);
-            writeLocalStorage(STORAGE_KEYS.TRANSACTIONS, derived);
-          }
+        // Immediately unblock the UI so the entire website renders in 0ms without waiting on network
+        if (isMounted) {
+          setIsLoading(false);
         }
+
+        // 2. BACKGROUND SYNC (Non-blocking): Run admin check & live updates in parallel
+        (async () => {
+          try {
+            // Check admin status non-blockingly
+            fetchAdminSession()
+              .then((adminSession) => {
+                if (isMounted) {
+                  setIsAdmin(adminSession);
+                  if (adminSession) {
+                    fetchAccessPins()
+                      .then((livePins) => {
+                        if (isMounted) {
+                          setPins(livePins);
+                          writeLocalStorage(STORAGE_KEYS.ACCESS_PINS, livePins);
+                          const derived = deriveTransactions(livePins);
+                          setTransactions(derived);
+                          writeLocalStorage(STORAGE_KEYS.TRANSACTIONS, derived);
+                        }
+                      })
+                      .catch(() => {});
+                  }
+                }
+              })
+              .catch(() => {});
+
+            // If session token exists, fetch live updates in parallel (not sequential)
+            if (getSessionToken()) {
+              const [studentRes, progressRes, examsRes] = await Promise.allSettled([
+                fetchCurrentStudent(),
+                fetchStudentProgress(),
+                fetchWeeklyExams(),
+              ]);
+
+              if (studentRes.status === 'fulfilled') {
+                const liveStudent = studentRes.value;
+                if (!liveStudent) {
+                  clearSessionToken();
+                  if (typeof window !== 'undefined') window.localStorage.removeItem(STORAGE_KEYS.CURRENT_STUDENT);
+                  if (isMounted) setStudent(null);
+                } else if (isMounted) {
+                  setStudent(liveStudent);
+                  writeLocalStorage(STORAGE_KEYS.CURRENT_STUDENT, liveStudent);
+                }
+              }
+
+              if (progressRes.status === 'fulfilled' && isMounted && progressRes.value) {
+                const cloudProgress = progressRes.value;
+                setTopicProgress((prev) => {
+                  const merged = { ...prev, ...cloudProgress };
+                  if (cachedStudent?.phoneNumber) {
+                    writeLocalStorage(`academicprep_progress_${cachedStudent.phoneNumber}`, merged);
+                  }
+                  return merged;
+                });
+              }
+
+              if (examsRes.status === 'fulfilled' && Array.isArray(examsRes.value) && isMounted) {
+                setWeeklyExamAttempts(
+                  examsRes.value.map((exam: any) => ({
+                    id: exam.id,
+                    studentId: exam.student_phone || cachedStudent?.phoneNumber || '',
+                    level: exam.level,
+                    coveredTopicIds: [],
+                    totalQuestions: exam.paper1_total || 20,
+                    correctAnswers: exam.paper1_score || 0,
+                    scorePercentage: exam.composite_total_percentage || 0,
+                    timeSpentSeconds: 1200,
+                    createdAt: exam.completed_at,
+                  }))
+                );
+              }
+            }
+          } catch {
+            // Background sync error handled gracefully
+          }
+        })();
       } catch {
-        // Graceful fallback for SSR or restricted storage
-      } finally {
+        // Graceful fallback
         if (isMounted) setIsLoading(false);
       }
     }
