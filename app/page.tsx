@@ -110,41 +110,37 @@ export default function HomePage() {
               Full JHS and SHS curriculum notes, instant WAEC-standard quizzes with step-by-step explanations, and 5 comprehensive elective programme strands.
             </p>
 
-            <div className="pt-2 w-full max-w-md mx-auto sm:max-w-none">
-              <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-3">
-                <Link
-                  href="/jhs"
-                  id="tour-home-launch"
-                  className="group px-3 py-2.5 sm:px-6 sm:py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold sm:font-bold text-xs sm:text-sm transition-all shadow-md shadow-blue-500/25 hover:shadow-blue-500/40 flex items-center justify-center gap-1.5 sm:gap-2 active:scale-95 cursor-pointer border border-blue-400/20"
-                >
-                  <GraduationCap className="w-4 h-4 shrink-0 text-blue-200" />
-                  <span><span className="hidden sm:inline">Launch </span>JHS Portal</span>
-                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-0.5 sm:group-hover:translate-x-1 transition-transform shrink-0" />
-                </Link>
+            {/* Action Buttons - Desktop & Tablet (Hidden on Mobile) */}
+            <div className="hidden sm:flex flex-row items-center justify-center gap-3 pt-2 w-full max-w-none mx-auto">
+              <Link
+                href="/jhs"
+                id="tour-home-launch"
+                className="w-auto px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 group cursor-pointer"
+              >
+                <span>Launch JHS Portal</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
 
-                <Link
-                  href="/shs"
-                  className="group px-3 py-2.5 sm:px-6 sm:py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white font-semibold sm:font-bold text-xs sm:text-sm transition-all shadow-md shadow-purple-500/25 hover:shadow-purple-500/40 flex items-center justify-center gap-1.5 sm:gap-2 active:scale-95 cursor-pointer border border-purple-400/20"
-                >
-                  <BookOpenCheck className="w-4 h-4 shrink-0 text-purple-200" />
-                  <span><span className="hidden sm:inline">Launch </span>SHS Portal</span>
-                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-0.5 sm:group-hover:translate-x-1 transition-transform shrink-0" />
-                </Link>
+              <Link
+                href="/shs"
+                className="w-auto px-6 py-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm transition-all shadow-lg shadow-purple-500/30 flex items-center justify-center gap-2 group cursor-pointer"
+              >
+                <span>Launch SHS (WASSCE) Portal</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
 
-                <button
-                  type="button"
-                  onClick={() => setShowApkModal(true)}
-                  className="col-span-2 sm:col-auto mt-0.5 sm:mt-0 py-2 px-4 sm:px-5 sm:py-3.5 rounded-xl bg-emerald-500/15 sm:bg-emerald-600 hover:bg-emerald-500/25 sm:hover:bg-emerald-500 text-emerald-300 sm:text-white font-medium sm:font-bold text-xs sm:text-sm transition-all border border-emerald-400/30 shadow-xs sm:shadow-lg sm:shadow-emerald-600/25 flex items-center justify-center gap-2 cursor-pointer active:scale-95 w-full sm:w-auto"
-                >
-                  <Smartphone className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-300 sm:text-emerald-200 shrink-0" />
-                  <span>Android App (APK)</span>
-                  <span className="inline-block sm:hidden text-[10px] bg-emerald-400/20 text-emerald-300 px-1.5 py-0.5 rounded-full font-mono">v1.0</span>
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={() => setShowApkModal(true)}
+                className="w-auto px-5 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm transition-all shadow-lg shadow-emerald-600/25 flex items-center justify-center gap-2 cursor-pointer border border-emerald-400/30"
+              >
+                <Smartphone className="w-4 h-4 text-emerald-200" />
+                <span>Android App (APK)</span>
+              </button>
             </div>
 
-            {/* Quick Demo Info Box */}
-            <div className="pt-3 max-w-md mx-auto w-full">
+            {/* Quick Demo Info Box - Desktop & Tablet (Hidden on Mobile) */}
+            <div className="hidden sm:block pt-3 max-w-md mx-auto w-full">
               <div id="tour-home-demo" className="bg-slate-900/80 backdrop-blur-md rounded-xl p-3 sm:p-3.5 border border-slate-700/80 text-left text-xs text-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 shadow-md">
                 <div>
                   <span className="font-semibold text-white block mb-0.5">Try Demo Student Account:</span>

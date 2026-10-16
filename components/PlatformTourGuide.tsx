@@ -197,6 +197,17 @@ export default function PlatformTourGuide({
     }
 
     const rect = el.getBoundingClientRect();
+    if (rect.width === 0 && rect.height === 0) {
+      setHighlightRect(null);
+      const tooltipWidth = Math.min(420, window.innerWidth - 32);
+      setTooltipPos({
+        top: Math.max(16, (window.innerHeight - 240) / 2),
+        left: Math.max(16, (window.innerWidth - tooltipWidth) / 2),
+        arrowLeft: -999,
+        placement: 'bottom',
+      });
+      return;
+    }
 
     // Use fixed viewport coordinates with a 6px safety padding
     const pad = 6;
@@ -246,7 +257,7 @@ export default function PlatformTourGuide({
     if (!isOpen || !step) return;
 
     const el = document.getElementById(step.targetId);
-    if (el) {
+    if (el && (el.offsetWidth > 0 || el.offsetHeight > 0)) {
       el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       const t1 = setTimeout(updatePosition, 120);
       const t2 = setTimeout(updatePosition, 350);
