@@ -141,7 +141,7 @@ export default function HomePage() {
 
             {/* Quick Demo Info Box - Desktop & Tablet (Hidden on Mobile) */}
             <div className="hidden sm:block pt-3 max-w-md mx-auto w-full">
-              <div id="tour-home-demo" className="bg-slate-900/80 backdrop-blur-md rounded-xl p-3 sm:p-3.5 border border-slate-700/80 text-left text-xs text-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 shadow-md">
+              <div id="tour-home-demo" className="bg-slate-900/60 backdrop-blur-md rounded-xl p-3 sm:p-3.5 border border-slate-600/60 text-left text-xs text-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 shadow-md">
                 <div>
                   <span className="font-semibold text-white block mb-0.5">Try Demo Student Account:</span>
                   <span className="text-slate-300 break-words">
@@ -163,7 +163,7 @@ export default function HomePage() {
 
         {/* Live Counters */}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-3.5 sm:p-5 rounded-2xl bg-white/95 backdrop-blur-md border border-white/20 shadow-xl">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-3.5 sm:p-5 rounded-2xl bg-white/65 backdrop-blur-md border border-white/40 shadow-xl">
             <div className="text-center p-2 sm:p-3">
               <div className="text-xl sm:text-3xl font-black text-slate-900">8,000+</div>
               <div className="text-[11px] sm:text-xs text-slate-600 font-medium mt-1">Community Students</div>
@@ -185,7 +185,7 @@ export default function HomePage() {
 
       {/* Public Announcement: 30-Day Free Trial Notice */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2">
-        <div className="rounded-2xl bg-white/95 backdrop-blur-md border border-blue-200/90 p-4 sm:p-5 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="rounded-2xl bg-white/65 backdrop-blur-md border border-blue-200/70 p-4 sm:p-5 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
             
             <div className="space-y-1">
@@ -232,7 +232,7 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Card 1: JHS (ACTIVE) */}
-          <div id="tour-home-jhs" className="relative rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 p-6 shadow-xl flex flex-col justify-between overflow-hidden">
+          <div id="tour-home-jhs" className="relative rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-6 shadow-xl flex flex-col justify-between overflow-hidden">
             <div className="absolute top-0 right-0 bg-blue-600 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-1 rounded-bl-xl shadow-xs">
               Active & Live Now
             </div>
@@ -279,7 +279,7 @@ export default function HomePage() {
           </div>
 
           {/* Card 2: SHS Section (Live) */}
-          <div className="rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 p-6 flex flex-col justify-between shadow-xl">
+          <div className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-6 flex flex-col justify-between shadow-xl">
             <div className="space-y-4">
               <div className="w-11 h-11 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 flex items-center justify-center font-bold">
                 <BookOpenCheck className="w-6 h-6" />
@@ -327,7 +327,7 @@ export default function HomePage() {
           </div>
 
           {/* Card 3: University (Coming Soon) */}
-          <div className="rounded-2xl bg-white/90 backdrop-blur-md border border-slate-200 p-6 flex flex-col justify-between opacity-85 shadow-lg">
+          <div className="rounded-2xl bg-white/55 backdrop-blur-md border border-white/40 p-6 flex flex-col justify-between opacity-85 shadow-lg">
             <div className="space-y-4">
               <div className="w-11 h-11 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 flex items-center justify-center font-bold">
                 <Users className="w-6 h-6" />
@@ -388,7 +388,7 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* BECE Past Questions Archive Card */}
-          <div id="tour-home-bece" className="rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 text-slate-900 p-6 sm:p-7 shadow-xl flex flex-col justify-between">
+          <div id="tour-home-bece" className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 text-slate-900 p-6 sm:p-7 shadow-xl flex flex-col justify-between">
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
                 <FileText className="w-3.5 h-3.5 text-slate-600" />
@@ -431,7 +431,7 @@ export default function HomePage() {
           </div>
 
           {/* BECE Trial & Mock Exam Card */}
-          <div id="tour-home-mocks" className="rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 text-slate-900 p-6 sm:p-7 shadow-xl flex flex-col justify-between">
+          <div id="tour-home-mocks" className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 text-slate-900 p-6 sm:p-7 shadow-xl flex flex-col justify-between">
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
                 <Award className="w-3.5 h-3.5 text-slate-600" />
@@ -477,7 +477,7 @@ export default function HomePage() {
 
       {/* Key Innovation: Dynamic Weekly Exam */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div id="tour-home-weekly" className="rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 p-6 sm:p-9 text-slate-900 shadow-xl">
+        <div id="tour-home-weekly" className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-6 sm:p-9 text-slate-900 shadow-xl">
           <div className="max-w-2xl space-y-4">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
               <Clock className="w-3.5 h-3.5 text-slate-600" />
@@ -512,7 +512,7 @@ export default function HomePage() {
 
       {/* Android Mobile App (APK) Showcase Section */}
       <section id="mobile-app" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 sm:p-9 text-white shadow-xs">
+        <div className="bg-slate-900/60 backdrop-blur-md rounded-2xl border border-slate-600/50 p-6 sm:p-9 text-white shadow-xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left Content Column */}
             <div className="lg:col-span-7 space-y-5">
@@ -603,13 +603,14 @@ export default function HomePage() {
 
             {/* Right Card Column - Mock Phone Card */}
             <div className="lg:col-span-5 flex justify-center">
-              <div className="w-full max-w-sm rounded-2xl bg-slate-800 border border-slate-700 p-5 shadow-md space-y-4">
+              <div className="w-full max-w-sm rounded-2xl bg-slate-800/60 backdrop-blur-sm border border-slate-600/60 p-5 shadow-md space-y-4">
                 <div className="flex items-center gap-3.5 pb-4 border-b border-slate-700/60">
                   <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-slate-700 bg-blue-600">
                     <img 
                       src="/android-icon.png" 
                       alt="AcademicPrep App Icon" 
                       className="w-full h-full object-cover" 
+                      loading="lazy"
                     />
                   </div>
                   <div>
@@ -659,7 +660,7 @@ export default function HomePage() {
 
       {/* Study Journal & WAEC Strategy Articles */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div id="tour-home-blog" className="bg-white/95 backdrop-blur-md rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-xl space-y-8">
+        <div id="tour-home-blog" className="bg-white/65 backdrop-blur-md rounded-3xl border border-white/50 p-6 sm:p-10 shadow-xl space-y-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-100 pb-6">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold mb-2">
@@ -735,7 +736,7 @@ export default function HomePage() {
                   {displayPosts.map((post) => (
                     <article
                       key={post.id}
-                      className="rounded-2xl bg-white border border-slate-200/90 hover:border-slate-300 p-5 sm:p-5.5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between group"
+                      className="rounded-2xl bg-white/70 backdrop-blur-sm border border-white/60 hover:border-blue-400 p-5 sm:p-5.5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between group"
                     >
                       <div>
                         {/* Media Thumbnail */}

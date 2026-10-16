@@ -812,7 +812,7 @@ export default function Books3DBackground() {
         ctx.stroke();
       }
 
-      // Helper function to update an item following the trail snake
+      // Helper function to update an item following the trail snake with sub-node continuous interpolation
       const updateTrailMotion = (
         item: {
           x: number;
@@ -827,20 +827,33 @@ export default function Books3DBackground() {
         faceProminence = 1.0
       ) => {
         if (mouseIsActive && trailHistory.current.length > 0) {
-          // Look up point along trail snake based on assigned trail index
-          const targetNodeIdx = Math.min(trailHistory.current.length - 1, Math.floor(item.trailIdx * 0.9));
-          const node = trailHistory.current[targetNodeIdx] || targetWorld;
+          // Continuous sub-node lerp along trail snake for silky smooth movement without discrete stepping
+          const targetIdx = Math.min(trailHistory.current.length - 1, item.trailIdx * 0.38);
+          const i0 = Math.floor(targetIdx);
+          const i1 = Math.min(trailHistory.current.length - 1, i0 + 1);
+          const frac = targetIdx - i0;
+          const n0 = trailHistory.current[i0] || targetWorld;
+          const n1 = trailHistory.current[i1] || n0;
+          const nodeX = n0.x + (n1.x - n0.x) * frac;
+          const nodeY = n0.y + (n1.y - n0.y) * frac;
+          const nodeZ = n0.z + (n1.z - n0.z) * frac;
 
-          // Gentle organic breathing halo so items do not clump when stationary
-          const haloAngle = time * 1.3 + item.trailIdx * 0.38;
-          const haloRadius = dragging ? 18 + (item.trailIdx % 4) * 8 : 28 + (item.trailIdx % 6) * 10;
-          const destX = node.x + Math.cos(haloAngle) * haloRadius;
-          const destY = node.y + Math.sin(haloAngle) * haloRadius;
-          const destZ = node.z + Math.sin(haloAngle * 1.3) * 16;
+          // Dynamic velocity check for aerodynamic streamlining
+          const currentSpeed = Math.hypot(item.vx, item.vy);
 
-          // Normal smooth trail physics (calibrated to feel fluid, not frantic or sluggish)
-          const pullStrength = dragging ? 0.052 : 0.038;
-          const damping = dragging ? 0.88 : 0.895;
+          // Streamlines into a tight ribbon when moving, gently expands into breathing cluster when stationary
+          const speedFactor = Math.min(1, currentSpeed / 7);
+          const baseHalo = dragging ? 10 + (item.trailIdx % 4) * 5 : 18 + (item.trailIdx % 6) * 6;
+          const haloRadius = baseHalo * (1 - speedFactor * 0.55);
+          const haloAngle = time * 1.8 + item.trailIdx * 0.42;
+
+          const destX = nodeX + Math.cos(haloAngle) * haloRadius;
+          const destY = nodeY + Math.sin(haloAngle) * haloRadius;
+          const destZ = nodeZ + Math.sin(haloAngle * 1.3) * 14;
+
+          // Faster & smoother critically-damped spring follow
+          const pullStrength = dragging ? 0.115 : 0.082;
+          const damping = dragging ? 0.845 : 0.865;
 
           item.vx += (destX - item.x) * pullStrength;
           item.vy += (destY - item.y) * pullStrength;
@@ -850,16 +863,17 @@ export default function Books3DBackground() {
           item.vy *= damping;
           item.vz *= damping;
 
-          // Velocity clamp to ensure items never move too fast or violently
-          const currentSpeed = Math.hypot(item.vx, item.vy);
-          const maxSpeed = dragging ? 10.5 : 7.2;
+          // Velocity clamp calibrated for swift, elegant motion
+          const maxSpeed = dragging ? 19.0 : 15.0;
           if (currentSpeed > maxSpeed) {
             item.vx = (item.vx / currentSpeed) * maxSpeed;
             item.vy = (item.vy / currentSpeed) * maxSpeed;
           }
 
+          // Smooth rotational banking
           if (item.rotZ !== undefined) {
-            item.rotZ += item.vx * 0.0012 - item.rotZ * 0.03;
+            const targetRotZ = item.vx * 0.002;
+            item.rotZ += (targetRotZ - item.rotZ) * 0.08;
           }
         } else {
           // Ambient gentle floating
@@ -880,13 +894,13 @@ export default function Books3DBackground() {
       // ── 1. DRAW GLOWING PARTICLES (ADAPTS TO FACE) ──
       particles.forEach((p, idx) => {
         if (mouseIsActive) {
-          const pAngle = idx + time * 1.5;
-          const pRadius = 55 + (idx % 8) * 18;
+          const pAngle = idx + time * 2.0;
+          const pRadius = 45 + (idx % 8) * 15;
           const targetPX = targetWorld.x + Math.cos(pAngle) * pRadius;
           const targetPY = targetWorld.y + Math.sin(pAngle) * pRadius;
 
-          p.x += (targetPX - p.x) * 0.04;
-          p.y += (targetPY - p.y) * 0.04;
+          p.x += (targetPX - p.x) * 0.09;
+          p.y += (targetPY - p.y) * 0.09;
         } else {
           p.x += p.vx;
           p.y += p.vy;
@@ -912,8 +926,8 @@ export default function Books3DBackground() {
       // ── 2. DRAW TWINKLING 3D SPARKLES (✦) ──
       sparkles.forEach((s) => {
         if (mouseIsActive) {
-          s.x += (targetWorld.x - s.x) * 0.05;
-          s.y += (targetWorld.y - s.y) * 0.05;
+          s.x += (targetWorld.x - s.x) * 0.10;
+          s.y += (targetWorld.y - s.y) * 0.10;
         }
         const pulse = Math.sin(time * 3 + s.pulsePhase);
         const currentAlpha = (s.alpha + pulse * 0.3) * 0.85;
