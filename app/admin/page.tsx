@@ -1143,7 +1143,7 @@ export default function AdminDashboardPage() {
               <Smartphone className="w-4 h-4 text-emerald-600" />
               <span>MoMo Claims</span>
               {momoClaims.filter(c => c.status === 'PENDING').length > 0 ? (
-                <span className="ml-1 text-[10px] bg-amber-500 text-white font-bold px-1.5 py-0.5 rounded-full animate-pulse">
+                <span className="ml-1 text-[10px] bg-amber-600 text-white font-bold px-1.5 py-0.5 rounded-full">
                   {momoClaims.filter(c => c.status === 'PENDING').length} New
                 </span>
               ) : (
@@ -1887,7 +1887,7 @@ export default function AdminDashboardPage() {
                 <h3 className="text-xs font-bold text-slate-900 flex items-center gap-2">
                   <span>Student MoMo Payment Claims</span>
                   {loadingClaims && (
-                    <span className="text-[10px] text-blue-600 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full font-medium animate-pulse">
+                    <span className="text-[10px] text-blue-600 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full font-medium">
                       Updating...
                     </span>
                   )}
@@ -1989,7 +1989,7 @@ export default function AdminDashboardPage() {
                               <td className="px-4 py-3 whitespace-nowrap">
                                 {claim.status === 'PENDING' && (
                                   <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" />
+                                    <span className="w-1.5 h-1.5 rounded-full bg-amber-600" />
                                     <span>VIP ACTIVE (CHECK MOMO)</span>
                                   </span>
                                 )}
@@ -3452,7 +3452,7 @@ export default function AdminDashboardPage() {
                         className="rounded border-blue-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer"
                       />
                       <label htmlFor="blogBroadcastOnPublish" className="text-xs text-blue-900 font-bold cursor-pointer flex items-center gap-1.5">
-                        <Radio className="w-3.5 h-3.5 text-blue-600 animate-pulse" />
+                        <Radio className="w-3.5 h-3.5 text-blue-600" />
                         <span>Broadcast this announcement directly to students (SMS &amp; WhatsApp) upon publishing</span>
                       </label>
                     </div>
@@ -3523,7 +3523,7 @@ export default function AdminDashboardPage() {
                     Published Articles ({blogPosts.length})
                   </h3>
                   {loadingBlog && (
-                    <span className="text-[10px] text-blue-600 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full font-medium animate-pulse">
+                    <span className="text-[10px] text-blue-600 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full font-medium">
                       Syncing...
                     </span>
                   )}
@@ -3655,7 +3655,7 @@ export default function AdminDashboardPage() {
                                       className="inline-flex items-center gap-1 text-[10px] text-blue-700 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 px-2 py-0.5 rounded font-semibold transition cursor-pointer"
                                       title="Broadcast directly to students via SMS or WhatsApp"
                                     >
-                                      <Radio className="w-3 h-3 text-blue-600 animate-pulse" />
+                                      <Radio className="w-3 h-3 text-blue-600" />
                                       <span>Broadcast (SMS/WA)</span>
                                     </button>
                                   </div>

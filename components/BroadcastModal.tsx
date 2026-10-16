@@ -339,7 +339,7 @@ export default function BroadcastModal({ isOpen, onClose, post }: BroadcastModal
         <div className="p-4 sm:p-5 border-b border-slate-100 flex items-start justify-between bg-slate-50/70">
           <div className="space-y-1">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-bold uppercase tracking-wider">
-              <Radio className="w-3 h-3 text-emerald-600 animate-pulse" />
+              <Radio className="w-3 h-3 text-emerald-600" />
               <span>Direct Student Broadcast Hub</span>
             </div>
             <h2 className="text-base sm:text-lg font-bold text-slate-900 leading-tight">
@@ -482,7 +482,7 @@ export default function BroadcastModal({ isOpen, onClose, post }: BroadcastModal
                   <div className="pt-1">
                     {activeWhatsAppProvider === 'meta_cloud' ? (
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800 text-emerald-400 text-[11px] font-semibold border border-slate-700">
-                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                        <span className="w-2 h-2 rounded-full bg-emerald-400" />
                         Meta WhatsApp Cloud API Live (+233 59 311 9669)
                       </span>
                     ) : (
