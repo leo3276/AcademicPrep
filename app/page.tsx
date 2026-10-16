@@ -84,13 +84,8 @@ export default function HomePage() {
         {/* The Exact Original Content & Layout */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="text-center max-w-3xl mx-auto space-y-5 sm:space-y-6">
-            <div className="flex flex-wrap items-center justify-center gap-2 max-w-full">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/20 border border-blue-400/40 text-blue-200 text-xs font-semibold backdrop-blur-sm max-w-full">
-                <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
-                <span className="truncate">Built for 8,000+ Online Students • AcademicPrep Portal</span>
-              </div>
-
-              {latestPost && (
+            {latestPost && (
+              <div className="flex flex-wrap items-center justify-center gap-2 max-w-full">
                 <Link
                   href={`/blog/${latestPost.id}`}
                   className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 hover:border-amber-300 text-amber-200 text-xs font-medium backdrop-blur-sm transition-all group max-w-full shadow-sm"
@@ -100,8 +95,8 @@ export default function HomePage() {
                   <span className="truncate max-w-[200px] sm:max-w-xs md:max-w-sm text-white font-medium">{latestPost.title}</span>
                   <ArrowRight className="w-3.5 h-3.5 text-amber-300 group-hover:translate-x-0.5 transition-transform shrink-0" />
                 </Link>
-              )}
-            </div>
+              </div>
+            )}
 
             <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-white drop-shadow-sm">
               Master Your Curriculum, <br />
@@ -269,7 +264,7 @@ export default function HomePage() {
             <div className="pt-6">
               <Link
                 href="/jhs"
-                className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition-colors shadow-xs"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm shadow-blue-500/20"
               >
                 <span>Enter JHS Section</span>
                 <ArrowRight className="w-4 h-4" />
@@ -317,7 +312,7 @@ export default function HomePage() {
             <div className="pt-6">
               <Link
                 href="/shs"
-                className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition-colors shadow-xs"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm shadow-blue-500/20"
               >
                 <span>Enter SHS Section</span>
                 <ArrowRight className="w-4 h-4" />
@@ -421,7 +416,7 @@ export default function HomePage() {
             <div className="pt-6">
               <Link
                 href="/jhs/bece-past-questions"
-                className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm shadow-blue-500/20"
               >
                 <span>Browse BECE Past Questions (1990 - 2025)</span>
                 <ArrowRight className="w-4 h-4" />
@@ -464,7 +459,7 @@ export default function HomePage() {
             <div className="pt-6">
               <Link
                 href="/jhs/trial-questions"
-                className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm shadow-blue-500/20"
               >
                 <span>Practice BECE Trial &amp; Mock Papers</span>
                 <ArrowRight className="w-4 h-4" />
@@ -494,7 +489,7 @@ export default function HomePage() {
             <div className="pt-2 flex flex-wrap gap-3">
               <Link
                 href="/jhs/weekly-exam"
-                className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition shadow-xs"
+                className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition shadow-sm shadow-blue-500/20"
               >
                 Try Dynamic Weekly Exam
               </Link>
@@ -675,7 +670,7 @@ export default function HomePage() {
 
             <Link
               href="/blog"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition self-start sm:self-auto group shadow-xs"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition self-start sm:self-auto group shadow-sm shadow-blue-500/20"
             >
               <span>View All Articles</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -790,7 +785,7 @@ export default function HomePage() {
 
                         <Link
                           href={`/blog/${post.id}`}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 group-hover:bg-blue-600 text-white font-semibold text-xs transition shadow-2xs"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition shadow-2xs"
                         >
                           <span>Read Guide</span>
                           <ArrowRight className="w-3.5 h-3.5" />

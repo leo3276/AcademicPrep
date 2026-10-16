@@ -275,12 +275,12 @@ export default function Navbar() {
             </div>
 
             {/* Mobile / Tablet Menu Trigger & Quick Actions (< xl) */}
-            <div className="xl:hidden flex items-center gap-1.5 sm:gap-2 shrink-0">
+            <div className="xl:hidden flex items-center gap-1 sm:gap-2 shrink-0">
               <button
                 type="button"
                 id="tour-nav-guide-mobile"
                 onClick={handleOpenGuide}
-                className="p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 transition-colors flex items-center gap-1 text-xs font-bold cursor-pointer relative"
+                className="hidden md:flex p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 transition-colors items-center gap-1 text-xs font-bold cursor-pointer relative"
                 title="Platform Feature Guide"
               >
                 <Compass className="w-4 h-4 text-blue-600 animate-spin-slow" />
@@ -299,11 +299,10 @@ export default function Navbar() {
                     setModalTab('momo');
                     setPinModalOpen(true);
                   }}
-                  className="text-xs font-semibold px-2 py-1.5 sm:px-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white shadow-xs flex items-center gap-1 whitespace-nowrap cursor-pointer"
+                  className="hidden sm:flex text-xs font-semibold px-2 py-1.5 sm:px-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white shadow-xs items-center gap-1 whitespace-nowrap cursor-pointer"
                 >
                   <Crown className="w-3.5 h-3.5 text-slate-300" />
-                  <span className="hidden sm:inline">VIP Pass</span>
-                  <span className="sm:hidden">VIP</span>
+                  <span>VIP Pass</span>
                 </button>
               ) : null}
 

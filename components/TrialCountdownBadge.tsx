@@ -60,13 +60,14 @@ export default function TrialCountdownBadge() {
   return (
     <Link
       href={profileUrl}
-      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-700 text-xs font-medium transition shrink-0"
+      className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-700 text-xs font-medium transition shrink-0"
       title="30-Day Free Trial Active. All curriculum topics, quizzes and timetables are free."
     >
       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
       <span className="text-[11px] text-slate-500 hidden sm:inline">Trial:</span>
       <span className="font-mono text-xs font-semibold text-slate-900 flex items-center gap-1">
-        <span>{timeLeft.days}d {String(timeLeft.hours).padStart(2, '0')}h {String(timeLeft.minutes).padStart(2, '0')}m left</span>
+        <span className="hidden sm:inline">{timeLeft.days}d {String(timeLeft.hours).padStart(2, '0')}h {String(timeLeft.minutes).padStart(2, '0')}m left</span>
+        <span className="sm:hidden">{timeLeft.days}d left</span>
       </span>
     </Link>
   );
