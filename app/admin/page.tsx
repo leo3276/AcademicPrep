@@ -90,7 +90,9 @@ import {
   Check,
   Radio,
   Sparkles,
-  RefreshCw
+  RefreshCw,
+  FlaskConical,
+  Share2
 } from 'lucide-react';
 import { parseVideoUrl } from '@/lib/mediaUtils';
 import BroadcastModal from '@/components/BroadcastModal';
@@ -139,8 +141,8 @@ export default function AdminDashboardPage() {
   const [securityModalMsg, setSecurityModalMsg] = useState<string | null>(null);
   const [isSavingKeys, setIsSavingKeys] = useState(false);
   
-  // Navigation Tabs: traffic, paid_access, momo_claims, completions, trial_mocks, pins, blog, comments, whatsapp
-  const [activeTab, setActiveTab] = useState<'traffic' | 'paid_access' | 'momo_claims' | 'completions' | 'trial_mocks' | 'pins' | 'blog' | 'comments' | 'whatsapp'>('traffic');
+  // Navigation Tabs: traffic, paid_access, momo_claims, completions, trial_mocks, pins, blog, comments, whatsapp, weekly_exams
+  const [activeTab, setActiveTab] = useState<'traffic' | 'paid_access' | 'momo_claims' | 'completions' | 'trial_mocks' | 'pins' | 'blog' | 'comments' | 'whatsapp' | 'weekly_exams'>('traffic');
 
   // Stores
   const [trafficData, setTrafficData] = useState<WebTrafficData>(() => {
@@ -216,6 +218,162 @@ export default function AdminDashboardPage() {
   const [loadingWa, setLoadingWa] = useState(false);
   const [savingWa, setSavingWa] = useState(false);
   const [waFeedback, setWaFeedback] = useState<{ kind: 'ok' | 'bad'; text: string } | null>(null);
+
+  // Scheduled Weekly Exam Broadcast State
+  const [isBroadcastingExam, setIsBroadcastingExam] = useState(false);
+  const [examBroadcastFeedback, setExamBroadcastFeedback] = useState<{ kind: 'ok' | 'err'; text: string } | null>(null);
+
+  const handleDispatchExamBroadcast = async (channel: 'whatsapp_server' | 'sms') => {
+    try {
+      setIsBroadcastingExam(true);
+      setExamBroadcastFeedback(null);
+      const res = await fetch('/api/broadcast/weekly-exam', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ targetGroup: 'JHS', channel }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setExamBroadcastFeedback({
+          kind: 'ok',
+          text: data.statusMessage || `Successfully dispatched to ${data.sentCount} students!`,
+        });
+      } else {
+        setExamBroadcastFeedback({
+          kind: 'err',
+          text: data.error || 'Failed to dispatch exam broadcast.',
+        });
+      }
+    } catch (err: any) {
+      setExamBroadcastFeedback({
+        kind: 'err',
+        text: err?.message || 'Network error dispatching broadcast.',
+      });
+    } finally {
+      setIsBroadcastingExam(false);
+    }
+  };
+
+  // Weekly Exams Admin State & Candidate Scoreboard
+  const [weeklyExamMetrics, setWeeklyExamMetrics] = useState({
+    totalCandidates: 0,
+    completedCount: 0,
+    inProgressCount: 0,
+    averageCompositeScore: 0,
+    highestScore: 0,
+  });
+  const [weeklyExamCandidates, setWeeklyExamCandidates] = useState<any[]>([]);
+  const [loadingWeeklyExams, setLoadingWeeklyExams] = useState(false);
+  const [weeklyExamSearch, setWeeklyExamSearch] = useState('');
+  const [weeklyExamStatusFilter, setWeeklyExamStatusFilter] = useState<'ALL' | 'completed' | 'in_progress'>('ALL');
+  const [examShareCopied, setExamShareCopied] = useState<string | null>(null);
+  const [isSending5MinReminder, setIsSending5MinReminder] = useState(false);
+  const [reminder5MinFeedback, setReminder5MinFeedback] = useState<{ kind: 'ok' | 'err'; text: string } | null>(null);
+
+  const loadWeeklyExamData = useCallback(async (silent = false) => {
+    try {
+      if (!silent) setLoadingWeeklyExams(true);
+      const res = await fetch('/api/admin/weekly-exams');
+      const data = await res.json();
+      if (data?.success) {
+        if (data.metrics) setWeeklyExamMetrics(data.metrics);
+        if (Array.isArray(data.candidates)) setWeeklyExamCandidates(data.candidates);
+      }
+    } catch (err) {
+      console.warn('Failed to load weekly exam candidates:', err);
+    } finally {
+      if (!silent) setLoadingWeeklyExams(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (activeTab === 'weekly_exams') {
+      loadWeeklyExamData();
+      const interval = setInterval(() => loadWeeklyExamData(true), 15000);
+      return () => clearInterval(interval);
+    }
+  }, [activeTab, loadWeeklyExamData]);
+
+  const getWeeklyExamSharePayload = () => {
+    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://academicprep.com';
+    const examUrl = `${origin}/jhs/weekly-exam?mode=scheduled`;
+    const message = `📢 *ACADEMICPREP WEEKLY EXAMINATION* 🔬\n\n` +
+      `*Subject:* JHS 3 Integrated Science\n` +
+      `*Topic:* Atomic Structure, Periodic Table & Chemical Bonding\n` +
+      `*Time:* Today at 6:00 PM GMT Sharp!\n` +
+      `*Examination Criteria:*\n` +
+      `  • Paper 1: 30 Mins (Objectives - 40 Marks)\n` +
+      `  • Paper 2: 1 Hour (WAEC Theory Section B - 60 Marks)\n` +
+      `  • Total: 100 Marks (Official WAEC Stanine Grading 1 - 9)\n\n` +
+      `⚠️ *Proctoring Criteria:*\n` +
+      `Strict Anti-Cheat. Leaving or minimizing the exam window activates a 5-minute penalty lockout before re-entry, while the exam timer continues running in real time.\n\n` +
+      `👉 *Take Examination Here:*\n${examUrl}\n\n` +
+      `_All JHS 3 candidates are expected to take their seats before 6:00 PM. Good luck!_ 🏆`;
+    return { examUrl, message };
+  };
+
+  const handleShareWeeklyExam = (platform: 'whatsapp' | 'facebook' | 'twitter' | 'telegram') => {
+    const { examUrl, message } = getWeeklyExamSharePayload();
+    if (platform === 'whatsapp') {
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+    } else if (platform === 'facebook') {
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(examUrl)}`, '_blank');
+    } else if (platform === 'twitter') {
+      const tweetText = `AcademicPrep JHS 3 Science Weekly Exam (Atomic Structure) starts at 6:00 PM GMT sharp!\n\nTake the exam: ${examUrl}`;
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`, '_blank');
+    } else if (platform === 'telegram') {
+      window.open(`https://t.me/share/url?url=${encodeURIComponent(examUrl)}&text=${encodeURIComponent(message)}`, '_blank');
+    }
+  };
+
+  const handleCopyWeeklyExamText = () => {
+    const { message } = getWeeklyExamSharePayload();
+    navigator.clipboard.writeText(message);
+    setExamShareCopied('text');
+    setTimeout(() => setExamShareCopied(null), 2500);
+  };
+
+  const handleCopyWeeklyExamLink = () => {
+    const { examUrl } = getWeeklyExamSharePayload();
+    navigator.clipboard.writeText(examUrl);
+    setExamShareCopied('link');
+    setTimeout(() => setExamShareCopied(null), 2500);
+  };
+
+  const handleSend5MinReminder = async () => {
+    try {
+      setIsSending5MinReminder(true);
+      setReminder5MinFeedback(null);
+      const res = await fetch('/api/broadcast/weekly-exam', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          targetGroup: 'JHS',
+          channel: 'whatsapp_server',
+          broadcastType: '5min_reminder'
+        })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setReminder5MinFeedback({
+          kind: 'ok',
+          text: data.statusMessage || `5-Minute countdown reminder dispatched successfully to ${data.sentCount || 0} students!`,
+        });
+      } else {
+        setReminder5MinFeedback({
+          kind: 'err',
+          text: data.error || 'Failed to dispatch 5-minute reminder.',
+        });
+      }
+    } catch (err: any) {
+      setReminder5MinFeedback({
+        kind: 'err',
+        text: err?.message || 'Network error dispatching 5-minute reminder.',
+      });
+    } finally {
+      setIsSending5MinReminder(false);
+    }
+  };
 
   // PDF Upload Form State
   const [pdfFile, setPdfFile] = useState<File | null>(null);
@@ -1311,6 +1469,21 @@ export default function AdminDashboardPage() {
                   Off
                 </span>
               )}
+            </button>
+
+            <button
+              onClick={() => setActiveTab('weekly_exams')}
+              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+                activeTab === 'weekly_exams'
+                  ? 'border-indigo-600 text-indigo-900 font-bold'
+                  : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              <FlaskConical className="w-4 h-4 text-indigo-600" />
+              <span>Weekly Exams & Candidates</span>
+              <span className="ml-1 text-[10px] bg-indigo-50 text-indigo-700 border border-indigo-200 px-1.5 py-0.5 rounded-full font-mono font-bold">
+                6:00 PM
+              </span>
             </button>
           </nav>
         </div>
@@ -4167,6 +4340,542 @@ export default function AdminDashboardPage() {
                 </div>
               </form>
             </div>
+
+            {/* Scheduled Weekly Examination Broadcast Card */}
+            <div className="max-w-2xl bg-white border border-slate-200/80 rounded-xl p-5 shadow-xs space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+                    <FlaskConical className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-900">
+                      Scheduled Weekly Examination Broadcast
+                    </h3>
+                    <p className="text-[11px] text-slate-500">
+                      JHS 3 Science: Atomic Structure (Today at 6:00 PM GMT)
+                    </p>
+                  </div>
+                </div>
+                <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
+                  Strict Anti-Cheat Proctoring
+                </span>
+              </div>
+
+              {examBroadcastFeedback && (
+                <div
+                  className={`p-3 rounded-lg border text-xs font-medium ${
+                    examBroadcastFeedback.kind === 'ok'
+                      ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                      : 'bg-rose-50 text-rose-800 border-rose-200'
+                  }`}
+                >
+                  {examBroadcastFeedback.text}
+                </div>
+              )}
+
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1.5 leading-relaxed font-sans">
+                <p className="font-semibold text-slate-900">Official Broadcast Message Preview:</p>
+                <p className="font-mono text-[11px] text-slate-600 bg-white p-2.5 rounded-lg border border-slate-200 whitespace-pre-wrap">
+                  📢 *ACADEMICPREP SCHEDULED WEEKLY EXAMINATION ALERT* 🔬{'\n\n'}
+                  *Subject:* JHS 3 Integrated Science{'\n'}
+                  *Topic:* Atomic Structure, Periodic Table & Chemical Bonding{'\n'}
+                  *Time:* Today at 6:00 PM GMT Sharp!{'\n'}
+                  *Structure:* 30 Mins Paper 1 (Objectives) + 1 Hour Paper 2 (Theory){'\n\n'}
+                  ⚠️ *Strict Proctoring Rule:* Leaving the page or switching tabs will immediately terminate and submit your paper.{'\n\n'}
+                  👉 *Take the exam:* https://academicprep.com/jhs/weekly-exam?mode=scheduled
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2.5 pt-1">
+                <button
+                  type="button"
+                  disabled={isBroadcastingExam}
+                  onClick={() => handleDispatchExamBroadcast('whatsapp_server')}
+                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-60 text-white text-xs font-semibold rounded-lg transition shadow-xs flex items-center gap-1.5 cursor-pointer"
+                >
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  <span>{isBroadcastingExam ? 'Dispatching Broadcast…' : 'Send WhatsApp Broadcast to Registered Students'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  disabled={isBroadcastingExam}
+                  onClick={() => handleDispatchExamBroadcast('sms')}
+                  className="px-3.5 py-2 border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg transition"
+                >
+                  Dispatch via SMS
+                </button>
+
+                <a
+                  href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
+                    `📢 *ACADEMICPREP WEEKLY EXAM ALERT* 🔬\n\nJHS 3 Science: Atomic Structure\nToday at 6:00 PM GMT Sharp!\n30m Objs + 1hr Theory\n\nTake Exam: https://academicprep.com/jhs/weekly-exam?mode=scheduled`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3.5 py-2 border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold rounded-lg transition flex items-center gap-1"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>Forward Link</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ============================================================ */}
+        {/* TAB 10: WEEKLY EXAMS & CANDIDATE SCOREBOARD                  */}
+        {/* ============================================================ */}
+        {activeTab === 'weekly_exams' && (
+          <div className="space-y-6">
+            {/* Tab Header */}
+            <div className="flex flex-wrap items-center justify-between gap-4 pb-3 border-b border-slate-200">
+              <div>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold">
+                    <FlaskConical className="w-4 h-4" />
+                  </div>
+                  <h2 className="text-base font-bold text-slate-900">
+                    Weekly Examination Center & Candidate Scoreboard
+                  </h2>
+                </div>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Real-time candidate monitoring, score reporting, 5:55 PM notification trigger, and multi-channel social distribution.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => loadWeeklyExamData(false)}
+                  disabled={loadingWeeklyExams}
+                  className="px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center gap-1.5 transition"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${loadingWeeklyExams ? 'animate-spin text-blue-600' : ''}`} />
+                  <span>Refresh Candidates</span>
+                </button>
+
+                <Link
+                  href="/jhs/weekly-exam?mode=scheduled&admin=true"
+                  target="_blank"
+                  className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition shadow-sm shadow-indigo-600/20 flex items-center gap-1.5 cursor-pointer"
+                >
+                  <KeyRound className="w-3.5 h-3.5" />
+                  <span>Enter Examination Hall (Admin Preview Mode)</span>
+                  <ExternalLink className="w-3 h-3 ml-0.5" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Minimal Exam Schedule & Lock Status Banner */}
+            <div className="bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-xs">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="space-y-2 max-w-xl">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-amber-50 text-amber-800 border border-amber-200/80">
+                      🔒 Locked for Students until 6:00 PM GMT
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-600">
+                      JHS 3 Science
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-600">
+                      5-Min Penalty Proctoring
+                    </span>
+                  </div>
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
+                    Atomic Structure, Periodic Table & Chemical Bonding
+                  </h3>
+                  <p className="text-xs text-slate-500 leading-relaxed">
+                    Dual paper format: 30 minutes Paper 1 (Objectives, 40 marks) + 1 hour Paper 2 (Theory, 60 marks). Opens 6:00 PM GMT for students. Administrator has immediate unrestricted preview.
+                  </p>
+                </div>
+
+                <div className="bg-slate-50 border border-slate-200/80 p-3 sm:p-3.5 rounded-xl text-left md:text-right shrink-0 min-w-[200px] space-y-0.5">
+                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">
+                    Scheduled Start
+                  </span>
+                  <span className="text-lg font-black font-mono text-slate-900 block">
+                    6:00 PM GMT Sharp
+                  </span>
+                  <span className="text-[11px] text-emerald-600 block font-semibold">
+                    Admin Preview: Unrestricted
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Metrics Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-xs">
+                <span className="text-[10px] font-bold uppercase text-slate-400 block tracking-wider">
+                  Total Candidates
+                </span>
+                <span className="text-2xl font-black text-slate-900 font-mono mt-1 block">
+                  {weeklyExamMetrics.totalCandidates}
+                </span>
+                <span className="text-[10px] text-slate-500">Registered or writing</span>
+              </div>
+
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-xs">
+                <span className="text-[10px] font-bold uppercase text-blue-600 block tracking-wider">
+                  In-Progress Now
+                </span>
+                <span className="text-2xl font-black text-blue-600 font-mono mt-1 block">
+                  {weeklyExamMetrics.inProgressCount}
+                </span>
+                <span className="text-[10px] text-slate-500">Currently writing papers</span>
+              </div>
+
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-xs">
+                <span className="text-[10px] font-bold uppercase text-emerald-600 block tracking-wider">
+                  Completed Papers
+                </span>
+                <span className="text-2xl font-black text-emerald-600 font-mono mt-1 block">
+                  {weeklyExamMetrics.completedCount}
+                </span>
+                <span className="text-[10px] text-slate-500">Submissions graded</span>
+              </div>
+
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-xs">
+                <span className="text-[10px] font-bold uppercase text-amber-600 block tracking-wider">
+                  Average Score
+                </span>
+                <span className="text-2xl font-black text-amber-600 font-mono mt-1 block">
+                  {weeklyExamMetrics.averageCompositeScore}%
+                </span>
+                <span className="text-[10px] text-slate-500">Class composite mean</span>
+              </div>
+
+              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-xs col-span-2 sm:col-span-1">
+                <span className="text-[10px] font-bold uppercase text-purple-600 block tracking-wider">
+                  Highest Score
+                </span>
+                <span className="text-2xl font-black text-purple-600 font-mono mt-1 block">
+                  {weeklyExamMetrics.highestScore}%
+                </span>
+                <span className="text-[10px] text-slate-500">Top Stanine Grade 1</span>
+              </div>
+            </div>
+
+            {/* Row with 2 Action Centers: 5:55 PM Alert Notification & Social Media Distribution */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+              
+              {/* Card 1: 5:55 PM Push Notification (Starts in 5 Minutes) */}
+              <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs space-y-4 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center font-bold">
+                        <Clock className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-bold text-slate-900">
+                          5:55 PM Push Notification (Starts in 5 Mins)
+                        </h3>
+                        <p className="text-[11px] text-slate-500">
+                          Broadcast urgent countdown alert to all registered students
+                        </p>
+                      </div>
+                    </div>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">
+                      5:55 PM GMT
+                    </span>
+                  </div>
+
+                  {reminder5MinFeedback && (
+                    <div
+                      className={`p-3 rounded-xl border text-xs font-semibold ${
+                        reminder5MinFeedback.kind === 'ok'
+                          ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                          : 'bg-rose-50 text-rose-800 border-rose-200'
+                      }`}
+                    >
+                      {reminder5MinFeedback.text}
+                    </div>
+                  )}
+
+                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1.5">
+                    <span className="text-[11px] font-bold text-slate-900 block">
+                      Preview of 5:55 PM WhatsApp Notification:
+                    </span>
+                    <p className="font-mono text-[11px] text-slate-600 bg-white p-2.5 rounded-lg border border-slate-200 whitespace-pre-wrap leading-relaxed">
+                      🚨 *ACADEMICPREP WEEKLY EXAM: 5 MINUTES TO START!* 🔬{'\n\n'}
+                      *Subject:* JHS 3 Integrated Science{'\n'}
+                      *Topic:* Atomic Structure, Periodic Table & Chemical Bonding{'\n'}
+                      *Time:* Starting at 6:00 PM GMT SHARP (In 5 Minutes!){'\n\n'}
+                      *Criteria:* 30 Mins Paper 1 (Objs) + 1 Hour Paper 2 (Theory){'\n'}
+                      ⚠️ *Proctoring:* Leaving the window triggers a 5-minute penalty lockout!{'\n\n'}
+                      👉 *Enter Hall Now:* https://academicprep.com/jhs/weekly-exam?mode=scheduled
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    type="button"
+                    disabled={isSending5MinReminder}
+                    onClick={handleSend5MinReminder}
+                    className="w-full py-3 px-4 rounded-xl bg-amber-600 hover:bg-amber-500 disabled:opacity-60 text-white font-bold text-xs transition shadow-sm shadow-amber-600/20 flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    <span>{isSending5MinReminder ? 'Dispatching 5-Min Reminder…' : '🚀 Push 5-Minute Reminder to Students (WhatsApp)'}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Card 2: Social Media & Broadcast Share Kit */}
+              <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs space-y-4 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold">
+                        <Share2 className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-bold text-slate-900">
+                          Social Media & Broadcast Share Center
+                        </h3>
+                        <p className="text-[11px] text-slate-500">
+                          Share exam subject, topic, time, and criteria across platforms
+                        </p>
+                      </div>
+                    </div>
+                    {examShareCopied && (
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 animate-pulse">
+                        {examShareCopied === 'text' ? 'Message Copied!' : 'Link Copied!'}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-2">
+                    <div className="grid grid-cols-2 gap-2 text-[11px]">
+                      <div>
+                        <span className="text-slate-400 block font-semibold">Subject & Level</span>
+                        <span className="font-bold text-slate-800">Integrated Science (JHS 3)</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 block font-semibold">Scheduled Time</span>
+                        <span className="font-bold text-slate-800">Today at 6:00 PM GMT Sharp</span>
+                      </div>
+                      <div className="col-span-2">
+                        <span className="text-slate-400 block font-semibold">Topic</span>
+                        <span className="font-bold text-slate-800">Atomic Structure, Periodic Table & Chemical Bonding</span>
+                      </div>
+                      <div className="col-span-2">
+                        <span className="text-slate-400 block font-semibold">Criteria</span>
+                        <span className="text-slate-700">30m Objs (40m) + 1h Theory (60m) • 5-Min Tab-Switch Lockout Rule</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Direct Share Buttons */}
+                <div className="space-y-2 pt-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => handleShareWeeklyExam('whatsapp')}
+                      className="py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs cursor-pointer"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5" />
+                      <span>WhatsApp</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleShareWeeklyExam('facebook')}
+                      className="py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs cursor-pointer"
+                    >
+                      <span>Facebook</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleShareWeeklyExam('twitter')}
+                      className="py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs cursor-pointer"
+                    >
+                      <span>X (Twitter)</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleShareWeeklyExam('telegram')}
+                      className="py-2 px-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs cursor-pointer"
+                    >
+                      <span>Telegram</span>
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={handleCopyWeeklyExamText}
+                      className="py-2 px-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-800 font-semibold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer"
+                    >
+                      <Copy className="w-3.5 h-3.5 text-slate-500" />
+                      <span>Copy Formatted Criteria</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handleCopyWeeklyExamLink}
+                      className="py-2 px-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-800 font-semibold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
+                      <span>Copy Direct Exam Link</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Candidates & Individual Marks Scoreboard */}
+            <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+                <div>
+                  <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <span>Candidate Roster & Individual Marks</span>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700">
+                      {weeklyExamCandidates.length} Candidates
+                    </span>
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Live breakdown of Paper 1 objectives, Paper 2 WAEC theory marks, composite percentage, and stanine grades.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2.5">
+                  <div className="relative">
+                    <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <input
+                      type="text"
+                      value={weeklyExamSearch}
+                      onChange={(e) => setWeeklyExamSearch(e.target.value)}
+                      placeholder="Search candidate or phone…"
+                      className="pl-8 pr-3 py-1.5 text-xs border border-slate-300 rounded-lg w-48 focus:outline-hidden focus:ring-1 focus:ring-slate-900"
+                    />
+                  </div>
+
+                  <select
+                    value={weeklyExamStatusFilter}
+                    onChange={(e: any) => setWeeklyExamStatusFilter(e.target.value)}
+                    className="py-1.5 px-2.5 text-xs border border-slate-300 rounded-lg bg-white text-slate-700 focus:outline-hidden"
+                  >
+                    <option value="ALL">All Statuses</option>
+                    <option value="completed">Completed Only</option>
+                    <option value="in_progress">In-Progress Only</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Table */}
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead>
+                    <tr className="border-b border-slate-200 text-[11px] font-bold text-slate-500 uppercase tracking-wider bg-slate-50/70">
+                      <th className="py-2.5 px-3">Candidate</th>
+                      <th className="py-2.5 px-3">Phone</th>
+                      <th className="py-2.5 px-3">Level</th>
+                      <th className="py-2.5 px-3 text-center">Status</th>
+                      <th className="py-2.5 px-3 text-right">Paper 1 (Objs / 40)</th>
+                      <th className="py-2.5 px-3 text-right">Paper 2 (Theory / 60)</th>
+                      <th className="py-2.5 px-3 text-right">Composite %</th>
+                      <th className="py-2.5 px-3">Stanine Grade</th>
+                      <th className="py-2.5 px-3 text-right">Time Spent</th>
+                      <th className="py-2.5 px-3 text-right">Submitted At</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {weeklyExamCandidates
+                      .filter((c) => {
+                        if (weeklyExamStatusFilter !== 'ALL' && c.status !== weeklyExamStatusFilter) return false;
+                        if (weeklyExamSearch) {
+                          const q = weeklyExamSearch.toLowerCase();
+                          return (
+                            (c.studentName || '').toLowerCase().includes(q) ||
+                            (c.studentPhone || '').toLowerCase().includes(q)
+                          );
+                        }
+                        return true;
+                      })
+                      .map((c) => {
+                        const isDone = c.status === 'completed';
+                        return (
+                          <tr key={c.id} className="hover:bg-slate-50/60 transition">
+                            <td className="py-3 px-3 font-semibold text-slate-900">
+                              {c.studentName || 'Candidate'}
+                            </td>
+                            <td className="py-3 px-3 font-mono text-slate-600 text-[11px]">
+                              {c.studentPhone || 'N/A'}
+                            </td>
+                            <td className="py-3 px-3 font-medium text-slate-700">
+                              {c.level || 'JHS 3'}
+                            </td>
+                            <td className="py-3 px-3 text-center">
+                              <span
+                                className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
+                                  isDone
+                                    ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                                    : 'bg-blue-50 text-blue-700 border border-blue-200'
+                                }`}
+                              >
+                                {isDone ? 'Completed' : 'Writing Paper'}
+                              </span>
+                            </td>
+                            <td className="py-3 px-3 text-right font-mono font-bold text-slate-800">
+                              {c.paper1ScoreMarks} / 40 ({c.paper1Percentage}%)
+                            </td>
+                            <td className="py-3 px-3 text-right font-mono font-bold text-slate-800">
+                              {c.paper2ScoreMarks} / 60 ({c.paper2Percentage}%)
+                            </td>
+                            <td className="py-3 px-3 text-right font-mono font-black text-sm">
+                              <span
+                                className={
+                                  c.compositePercentage >= 75
+                                    ? 'text-emerald-600'
+                                    : c.compositePercentage >= 50
+                                    ? 'text-blue-600'
+                                    : 'text-amber-600'
+                                }
+                              >
+                                {c.compositePercentage}%
+                              </span>
+                            </td>
+                            <td className="py-3 px-3">
+                              <span className="font-semibold text-slate-900 block text-[11px]">
+                                {c.gradeRemark}
+                              </span>
+                              <span className="text-[10px] text-slate-400 font-mono">
+                                Stanine {c.stanineGrade}
+                              </span>
+                            </td>
+                            <td className="py-3 px-3 text-right font-mono text-[11px] text-slate-600">
+                              {Math.floor((c.timeSpentSeconds || 0) / 60)}m {(c.timeSpentSeconds || 0) % 60}s
+                            </td>
+                            <td className="py-3 px-3 text-right font-mono text-[10px] text-slate-400 whitespace-nowrap">
+                              {c.completedAt
+                                ? new Date(c.completedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                                : 'In Session'}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                  </tbody>
+                </table>
+
+                {weeklyExamCandidates.length === 0 && (
+                  <div className="py-12 text-center text-slate-400 space-y-2">
+                    <FlaskConical className="w-8 h-8 mx-auto text-slate-300" />
+                    <p className="text-xs font-semibold">No candidates have started yet.</p>
+                    <p className="text-[11px]">
+                      Students will appear in this scoreboard once they enter the exam at 6:00 PM.
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+
           </div>
         )}
 

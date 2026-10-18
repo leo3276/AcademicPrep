@@ -31,6 +31,7 @@ import NewBlogNotificationToast from '@/components/NewBlogNotificationToast';
 import { OFFICIAL_APK_DOWNLOAD_URL, APK_FILE_SIZE } from '@/lib/apkConfig';
 import Books3DBackground from '@/components/Books3DBackground';
 import WhatsAppChannelBanner from '@/components/WhatsAppChannelBanner';
+import ScheduledExamBanner from '@/components/ScheduledExamBanner';
 
 export default function HomePage() {
   const { student } = useAuth();
@@ -80,11 +81,14 @@ export default function HomePage() {
         {/* Hero Section */}
         <section className="relative overflow-hidden text-white pt-12 pb-16 sm:pt-16 sm:pb-24">
           {/* Ambient Top Glow Overlay */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-400/20 via-blue-600/10 to-transparent pointer-events-none" />
           
           {/* The Exact Original Content & Layout */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="text-center max-w-3xl mx-auto space-y-5 sm:space-y-6">
+            {/* Scheduled 6:00 PM Examination Alert Banner */}
+            <ScheduledExamBanner variant="compact" className="max-w-2xl mx-auto border border-blue-400/40 bg-slate-900/90 backdrop-blur-md" />
+
             {latestPost && (
               <div className="flex flex-wrap items-center justify-center gap-2 max-w-full">
                 <Link

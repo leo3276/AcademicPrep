@@ -98,7 +98,7 @@ export default function Footer() {
             <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-3">Student Community</h4>
             <div className="space-y-3">
               <a
-                href="https://whatsapp.com/channel/0029VagMXcm4yltRps7S2b2x"
+                href="https://whatsapp.com/channel/0029VaxViay4NVikek1ENH0x"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 rounded-xl bg-emerald-950/40 hover:bg-emerald-900/50 border border-emerald-500/30 hover:border-emerald-500/60 flex items-center justify-between gap-2.5 transition-all group shadow-xs cursor-pointer block"

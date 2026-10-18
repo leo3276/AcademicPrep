@@ -4,6 +4,7 @@ import path from 'path';
 import { UploadedPdfDocument, PdfCategory } from '@/lib/pdfStore';
 import { supabaseAdmin } from '@/lib/supabaseClient';
 import { requireAdmin } from '@/lib/adminAuth';
+import { uploadToR2, deleteFromR2, isR2Configured, R2_PUBLIC_URL } from '@/lib/r2Client';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -14,7 +15,22 @@ const MANIFEST_FILE_NAME = 'documents_manifest.json';
 const DOCUMENTS_BUCKET = 'documents';
 
 async function getStoredDocuments(): Promise<UploadedPdfDocument[]> {
-  // 1. Primary: Fetch from Supabase Storage CDN with cache-buster
+  // 1. Primary: Fetch from Cloudflare R2 CDN with cache-buster
+  if (isR2Configured) {
+    try {
+      const res = await fetch(`${R2_PUBLIC_URL}/${MANIFEST_FILE_NAME}?t=${Date.now()}`, { cache: 'no-store' });
+      if (res.ok) {
+        const parsed = await res.json();
+        if (Array.isArray(parsed)) {
+          return parsed;
+        }
+      }
+    } catch (err) {
+      console.warn('Cloudflare R2 manifest fetch note:', err);
+    }
+  }
+
+  // 2. Secondary: Fetch from Supabase Storage CDN with cache-buster
   try {
     const { data: pubData } = supabaseAdmin.storage
       .from(DOCUMENTS_BUCKET)
@@ -33,7 +49,7 @@ async function getStoredDocuments(): Promise<UploadedPdfDocument[]> {
     console.warn('Supabase storage CDN manifest fetch note:', err);
   }
 
-  // 2. Direct download from Supabase Storage API
+  // 3. Tertiary: Direct download from Supabase Storage API
   try {
     const { data, error } = await supabaseAdmin.storage
       .from(DOCUMENTS_BUCKET)
@@ -50,7 +66,7 @@ async function getStoredDocuments(): Promise<UploadedPdfDocument[]> {
     console.warn('Supabase storage manifest download note:', err);
   }
 
-  // 3. Fallback: Read local documents.json (bundled with project)
+  // 4. Fallback: Read local documents.json (bundled with project)
   try {
     if (fs.existsSync(DATA_FILE)) {
       const raw = fs.readFileSync(DATA_FILE, 'utf8');
@@ -67,11 +83,22 @@ async function getStoredDocuments(): Promise<UploadedPdfDocument[]> {
 }
 
 async function saveStoredDocuments(docs: UploadedPdfDocument[]): Promise<void> {
-  // 1. Primary: Save to Supabase Storage with cacheControl: '0'
+  const payload = JSON.stringify(docs, null, 2);
+
+  // 1. Primary: Save to Cloudflare R2
+  if (isR2Configured) {
+    try {
+      await uploadToR2(MANIFEST_FILE_NAME, Buffer.from(payload), 'application/json', '0');
+    } catch (err) {
+      console.error('Failed to save manifest to Cloudflare R2:', err);
+    }
+  }
+
+  // 2. Secondary: Save to Supabase Storage backup with cacheControl: '0'
   try {
     const { error } = await supabaseAdmin.storage
       .from(DOCUMENTS_BUCKET)
-      .upload(MANIFEST_FILE_NAME, JSON.stringify(docs, null, 2), {
+      .upload(MANIFEST_FILE_NAME, payload, {
         upsert: true,
         contentType: 'application/json',
         cacheControl: '0',
@@ -83,13 +110,13 @@ async function saveStoredDocuments(docs: UploadedPdfDocument[]): Promise<void> {
     console.error('Failed to save manifest to Supabase storage:', err);
   }
 
-  // 2. Secondary: Safely attempt to sync to local disk if writable
+  // 3. Tertiary: Safely attempt to sync to local disk if writable
   try {
     const dir = path.dirname(DATA_FILE);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
-    fs.writeFileSync(DATA_FILE, JSON.stringify(docs, null, 2), 'utf8');
+    fs.writeFileSync(DATA_FILE, payload, 'utf8');
   } catch {
     // Expected on Vercel / serverless (read-only filesystem)
   }
@@ -194,28 +221,38 @@ export async function POST(request: NextRequest) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // 1. Upload to Supabase Storage Bucket 'documents' (Cloud CDN)
+    // 1. Upload to Cloudflare R2 (Primary - $0 egress), with Supabase fallback
     let fileUrl = '';
-    const { error: uploadError } = await supabaseAdmin.storage
-      .from(DOCUMENTS_BUCKET)
-      .upload(uniqueFileName, buffer, {
-        contentType: file.type || 'application/pdf',
-        upsert: true,
-      });
-
-    if (uploadError) {
-      console.error('Supabase storage upload error:', uploadError);
-      return NextResponse.json(
-        { error: `Cloud storage upload failed: ${uploadError.message}` },
-        { status: 500 }
-      );
+    if (isR2Configured) {
+      try {
+        fileUrl = await uploadToR2(uniqueFileName, buffer, file.type || 'application/pdf');
+      } catch (r2Err: any) {
+        console.error('Cloudflare R2 upload error, falling back to Supabase:', r2Err);
+      }
     }
 
-    const { data: publicUrlData } = supabaseAdmin.storage
-      .from(DOCUMENTS_BUCKET)
-      .getPublicUrl(uniqueFileName);
+    if (!fileUrl) {
+      const { error: uploadError } = await supabaseAdmin.storage
+        .from(DOCUMENTS_BUCKET)
+        .upload(uniqueFileName, buffer, {
+          contentType: file.type || 'application/pdf',
+          upsert: true,
+        });
 
-    fileUrl = publicUrlData.publicUrl;
+      if (uploadError) {
+        console.error('Supabase storage upload error:', uploadError);
+        return NextResponse.json(
+          { error: `Cloud storage upload failed: ${uploadError.message}` },
+          { status: 500 }
+        );
+      }
+
+      const { data: publicUrlData } = supabaseAdmin.storage
+        .from(DOCUMENTS_BUCKET)
+        .getPublicUrl(uniqueFileName);
+
+      fileUrl = publicUrlData.publicUrl;
+    }
 
     // 2. Safely attempt local disk write if writable (e.g. local dev), ignoring read-only errors
     try {
@@ -273,6 +310,15 @@ export async function DELETE(request: NextRequest) {
     if (target && target.fileUrl) {
       const fileName = target.fileUrl.split('/').pop();
       if (fileName) {
+        // Delete from Cloudflare R2 if configured
+        if (isR2Configured) {
+          try {
+            await deleteFromR2(fileName);
+          } catch (e) {
+            console.warn('Failed to delete file from Cloudflare R2:', e);
+          }
+        }
+
         // Delete from Supabase Storage
         try {
           await supabaseAdmin.storage.from(DOCUMENTS_BUCKET).remove([fileName]);

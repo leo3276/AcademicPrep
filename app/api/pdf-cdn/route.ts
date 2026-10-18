@@ -3,15 +3,16 @@ import { NextRequest, NextResponse } from 'next/server';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-// Allowed Supabase Storage hosts for security
+// Allowed Storage hosts for security
 const ALLOWED_STORAGE_HOSTS = [
   'wwbmayypdzisopdqlefg.supabase.co',
   'ynqlfjoybxzrgczktrht.supabase.co',
+  'pub-c3d4ea9ea40449089b98812ed9cacaf8.r2.dev',
 ];
 
 /**
  * High-Performance Edge Proxy for PDF Past Papers & Mocks
- * Implements aggressive immutable CDN headers to offload Supabase storage egress.
+ * Implements aggressive immutable CDN headers to offload storage egress.
  * Supported by Vercel Edge Network, Cloudflare, and browser Cache-Control.
  */
 export async function GET(req: NextRequest) {
@@ -32,7 +33,10 @@ export async function GET(req: NextRequest) {
 
     // Host verification
     const isAllowed = ALLOWED_STORAGE_HOSTS.some(
-      (host) => parsedUrl.hostname === host || parsedUrl.hostname.endsWith('.supabase.co')
+      (host) =>
+        parsedUrl.hostname === host ||
+        parsedUrl.hostname.endsWith('.supabase.co') ||
+        parsedUrl.hostname.endsWith('.r2.dev')
     );
 
     if (!isAllowed) {

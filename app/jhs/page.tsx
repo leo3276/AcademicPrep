@@ -35,6 +35,7 @@ import PlatformTourGuide from '@/components/PlatformTourGuide';
 import TourPromptToast from '@/components/TourPromptToast';
 import PaystackPaymentModal from '@/components/PaystackPaymentModal';
 import TrialCountdownBanner from '@/components/TrialCountdownBanner';
+import ScheduledExamBanner from '@/components/ScheduledExamBanner';
 
 export default function JhsPortalPage() {
   const router = useRouter();
@@ -206,6 +207,9 @@ export default function JhsPortalPage() {
         </div>
       )}
 
+      {/* Official Scheduled 6:00 PM Weekly Examination Banner */}
+      <ScheduledExamBanner className="w-full" />
+
       {/* Progress & Dynamic Exam Trigger Row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Progress Card */}
@@ -342,7 +346,7 @@ export default function JhsPortalPage() {
         </div>
 
         <Link
-          href="/jhs/weekly-exam"
+          href="/jhs/weekly-exam?mode=scheduled"
           className="w-full sm:w-auto px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs shrink-0 transition shadow-sm shadow-blue-500/20 flex items-center justify-center gap-1.5 whitespace-nowrap"
         >
           <span>Start Weekly Exam</span>
