@@ -29,6 +29,8 @@ import {
 } from 'lucide-react';
 import AccessPinModal from '@/components/AccessPinModal';
 import MockShareButtons from '@/components/MockShareButtons';
+import OfflineStorageBar from '@/components/OfflineStorageBar';
+import { openPdfDocumentCached, downloadPdfDocumentCached } from '@/lib/pdfCache';
 
 export default function ShsTrialQuestionsPage() {
   const { student, hasFullAccess, isTrialActive, trialDaysRemaining } = useAuth();
@@ -37,12 +39,35 @@ export default function ShsTrialQuestionsPage() {
   const [documents, setDocuments] = useState<UploadedPdfDocument[]>([]);
   const [isPinModalOpen, setIsPinModalOpen] = useState(false);
   const [selectedDocForPin, setSelectedDocForPin] = useState<UploadedPdfDocument | null>(null);
+  const [openingDocId, setOpeningDocId] = useState<string | null>(null);
 
-  const handleDocumentAction = (e: React.MouseEvent, doc: UploadedPdfDocument) => {
+  const handleViewPdf = async (e: React.MouseEvent, doc: UploadedPdfDocument) => {
+    e.preventDefault();
     if (!hasFullAccess) {
-      e.preventDefault();
       setSelectedDocForPin(doc);
       setIsPinModalOpen(true);
+      return;
+    }
+    setOpeningDocId(doc.id);
+    try {
+      await openPdfDocumentCached(doc);
+    } finally {
+      setOpeningDocId(null);
+    }
+  };
+
+  const handleDownloadPdf = async (e: React.MouseEvent, doc: UploadedPdfDocument) => {
+    e.preventDefault();
+    if (!hasFullAccess) {
+      setSelectedDocForPin(doc);
+      setIsPinModalOpen(true);
+      return;
+    }
+    setOpeningDocId(doc.id);
+    try {
+      await downloadPdfDocumentCached(doc);
+    } finally {
+      setOpeningDocId(null);
     }
   };
 
@@ -217,6 +242,9 @@ export default function ShsTrialQuestionsPage() {
           </div>
         )}
 
+        {/* Offline Smart Data-Saver Bar */}
+        <OfflineStorageBar />
+
         {/* Filter & Search Bar */}
         <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-xs space-y-4">
           <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
@@ -360,26 +388,31 @@ export default function ShsTrialQuestionsPage() {
                 {/* Bottom Actions: View, Download & Share */}
                 <div className="space-y-2 pt-3 border-t border-slate-100">
                   <div className="flex items-center justify-between gap-2">
-                    <a
-                      href={doc.fileUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => handleDocumentAction(e, doc)}
-                      className="flex-1 py-2 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center justify-center gap-1.5 transition"
+                    <button
+                      type="button"
+                      onClick={(e) => handleViewPdf(e, doc)}
+                      disabled={openingDocId === doc.id}
+                      className="flex-1 py-2 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center justify-center gap-1.5 transition cursor-pointer"
                     >
-                      {!hasFullAccess ? <Lock className="w-3.5 h-3.5 text-amber-500" /> : <ExternalLink className="w-3.5 h-3.5" />}
-                      <span>Preview</span>
-                    </a>
+                      {!hasFullAccess ? (
+                        <Lock className="w-3.5 h-3.5 text-amber-500" />
+                      ) : openingDocId === doc.id ? (
+                        <div className="w-3.5 h-3.5 border-2 border-slate-600/30 border-t-slate-800 rounded-full animate-spin" />
+                      ) : (
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      )}
+                      <span>{!hasFullAccess ? 'Preview' : openingDocId === doc.id ? 'Loading…' : 'Preview'}</span>
+                    </button>
 
-                    <a
-                      href={doc.fileUrl}
-                      download={doc.fileName}
-                      onClick={(e) => handleDocumentAction(e, doc)}
-                      className="flex-1 py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition shadow-sm shadow-blue-500/20"
+                    <button
+                      type="button"
+                      onClick={(e) => handleDownloadPdf(e, doc)}
+                      disabled={openingDocId === doc.id}
+                      className="flex-1 py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition shadow-sm shadow-blue-500/20 cursor-pointer"
                     >
                       {!hasFullAccess ? <Lock className="w-3.5 h-3.5 text-amber-400" /> : <Download className="w-3.5 h-3.5" />}
                       <span>Download</span>
-                    </a>
+                    </button>
                   </div>
 
                   {/* 1-Tap WhatsApp Share & Link Copy for this SHS Mock Paper */}

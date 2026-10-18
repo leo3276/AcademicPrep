@@ -24,6 +24,7 @@ import {
   FileCheck2,
   Check
 } from 'lucide-react';
+import WhatsAppChannelBanner from '@/components/WhatsAppChannelBanner';
 
 interface InteractiveQuestion {
   level: 'JHS' | 'SHS';
@@ -514,23 +515,9 @@ export default function Integrated3DHero({ latestPost, onOpenApkModal }: Integra
               )}
             </div>
 
-            {/* Quick Demo Info Pill */}
+            {/* Official WhatsApp Channel Link (Configured & Uploaded by Admin) */}
             <div className="pt-2 max-w-md mx-auto lg:mx-0">
-              <div id="tour-home-demo" className="bg-slate-50 rounded-xl p-3 border border-slate-200 text-left text-xs text-slate-700 flex items-center justify-between gap-3 shadow-2xs">
-                <div>
-                  <span className="font-semibold text-slate-900 block text-[11px]">Quick Demo Account:</span>
-                  <span className="text-slate-600 text-[11px]">
-                    Phone: <b className="text-slate-900 font-mono">0241234567</b> • PIN: <b className="text-slate-900 font-mono">1234</b>
-                  </span>
-                </div>
-                <Link 
-                  href="/login"
-                  data-hot="true"
-                  className="px-2.5 py-1 rounded-lg bg-blue-600 text-white font-semibold text-[10px] hover:bg-blue-500 shadow-sm shadow-blue-500/20 shrink-0"
-                >
-                  Quick Fill
-                </Link>
-              </div>
+              <WhatsAppChannelBanner variant="hero" />
             </div>
 
             {/* Floating Accredited Books Selector Bar */}

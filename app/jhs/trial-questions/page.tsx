@@ -30,6 +30,8 @@ import {
 } from 'lucide-react';
 import AccessPinModal from '@/components/AccessPinModal';
 import MockShareButtons from '@/components/MockShareButtons';
+import OfflineStorageBar from '@/components/OfflineStorageBar';
+import { openPdfDocumentCached, downloadPdfDocumentCached } from '@/lib/pdfCache';
 
 export default function TrialQuestionsPage() {
   const { student, hasFullAccess, isTrialActive, trialDaysRemaining } = useAuth();
@@ -38,12 +40,35 @@ export default function TrialQuestionsPage() {
   const [documents, setDocuments] = useState<UploadedPdfDocument[]>([]);
   const [isPinModalOpen, setIsPinModalOpen] = useState(false);
   const [selectedDocForPin, setSelectedDocForPin] = useState<UploadedPdfDocument | null>(null);
+  const [openingDocId, setOpeningDocId] = useState<string | null>(null);
 
-  const handleDocumentAction = (e: React.MouseEvent, doc: UploadedPdfDocument) => {
+  const handleViewPdf = async (e: React.MouseEvent, doc: UploadedPdfDocument) => {
+    e.preventDefault();
     if (!hasFullAccess) {
-      e.preventDefault();
       setSelectedDocForPin(doc);
       setIsPinModalOpen(true);
+      return;
+    }
+    setOpeningDocId(doc.id);
+    try {
+      await openPdfDocumentCached(doc);
+    } finally {
+      setOpeningDocId(null);
+    }
+  };
+
+  const handleDownloadPdf = async (e: React.MouseEvent, doc: UploadedPdfDocument) => {
+    e.preventDefault();
+    if (!hasFullAccess) {
+      setSelectedDocForPin(doc);
+      setIsPinModalOpen(true);
+      return;
+    }
+    setOpeningDocId(doc.id);
+    try {
+      await downloadPdfDocumentCached(doc);
+    } finally {
+      setOpeningDocId(null);
     }
   };
 
@@ -208,6 +233,9 @@ export default function TrialQuestionsPage() {
             </span>
           </div>
         )}
+
+        {/* Offline Smart Data-Saver Bar */}
+        <OfflineStorageBar />
 
         {/* Filter & Search Bar */}
         <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-xs space-y-4">
@@ -421,42 +449,43 @@ export default function TrialQuestionsPage() {
                 {/* Actions: View PDF, Download & Share */}
                 <div className="space-y-2 mt-5 pt-3 border-t border-slate-100">
                   <div className="grid grid-cols-2 gap-2">
-                    <a
-                      href={doc.fileUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => handleDocumentAction(e, doc)}
-                      className={`py-2 px-3 rounded-xl border text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-2xs ${
-                        !student?.hasFullAccess
+                    <button
+                      type="button"
+                      onClick={(e) => handleViewPdf(e, doc)}
+                      disabled={openingDocId === doc.id}
+                      className={`py-2 px-3 rounded-xl border text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer ${
+                        !hasFullAccess
                           ? 'border-amber-200 bg-amber-50/70 hover:bg-amber-100 text-amber-900'
                           : 'border-slate-200 hover:border-slate-300 bg-slate-50/50 hover:bg-slate-100 text-slate-800'
                       }`}
                     >
-                      {!student?.hasFullAccess ? (
+                      {!hasFullAccess ? (
                         <Lock className="w-3.5 h-3.5 text-amber-600" />
+                      ) : openingDocId === doc.id ? (
+                        <div className="w-3.5 h-3.5 border-2 border-slate-600/30 border-t-slate-800 rounded-full animate-spin" />
                       ) : (
                         <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
                       )}
-                      <span>{!student?.hasFullAccess ? 'Unlock PDF' : 'View PDF'}</span>
-                    </a>
+                      <span>{!hasFullAccess ? 'Unlock PDF' : openingDocId === doc.id ? 'Loading…' : 'View PDF'}</span>
+                    </button>
 
-                    <a
-                      href={doc.fileUrl}
-                      download={doc.fileName}
-                      onClick={(e) => handleDocumentAction(e, doc)}
-                      className={`py-2 px-3 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-2xs ${
-                        !student?.hasFullAccess
+                    <button
+                      type="button"
+                      onClick={(e) => handleDownloadPdf(e, doc)}
+                      disabled={openingDocId === doc.id}
+                      className={`py-2 px-3 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer ${
+                        !hasFullAccess
                           ? 'bg-amber-600 hover:bg-amber-700 text-white'
                           : 'bg-blue-600 hover:bg-blue-500 text-white shadow-sm shadow-blue-500/20'
                       }`}
                     >
-                      {!student?.hasFullAccess ? (
+                      {!hasFullAccess ? (
                         <KeyRound className="w-3.5 h-3.5" />
                       ) : (
                         <Download className="w-3.5 h-3.5" />
                       )}
-                      <span>{!student?.hasFullAccess ? 'Unlock Access' : 'Download'}</span>
-                    </a>
+                      <span>{!hasFullAccess ? 'Unlock Access' : 'Download'}</span>
+                    </button>
                   </div>
 
                   {/* 1-Tap WhatsApp Share & Link Copy for this Mock Paper */}

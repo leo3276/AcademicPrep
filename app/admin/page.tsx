@@ -88,10 +88,19 @@ import {
   Pin,
   Crown,
   Check,
-  Radio
+  Radio,
+  Sparkles,
+  RefreshCw
 } from 'lucide-react';
 import { parseVideoUrl } from '@/lib/mediaUtils';
 import BroadcastModal from '@/components/BroadcastModal';
+import {
+  WhatsAppChannelConfig,
+  fetchWhatsAppChannelConfig,
+  saveWhatsAppChannelConfig,
+  DEFAULT_WHATSAPP_CHANNEL_CONFIG,
+} from '@/lib/whatsappChannelStore';
+import WhatsAppChannelBanner from '@/components/WhatsAppChannelBanner';
 
 
 export default function AdminDashboardPage() {
@@ -130,8 +139,8 @@ export default function AdminDashboardPage() {
   const [securityModalMsg, setSecurityModalMsg] = useState<string | null>(null);
   const [isSavingKeys, setIsSavingKeys] = useState(false);
   
-  // Navigation Tabs: traffic, paid_access, momo_claims, completions, trial_mocks, pins, blog, comments
-  const [activeTab, setActiveTab] = useState<'traffic' | 'paid_access' | 'momo_claims' | 'completions' | 'trial_mocks' | 'pins' | 'blog' | 'comments'>('traffic');
+  // Navigation Tabs: traffic, paid_access, momo_claims, completions, trial_mocks, pins, blog, comments, whatsapp
+  const [activeTab, setActiveTab] = useState<'traffic' | 'paid_access' | 'momo_claims' | 'completions' | 'trial_mocks' | 'pins' | 'blog' | 'comments' | 'whatsapp'>('traffic');
 
   // Stores
   const [trafficData, setTrafficData] = useState<WebTrafficData>(() => {
@@ -201,6 +210,12 @@ export default function AdminDashboardPage() {
   const [adminComments, setAdminComments] = useState<LessonComment[]>([]);
   const [loadingComments, setLoadingComments] = useState(false);
   const [commentSearch, setCommentSearch] = useState('');
+
+  // WhatsApp Channel Management State
+  const [waConfig, setWaConfig] = useState<WhatsAppChannelConfig>(DEFAULT_WHATSAPP_CHANNEL_CONFIG);
+  const [loadingWa, setLoadingWa] = useState(false);
+  const [savingWa, setSavingWa] = useState(false);
+  const [waFeedback, setWaFeedback] = useState<{ kind: 'ok' | 'bad'; text: string } | null>(null);
 
   // PDF Upload Form State
   const [pdfFile, setPdfFile] = useState<File | null>(null);
@@ -616,6 +631,57 @@ export default function AdminDashboardPage() {
     window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
   };
 
+  const loadWhatsAppConfig = useCallback(async () => {
+    setLoadingWa(true);
+    try {
+      const cfg = await fetchWhatsAppChannelConfig();
+      if (cfg) {
+        setWaConfig(cfg);
+      }
+    } catch (err: any) {
+      console.warn('Failed to load WhatsApp channel config:', err);
+    } finally {
+      setLoadingWa(false);
+    }
+  }, []);
+
+  const handleSaveWhatsAppConfig = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSavingWa(true);
+    setWaFeedback(null);
+    try {
+      const res = await saveWhatsAppChannelConfig(waConfig);
+      if (res.success) {
+        if (res.config) setWaConfig(res.config);
+        setWaFeedback({ kind: 'ok', text: 'WhatsApp channel settings saved and updated live on the homepage!' });
+      } else {
+        setWaFeedback({ kind: 'bad', text: res.error || 'Failed to save WhatsApp channel configuration.' });
+      }
+    } catch (err: any) {
+      setWaFeedback({ kind: 'bad', text: err?.message || 'Unexpected network error.' });
+    } finally {
+      setSavingWa(false);
+    }
+  };
+
+  const handleTestWhatsAppLink = () => {
+    if (!waConfig.url?.trim()) {
+      alert('Please enter a WhatsApp channel URL first.');
+      return;
+    }
+    window.open(waConfig.url.trim(), '_blank', 'noopener,noreferrer');
+  };
+
+  const handleResetWhatsAppConfig = () => {
+    if (confirm('Reset WhatsApp banner settings to default template? (Remember to click Save Changes to apply)')) {
+      setWaConfig({
+        ...DEFAULT_WHATSAPP_CHANNEL_CONFIG,
+        url: waConfig.url || '',
+      });
+      setWaFeedback({ kind: 'ok', text: 'Reset to default template. Review and click "Save & Publish Changes".' });
+    }
+  };
+
   useEffect(() => {
     if (!isAdmin) return;
     clearStudentRosterCache();
@@ -625,7 +691,8 @@ export default function AdminDashboardPage() {
     loadMomoClaims();
     loadComments();
     refreshPins();
-  }, [isAdmin, refreshPins, loadBlogPosts, loadMomoClaims, loadComments]);
+    loadWhatsAppConfig();
+  }, [isAdmin, refreshPins, loadBlogPosts, loadMomoClaims, loadComments, loadWhatsAppConfig]);
 
   if (!mounted) {
     return (
@@ -1223,6 +1290,27 @@ export default function AdminDashboardPage() {
               <span className="ml-1 text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full font-mono font-bold">
                 {adminComments.length}
               </span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('whatsapp')}
+              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+                activeTab === 'whatsapp'
+                  ? 'border-slate-900 text-slate-900 font-semibold'
+                  : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              <MessageCircle className="w-4 h-4" />
+              <span>WhatsApp Channel</span>
+              {waConfig.enabled && waConfig.url ? (
+                <span className="ml-1 text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-1.5 py-0.5 rounded-full font-mono">
+                  Live
+                </span>
+              ) : (
+                <span className="ml-1 text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-full font-mono">
+                  Off
+                </span>
+              )}
             </button>
           </nav>
         </div>
@@ -3936,6 +4024,148 @@ export default function AdminDashboardPage() {
                   </table>
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* ============================================================ */}
+        {/* TAB 9: WHATSAPP CHANNEL SETTINGS                             */}
+        {/* ============================================================ */}
+        {activeTab === 'whatsapp' && (
+          <div className="space-y-6">
+            <div className="flex flex-wrap items-center justify-between gap-4 pb-3 border-b border-slate-200">
+              <div>
+                <h2 className="text-base font-semibold text-slate-900">WhatsApp Channel Settings</h2>
+                <p className="text-xs text-slate-500">
+                  Configure the official WhatsApp channel link displayed to students on the homepage.
+                </p>
+              </div>
+            </div>
+
+            <div className="max-w-2xl bg-white border border-slate-200/80 rounded-xl p-5 shadow-xs space-y-4">
+              <form onSubmit={handleSaveWhatsAppConfig} className="space-y-4">
+                {waFeedback && (
+                  <div
+                    className={`p-3 rounded-lg border text-xs font-medium ${
+                      waFeedback.kind === 'ok'
+                        ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                        : 'bg-rose-50 text-rose-800 border-rose-200'
+                    }`}
+                  >
+                    {waFeedback.text}
+                  </div>
+                )}
+
+                <div className="flex items-center gap-2 pt-1 pb-2 border-b border-slate-100">
+                  <input
+                    type="checkbox"
+                    id="waEnabledToggle"
+                    checked={waConfig.enabled}
+                    onChange={(e) => setWaConfig(prev => ({ ...prev, enabled: e.target.checked }))}
+                    className="w-4 h-4 rounded border-slate-300 text-slate-900 focus:ring-slate-900"
+                  />
+                  <label htmlFor="waEnabledToggle" className="text-xs font-medium text-slate-800 cursor-pointer select-none">
+                    Show WhatsApp channel banner on student homepage
+                  </label>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-slate-700 block">
+                    WhatsApp Channel URL
+                  </label>
+                  <div className="flex gap-2">
+                    <input
+                      type="url"
+                      value={waConfig.url}
+                      onChange={(e) => setWaConfig(prev => ({ ...prev, url: e.target.value }))}
+                      placeholder="https://whatsapp.com/channel/..."
+                      className="flex-1 text-xs font-mono border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+                      required
+                    />
+                    {waConfig.url && (
+                      <button
+                        type="button"
+                        onClick={handleTestWhatsAppLink}
+                        className="px-3 py-2 border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-medium rounded-lg transition"
+                      >
+                        Test Link
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-slate-700 block">
+                    Headline Title
+                  </label>
+                  <input
+                    type="text"
+                    value={waConfig.title}
+                    onChange={(e) => setWaConfig(prev => ({ ...prev, title: e.target.value }))}
+                    placeholder="AcademicPrep Official WhatsApp Channel"
+                    className="w-full text-xs border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-slate-700 block">
+                    Description
+                  </label>
+                  <textarea
+                    rows={3}
+                    value={waConfig.description}
+                    onChange={(e) => setWaConfig(prev => ({ ...prev, description: e.target.value }))}
+                    placeholder="Join our official student community for daily WAEC & BECE questions..."
+                    className="w-full text-xs border border-slate-300 rounded-lg p-3 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900 resize-none"
+                    required
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <label className="text-xs font-medium text-slate-700 block">
+                      Button Text
+                    </label>
+                    <input
+                      type="text"
+                      value={waConfig.buttonText}
+                      onChange={(e) => setWaConfig(prev => ({ ...prev, buttonText: e.target.value }))}
+                      placeholder="Follow Channel"
+                      className="w-full text-xs border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-medium text-slate-700 block">
+                      Badge Text
+                    </label>
+                    <input
+                      type="text"
+                      value={waConfig.badgeText}
+                      onChange={(e) => setWaConfig(prev => ({ ...prev, badgeText: e.target.value }))}
+                      placeholder="Official WhatsApp Channel"
+                      className="w-full text-xs border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 pt-2 border-t border-slate-100">
+                  <button
+                    type="submit"
+                    disabled={savingWa}
+                    className="px-4 py-2 bg-slate-900 hover:bg-slate-800 disabled:opacity-60 text-white text-xs font-semibold rounded-lg transition shadow-xs"
+                  >
+                    {savingWa ? 'Saving…' : 'Save Changes'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleResetWhatsAppConfig}
+                    className="px-3 py-2 border border-slate-200 hover:bg-slate-50 text-slate-600 text-xs font-medium rounded-lg transition"
+                  >
+                    Reset Defaults
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         )}

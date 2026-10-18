@@ -22,12 +22,12 @@ export const HOMEPAGE_TOUR_STEPS: TourStep[] = [
     tip: 'No payment required to get started with your first 3 topics.',
   },
   {
-    id: 'home-demo',
-    targetId: 'tour-home-demo',
+    id: 'home-whatsapp',
+    targetId: 'tour-home-whatsapp',
     stepNumber: 2,
-    title: 'Instant Demo Student Account',
-    text: 'Want to test the platform instantly? Use our pre-filled demo student login (Phone: 0241234567, PIN: 1234) without signing up first.',
-    tip: 'Click "Quick Fill" on the login page to sign in with one tap.',
+    title: 'Official WhatsApp Channel',
+    text: 'Follow our official WhatsApp channel for daily WAEC & BECE questions, examination updates, and study alerts directly from teachers.',
+    tip: 'Click "Follow Channel" to join free directly on WhatsApp.',
   },
   {
     id: 'home-jhs',

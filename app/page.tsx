@@ -30,6 +30,7 @@ import ApkDownloadModal from '@/components/ApkDownloadModal';
 import NewBlogNotificationToast from '@/components/NewBlogNotificationToast';
 import { OFFICIAL_APK_DOWNLOAD_URL, APK_FILE_SIZE } from '@/lib/apkConfig';
 import Books3DBackground from '@/components/Books3DBackground';
+import WhatsAppChannelBanner from '@/components/WhatsAppChannelBanner';
 
 export default function HomePage() {
   const { student } = useAuth();
@@ -138,22 +139,9 @@ export default function HomePage() {
               </button>
             </div>
 
-            {/* Quick Demo Info Box - Desktop & Tablet (Hidden on Mobile) */}
-            <div className="hidden sm:block pt-3 max-w-md mx-auto w-full">
-              <div id="tour-home-demo" className="bg-slate-900/60 backdrop-blur-md rounded-xl p-3 sm:p-3.5 border border-slate-600/60 text-left text-xs text-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 shadow-md">
-                <div>
-                  <span className="font-semibold text-white block mb-0.5">Try Demo Student Account:</span>
-                  <span className="text-slate-300 break-words">
-                    Phone: <b className="text-blue-300 font-mono">0241234567</b> • PIN: <b className="text-blue-300 font-mono">1234</b>
-                  </span>
-                </div>
-                <Link 
-                  href="/login"
-                  className="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-semibold text-[11px] hover:bg-blue-500 shadow-xs shrink-0 self-start sm:self-auto text-center transition"
-                >
-                  Quick Fill
-                </Link>
-              </div>
+            {/* Official WhatsApp Channel Link (Configured & Uploaded by Admin) */}
+            <div className="pt-3 max-w-lg mx-auto w-full px-2 sm:px-0">
+              <WhatsAppChannelBanner variant="hero" />
             </div>
 
           </div>
