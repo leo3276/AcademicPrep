@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import { supabaseAdmin, isSupabaseConfigured } from './supabaseClient';
 import { buildTopicProgressWrite } from './topicProgressWrite';
 
@@ -94,7 +96,33 @@ export async function fetchPublicLeaderboard(
   limit = 50,
   currentPhone?: string
 ): Promise<PublicLeaderboardEntry[]> {
-  if (!isSupabaseConfigured) return [];
+  if (!isSupabaseConfigured) {
+    try {
+      const p = path.join(process.cwd(), 'data', 'students.json');
+      if (fs.existsSync(p)) {
+        const raw = fs.readFileSync(p, 'utf-8');
+        const list = JSON.parse(raw);
+        if (Array.isArray(list)) {
+          return list
+            .slice()
+            .sort((a, b) => (b.topicsCompleted || 0) - (a.topicsCompleted || 0))
+            .slice(0, limit)
+            .map((s: any, idx: number) => ({
+              name: s.name || s.fullName || 'Student',
+              level: s.level || s.currentLevel || 'JHS 1',
+              phoneMasked: maskPhone(s.phone || s.phoneNumber || ''),
+              topicsCompleted: s.topicsCompleted ?? s.topics_completed_count ?? 0,
+              avgScorePercentage: s.avgScorePercentage ?? s.avg_score_percentage ?? 0,
+              rank: idx + 1,
+              isCurrentUser: Boolean(currentPhone) && (s.phone === currentPhone || s.phoneNumber === currentPhone),
+            }));
+        }
+      }
+    } catch (err) {
+      console.warn('[dbService] Leaderboard fallback failed:', err);
+    }
+    return [];
+  }
 
   const { data, error } = await supabaseAdmin
     .from('students')
@@ -121,7 +149,33 @@ export async function fetchPublicLeaderboard(
 
 /** Full student list for the admin dashboard. Requires admin authentication. */
 export async function fetchStudentsForAdmin(): Promise<any[]> {
-  if (!isSupabaseConfigured) return [];
+  if (!isSupabaseConfigured) {
+    try {
+      const p = path.join(process.cwd(), 'data', 'students.json');
+      if (fs.existsSync(p)) {
+        const raw = fs.readFileSync(p, 'utf-8');
+        const list = JSON.parse(raw);
+        if (Array.isArray(list)) {
+          return list.map((s: any) => ({
+            id: s.id,
+            phone: s.phone || s.phoneNumber || s.phone_number || '',
+            name: s.name || s.fullName || s.full_name || 'Student',
+            level: s.level || s.currentLevel || s.current_level || 'JHS 3',
+            accessType: s.accessType || s.access_type || 'Free Trial',
+            accessExpiresAt: s.accessExpiresAt || s.access_expires_at || null,
+            lastActive: s.lastActive || s.last_active_at || new Date().toISOString(),
+            topicsCompleted: s.topicsCompleted ?? s.topics_completed_count ?? 0,
+            completedTopicIds: s.completedTopicIds || s.completed_topic_ids || [],
+            avgScorePercentage: s.avgScorePercentage ?? s.avg_score_percentage ?? 0,
+            registeredAt: s.registeredAt || s.created_at || new Date().toISOString(),
+          }));
+        }
+      }
+    } catch (err) {
+      console.warn('[dbService] Admin students fallback failed:', err);
+    }
+    return [];
+  }
 
   const { data, error } = await supabaseAdmin
     .from('students')

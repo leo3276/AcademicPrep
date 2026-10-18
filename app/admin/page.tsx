@@ -254,18 +254,22 @@ export default function AdminDashboardPage() {
     }
   };
 
-  // Weekly Exams Admin State & Candidate Scoreboard
+  // Weekly Exams Admin State & Candidate Scoreboard (Live Real-Time Data)
   const [weeklyExamMetrics, setWeeklyExamMetrics] = useState({
     totalCandidates: 0,
     completedCount: 0,
     inProgressCount: 0,
+    awaitingCount: 0,
     averageCompositeScore: 0,
     highestScore: 0,
   });
   const [weeklyExamCandidates, setWeeklyExamCandidates] = useState<any[]>([]);
   const [loadingWeeklyExams, setLoadingWeeklyExams] = useState(false);
   const [weeklyExamSearch, setWeeklyExamSearch] = useState('');
-  const [weeklyExamStatusFilter, setWeeklyExamStatusFilter] = useState<'ALL' | 'completed' | 'in_progress'>('ALL');
+  const [weeklyExamStatusFilter, setWeeklyExamStatusFilter] = useState<'ALL' | 'completed' | 'in_progress' | 'not_started'>('ALL');
+  const [weeklyExamLevelFilter, setWeeklyExamLevelFilter] = useState<'ALL' | 'JHS 3' | 'JHS 2' | 'JHS 1'>('ALL');
+  const [weeklyExamPage, setWeeklyExamPage] = useState(1);
+  const [lastWeeklyExamSync, setLastWeeklyExamSync] = useState<string>('');
   const [examShareCopied, setExamShareCopied] = useState<string | null>(null);
   const [isSending5MinReminder, setIsSending5MinReminder] = useState(false);
   const [reminder5MinFeedback, setReminder5MinFeedback] = useState<{ kind: 'ok' | 'err'; text: string } | null>(null);
@@ -278,6 +282,7 @@ export default function AdminDashboardPage() {
       if (data?.success) {
         if (data.metrics) setWeeklyExamMetrics(data.metrics);
         if (Array.isArray(data.candidates)) setWeeklyExamCandidates(data.candidates);
+        setLastWeeklyExamSync(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
       }
     } catch (err) {
       console.warn('Failed to load weekly exam candidates:', err);
@@ -289,7 +294,7 @@ export default function AdminDashboardPage() {
   useEffect(() => {
     if (activeTab === 'weekly_exams') {
       loadWeeklyExamData();
-      const interval = setInterval(() => loadWeeklyExamData(true), 15000);
+      const interval = setInterval(() => loadWeeklyExamData(true), 10000); // Live real-time poll every 10s
       return () => clearInterval(interval);
     }
   }, [activeTab, loadWeeklyExamData]);
@@ -4435,24 +4440,36 @@ export default function AdminDashboardPage() {
                   <div className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold">
                     <FlaskConical className="w-4 h-4" />
                   </div>
-                  <h2 className="text-base font-bold text-slate-900">
-                    Weekly Examination Center & Candidate Scoreboard
-                  </h2>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h2 className="text-base font-bold text-slate-900">
+                      Weekly Examination Center & Candidate Scoreboard
+                    </h2>
+                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      LIVE DATA ({weeklyExamMetrics.totalCandidates} Candidates)
+                    </span>
+                  </div>
                 </div>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Real-time candidate monitoring, score reporting, 5:55 PM notification trigger, and multi-channel social distribution.
+                  Real-time candidate monitoring for registered JHS students, live Paper 1 & Paper 2 scoring, and broadcast distribution.
                 </p>
               </div>
 
               <div className="flex items-center gap-2.5">
+                {lastWeeklyExamSync && (
+                  <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">
+                    Synced {lastWeeklyExamSync}
+                  </span>
+                )}
+
                 <button
                   type="button"
                   onClick={() => loadWeeklyExamData(false)}
                   disabled={loadingWeeklyExams}
-                  className="px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center gap-1.5 transition"
+                  className="px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer"
                 >
                   <RefreshCw className={`w-3.5 h-3.5 ${loadingWeeklyExams ? 'animate-spin text-blue-600' : ''}`} />
-                  <span>Refresh Candidates</span>
+                  <span>{loadingWeeklyExams ? 'Syncing...' : 'Refresh Live'}</span>
                 </button>
 
                 <Link
@@ -4504,56 +4521,66 @@ export default function AdminDashboardPage() {
               </div>
             </div>
 
-            {/* Quick Metrics Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
-              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-xs">
+            {/* Quick Metrics Grid (6 Live Cards) */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+              <div className="bg-white border border-slate-200/80 p-3.5 rounded-xl shadow-xs">
                 <span className="text-[10px] font-bold uppercase text-slate-400 block tracking-wider">
                   Total Candidates
                 </span>
-                <span className="text-2xl font-black text-slate-900 font-mono mt-1 block">
+                <span className="text-xl sm:text-2xl font-black text-slate-900 font-mono mt-1 block">
                   {weeklyExamMetrics.totalCandidates}
                 </span>
-                <span className="text-[10px] text-slate-500">Registered or writing</span>
+                <span className="text-[10px] text-slate-500">Registered roster</span>
               </div>
 
-              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-xs">
-                <span className="text-[10px] font-bold uppercase text-blue-600 block tracking-wider">
-                  In-Progress Now
-                </span>
-                <span className="text-2xl font-black text-blue-600 font-mono mt-1 block">
-                  {weeklyExamMetrics.inProgressCount}
-                </span>
-                <span className="text-[10px] text-slate-500">Currently writing papers</span>
-              </div>
-
-              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-xs">
+              <div className="bg-white border border-slate-200/80 p-3.5 rounded-xl shadow-xs">
                 <span className="text-[10px] font-bold uppercase text-emerald-600 block tracking-wider">
                   Completed Papers
                 </span>
-                <span className="text-2xl font-black text-emerald-600 font-mono mt-1 block">
+                <span className="text-xl sm:text-2xl font-black text-emerald-600 font-mono mt-1 block">
                   {weeklyExamMetrics.completedCount}
                 </span>
-                <span className="text-[10px] text-slate-500">Submissions graded</span>
+                <span className="text-[10px] text-slate-500">Graded submissions</span>
               </div>
 
-              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-xs">
+              <div className="bg-white border border-slate-200/80 p-3.5 rounded-xl shadow-xs">
+                <span className="text-[10px] font-bold uppercase text-blue-600 block tracking-wider">
+                  In-Progress Now
+                </span>
+                <span className="text-xl sm:text-2xl font-black text-blue-600 font-mono mt-1 block">
+                  {weeklyExamMetrics.inProgressCount}
+                </span>
+                <span className="text-[10px] text-slate-500">Writing papers now</span>
+              </div>
+
+              <div className="bg-white border border-slate-200/80 p-3.5 rounded-xl shadow-xs">
+                <span className="text-[10px] font-bold uppercase text-slate-500 block tracking-wider">
+                  Awaiting Entry
+                </span>
+                <span className="text-xl sm:text-2xl font-black text-slate-700 font-mono mt-1 block">
+                  {weeklyExamMetrics.awaitingCount}
+                </span>
+                <span className="text-[10px] text-slate-500">Yet to take seat</span>
+              </div>
+
+              <div className="bg-white border border-slate-200/80 p-3.5 rounded-xl shadow-xs">
                 <span className="text-[10px] font-bold uppercase text-amber-600 block tracking-wider">
                   Average Score
                 </span>
-                <span className="text-2xl font-black text-amber-600 font-mono mt-1 block">
-                  {weeklyExamMetrics.averageCompositeScore}%
+                <span className="text-xl sm:text-2xl font-black text-amber-600 font-mono mt-1 block">
+                  {weeklyExamMetrics.completedCount > 0 ? `${weeklyExamMetrics.averageCompositeScore}%` : '—'}
                 </span>
                 <span className="text-[10px] text-slate-500">Class composite mean</span>
               </div>
 
-              <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-xs col-span-2 sm:col-span-1">
+              <div className="bg-white border border-slate-200/80 p-3.5 rounded-xl shadow-xs">
                 <span className="text-[10px] font-bold uppercase text-purple-600 block tracking-wider">
                   Highest Score
                 </span>
-                <span className="text-2xl font-black text-purple-600 font-mono mt-1 block">
-                  {weeklyExamMetrics.highestScore}%
+                <span className="text-xl sm:text-2xl font-black text-purple-600 font-mono mt-1 block">
+                  {weeklyExamMetrics.completedCount > 0 ? `${weeklyExamMetrics.highestScore}%` : '—'}
                 </span>
-                <span className="text-[10px] text-slate-500">Top Stanine Grade 1</span>
+                <span className="text-[10px] text-slate-500">Top Stanine Grade</span>
               </div>
             </div>
 
@@ -4745,134 +4772,257 @@ export default function AdminDashboardPage() {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2 flex-wrap">
                   <div className="relative">
                     <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                     <input
                       type="text"
                       value={weeklyExamSearch}
-                      onChange={(e) => setWeeklyExamSearch(e.target.value)}
+                      onChange={(e) => {
+                        setWeeklyExamSearch(e.target.value);
+                        setWeeklyExamPage(1);
+                      }}
                       placeholder="Search candidate or phone…"
-                      className="pl-8 pr-3 py-1.5 text-xs border border-slate-300 rounded-lg w-48 focus:outline-hidden focus:ring-1 focus:ring-slate-900"
+                      className="pl-8 pr-3 py-1.5 text-xs border border-slate-300 rounded-lg w-44 focus:outline-hidden focus:ring-1 focus:ring-slate-900"
                     />
                   </div>
 
                   <select
-                    value={weeklyExamStatusFilter}
-                    onChange={(e: any) => setWeeklyExamStatusFilter(e.target.value)}
+                    value={weeklyExamLevelFilter}
+                    onChange={(e: any) => {
+                      setWeeklyExamLevelFilter(e.target.value);
+                      setWeeklyExamPage(1);
+                    }}
                     className="py-1.5 px-2.5 text-xs border border-slate-300 rounded-lg bg-white text-slate-700 focus:outline-hidden"
                   >
-                    <option value="ALL">All Statuses</option>
-                    <option value="completed">Completed Only</option>
-                    <option value="in_progress">In-Progress Only</option>
+                    <option value="ALL">All Levels</option>
+                    <option value="JHS 3">JHS 3 Only</option>
+                    <option value="JHS 2">JHS 2 Only</option>
+                    <option value="JHS 1">JHS 1 Only</option>
+                  </select>
+
+                  <select
+                    value={weeklyExamStatusFilter}
+                    onChange={(e: any) => {
+                      setWeeklyExamStatusFilter(e.target.value);
+                      setWeeklyExamPage(1);
+                    }}
+                    className="py-1.5 px-2.5 text-xs border border-slate-300 rounded-lg bg-white text-slate-700 focus:outline-hidden"
+                  >
+                    <option value="ALL">All Statuses ({weeklyExamCandidates.length})</option>
+                    <option value="completed">Completed ({weeklyExamMetrics.completedCount})</option>
+                    <option value="in_progress">In-Progress ({weeklyExamMetrics.inProgressCount})</option>
+                    <option value="not_started">Awaiting ({weeklyExamMetrics.awaitingCount})</option>
                   </select>
                 </div>
               </div>
 
               {/* Table */}
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs">
-                  <thead>
-                    <tr className="border-b border-slate-200 text-[11px] font-bold text-slate-500 uppercase tracking-wider bg-slate-50/70">
-                      <th className="py-2.5 px-3">Candidate</th>
-                      <th className="py-2.5 px-3">Phone</th>
-                      <th className="py-2.5 px-3">Level</th>
-                      <th className="py-2.5 px-3 text-center">Status</th>
-                      <th className="py-2.5 px-3 text-right">Paper 1 (Objs / 40)</th>
-                      <th className="py-2.5 px-3 text-right">Paper 2 (Theory / 60)</th>
-                      <th className="py-2.5 px-3 text-right">Composite %</th>
-                      <th className="py-2.5 px-3">Stanine Grade</th>
-                      <th className="py-2.5 px-3 text-right">Time Spent</th>
-                      <th className="py-2.5 px-3 text-right">Submitted At</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {weeklyExamCandidates
-                      .filter((c) => {
-                        if (weeklyExamStatusFilter !== 'ALL' && c.status !== weeklyExamStatusFilter) return false;
-                        if (weeklyExamSearch) {
-                          const q = weeklyExamSearch.toLowerCase();
-                          return (
-                            (c.studentName || '').toLowerCase().includes(q) ||
-                            (c.studentPhone || '').toLowerCase().includes(q)
-                          );
-                        }
-                        return true;
-                      })
-                      .map((c) => {
-                        const isDone = c.status === 'completed';
-                        return (
-                          <tr key={c.id} className="hover:bg-slate-50/60 transition">
-                            <td className="py-3 px-3 font-semibold text-slate-900">
-                              {c.studentName || 'Candidate'}
-                            </td>
-                            <td className="py-3 px-3 font-mono text-slate-600 text-[11px]">
-                              {c.studentPhone || 'N/A'}
-                            </td>
-                            <td className="py-3 px-3 font-medium text-slate-700">
-                              {c.level || 'JHS 3'}
-                            </td>
-                            <td className="py-3 px-3 text-center">
-                              <span
-                                className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                                  isDone
-                                    ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                                    : 'bg-blue-50 text-blue-700 border border-blue-200'
-                                }`}
-                              >
-                                {isDone ? 'Completed' : 'Writing Paper'}
-                              </span>
-                            </td>
-                            <td className="py-3 px-3 text-right font-mono font-bold text-slate-800">
-                              {c.paper1ScoreMarks} / 40 ({c.paper1Percentage}%)
-                            </td>
-                            <td className="py-3 px-3 text-right font-mono font-bold text-slate-800">
-                              {c.paper2ScoreMarks} / 60 ({c.paper2Percentage}%)
-                            </td>
-                            <td className="py-3 px-3 text-right font-mono font-black text-sm">
-                              <span
-                                className={
-                                  c.compositePercentage >= 75
-                                    ? 'text-emerald-600'
-                                    : c.compositePercentage >= 50
-                                    ? 'text-blue-600'
-                                    : 'text-amber-600'
-                                }
-                              >
-                                {c.compositePercentage}%
-                              </span>
-                            </td>
-                            <td className="py-3 px-3">
-                              <span className="font-semibold text-slate-900 block text-[11px]">
-                                {c.gradeRemark}
-                              </span>
-                              <span className="text-[10px] text-slate-400 font-mono">
-                                Stanine {c.stanineGrade}
-                              </span>
-                            </td>
-                            <td className="py-3 px-3 text-right font-mono text-[11px] text-slate-600">
-                              {Math.floor((c.timeSpentSeconds || 0) / 60)}m {(c.timeSpentSeconds || 0) % 60}s
-                            </td>
-                            <td className="py-3 px-3 text-right font-mono text-[10px] text-slate-400 whitespace-nowrap">
-                              {c.completedAt
-                                ? new Date(c.completedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                                : 'In Session'}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </table>
+                {(() => {
+                  const filtered = weeklyExamCandidates.filter((c) => {
+                    if (weeklyExamStatusFilter !== 'ALL' && c.status !== weeklyExamStatusFilter) return false;
+                    if (weeklyExamLevelFilter !== 'ALL' && c.level !== weeklyExamLevelFilter) return false;
+                    if (weeklyExamSearch) {
+                      const q = weeklyExamSearch.toLowerCase();
+                      return (
+                        (c.studentName || '').toLowerCase().includes(q) ||
+                        (c.studentPhone || '').toLowerCase().includes(q)
+                      );
+                    }
+                    return true;
+                  });
 
-                {weeklyExamCandidates.length === 0 && (
-                  <div className="py-12 text-center text-slate-400 space-y-2">
-                    <FlaskConical className="w-8 h-8 mx-auto text-slate-300" />
-                    <p className="text-xs font-semibold">No candidates have started yet.</p>
-                    <p className="text-[11px]">
-                      Students will appear in this scoreboard once they enter the exam at 6:00 PM.
-                    </p>
-                  </div>
-                )}
+                  const pageSize = 25;
+                  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+                  const currentPage = Math.min(weeklyExamPage, totalPages);
+                  const startIndex = (currentPage - 1) * pageSize;
+                  const currentSlice = filtered.slice(startIndex, startIndex + pageSize);
+
+                  return (
+                    <div className="space-y-4">
+                      <table className="w-full text-left text-xs">
+                        <thead>
+                          <tr className="border-b border-slate-200 text-[11px] font-bold text-slate-500 uppercase tracking-wider bg-slate-50/70">
+                            <th className="py-2.5 px-3">Candidate</th>
+                            <th className="py-2.5 px-3">Phone</th>
+                            <th className="py-2.5 px-3">Level</th>
+                            <th className="py-2.5 px-3 text-center">Status</th>
+                            <th className="py-2.5 px-3 text-right">Paper 1 (Objs / 40)</th>
+                            <th className="py-2.5 px-3 text-right">Paper 2 (Theory / 60)</th>
+                            <th className="py-2.5 px-3 text-right">Composite %</th>
+                            <th className="py-2.5 px-3">Stanine Grade</th>
+                            <th className="py-2.5 px-3 text-right">Time Spent</th>
+                            <th className="py-2.5 px-3 text-right">Action / Submitted</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100">
+                          {currentSlice.map((c) => {
+                            const isDone = c.status === 'completed';
+                            const isInProg = c.status === 'in_progress';
+
+                            const inviteText = `📢 *ACADEMICPREP WEEKLY EXAM INVITATION* 🔬\n\n` +
+                              `Hello ${c.studentName || 'Student'}! The official timed JHS 3 Science Examination is active today (available until 12:00 AM GMT Midnight).\n\n` +
+                              `👉 *Take Your Seat Now:* https://academicprep.com/jhs/weekly-exam?mode=scheduled\n\n` +
+                              `Good luck! 🏆`;
+                            const waInviteUrl = `https://api.whatsapp.com/send?phone=233${(c.studentPhone || '').replace(/^0/, '')}&text=${encodeURIComponent(inviteText)}`;
+
+                            return (
+                              <tr key={c.id} className="hover:bg-slate-50/60 transition">
+                                <td className="py-3 px-3 font-semibold text-slate-900">
+                                  {c.studentName || 'Candidate'}
+                                </td>
+                                <td className="py-3 px-3 font-mono text-slate-600 text-[11px]">
+                                  {c.studentPhone || 'N/A'}
+                                </td>
+                                <td className="py-3 px-3 font-medium text-slate-700">
+                                  {c.level || 'JHS 3'}
+                                </td>
+                                <td className="py-3 px-3 text-center">
+                                  <span
+                                    className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase inline-flex items-center gap-1 ${
+                                      isDone
+                                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                                        : isInProg
+                                        ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                                        : 'bg-slate-100 text-slate-600 border border-slate-200'
+                                    }`}
+                                  >
+                                    {isInProg && <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />}
+                                    {isDone ? 'Completed' : isInProg ? 'Writing Paper' : 'Awaiting Entry'}
+                                  </span>
+                                </td>
+                                <td className="py-3 px-3 text-right font-mono font-bold text-slate-800">
+                                  {isDone ? (
+                                    `${c.paper1ScoreMarks} / 40 (${c.paper1Percentage}%)`
+                                  ) : isInProg ? (
+                                    `${c.paper1ScoreMarks || 0} / 40`
+                                  ) : (
+                                    <span className="text-slate-400 font-normal">—</span>
+                                  )}
+                                </td>
+                                <td className="py-3 px-3 text-right font-mono font-bold text-slate-800">
+                                  {isDone ? (
+                                    `${c.paper2ScoreMarks} / 60 (${c.paper2Percentage}%)`
+                                  ) : isInProg ? (
+                                    <span className="text-blue-600 font-normal">Writing...</span>
+                                  ) : (
+                                    <span className="text-slate-400 font-normal">—</span>
+                                  )}
+                                </td>
+                                <td className="py-3 px-3 text-right font-mono font-black text-sm">
+                                  {isDone && typeof c.compositePercentage === 'number' ? (
+                                    <span
+                                      className={
+                                        c.compositePercentage >= 75
+                                          ? 'text-emerald-600'
+                                          : c.compositePercentage >= 50
+                                          ? 'text-blue-600'
+                                          : 'text-amber-600'
+                                      }
+                                    >
+                                      {c.compositePercentage}%
+                                    </span>
+                                  ) : (
+                                    <span className="text-slate-400 font-normal text-xs">—</span>
+                                  )}
+                                </td>
+                                <td className="py-3 px-3">
+                                  {isDone ? (
+                                    <>
+                                      <span className="font-semibold text-slate-900 block text-[11px]">
+                                        {c.gradeRemark}
+                                      </span>
+                                      <span className="text-[10px] text-slate-400 font-mono">
+                                        Stanine {c.stanineGrade}
+                                      </span>
+                                    </>
+                                  ) : isInProg ? (
+                                    <span className="text-blue-600 text-[11px] font-medium">In Session</span>
+                                  ) : (
+                                    <span className="text-slate-400 text-[11px]">Pending Entry</span>
+                                  )}
+                                </td>
+                                <td className="py-3 px-3 text-right font-mono text-[11px] text-slate-600">
+                                  {isDone || isInProg ? (
+                                    `${Math.floor((c.timeSpentSeconds || 0) / 60)}m ${(c.timeSpentSeconds || 0) % 60}s`
+                                  ) : (
+                                    <span className="text-slate-400">—</span>
+                                  )}
+                                </td>
+                                <td className="py-3 px-3 text-right font-mono text-[11px] text-slate-400 whitespace-nowrap">
+                                  {isDone ? (
+                                    c.completedAt
+                                      ? new Date(c.completedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                                      : 'Submitted'
+                                  ) : isInProg ? (
+                                    <span className="text-blue-600 font-semibold">Active Now</span>
+                                  ) : c.studentPhone && c.studentPhone !== 'N/A' ? (
+                                    <a
+                                      href={waInviteUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 text-[10px] font-semibold transition"
+                                      title="Send direct WhatsApp exam link to student"
+                                    >
+                                      <MessageCircle className="w-3 h-3" />
+                                      <span>Remind</span>
+                                    </a>
+                                  ) : (
+                                    'Awaiting Entry'
+                                  )}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+
+                      {/* Pagination Bar */}
+                      {filtered.length > 0 && (
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-100 text-xs text-slate-500">
+                          <span>
+                            Showing <strong className="text-slate-800">{startIndex + 1}</strong> to{' '}
+                            <strong className="text-slate-800">{Math.min(startIndex + pageSize, filtered.length)}</strong> of{' '}
+                            <strong className="text-slate-800">{filtered.length}</strong> candidates
+                          </span>
+
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              disabled={currentPage <= 1}
+                              onClick={() => setWeeklyExamPage(p => Math.max(1, p - 1))}
+                              className="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40 text-slate-700 font-medium transition cursor-pointer"
+                            >
+                              Previous
+                            </button>
+                            <span className="font-mono text-slate-700 px-1 font-semibold">
+                              {currentPage} / {totalPages}
+                            </span>
+                            <button
+                              type="button"
+                              disabled={currentPage >= totalPages}
+                              onClick={() => setWeeklyExamPage(p => Math.min(totalPages, p + 1))}
+                              className="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40 text-slate-700 font-medium transition cursor-pointer"
+                            >
+                              Next
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      {filtered.length === 0 && (
+                        <div className="py-12 text-center text-slate-400 space-y-2">
+                          <FlaskConical className="w-8 h-8 mx-auto text-slate-300" />
+                          <p className="text-xs font-semibold">No candidates match your filter.</p>
+                          <p className="text-[11px]">
+                            Try clearing your search query or selecting a different status.
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
               </div>
             </div>
 

@@ -17,10 +17,12 @@ import { OFFICIAL_SCHEDULED_EXAM } from '@/lib/scheduledWeeklyExam';
 interface ScheduledExamBriefingModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirmStart: () => void;
+  onConfirmStart: (info?: { fullName: string; phone: string }) => void;
   isAdmin?: boolean;
   isLocked?: boolean;
   countdownText?: string;
+  defaultName?: string;
+  defaultPhone?: string;
 }
 
 export default function ScheduledExamBriefingModal({
@@ -30,8 +32,12 @@ export default function ScheduledExamBriefingModal({
   isAdmin = false,
   isLocked = false,
   countdownText = '',
+  defaultName = '',
+  defaultPhone = '',
 }: ScheduledExamBriefingModalProps) {
   const [agreed, setAgreed] = useState(false);
+  const [candidateName, setCandidateName] = useState(defaultName);
+  const [candidatePhone, setCandidatePhone] = useState(defaultPhone);
 
   if (!isOpen) return null;
 
@@ -130,6 +136,46 @@ export default function ScheduledExamBriefingModal({
             </ul>
           </div>
 
+          {/* Candidate Identification */}
+          {defaultName ? (
+            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+              <div>
+                <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Candidate</span>
+                <span className="text-xs font-bold text-slate-900">{defaultName}</span>
+                {defaultPhone && <span className="text-[11px] text-slate-500 font-mono block">{defaultPhone}</span>}
+              </div>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                Verified Candidate
+              </span>
+            </div>
+          ) : (
+            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <span className="text-xs font-bold text-slate-900 block">Candidate Identity</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                  <label className="text-[10px] font-bold text-slate-600 block mb-1">Full Name</label>
+                  <input
+                    type="text"
+                    value={candidateName}
+                    onChange={(e) => setCandidateName(e.target.value)}
+                    placeholder="e.g. Kwame Mensah"
+                    className="w-full px-2.5 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:outline-hidden focus:ring-1 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-slate-600 block mb-1">WhatsApp / Phone Number</label>
+                  <input
+                    type="tel"
+                    value={candidatePhone}
+                    onChange={(e) => setCandidatePhone(e.target.value)}
+                    placeholder="e.g. 0244123456"
+                    className="w-full px-2.5 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:outline-hidden focus:ring-1 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Candidate Checkbox Acknowledgment */}
           <label className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:bg-slate-100/70 transition cursor-pointer select-none">
             <input
@@ -174,7 +220,10 @@ export default function ScheduledExamBriefingModal({
               disabled={!agreed}
               onClick={() => {
                 if (agreed) {
-                  onConfirmStart();
+                  onConfirmStart({
+                    fullName: candidateName.trim() || defaultName || 'Candidate',
+                    phone: candidatePhone.trim() || defaultPhone || 'N/A',
+                  });
                 }
               }}
               className={`px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition ${

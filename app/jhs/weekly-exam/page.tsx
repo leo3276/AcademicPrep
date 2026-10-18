@@ -80,6 +80,10 @@ export default function WeeklyExamPage() {
   // Scheduled Exam States
   const [isScheduledMode, setIsScheduledMode] = useState(false);
   const [isBriefingModalOpen, setIsBriefingModalOpen] = useState(false);
+  const [candidateIdentity, setCandidateIdentity] = useState<{ fullName: string; phone: string }>({
+    fullName: '',
+    phone: '',
+  });
   const [scheduledAttempt, setScheduledAttempt] = useState<ScheduledExamAttemptRecord | null>(null);
   const [terminationReason, setTerminationReason] = useState<'normal_submission' | 'time_expired' | 'tab_switched_expired' | null>(null);
 
@@ -268,7 +272,7 @@ export default function WeeklyExamPage() {
     setIsBriefingModalOpen(true);
   };
 
-  const handleConfirmLaunchScheduledExam = () => {
+  const handleConfirmLaunchScheduledExam = (info?: { fullName: string; phone: string }) => {
     if (!isAdminPreviewMode && timeStatus.isUpcoming) {
       alert('The Examination Hall is locked and will open at 6:00 PM GMT sharp. Please wait for the countdown to complete.');
       return;
@@ -276,6 +280,16 @@ export default function WeeklyExamPage() {
     if (!isAdminPreviewMode && timeStatus.isEnded) {
       alert('The Examination window concluded at 12:00 AM GMT (Midnight). Submissions for this session are now closed.');
       return;
+    }
+
+    const candName = info?.fullName || student?.fullName || (isAdminPreviewMode ? 'Administrator (Preview)' : 'Candidate');
+    const candPhone = info?.phone || student?.phoneNumber || (isAdminPreviewMode ? '0244000000' : 'N/A');
+    setCandidateIdentity({ fullName: candName, phone: candPhone });
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('academicprep_cand_name', candName);
+        localStorage.setItem('academicprep_cand_phone', candPhone);
+      } catch {}
     }
 
     setIsBriefingModalOpen(false);
@@ -321,9 +335,9 @@ export default function WeeklyExamPage() {
       body: JSON.stringify({
         id: `attempt-sched-${Date.now()}`,
         examId: OFFICIAL_SCHEDULED_EXAM.id,
-        studentId: student?.id || (isAdminPreviewMode ? 'admin-preview-user' : 'guest-student'),
-        studentName: student?.fullName || (isAdminPreviewMode ? 'Administrator (Preview)' : 'Candidate'),
-        studentPhone: student?.phoneNumber || (isAdminPreviewMode ? '0244000000' : '0240000000'),
+        studentId: student?.id || candPhone || (isAdminPreviewMode ? 'admin-preview-user' : 'guest-student'),
+        studentName: candName,
+        studentPhone: candPhone,
         level: 'JHS 3',
         status: 'in_progress',
         paper1ScoreMarks: 0,
@@ -650,12 +664,15 @@ export default function WeeklyExamPage() {
     });
 
     if (isScheduledMode) {
+      const finalCandName = candidateIdentity.fullName || (typeof window !== 'undefined' ? localStorage.getItem('academicprep_cand_name') : null) || student?.fullName || 'Candidate';
+      const finalCandPhone = candidateIdentity.phone || (typeof window !== 'undefined' ? localStorage.getItem('academicprep_cand_phone') : null) || student?.phoneNumber || undefined;
+
       const schedRecord: ScheduledExamAttemptRecord = {
         id: `attempt-sched-${Date.now()}`,
         examId: OFFICIAL_SCHEDULED_EXAM.id,
-        studentId: student?.id || 'guest-student',
-        studentName: student?.fullName || 'Candidate',
-        studentPhone: student?.phoneNumber || undefined,
+        studentId: student?.id || finalCandPhone || 'guest-student',
+        studentName: finalCandName,
+        studentPhone: finalCandPhone,
         startedAt: new Date(Date.now() - Math.max(1, timeSpentSeconds) * 1000).toISOString(),
         completedAt: new Date().toISOString(),
         status: 'completed',
@@ -1300,6 +1317,8 @@ export default function WeeklyExamPage() {
           isAdmin={isAdminPreviewMode}
           isLocked={(timeStatus.isUpcoming || timeStatus.isEnded) && !isAdminPreviewMode}
           countdownText={timeStatus.isEnded ? 'Closed' : `${timeStatus.hoursUntilStart}h ${timeStatus.minutesUntilStart}m`}
+          defaultName={student?.fullName || ''}
+          defaultPhone={student?.phoneNumber || ''}
         />
       </div>
     );
