@@ -74,6 +74,9 @@ export default function ScheduledExamBriefingModal({
             <p className="text-[11px] text-blue-700">
               Level: {OFFICIAL_SCHEDULED_EXAM.level} • Subject: {OFFICIAL_SCHEDULED_EXAM.subjectName} • Total Marks: {OFFICIAL_SCHEDULED_EXAM.totalMarks}
             </p>
+            <p className="text-[11px] text-slate-600 font-medium pt-1 border-t border-blue-100/80">
+              Available Window: <strong>6:00 PM – 12:00 AM GMT (Midnight)</strong>.
+            </p>
           </div>
 
           {/* Sequential Timers Breakdown */}

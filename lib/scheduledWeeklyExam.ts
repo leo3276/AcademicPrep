@@ -14,7 +14,7 @@ export interface ScheduledExamConfig {
   topicId: string;
   topicTitle: string;
   scheduledStartUtc: string; // ISO 8601 string, e.g. "2026-10-18T18:00:00.000Z"
-  windowDurationHours: number; // 24 hours
+  windowDurationHours: number; // 6 hours (6:00 PM to 12:00 AM GMT Midnight)
   paper1DurationMinutes: number; // 30 minutes
   paper2DurationMinutes: number; // 60 minutes
   paper1MaxMarks: number; // 40 marks
@@ -66,7 +66,7 @@ export const OFFICIAL_SCHEDULED_EXAM: ScheduledExamConfig = {
   topicId: 'jhs3-sci-t1-atomic-structure-bonding',
   topicTitle: 'Atomic Structure, Periodic Table & Chemical Bonding',
   scheduledStartUtc: '2026-10-18T18:00:00.000Z', // 6:00 PM GMT Sharp (Locked for students until 6:00 PM)
-  windowDurationHours: 24,
+  windowDurationHours: 6, // Available until 12:00 AM GMT (Midnight)
   paper1DurationMinutes: 30, // 30 Minutes Objectives
   paper2DurationMinutes: 60, // 1 Hour Theory
   paper1MaxMarks: 40,

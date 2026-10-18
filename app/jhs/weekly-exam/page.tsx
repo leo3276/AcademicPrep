@@ -273,6 +273,10 @@ export default function WeeklyExamPage() {
       alert('The Examination Hall is locked and will open at 6:00 PM GMT sharp. Please wait for the countdown to complete.');
       return;
     }
+    if (!isAdminPreviewMode && timeStatus.isEnded) {
+      alert('The Examination window concluded at 12:00 AM GMT (Midnight). Submissions for this session are now closed.');
+      return;
+    }
 
     setIsBriefingModalOpen(false);
     setIsScheduledMode(true);
@@ -1294,8 +1298,8 @@ export default function WeeklyExamPage() {
           onClose={() => setIsBriefingModalOpen(false)}
           onConfirmStart={handleConfirmLaunchScheduledExam}
           isAdmin={isAdminPreviewMode}
-          isLocked={timeStatus.isUpcoming && !isAdminPreviewMode}
-          countdownText={`${timeStatus.hoursUntilStart}h ${timeStatus.minutesUntilStart}m`}
+          isLocked={(timeStatus.isUpcoming || timeStatus.isEnded) && !isAdminPreviewMode}
+          countdownText={timeStatus.isEnded ? 'Closed' : `${timeStatus.hoursUntilStart}h ${timeStatus.minutesUntilStart}m`}
         />
       </div>
     );

@@ -87,7 +87,7 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="text-center max-w-3xl mx-auto space-y-5 sm:space-y-6">
             {/* Scheduled 6:00 PM Examination Alert Banner */}
-            <ScheduledExamBanner variant="compact" className="max-w-2xl mx-auto border border-blue-400/40 bg-slate-900/90 backdrop-blur-md" />
+            <ScheduledExamBanner variant="compact" className="max-w-2xl mx-auto" />
 
             {latestPost && (
               <div className="flex flex-wrap items-center justify-center gap-2 max-w-full">

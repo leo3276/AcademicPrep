@@ -300,7 +300,7 @@ export default function AdminDashboardPage() {
     const message = `📢 *ACADEMICPREP WEEKLY EXAMINATION* 🔬\n\n` +
       `*Subject:* JHS 3 Integrated Science\n` +
       `*Topic:* Atomic Structure, Periodic Table & Chemical Bonding\n` +
-      `*Time:* Today at 6:00 PM GMT Sharp!\n` +
+      `*Time:* Today 6:00 PM – 12:00 AM GMT (Available until Midnight)\n` +
       `*Examination Criteria:*\n` +
       `  • Paper 1: 30 Mins (Objectives - 40 Marks)\n` +
       `  • Paper 2: 1 Hour (WAEC Theory Section B - 60 Marks)\n` +
@@ -4486,16 +4486,16 @@ export default function AdminDashboardPage() {
                     Atomic Structure, Periodic Table & Chemical Bonding
                   </h3>
                   <p className="text-xs text-slate-500 leading-relaxed">
-                    Dual paper format: 30 minutes Paper 1 (Objectives, 40 marks) + 1 hour Paper 2 (Theory, 60 marks). Opens 6:00 PM GMT for students. Administrator has immediate unrestricted preview.
+                    Dual paper format: 30 minutes Paper 1 (Objectives, 40 marks) + 1 hour Paper 2 (Theory, 60 marks). Opens 6:00 PM GMT, available until 12:00 AM GMT (Midnight). Administrator has immediate unrestricted preview.
                   </p>
                 </div>
 
                 <div className="bg-slate-50 border border-slate-200/80 p-3 sm:p-3.5 rounded-xl text-left md:text-right shrink-0 min-w-[200px] space-y-0.5">
                   <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">
-                    Scheduled Start
+                    Scheduled Window
                   </span>
-                  <span className="text-lg font-black font-mono text-slate-900 block">
-                    6:00 PM GMT Sharp
+                  <span className="text-base sm:text-lg font-black font-mono text-slate-900 block">
+                    6:00 PM – 12:00 AM GMT
                   </span>
                   <span className="text-[11px] text-emerald-600 block font-semibold">
                     Admin Preview: Unrestricted

@@ -34,7 +34,7 @@ function formatWeeklyExamWhatsApp(examUrl: string, is5MinReminder = false): stri
   return `📢 *ACADEMICPREP SCHEDULED WEEKLY EXAMINATION ALERT* 🔬\n\n` +
     `*Subject:* JHS 3 Integrated Science\n` +
     `*Topic:* Atomic Structure, Periodic Table & Chemical Bonding\n` +
-    `*Time:* Today at 6:00 PM GMT Sharp!\n` +
+    `*Time:* Today 6:00 PM – 12:00 AM GMT (Available until Midnight)\n` +
     `*Exam Structure:*\n` +
     `  • *Paper 1:* 30 Mins (Objectives - 40 Marks)\n` +
     `  • *Paper 2:* 1 Hour (WAEC Theory - 60 Marks)\n\n` +
