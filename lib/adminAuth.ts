@@ -115,12 +115,11 @@ export async function verifyAdminSlot(slot: AdminSlot, pin: string): Promise<boo
     const { data, error } = await supabaseAdmin.rpc('verify_admin_pin', { p_slot: slot, p_pin: pin });
 
     if (error) {
-      console.error(`[adminAuth] verify_admin_pin failed for ${slot}:`, error.message);
-      return false;
+      console.warn(`[adminAuth] verify_admin_pin RPC error for ${slot}, falling back to env PIN:`, error.message);
+    } else if (data !== null && data !== undefined) {
+      // NULL means "slot not configured in the database" - use the env bootstrap.
+      return data === true;
     }
-
-    // NULL means "slot not configured in the database" - use the env bootstrap.
-    if (data !== null && data !== undefined) return data === true;
   }
 
   const envPin = envPinForSlot(slot);

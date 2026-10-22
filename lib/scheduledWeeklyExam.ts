@@ -657,3 +657,31 @@ export function isStudentDisqualified(examId: string = OFFICIAL_SCHEDULED_EXAM.i
   const attempt = getScheduledExamAttempt(examId);
   return attempt !== null && attempt.status === 'expired';
 }
+
+// ============================================================================
+// PAST WEEKLY EXAMINATIONS ARCHIVE
+// ============================================================================
+
+export interface ArchivedWeeklyExam extends ScheduledExamConfig {
+  sessionDate: string; // e.g. "Sunday, October 18, 2026"
+  isConcluded: boolean;
+  termWeekLabel: string; // e.g. "Term 1 • Week 1 Official Exam"
+}
+
+export const PAST_WEEKLY_EXAMS: ArchivedWeeklyExam[] = [
+  {
+    ...OFFICIAL_SCHEDULED_EXAM,
+    sessionDate: 'Sunday, October 18, 2026',
+    isConcluded: true,
+    termWeekLabel: 'Term 1 • Week 1 Official Exam',
+  },
+];
+
+export function getPastWeeklyExams(level?: EducationLevel): ArchivedWeeklyExam[] {
+  if (!level) return PAST_WEEKLY_EXAMS;
+  return PAST_WEEKLY_EXAMS.filter((e) => e.level === level);
+}
+
+export function getPastWeeklyExamById(id: string): ArchivedWeeklyExam | undefined {
+  return PAST_WEEKLY_EXAMS.find((e) => e.id === id);
+}

@@ -68,6 +68,11 @@ export default function ScheduledExamBanner({ variant = 'full', className = '' }
   const isLive = timeStatus.isLive;
   const isEnded = timeStatus.isEnded;
 
+  // Once the scheduled exam has concluded (isEnded), it leaves the home screen automatically
+  if (isEnded) {
+    return null;
+  }
+
   // Minimalist Compact Variant
   if (variant === 'compact') {
     return (

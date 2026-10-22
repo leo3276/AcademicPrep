@@ -26,10 +26,13 @@ import {
   SCHEDULED_EXAM_STORAGE_KEYS,
   setPenaltyLockout,
   getRemainingPenaltyLockoutSeconds,
-  clearPenaltyLockout
+  clearPenaltyLockout,
+  ArchivedWeeklyExam,
+  PAST_WEEKLY_EXAMS
 } from '@/lib/scheduledWeeklyExam';
 import ScheduledExamBanner from '@/components/ScheduledExamBanner';
 import ScheduledExamBriefingModal from '@/components/ScheduledExamBriefingModal';
+import PastWeeklyExamsSection from '@/components/PastWeeklyExamsSection';
 import { 
   ArrowLeft, 
   ArrowRight, 
@@ -77,8 +80,10 @@ export default function WeeklyExamPage() {
   const [penaltyLockoutRemaining, setPenaltyLockoutRemaining] = useState(0);
   const [activeScheduledPaper, setActiveScheduledPaper] = useState<'paper1' | 'paper2'>('paper1');
 
-  // Scheduled Exam States
+  // Scheduled & Past Exam States
   const [isScheduledMode, setIsScheduledMode] = useState(false);
+  const [isPastExamPractice, setIsPastExamPractice] = useState(false);
+  const [activePastExamId, setActivePastExamId] = useState<string | null>(null);
   const [isBriefingModalOpen, setIsBriefingModalOpen] = useState(false);
   const [candidateIdentity, setCandidateIdentity] = useState<{ fullName: string; phone: string }>({
     fullName: '',
@@ -362,6 +367,52 @@ export default function WeeklyExamPage() {
       localStorage.setItem(SCHEDULED_EXAM_STORAGE_KEYS.ACTIVE_EXAM_CURRENT_PAPER, 'paper1');
     } catch {}
 
+    setActiveScheduledPaper('paper1');
+    setTimeLeftSeconds(p1DurationSec);
+    setTimeSpentSeconds(0);
+    setExamState('exam_paper1');
+  };
+
+  // Launch Past Examination Practice (Self-paced, no strict penalty lockout)
+  const handlePracticePastExam = (pastExam: ArchivedWeeklyExam) => {
+    setIsScheduledMode(false);
+    setIsPastExamPractice(true);
+    setActivePastExamId(pastExam.id);
+    setCurrentLevel(pastExam.level);
+
+    const pkg: AdaptiveExamPackage = {
+      level: pastExam.level,
+      title: `${pastExam.title} (Past Paper Practice)`,
+      paper1Questions: pastExam.paper1Questions.map(q => ({
+        ...q,
+        topicId: pastExam.topicId,
+        topicTitle: pastExam.topicTitle,
+        subjectId: pastExam.subjectId,
+        subjectName: pastExam.subjectName,
+      })),
+      paper2Questions: pastExam.paper2Questions,
+      paper1MaxMarks: pastExam.paper1MaxMarks,
+      paper2MaxMarks: pastExam.paper2MaxMarks,
+      totalExamMarks: pastExam.totalMarks,
+      suggestedDurationMinutes: pastExam.paper1DurationMinutes,
+      remediationCount: 0,
+    };
+
+    setExamPackage(pkg);
+    setPaper1CurrentIdx(0);
+    setPaper1Answers({});
+    setPaper1Flagged({});
+    setTheoryAnswers({});
+    setTheorySelfMarks({});
+
+    clearPenaltyLockout();
+    try {
+      localStorage.removeItem('academicprep_scheduled_p1_answers');
+      localStorage.removeItem('academicprep_scheduled_theory_answers');
+      localStorage.removeItem('academicprep_scheduled_theory_marks');
+    } catch {}
+
+    const p1DurationSec = pastExam.paper1DurationMinutes * 60;
     setActiveScheduledPaper('paper1');
     setTimeLeftSeconds(p1DurationSec);
     setTimeSpentSeconds(0);
@@ -729,6 +780,39 @@ export default function WeeklyExamPage() {
         localStorage.removeItem('academicprep_scheduled_theory_answers');
         clearPenaltyLockout();
       } catch {}
+    }
+
+    if (isPastExamPractice && activePastExamId) {
+      const finalCandName = candidateIdentity.fullName || (typeof window !== 'undefined' ? localStorage.getItem('academicprep_cand_name') : null) || student?.fullName || 'Candidate';
+      const finalCandPhone = candidateIdentity.phone || (typeof window !== 'undefined' ? localStorage.getItem('academicprep_cand_phone') : null) || student?.phoneNumber || undefined;
+
+      const pastRecord: ScheduledExamAttemptRecord = {
+        id: `attempt-past-${Date.now()}`,
+        examId: activePastExamId,
+        studentId: student?.id || finalCandPhone || 'guest-student',
+        studentName: finalCandName,
+        studentPhone: finalCandPhone,
+        startedAt: new Date(Date.now() - Math.max(1, timeSpentSeconds) * 1000).toISOString(),
+        completedAt: new Date().toISOString(),
+        status: 'completed',
+        terminationReason: 'normal_submission',
+        timeSpentSeconds,
+        paper1Answers,
+        paper1CorrectCount: p1Correct,
+        paper1TotalQuestions: p1TotalQ,
+        paper1Percentage: p1Percent,
+        paper1ScoreMarks: p1MarksAwarded,
+        paper2Answers: theoryAnswers,
+        paper2SelfMarks: theorySelfMarks,
+        paper2TotalMarks: p2TotalMarks,
+        paper2ScoreMarks: p2EarnedMarks,
+        paper2Percentage: p2Percent,
+        compositePercentage: compositePercent,
+        stanineGrade: grade,
+        gradeRemark: remark,
+      };
+      saveScheduledExamAttempt(pastRecord);
+      setScheduledAttempt(pastRecord);
     }
 
     setCompletedAttempt(record);
@@ -1106,15 +1190,30 @@ export default function WeeklyExamPage() {
               </div>
 
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
-                <button
-                  type="button"
-                  onClick={handleStartScheduledExam}
-                  className="py-3 px-5 rounded-xl text-xs font-bold transition shadow-sm shadow-emerald-600/20 flex items-center justify-center gap-2 shrink-0 cursor-pointer bg-emerald-600 hover:bg-emerald-500 text-white"
-                >
-                  <Play className="w-3.5 h-3.5 fill-current" />
-                  <span>Enter 6:00 PM Atomic Exam</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                {timeStatus.isEnded ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const past = PAST_WEEKLY_EXAMS.find(e => e.level === currentLevel) || PAST_WEEKLY_EXAMS[0];
+                      if (past) handlePracticePastExam(past);
+                    }}
+                    className="py-3 px-5 rounded-xl text-xs font-bold transition shadow-sm shadow-blue-600/20 flex items-center justify-center gap-2 shrink-0 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white"
+                  >
+                    <BookOpen className="w-3.5 h-3.5" />
+                    <span>Practice Past Exam ({currentLevel === 'JHS 3' ? 'Oct 18 Atomic Paper' : 'Past Paper'})</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleStartScheduledExam}
+                    className="py-3 px-5 rounded-xl text-xs font-bold transition shadow-sm shadow-emerald-600/20 flex items-center justify-center gap-2 shrink-0 cursor-pointer bg-emerald-600 hover:bg-emerald-500 text-white"
+                  >
+                    <Play className="w-3.5 h-3.5 fill-current" />
+                    <span>Enter 6:00 PM Atomic Exam</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                )}
 
                 {scheduledAttempt && (
                   <button
@@ -1237,6 +1336,12 @@ export default function WeeklyExamPage() {
               </div>
             </div>
           )}
+
+          {/* Past Weekly Examinations Archive (Concluded Official Papers) */}
+          <PastWeeklyExamsSection
+            currentLevel={currentLevel}
+            onPracticeExam={handlePracticePastExam}
+          />
 
           {/* Past Weekly Exam Attempts History */}
           <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-4">

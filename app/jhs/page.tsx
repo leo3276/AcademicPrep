@@ -341,15 +341,15 @@ export default function JhsPortalPage() {
           </div>
           <h3 className="text-base font-bold text-slate-900">Personalized Weekly Revision Exam</h3>
           <p className="text-xs text-slate-500 max-w-xl leading-relaxed">
-            Generates a timed CBT examination based on your completed topics in {selectedLevel}.
+            Generates timed CBT examinations based on your completed topics in {selectedLevel}, with full access to past weekly examination papers and marking schemes.
           </p>
         </div>
 
         <Link
-          href="/jhs/weekly-exam?mode=scheduled"
+          href="/jhs/weekly-exam"
           className="w-full sm:w-auto px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs shrink-0 transition shadow-sm shadow-blue-500/20 flex items-center justify-center gap-1.5 whitespace-nowrap"
         >
-          <span>Start Weekly Exam</span>
+          <span>Weekly Exams & Past Papers</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>

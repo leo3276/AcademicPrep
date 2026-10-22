@@ -1,5 +1,204 @@
 [
   {
+    "id": "comm-1792281714301-v6a3i",
+    "topicId": "room-all",
+    "subjectId": "all",
+    "level": "JHS 3",
+    "studentId": "guest-1792281714301",
+    "studentName": "lamine Yamal",
+    "studentPhoneMasked": "024****000",
+    "isVip": false,
+    "content": "what is the meaning of that",
+    "likesCount": 0,
+    "likedByStudents": [],
+    "isPinned": false,
+    "isTeacherReply": false,
+    "createdAt": "2026-10-18T00:01:54.301Z",
+    "status": "active",
+    "replies": []
+  },
+  {
+    "id": "comm-1792281695301-baie3",
+    "topicId": "room-all",
+    "subjectId": "all",
+    "level": "JHS 3",
+    "studentId": "guest-1792281695301",
+    "studentName": "lamine Yamal",
+    "studentPhoneMasked": "024****000",
+    "isVip": false,
+    "content": "boring",
+    "likesCount": 0,
+    "likedByStudents": [],
+    "isPinned": false,
+    "isTeacherReply": false,
+    "createdAt": "2026-10-18T00:01:35.301Z",
+    "status": "active",
+    "replies": []
+  },
+  {
+    "id": "comm-1792212286357-6irdg",
+    "topicId": "shs1-math-t1-real-numbers-surds",
+    "subjectId": "math",
+    "level": "SHS 1",
+    "studentId": "guest-1792212286356",
+    "studentName": "Godfred Oppong",
+    "studentPhoneMasked": "024****000",
+    "isVip": false,
+    "content": "Real numbers",
+    "likesCount": 1,
+    "likedByStudents": [
+      "46749bc5-1397-413f-9de8-3739ff13b25f"
+    ],
+    "isPinned": false,
+    "isTeacherReply": false,
+    "createdAt": "2026-10-17T04:44:46.357Z",
+    "status": "active",
+    "replies": []
+  },
+  {
+    "id": "comm-1792134517612-hh21v",
+    "topicId": "shs1-math-t1-algebra-factorization",
+    "subjectId": "math",
+    "level": "SHS 1",
+    "studentId": "guest-1792134517612",
+    "studentName": "urielanchaba@email.com",
+    "studentPhoneMasked": "024****000",
+    "isVip": false,
+    "content": "Good is website but notes",
+    "likesCount": 0,
+    "likedByStudents": [],
+    "isPinned": false,
+    "isTeacherReply": false,
+    "createdAt": "2026-10-16T07:08:37.612Z",
+    "status": "active",
+    "replies": [
+      {
+        "id": "rep-1792167769702-hfsy2",
+        "commentId": "comm-1792134517612-hh21v",
+        "studentId": "guest-1792167769702",
+        "studentName": "AcademicPrep Teacher / Admin",
+        "studentPhoneMasked": "Official",
+        "isVip": true,
+        "content": "??",
+        "likesCount": 0,
+        "likedByStudents": [],
+        "isTeacherReply": true,
+        "teacherTitle": "Verified AcademicPrep Instructor",
+        "createdAt": "2026-10-16T16:22:49.702Z",
+        "status": "active"
+      }
+    ]
+  },
+  {
+    "id": "comm-1792087654156-uzp08",
+    "topicId": "shs-his-topic-01",
+    "subjectId": "history",
+    "level": "SHS 1",
+    "studentId": "guest-1792087654156",
+    "studentName": "Nylah Ohemaa Aprakua",
+    "studentPhoneMasked": "024****000",
+    "isVip": false,
+    "content": "What history is",
+    "likesCount": 0,
+    "likedByStudents": [],
+    "isPinned": false,
+    "isTeacherReply": false,
+    "createdAt": "2026-10-15T18:07:34.156Z",
+    "status": "active",
+    "replies": [
+      {
+        "id": "rep-1792168165999-afb8e",
+        "commentId": "comm-1792087654156-uzp08",
+        "studentId": "guest-1792168165999",
+        "studentName": "AcademicPrep Teacher / Admin",
+        "studentPhoneMasked": "Official",
+        "isVip": true,
+        "content": "please check the histroy notes in shs portal",
+        "likesCount": 0,
+        "likedByStudents": [],
+        "isTeacherReply": true,
+        "teacherTitle": "Verified AcademicPrep Instructor",
+        "createdAt": "2026-10-16T16:29:25.999Z",
+        "status": "active"
+      }
+    ]
+  },
+  {
+    "id": "comm-1792065503489-vakwg",
+    "topicId": "shs-cst-topic-04",
+    "subjectId": "costing",
+    "level": "SHS 1",
+    "studentId": "guest-1792065503489",
+    "studentName": "Adusei shadrack",
+    "studentPhoneMasked": "024****000",
+    "isVip": false,
+    "content": "I learned that fifo should be at old stock first \nAnd lifo is a newest stock first",
+    "likesCount": 0,
+    "likedByStudents": [],
+    "isPinned": false,
+    "isTeacherReply": false,
+    "createdAt": "2026-10-15T11:58:23.489Z",
+    "status": "active"
+  },
+  {
+    "id": "comm-1791912826484-lhca3",
+    "topicId": "room-all",
+    "subjectId": "all",
+    "level": "SHS 3",
+    "studentId": "guest-1791912826484",
+    "studentName": "AcademicPrep Teacher / Admin",
+    "studentPhoneMasked": "Official",
+    "isVip": true,
+    "content": "how was today study?",
+    "likesCount": 1,
+    "likedByStudents": [
+      "8147ad36-c387-4c0e-9ae1-add32ef034f5"
+    ],
+    "isPinned": true,
+    "isTeacherReply": true,
+    "teacherTitle": "Verified AcademicPrep Instructor",
+    "createdAt": "2026-10-13T17:33:46.484Z",
+    "status": "active"
+  },
+  {
+    "id": "comm-1791758809503-92av4",
+    "topicId": "room-all",
+    "subjectId": "all",
+    "level": "JHS 3",
+    "studentId": "guest-1791758809503",
+    "studentName": "lamine Yamal",
+    "studentPhoneMasked": "024****000",
+    "isVip": false,
+    "content": "Hi",
+    "likesCount": 1,
+    "likedByStudents": [
+      "736296d1-d39a-49d2-b250-5f91be2cde50"
+    ],
+    "isPinned": false,
+    "isTeacherReply": false,
+    "createdAt": "2026-10-11T22:46:49.503Z",
+    "status": "active"
+  },
+  {
+    "id": "comm-1791681902651-lsvnl",
+    "topicId": "room-all",
+    "subjectId": "all",
+    "level": "JHS 3",
+    "studentId": "guest-1791681902651",
+    "studentName": "Stephen calculus",
+    "studentPhoneMasked": "024****000",
+    "isVip": false,
+    "content": "Venn diagram",
+    "likesCount": 1,
+    "likedByStudents": [
+      "736296d1-d39a-49d2-b250-5f91be2cde50"
+    ],
+    "isPinned": false,
+    "isTeacherReply": false,
+    "createdAt": "2026-10-11T01:25:02.651Z",
+    "status": "active"
+  },
+  {
     "id": "comm-init-1",
     "topicId": "sci-jhs1-intro-science",
     "subjectId": "science",
@@ -15,41 +214,8 @@
       "seed-st-3"
     ],
     "isPinned": true,
-    "createdAt": "2026-10-14T15:05:05.934Z",
-    "status": "active",
-    "replies": [
-      {
-        "id": "rep-init-1",
-        "commentId": "comm-init-1",
-        "studentId": "seed-st-2",
-        "studentName": "Abigail Osei",
-        "studentPhoneMasked": "055****409",
-        "isVip": false,
-        "content": "Thanks for this breakdown Emmanuel! Does WAEC penalize if hypothesis is skipped?",
-        "likesCount": 3,
-        "likedByStudents": [
-          "seed-st-1"
-        ],
-        "createdAt": "2026-10-15T03:05:05.952Z",
-        "status": "active"
-      },
-      {
-        "id": "rep-init-2",
-        "commentId": "comm-init-1",
-        "studentId": "seed-st-1",
-        "studentName": "Emmanuel Mensah",
-        "studentPhoneMasked": "024****812",
-        "isVip": true,
-        "content": "Yes! The marking scheme assigns 2 marks specifically to the hypothesis statement.",
-        "likesCount": 5,
-        "likedByStudents": [
-          "seed-st-2",
-          "seed-st-3"
-        ],
-        "createdAt": "2026-10-15T09:05:05.952Z",
-        "status": "active"
-      }
-    ]
+    "createdAt": "2026-10-06T17:43:12.860Z",
+    "status": "active"
   },
   {
     "id": "comm-init-2",
@@ -65,9 +231,8 @@
     "likedByStudents": [
       "seed-st-1"
     ],
-    "createdAt": "2026-10-15T15:05:05.952Z",
-    "status": "active",
-    "replies": []
+    "createdAt": "2026-10-07T17:43:12.861Z",
+    "status": "active"
   },
   {
     "id": "comm-init-3",
@@ -79,121 +244,14 @@
     "studentPhoneMasked": "020****932",
     "isVip": true,
     "content": "Always draw the Venn diagram first before writing equations. It saved me 5 minutes during the timed quiz!",
-    "likesCount": 19,
-    "likedByStudents": [
-      "seed-st-1",
-      "seed-st-2"
-    ],
-    "isPinned": true,
-    "createdAt": "2026-10-16T03:05:05.952Z",
-    "status": "active",
-    "replies": [
-      {
-        "id": "rep-init-3",
-        "commentId": "comm-init-3",
-        "studentId": "seed-st-4",
-        "studentName": "Nana Yeboah",
-        "studentPhoneMasked": "027****551",
-        "isVip": true,
-        "content": "Great tip! Especially when there are 3 intersecting sets with the universal set.",
-        "likesCount": 4,
-        "likedByStudents": [
-          "seed-st-3"
-        ],
-        "createdAt": "2026-10-16T09:05:05.952Z",
-        "status": "active"
-      }
-    ]
-  },
-  {
-    "id": "comm-init-4",
-    "topicId": "room-all",
-    "subjectId": "all",
-    "level": "JHS / SHS",
-    "studentId": "seed-st-5",
-    "studentName": "Kofi Boakye",
-    "studentPhoneMasked": "054****319",
-    "isVip": true,
-    "content": "Welcome everyone to the AcademicPrep Student Lounge! Drop your daily study targets here. My target today is completing 2 Integrated Science past papers.",
-    "likesCount": 28,
+    "likesCount": 20,
     "likedByStudents": [
       "seed-st-1",
       "seed-st-2",
-      "seed-st-3"
+      "12f181ec-c01f-4233-ba45-e344d2385de7"
     ],
     "isPinned": true,
-    "createdAt": "2026-10-16T07:05:05.952Z",
-    "status": "active",
-    "replies": [
-      {
-        "id": "rep-init-4",
-        "commentId": "comm-init-4",
-        "studentId": "seed-st-6",
-        "studentName": "Akosua Mensah",
-        "studentPhoneMasked": "024****770",
-        "isVip": true,
-        "content": "Rooting for you Kofi! I am revising Elective Maths trigonometry today.",
-        "likesCount": 7,
-        "likedByStudents": [
-          "seed-st-5"
-        ],
-        "createdAt": "2026-10-16T10:05:05.952Z",
-        "status": "active"
-      },
-      {
-        "id": "rep-init-5",
-        "commentId": "comm-init-4",
-        "studentId": "seed-st-7",
-        "studentName": "Mr. Danso",
-        "studentPhoneMasked": "Official",
-        "isVip": true,
-        "isTeacherReply": true,
-        "teacherTitle": "AcademicPrep Science Lead",
-        "content": "Excellent dedication scholars. Remember to review both Section A objectives and Section B practical diagrams.",
-        "likesCount": 12,
-        "likedByStudents": [
-          "seed-st-5",
-          "seed-st-6"
-        ],
-        "createdAt": "2026-10-16T13:05:05.952Z",
-        "status": "active"
-      }
-    ]
-  },
-  {
-    "id": "comm-init-5",
-    "topicId": "room-tips",
-    "subjectId": "tips",
-    "level": "JHS / SHS",
-    "studentId": "seed-st-8",
-    "studentName": "Benedicta Tetteh",
-    "studentPhoneMasked": "020****448",
-    "isVip": false,
-    "content": "Tip for English composition: Always spend 5 minutes drafting a short 4-paragraph outline before writing. It prevents you from running out of points halfway!",
-    "likesCount": 22,
-    "likedByStudents": [
-      "seed-st-1",
-      "seed-st-4"
-    ],
-    "isPinned": false,
-    "createdAt": "2026-10-16T11:05:05.952Z",
-    "status": "active",
-    "replies": [
-      {
-        "id": "rep-init-6",
-        "commentId": "comm-init-5",
-        "studentId": "seed-st-1",
-        "studentName": "Emmanuel Mensah",
-        "studentPhoneMasked": "024****812",
-        "isVip": true,
-        "content": "This worked so well for me in our last terminal mock exams! Especially for formal letter writing.",
-        "likesCount": 5,
-        "likedByStudents": [
-          "seed-st-8"
-        ],
-        "createdAt": "2026-10-16T14:05:05.952Z",
-        "status": "active"
-      }
-    ]
+    "createdAt": "2026-10-08T05:43:12.861Z",
+    "status": "active"
   }
 ]
