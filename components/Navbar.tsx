@@ -6,145 +6,115 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/authContext';
 import { 
   GraduationCap, 
-  KeyRound, 
   User, 
   LogOut, 
-  ShieldCheck, 
   Menu, 
   X,
-  CheckCircle2,
-  Crown,
-  Clock,
-  Award,
-  BookOpen,
-  FileCheck,
-  FileText,
-  Compass,
-  Smartphone,
-  MessageSquare,
+  BookOpen, 
+  FileText, 
+  MessageSquare, 
   Brain
 } from 'lucide-react';
 import PaystackPaymentModal from './PaystackPaymentModal';
-import TrialCountdownBadge from './TrialCountdownBadge';
-import { fetchBlogPosts } from '@/lib/blogStore';
 
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { student, isAdmin, logoutStudent, logoutAdmin, isTrialActive, trialDaysRemaining } = useAuth();
+  const { student, logoutStudent } = useAuth();
   
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [pinModalOpen, setPinModalOpen] = useState(false);
   const [modalTab, setModalTab] = useState<'momo' | 'pin'>('momo');
   const [mounted, setMounted] = useState(false);
-  const [hasNewBlog, setHasNewBlog] = useState(false);
 
+  const isUniversityStudent = student?.currentLevel === 'UNIVERSITY';
   const isShsStudent = Boolean(student?.currentLevel?.startsWith('SHS'));
+  const isUniversityPage = pathname.startsWith('/university');
   const isShsPage = pathname.startsWith('/shs');
-  const profileHref = isShsStudent ? '/shs/profile' : '/jhs/profile';
+
+  const profileHref = isUniversityStudent 
+    ? '/university' 
+    : isShsStudent 
+    ? '/shs/profile' 
+    : '/jhs/profile';
+
   const isProfilePage = pathname.includes('/profile');
-  const loginHref = `/login?redirect=${encodeURIComponent(isShsPage ? '/shs' : '/jhs')}`;
+  const loginHref = isUniversityPage
+    ? '/login?mode=register&level=UNIVERSITY&redirect=/university'
+    : `/login?redirect=${encodeURIComponent(isShsPage ? '/shs' : '/jhs')}`;
 
   useEffect(() => {
     setMounted(true);
-    fetchBlogPosts()
-      .then((posts) => {
-        if (Array.isArray(posts) && posts.length > 0) {
-          const sorted = [...posts].sort(
-            (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-          );
-          const newest = sorted[0];
-          if (newest) {
-            const diffDays = (Date.now() - new Date(newest.publishedAt).getTime()) / (1000 * 60 * 60 * 24);
-            if (diffDays <= 14) {
-              setHasNewBlog(true);
-            }
-          }
-        }
-      })
-      .catch(() => {});
   }, []);
-
-  const handleOpenGuide = () => {
-    if (mobileMenuOpen) setMobileMenuOpen(false);
-    if (pathname === '/' || pathname === '/jhs') {
-      window.dispatchEvent(new CustomEvent('academicprep:open-tour'));
-    } else {
-      router.push('/jhs?tour=1');
-    }
-  };
-
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full bg-white border-b border-slate-200 shadow-xs">
+      <header className="sticky top-0 z-40 w-full bg-white border-b border-slate-200 shadow-2xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="flex items-center justify-between h-16 w-full gap-2 sm:gap-4">
+          <div className="flex items-center justify-between h-15 w-full gap-2 sm:gap-4">
+            
             {/* Logo */}
             <div className="flex items-center gap-4 shrink-0">
-              <Link href="/" id="tour-nav-logo" className="flex items-center gap-2.5 group shrink-0">
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-xs group-hover:scale-105 transition-transform shrink-0">
-                  <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6" />
+              <Link href="/" className="flex items-center gap-2.5 group shrink-0">
+                <div className="w-9 h-9 rounded-xl bg-slate-900 flex items-center justify-center text-white shadow-xs shrink-0">
+                  <GraduationCap className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-bold text-sm sm:text-base text-slate-900 tracking-tight leading-tight flex items-center gap-1.5 whitespace-nowrap">
+                  <span className="font-bold text-sm sm:text-base text-slate-900 tracking-tight leading-tight whitespace-nowrap">
                     AcademicPrep
-                    <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-blue-100 text-blue-700">Beta</span>
                   </span>
-                  <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium whitespace-nowrap hidden sm:inline">academicprep.com</span>
+                  <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium whitespace-nowrap hidden sm:inline">
+                    academicprep.com
+                  </span>
                 </div>
               </Link>
 
-              {/* Education Level Switcher - Shown on extra wide screens when not on profile page */}
+              {/* Level Switcher (Wide Desktops) */}
               {!isProfilePage && (
                 <div className="hidden 2xl:flex items-center bg-slate-100 p-1 rounded-xl text-xs font-semibold shrink-0">
                   <Link 
-                    href={student ? (isShsStudent ? "/jhs?browse=1" : "/jhs") : "/login?redirect=/jhs"}
-                    className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    href="/jhs"
+                    className={`px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 whitespace-nowrap ${
                       pathname.startsWith('/jhs') || pathname === '/'
-                        ? 'bg-white text-blue-700 shadow-sm font-bold'
+                        ? 'bg-white text-slate-900 shadow-2xs font-bold'
                         : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
-                    <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                    JHS Section
+                    <span>JHS</span>
                   </Link>
                   <Link 
                     href="/shs"
-                    className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    className={`px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 whitespace-nowrap ${
                       pathname.startsWith('/shs')
-                        ? 'bg-white text-blue-700 shadow-sm font-bold'
+                        ? 'bg-white text-slate-900 shadow-2xs font-bold'
                         : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
-                    <span className="w-2 h-2 rounded-full bg-purple-500"></span>
-                    <span>SHS Section</span>
+                    <span>SHS</span>
                   </Link>
                   <Link 
                     href="/university"
-                    className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    className={`px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 whitespace-nowrap ${
                       pathname.startsWith('/university')
-                        ? 'bg-white text-slate-900 shadow-sm font-bold'
+                        ? 'bg-white text-slate-900 shadow-2xs font-bold'
                         : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
-                    <span className="w-2 h-2 rounded-full bg-slate-700"></span>
                     <span>University</span>
-                    <span className="text-[9px] bg-slate-200 text-slate-700 px-1 rounded font-mono uppercase">AI</span>
                   </Link>
                 </div>
               )}
             </div>
 
-            {/* Desktop Navigation links & Actions (Visible on xl: 1280px+) */}
-            <div id="tour-nav-links" className="hidden xl:flex items-center gap-1.5 2xl:gap-2">
+            {/* Desktop Navigation Links (xl+) */}
+            <div className="hidden xl:flex items-center gap-1.5 2xl:gap-2">
               {isProfilePage ? (
                 <>
                   <Link
-                    href={isShsStudent ? "/shs" : "/jhs"}
-                    className="text-xs font-semibold text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-lg hover:bg-slate-100 transition flex items-center gap-1.5"
+                    href={isShsStudent ? "/shs" : isUniversityStudent ? "/university" : "/jhs"}
+                    className="text-xs font-semibold text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-lg hover:bg-slate-100 transition"
                   >
-                    <span>&larr; Return to {isShsStudent ? "SHS Portal" : "JHS Portal"}</span>
+                    &larr; Return to {isShsStudent ? "SHS" : isUniversityStudent ? "University" : "JHS"}
                   </Link>
                   <Link
                     href="/chat"
@@ -157,127 +127,84 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/jhs"
-                    className={`text-xs font-semibold transition-colors whitespace-nowrap px-2.5 py-1.5 rounded-lg ${
+                    className={`text-xs font-semibold transition px-2.5 py-1.5 rounded-lg ${
                       pathname.startsWith('/jhs') && pathname !== '/jhs/weekly-exam'
-                        ? 'text-blue-600 bg-blue-50 font-bold' 
+                        ? 'text-slate-900 bg-slate-100 font-bold' 
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
-                    JHS Portal
+                    JHS
                   </Link>
                   <Link
                     href="/shs"
-                    className={`text-xs font-semibold transition-colors whitespace-nowrap px-2.5 py-1.5 rounded-lg ${
+                    className={`text-xs font-semibold transition px-2.5 py-1.5 rounded-lg ${
                       pathname.startsWith('/shs') 
-                        ? 'text-purple-600 bg-purple-50 font-bold' 
+                        ? 'text-slate-900 bg-slate-100 font-bold' 
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
-                    SHS Portal
+                    SHS
                   </Link>
                   <Link
                     href="/university"
-                    className={`text-xs font-semibold transition-colors flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg whitespace-nowrap ${
+                    className={`text-xs font-semibold transition flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg ${
                       pathname.startsWith('/university') 
                         ? 'text-slate-900 bg-slate-100 font-bold' 
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
-                    <Brain className="w-3.5 h-3.5 text-indigo-600" />
-                    <span>University AI</span>
+                    <Brain className="w-3.5 h-3.5 text-slate-700" />
+                    <span>University</span>
                   </Link>
                   <Link
                     href="/blog"
-                    className={`text-xs font-semibold transition-colors flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg whitespace-nowrap ${
+                    className={`text-xs font-semibold transition flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg ${
                       pathname.startsWith('/blog')
-                        ? 'text-blue-600 bg-blue-50 font-bold'
+                        ? 'text-slate-900 bg-slate-100 font-bold'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
-                    <FileText className="w-3.5 h-3.5 text-blue-600" />
+                    <FileText className="w-3.5 h-3.5 text-slate-500" />
                     <span>Journal</span>
                   </Link>
                   <Link
                     href="/chat"
-                    className={`text-xs font-semibold transition-colors flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg whitespace-nowrap ${
+                    className={`text-xs font-semibold transition flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg ${
                       pathname.startsWith('/chat')
-                        ? 'text-indigo-600 bg-indigo-50 font-bold'
+                        ? 'text-slate-900 bg-slate-100 font-bold'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
-                    <MessageSquare className="w-3.5 h-3.5 text-indigo-600" />
+                    <MessageSquare className="w-3.5 h-3.5 text-slate-500" />
                     <span>Study Lounge</span>
                   </Link>
-                  <button
-                    type="button"
-                    id="tour-nav-guide"
-                    onClick={handleOpenGuide}
-                    className="text-xs font-semibold transition-all flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50 whitespace-nowrap cursor-pointer"
-                    title="Interactive Guide"
-                  >
-                    <Compass className="w-3.5 h-3.5 text-slate-500" />
-                    <span>Guide</span>
-                  </button>
                 </>
               )}
 
-              {mounted && isTrialActive ? (
-                <TrialCountdownBadge />
-              ) : mounted && !student?.hasFullAccess ? (
-                <button
-                  type="button"
-                  id="tour-nav-vip"
-                  onClick={() => {
-                    setModalTab('momo');
-                    setPinModalOpen(true);
-                  }}
-                  className="text-xs font-semibold px-2.5 py-1.5 2xl:px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white shadow-sm shadow-blue-500/20 transition flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
-                >
-                  <Crown className="w-3.5 h-3.5 text-slate-300" />
-                  <span>VIP Pass</span>
-                </button>
-              ) : null}
+              <div className="h-4 w-px bg-slate-200 shrink-0 mx-1" />
 
-              <div className="h-5 w-px bg-slate-200 shrink-0 mx-0.5" />
-
-              {/* Student Profile Pill */}
+              {/* Desktop Profile / Login */}
               {!mounted ? (
-                <div className="w-24 sm:w-28 h-8 rounded-xl bg-slate-100 animate-pulse shrink-0" />
+                <div className="w-24 h-8 rounded-xl bg-slate-100 animate-pulse shrink-0" />
               ) : student ? (
-                <div id="tour-nav-profile" className="flex items-center gap-2 pl-2 pr-1.5 py-1 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 shrink-0 transition">
+                <div className="flex items-center gap-2 pl-2 pr-1.5 py-1 rounded-xl bg-slate-50 border border-slate-200 shrink-0">
                   <Link href={profileHref} className="flex items-center gap-2 text-left leading-tight shrink-0 group">
-                    <div className={`w-7 h-7 rounded-lg ${isShsStudent ? 'bg-purple-600' : 'bg-blue-600'} text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform`}>
+                    <div className="w-7 h-7 rounded-lg bg-slate-900 text-white font-bold text-xs flex items-center justify-center shrink-0">
                       {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
                     </div>
                     <div className="flex flex-col text-left leading-tight shrink-0">
-                      <span className="text-xs font-bold text-slate-900 truncate max-w-[80px] 2xl:max-w-[100px] whitespace-nowrap group-hover:text-blue-600">
+                      <span className="text-xs font-bold text-slate-900 truncate max-w-[100px] whitespace-nowrap">
                         {student.fullName}
                       </span>
-                      <div className="flex items-center gap-1 mt-0.5 whitespace-nowrap">
-                        <span className={`text-[10px] font-bold whitespace-nowrap ${isShsStudent ? 'text-purple-700' : 'text-slate-600'}`}>
-                          {student.currentLevel}
-                        </span>
-                        <span className="text-[10px] text-slate-300">•</span>
-                        {student.accessType === 'Full Pass' ? (
-                          <span className="text-[9px] font-bold text-emerald-800 bg-emerald-100 px-1.5 py-0.2 rounded-full inline-flex items-center gap-0.5 whitespace-nowrap">
-                            <CheckCircle2 className="w-2.5 h-2.5" /> VIP
-                          </span>
-                        ) : isTrialActive ? (
-                          <span className="text-[9px] font-bold text-blue-700 bg-blue-100 px-1.5 py-0.2 rounded-full whitespace-nowrap inline-flex items-center gap-0.5">
-                            🎁 Trial ({trialDaysRemaining}d)
-                          </span>
-                        ) : (
-                          <span className="text-[9px] font-bold text-amber-800 bg-amber-100/90 px-1.5 py-0.2 rounded-full whitespace-nowrap">
-                            {student.accessType === 'Expired' ? 'VIP Expired' : 'Trial Expired'}
-                          </span>
-                        )}
-                      </div>
+                      <span className="text-[10px] text-slate-500 font-medium">
+                        {student.currentLevel === 'UNIVERSITY' ? 'Tertiary' : student.currentLevel}
+                      </span>
                     </div>
                   </Link>
                   <button
                     onClick={logoutStudent}
                     title="Sign Out"
-                    className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0 ml-0.5"
+                    className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition shrink-0 ml-0.5"
                   >
                     <LogOut className="w-3.5 h-3.5" />
                   </button>
@@ -285,61 +212,29 @@ export default function Navbar() {
               ) : (
                 <Link
                   href={loginHref}
-                  id="tour-nav-profile"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 xl:px-3.5 xl:py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-sm shadow-blue-500/20 whitespace-nowrap"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl bg-slate-900 text-white hover:bg-slate-800 transition shadow-2xs whitespace-nowrap"
                 >
                   <User className="w-3.5 h-3.5" />
-                  <span>Create Account / Login</span>
+                  <span>Sign In</span>
                 </Link>
               )}
             </div>
 
-            {/* Mobile / Tablet Menu Trigger & Quick Actions (< xl) */}
-            <div className="xl:hidden flex items-center gap-1 sm:gap-2 shrink-0">
-              <button
-                type="button"
-                id="tour-nav-guide-mobile"
-                onClick={handleOpenGuide}
-                className="hidden md:flex p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 transition-colors items-center gap-1 text-xs font-bold cursor-pointer relative"
-                title="Platform Feature Guide"
-              >
-                <Compass className="w-4 h-4 text-blue-600 animate-spin-slow" />
-                <span className="hidden sm:inline">Guide</span>
-                <span className="flex h-1.5 w-1.5 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-600"></span>
-                </span>
-              </button>
-
-              {mounted && isTrialActive ? (
-                <TrialCountdownBadge />
-              ) : mounted && !student?.hasFullAccess ? (
-                <button
-                  onClick={() => {
-                    setModalTab('momo');
-                    setPinModalOpen(true);
-                  }}
-                  className="hidden sm:flex text-xs font-semibold px-2 py-1.5 sm:px-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white shadow-sm shadow-blue-500/20 items-center gap-1 whitespace-nowrap cursor-pointer"
-                >
-                  <Crown className="w-3.5 h-3.5 text-slate-300" />
-                  <span>VIP Pass</span>
-                </button>
-              ) : null}
-
+            {/* Mobile Top Bar Controls (< xl) */}
+            <div className="xl:hidden flex items-center gap-2 shrink-0">
               {mounted && !student && (
                 <Link
                   href={loginHref}
-                  className="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-1 whitespace-nowrap shadow-xs"
+                  className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-900 text-white hover:bg-slate-800 transition"
                 >
-                  <User className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Login</span>
+                  Sign In
                 </Link>
               )}
 
               {mounted && student && (
                 <Link
                   href={profileHref}
-                  className={`w-8 h-8 rounded-lg ${isShsStudent ? 'bg-purple-600' : 'bg-blue-600'} text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-xs`}
+                  className="w-8 h-8 rounded-lg bg-slate-900 text-white font-bold text-xs flex items-center justify-center shrink-0"
                   title={student.fullName}
                 >
                   {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
@@ -348,247 +243,146 @@ export default function Navbar() {
 
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+                className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition"
                 aria-label="Toggle menu"
               >
-                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
             </div>
           </div>
         </div>
 
-        {/* Mobile menu drawer */}
+        {/* Minimal Mobile Drawer */}
         {mobileMenuOpen && (
-          <div className="xl:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-3 w-full max-w-full">
-            <div className="flex flex-col gap-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Select Section</span>
-              <div className="grid grid-cols-3 gap-2">
-                <Link 
-                  href="/jhs"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`text-center py-2 rounded-lg font-bold text-xs border ${
-                    pathname.startsWith('/jhs')
-                      ? 'bg-blue-50 text-blue-700 border-blue-200'
-                      : 'bg-slate-50 text-slate-700 border-slate-200'
-                  }`}
-                >
-                  JHS 1-3
-                </Link>
-                <Link 
-                  href="/shs"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`text-center py-2 rounded-lg font-bold text-xs border ${
-                    pathname.startsWith('/shs')
-                      ? 'bg-purple-50 text-purple-700 border-purple-200'
-                      : 'bg-slate-50 text-slate-700 border-slate-200'
-                  }`}
-                >
-                  SHS 1-3
-                </Link>
-                <Link 
-                  href="/university"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`text-center py-2 rounded-lg font-bold text-xs border ${
-                    pathname.startsWith('/university')
-                      ? 'bg-indigo-50 text-indigo-700 border-indigo-200'
-                      : 'bg-slate-50 text-slate-700 border-slate-200'
-                  }`}
-                >
-                  University
-                </Link>
-              </div>
+          <div className="xl:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-5 space-y-4 w-full">
+            {/* Portal Switcher Grid */}
+            <div className="grid grid-cols-3 gap-2 text-xs">
+              <Link 
+                href="/jhs"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-center py-2 rounded-lg font-semibold border transition ${
+                  pathname.startsWith('/jhs')
+                    ? 'bg-slate-900 text-white border-slate-900'
+                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                }`}
+              >
+                JHS
+              </Link>
+              <Link 
+                href="/shs"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-center py-2 rounded-lg font-semibold border transition ${
+                  pathname.startsWith('/shs')
+                    ? 'bg-slate-900 text-white border-slate-900'
+                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                }`}
+              >
+                SHS
+              </Link>
+              <Link 
+                href="/university"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-center py-2 rounded-lg font-semibold border transition ${
+                  pathname.startsWith('/university')
+                    ? 'bg-slate-900 text-white border-slate-900'
+                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                }`}
+              >
+                University
+              </Link>
             </div>
 
-            <div className="pt-2 border-t border-slate-100 flex flex-col gap-2">
-              {mounted && isTrialActive && (
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                    <div>
-                      <p className="font-semibold text-slate-900">30-Day Free Trial Active</p>
-                      <p className="text-[11px] text-slate-500">All subjects & quizzes unlocked</p>
-                    </div>
-                  </div>
-                  <span className="font-mono font-semibold text-slate-700 bg-slate-200/80 px-2 py-0.5 rounded text-[11px] whitespace-nowrap">
-                    {trialDaysRemaining}d left
-                  </span>
-                </div>
-              )}
-
-              <button
-                type="button"
-                onClick={handleOpenGuide}
-                className="py-2 px-2.5 text-sm font-bold text-blue-700 bg-blue-50/80 hover:bg-blue-100 rounded-xl flex items-center gap-2.5 text-left w-full transition-colors cursor-pointer border border-blue-200"
-              >
-                <div className="w-6 h-6 rounded-lg bg-blue-600 flex items-center justify-center text-white shrink-0">
-                  <Compass className="w-3.5 h-3.5" />
-                </div>
-                <span>Platform Feature Tour Guide</span>
-              </button>
-
+            {/* Clean Functional Navigation Links */}
+            <div className="pt-2 border-t border-slate-100 flex flex-col text-xs font-medium space-y-1">
               <Link
                 href="/jhs"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2 text-sm font-semibold text-slate-800"
+                className="py-2 px-2.5 rounded-lg text-slate-800 hover:bg-slate-50 transition"
               >
-                JHS Curriculum Topics
+                JHS Curriculum &amp; Notes
+              </Link>
+              <Link
+                href="/jhs/bece-past-questions"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2 px-2.5 rounded-lg text-slate-800 hover:bg-slate-50 transition"
+              >
+                BECE Past Questions
               </Link>
               <Link
                 href="/shs"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2 text-sm font-semibold text-purple-700 flex items-center justify-between"
+                className="py-2 px-2.5 rounded-lg text-slate-800 hover:bg-slate-50 transition"
               >
-                <span>SHS Lessons & Elective Quizzes</span>
-                <span className="text-[10px] font-bold bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full">WASSCE</span>
+                SHS Curriculum &amp; Quizzes
               </Link>
               <Link
                 href="/shs/wassce-past-questions"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2 text-sm font-semibold text-purple-700 flex items-center gap-1.5"
+                className="py-2 px-2.5 rounded-lg text-slate-800 hover:bg-slate-50 transition"
               >
-                <BookOpen className="w-4 h-4 text-purple-600" />
-                WASSCE Past Questions (2008–2026)
-              </Link>
-              <Link
-                href="/shs/trial-questions"
-                onClick={() => setMobileMenuOpen(false)}
-                className="py-2 text-sm font-semibold text-amber-800 flex items-center gap-1.5"
-              >
-                <FileCheck className="w-4 h-4 text-amber-600" />
-                SHS Trial Questions &amp; Mocks
+                WASSCE Past Questions
               </Link>
               <Link
                 href="/university"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2 text-sm font-semibold text-slate-800 flex items-center justify-between"
+                className="py-2 px-2.5 rounded-lg text-slate-800 hover:bg-slate-50 transition"
               >
-                <span className="flex items-center gap-1.5">
-                  <Brain className="w-4 h-4 text-slate-700" />
-                  University Slide Studio
-                </span>
-                <span className="text-[10px] font-mono bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded">AI</span>
+                University Slide Studio &amp; 10-to-1 Digest
               </Link>
               <Link
-                href="/jhs/weekly-exam"
+                href="/chat"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2 text-sm font-bold text-amber-800 flex items-center gap-1.5"
+                className="py-2 px-2.5 rounded-lg text-slate-800 hover:bg-slate-50 transition"
               >
-                <Clock className="w-4 h-4 text-amber-600" />
-                Adaptive Weekly Exam
+                Study Lounge
               </Link>
               <Link
                 href="/blog"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2 text-sm font-semibold text-slate-800 flex items-center justify-between"
+                className="py-2 px-2.5 rounded-lg text-slate-800 hover:bg-slate-50 transition"
               >
-                <div className="flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-blue-600" />
-                  <span>Study Journal & Guides</span>
-                </div>
-                {hasNewBlog && (
-                  <span className="px-2 py-0.5 rounded-full bg-amber-500 text-slate-950 text-[10px] font-black uppercase tracking-wider shadow-xs">
-                    NEW
-                  </span>
-                )}
+                Journal &amp; Guides
               </Link>
-
-              <Link
-                href="/chat"
-                onClick={() => setMobileMenuOpen(false)}
-                className="py-2 text-sm font-semibold text-indigo-700 flex items-center justify-between"
-              >
-                <div className="flex items-center gap-2">
-                  <MessageSquare className="w-4 h-4 text-indigo-600" />
-                  <span>Student Study Lounge</span>
-                </div>
-                <span className="text-[10px] font-bold bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full">Community Chat</span>
-              </Link>
-
-              <Link
-                href="/#mobile-app"
-                onClick={() => setMobileMenuOpen(false)}
-                className="py-2 text-sm font-semibold text-emerald-700 flex items-center justify-between"
-              >
-                <div className="flex items-center gap-1.5">
-                  <Smartphone className="w-4 h-4 text-emerald-600" />
-                  <span>Android App (APK)</span>
-                </div>
-                <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">Offline VIP</span>
-              </Link>
-
-              {mounted && isTrialActive ? (
-                <div className="py-2.5 px-3 rounded-xl bg-blue-50 border border-blue-200/90 text-blue-950 font-bold text-xs flex items-center justify-between shadow-2xs mt-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-base">🎁</span>
-                    <span>30-Day Free Trial</span>
-                  </div>
-                  <span className="text-[11px] font-mono text-blue-900 bg-blue-100/90 px-2 py-0.5 rounded-md font-extrabold">{trialDaysRemaining}d remaining</span>
-                </div>
-              ) : mounted && !student?.hasFullAccess ? (
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    setModalTab('momo');
-                    setPinModalOpen(true);
-                  }}
-                  className="py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center justify-between shadow-sm shadow-blue-500/20 mt-1 cursor-pointer"
-                >
-                  <div className="flex items-center gap-2">
-                    <Crown className="w-4 h-4 text-white" />
-                    <span>VIP Pass</span>
-                  </div>
-                  <span className="text-[10px] bg-blue-700/60 px-1.5 py-0.5 rounded font-semibold tracking-wider uppercase">Upgrade</span>
-                </button>
-              ) : null}
             </div>
 
-            <div className="pt-2 border-t border-slate-100">
+            {/* User Account Bar in Mobile Drawer */}
+            <div className="pt-3 border-t border-slate-100 text-xs">
               {!mounted ? (
-                <div className="w-full h-10 rounded-xl bg-slate-100 animate-pulse" />
+                <div className="w-full h-9 rounded-lg bg-slate-100 animate-pulse" />
               ) : student ? (
-                <div className="space-y-2 py-1">
+                <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <Link
-                      href="/jhs/profile"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center gap-2"
-                    >
-                      <div className="w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center">
-                        {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
-                      </div>
-                      <div>
-                        <p className="text-xs font-bold text-slate-900">{student.fullName}</p>
-                        <p className="text-[11px] text-slate-500 font-medium">
-                          {student.phoneNumber} • {student.currentLevel}
-                        </p>
-                      </div>
-                    </Link>
+                    <div>
+                      <p className="font-semibold text-slate-900">{student.fullName}</p>
+                      <p className="text-[11px] text-slate-500 font-mono">
+                        {student.currentLevel === 'UNIVERSITY' ? 'Tertiary' : student.currentLevel} · {student.phoneNumber}
+                      </p>
+                    </div>
                     <button
                       onClick={async () => {
                         setMobileMenuOpen(false);
                         await logoutStudent();
                       }}
-                      className="text-xs font-bold text-red-600 py-1.5 px-3 bg-red-50 rounded-lg hover:bg-red-100"
+                      className="text-xs font-medium text-red-600 hover:text-red-700 px-2.5 py-1 rounded-md hover:bg-red-50 transition"
                     >
-                      Logout
+                      Sign Out
                     </button>
                   </div>
                   <Link
                     href={profileHref}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="w-full py-2 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold flex items-center justify-center gap-1.5"
+                    className="w-full py-2 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs flex items-center justify-center transition"
                   >
-                    <User className={`w-3.5 h-3.5 ${isShsStudent ? 'text-purple-600' : 'text-blue-600'}`} />
-                    <span>{isShsStudent ? "SHS Learning Portal" : "View Student Profile & Leaderboard"}</span>
+                    Go to Portal Dashboard
                   </Link>
                 </div>
               ) : (
                 <Link
                   href={loginHref}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full block text-center py-2.5 rounded-xl bg-blue-600 text-white font-bold text-xs shadow-md"
+                  className="w-full block text-center py-2.5 rounded-xl bg-slate-900 text-white font-semibold text-xs hover:bg-slate-800 transition"
                 >
-                  Create Student Account / Sign In
+                  Create Account / Sign In
                 </Link>
               )}
             </div>

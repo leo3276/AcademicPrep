@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import TrafficTracker from '@/components/TrafficTracker';
 import OfflineAccessGuard from '@/components/OfflineAccessGuard';
+import PortalAuthGuard from '@/components/PortalAuthGuard';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -195,6 +196,7 @@ export default function RootLayout({
       >
         <AuthProvider>
           <OfflineAccessGuard />
+          <PortalAuthGuard />
           <TrafficTracker />
           <Navbar />
           <main className="flex-1 w-full max-w-full overflow-x-hidden">
