@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, Suspense } from 'react';
 import OnboardingGuide from '@/components/OnboardingGuide';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/lib/authContext';
@@ -24,8 +24,9 @@ function LoginFormContent() {
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get('redirect') || '';
   const levelParam = searchParams.get('level') as EducationLevel | null;
+  const isUniversityIntent = redirectUrl.startsWith('/university') || levelParam === 'UNIVERSITY';
   const isShsIntent = redirectUrl.startsWith('/shs') || (levelParam && levelParam.startsWith('SHS'));
-  const initialMode = searchParams.get('mode') === 'register' ? 'register' : 'signin';
+  const initialMode = searchParams.get('mode') === 'register' || isUniversityIntent ? 'register' : 'signin';
 
   const { student, signInStudent, registerStudent, logoutStudent, isTrialActive, trialDaysRemaining } = useAuth();
 
@@ -42,9 +43,10 @@ function LoginFormContent() {
   const [regFullName, setRegFullName] = useState('');
   const [regPhone, setRegPhone] = useState('');
   const [regLevel, setRegLevel] = useState<EducationLevel>(() => {
-    if (levelParam && ['JHS 1', 'JHS 2', 'JHS 3', 'SHS 1', 'SHS 2', 'SHS 3'].includes(levelParam)) {
+    if (levelParam && ['JHS 1', 'JHS 2', 'JHS 3', 'SHS 1', 'SHS 2', 'SHS 3', 'UNIVERSITY'].includes(levelParam)) {
       return levelParam;
     }
+    if (isUniversityIntent) return 'UNIVERSITY';
     return isShsIntent ? 'SHS 1' : 'JHS 1';
   });
   const [regPassword, setRegPassword] = useState('');
@@ -57,9 +59,10 @@ function LoginFormContent() {
 
   // If already logged in, show status & option to switch account or sign out
   if (student) {
+    const isUniversityStudent = student.currentLevel === 'UNIVERSITY';
     const isShsStudent = student.currentLevel?.startsWith('SHS');
-    const continueUrl = isShsStudent ? '/shs' : '/jhs';
-    const profileUrl = isShsStudent ? '/shs' : '/jhs/profile';
+    const continueUrl = isUniversityStudent ? '/university' : isShsStudent ? '/shs' : '/jhs';
+    const profileUrl = isUniversityStudent ? '/university' : isShsStudent ? '/shs' : '/jhs/profile';
 
     return (
       <div className="max-w-md mx-auto my-14 px-4">
@@ -75,12 +78,16 @@ function LoginFormContent() {
           </div>
 
           <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 flex items-center justify-between">
-            <span className="font-medium">Class & Tier:</span>
+            <span className="font-medium">Class &amp; Tier:</span>
             <div className="flex items-center gap-1.5 font-bold text-slate-900">
               <span className={`px-2 py-0.5 rounded-md text-[11px] ${
-                isShsStudent ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'
+                isUniversityStudent
+                  ? 'bg-slate-900 text-white'
+                  : isShsStudent
+                  ? 'bg-purple-100 text-purple-700'
+                  : 'bg-blue-100 text-blue-700'
               }`}>
-                {student.currentLevel}
+                {isUniversityStudent ? 'Tertiary / University' : student.currentLevel}
               </span>
               <span>
                 {student.accessType === 'Full Pass'
@@ -96,11 +103,21 @@ function LoginFormContent() {
             <Link
               href={profileUrl}
               className={`w-full py-2.5 rounded-xl ${
-                isShsStudent ? 'bg-purple-600 hover:bg-purple-700 shadow-purple-500/20' : 'bg-blue-600 hover:bg-blue-700 shadow-blue-500/20'
+                isUniversityStudent
+                  ? 'bg-slate-900 hover:bg-slate-800'
+                  : isShsStudent
+                  ? 'bg-purple-600 hover:bg-purple-700 shadow-purple-500/20'
+                  : 'bg-blue-600 hover:bg-blue-700 shadow-blue-500/20'
               } text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-sm`}
             >
               <User className="w-4 h-4" />
-              <span>{isShsStudent ? 'Go to SHS Learning Portal' : 'Go to Student Profile Dashboard'}</span>
+              <span>
+                {isUniversityStudent
+                  ? 'Go to University Slide Studio'
+                  : isShsStudent
+                  ? 'Go to SHS Learning Portal'
+                  : 'Go to Student Profile Dashboard'}
+              </span>
             </Link>
             
             <Link
@@ -121,6 +138,10 @@ function LoginFormContent() {
                 setRegPhone('');
                 setRegPassword('');
                 setRegAccessPin('');
+                if (isUniversityIntent) {
+                  setRegLevel('UNIVERSITY');
+                  setActiveTab('register');
+                }
               }}
               className="w-full py-2.5 rounded-xl border border-red-200 bg-red-50/50 hover:bg-red-50 text-red-600 font-bold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer mt-1"
             >
@@ -148,7 +169,14 @@ function LoginFormContent() {
     }
 
     const explicitRedirect = searchParams.get('redirect');
+    const isUniversity = res.student?.currentLevel === 'UNIVERSITY';
     const isShs = res.student?.currentLevel?.startsWith('SHS');
+
+    if (isUniversity) {
+      router.push('/university');
+      return;
+    }
+
     if (explicitRedirect) {
       if (isShs && explicitRedirect.startsWith('/jhs')) {
         router.push('/shs');
@@ -188,9 +216,14 @@ function LoginFormContent() {
       localStorage.setItem('academicprep_show_new_account_tour', 'true');
       if (regLevel.startsWith('SHS')) {
         localStorage.setItem('academicprep_shs_level', regLevel);
-      } else {
+      } else if (regLevel.startsWith('JHS')) {
         localStorage.setItem('academicprep_jhs_level', regLevel);
       }
+    }
+
+    if (regLevel === 'UNIVERSITY') {
+      router.push('/university');
+      return;
     }
 
     const isShs = regLevel.startsWith('SHS');
@@ -198,13 +231,11 @@ function LoginFormContent() {
     const explicitRedirect = searchParams.get('redirect');
     if (explicitRedirect) {
       if (isShs) {
-        // If user registered for SHS, ignore any incoming redirect to JHS
-        if (!explicitRedirect.startsWith('/jhs')) {
+        if (!explicitRedirect.startsWith('/jhs') && !explicitRedirect.startsWith('/university')) {
           destination = explicitRedirect;
         }
       } else {
-        // If user registered for JHS, ignore any incoming redirect to SHS
-        if (!explicitRedirect.startsWith('/shs')) {
+        if (!explicitRedirect.startsWith('/shs') && !explicitRedirect.startsWith('/university')) {
           destination = explicitRedirect;
         }
       }
@@ -227,7 +258,7 @@ function LoginFormContent() {
           <p className="text-xs text-slate-500 leading-relaxed">
             {activeTab === 'signin' 
               ? 'Access your individual dashboard, weakness reports, and exam records.' 
-              : 'Sign up for JHS or SHS to start your 30-day unrestricted free trial, or enter a PIN for immediate VIP access.'}
+              : 'Sign up for JHS, SHS, or Tertiary to start your 30-day unrestricted free trial, or enter a PIN for immediate VIP access.'}
           </p>
         </div>
 
@@ -415,6 +446,9 @@ function LoginFormContent() {
                 onChange={(e) => setRegLevel(e.target.value as EducationLevel)}
                 className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
+                <optgroup label="Tertiary / University">
+                  <option value="UNIVERSITY">Tertiary / University (Slide Studio)</option>
+                </optgroup>
                 <optgroup label="Senior High School (SHS)">
                   <option value="SHS 1">Senior High School 1 (SHS 1)</option>
                   <option value="SHS 2">Senior High School 2 (SHS 2)</option>
@@ -503,7 +537,7 @@ function LoginFormContent() {
                 <span>Creating account...</span>
               ) : (
                 <>
-                  <span>Create Account & Start Learning</span>
+                  <span>Create Account &amp; Start Learning</span>
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}
@@ -535,8 +569,8 @@ function LoginFormContent() {
           </p>
           <div className="text-[11px] text-slate-600 space-y-1">
             <p>• <b>Isolated Data:</b> Every student has their own unique Supabase profile, progress score, and weakness ledger.</p>
-            <p>• <b>Free Trial:</b> Complete up to 3 topics across any subjects before requiring an Access PIN.</p>
-            <p>• <b>VIP Pass:</b> Unlocks all topics, 2008–2026 BECE Past Question PDFs, and Adaptive Weekly Examinations.</p>
+            <p>• <b>Tertiary Access:</b> Selecting Tertiary / University unlocks the Slide Studio, 10-to-1 Digest, and Spaced Study Planner.</p>
+            <p>• <b>VIP Pass:</b> Unlocks all topics, BECE/WASSCE Past Question PDFs, and Adaptive Weekly Examinations.</p>
           </div>
         </div>
 
