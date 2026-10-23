@@ -24,7 +24,10 @@ import {
   Sparkles,
   BookOpen,
   HelpCircle,
-  Eye
+  Eye,
+  Send,
+  MessageSquare,
+  RotateCcw
 } from 'lucide-react';
 import { 
   CompleteSlideStudyPackage, 
@@ -154,6 +157,12 @@ export default function UniversityPortalPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const modalCanvasRef = useRef<HTMLCanvasElement>(null);
   const breakdownScrollRef = useRef<HTMLDivElement>(null);
+
+  // Per-slide interactive AI Tutor chat state
+  const [tutorMessages, setTutorMessages] = useState<Record<number, Array<{ id: string; role: 'user' | 'assistant'; text: string; timestamp: number }>>>({});
+  const [tutorInput, setTutorInput] = useState('');
+  const [isTutorLoading, setIsTutorLoading] = useState(false);
+  const [tutorError, setTutorError] = useState<string | null>(null);
 
   // Upload & UI status
   const [loading, setLoading] = useState(false);
@@ -500,6 +509,153 @@ export default function UniversityPortalPage() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [activeTab, activePackage, filteredSlides.length, isFullscreenSlide]);
 
+  // Ask AI Tutor Handler
+  const handleAskTutor = async (questionText: string) => {
+    if (!currentSlide || !questionText.trim() || isTutorLoading) return;
+    const cleanQ = questionText.trim();
+    const currentSlideNum = currentSlide.pageNumber;
+
+    const userMsg = {
+      id: `user-${Date.now()}`,
+      role: 'user' as const,
+      text: cleanQ,
+      timestamp: Date.now()
+    };
+
+    const existingChat = tutorMessages[currentSlideNum] || [];
+    setTutorMessages(prev => ({
+      ...prev,
+      [currentSlideNum]: [...existingChat, userMsg]
+    }));
+    setTutorInput('');
+    setIsTutorLoading(true);
+    setTutorError(null);
+
+    try {
+      const historyPayload = existingChat.map(m => ({
+        role: m.role,
+        content: m.text
+      }));
+
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json'
+      };
+      if (customApiKey) {
+        headers['x-gemini-api-key'] = customApiKey;
+      }
+
+      const res = await fetch('/api/university/tutor-chat', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          slideNumber: currentSlideNum,
+          slideTitle: currentSlide.title,
+          slideText: `${currentSlide.coreRule} ${currentSlide.simplifiedPoints.join(' ')}`,
+          coreRule: currentSlide.coreRule,
+          takeaways: currentSlide.detailedTakeaways,
+          formulas: currentSlide.keyFormulas,
+          definitions: currentSlide.keyDefinitions,
+          userQuestion: cleanQ,
+          chatHistory: historyPayload
+        })
+      });
+
+      if (!res.ok) {
+        throw new Error(`Tutor service error (${res.status})`);
+      }
+
+      const data = await res.json();
+      if (data.success && data.answer) {
+        const assistantMsg = {
+          id: `asst-${Date.now()}`,
+          role: 'assistant' as const,
+          text: data.answer,
+          timestamp: Date.now()
+        };
+        setTutorMessages(prev => ({
+          ...prev,
+          [currentSlideNum]: [...(prev[currentSlideNum] || []), assistantMsg]
+        }));
+      } else {
+        throw new Error(data.error || 'Failed to receive tutor response');
+      }
+    } catch (err: any) {
+      setTutorError(err.message || 'Could not connect to tutor. Please try again.');
+    } finally {
+      setIsTutorLoading(false);
+    }
+  };
+
+  // Re-run pedagogical analysis with updated plain-English models
+  const handleReanalyze = async () => {
+    if (!activePackage) return;
+    setLoading(true);
+    setLoadingStatus('Updating slide analyses with deep plain-English explanations...');
+
+    try {
+      let currentBuffer = pdfBuffer;
+      if (!currentBuffer && activePackage?.id) {
+        currentBuffer = await loadPdfFromIDB(activePackage.id);
+        if (currentBuffer) setPdfBuffer(currentBuffer);
+      }
+
+      let clientExtractedPages: Array<{ pageNumber: number; text: string }> = [];
+      const pdfjs = await getPdfJsLib();
+
+      if (pdfjs && currentBuffer) {
+        const loadingTask = pdfjs.getDocument({ data: currentBuffer.slice(0) });
+        const doc = await loadingTask.promise;
+        setPdfDoc(doc);
+
+        for (let i = 1; i <= doc.numPages; i++) {
+          try {
+            const page = await doc.getPage(i);
+            const content = await page.getTextContent();
+            const structured = extractStructuredSlideFromItems(content.items);
+            clientExtractedPages.push({ pageNumber: i, text: structured.fullText || '' });
+          } catch {
+            clientExtractedPages.push({ pageNumber: i, text: '' });
+          }
+        }
+      }
+
+      if (clientExtractedPages.length === 0) {
+        alert('Please re-upload the PDF to refresh analyses.');
+        fileInputRef.current?.click();
+        return;
+      }
+
+      const res = await fetch('/api/university/analyze-slides', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(customApiKey ? { 'x-gemini-api-key': customApiKey } : {})
+        },
+        body: JSON.stringify({
+          textChunks: clientExtractedPages,
+          fileName: activePackage.deckTitle || 'Lecture Slides',
+          daysUntilExam,
+          dailyMinutes,
+          targetGrade
+        })
+      });
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      if (data.success && data.package) {
+        setActivePackage(data.package);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('academicprep_active_package', JSON.stringify(data.package));
+        }
+      }
+    } catch (err: any) {
+      alert('Could not refresh analysis: ' + err.message);
+    } finally {
+      setLoading(false);
+      setLoadingStatus('');
+    }
+  };
+
   const totalMasteredCount = useMemo(() => {
     return Object.values(masteredSlides).filter(Boolean).length;
   }, [masteredSlides]);
@@ -734,8 +890,18 @@ export default function UniversityPortalPage() {
               </div>
             </div>
 
-            {/* Quick Pacing Recalibration */}
-            <div className="flex items-center gap-2 self-start md:self-auto text-xs">
+            {/* Quick Pacing Recalibration & Refresh */}
+            <div className="flex flex-wrap items-center gap-2 self-start md:self-auto text-xs">
+              <button
+                onClick={handleReanalyze}
+                disabled={loading}
+                className="px-3 py-1.5 rounded-lg border border-neutral-200 bg-white hover:bg-neutral-50 text-neutral-700 font-medium transition flex items-center gap-1.5 shadow-2xs"
+                title="Re-analyze all slides using latest plain-English models"
+              >
+                <RotateCcw className={`w-3 h-3 text-neutral-600 ${loading ? 'animate-spin' : ''}`} />
+                <span>{loading ? 'Re-analyzing...' : 'Refresh Explanations'}</span>
+              </button>
+
               <div className="flex items-center gap-1.5 bg-neutral-50 border border-neutral-200 px-3 py-1.5 rounded-lg">
                 <Calendar className="w-3 h-3 text-neutral-400" />
                 <select
@@ -1266,6 +1432,138 @@ export default function UniversityPortalPage() {
                             Reveal Model Answer &amp; Solution
                           </button>
                         )}
+                      </div>
+
+                      {/* 8. Interactive AI Slide Tutor ("Ask Questions") */}
+                      <div className="border border-neutral-200 rounded-xl p-5 space-y-4 bg-white shadow-2xs">
+                        <div className="flex items-center justify-between border-b border-neutral-100 pb-3">
+                          <div className="flex items-center gap-2.5">
+                            <div className="w-7 h-7 rounded-lg bg-neutral-900 text-white flex items-center justify-center shrink-0">
+                              <Sparkles className="w-3.5 h-3.5 text-neutral-100" />
+                            </div>
+                            <div>
+                              <h4 className="text-xs sm:text-sm font-bold text-neutral-900 flex items-center gap-1.5">
+                                <span>Ask Slide Tutor</span>
+                                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-600 font-normal">
+                                  Slide {currentSlide.pageNumber}
+                                </span>
+                              </h4>
+                              <p className="text-[11px] text-neutral-500">
+                                Instant plain-English breakdowns, everyday analogies, or exam practice.
+                              </p>
+                            </div>
+                          </div>
+                          {tutorMessages[currentSlide.pageNumber]?.length > 0 && (
+                            <button
+                              onClick={() => setTutorMessages(prev => ({ ...prev, [currentSlide.pageNumber]: [] }))}
+                              className="text-[11px] text-neutral-400 hover:text-neutral-700 transition"
+                            >
+                              Clear
+                            </button>
+                          )}
+                        </div>
+
+                        {/* Quick Prompt Pills */}
+                        <div className="flex flex-wrap gap-1.5">
+                          <button
+                            onClick={() => handleAskTutor("Explain like I'm a beginner")}
+                            disabled={isTutorLoading}
+                            className="px-2.5 py-1 rounded-full text-[11px] bg-neutral-50 hover:bg-neutral-100 text-neutral-700 border border-neutral-200 transition flex items-center gap-1 disabled:opacity-50"
+                          >
+                            <span>💡</span>
+                            <span>Explain simply</span>
+                          </button>
+                          <button
+                            onClick={() => handleAskTutor("Give me a real-world example")}
+                            disabled={isTutorLoading}
+                            className="px-2.5 py-1 rounded-full text-[11px] bg-neutral-50 hover:bg-neutral-100 text-neutral-700 border border-neutral-200 transition flex items-center gap-1 disabled:opacity-50"
+                          >
+                            <span>🌍</span>
+                            <span>Real-world example</span>
+                          </button>
+                          <button
+                            onClick={() => handleAskTutor("How will this be tested on my exam?")}
+                            disabled={isTutorLoading}
+                            className="px-2.5 py-1 rounded-full text-[11px] bg-neutral-50 hover:bg-neutral-100 text-neutral-700 border border-neutral-200 transition flex items-center gap-1 disabled:opacity-50"
+                          >
+                            <span>📝</span>
+                            <span>Exam tips &amp; traps</span>
+                          </button>
+                          <button
+                            onClick={() => handleAskTutor("Quiz my understanding")}
+                            disabled={isTutorLoading}
+                            className="px-2.5 py-1 rounded-full text-[11px] bg-neutral-50 hover:bg-neutral-100 text-neutral-700 border border-neutral-200 transition flex items-center gap-1 disabled:opacity-50"
+                          >
+                            <span>🎯</span>
+                            <span>Quiz me</span>
+                          </button>
+                        </div>
+
+                        {/* Message Thread */}
+                        {tutorMessages[currentSlide.pageNumber]?.length > 0 && (
+                          <div className="space-y-3 pt-2 max-h-[380px] overflow-y-auto pr-1 scrollbar-thin">
+                            {tutorMessages[currentSlide.pageNumber].map((msg) => (
+                              <div
+                                key={msg.id}
+                                className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
+                              >
+                                <div
+                                  className={`rounded-xl p-3 text-xs leading-relaxed max-w-[92%] ${
+                                    msg.role === 'user'
+                                      ? 'bg-neutral-900 text-white font-medium'
+                                      : 'bg-neutral-50 border border-neutral-200/80 text-neutral-800 space-y-1.5'
+                                  }`}
+                                >
+                                  {msg.role === 'assistant' ? (
+                                    <div className="whitespace-pre-line font-sans text-xs">
+                                      {msg.text}
+                                    </div>
+                                  ) : (
+                                    <span>{msg.text}</span>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                            {isTutorLoading && (
+                              <div className="flex items-center gap-2 text-xs text-neutral-400 italic bg-neutral-50 p-2.5 rounded-xl border border-neutral-100 w-fit">
+                                <Sparkles className="w-3.5 h-3.5 animate-spin text-neutral-600" />
+                                <span>Tutor is explaining...</span>
+                              </div>
+                            )}
+                          </div>
+                        )}
+
+                        {tutorError && (
+                          <div className="p-2.5 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs">
+                            {tutorError}
+                          </div>
+                        )}
+
+                        {/* Input Form */}
+                        <form
+                          onSubmit={(e) => {
+                            e.preventDefault();
+                            handleAskTutor(tutorInput);
+                          }}
+                          className="flex items-center gap-2 pt-1"
+                        >
+                          <input
+                            type="text"
+                            value={tutorInput}
+                            onChange={(e) => setTutorInput(e.target.value)}
+                            placeholder="Ask any question about this slide..."
+                            disabled={isTutorLoading}
+                            className="flex-1 px-3.5 py-2 text-xs border border-neutral-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-neutral-900 bg-white placeholder:text-neutral-400"
+                          />
+                          <button
+                            type="submit"
+                            disabled={!tutorInput.trim() || isTutorLoading}
+                            className="px-3.5 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 disabled:opacity-40 text-white text-xs font-medium transition flex items-center gap-1.5 shrink-0"
+                          >
+                            <span>Ask</span>
+                            <Send className="w-3 h-3" />
+                          </button>
+                        </form>
                       </div>
 
                       {/* Slide Flip Bottom Navigation */}

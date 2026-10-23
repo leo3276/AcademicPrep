@@ -23,11 +23,17 @@ const HEADER_FOOTER_PATTERNS = [
   /kwame adom/i,
   /dept of mktg/i,
   /polycarp/i,
+  /gabriel nartey/i,
   /^\d+\s*-\s*\d+$/,
   /^\d+$/,
   /^page\s+\d+/i,
   /^ugbs\s*\d+\b/i,
-  /\b(all rights reserved|copyright|spring \d+|fall \d+|semester \d+)\b/i
+  /pearson/i,
+  /prentice hall/i,
+  /publishing as/i,
+  /copyright/i,
+  /all rights reserved/i,
+  /\b(spring \d+|fall \d+|semester \d+)\b/i
 ];
 
 export function isHeaderFooterLine(line: string): boolean {
@@ -40,13 +46,15 @@ export function isHeaderFooterLine(line: string): boolean {
 /**
  * Normalizes and cleans slide titles, replacing fragmented note sentences with crisp conceptual headings.
  */
-export function normalizeSlideTitle(rawTitle: string): string {
+export function normalizeSlideTitle(rawTitle: string, contextText: string = ''): string {
   let title = rawTitle
     .replace(/^[•\s\-\*\.\d]+/, '')
     .replace(/^(slide\s+\d+|page\s+\d+)\s*[:\-–—]?\s*/i, '')
     .replace(/^\d+\s*-\s*\d+\s*/, '')
     .replace(/\b\d+\s*-\s*\d+\b/g, '')
     .trim();
+
+  const ctx = (title + ' ' + contextText).toLowerCase();
 
   // Replace fragmentary note titles with clear academic topic titles
   if (/^note\s+ngos/i.test(title) || /in that the(y)?/i.test(title)) {
@@ -62,32 +70,77 @@ export function normalizeSlideTitle(rawTitle: string): string {
     return 'Chapter Review & Key Takeaways';
   }
 
+  // Handle generic single-word titles like "Drawbacks" or "Advantages"
+  if (/^drawbacks?$/i.test(title)) {
+    if (/unlimited.*liability|fringe benefits|sole proprietor/i.test(ctx)) {
+      return 'Sole Proprietorship: Key Drawbacks & Risks';
+    }
+    if (/double tax|corporation|charter/i.test(ctx)) {
+      return 'Corporations: Key Drawbacks & Double Taxation';
+    }
+    if (/franchis|royalties/i.test(ctx)) {
+      return 'Franchising: Key Drawbacks & Royalties';
+    }
+    if (/partner/i.test(ctx)) {
+      return 'Partnerships: Key Drawbacks & Liabilities';
+    }
+    return 'Key Drawbacks & Operational Risks';
+  }
+
+  if (/^advantages?$/i.test(title) || /ease of start up/i.test(title)) {
+    if (/partner/i.test(ctx)) {
+      return 'Partnerships: Key Advantages & Formation';
+    }
+    if (/corporation/i.test(ctx)) {
+      return 'Corporations: Key Advantages & Limited Liability';
+    }
+    if (/sole proprietor/i.test(ctx)) {
+      return 'Sole Proprietorship: Key Advantages';
+    }
+    return 'Key Advantages & Business Benefits';
+  }
+
   return title;
 }
 
 /**
  * Extracts line-bucketed and bullet-assembled slide data from pdf.js text items.
+ * Sorts items top-to-bottom (descending Y) so real titles appear at the top,
+ * and footers/copyrights naturally fall to the bottom.
  */
 export function extractStructuredSlideFromItems(items: any[]): ParsedSlideStructure {
   if (!items || items.length === 0) {
     return { title: 'Lecture Slide', bullets: [], termDefinitions: [], fullText: '' };
   }
 
+  // Sort items top-to-bottom, left-to-right (Y descending, X ascending)
+  const sortedItems = items
+    .filter((it: any) => it && it.str)
+    .map((it: any) => ({
+      str: it.str,
+      y: Math.round(it.transform ? it.transform[5] : 0),
+      x: Math.round(it.transform ? it.transform[4] : 0)
+    }))
+    .sort((a, b) => {
+      if (Math.abs(b.y - a.y) > 5) {
+        return b.y - a.y; // Top of slide to bottom of slide
+      }
+      return a.x - b.x; // Left to right
+    });
+
   const lineBuckets: string[] = [];
   let currentY: number | null = null;
   let currentLine: string[] = [];
 
-  for (const item of items) {
-    if (!item || !item.str) continue;
-    const y = Math.round(item.transform ? item.transform[5] : 0);
-    if (currentY !== null && Math.abs(y - currentY) > 5) {
+  for (const item of sortedItems) {
+    if (currentY !== null && Math.abs(item.y - currentY) > 5) {
       if (currentLine.length > 0) {
         lineBuckets.push(currentLine.join(' '));
         currentLine = [];
       }
     }
     currentLine.push(item.str);
-    currentY = y;
+    currentY = item.y;
   }
   if (currentLine.length > 0) {
     lineBuckets.push(currentLine.join(' '));
@@ -128,7 +181,7 @@ export function extractStructuredSlideFromItems(items: any[]): ParsedSlideStruct
     bodyStartIndex = cleanCandidates.length;
   }
 
-  const title = normalizeSlideTitle(rawTitle);
+  const title = normalizeSlideTitle(rawTitle, cleanCandidates.slice(bodyStartIndex).join(' '));
 
   // 2. Assemble Multiline Body Bullets
   const bodyLines = cleanCandidates.slice(bodyStartIndex);
@@ -215,7 +268,7 @@ export function parseSlideText(rawText: string, pageNum: number): ParsedSlideStr
     bodyStartIndex = 2;
   }
 
-  const title = normalizeSlideTitle(rawTitle);
+  const title = normalizeSlideTitle(rawTitle, cleanCandidates.slice(bodyStartIndex).join(' '));
 
   const bullets: string[] = [];
   let currentBullet = '';
