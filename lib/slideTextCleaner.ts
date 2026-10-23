@@ -11,9 +11,23 @@ export interface ParsedSlideStructure {
 export function cleanBulletSymbols(str: string): string {
   if (!str) return '';
   return str
-    .replace(/[\uF0A8\uF0D8\uF0B7\uF071\u25CF\u25AA\u25B6\u25C6\u25CB\u25BA\u2022\u2013\u2014•–—➢*✔▪▫]/g, ' • ')
-    .replace(/\b\d+\s*-\s*\d+\b/g, '') // remove stray slide numbers like 1 - 10, 1 - 11
-    .replace(/\bin that the depend\b/gi, 'in that they depend') // fix common lecture slide typos
+    .replace(/[\uF0A8\uF0D8\uF0B7\uF071\u25CF\u25AA\u25B6\u25C6\u25CB\u25BA\u2022\u2013\u2014•–—➢*✔▪▫]/g, ' • ')
+    .replace(/\bCopyrigh\b/gi, '')
+    .replace(/\bt\s*©\s*\d{4}\b/gi, '')
+    .replace(/\bEducatio\b/gi, '')
+    .replace(/\bn,\s*Inc\.?/gi, '')
+    .replace(/\b2013\s+Pearson\b/gi, '')
+    .replace(/\bEducation,\s*Inc\.?/gi, '')
+    .replace(/\bPublishing\s+as\b/gi, '')
+    .replace(/\b\d+\s*-\s*\d+\b/g, '') // remove stray slide numbers like 1 - 10, 12 - 128
+    .replace(/\bin that the depend\b/gi, 'in that they depend')
+    .replace(/\bMaslow\s+s\b/gi, "Maslow's")
+    .replace(/\bHertzberg\s+s\b/gi, "Herzberg's")
+    .replace(/\bVroom\s+s\b/gi, "Vroom's")
+    .replace(/\bAdams\s+Equity\s+Theo\s*ry\b/gi, "Adams' Equity Theory")
+    .replace(/\bFed\s+s\b/gi, "Fed's")
+    .replace(/\bR\s*é\s*sum\s*é\s*s\b/gi, 'Résumés')
+    .replace(/\bMARKETIN\s+G\b/gi, 'MARKETING')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -23,7 +37,11 @@ const HEADER_FOOTER_PATTERNS = [
   /kwame adom/i,
   /dept of mktg/i,
   /polycarp/i,
+  /0544812902/,
+  /you are a champion/i,
   /gabriel nartey/i,
+  /^for$/i,
+  /bhjcr/i,
   /^\d+\s*-\s*\d+$/,
   /^\d+$/,
   /^page\s+\d+/i,
@@ -32,8 +50,15 @@ const HEADER_FOOTER_PATTERNS = [
   /prentice hall/i,
   /publishing as/i,
   /copyright/i,
+  /^copyrigh$/i,
+  /^t\s*©/i,
+  /^educatio$/i,
+  /^n,\s*inc\.?$/i,
   /all rights reserved/i,
-  /\b(spring \d+|fall \d+|semester \d+)\b/i
+  /\b(spring \d+|fall \d+|semester \d+)\b/i,
+  /^[’'"`•\-\s\.]+$/,
+  /^th$/i,
+  /^st$/i
 ];
 
 export function isHeaderFooterLine(line: string): boolean {
@@ -46,15 +71,20 @@ export function isHeaderFooterLine(line: string): boolean {
 /**
  * Normalizes and cleans slide titles, replacing fragmented note sentences with crisp conceptual headings.
  */
-export function normalizeSlideTitle(rawTitle: string, contextText: string = ''): string {
+export function normalizeSlideTitle(
+  rawTitle: string,
+  previousTitle: string = '',
+  pageNum: number = 0,
+  contextText: string = ''
+): string {
   let title = rawTitle
-    .replace(/^[•\s\-\*\.\d]+/, '')
+    .replace(/^[•\s\-\*\.\d’']+/, '')
     .replace(/^(slide\s+\d+|page\s+\d+)\s*[:\-–—]?\s*/i, '')
     .replace(/^\d+\s*-\s*\d+\s*/, '')
     .replace(/\b\d+\s*-\s*\d+\b/g, '')
     .trim();
 
-  const ctx = (title + ' ' + contextText).toLowerCase();
+  const ctx = `${title} ${previousTitle} ${contextText}`.toLowerCase();
 
   // Replace fragmentary note titles with clear academic topic titles
   if (/^note\s+ngos/i.test(title) || /in that the(y)?/i.test(title)) {
@@ -69,27 +99,48 @@ export function normalizeSlideTitle(rawTitle: string, contextText: string = ''):
   if (/^what have learned\??/i.test(title)) {
     return 'Chapter Review & Key Takeaways';
   }
+  if (/^company make good financial/i.test(title) || /differs from bookkeeping/i.test(ctx)) {
+    return 'What Is Accounting vs. Bookkeeping?';
+  }
+  if (/^how much each partner is allowed to withdraw/i.test(title)) {
+    return 'Partnership Agreement: Partner Withdrawals & Compensation';
+  }
+  if (/^death of a partner/i.test(title)) {
+    return 'Partnership Agreement: Dissolution, Continuity & Buyouts';
+  }
+  if (/^controlling:\s*you monitor performance/i.test(title)) {
+    return 'Management Review: The Controlling Function';
+  }
+  if (/^using financial analysis to dig deep/i.test(title)) {
+    if (/what is accounting/i.test(ctx)) {
+      return 'What Is Accounting? Measuring & Communicating Financial Data';
+    }
+    return 'Financial Statement Analysis & Ratio Overview';
+  }
+  if (/^the changing banking environment/i.test(title)) {
+    return 'The Changing Banking Environment: Regulation & Financial Crises';
+  }
 
   // Handle generic single-word titles like "Drawbacks" or "Advantages"
   if (/^drawbacks?$/i.test(title)) {
-    if (/unlimited.*liability|fringe benefits|sole proprietor/i.test(ctx)) {
+    if (/unlimited.*financial.*liability|fringe benefits|sole proprietor/i.test(ctx)) {
       return 'Sole Proprietorship: Key Drawbacks & Risks';
     }
-    if (/double tax|corporation|charter/i.test(ctx)) {
+    if (/double tax|taxed twice|corporation|publicly disclose/i.test(ctx)) {
       return 'Corporations: Key Drawbacks & Double Taxation';
     }
-    if (/franchis|royalties/i.test(ctx)) {
-      return 'Franchising: Key Drawbacks & Royalties';
+    if (/franchis|share sales|royalties/i.test(ctx)) {
+      return 'Franchising: Key Drawbacks & Costs';
     }
-    if (/partner/i.test(ctx)) {
+    if (/partner|personality/i.test(ctx)) {
       return 'Partnerships: Key Drawbacks & Liabilities';
     }
     return 'Key Drawbacks & Operational Risks';
   }
 
   if (/^advantages?$/i.test(title) || /ease of start up/i.test(title)) {
-    if (/partner/i.test(ctx)) {
-      return 'Partnerships: Key Advantages & Formation';
+    if (/partner|fewer regulatory/i.test(ctx)) {
+      return 'Partnerships: Key Advantages & Pooled Resources';
     }
     if (/corporation/i.test(ctx)) {
       return 'Corporations: Key Advantages & Limited Liability';
@@ -98,6 +149,13 @@ export function normalizeSlideTitle(rawTitle: string, contextText: string = ''):
       return 'Sole Proprietorship: Key Advantages';
     }
     return 'Key Advantages & Business Benefits';
+  }
+
+  if (/^slide\s+\d+$/i.test(title) || title === 'Lecture Slide' || !title) {
+    if (previousTitle && /franchis/i.test(previousTitle)) {
+      return 'Franchising in Practice: Brand & Retail Model';
+    }
+    return `Slide ${pageNum || ''} Concept Breakdown`.trim();
   }
 
   return title;
@@ -157,7 +215,7 @@ export function extractStructuredSlideFromItems(items: any[]): ParsedSlideStruct
 
   // 1. Identify Title
   let rawTitle = cleanCandidates[0]
-    .replace(/^[•\s\-\*\.\d]+/, '')
+    .replace(/^[•\s\-\*\.\d’']+/, '')
     .replace(/^(slide\s+\d+|page\s+\d+)\s*[:\-–—]?\s*/i, '')
     .replace(/^\d+\s*-\s*\d+\s*/, '')
     .trim();
@@ -167,7 +225,7 @@ export function extractStructuredSlideFromItems(items: any[]): ParsedSlideStruct
   // Title wrapping check (e.g. "UGBS 101: INTRODUCTION TO" + "BUSINESS ADMINISTRATION")
   if (
     cleanCandidates.length > 1 &&
-    (rawTitle.endsWith(':') || /\b(to|of|and|for|in|on|with|part\s+[a-z0-9]+:?)$/i.test(rawTitle)) &&
+    (rawTitle.endsWith(':') || /\b(to|of|and|for|in|on|with|part\s+[a-z0-9]+:?|achieving\s+success\s+in\s+a\s+small|human\s+resource|the\s+distribution\s+mix:\s*marketing|promotion\s+mix:\s*tools,\s*goals\s*&)$/i.test(rawTitle)) &&
     cleanCandidates[1].length < 60 &&
     !cleanCandidates[1].startsWith('•')
   ) {
@@ -181,7 +239,8 @@ export function extractStructuredSlideFromItems(items: any[]): ParsedSlideStruct
     bodyStartIndex = cleanCandidates.length;
   }
 
-  const title = normalizeSlideTitle(rawTitle, cleanCandidates.slice(bodyStartIndex).join(' '));
+  const bodyContext = cleanCandidates.slice(bodyStartIndex).join(' ');
+  const title = normalizeSlideTitle(rawTitle, '', 0, bodyContext);
 
   // 2. Assemble Multiline Body Bullets
   const bodyLines = cleanCandidates.slice(bodyStartIndex);
@@ -190,7 +249,7 @@ export function extractStructuredSlideFromItems(items: any[]): ParsedSlideStruct
 
   for (const rawLine of bodyLines) {
     const hasBullet = /^[•\-\*]/.test(rawLine) || rawLine.startsWith('•');
-    const cleanL = rawLine.replace(/^[•\-\*\s]+/, '').trim();
+    const cleanL = rawLine.replace(/^[•\-\*\s’']+/, '').trim();
     if (!cleanL) continue;
 
     if (hasBullet) {
@@ -251,7 +310,7 @@ export function parseSlideText(rawText: string, pageNum: number): ParsedSlideStr
   }
 
   let rawTitle = rawLines[0]
-    .replace(/^[•\s\-\*\.\d]+/, '')
+    .replace(/^[•\s\-\*\.\d’']+/, '')
     .replace(/^(slide\s+\d+|page\s+\d+)\s*[:\-–—]?\s*/i, '')
     .replace(/^\d+\s*-\s*\d+\s*/, '')
     .trim();
@@ -260,7 +319,7 @@ export function parseSlideText(rawText: string, pageNum: number): ParsedSlideStr
 
   if (
     rawLines.length > 1 &&
-    (rawTitle.endsWith(':') || /\b(to|of|and|for|in|on|with|part\s+[a-z0-9]+:?)$/i.test(rawTitle)) &&
+    (rawTitle.endsWith(':') || /\b(to|of|and|for|in|on|with|part\s+[a-z0-9]+:?|achieving\s+success\s+in\s+a\s+small|human\s+resource|the\s+distribution\s+mix:\s*marketing|promotion\s+mix:\s*tools,\s*goals\s*&)$/i.test(rawTitle)) &&
     rawLines[1].length < 60 &&
     !rawLines[1].startsWith('•')
   ) {
@@ -268,14 +327,15 @@ export function parseSlideText(rawText: string, pageNum: number): ParsedSlideStr
     bodyStartIndex = 2;
   }
 
-  const title = normalizeSlideTitle(rawTitle, cleanCandidates.slice(bodyStartIndex).join(' '));
+  const bodyContext = rawLines.slice(bodyStartIndex).join(' ');
+  const title = normalizeSlideTitle(rawTitle, '', pageNum, bodyContext);
 
   const bullets: string[] = [];
   let currentBullet = '';
 
   for (const rawLine of rawLines.slice(bodyStartIndex)) {
     const hasBullet = /^[•\-\*]/.test(rawLine) || rawLine.startsWith('•');
-    const cleanL = rawLine.replace(/^[•\-\*\s]+/, '').trim();
+    const cleanL = rawLine.replace(/^[•\-\*\s’']+/, '').trim();
     if (!cleanL) continue;
 
     if (hasBullet) {

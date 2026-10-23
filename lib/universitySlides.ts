@@ -93,6 +93,7 @@ export interface CompleteSlideStudyPackage {
   };
   cramSheetSummary: CramSheetSummary;
   analyzedAt: string;
+  engineVersion?: string;
 }
 
 /**

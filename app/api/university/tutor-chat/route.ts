@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import {
+  matchSlideConceptsFromText,
+  matchSpecializedTopicGuide
+} from '@/lib/conceptKnowledgeBase';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -144,13 +148,27 @@ function generateGroundedTutorAnswer(
   const q = userQuestion.toLowerCase().trim();
   const fullContext = `${slideTitle} ${slideText} ${coreRule}`.toLowerCase();
 
+  // Enrich with our Concept Knowledge Base so even specific questions or older cached slides get rich answers
+  const directQuestionMatches = matchSlideConceptsFromText(userQuestion);
+  const slideKbMatches = matchSlideConceptsFromText(`${slideTitle} ${slideText}`);
+  const specializedGuide = matchSpecializedTopicGuide(slideTitle, fullContext, []);
+
+  const effectiveCoreRule = specializedGuide?.coreRule || (slideKbMatches[0]?.explanation) || coreRule;
+  const effectiveTakeaways = specializedGuide?.detailedTakeaways || (slideKbMatches.length > 0 ? slideKbMatches : takeaways);
+
+  // If the student asked directly about a specific concept in our knowledge base, answer it directly!
+  if (directQuestionMatches.length > 0 && !/explain simply|real-world example|quiz me|exam/i.test(q)) {
+    const m = directQuestionMatches[0];
+    return `💡 **${m.label} — Plain-English Breakdown**:\n\n${m.explanation}\n\n${directQuestionMatches[1] ? `👉 **Related Concept (${directQuestionMatches[1].label})**: ${directQuestionMatches[1].explanation}\n\n` : ''}Ask me for a real-world example or an exam quiz question on this anytime!`;
+  }
+
   // Mode 1: "Explain simply" / "Explain like I'm a beginner"
   if (/explain|simple|beginner|what does this mean|eli5|understand|teach|clarify/i.test(q)) {
-    let explanation = `Here is the simple, real-world way to understand **${slideTitle}**:\n\n`;
-    explanation += `👉 **The Big Picture**: ${coreRule}\n\n`;
-    if (takeaways.length > 0) {
-      explanation += `💡 **Key Points Broken Down Simply**:\n`;
-      takeaways.slice(0, 3).forEach(t => {
+    let explanation = `Here is the simple, plain-English way to understand **${slideTitle}**:\n\n`;
+    explanation += `👉 **The Big Picture**: ${effectiveCoreRule}\n\n`;
+    if (effectiveTakeaways.length > 0) {
+      explanation += `💡 **Key Concepts Broken Down Simply**:\n`;
+      effectiveTakeaways.slice(0, 4).forEach(t => {
         explanation += `• **${t.label}**: ${t.explanation}\n`;
       });
     }
@@ -183,22 +201,25 @@ function generateGroundedTutorAnswer(
     if (/theory x|theory y|motivation/i.test(fullContext)) {
       return `🌍 **Everyday Real-World Example**:\n\nThink of two bosses at a tech startup:\n• **Boss X (Theory X)**: Thinks everyone is lazy and will browse TikTok unless they have screen-monitoring software installed on their laptops.\n• **Boss Y (Theory Y)**: Gives employees flexible hours and creative freedom because they believe people genuinely take pride in building great products when trusted.`;
     }
-    return `🌍 **Everyday Real-World Example**:\n\nTo see how **${slideTitle}** works in real life, consider how modern organizations apply this:\n\nWhen a manager or founder encounters this situation, they must balance operational costs against customer demand. For instance, ${coreRule.slice(0, 180)}. If you understand this trade-off, you can solve any case study problem your lecturer gives you.`;
+    return `🌍 **Everyday Real-World Example**:\n\nTo see how **${slideTitle}** works in real life, consider how modern organizations apply this:\n\n${effectiveCoreRule}\n\n${effectiveTakeaways[0] ? `For example, **${effectiveTakeaways[0].label}**: ${effectiveTakeaways[0].explanation}` : ''}`;
   }
 
   // Mode 3: "Exam questions" / "How will this be tested"
   if (/exam|test|questions|marks|professor|paper/i.test(q)) {
-    return `📝 **How Professors Test This On Exams**:\n\n1. **Multiple Choice Trick**: Lecturers love asking questions with subtle definition traps. Make sure you don't confuse similar terms.\n2. **Short-Answer Definition**: Be ready to define the core term in 2 sentences without notes: "${coreRule.slice(0, 140)}..."\n3. **Application Scenario**: Professors often present a short mini-case (e.g. "Company X wants to do Y...") and ask you what principle applies and what risk they face.`;
+    return `📝 **How Professors Test This On Exams**:\n\n1. **Multiple Choice Trick**: ${specializedGuide?.examTrap || 'Lecturers love asking questions with subtle definition traps. Make sure you don\'t confuse similar terms.'}\n2. **Short-Answer Definition**: Be ready to define the core concept in 2 sentences without notes: "${effectiveCoreRule.slice(0, 180)}..."\n3. **Application Scenario**: Professors often present a short mini-case and ask you to apply ${effectiveTakeaways[0]?.label || slideTitle}.`;
   }
 
   // Mode 4: "Quiz me"
   if (/quiz|test me|check me|question for me/i.test(q)) {
-    if (definitions.length > 0) {
-      return `🎯 **Quick Active Recall Quiz**:\n\n**Question**: In your university exam, how would you define **${definitions[0].term}**?\n\n*Try thinking of the answer before reading below!*\n\n---\n✅ **Model Answer**: ${definitions[0].definition}\n💡 **Key Exam Tip**: Make sure you mention whether it applies to tangible goods or intangible services!`;
+    if (specializedGuide) {
+      return `🎯 **Quick Active Recall Quiz**:\n\n**Question**: ${specializedGuide.activeRecallPrompt.question}\n\n*Try answering out loud before checking below!*\n\n---\n✅ **Model Answer**: ${specializedGuide.activeRecallPrompt.answer}`;
     }
-    return `🎯 **Quick Active Recall Quiz**:\n\n**Question**: Based on Slide ${slideNumber} (${slideTitle}), what is the primary consequence or rule students must know?\n\n*Try answering out loud before checking below!*\n\n---\n✅ **Model Answer**: ${coreRule}`;
+    if (definitions.length > 0) {
+      return `🎯 **Quick Active Recall Quiz**:\n\n**Question**: In your university exam, how would you define **${definitions[0].term}**?\n\n*Try thinking of the answer before reading below!*\n\n---\n✅ **Model Answer**: ${definitions[0].definition}`;
+    }
+    return `🎯 **Quick Active Recall Quiz**:\n\n**Question**: Based on Slide ${slideNumber} (${slideTitle}), explain the main idea of **${effectiveTakeaways[0]?.label || slideTitle}** in simple words.\n\n*Try answering out loud before checking below!*\n\n---\n✅ **Model Answer**: ${effectiveCoreRule}`;
   }
 
   // General specific question matching
-  return `💡 **Tutor Breakdown on "${slideTitle}"**:\n\nRegarding your question: "${userQuestion}"\n\n${coreRule}\n\n${takeaways.length > 0 ? `Here is the crucial distinction to remember: **${takeaways[0].label}** — ${takeaways[0].explanation}` : ''}\n\nFeel free to ask for an everyday analogy, an exam tip, or a quick quiz!`;
+  return `💡 **Tutor Breakdown on "${slideTitle}"**:\n\nRegarding your question: *"${userQuestion}"*\n\n${effectiveCoreRule}\n\n${effectiveTakeaways.length > 0 ? `Here are the key points broken down simply:\n${effectiveTakeaways.slice(0, 3).map(t => `• **${t.label}**: ${t.explanation}`).join('\n')}` : ''}\n\nFeel free to ask for an everyday analogy, an exam tip, or a quick quiz!`;
 }
