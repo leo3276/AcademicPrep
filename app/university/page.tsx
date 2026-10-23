@@ -153,6 +153,7 @@ export default function UniversityPortalPage() {
   const [isFullscreenSlide, setIsFullscreenSlide] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const modalCanvasRef = useRef<HTMLCanvasElement>(null);
+  const breakdownScrollRef = useRef<HTMLDivElement>(null);
 
   // Upload & UI status
   const [loading, setLoading] = useState(false);
@@ -460,6 +461,13 @@ export default function UniversityPortalPage() {
       renderSlideToCanvas(modalCanvasRef.current, true);
     }
   }, [renderSlideToCanvas, isFullscreenSlide]);
+
+  // Scroll breakdown panel to top when slide changes
+  useEffect(() => {
+    if (breakdownScrollRef.current) {
+      breakdownScrollRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [selectedSlideIndex]);
 
   // Window resize handler to maintain aspect ratio
   useEffect(() => {
@@ -844,9 +852,9 @@ export default function UniversityPortalPage() {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                 
                 {/* ─────────────────────────────────────────────────────────
-                    LEFT PANEL: THE VISUAL SLIDE PAGE
+                    LEFT PANEL: THE VISUAL SLIDE PAGE (STICKY IN VIEWPORT)
                 ───────────────────────────────────────────────────────── */}
-                <div className="lg:col-span-6 border border-neutral-200 rounded-2xl p-4 sm:p-5 bg-white space-y-4 shadow-xs">
+                <div className="lg:col-span-6 lg:sticky lg:top-20 border border-neutral-200 rounded-2xl p-4 sm:p-5 bg-white space-y-4 shadow-xs">
                   
                   {/* Visual Header Controls */}
                   <div className="flex items-center justify-between border-b border-neutral-100 pb-3 text-xs">
@@ -980,9 +988,12 @@ export default function UniversityPortalPage() {
                 </div>
 
                 {/* ─────────────────────────────────────────────────────────
-                    RIGHT PANEL: THE SIMPLIFIED STUDENT BREAKDOWN
+                    RIGHT PANEL: THE SIMPLIFIED STUDENT BREAKDOWN (SCROLLABLE)
                 ───────────────────────────────────────────────────────── */}
-                <div className="lg:col-span-6 border border-neutral-200 rounded-2xl p-6 sm:p-7 bg-white space-y-6 shadow-xs">
+                <div 
+                  ref={breakdownScrollRef}
+                  className="lg:col-span-6 border border-neutral-200 rounded-2xl p-6 sm:p-7 bg-white space-y-6 shadow-xs lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-thin"
+                >
                   {currentSlide ? (
                     <>
                       {/* Slide Title & Status Bar */}
