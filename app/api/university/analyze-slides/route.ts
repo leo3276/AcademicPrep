@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { 
   CompleteSlideStudyPackage, 
-  generateAlgorithmicStudyPlan 
+  generateAlgorithmicStudyPlan,
+  generateCondensedSlideSummaries
 } from '@/lib/universitySlides';
 import { 
   extractPagesFromPdf, 
@@ -325,6 +326,7 @@ Output your response STRICTLY as valid JSON without markdown fences, adhering to
       formulasToRecite: [],
       highFrequencyQuestions: []
     },
+    condensedSummaries: generateCondensedSlideSummaries(normalizedSlides, 10),
     analyzedAt: new Date().toISOString()
   };
 }

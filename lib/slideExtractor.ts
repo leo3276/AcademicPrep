@@ -5,6 +5,7 @@ import {
   SlideAnalysis, 
   CompleteSlideStudyPackage, 
   generateAlgorithmicStudyPlan,
+  generateCondensedSlideSummaries,
   DetailedTakeaway,
   DecodedFormula,
   DecodedVariable
@@ -212,6 +213,7 @@ export function analyzeExtractedPages(
   const highYieldSlides = slides.filter(s => s.importance === 'CORE_FUNDAMENTAL');
   const highYieldCount = Math.max(1, highYieldSlides.length);
   const studyPlan = generateAlgorithmicStudyPlan(slides, daysUntilExam, dailyMinutes, targetGrade);
+  const condensedSummaries = generateCondensedSlideSummaries(slides, 10);
 
   return {
     id: `deck-${Date.now()}`,
@@ -236,8 +238,9 @@ export function analyzeExtractedPages(
         .slice(0, 4)
         .map(s => s.activeRecallPrompt.question)
     },
+    condensedSummaries,
     analyzedAt: new Date().toISOString(),
-    engineVersion: 'v5-clean'
+    engineVersion: 'v6-condensed'
   };
 }
 

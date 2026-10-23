@@ -1,6 +1,9 @@
 // University Slides Intelligence & Strategic Study Planner Engine
 // Clean data models & algorithmic study plan generators.
 
+import { CondensedSlideGroup, generateCondensedSlideSummaries } from './condensedSlideSummarizer';
+export * from './condensedSlideSummarizer';
+
 export type SlideImportance = 'CORE_FUNDAMENTAL' | 'SUPPORTING' | 'CONTEXT_LOW_YIELD';
 
 export interface KeyDefinition {
@@ -92,6 +95,7 @@ export interface CompleteSlideStudyPackage {
     phases: StudyPlanPhase[];
   };
   cramSheetSummary: CramSheetSummary;
+  condensedSummaries?: CondensedSlideGroup[];
   analyzedAt: string;
   engineVersion?: string;
 }
