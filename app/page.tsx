@@ -21,7 +21,8 @@ import {
   Smartphone,
   Download,
   ExternalLink,
-  Flame
+  Flame,
+  Brain
 } from 'lucide-react';
 import { BlogPost, BlogCategory, BLOG_CATEGORIES, INITIAL_BLOG_POSTS, fetchBlogPosts } from '@/lib/blogStore';
 import PlatformTourGuide, { HOMEPAGE_TOUR_STEPS } from '@/components/PlatformTourGuide';
@@ -317,46 +318,54 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Card 3: University (Coming Soon) */}
-          <div className="rounded-2xl bg-white/55 backdrop-blur-md border border-white/40 p-6 flex flex-col justify-between opacity-85 shadow-lg">
+          {/* Card 3: University AI Slide Copilot (Live) */}
+          <div className="rounded-2xl bg-white/80 backdrop-blur-md border border-indigo-200/80 p-6 flex flex-col justify-between shadow-xl hover:shadow-2xl hover:border-indigo-400 transition-all group">
             <div className="space-y-4">
-              <div className="w-11 h-11 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 flex items-center justify-center font-bold">
-                <Users className="w-6 h-6" />
+              <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 text-white flex items-center justify-center font-bold shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+                <Brain className="w-6 h-6" />
               </div>
 
               <div>
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-bold text-slate-900">University & Tertiary</h3>
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
-                    Phase 3
+                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
+                    University &amp; Tertiary
+                  </h3>
+                  <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 border border-indigo-200 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-pulse"></span>
+                    AI LIVE
                   </span>
                 </div>
-                <p className="text-xs text-slate-500 font-medium mt-0.5">Undergraduate & Foundations</p>
+                <p className="text-xs text-indigo-700 font-semibold mt-0.5">AI Slide Study Copilot &amp; Spaced Planner</p>
               </div>
 
               <p className="text-xs text-slate-600 leading-relaxed">
-                Foundational tertiary courses, professional certifications, and aptitude tests for university entrance and career readiness.
+                Deconstruct 100-slide university decks page by page. Pinpoints fundamental principles, extracts formulas, reveals examiner traps, and builds a spaced study timetable.
               </p>
 
-              <div className="space-y-2 pt-2 border-t border-slate-100 text-slate-500">
+              <div className="space-y-2 pt-2 border-t border-slate-100 text-slate-700 font-medium">
                 <div className="flex items-center gap-2 text-xs">
-                  <Lock className="w-3.5 h-3.5" />
-                  <span>Aptitude & Entry Quizzes</span>
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Page-by-Page Fundamental Pinpointer</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs">
-                  <Lock className="w-3.5 h-3.5" />
-                  <span>Tertiary Modules</span>
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Cognitive Spaced Repetition Plan</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>1-Page Exam Cram Sheets &amp; Flashcards</span>
                 </div>
               </div>
             </div>
 
             <div className="pt-6">
-              <button
-                disabled
-                className="w-full py-2.5 px-4 rounded-xl bg-slate-100 text-slate-400 font-bold text-xs cursor-not-allowed text-center"
+              <Link
+                href="/university"
+                className="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition shadow-md shadow-indigo-500/25 flex items-center justify-center gap-1.5 group-hover:gap-2"
               >
-                Available in Phase 3
-              </button>
+                <span>Launch University AI Studio</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
           </div>
         </div>
