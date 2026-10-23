@@ -25,7 +25,7 @@ export default function PortalAuthGuard() {
 
     if (isProtected && !student) {
       if (pathname.startsWith('/university')) {
-        router.push('/login?mode=register&level=UNIVERSITY&redirect=/university');
+        router.push('/login?redirect=/university');
       } else if (pathname.startsWith('/shs')) {
         router.push(`/login?mode=register&level=SHS+1&redirect=${encodeURIComponent(pathname)}`);
       } else if (pathname.startsWith('/jhs')) {

@@ -747,7 +747,7 @@ export default function UniversityPortalPage() {
 
   useEffect(() => {
     if (mounted && !authLoading && !student) {
-      router.push('/login?mode=register&level=UNIVERSITY&redirect=/university');
+      router.push('/login?redirect=/university');
     }
   }, [mounted, authLoading, student, router]);
 
@@ -755,47 +755,6 @@ export default function UniversityPortalPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white text-neutral-400">
         <div className="w-6 h-6 border-2 border-neutral-900 border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
-
-  if (student.currentLevel !== 'UNIVERSITY') {
-    const isShs = student.currentLevel?.startsWith('SHS');
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center px-4">
-        <div className="max-w-md w-full border border-neutral-200 rounded-2xl p-8 space-y-5 text-center shadow-xs">
-          <div className="space-y-1.5">
-            <p className="text-[11px] font-mono uppercase tracking-wider text-neutral-400">
-              Tertiary Access Required
-            </p>
-            <h1 className="text-xl font-bold text-neutral-900">
-              Create a Tertiary Account to Continue
-            </h1>
-            <p className="text-xs text-neutral-600 leading-relaxed">
-              The University Slide Studio and 10-to-1 Slide Digest are available for accounts registered under <strong>Tertiary / University</strong>. You are currently signed in as <strong>{student.fullName}</strong> ({student.currentLevel}).
-            </p>
-          </div>
-
-          <div className="space-y-2.5 pt-2">
-            <button
-              type="button"
-              onClick={async () => {
-                await logoutStudent();
-                router.push('/login?mode=register&level=UNIVERSITY&redirect=/university');
-              }}
-              className="w-full py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold transition cursor-pointer"
-            >
-              Create Tertiary Account
-            </button>
-
-            <Link
-              href={isShs ? '/shs' : '/jhs'}
-              className="block w-full py-2.5 px-4 rounded-xl border border-neutral-200 hover:bg-neutral-50 text-neutral-700 text-xs font-medium transition"
-            >
-              Return to {isShs ? 'SHS' : 'JHS'} Portal
-            </Link>
-          </div>
-        </div>
       </div>
     );
   }

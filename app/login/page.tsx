@@ -121,10 +121,10 @@ function LoginFormContent() {
             </Link>
             
             <Link
-              href={continueUrl}
+              href={redirectUrl || continueUrl}
               className="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs transition flex items-center justify-center gap-1.5"
             >
-              <span>Continue Learning</span>
+              <span>{redirectUrl ? 'Continue to Destination' : 'Continue Learning'}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
 
