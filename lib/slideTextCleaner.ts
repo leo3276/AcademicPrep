@@ -12,6 +12,8 @@ export function cleanBulletSymbols(str: string): string {
   if (!str) return '';
   return str
     .replace(/[\uF0A8\uF0D8\uF0B7\uF071\u25CF\u25AA\u25B6\u25C6\u25CB\u25BA\u2022\u2013\u2014•–—➢*✔▪▫]/g, ' • ')
+    .replace(/\b\d+\s*-\s*\d+\b/g, '') // remove stray slide numbers like 1 - 10, 1 - 11
+    .replace(/\bin that the depend\b/gi, 'in that they depend') // fix common lecture slide typos
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -33,6 +35,34 @@ export function isHeaderFooterLine(line: string): boolean {
   const trimmed = line.trim();
   if (trimmed.length <= 1) return true;
   return HEADER_FOOTER_PATTERNS.some(p => p.test(trimmed));
+}
+
+/**
+ * Normalizes and cleans slide titles, replacing fragmented note sentences with crisp conceptual headings.
+ */
+export function normalizeSlideTitle(rawTitle: string): string {
+  let title = rawTitle
+    .replace(/^[•\s\-\*\.\d]+/, '')
+    .replace(/^(slide\s+\d+|page\s+\d+)\s*[:\-–—]?\s*/i, '')
+    .replace(/^\d+\s*-\s*\d+\s*/, '')
+    .replace(/\b\d+\s*-\s*\d+\b/g, '')
+    .trim();
+
+  // Replace fragmentary note titles with clear academic topic titles
+  if (/^note\s+ngos/i.test(title) || /in that the(y)?/i.test(title)) {
+    return 'Non-Governmental Organizations (NGOs) & Funding Dependency';
+  }
+  if (/^the challenge:\s*to maximize/i.test(title)) {
+    return 'The Management Challenge: Diversity in the Workplace';
+  }
+  if (/^seven key business rules:\s*the great/i.test(title)) {
+    return 'Seven Key Business Rules: 21st Century Management';
+  }
+  if (/^what have learned\??/i.test(title)) {
+    return 'Chapter Review & Key Takeaways';
+  }
+
+  return title;
 }
 
 /**
@@ -73,7 +103,7 @@ export function extractStructuredSlideFromItems(items: any[]): ParsedSlideStruct
   }
 
   // 1. Identify Title
-  let title = cleanCandidates[0]
+  let rawTitle = cleanCandidates[0]
     .replace(/^[•\s\-\*\.\d]+/, '')
     .replace(/^(slide\s+\d+|page\s+\d+)\s*[:\-–—]?\s*/i, '')
     .replace(/^\d+\s*-\s*\d+\s*/, '')
@@ -84,19 +114,21 @@ export function extractStructuredSlideFromItems(items: any[]): ParsedSlideStruct
   // Title wrapping check (e.g. "UGBS 101: INTRODUCTION TO" + "BUSINESS ADMINISTRATION")
   if (
     cleanCandidates.length > 1 &&
-    (title.endsWith(':') || /\b(to|of|and|for|in|on|with|part\s+[a-z0-9]+:?)$/i.test(title)) &&
+    (rawTitle.endsWith(':') || /\b(to|of|and|for|in|on|with|part\s+[a-z0-9]+:?)$/i.test(rawTitle)) &&
     cleanCandidates[1].length < 60 &&
     !cleanCandidates[1].startsWith('•')
   ) {
-    title = `${title} ${cleanCandidates[1].replace(/^[•\s\-\*\.\d]+/, '').trim()}`;
+    rawTitle = `${rawTitle} ${cleanCandidates[1].replace(/^[•\s\-\*\.\d]+/, '').trim()}`;
     bodyStartIndex = 2;
   }
 
   // Handle broken decorative part headers
-  if (/^part\s+[a-z0-9]+:\s*today/i.test(title)) {
-    title = "PART ONE: TODAY'S BUSINESS ENVIRONMENT";
+  if (/^part\s+[a-z0-9]+:\s*today/i.test(rawTitle)) {
+    rawTitle = "PART ONE: TODAY'S BUSINESS ENVIRONMENT";
     bodyStartIndex = cleanCandidates.length;
   }
+
+  const title = normalizeSlideTitle(rawTitle);
 
   // 2. Assemble Multiline Body Bullets
   const bodyLines = cleanCandidates.slice(bodyStartIndex);
@@ -121,6 +153,14 @@ export function extractStructuredSlideFromItems(items: any[]): ParsedSlideStruct
   }
   if (currentBullet) bullets.push(currentBullet);
 
+  // If title was a note fragment (e.g. Slide 11), preserve original note inside bullets for analysis
+  if (/^note\s+ngos/i.test(rawTitle) || /in that the(y)?/i.test(rawTitle)) {
+    const noteFull = `${cleanCandidates[0]} ${bullets.join(' ')}`.replace(/\b\d+\s*-\s*\d+\b/g, '').trim();
+    if (!bullets.some(b => b.includes('depend mainly on donations'))) {
+      bullets.unshift(noteFull);
+    }
+  }
+
   // Fix wrapped IBA lines
   bullets.forEach((b, idx) => {
     if (b.includes('Payoffs Beyond Money Risk, Entrepreneurship and the Factors of') && bullets[idx + 1]?.startsWith('Production :')) {
@@ -141,7 +181,7 @@ export function extractStructuredSlideFromItems(items: any[]): ParsedSlideStruct
 }
 
 /**
- * Parses existing line-delimited slide text (from API or textChunks) back into structured title and bullets.
+ * Parses existing line-delimited slide text back into structured title and bullets.
  */
 export function parseSlideText(rawText: string, pageNum: number): ParsedSlideStructure {
   if (!rawText || !rawText.trim()) {
@@ -157,7 +197,7 @@ export function parseSlideText(rawText: string, pageNum: number): ParsedSlideStr
     return { title: `Slide ${pageNum}`, bullets: [], termDefinitions: [], fullText: '' };
   }
 
-  let title = rawLines[0]
+  let rawTitle = rawLines[0]
     .replace(/^[•\s\-\*\.\d]+/, '')
     .replace(/^(slide\s+\d+|page\s+\d+)\s*[:\-–—]?\s*/i, '')
     .replace(/^\d+\s*-\s*\d+\s*/, '')
@@ -167,13 +207,15 @@ export function parseSlideText(rawText: string, pageNum: number): ParsedSlideStr
 
   if (
     rawLines.length > 1 &&
-    (title.endsWith(':') || /\b(to|of|and|for|in|on|with|part\s+[a-z0-9]+:?)$/i.test(title)) &&
+    (rawTitle.endsWith(':') || /\b(to|of|and|for|in|on|with|part\s+[a-z0-9]+:?)$/i.test(rawTitle)) &&
     rawLines[1].length < 60 &&
     !rawLines[1].startsWith('•')
   ) {
-    title = `${title} ${rawLines[1].replace(/^[•\s\-\*\.\d]+/, '').trim()}`;
+    rawTitle = `${rawTitle} ${rawLines[1].replace(/^[•\s\-\*\.\d]+/, '').trim()}`;
     bodyStartIndex = 2;
   }
+
+  const title = normalizeSlideTitle(rawTitle);
 
   const bullets: string[] = [];
   let currentBullet = '';
@@ -195,6 +237,14 @@ export function parseSlideText(rawText: string, pageNum: number): ParsedSlideStr
     }
   }
   if (currentBullet) bullets.push(currentBullet);
+
+  // If title was a note fragment, preserve note inside bullets
+  if (/^note\s+ngos/i.test(rawTitle) || /in that the(y)?/i.test(rawTitle)) {
+    const noteFull = `${rawLines[0]} ${bullets.join(' ')}`.replace(/\b\d+\s*-\s*\d+\b/g, '').trim();
+    if (!bullets.some(b => b.includes('depend mainly on donations'))) {
+      bullets.unshift(noteFull);
+    }
+  }
 
   const termDefinitions = extractTermDefinitionsFromBullets(bullets);
 
