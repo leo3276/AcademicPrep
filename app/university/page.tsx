@@ -322,62 +322,79 @@ export default function UniversityPortalPage() {
 
       setLoadingStatus('Analyzing all slides & generating detailed study breakdowns...');
 
-      // 2. Read base64 for API
-      const reader = new FileReader();
-      reader.onload = async () => {
+      // 2. Prepare payload for API
+      // If client-side extracted text is present, do NOT transmit the multi-megabyte PDF binary (prevents HTTP 413 "Request Entity Too Large")
+      const hasClientText = clientExtractedPages && clientExtractedPages.length > 0;
+      let base64Data: string | undefined = undefined;
+
+      if (!hasClientText && selectedFile.size < 4 * 1024 * 1024) {
+        base64Data = await new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = () => resolve('');
+          reader.readAsDataURL(selectedFile);
+        });
+      }
+
+      const res = await fetch('/api/university/analyze-slides', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(customApiKey ? { 'x-gemini-api-key': customApiKey } : {})
+        },
+        body: JSON.stringify({
+          textChunks: clientExtractedPages,
+          fileBase64: base64Data,
+          fileName: selectedFile.name,
+          daysUntilExam,
+          dailyMinutes,
+          targetGrade
+        })
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        let errorMessage = `Server error (${res.status})`;
         try {
-          const base64Data = reader.result as string;
-
-          const res = await fetch('/api/university/analyze-slides', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              ...(customApiKey ? { 'x-gemini-api-key': customApiKey } : {})
-            },
-            body: JSON.stringify({
-              textChunks: clientExtractedPages,
-              fileBase64: base64Data,
-              fileName: selectedFile.name,
-              daysUntilExam,
-              dailyMinutes,
-              targetGrade
-            })
-          });
-
-          const data = await res.json();
-          if (data.success && data.package) {
-            setActivePackage(data.package);
-            const initialLessonIndex = data.package.lessonStartPage 
-              ? data.package.slides.findIndex((s: SlideAnalysis) => s.pageNumber === data.package.lessonStartPage)
-              : 0;
-            setSelectedSlideIndex(initialLessonIndex >= 0 ? initialLessonIndex : 0);
-            setRevealedAnswers({});
-            setMasteredSlides({});
-            setCompletedSessions({});
-            setActiveTab('slides');
-
-            // Persist locally
-            if (typeof window !== 'undefined') {
-              localStorage.setItem('academicprep_active_package', JSON.stringify(data.package));
-            }
-            if (currentBuffer) {
-              savePdfToIDB(data.package.id, currentBuffer);
-            }
-          } else {
-            alert('Failed to analyze slides: ' + (data.error || 'Unknown error'));
+          const errJson = JSON.parse(errorText);
+          if (errJson.error) errorMessage = errJson.error;
+        } catch {
+          if (res.status === 413) {
+            errorMessage = 'The file exceeds the server payload limit. Text extraction has been switched to client-only mode.';
+          } else if (errorText) {
+            errorMessage = errorText.slice(0, 150);
           }
-        } catch (err: any) {
-          alert('Network or processing error: ' + err.message);
-        } finally {
-          setLoading(false);
-          setLoadingStatus('');
         }
-      };
-      reader.readAsDataURL(selectedFile);
+        throw new Error(errorMessage);
+      }
+
+      const data = await res.json();
+      if (data.success && data.package) {
+        setActivePackage(data.package);
+        const initialLessonIndex = data.package.lessonStartPage 
+          ? data.package.slides.findIndex((s: SlideAnalysis) => s.pageNumber === data.package.lessonStartPage)
+          : 0;
+        setSelectedSlideIndex(initialLessonIndex >= 0 ? initialLessonIndex : 0);
+        setRevealedAnswers({});
+        setMasteredSlides({});
+        setCompletedSessions({});
+        setActiveTab('slides');
+
+        // Persist locally
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('academicprep_active_package', JSON.stringify(data.package));
+        }
+        if (currentBuffer) {
+          savePdfToIDB(data.package.id, currentBuffer);
+        }
+      } else {
+        alert('Failed to analyze slides: ' + (data.error || 'Unknown error'));
+      }
     } catch (err: any) {
+      alert('Network or processing error: ' + err.message);
+    } finally {
       setLoading(false);
       setLoadingStatus('');
-      alert('Error reading PDF: ' + err.message);
     }
   };
 

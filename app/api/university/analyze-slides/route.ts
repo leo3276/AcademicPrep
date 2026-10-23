@@ -36,8 +36,8 @@ export async function POST(req: NextRequest) {
 
     let pages: ExtractedPage[] = textChunks;
 
-    // 1. If base64 PDF is provided, extract real text page-by-page from PDF
-    if (fileBase64) {
+    // 1. If base64 PDF is provided and textChunks is empty, extract real text page-by-page from PDF
+    if (fileBase64 && pages.length === 0) {
       try {
         const cleanBase64 = fileBase64.replace(/^data:application\/pdf;base64,/, '');
         const binaryBuffer = Buffer.from(cleanBase64, 'base64');
