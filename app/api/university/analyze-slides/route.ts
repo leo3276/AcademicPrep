@@ -6,6 +6,7 @@ import {
 import { 
   extractPagesFromPdf, 
   analyzeExtractedPages, 
+  detectLessonStartPage,
   ExtractedPage 
 } from '@/lib/slideExtractor';
 
@@ -116,26 +117,41 @@ async function analyzePagesWithGemini(
     `[PAGE ${p.pageNumber}]\n${p.text || '(Visual / diagram slide)'}`
   ).join('\n\n--- NEXT SLIDE ---\n\n');
 
-  const prompt = `You are an elite university evaluator and cognitive-science study strategist.
-Analyze this university lecture slide deck page-by-page.
+  const prompt = `You are a supportive, high-clarity university tutor who excels at making complex university lecture slides simple, intuitive, and easy for undergraduate students to master.
 
 TOTAL PAGES IN DECK: ${pages.length}.
 YOU MUST ANALYZE EVERY PAGE FROM 1 TO ${pages.length}. DO NOT SKIP ANY SLIDE.
 
-DATA INTEGRITY INSTRUCTIONS:
-1. ONLY extract formulas, terms, and definitions that ACTUALLY APPEAR in the provided slide text. Do not hallucinate equations that are not on the slide.
+MISSION:
+Take each slide and explain the important information in DETAILED, STRUCTURED, and SIMPLE PLAIN ENGLISH so an undergraduate student can easily assess and master it.
+
+SPECIAL REQUIREMENT - IDENTIFY WHERE THE LESSON ACTUALLY BEGINS:
+University slide decks almost always begin with title slides, professor/instructor names, emails, office hours, syllabus logistics, grading policies, and agenda/outline slides.
+Identify the EXACT page number where the actual instructional lesson begins:
+- "lessonStartPage": The 1-based page number (e.g., 3, 4, or 5) of the first slide where actual academic teaching, core definitions, or theory begins.
+- For all slides before this page: mark "isIntroLogistics": true, "importance": "CONTEXT_LOW_YIELD", "importanceScore": 2, and "categoryTag": "Intro / Logistics".
+- For the exact lesson start slide: mark "isLessonStart": true, and "categoryTag": "Lesson Begins".
+
+DATA INTEGRITY RULES:
+1. ONLY extract formulas, terms, and definitions that ACTUALLY APPEAR on that specific slide text. Do not invent equations not present on the slide.
 2. For EVERY slide:
    - "pageNumber": Exact number (1 to ${pages.length})
    - "title": Concise, accurate title of this specific slide
-   - "importance": "CORE_FUNDAMENTAL" (score 8-10 for core governing laws, theorems, algorithms, formulas), "SUPPORTING" (score 4-7 for worked examples, illustrations), or "CONTEXT_LOW_YIELD" (score 1-3 for title, agenda, logistics, fluff)
+   - "importance": "CORE_FUNDAMENTAL" (score 8-10 for core governing laws, theorems, algorithms, exam-heavy formulas), "SUPPORTING" (score 4-7 for worked examples, case studies, illustrations), or "CONTEXT_LOW_YIELD" (score 1-3 for title, agenda, logistics, fluff)
    - "importanceScore": 1 to 10
-   - "categoryTag": "Theorem" | "Equation" | "Concept" | "Algorithm" | "Overview" | "Example"
-   - "coreRule": A crystal-clear 1-2 sentence core takeaway (grounded directly in the slide's text)
-   - "keyFormulas": Array of real formulas/equations present on this slide
-   - "keyDefinitions": Array of real definitions [{ "term": "...", "definition": "..." }]
-   - "examTrap": Exactly where university examiners test caveats, tricky edge cases, or unit confusions on this topic
-   - "activeRecallPrompt": { "question": "...", "answer": "...", "hint": "..." }
-   - "estimatedStudyMinutes": 2 to 15
+   - "categoryTag": "Theorem" | "Equation" | "Concept" | "Algorithm" | "Overview" | "Example" | "Intro / Logistics" | "Lesson Begins"
+   - "isLessonStart": boolean (true ONLY on the exact slide where educational teaching begins)
+   - "isIntroLogistics": boolean (true for slides before the lesson starts)
+   - "whyItMatters": 1-2 sentence real-world intuition or reason why the lecturer included this topic in the course.
+   - "coreRule": A comprehensive, crystal-clear 2-3 sentence explanation in simple, plain English of what this slide actually means.
+   - "detailedTakeaways": Array of 3 to 5 structured points [{ "label": "e.g. Core Mechanism / Key Condition / Practical Implication / Crucial Boundary", "explanation": "Substantial, detailed explanation of what happens and why in plain English" }]
+   - "simplifiedPoints": Array of 2 to 4 quick summary bullet points.
+   - "decodedFormulas": Array of [{ "formula": "...", "inPlainEnglish": "...", "variables": [{ "symbol": "...", "meaning": "...", "units": "..." }] }] (empty array [] if none)
+   - "keyFormulas": Array of real formulas/equations present on this slide (empty array [] if none)
+   - "keyDefinitions": Array of real definitions [{ "term": "...", "definition": "..." }] present on this slide (empty array [] if none)
+   - "examTrap": Exactly how professors test this topic and where students lose marks (e.g., tricky edge cases, common calculation mistakes, or conditions that must hold)
+   - "activeRecallPrompt": { "question": "Realistic exam question to test understanding", "hint": "Helpful hint", "answer": "Clear model answer", "stepByStepSolution": "Step-by-step worked response" }
+   - "estimatedStudyMinutes": 1 to 10
 
 3. Provide a high-yield synthesis for the 1-page cram sheet:
    - "mustMemorizeTheorems": Top governing principles across the entire deck
@@ -151,6 +167,7 @@ Output your response STRICTLY as valid JSON without markdown fences, adhering to
   "courseCode": "COURSE",
   "subject": "University Coursework",
   "totalSlides": ${pages.length},
+  "lessonStartPage": 4,
   "cramSheetSummary": {
     "mustMemorizeTheorems": ["..."],
     "formulasToRecite": ["..."],
@@ -185,14 +202,112 @@ Output your response STRICTLY as valid JSON without markdown fences, adhering to
   if (!textContent) return null;
 
   const parsed = JSON.parse(textContent);
+  
+  // Validate lesson start page
+  const fallbackStartPage = detectLessonStartPage(pages);
+  const lessonStartPage = (typeof parsed.lessonStartPage === 'number' && parsed.lessonStartPage >= 1 && parsed.lessonStartPage <= pages.length)
+    ? parsed.lessonStartPage
+    : fallbackStartPage;
+
+  const normalizedSlides: any[] = (parsed.slides || []).map((s: any, idx: number) => {
+    const pageNum = s.pageNumber || idx + 1;
+    const isBeforeLessonStart = pageNum < lessonStartPage;
+    const isLessonStart = pageNum === lessonStartPage;
+
+    const formulas = Array.isArray(s.keyFormulas) ? s.keyFormulas : [];
+    const definitions = Array.isArray(s.keyDefinitions) ? s.keyDefinitions : [];
+
+    const defaultTakeaways = [
+      {
+        label: 'Core Mechanism',
+        explanation: s.coreRule || `Master the operational principle of ${s.title || `Slide ${pageNum}`}.`
+      },
+      {
+        label: 'Analytical Condition',
+        explanation: 'Verify the governing boundary conditions and assumptions before applying this principle to exam questions.'
+      },
+      {
+        label: 'Exam Application',
+        explanation: s.examTrap || 'Focus on precise terminology, variable definitions, and standard units.'
+      }
+    ];
+
+    const detailedTakeaways = Array.isArray(s.detailedTakeaways) && s.detailedTakeaways.length > 0
+      ? s.detailedTakeaways
+      : defaultTakeaways;
+
+    const decodedFormulas = Array.isArray(s.decodedFormulas) && s.decodedFormulas.length > 0
+      ? s.decodedFormulas
+      : formulas.map((f: string) => ({
+          formula: f,
+          inPlainEnglish: 'Expresses the governing mathematical balance between the system parameters.',
+          variables: Array.from(new Set(f.match(/[A-Za-zΔΣπλθα-ω]/g) || [])).slice(0, 4).map(sym => ({
+            symbol: sym,
+            meaning: `Parameter ${sym} in ${f}`,
+            units: 'Standard unit'
+          }))
+        }));
+
+    return {
+      pageNumber: pageNum,
+      title: s.title || `Slide ${pageNum}`,
+      importance: isBeforeLessonStart 
+        ? 'CONTEXT_LOW_YIELD' 
+        : (s.importance || 'SUPPORTING'),
+      importanceScore: isBeforeLessonStart 
+        ? 2 
+        : (typeof s.importanceScore === 'number' ? s.importanceScore : 6),
+      categoryTag: isBeforeLessonStart 
+        ? 'Intro / Logistics' 
+        : (isLessonStart ? 'Lesson Begins' : (s.categoryTag || 'Concept')),
+      isLessonStart,
+      isIntroLogistics: isBeforeLessonStart,
+      whyItMatters: s.whyItMatters || (isBeforeLessonStart
+        ? 'Provides administrative orientation and establishes course scope.'
+        : `Establishes fundamental theoretical concepts connecting lecture definitions to exam problems.`),
+      coreRule: s.coreRule || (isBeforeLessonStart 
+        ? `Course introduction & administration slide. The instructional lesson begins on Slide ${lessonStartPage}.`
+        : `Essential takeaways for ${s.title || `Slide ${pageNum}`}`),
+      detailedTakeaways,
+      simplifiedPoints: Array.isArray(s.simplifiedPoints) && s.simplifiedPoints.length > 0
+        ? s.simplifiedPoints
+        : (isBeforeLessonStart
+          ? [
+              'Course administrative and instructor contact details',
+              'Lecture agenda and topics roadmap',
+              `Teaching content officially begins on Slide ${lessonStartPage}`
+            ]
+          : detailedTakeaways.map(t => `${t.label}: ${t.explanation}`)),
+      keyFormulas: formulas,
+      decodedFormulas,
+      keyDefinitions: definitions,
+      examTrap: isBeforeLessonStart
+        ? `Introductory slides are not tested in exams. Focus your revision on Slide ${lessonStartPage} onwards.`
+        : (s.examTrap || 'Focus on understanding the exact definitions and operational conditions on this slide.'),
+      activeRecallPrompt: s.activeRecallPrompt || {
+        question: isBeforeLessonStart
+          ? `On which slide does the core lecture teaching begin?`
+          : `What is the primary concept on slide ${pageNum}?`,
+        answer: isBeforeLessonStart
+          ? `The lesson begins on Slide ${lessonStartPage}.`
+          : (s.coreRule || 'Review the slide summary.'),
+        hint: 'Recall the main term or relation.',
+        stepByStepSolution: isBeforeLessonStart
+          ? `Step 1: Check the course outline. Step 2: Jump directly to Slide ${lessonStartPage}.`
+          : `Step 1: Define the core concept. Step 2: State the operational mechanism. Step 3: Check units and boundary conditions.`
+      },
+      estimatedStudyMinutes: isBeforeLessonStart ? 1 : (s.estimatedStudyMinutes || 5)
+    };
+  });
+
   const plan = generateAlgorithmicStudyPlan(
-    parsed.slides || [],
+    normalizedSlides,
     daysUntilExam,
     dailyMinutes,
     targetGrade
   );
 
-  const highYieldCount = (parsed.slides || []).filter((s: any) => s.importance === 'CORE_FUNDAMENTAL').length;
+  const highYieldCount = normalizedSlides.filter((s: any) => s.importance === 'CORE_FUNDAMENTAL').length;
 
   return {
     id: `deck-${Date.now()}`,
@@ -200,9 +315,10 @@ Output your response STRICTLY as valid JSON without markdown fences, adhering to
     courseCode: parsed.courseCode || 'COURSE',
     subject: parsed.subject || 'University Coursework',
     totalSlides: pages.length,
+    lessonStartPage,
     highYieldCount,
-    estimatedHoursTotal: Math.round(((parsed.slides || []).reduce((acc: number, s: any) => acc + (s.estimatedStudyMinutes || 5), 0) / 60) * 10) / 10,
-    slides: parsed.slides || [],
+    estimatedHoursTotal: Math.round((normalizedSlides.reduce((acc: number, s: any) => acc + (s.estimatedStudyMinutes || 5), 0) / 60) * 10) / 10,
+    slides: normalizedSlides,
     studyPlan: plan,
     cramSheetSummary: parsed.cramSheetSummary || {
       mustMemorizeTheorems: [],

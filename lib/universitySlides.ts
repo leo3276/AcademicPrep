@@ -1,5 +1,5 @@
 // University Slides Intelligence & Strategic Study Planner Engine
-// Pure data models & algorithmic spaced-repetition study plan generators.
+// Clean data models & algorithmic study plan generators.
 
 export type SlideImportance = 'CORE_FUNDAMENTAL' | 'SUPPORTING' | 'CONTEXT_LOW_YIELD';
 
@@ -8,10 +8,28 @@ export interface KeyDefinition {
   definition: string;
 }
 
+export interface DetailedTakeaway {
+  label: string; // e.g., "Core Mechanism", "Operational Condition", "Real-World Context"
+  explanation: string;
+}
+
+export interface DecodedVariable {
+  symbol: string;
+  meaning: string;
+  units?: string;
+}
+
+export interface DecodedFormula {
+  formula: string;
+  inPlainEnglish: string;
+  variables: DecodedVariable[];
+}
+
 export interface ActiveRecallPrompt {
   question: string;
   answer: string;
   hint?: string;
+  stepByStepSolution?: string;
 }
 
 export interface SlideAnalysis {
@@ -19,11 +37,17 @@ export interface SlideAnalysis {
   title: string;
   importance: SlideImportance;
   importanceScore: number; // 1 to 10
-  categoryTag: string; // 'Concept', 'Equation', 'Algorithm', 'Theorem', 'Example', 'Overview'
-  coreRule: string; // The 1-2 sentence core takeaway (No fluff)
+  categoryTag: string;
+  isLessonStart?: boolean; // True for the exact slide where educational teaching begins
+  isIntroLogistics?: boolean; // True for professor names, syllabus, logistics, agenda
+  coreRule: string; // Comprehensive, clear plain-English explanation
+  whyItMatters?: string; // The big-picture intuition / context of why this slide is taught
+  detailedTakeaways: DetailedTakeaway[]; // Rich, structured explanations with clear headings
+  simplifiedPoints: string[]; // Fast bullet points for quick scan
   keyFormulas: string[];
+  decodedFormulas?: DecodedFormula[]; // Formulas with variable breakdowns
   keyDefinitions: KeyDefinition[];
-  examTrap: string; // Where examiners trick students or common misconceptions
+  examTrap: string; // Practical exam angle & common traps
   activeRecallPrompt: ActiveRecallPrompt;
   estimatedStudyMinutes: number;
 }
@@ -57,6 +81,7 @@ export interface CompleteSlideStudyPackage {
   courseCode: string;
   subject: string;
   totalSlides: number;
+  lessonStartPage: number; // The exact slide number where teaching begins (skipping intro/logistics)
   highYieldCount: number;
   estimatedHoursTotal: number;
   slides: SlideAnalysis[];
@@ -100,14 +125,14 @@ export function generateAlgorithmicStudyPlan(
       const slideNums = daySlice.map(s => s.pageNumber);
       sessions.push({
         day: d,
-        title: `Core Fundamentals & Definitions (Part ${d})`,
+        title: `Core Concepts & Key Principles (Part ${d})`,
         slideNumbers: slideNums.length > 0 ? slideNums : [slides[0]?.pageNumber || 1],
         allocatedMinutes: safeMinutes,
-        focus: 'Deconstruct governing laws, definitions, and slide takeaways without rote memorization.',
+        focus: 'Understand main definitions and core slide takeaways in simple terms.',
         checklist: [
-          'Read slide core rules and state them out loud in your own words',
-          'Identify and write down any unfamiliar terms in your personal glossary',
-          'Attempt the active recall card on each assigned slide'
+          'Read the simplified takeaways and state them in your own words',
+          'Note down unfamiliar terms in your personal summary',
+          'Attempt the self-check question for each slide'
         ]
       });
     } else if (d <= p1DaysCount + p2DaysCount) {
@@ -116,41 +141,41 @@ export function generateAlgorithmicStudyPlan(
       const slideNums = daySlice.map(s => s.pageNumber);
       sessions.push({
         day: d,
-        title: `Mechanisms, Formulas & Worked Examples (Day ${idx})`,
+        title: `Mechanisms, Formulas & Applications (Day ${idx})`,
         slideNumbers: slideNums.length > 0 ? slideNums : coreSlides.map(s => s.pageNumber).slice(0, 3),
         allocatedMinutes: safeMinutes,
-        focus: 'Practice formula substitutions, diagram sketching, and examiner pitfall analysis.',
+        focus: 'Review key formulas, diagrams, and common exam traps.',
         checklist: [
-          'Solve 2 calculation problems or sketch key diagrams from memory',
-          'Review the Examiner Trap warnings for today\'s slide deck',
-          'Highlight any formulas that need instant recall'
+          'Practice explaining key diagrams or equations from memory',
+          'Review the exam tips and common pitfalls for today\'s slides',
+          'Check off the slides you feel confident about'
         ]
       });
     } else if (d < safeDays) {
       const highYieldPages = coreSlides.map(s => s.pageNumber);
       sessions.push({
         day: d,
-        title: 'Spaced Retrieval Practice & Closed-Book Drills',
+        title: 'Active Retrieval & Closed-Book Review',
         slideNumbers: highYieldPages,
         allocatedMinutes: safeMinutes,
-        focus: 'Closed-book flashcard drills across all high-yield fundamental slides.',
+        focus: 'Self-test your memory without looking at notes.',
         checklist: [
-          'Cycle through all high-yield flashcards with answers hidden',
-          'Flag any slide where you hesitated for > 15 seconds for re-review',
-          'Write down all governing formulas without looking at notes'
+          'Go through the key slides and answer the self-check questions',
+          'Flag any concept where you felt unsure for a quick re-read',
+          'Write down core formulas without checking the slide'
         ]
       });
     } else {
       sessions.push({
         day: d,
-        title: 'Final High-Yield Exam Eve Scan & Formula Recitation',
+        title: 'Final High-Yield Exam Eve Scan',
         slideNumbers: coreSlides.map(s => s.pageNumber).slice(0, 5),
         allocatedMinutes: Math.min(45, safeMinutes),
-        focus: 'Zero new material. Rapid 30-minute scan of top 5 highest-yield slides and sleep hygiene.',
+        focus: 'Relaxed review of key takeaways and summary sheet.',
         checklist: [
-          'Review the 1-page cheat sheet formulas',
-          'Read the top examiner traps one last time',
-          'Get 8 hours of restorative sleep before the exam hall'
+          'Review the 1-page summary sheet',
+          'Read through top exam tips one last time',
+          'Get a full night\'s rest before the exam'
         ]
       });
     }
@@ -163,22 +188,22 @@ export function generateAlgorithmicStudyPlan(
     phases: [
       {
         phaseNumber: 1,
-        name: 'Phase 1: Conceptual Foundations & Terminology',
-        objective: 'Extract governing rules and establish strong foundational understanding.',
+        name: 'Phase 1: Core Understanding & Concepts',
+        objective: 'Build a solid grasp of the primary ideas and definitions.',
         days: `Days 1 - ${p1DaysCount}`,
         sessions: sessions.filter(s => s.day <= p1DaysCount)
       },
       {
         phaseNumber: 2,
-        name: 'Phase 2: Mechanisms, Derivations & Examiner Traps',
-        objective: 'Master problem-solving steps, formulas, and common exam traps.',
+        name: 'Phase 2: Applications & Exam Traps',
+        objective: 'Master equations, examples, and points where students lose marks.',
         days: `Days ${p1DaysCount + 1} - ${p1DaysCount + p2DaysCount}`,
         sessions: sessions.filter(s => s.day > p1DaysCount && s.day <= p1DaysCount + p2DaysCount)
       },
       {
         phaseNumber: 3,
-        name: 'Phase 3: Active Retrieval & Spaced Recall',
-        objective: 'Test retention with closed-book prompts and exam-eve rapid scanning.',
+        name: 'Phase 3: Active Recall & Final Scan',
+        objective: 'Solidify retention with closed-book self-tests before the exam.',
         days: `Days ${p1DaysCount + p2DaysCount + 1} - ${safeDays}`,
         sessions: sessions.filter(s => s.day > p1DaysCount + p2DaysCount)
       }
