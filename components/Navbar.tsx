@@ -124,13 +124,13 @@ export default function Navbar() {
                     href="/university"
                     className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 whitespace-nowrap ${
                       pathname.startsWith('/university')
-                        ? 'bg-white text-indigo-700 shadow-sm font-bold'
+                        ? 'bg-white text-slate-900 shadow-sm font-bold'
                         : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
-                    <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
+                    <span className="w-2 h-2 rounded-full bg-slate-700"></span>
                     <span>University</span>
-                    <span className="text-[9px] bg-indigo-100 text-indigo-700 px-1 rounded font-bold uppercase">AI</span>
+                    <span className="text-[9px] bg-slate-200 text-slate-700 px-1 rounded font-mono uppercase">AI</span>
                   </Link>
                 </div>
               )}
@@ -179,7 +179,7 @@ export default function Navbar() {
                     href="/university"
                     className={`text-xs font-semibold transition-colors flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg whitespace-nowrap ${
                       pathname.startsWith('/university') 
-                        ? 'text-indigo-600 bg-indigo-50 font-bold' 
+                        ? 'text-slate-900 bg-slate-100 font-bold' 
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
@@ -460,13 +460,13 @@ export default function Navbar() {
               <Link
                 href="/university"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2 text-sm font-semibold text-indigo-700 flex items-center justify-between"
+                className="py-2 text-sm font-semibold text-slate-800 flex items-center justify-between"
               >
                 <span className="flex items-center gap-1.5">
-                  <Brain className="w-4 h-4 text-indigo-600" />
-                  University Slide Study Copilot
+                  <Brain className="w-4 h-4 text-slate-700" />
+                  University Slide Studio
                 </span>
-                <span className="text-[10px] font-bold bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full">AI</span>
+                <span className="text-[10px] font-mono bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded">AI</span>
               </Link>
               <Link
                 href="/jhs/weekly-exam"

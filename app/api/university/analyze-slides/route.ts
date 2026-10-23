@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { 
   CompleteSlideStudyPackage, 
   SlideAnalysis, 
-  generateAlgorithmicStudyPlan,
-  UNIVERSITY_COURSE_PRESETS 
+  generateAlgorithmicStudyPlan
 } from '@/lib/universitySlides';
 
 export const runtime = 'nodejs';
@@ -16,7 +15,6 @@ interface AnalyzeRequestBody {
   daysUntilExam?: number;
   dailyMinutes?: number;
   targetGrade?: string;
-  presetId?: string;
 }
 
 export async function POST(req: NextRequest) {
@@ -28,34 +26,13 @@ export async function POST(req: NextRequest) {
       textChunks = [],
       daysUntilExam = 7,
       dailyMinutes = 45,
-      targetGrade = 'A / First Class',
-      presetId
+      targetGrade = 'A / First Class'
     } = body;
-
-    // 1. If user selected a preset, return customized preset with recalculated timetable
-    if (presetId) {
-      const preset = UNIVERSITY_COURSE_PRESETS.find(p => p.id === presetId);
-      if (preset) {
-        const customizedPlan = generateAlgorithmicStudyPlan(
-          preset.slides,
-          daysUntilExam,
-          dailyMinutes,
-          targetGrade
-        );
-        return NextResponse.json({
-          success: true,
-          package: {
-            ...preset,
-            studyPlan: customizedPlan
-          }
-        });
-      }
-    }
 
     const headerApiKey = req.headers.get('x-gemini-api-key') || '';
     const geminiApiKey = process.env.GEMINI_API_KEY || headerApiKey;
 
-    // 2. If Gemini API key is configured and fileBase64 is provided, run multimodal PDF analysis
+    // 1. If Gemini API key is configured and fileBase64 is provided, run multimodal PDF analysis
     if (geminiApiKey && fileBase64) {
       try {
         const geminiResult = await analyzeWithGemini(
@@ -74,8 +51,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // 3. Fallback / Client-extracted slide intelligence engine
-    // Parses text chunks or synthesizes high-yield structured breakdown
+    // 2. Fallback / Client-extracted slide intelligence engine
     const fallbackPackage = synthesizeFallbackPackage(
       fileName, 
       textChunks, 
@@ -109,7 +85,6 @@ async function analyzeWithGemini(
   dailyMinutes: number,
   targetGrade: string
 ): Promise<CompleteSlideStudyPackage | null> {
-  // Strip data:application/pdf;base64, prefix if present
   const cleanBase64 = fileBase64.replace(/^data:application\/pdf;base64,/, '');
 
   const prompt = `You are an elite university professor, exam board evaluator, and cognitive-science study strategist.
@@ -203,7 +178,6 @@ Output your response STRICTLY as valid JSON without markdown fences, conforming 
   if (!textContent) return null;
 
   const parsed = JSON.parse(textContent);
-  // Inject algorithmic study plan with user's specific timeframe
   const plan = generateAlgorithmicStudyPlan(
     parsed.slides || [],
     daysUntilExam,
@@ -220,7 +194,7 @@ Output your response STRICTLY as valid JSON without markdown fences, conforming 
 
 /**
  * Intelligent Fallback Synthesizer
- * Formulates a rich, university-grade analytical breakdown when no API key is provided
+ * Formulates a rich analytical breakdown when no API key is provided
  */
 function synthesizeFallbackPackage(
   fileName: string,
@@ -243,7 +217,6 @@ function synthesizeFallbackPackage(
     const rawText = chunk?.text || '';
     const rawTitle = chunk?.title || extractTitleFromText(rawText) || `Slide ${i}: Lecture Key Topic`;
 
-    // Classify slide type and importance
     const isFluff = i === 1 || i === totalPages || /agenda|outline|reading|questions\?|office hours|announcement/i.test(rawTitle + ' ' + rawText);
     const hasFormulas = /[=><±∑∫∆\^/]|formula|equation|calculate|derivation/i.test(rawText);
     const hasTheorem = /law|theorem|principle|rule|axiom|model/i.test(rawText + ' ' + rawTitle);
@@ -275,7 +248,7 @@ function synthesizeFallbackPackage(
       keyDefinitions: [
         {
           term: rawTitle.split(':')[0].trim(),
-          definition: `Foundational university principle covering the core mechanics and trade-offs of ${rawTitle}.`
+          definition: `Foundational principle covering the core mechanics and trade-offs of ${rawTitle}.`
         }
       ],
       examTrap: isFluff
@@ -295,9 +268,9 @@ function synthesizeFallbackPackage(
 
   return {
     id: `deck-${Date.now()}`,
-    deckTitle: cleanTitle.length > 3 ? cleanTitle : 'University Lecture Slides Analysis',
-    courseCode: 'UNI 300',
-    subject: 'Higher Education / Tertiary Coursework',
+    deckTitle: cleanTitle.length > 3 ? cleanTitle : 'Lecture Slides Analysis',
+    courseCode: 'COURSE',
+    subject: 'Higher Education',
     totalSlides: totalPages,
     highYieldCount,
     estimatedHoursTotal: Math.round((slides.reduce((acc, s) => acc + s.estimatedStudyMinutes, 0) / 60) * 10) / 10,
@@ -311,8 +284,7 @@ function synthesizeFallbackPackage(
       formulasToRecite: [
         'E = mc²',
         'PV = nRT',
-        '\\Delta G = \\Delta H - T\\Delta S',
-        'O(n \\log n) Sorting Bound'
+        '\\Delta G = \\Delta H - T\\Delta S'
       ],
       highFrequencyQuestions: slides
         .filter(s => s.importance === 'CORE_FUNDAMENTAL')

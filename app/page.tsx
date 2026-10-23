@@ -318,42 +318,39 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Card 3: University AI Slide Copilot (Live) */}
-          <div className="rounded-2xl bg-white/80 backdrop-blur-md border border-indigo-200/80 p-6 flex flex-col justify-between shadow-xl hover:shadow-2xl hover:border-indigo-400 transition-all group">
+          {/* Card 3: University AI Slide Copilot (Minimal) */}
+          <div className="rounded-2xl bg-white/70 backdrop-blur-md border border-slate-200/80 p-6 flex flex-col justify-between shadow-xs hover:border-slate-400 transition-all group">
             <div className="space-y-4">
-              <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 text-white flex items-center justify-center font-bold shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
-                <Brain className="w-6 h-6" />
+              <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold">
+                <Brain className="w-5 h-5" />
               </div>
 
               <div>
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
-                    University &amp; Tertiary
-                  </h3>
-                  <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 border border-indigo-200 flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-pulse"></span>
-                    AI LIVE
+                  <h3 className="text-xl font-bold text-slate-900">University &amp; Tertiary</h3>
+                  <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
+                    AI Live
                   </span>
                 </div>
-                <p className="text-xs text-indigo-700 font-semibold mt-0.5">AI Slide Study Copilot &amp; Spaced Planner</p>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">Slide Intelligence &amp; Spaced Study Planner</p>
               </div>
 
               <p className="text-xs text-slate-600 leading-relaxed">
-                Deconstruct 100-slide university decks page by page. Pinpoints fundamental principles, extracts formulas, reveals examiner traps, and builds a spaced study timetable.
+                Upload your lecture slides. Extracts core exam principles, eliminates slide fluff, and structures an active recall study timetable.
               </p>
 
-              <div className="space-y-2 pt-2 border-t border-slate-100 text-slate-700 font-medium">
-                <div className="flex items-center gap-2 text-xs">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Page-by-Page Fundamental Pinpointer</span>
+              <div className="space-y-1.5 pt-2 border-t border-slate-100 text-slate-600 text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
+                  <span>Page-by-page fundamental breakdown</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Cognitive Spaced Repetition Plan</span>
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
+                  <span>Formula &amp; definition extraction</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>1-Page Exam Cram Sheets &amp; Flashcards</span>
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
+                  <span>Spaced repetition &amp; active recall prompts</span>
                 </div>
               </div>
             </div>
@@ -361,9 +358,9 @@ export default function HomePage() {
             <div className="pt-6">
               <Link
                 href="/university"
-                className="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition shadow-md shadow-indigo-500/25 flex items-center justify-center gap-1.5 group-hover:gap-2"
+                className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-medium text-xs transition flex items-center justify-center gap-1.5"
               >
-                <span>Launch University AI Studio</span>
+                <span>Open Slide Studio</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
