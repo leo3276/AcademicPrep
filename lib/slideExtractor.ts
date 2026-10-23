@@ -237,7 +237,7 @@ export function analyzeExtractedPages(
         .map(s => s.activeRecallPrompt.question)
     },
     analyzedAt: new Date().toISOString(),
-    engineVersion: 'v4-explained'
+    engineVersion: 'v5-clean'
   };
 }
 
@@ -1247,41 +1247,32 @@ function synthesizeDynamicSlidePedagogy(
     definitions.forEach(d => {
       if (!detailedTakeaways.some(t => t.label.toLowerCase().includes(d.term.toLowerCase()))) {
         detailedTakeaways.push({
-          label: `Key Term: ${d.term}`,
-          explanation: `${d.term} means ${d.definition}`
+          label: d.term,
+          explanation: d.definition
         });
       }
-    });
-  }
-
-  // Add formula takeaway if present
-  if (formulas.length > 0 && detailedTakeaways.length < 6) {
-    detailedTakeaways.push({
-      label: 'Key Formula to Know',
-      explanation: `Formula: ${formulas[0]}. Make sure you understand how changing each part of this equation affects the final result on an exam.`
     });
   }
 
   // Fallback takeaways if slide had no bullets at all
   if (detailedTakeaways.length === 0) {
     detailedTakeaways.push({
-      label: `What "${cleanTitle}" Means`,
-      explanation: `This slide introduces ${cleanTitle}, breaking down the main ideas and practical rules you need to understand for this section of the course.`
+      label: cleanTitle,
+      explanation: `Covers the main concepts and practical rules of ${cleanTitle.toLowerCase()}.`
     });
   }
 
-  // 2. Build a Clear, Plain-English Core Explanation ("In Plain English — What This Slide Teaches")
+  // 2. Build a Direct, Natural Summary
   let coreRule = '';
-  const kbExplainedTakeaways = detailedTakeaways.filter(t => t.explanation.length > 60);
+  const kbExplainedTakeaways = detailedTakeaways.filter(t => t.explanation.length > 50);
   if (kbExplainedTakeaways.length >= 2) {
-    const firstTwo = kbExplainedTakeaways.slice(0, 2).map(t => `${t.label} (${t.explanation.split('. ')[0]})`).join('; and ');
-    coreRule = `In simple terms, this slide breaks down ${cleanTitle}: ${firstTwo}. Review each concept below for the full plain-English explanation and real-world examples.`;
+    coreRule = kbExplainedTakeaways.slice(0, 2).map(t => t.explanation).join(' ');
   } else if (kbExplainedTakeaways.length === 1) {
     coreRule = kbExplainedTakeaways[0].explanation;
   } else if (rawBullets.length > 0) {
-    coreRule = `In simple terms, ${cleanTitle} covers ${rawBullets.slice(0, 3).join('; ')}. Understanding how these points work together will help you answer both multiple-choice and short-answer exam questions on this topic.`;
+    coreRule = `${cleanTitle}: ${rawBullets.slice(0, 4).join('; ')}.`;
   } else {
-    coreRule = `This slide introduces ${cleanTitle} and connects its core ideas to real-world business decisions.`;
+    coreRule = `${cleanTitle}.`;
   }
 
   // 3. Simplified Points (Fast summary list)
@@ -1289,37 +1280,28 @@ function synthesizeDynamicSlidePedagogy(
     ? detailedTakeaways.slice(0, 4).map(t => `${t.label}: ${t.explanation.split('. ')[0]}.`)
     : rawBullets.slice(0, 4);
 
-  // 4. Concrete Exam Trap
-  const examTrap = isDrawback
-    ? `Exam Trap: When answering questions on ${cleanTitle}, don't just memorize bullet headings—always explain the real-world consequence of each drawback and how a business can avoid it.`
-    : isBenefit
-    ? `Exam Tip: Professors love asking you to compare the advantages of ${cleanTitle} against its downsides. Be ready to give a real-world example of each point.`
-    : `Exam Watch-Out: Examiners test whether you can explain the difference between the key terms on this slide (${detailedTakeaways.slice(0, 3).map(t => t.label.split('(')[0].trim()).join(', ')}) in your own words with an example.`;
-
-  // 5. Authentic Exam Practice Challenge
+  // 4. Practice Question
   const firstTakeaway = detailedTakeaways[0];
   const secondTakeaway = detailedTakeaways[1];
   const examQuestion = secondTakeaway
-    ? `In plain English, explain "${firstTakeaway.label}" and "${secondTakeaway.label}" as covered on this slide.`
-    : `In plain English, what is the main idea of "${firstTakeaway.label}" on this slide?`;
-  const examHint = `Think about the simple definition and real-world example for ${firstTakeaway.label}${secondTakeaway ? ` and ${secondTakeaway.label}` : ''}.`;
+    ? `Explain "${firstTakeaway.label}" and "${secondTakeaway.label}".`
+    : `What is "${firstTakeaway.label}"?`;
   const examAnswer = secondTakeaway
-    ? `1. ${firstTakeaway.label}: ${firstTakeaway.explanation}\n2. ${secondTakeaway.label}: ${secondTakeaway.explanation}`
+    ? `${firstTakeaway.label}: ${firstTakeaway.explanation}\n\n${secondTakeaway.label}: ${secondTakeaway.explanation}`
     : `${firstTakeaway.label}: ${firstTakeaway.explanation}`;
-  const examSolution = `Step 1: Define ${firstTakeaway.label} in simple terms. ${secondTakeaway ? `Step 2: Define ${secondTakeaway.label} and contrast how it works. ` : ''}Step 3: Give a concrete business example.`;
 
   return {
     title: cleanTitle,
     coreRule,
-    whyItMatters: `Helps you understand how "${cleanTitle}" works in real life so you don't have to memorize bare bullet points without context.`,
+    whyItMatters: '',
     detailedTakeaways,
     simplifiedPoints,
-    examTrap,
+    examTrap: '',
     activeRecallPrompt: {
       question: examQuestion,
       answer: examAnswer,
-      hint: examHint,
-      stepByStepSolution: examSolution
+      hint: '',
+      stepByStepSolution: ''
     }
   };
 }
@@ -1332,7 +1314,6 @@ function extractFormulas(text: string, title: string, bullets: string[]): string
   const formulas: string[] = [];
   const full = `${title} ${text} ${bullets.join(' ')}`;
 
-  // Conceptual formula synthesis for business & economics
   if (/profit/i.test(full) && /expenses|revenue|selling|how does a business make money/i.test(full)) {
     formulas.push('Profit = Total Revenue - Total Expenses');
   }
@@ -1341,38 +1322,12 @@ function extractFormulas(text: string, title: string, bullets: string[]): string
     formulas.push('Assets = Liabilities + Owner\'s Equity');
   }
 
-  if (/factors of production/i.test(full)) {
-    formulas.push('Output (Q) = f(Land, Labor, Capital, Entrepreneurship, Knowledge)');
-  }
-
-  if (/entrepreneurship & risk|risk is defined/i.test(full)) {
-    formulas.push('Return = Risk Premium + Base Return');
-  }
-
-  if (/current ratio|liquidity/i.test(full)) {
+  if (/current ratio|liquidity ratio/i.test(full)) {
     formulas.push('Current Ratio = Current Assets / Current Liabilities');
   }
 
-  // Detect explicit math/algebraic expressions
-  const candidateMatches = text.match(
-    /[A-Za-z0-9_ΔΣπλθα-ω\(\)\s]{1,20}\s*(?:=|≈|<=|>=|<|>|≡|∝|->)\s*[A-Za-z0-9_ΔΣπλθα-ω\(\)\s+\-*/^%√²]{1,35}/g
-  );
-
-  if (candidateMatches) {
-    for (const m of candidateMatches) {
-      const trimmed = m.trim();
-      if (
-        trimmed.length >= 4 &&
-        trimmed.length <= 50 &&
-        /[=≈<>±^/+\-*√²]/.test(trimmed) &&
-        !/^(if|and|or|for|to|the|that|part)\s/i.test(trimmed)
-      ) {
-        if (!formulas.includes(trimmed)) {
-          formulas.push(trimmed);
-        }
-      }
-      if (formulas.length >= 4) break;
-    }
+  if (/break\s*-\s*even/i.test(full)) {
+    formulas.push('Break-Even Units = Total Fixed Costs / (Price per Unit - Variable Cost per Unit)');
   }
 
   return formulas;
@@ -1383,11 +1338,11 @@ function decodeFormulas(formulas: string[]): DecodedFormula[] {
     if (f.includes('Profit = Total Revenue - Total Expenses')) {
       return {
         formula: f,
-        inPlainEnglish: 'Net business profit is the financial surplus that remains after all operational, production, and tax expenses are deducted from total sales revenue.',
+        inPlainEnglish: 'Profit is what remains after subtracting all business expenses from total sales revenue.',
         variables: [
-          { symbol: 'Profit', meaning: 'Net financial gain retained by business owners or reinvested', units: 'Currency (e.g. $, GHS)' },
-          { symbol: 'Revenue', meaning: 'Total money received from selling goods or delivering services', units: 'Currency' },
-          { symbol: 'Expenses', meaning: 'All operating costs, wages, raw materials, rent, and overhead', units: 'Currency' }
+          { symbol: 'Profit', meaning: 'Money left over after all costs are paid' },
+          { symbol: 'Revenue', meaning: 'Total money brought in from selling goods or services' },
+          { symbol: 'Expenses', meaning: 'Costs of running the business (wages, rent, materials, taxes)' }
         ]
       };
     }
@@ -1395,11 +1350,11 @@ function decodeFormulas(formulas: string[]): DecodedFormula[] {
     if (f.includes('Assets = Liabilities + Owner\'s Equity')) {
       return {
         formula: f,
-        inPlainEnglish: 'The fundamental accounting equation states that everything a company owns (assets) is financed either through debt owed to creditors (liabilities) or funds contributed by owners (equity).',
+        inPlainEnglish: 'Everything a company owns (assets) is paid for either by borrowing money (liabilities) or by the owners\' own investment (equity).',
         variables: [
-          { symbol: 'Assets', meaning: 'Total resources owned by the business (cash, inventory, property)', units: 'Currency' },
-          { symbol: 'Liabilities', meaning: 'Debts and financial obligations owed to outside creditors', units: 'Currency' },
-          { symbol: 'Owner\'s Equity', meaning: 'Net ownership claim of shareholders after all debts are paid', units: 'Currency' }
+          { symbol: 'Assets', meaning: 'Resources owned by the business (cash, inventory, equipment)' },
+          { symbol: 'Liabilities', meaning: 'Debts owed to outside creditors and suppliers' },
+          { symbol: 'Owner\'s Equity', meaning: 'Net value belonging to the owners after debts are subtracted' }
         ]
       };
     }
@@ -1407,55 +1362,29 @@ function decodeFormulas(formulas: string[]): DecodedFormula[] {
     if (f.includes('Current Ratio =')) {
       return {
         formula: f,
-        inPlainEnglish: 'A fundamental liquidity ratio measuring whether a company has enough short-term cash and liquid assets to pay off its bills due within one year.',
+        inPlainEnglish: 'Checks whether a company has enough short-term cash and assets to pay the bills due within the next 12 months.',
         variables: [
-          { symbol: 'Current Assets', meaning: 'Cash, accounts receivable, and inventory convertible to cash within 1 year', units: 'Currency' },
-          { symbol: 'Current Liabilities', meaning: 'Short-term debts and bills due within 1 year', units: 'Currency' }
+          { symbol: 'Current Assets', meaning: 'Cash, receivables, and inventory convertible to cash within 1 year' },
+          { symbol: 'Current Liabilities', meaning: 'Short-term debts and bills due within 1 year' }
         ]
       };
     }
 
-    if (f.includes('Output (Q) = f(')) {
+    if (f.includes('Break-Even Units =')) {
       return {
         formula: f,
-        inPlainEnglish: 'Economic production is achieved by combining natural resources (land), human effort (labor), tools and machinery (capital), and managerial vision (entrepreneurship).',
+        inPlainEnglish: 'Finds the exact number of units you must sell to cover all costs (where profit is $0).',
         variables: [
-          { symbol: 'Land', meaning: 'Natural raw materials and real estate used in production', units: 'Natural resources' },
-          { symbol: 'Labor', meaning: 'Human physical and mental effort contributed to work', units: 'Labor hours' },
-          { symbol: 'Capital', meaning: 'Manufactured goods used to make other goods (machinery, tools)', units: 'Capital assets' },
-          { symbol: 'Entrepreneurship', meaning: 'Risk-taking initiative that combines the other factors', units: 'Executive leadership' }
+          { symbol: 'Fixed Costs', meaning: 'Overhead costs that stay the same no matter how much you sell (rent, insurance)' },
+          { symbol: 'Price - Variable Cost', meaning: 'Contribution margin earned on each unit sold' }
         ]
       };
     }
-
-    if (f.includes('Return = Risk Premium')) {
-      return {
-        formula: f,
-        inPlainEnglish: 'The expected financial reward from starting a business compensates the owner for the uncertainty and potential loss of invested capital.',
-        variables: [
-          { symbol: 'Return', meaning: 'Total financial gain or profit from the enterprise', units: 'Percentage / Currency' },
-          { symbol: 'Risk Premium', meaning: 'Additional reward required for taking on business uncertainty', units: 'Percentage' },
-          { symbol: 'Base Return', meaning: 'Standard risk-free rate of return (e.g. government bonds)', units: 'Percentage' }
-        ]
-      };
-    }
-
-    const symbols = Array.from(new Set(f.match(/[A-Za-zΔΣπλθα-ω]/g) || [])).slice(0, 5);
-    const variables: DecodedVariable[] = symbols.map(sym => {
-      let meaning = `Parameter ${sym} in ${f}`;
-      let units = 'Standard SI unit';
-      if (/^[FEW]$/i.test(sym)) { meaning = `${sym}: Force, Energy, or Work`; units = 'Joules (J) or Newtons (N)'; }
-      else if (/^[m]$/i.test(sym)) { meaning = 'm: Mass or slope'; units = 'Kilograms (kg)'; }
-      else if (/^[vt]$/i.test(sym)) { meaning = `${sym}: Velocity or time elapsed`; units = 'm/s or seconds (s)'; }
-      else if (/^[pr]$/i.test(sym)) { meaning = `${sym}: Pressure, probability, or interest/growth rate`; units = 'Pascals (Pa) or ratio'; }
-      else if (/^[kT]$/i.test(sym)) { meaning = `${sym}: Constant or absolute temperature`; units = 'Kelvin (K) or constant'; }
-      return { symbol: sym, meaning, units };
-    });
 
     return {
       formula: f,
-      inPlainEnglish: `States the quantitative balance between variables under governing system conditions.`,
-      variables
+      inPlainEnglish: '',
+      variables: []
     };
   });
 }

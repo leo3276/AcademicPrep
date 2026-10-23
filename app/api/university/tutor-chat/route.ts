@@ -159,67 +159,65 @@ function generateGroundedTutorAnswer(
   // If the student asked directly about a specific concept in our knowledge base, answer it directly!
   if (directQuestionMatches.length > 0 && !/explain simply|real-world example|quiz me|exam/i.test(q)) {
     const m = directQuestionMatches[0];
-    return `💡 **${m.label} — Plain-English Breakdown**:\n\n${m.explanation}\n\n${directQuestionMatches[1] ? `👉 **Related Concept (${directQuestionMatches[1].label})**: ${directQuestionMatches[1].explanation}\n\n` : ''}Ask me for a real-world example or an exam quiz question on this anytime!`;
+    return `${m.label}:\n\n${m.explanation}${directQuestionMatches[1] ? `\n\n${directQuestionMatches[1].label}: ${directQuestionMatches[1].explanation}` : ''}`;
   }
 
   // Mode 1: "Explain simply" / "Explain like I'm a beginner"
   if (/explain|simple|beginner|what does this mean|eli5|understand|teach|clarify/i.test(q)) {
-    let explanation = `Here is the simple, plain-English way to understand **${slideTitle}**:\n\n`;
-    explanation += `👉 **The Big Picture**: ${effectiveCoreRule}\n\n`;
+    let explanation = `${effectiveCoreRule}\n\n`;
     if (effectiveTakeaways.length > 0) {
-      explanation += `💡 **Key Concepts Broken Down Simply**:\n`;
       effectiveTakeaways.slice(0, 4).forEach(t => {
-        explanation += `• **${t.label}**: ${t.explanation}\n`;
+        explanation += `• ${t.label}: ${t.explanation}\n`;
       });
     }
     if (formulas.length > 0) {
-      explanation += `\n🔢 **The Formula Rule**: \`${formulas[0]}\` — notice how changing one variable directly affects the result!`;
+      explanation += `\nFormula: ${formulas[0]}`;
     }
-    return explanation;
+    return explanation.trim();
   }
 
   // Mode 2: "Real-world example"
   if (/example|real world|analogy|scenario|practical|instance/i.test(q)) {
     if (/ngo|donation|nonprofit/i.test(fullContext)) {
-      return `🌍 **Everyday Real-World Example**:\n\nThink of the Red Cross or Doctors Without Borders. Unlike a supermarket that sells food to make money, an NGO gives medical help or disaster relief for free. They don't have paying customers. Their entire budget comes from donations. If the economy crashes and people stop donating, the NGO immediately struggles to keep ambulances running or pay doctors. That's why donation dependency is their biggest vulnerability!`;
+      return `Think of the Red Cross or Doctors Without Borders. Unlike a supermarket that sells food to make money, an NGO provides medical help or disaster relief without charging customers. Their budget comes from donations. If donations drop during an economic downturn, their operations immediately stall.`;
     }
     if (/sole proprietorship|unlimited liability/i.test(fullContext)) {
-      return `🌍 **Everyday Real-World Example**:\n\nImagine you start a food truck business as a sole proprietor. If a customer slips, breaks an arm, and sues you for $100,000, but your food truck only has $10,000 in the bank, what happens? Because of **unlimited liability**, the court can legally take your personal car, your personal bank account, and even force you to sell your home to pay the remaining $90,000! There is zero legal shield between you and your business.`;
+      return `Imagine you start a food truck business as a sole proprietor. If a customer slips and sues you for $100,000, and your business account only has $10,000, unlimited liability means the court can seize your personal car, savings, or home to pay the remaining $90,000. There is no legal separation between you and the business.`;
     }
     if (/franchise|franchisor/i.test(fullContext)) {
-      return `🌍 **Everyday Real-World Example**:\n\nThink of McDonald's or Domino's Pizza. The parent corporation (the franchisor) invented the recipes, the golden arches logo, and the brand. You (the franchisee) pay them a big upfront fee and monthly royalties for the right to open your own restaurant using their brand. You get instant customer recognition, but you have zero freedom to change the menu—you must follow their exact rules!`;
+      return `Think of McDonald's or KFC. The parent corporation (the franchisor) owns the brand and recipes. You (the franchisee) pay an upfront fee and monthly royalties on gross sales to open a local branch. You get instant customer recognition, but you must follow their strict operating rules.`;
     }
     if (/profit|revenue|expenses|make money/i.test(fullContext)) {
-      return `🌍 **Everyday Real-World Example**:\n\nImagine running an online sneaker store. You sell 100 pairs of shoes at $100 each. Your **Revenue** is $10,000. But did you make $10,000 in profit? No! You spent $6,000 buying the shoes, $1,500 on shipping, and $1,000 on Instagram ads (Total Expenses = $8,500). Your **Net Profit** is only $10,000 - $8,500 = **$1,500**. Revenue is the cash collected; profit is what you actually keep!`;
+      return `Suppose you sell 100 pairs of shoes at $100 each. Your Revenue is $10,000. If you spent $6,000 buying the shoes, $1,500 on shipping, and $1,000 on ads (Total Expenses = $8,500), your Profit is $10,000 - $8,500 = $1,500. Revenue is total sales; profit is what remains after expenses.`;
     }
     if (/accounting|balance sheet|asset.*liabilit/i.test(fullContext)) {
-      return `🌍 **Everyday Real-World Example**:\n\nThink of buying a $1,000 smartphone. You swipe your credit card for $600 and pay the other $400 out of your savings. In accounting terms:\n• **Assets ($1,000)**: The phone you own.\n• **Liabilities ($600)**: The credit card balance you owe.\n• **Owner's Equity ($400)**: What you actually paid and own free-and-clear.\nNotice how **Assets ($1,000) = Liabilities ($600) + Equity ($400)**. It always balances!`;
+      return `Suppose you buy a $1,000 laptop using $600 on a credit card and $400 of your own cash:\n• Asset ($1,000): The laptop you own.\n• Liability ($600): What you owe on the credit card.\n• Owner's Equity ($400): The portion you own debt-free.\nAssets ($1,000) = Liabilities ($600) + Equity ($400).`;
     }
     if (/matrix/i.test(fullContext)) {
-      return `🌍 **Everyday Real-World Example**:\n\nImagine you are a software designer at Spotify. Your functional manager is the Head of Design (who conducts your annual review and ensures your designs look modern). At the same time, your project manager is the Leader of the "Search & Discover Squad" (who tells you what features must ship by Friday). You report to two bosses simultaneously—this is the matrix structure!`;
+      return `Imagine working as a designer at a tech company where you report to the Head of Design (your functional boss) for skill standards, while also reporting to the Mobile App Project Manager (your project boss) for daily launch deadlines. Reporting to two bosses at once is a matrix structure.`;
     }
     if (/theory x|theory y|motivation/i.test(fullContext)) {
-      return `🌍 **Everyday Real-World Example**:\n\nThink of two bosses at a tech startup:\n• **Boss X (Theory X)**: Thinks everyone is lazy and will browse TikTok unless they have screen-monitoring software installed on their laptops.\n• **Boss Y (Theory Y)**: Gives employees flexible hours and creative freedom because they believe people genuinely take pride in building great products when trusted.`;
+      return `Compare two managers:\n• Theory X Manager: Assumes workers dislike work and must be closely monitored and penalized.\n• Theory Y Manager: Assumes workers take pride in their work and perform best when given trust and autonomy.`;
     }
-    return `🌍 **Everyday Real-World Example**:\n\nTo see how **${slideTitle}** works in real life, consider how modern organizations apply this:\n\n${effectiveCoreRule}\n\n${effectiveTakeaways[0] ? `For example, **${effectiveTakeaways[0].label}**: ${effectiveTakeaways[0].explanation}` : ''}`;
+    return `${effectiveCoreRule}${effectiveTakeaways[0] ? `\n\nFor example, ${effectiveTakeaways[0].label}: ${effectiveTakeaways[0].explanation}` : ''}`;
   }
 
   // Mode 3: "Exam questions" / "How will this be tested"
   if (/exam|test|questions|marks|professor|paper/i.test(q)) {
-    return `📝 **How Professors Test This On Exams**:\n\n1. **Multiple Choice Trick**: ${specializedGuide?.examTrap || 'Lecturers love asking questions with subtle definition traps. Make sure you don\'t confuse similar terms.'}\n2. **Short-Answer Definition**: Be ready to define the core concept in 2 sentences without notes: "${effectiveCoreRule.slice(0, 180)}..."\n3. **Application Scenario**: Professors often present a short mini-case and ask you to apply ${effectiveTakeaways[0]?.label || slideTitle}.`;
+    return `${specializedGuide?.examTrap || `Focus on being able to define ${slideTitle} clearly and contrast its main points:`}\n\n${effectiveTakeaways.slice(0, 3).map(t => `• ${t.label}: ${t.explanation}`).join('\n')}`;
   }
 
   // Mode 4: "Quiz me"
   if (/quiz|test me|check me|question for me/i.test(q)) {
     if (specializedGuide) {
-      return `🎯 **Quick Active Recall Quiz**:\n\n**Question**: ${specializedGuide.activeRecallPrompt.question}\n\n*Try answering out loud before checking below!*\n\n---\n✅ **Model Answer**: ${specializedGuide.activeRecallPrompt.answer}`;
+      return `Question: ${specializedGuide.activeRecallPrompt.question}\n\nAnswer: ${specializedGuide.activeRecallPrompt.answer}`;
     }
     if (definitions.length > 0) {
-      return `🎯 **Quick Active Recall Quiz**:\n\n**Question**: In your university exam, how would you define **${definitions[0].term}**?\n\n*Try thinking of the answer before reading below!*\n\n---\n✅ **Model Answer**: ${definitions[0].definition}`;
+      return `Question: How is ${definitions[0].term} defined?\n\nAnswer: ${definitions[0].definition}`;
     }
-    return `🎯 **Quick Active Recall Quiz**:\n\n**Question**: Based on Slide ${slideNumber} (${slideTitle}), explain the main idea of **${effectiveTakeaways[0]?.label || slideTitle}** in simple words.\n\n*Try answering out loud before checking below!*\n\n---\n✅ **Model Answer**: ${effectiveCoreRule}`;
+    return `Question: Explain ${effectiveTakeaways[0]?.label || slideTitle}.\n\nAnswer: ${effectiveCoreRule}`;
   }
 
   // General specific question matching
-  return `💡 **Tutor Breakdown on "${slideTitle}"**:\n\nRegarding your question: *"${userQuestion}"*\n\n${effectiveCoreRule}\n\n${effectiveTakeaways.length > 0 ? `Here are the key points broken down simply:\n${effectiveTakeaways.slice(0, 3).map(t => `• **${t.label}**: ${t.explanation}`).join('\n')}` : ''}\n\nFeel free to ask for an everyday analogy, an exam tip, or a quick quiz!`;
+  return `${effectiveCoreRule}${effectiveTakeaways.length > 0 ? `\n\n${effectiveTakeaways.slice(0, 3).map(t => `• ${t.label}: ${t.explanation}`).join('\n')}` : ''}`;
 }
