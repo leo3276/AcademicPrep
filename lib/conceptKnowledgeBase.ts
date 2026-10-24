@@ -764,7 +764,7 @@ export function matchSlideConceptsFromText(fullSlideText: string): DetailedTakea
 export function explainSlideBullet(bullet: string, slideTitle: string): DetailedTakeaway | null {
   const cleanB = bullet.replace(/^[•\-\*\d\.\s]+/, '').trim();
 
-  // 1. Check against our rich concept dictionary first
+  // Check against our curated concept dictionary first
   for (const entry of BULLET_CONCEPT_EXPLAINERS) {
     if (entry.pattern.test(cleanB)) {
       return {
@@ -772,17 +772,6 @@ export function explainSlideBullet(bullet: string, slideTitle: string): Detailed
         explanation: entry.explanation
       };
     }
-  }
-
-  // 2. Check if the bullet already contains a substantive definition separator (e.g. "Term: Full explanation...")
-  const sepMatch = cleanB.match(/^([A-Za-z0-9\s/&'’\-]{2,42})\s*[:–—]\s*(.{35,})$/);
-  if (sepMatch) {
-    const term = sepMatch[1].trim();
-    const def = sepMatch[2].trim();
-    return {
-      label: term,
-      explanation: `${def.charAt(0).toUpperCase() + def.slice(1)}${def.endsWith('.') ? '' : '.'}`
-    };
   }
 
   return null;

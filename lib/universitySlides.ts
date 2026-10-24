@@ -53,6 +53,8 @@ export interface SlideAnalysis {
   examTrap: string; // Practical exam angle & common traps
   activeRecallPrompt: ActiveRecallPrompt;
   estimatedStudyMinutes: number;
+  rawSlideText?: string; // Original extracted slide text for live AI simplification & tutoring
+  aiSimplified?: boolean; // True once enriched by live AI simplification
 }
 
 export interface StudyPlanSession {

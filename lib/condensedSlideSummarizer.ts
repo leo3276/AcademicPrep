@@ -156,41 +156,64 @@ function deriveBlockTitle(batch: SlideAnalysis[], groupNum: number): string {
 }
 
 /**
- * Creates a cohesive high-density overview combining the core rules across the slides.
+ * Creates a cohesive, plain-English teaching walkthrough explaining how the 10 slides connect.
  */
 function synthesizeBlockOverview(batch: SlideAnalysis[], startPage: number, endPage: number): string {
   const substantive = batch.filter(s => !s.isIntroLogistics);
 
   if (substantive.length === 0) {
-    return `Slides ${startPage}–${endPage} cover preliminary lecture orientation, course administration, and the syllabus outline before formal instructional topics commence.`;
+    return `In simple terms, Slides ${startPage}–${endPage} cover course orientation, lecturer contact details, and the syllabus outline before the core academic teaching begins.`;
   }
 
-  // Collect distinct core rules from the highest yield slides in this batch
+  // Gather unique slide topic titles across this block to explain the logical progression
+  const distinctTopics: string[] = [];
+  for (const s of substantive) {
+    const cleanT = s.title.replace(/^Slide\s+\d+[:\-]?\s*/i, '').trim();
+    if (cleanT.length > 2 && !distinctTopics.some(t => t.toLowerCase() === cleanT.toLowerCase())) {
+      distinctTopics.push(cleanT);
+    }
+  }
+
+  let progressionIntro = '';
+  if (distinctTopics.length >= 3) {
+    progressionIntro = `In plain English, Slides ${startPage}–${endPage} walk you through ${distinctTopics[0]}, move into ${distinctTopics.slice(1, Math.min(4, distinctTopics.length - 1)).join(', ')}, and connect them to ${distinctTopics[distinctTopics.length - 1]}. `;
+  } else if (distinctTopics.length === 2) {
+    progressionIntro = `In plain English, Slides ${startPage}–${endPage} explain how ${distinctTopics[0]} and ${distinctTopics[1]} work together in practice. `;
+  } else if (distinctTopics.length === 1) {
+    progressionIntro = `In plain English, Slides ${startPage}–${endPage} break down ${distinctTopics[0]} step by step. `;
+  }
+
+  // Collect the clearest plain-English core rules & intuitions from the highest-yield slides in this batch
   const coreRules: string[] = [];
+  const intuitions: string[] = [];
   for (const s of substantive) {
     const text = s.coreRule?.trim();
-    if (text && text.length > 10 && !coreRules.some(r => r.toLowerCase() === text.toLowerCase())) {
-      coreRules.push(text);
+    if (text && text.length > 15 && !coreRules.some(r => r.toLowerCase() === text.toLowerCase())) {
+      coreRules.push(text.replace(/^In (plain English|simple terms),?\s*(this slide\s*)?/i, '').replace(/^[a-z]/, c => c.toUpperCase()));
+    }
+    if (s.whyItMatters && s.whyItMatters.length > 15 && intuitions.length < 1) {
+      intuitions.push(s.whyItMatters);
     }
   }
 
   if (coreRules.length === 0) {
-    return `Slides ${startPage}–${endPage} present foundational concepts, definitions, and relationships essential for this section of the course.`;
+    return `${progressionIntro}Instead of memorizing each slide in isolation, focus on the simplified concept breakdowns below to see what each term means in everyday language and how they are tested together.`;
   }
 
-  // Join the most distinct rules (up to 3) into a coherent block summary
-  const selectedRules = coreRules.slice(0, 3);
-  return selectedRules.join(' ');
+  const combinedRules = coreRules.slice(0, 2).join(' ');
+  const intuitionSuffix = intuitions[0] ? ` ${intuitions[0]}` : '';
+  return `${progressionIntro}${combinedRules}${intuitionSuffix}`.trim();
 }
 
 /**
- * Consolidates, deduplicates, and organizes concepts across the batch.
+ * Consolidates, deduplicates, and organizes simplified concepts across the batch.
  */
 function consolidateConcepts(batch: SlideAnalysis[]): CondensedConcept[] {
-  const conceptMap = new Map<string, { explanation: string; slides: Set<number> }>();
+  const conceptMap = new Map<string, { displayTitle: string; explanation: string; slides: Set<number> }>();
 
   for (const slide of batch) {
-    // If slide has detailed takeaways, use them
+    if (slide.isIntroLogistics && batch.some(s => !s.isIntroLogistics)) continue;
+
     if (slide.detailedTakeaways && slide.detailedTakeaways.length > 0) {
       for (const t of slide.detailedTakeaways) {
         const cleanLabel = t.label.trim();
@@ -199,30 +222,13 @@ function consolidateConcepts(batch: SlideAnalysis[]): CondensedConcept[] {
         if (conceptMap.has(normKey)) {
           const existing = conceptMap.get(normKey)!;
           existing.slides.add(slide.pageNumber);
-          // If the new explanation has more detail, enhance it
           if (t.explanation.length > existing.explanation.length) {
             existing.explanation = t.explanation;
           }
         } else {
           conceptMap.set(normKey, {
+            displayTitle: cleanLabel,
             explanation: t.explanation,
-            slides: new Set([slide.pageNumber])
-          });
-        }
-      }
-    } else if (slide.simplifiedPoints && slide.simplifiedPoints.length > 0) {
-      // Fallback to simplified points
-      for (const pt of slide.simplifiedPoints) {
-        const parts = pt.split(/:\s*/);
-        const title = parts.length > 1 ? parts[0].trim() : slide.title;
-        const explanation = parts.length > 1 ? parts.slice(1).join(': ').trim() : pt;
-        const normKey = title.toLowerCase();
-
-        if (conceptMap.has(normKey)) {
-          conceptMap.get(normKey)!.slides.add(slide.pageNumber);
-        } else {
-          conceptMap.set(normKey, {
-            explanation,
             slides: new Set([slide.pageNumber])
           });
         }
@@ -231,6 +237,7 @@ function consolidateConcepts(batch: SlideAnalysis[]): CondensedConcept[] {
       const normKey = slide.title.toLowerCase();
       if (!conceptMap.has(normKey)) {
         conceptMap.set(normKey, {
+          displayTitle: slide.title,
           explanation: slide.coreRule,
           slides: new Set([slide.pageNumber])
         });
@@ -239,15 +246,9 @@ function consolidateConcepts(batch: SlideAnalysis[]): CondensedConcept[] {
   }
 
   const results: CondensedConcept[] = [];
-  conceptMap.forEach((val, key) => {
-    // Title case the key
-    const formattedTitle = key
-      .split(' ')
-      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-      .join(' ');
-
+  conceptMap.forEach((val) => {
     results.push({
-      title: formattedTitle,
+      title: val.displayTitle,
       explanation: val.explanation,
       sourceSlides: Array.from(val.slides).sort((a, b) => a - b)
     });
@@ -339,7 +340,18 @@ function consolidateExamPoints(batch: SlideAnalysis[]): string[] {
       const norm = clean.toLowerCase();
       if (!seen.has(norm) && clean.length > 15) {
         seen.add(norm);
-        points.push(clean);
+        points.push(`Slide ${slide.pageNumber} (${slide.title}): ${clean}`);
+      }
+    }
+  }
+
+  if (points.length === 0) {
+    const substantive = batch.filter(s => !s.isIntroLogistics);
+    for (const s of substantive.slice(0, 3)) {
+      if (s.detailedTakeaways && s.detailedTakeaways.length >= 2) {
+        points.push(
+          `Slide ${s.pageNumber} (${s.title}): Be ready to clearly distinguish between "${s.detailedTakeaways[0].label}" and "${s.detailedTakeaways[1].label}" using a plain-English example.`
+        );
       }
     }
   }
@@ -348,17 +360,31 @@ function consolidateExamPoints(batch: SlideAnalysis[]): string[] {
 }
 
 /**
- * Selects the best active recall check for the 10-slide block.
+ * Selects or synthesizes a multi-slide active recall check for the 10-slide block.
  */
 function pickSynthesisCheck(
   batch: SlideAnalysis[],
   startPage: number,
   endPage: number
 ): { question: string; answer: string; testedSlides: number[] } {
-  // Find the highest yield slide in the batch with a strong question
-  const sorted = [...batch].sort((a, b) => b.importanceScore - a.importanceScore);
-  const bestSlide = sorted.find(s => s.activeRecallPrompt && s.activeRecallPrompt.question.length > 15) || batch[0];
+  const substantive = batch.filter(s => !s.isIntroLogistics);
+  const sorted = [...(substantive.length > 0 ? substantive : batch)].sort((a, b) => b.importanceScore - a.importanceScore);
 
+  if (sorted.length >= 2) {
+    const top1 = sorted[0];
+    const top2 = sorted[1];
+    const t1 = top1.detailedTakeaways?.[0];
+    const t2 = top2.detailedTakeaways?.[0];
+    if (t1 && t2 && top1.pageNumber !== top2.pageNumber) {
+      return {
+        question: `Module Synthesis (Slides ${startPage}–${endPage}): In plain English, explain "${t1.label}" (from Slide ${top1.pageNumber}: ${top1.title}) and "${t2.label}" (from Slide ${top2.pageNumber}: ${top2.title}).`,
+        answer: `1. ${t1.label} (Slide ${top1.pageNumber}): ${t1.explanation}\n\n2. ${t2.label} (Slide ${top2.pageNumber}): ${t2.explanation}`,
+        testedSlides: [top1.pageNumber, top2.pageNumber].sort((a, b) => a - b)
+      };
+    }
+  }
+
+  const bestSlide = sorted.find(s => s.activeRecallPrompt && s.activeRecallPrompt.question.length > 15) || batch[0];
   if (bestSlide && bestSlide.activeRecallPrompt) {
     return {
       question: bestSlide.activeRecallPrompt.question,
@@ -369,7 +395,7 @@ function pickSynthesisCheck(
 
   return {
     question: `What are the primary governing principles established across Slides ${startPage}–${endPage}?`,
-    answer: `Review the core concepts and definitions summarized in this module block.`,
+    answer: `Review the simplified concepts and definitions summarized in this module block.`,
     testedSlides: [startPage, endPage]
   };
 }

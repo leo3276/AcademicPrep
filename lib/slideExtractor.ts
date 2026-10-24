@@ -22,6 +22,13 @@ import {
   matchSlideConceptsFromText,
   matchSpecializedTopicGuide
 } from './conceptKnowledgeBase';
+import {
+  simplifyAndExplainSlideBullet,
+  synthesizePlainEnglishSlideOverview,
+  synthesizeWhyItMatters,
+  synthesizeExamWatchOut,
+  simplifyAcademicPhrasing
+} from './slideSimplifier';
 
 export interface ExtractedPage {
   pageNumber: number;
@@ -131,10 +138,18 @@ export function analyzeExtractedPages(
       }
     });
 
-    // Extract Real Definitions
-    const definitions = parsed.termDefinitions.length > 0 
+    // Extract & Simplify Real Definitions into Plain English
+    const rawDefinitions = parsed.termDefinitions.length > 0 
       ? parsed.termDefinitions 
       : extractDefinitions(raw, parsed.title);
+    const definitions = rawDefinitions.map((d, dIdx) => {
+      const kbDef = explainSlideBullet(`${d.term}: ${d.definition}`, parsed.title);
+      if (kbDef) {
+        return { term: d.term, definition: kbDef.explanation };
+      }
+      const simplifiedDef = simplifyAndExplainSlideBullet(`${d.term}: ${d.definition}`, parsed.title, dIdx, parsed.bullets);
+      return { term: d.term, definition: simplifiedDef.explanation };
+    });
 
     // Deep Pedagogical Breakdown: Explains rather than just repeating slide text
     const pedagogical = synthesizePedagogicalBreakdown(
@@ -206,7 +221,8 @@ export function analyzeExtractedPages(
       keyDefinitions: definitions,
       examTrap: pedagogical.examTrap,
       activeRecallPrompt: pedagogical.activeRecallPrompt,
-      estimatedStudyMinutes: isBeforeLessonStart ? 1 : (importance === 'CORE_FUNDAMENTAL' ? 8 : (importance === 'SUPPORTING' ? 4 : 2))
+      estimatedStudyMinutes: isBeforeLessonStart ? 1 : (importance === 'CORE_FUNDAMENTAL' ? 8 : (importance === 'SUPPORTING' ? 4 : 2)),
+      rawSlideText: raw
     });
   }
 
@@ -240,7 +256,7 @@ export function analyzeExtractedPages(
     },
     condensedSummaries,
     analyzedAt: new Date().toISOString(),
-    engineVersion: 'v6-condensed'
+    engineVersion: 'v8-ai-simplified'
   };
 }
 
@@ -416,7 +432,15 @@ function synthesizePedagogicalBreakdown(
   // 2b. Check Specialized Topic & Diagram-Slide Knowledge Base
   const specializedGuide = matchSpecializedTopicGuide(title, full, bullets);
   if (specializedGuide) {
-    return specializedGuide;
+    return {
+      title: specializedGuide.title || title,
+      coreRule: specializedGuide.coreRule,
+      whyItMatters: specializedGuide.whyItMatters,
+      detailedTakeaways: specializedGuide.detailedTakeaways,
+      simplifiedPoints: specializedGuide.detailedTakeaways.map(t => `${t.label}: ${t.explanation.split('. ')[0]}.`),
+      examTrap: specializedGuide.examTrap,
+      activeRecallPrompt: specializedGuide.activeRecallPrompt
+    };
   }
 
   // 3. NGOs & Charitable Funding Dependency (Slide 11)
@@ -1169,7 +1193,8 @@ function synthesizePedagogicalBreakdown(
 
 /**
  * Universal dynamic synthesizer that breaks down ANY university slide conceptually.
- * Uses the Concept Knowledge Base to explain every bullet in simple, student-friendly English.
+ * Uses the Concept Knowledge Base + Academic Simplifier to explain every bullet in simple,
+ * student-friendly plain English—never copying raw bullets verbatim.
  */
 function synthesizeDynamicSlidePedagogy(
   parsed: ParsedSlideStructure,
@@ -1181,15 +1206,11 @@ function synthesizeDynamicSlidePedagogy(
   const cleanTitle = title.replace(/^[-•*–\d\.\s]+/, '').trim();
   const rawBullets = bullets.map(b => cleanBulletSymbols(b)).filter(b => b.length > 2);
 
-  // Determine conceptual orientation of this slide
-  const isDrawback = /drawback|disadvantage|downside|problem|challenge|risk|weakness|failure/i.test(cleanTitle);
-  const isBenefit = /advantage|benefit|strength|pro\b|payoff|reward|upside|success/i.test(cleanTitle);
-
-  // 1. Synthesize High-Yield Detailed Takeaways FIRST using Concept Knowledge Base
+  // 1. Synthesize High-Yield Detailed Takeaways using Concept Knowledge Base + Academic Simplifier
   const detailedTakeaways: DetailedTakeaway[] = [];
   const combinedSlideText = `${cleanTitle} ${rawBullets.join(' ')} ${fullText}`;
 
-  // First: Match multi-bullet or slide-wide concepts from our Knowledge Base
+  // First: Match multi-bullet or slide-wide concepts from our curated Knowledge Base
   const slideConceptMatches = matchSlideConceptsFromText(combinedSlideText);
   slideConceptMatches.forEach((m) => {
     if (detailedTakeaways.length < 6 && !detailedTakeaways.some(t => t.label.toLowerCase() === m.label.toLowerCase())) {
@@ -1197,114 +1218,110 @@ function synthesizeDynamicSlidePedagogy(
     }
   });
 
-  // Second: Unpack individual bullets that have specific KB matches or colon/dash definitions
-  rawBullets.forEach((bullet) => {
-    if (detailedTakeaways.length < 6) {
-      const kbMatch = explainSlideBullet(bullet, cleanTitle);
-      if (kbMatch) {
-        if (!detailedTakeaways.some(t => t.label.toLowerCase() === kbMatch.label.toLowerCase())) {
-          detailedTakeaways.push(kbMatch);
-        }
-        return;
-      }
+  // Second: Unpack and simplify individual bullets so every point is genuinely explained in plain English
+  rawBullets.forEach((bullet, idx) => {
+    if (detailedTakeaways.length >= 6) return;
 
-      // If we didn't already match slide-wide KB concepts, or if this bullet is a full descriptive sentence (>45 chars), unpack it
-      const parts = bullet.split(/[:–—]\s+/);
-      if (parts.length >= 2 && parts[0].trim().length < 45) {
-        const label = parts[0].trim();
-        const rest = parts.slice(1).join(' — ').trim();
-        const explanation = rest.length > 35
-          ? rest
-          : `${label} means ${rest.charAt(0).toLowerCase() + rest.slice(1)}.`;
-        if (!detailedTakeaways.some(t => t.label.toLowerCase() === label.toLowerCase())) {
-          detailedTakeaways.push({
-            label: label.charAt(0).toUpperCase() + label.slice(1),
-            explanation
-          });
-        }
-      } else if (bullet.length >= 45 || slideConceptMatches.length === 0) {
-        const words = bullet.split(/\s+/);
-        const label = words.slice(0, Math.min(words.length, 5)).join(' ').replace(/[.,;:]$/, '');
-        let explanation = '';
-        if (bullet.length >= 45) {
-          explanation = bullet;
-        } else if (isDrawback) {
-          explanation = `"${bullet}" is a major limitation of ${cleanTitle}: if not carefully managed, it increases operating risk, drains cash or management time, and can hurt long-term business survival.`;
-        } else if (isBenefit) {
-          explanation = `"${bullet}" is a key advantage of ${cleanTitle}: it helps the business operate more flexibly, serve customers better, or build a stronger competitive position.`;
-        } else {
-          explanation = `In ${cleanTitle}, "${bullet}" is one of the key operational elements covered on this slide.`;
-        }
-        if (!detailedTakeaways.some(t => t.label.toLowerCase() === label.toLowerCase())) {
-          detailedTakeaways.push({
-            label: label.charAt(0).toUpperCase() + label.slice(1),
-            explanation
-          });
-        }
+    const kbMatch = explainSlideBullet(bullet, cleanTitle);
+    if (kbMatch) {
+      if (!detailedTakeaways.some(t => t.label.toLowerCase() === kbMatch.label.toLowerCase())) {
+        detailedTakeaways.push(kbMatch);
+      }
+      return;
+    }
+
+    // If we didn't already cover this slide with curated multi-bullet KB concepts,
+    // or if this bullet is a substantive point (>= 35 chars or has a colon/dash), unpack and simplify it!
+    if (slideConceptMatches.length === 0 || bullet.length >= 35 || /[:–—]/.test(bullet)) {
+      const simplifiedTakeaway = simplifyAndExplainSlideBullet(bullet, cleanTitle, idx, rawBullets);
+      if (!detailedTakeaways.some(t => t.label.toLowerCase() === simplifiedTakeaway.label.toLowerCase())) {
+        detailedTakeaways.push(simplifiedTakeaway);
       }
     }
   });
 
-  // Add extracted definitions if space remains
+  // Add simplified definitions if space remains
   if (definitions.length > 0 && detailedTakeaways.length < 5) {
-    definitions.forEach(d => {
+    definitions.forEach((d, idx) => {
       if (!detailedTakeaways.some(t => t.label.toLowerCase().includes(d.term.toLowerCase()))) {
-        detailedTakeaways.push({
-          label: d.term,
-          explanation: d.definition
-        });
+        const simplifiedDef = simplifyAndExplainSlideBullet(`${d.term}: ${d.definition}`, cleanTitle, idx, rawBullets);
+        detailedTakeaways.push(simplifiedDef);
       }
     });
   }
 
-  // Fallback takeaways if slide had no bullets at all
+  // Fallback takeaways if slide had no bullets at all (e.g. visual/diagram-only slide)
   if (detailedTakeaways.length === 0) {
-    detailedTakeaways.push({
-      label: cleanTitle,
-      explanation: `Covers the main concepts and practical rules of ${cleanTitle.toLowerCase()}.`
-    });
+    const cleanSentences = fullText
+      .split(/(?<=[.?!])\s+/)
+      .map(s => s.trim())
+      .filter(s => s.length > 20 && s.toLowerCase() !== cleanTitle.toLowerCase());
+
+    if (cleanSentences.length > 0) {
+      cleanSentences.slice(0, 3).forEach((s, i) => {
+        detailedTakeaways.push(simplifyAndExplainSlideBullet(s, cleanTitle, i, cleanSentences));
+      });
+    } else {
+      detailedTakeaways.push({
+        label: `Understanding ${cleanTitle}`,
+        explanation: `In simple terms, this visual/diagram slide illustrates ${cleanTitle.toLowerCase()}. Focus on how the main components on the slide connect and what practical problem ${cleanTitle.toLowerCase()} solves.`
+      });
+    }
   }
 
-  // 2. Build a Direct, Natural Summary
-  let coreRule = '';
-  const kbExplainedTakeaways = detailedTakeaways.filter(t => t.explanation.length > 50);
-  if (kbExplainedTakeaways.length >= 2) {
-    coreRule = kbExplainedTakeaways.slice(0, 2).map(t => t.explanation).join(' ');
-  } else if (kbExplainedTakeaways.length === 1) {
-    coreRule = kbExplainedTakeaways[0].explanation;
-  } else if (rawBullets.length > 0) {
-    coreRule = `${cleanTitle}: ${rawBullets.slice(0, 4).join('; ')}.`;
-  } else {
-    coreRule = `${cleanTitle}.`;
-  }
+  // 2. Build a Genuine Plain-English Explanation Overview (never just concatenating raw bullets)
+  const coreRule = synthesizePlainEnglishSlideOverview(
+    cleanTitle,
+    rawBullets,
+    detailedTakeaways,
+    definitions,
+    formulas
+  );
 
-  // 3. Simplified Points (Fast summary list)
-  const simplifiedPoints = detailedTakeaways.length > 0
-    ? detailedTakeaways.slice(0, 4).map(t => `${t.label}: ${t.explanation.split('. ')[0]}.`)
-    : rawBullets.slice(0, 4);
+  // 3. Build Real-World Intuition / Why It Matters
+  const whyItMatters = synthesizeWhyItMatters(
+    cleanTitle,
+    rawBullets,
+    detailedTakeaways,
+    formulas
+  );
 
-  // 4. Practice Question
+  // 4. Build Exam Watch-Out / Common Mistake
+  const examTrap = synthesizeExamWatchOut(
+    cleanTitle,
+    rawBullets,
+    detailedTakeaways,
+    definitions,
+    formulas
+  );
+
+  // 5. Simplified Points (Fast summary list in plain English)
+  const simplifiedPoints = detailedTakeaways
+    .slice(0, 4)
+    .map(t => `${t.label}: ${simplifyAcademicPhrasing(t.explanation.split(/(?<=[.?!])\s+/)[0])}`);
+
+  // 6. Comprehension Practice Question & Explanatory Answer
   const firstTakeaway = detailedTakeaways[0];
   const secondTakeaway = detailedTakeaways[1];
   const examQuestion = secondTakeaway
-    ? `Explain "${firstTakeaway.label}" and "${secondTakeaway.label}".`
-    : `What is "${firstTakeaway.label}"?`;
+    ? `In your own words, explain how "${firstTakeaway.label}" and "${secondTakeaway.label}" work within ${cleanTitle}, and why the distinction matters.`
+    : `In simple terms, what is the main idea behind "${firstTakeaway.label}" in ${cleanTitle}, and how does it work in practice?`;
   const examAnswer = secondTakeaway
-    ? `${firstTakeaway.label}: ${firstTakeaway.explanation}\n\n${secondTakeaway.label}: ${secondTakeaway.explanation}`
-    : `${firstTakeaway.label}: ${firstTakeaway.explanation}`;
+    ? `1. ${firstTakeaway.label}: ${firstTakeaway.explanation}\n\n2. ${secondTakeaway.label}: ${secondTakeaway.explanation}`
+    : `${firstTakeaway.label}: ${firstTakeaway.explanation}\n\n${whyItMatters}`;
 
   return {
     title: cleanTitle,
     coreRule,
-    whyItMatters: '',
+    whyItMatters,
     detailedTakeaways,
     simplifiedPoints,
-    examTrap: '',
+    examTrap,
     activeRecallPrompt: {
       question: examQuestion,
       answer: examAnswer,
-      hint: '',
-      stepByStepSolution: ''
+      hint: `Think about the plain-English meaning of ${firstTakeaway.label}${secondTakeaway ? ` and ${secondTakeaway.label}` : ''}.`,
+      stepByStepSolution: `Step 1: Define ${firstTakeaway.label} in simple words. ${secondTakeaway ? `Step 2: Explain ${secondTakeaway.label} and how it connects. ` : ''}Step 3: Give a quick real-world example.`
     }
   };
 }

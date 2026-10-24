@@ -10,6 +10,7 @@ import {
   detectLessonStartPage,
   ExtractedPage 
 } from '@/lib/slideExtractor';
+import { simplifySlideBatchWithAI } from '@/lib/aiExplainerService';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -75,8 +76,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // 3. High-Efficiency Grounded Analysis Engine
-    // Directly processes the true extracted text of every page
+    // 3. Grounded Plain-English Simplification Engine
     const groundedPackage = analyzeExtractedPages(
       fileName,
       pages.length > 0 ? pages : [{ pageNumber: 1, text: fileName }],
@@ -84,6 +84,46 @@ export async function POST(req: NextRequest) {
       dailyMinutes,
       targetGrade
     );
+
+    // 4. Quick Live AI Enrichment on the first key teaching slides
+    // Blazing-fast background pass so initial lesson slides get live AI simplification right from upload!
+    try {
+      const lessonStart = groundedPackage.lessonStartPage || 1;
+      const slidesToEnrich = groundedPackage.slides
+        .filter(s => s.pageNumber >= lessonStart && !s.isIntroLogistics)
+        .slice(0, 4)
+        .map(s => ({
+          pageNumber: s.pageNumber,
+          title: s.title,
+          rawText: s.rawSlideText || `${s.title}\n${s.simplifiedPoints.join('\n')}`
+        }));
+
+      if (slidesToEnrich.length > 0) {
+        const aiBatch = await simplifySlideBatchWithAI(slidesToEnrich, groundedPackage.deckTitle, geminiApiKey);
+        if (aiBatch && Object.keys(aiBatch).length > 0) {
+          groundedPackage.slides = groundedPackage.slides.map(s => {
+            const enriched = aiBatch[s.pageNumber];
+            if (enriched) {
+              return {
+                ...s,
+                coreRule: enriched.coreRule || s.coreRule,
+                whyItMatters: enriched.whyItMatters || s.whyItMatters,
+                detailedTakeaways: enriched.detailedTakeaways?.length ? enriched.detailedTakeaways : s.detailedTakeaways,
+                simplifiedPoints: enriched.simplifiedPoints?.length ? enriched.simplifiedPoints : s.simplifiedPoints,
+                examTrap: enriched.examTrap || s.examTrap,
+                activeRecallPrompt: enriched.activeRecallPrompt || s.activeRecallPrompt,
+                aiSimplified: true
+              };
+            }
+            return s;
+          });
+          // Refresh 10-to-1 digest with the AI enriched slides
+          groundedPackage.condensedSummaries = generateCondensedSlideSummaries(groundedPackage.slides, 10);
+        }
+      }
+    } catch (enrichErr) {
+      console.warn('Initial slide AI enrichment notice (proceeding with grounded package):', enrichErr);
+    }
 
     return NextResponse.json({
       success: true,
@@ -178,7 +218,7 @@ Output your response STRICTLY as valid JSON without markdown fences, adhering to
 }`;
 
   const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -278,7 +318,7 @@ Output your response STRICTLY as valid JSON without markdown fences, adhering to
               'Lecture agenda and topics roadmap',
               `Teaching content officially begins on Slide ${lessonStartPage}`
             ]
-          : detailedTakeaways.map(t => `${t.label}: ${t.explanation}`)),
+          : detailedTakeaways.map((t: any) => `${t.label}: ${t.explanation}`)),
       keyFormulas: formulas,
       decodedFormulas,
       keyDefinitions: definitions,

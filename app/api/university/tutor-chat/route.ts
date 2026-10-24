@@ -3,6 +3,11 @@ import {
   matchSlideConceptsFromText,
   matchSpecializedTopicGuide
 } from '@/lib/conceptKnowledgeBase';
+import { askSlideTutorWithAI } from '@/lib/aiExplainerService';
+import {
+  ACADEMIC_JARGON_LEXICON,
+  synthesizeWhyItMatters
+} from '@/lib/slideSimplifier';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -44,11 +49,10 @@ export async function POST(req: NextRequest) {
     const headerApiKey = req.headers.get('x-gemini-api-key') || '';
     const geminiApiKey = process.env.GEMINI_API_KEY || headerApiKey;
 
-    // 1. If Gemini API key is available, call Gemini for live tutoring
-    if (geminiApiKey) {
-      try {
-        const geminiAnswer = await askGeminiTutor(
-          geminiApiKey,
+    // 1. Live AI Tutor (Gemini 2.0 Flash or zero-key Pollinations LLM)
+    try {
+      const liveAnswer = await askSlideTutorWithAI(
+        {
           slideNumber,
           slideTitle,
           slideText,
@@ -56,13 +60,14 @@ export async function POST(req: NextRequest) {
           takeaways,
           userQuestion,
           chatHistory
-        );
-        if (geminiAnswer) {
-          return NextResponse.json({ success: true, answer: geminiAnswer });
-        }
-      } catch (geminiErr) {
-        console.warn('Gemini tutor fallback note:', geminiErr);
+        },
+        geminiApiKey
+      );
+      if (liveAnswer && liveAnswer.trim().length > 0) {
+        return NextResponse.json({ success: true, answer: liveAnswer.trim() });
       }
+    } catch (aiErr) {
+      console.warn('Live AI tutor notice, falling back to grounded responder:', aiErr);
     }
 
     // 2. Intelligent Grounded Pedagogical Tutor Engine
@@ -156,28 +161,41 @@ function generateGroundedTutorAnswer(
   const effectiveCoreRule = specializedGuide?.coreRule || (slideKbMatches[0]?.explanation) || coreRule;
   const effectiveTakeaways = specializedGuide?.detailedTakeaways || (slideKbMatches.length > 0 ? slideKbMatches : takeaways);
 
+  // Check our 500+ academic jargon lexicon for relevant terms in question or slide context
+  const jargonMatches = ACADEMIC_JARGON_LEXICON.filter(j =>
+    j.pattern.test(`${userQuestion} ${slideTitle} ${slideText}`)
+  );
+
   // If the student asked directly about a specific concept in our knowledge base, answer it directly!
   if (directQuestionMatches.length > 0 && !/explain simply|real-world example|quiz me|exam/i.test(q)) {
     const m = directQuestionMatches[0];
-    return `${m.label}:\n\n${m.explanation}${directQuestionMatches[1] ? `\n\n${directQuestionMatches[1].label}: ${directQuestionMatches[1].explanation}` : ''}`;
+    return `**${m.label}**:\n\n${m.explanation}${directQuestionMatches[1] ? `\n\n**${directQuestionMatches[1].label}**: ${directQuestionMatches[1].explanation}` : ''}`;
   }
 
-  // Mode 1: "Explain simply" / "Explain like I'm a beginner"
-  if (/explain|simple|beginner|what does this mean|eli5|understand|teach|clarify/i.test(q)) {
-    let explanation = `${effectiveCoreRule}\n\n`;
+  // Mode 1: "Explain simply" / "Explain like I'm a beginner" / "What does this mean"
+  if (/explain|simple|beginner|what does this mean|eli5|understand|teach|clarify|how does|why does/i.test(q)) {
+    let explanation = `**In Plain English:**\n${effectiveCoreRule}\n\n`;
+    if (jargonMatches.length > 0 && jargonMatches[0].example) {
+      explanation += `**Everyday Analogy:**\n${jargonMatches[0].example}\n\n`;
+    }
     if (effectiveTakeaways.length > 0) {
-      effectiveTakeaways.slice(0, 4).forEach(t => {
-        explanation += `• ${t.label}: ${t.explanation}\n`;
+      explanation += `**Step-by-Step Breakdown:**\n`;
+      effectiveTakeaways.slice(0, 4).forEach((t, i) => {
+        explanation += `${i + 1}. **${t.label}**: ${t.explanation}\n`;
       });
     }
     if (formulas.length > 0) {
-      explanation += `\nFormula: ${formulas[0]}`;
+      explanation += `\n**Key Formula:** \`${formulas[0]}\``;
     }
     return explanation.trim();
   }
 
-  // Mode 2: "Real-world example"
-  if (/example|real world|analogy|scenario|practical|instance/i.test(q)) {
+  // Mode 2: "Real-world example" / "Analogy" / "Scenario"
+  if (/example|real world|analogy|scenario|practical|instance|case/i.test(q)) {
+    if (jargonMatches.length > 0 && jargonMatches[0].example) {
+      const j = jargonMatches[0];
+      return `**Real-World Analogy for ${j.term}:**\n\n${j.example}\n\nIn simple terms, ${j.plainMeaning}.`;
+    }
     if (/ngo|donation|nonprofit/i.test(fullContext)) {
       return `Think of the Red Cross or Doctors Without Borders. Unlike a supermarket that sells food to make money, an NGO provides medical help or disaster relief without charging customers. Their budget comes from donations. If donations drop during an economic downturn, their operations immediately stall.`;
     }
@@ -199,12 +217,13 @@ function generateGroundedTutorAnswer(
     if (/theory x|theory y|motivation/i.test(fullContext)) {
       return `Compare two managers:\n• Theory X Manager: Assumes workers dislike work and must be closely monitored and penalized.\n• Theory Y Manager: Assumes workers take pride in their work and perform best when given trust and autonomy.`;
     }
-    return `${effectiveCoreRule}${effectiveTakeaways[0] ? `\n\nFor example, ${effectiveTakeaways[0].label}: ${effectiveTakeaways[0].explanation}` : ''}`;
+    const generatedAnalogy = synthesizeWhyItMatters(slideTitle, [slideText], effectiveTakeaways, formulas);
+    return `${generatedAnalogy}\n\n${effectiveTakeaways[0] ? `For example, **${effectiveTakeaways[0].label}**: ${effectiveTakeaways[0].explanation}` : ''}`;
   }
 
   // Mode 3: "Exam questions" / "How will this be tested"
   if (/exam|test|questions|marks|professor|paper/i.test(q)) {
-    return `${specializedGuide?.examTrap || `Focus on being able to define ${slideTitle} clearly and contrast its main points:`}\n\n${effectiveTakeaways.slice(0, 3).map(t => `• ${t.label}: ${t.explanation}`).join('\n')}`;
+    return `${specializedGuide?.examTrap || `Focus on being able to define ${slideTitle} clearly and contrast its main points:`}\n\n${effectiveTakeaways.slice(0, 3).map(t => `• **${t.label}**: ${t.explanation}`).join('\n')}`;
   }
 
   // Mode 4: "Quiz me"
@@ -219,5 +238,5 @@ function generateGroundedTutorAnswer(
   }
 
   // General specific question matching
-  return `${effectiveCoreRule}${effectiveTakeaways.length > 0 ? `\n\n${effectiveTakeaways.slice(0, 3).map(t => `• ${t.label}: ${t.explanation}`).join('\n')}` : ''}`;
+  return `**${effectiveCoreRule}**\n\n${effectiveTakeaways.length > 0 ? effectiveTakeaways.slice(0, 3).map(t => `• **${t.label}**: ${t.explanation}`).join('\n') : ''}${jargonMatches.length > 0 && jargonMatches[0].example ? `\n\n**Intuition**: ${jargonMatches[0].example}` : ''}`;
 }
