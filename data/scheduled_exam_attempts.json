@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "id": "attempt-sched-1792954734915",
+    "examId": "jhs3-weekly-exam-2026-10-25-english",
+    "studentId": "736296d1-d39a-49d2-b250-5f91be2cde50",
+    "studentName": "Leo Kofi Derksen",
+    "studentPhone": "0598680053",
+    "level": "JHS 3",
+    "startedAt": "2026-10-25T18:58:54.915Z",
+    "completedAt": null,
+    "status": "in_progress",
+    "timeSpentSeconds": 0,
+    "paper1ScoreMarks": 0,
+    "paper1TotalQuestions": 25,
+    "paper1Percentage": 0,
+    "paper2ScoreMarks": 0,
+    "paper2TotalMarks": 60,
+    "paper2Percentage": 0,
+    "compositePercentage": 0,
+    "stanineGrade": 9,
+    "gradeRemark": "Paper 1 In-Progress"
+  }
+]
