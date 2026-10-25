@@ -98,23 +98,23 @@ export default function ScheduledExamBriefingModal({
                   <span>Paper 1: Objectives</span>
                 </div>
                 <p className="text-slate-600 text-[11px]">
-                  <strong>30 Minutes</strong> • 25 Questions • 40 Marks
+                  <strong>{OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes} Minutes</strong> • {OFFICIAL_SCHEDULED_EXAM.paper1Questions.length} Questions • {OFFICIAL_SCHEDULED_EXAM.paper1MaxMarks} Marks
                 </p>
                 <p className="text-[10px] text-slate-500">
-                  Auto-locks and automatically submits when 30 mins elapse, immediately advancing to Paper 2.
+                  Auto-locks and automatically submits when {OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes} mins elapse, immediately advancing to Paper 2.
                 </p>
               </div>
 
               <div className="p-3.5 rounded-xl border border-slate-200 bg-white space-y-1">
                 <div className="flex items-center gap-1.5 font-bold text-slate-900">
                   <FileText className="w-3.5 h-3.5 text-indigo-600" />
-                  <span>Paper 2: WAEC Theory</span>
+                  <span>Paper 2: Comprehension & Summary</span>
                 </div>
                 <p className="text-slate-600 text-[11px]">
-                  <strong>1 Hour (60 Mins)</strong> • 3 Section B Questions • 60 Marks
+                  <strong>{OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes} Minutes</strong> • {OFFICIAL_SCHEDULED_EXAM.paper2Questions.length} Structured Questions • {OFFICIAL_SCHEDULED_EXAM.paper2MaxMarks} Marks
                 </p>
                 <p className="text-[10px] text-slate-500">
-                  Detailed structured questions. Type your comprehensive working and answers before time runs out.
+                  Detailed reading passage & summary tasks. Type your answers into the designated boxes before time runs out.
                 </p>
               </div>
             </div>

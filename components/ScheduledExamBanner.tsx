@@ -45,13 +45,13 @@ export default function ScheduledExamBanner({ variant = 'full', className = '' }
   const handleShareWhatsApp = () => {
     if (typeof window === 'undefined') return;
     const origin = window.location.origin;
-    const text = `📢 *ACADEMICPREP JHS 3 SCIENCE WEEKLY EXAM* 🔬\n\n` +
-      `*Subject:* Integrated Science (JHS 3)\n` +
-      `*Topic:* Atomic Structure, Periodic Table & Chemical Bonding\n` +
+    const text = `📢 *ACADEMICPREP ${OFFICIAL_SCHEDULED_EXAM.level.toUpperCase()} ${OFFICIAL_SCHEDULED_EXAM.subjectName.toUpperCase()} WEEKLY EXAM* 📝\n\n` +
+      `*Subject:* ${OFFICIAL_SCHEDULED_EXAM.subjectName} (${OFFICIAL_SCHEDULED_EXAM.level})\n` +
+      `*Topic:* ${OFFICIAL_SCHEDULED_EXAM.topicTitle}\n` +
       `*Time:* Today 6:00 PM – 12:00 AM GMT (Available until Midnight)\n` +
       `*Structure:*\n` +
-      `  • Paper 1: 30 Mins (Objectives - 40 Marks)\n` +
-      `  • Paper 2: 1 Hour (WAEC Theory Section B - 60 Marks)\n\n` +
+      `  • Paper 1: ${OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes} Mins (Objectives - ${OFFICIAL_SCHEDULED_EXAM.paper1MaxMarks} Marks)\n` +
+      `  • Paper 2: ${OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes} Mins (Comprehension & Summary - ${OFFICIAL_SCHEDULED_EXAM.paper2MaxMarks} Marks)\n\n` +
       `⚠️ *Proctoring Criteria:* Strict Anti-Cheat with 5-minute penalty lockout on tab switch. Exam timer never stops!\n\n` +
       `👉 *Examination Link:*\n${origin}/jhs/weekly-exam?mode=scheduled`;
 
@@ -82,10 +82,10 @@ export default function ScheduledExamBanner({ variant = 'full', className = '' }
             isLive ? 'bg-emerald-500' : is5MinWarning ? 'bg-amber-500 animate-pulse' : isEnded ? 'bg-slate-300' : 'bg-blue-500'
           }`} />
           <span className="font-semibold text-slate-900 truncate">
-            {is5MinWarning ? 'Starts in 5m:' : isLive ? 'Live Exam (Until 12 AM):' : isEnded ? 'Exam Closed:' : '6:00 PM Exam:'} JHS 3 Science (Atomic Structure)
+            {is5MinWarning ? 'Starts in 5m:' : isLive ? 'Live Exam (Until 12 AM):' : isEnded ? 'Exam Closed:' : '6:00 PM Exam:'} {OFFICIAL_SCHEDULED_EXAM.level} {OFFICIAL_SCHEDULED_EXAM.subjectName} ({OFFICIAL_SCHEDULED_EXAM.topicTitle})
           </span>
           <span className="hidden md:inline text-slate-500">
-            • 30m Objs + 1hr Theory
+            • {OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes}m Objs + {OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes}m Section B
           </span>
         </div>
         <div className="flex items-center gap-2 shrink-0">
@@ -147,7 +147,7 @@ export default function ScheduledExamBanner({ variant = 'full', className = '' }
             {/* Subject Badge */}
             <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-slate-100 text-slate-700 border border-slate-200/80">
               <FlaskConical className="w-3 h-3 text-slate-500" />
-              <span>JHS 3 Integrated Science</span>
+              <span>{OFFICIAL_SCHEDULED_EXAM.level} {OFFICIAL_SCHEDULED_EXAM.subjectName}</span>
             </span>
 
             {/* WAEC Rubric Badge */}
@@ -159,10 +159,10 @@ export default function ScheduledExamBanner({ variant = 'full', className = '' }
 
           <div>
             <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
-              Atomic Structure, Periodic Table & Chemical Bonding
+              {OFFICIAL_SCHEDULED_EXAM.topicTitle}
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
-              Official timed weekly revision test. Structured sequential papers: <strong className="text-slate-800 font-semibold">30 minutes Paper 1 (Objectives)</strong> auto-transitioning into <strong className="text-slate-800 font-semibold">1 hour Paper 2 (WAEC Theory Section B)</strong>.
+              Official timed weekly revision test. Structured sequential papers: <strong className="text-slate-800 font-semibold">{OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes} minutes Paper 1 (Objectives)</strong> auto-transitioning into <strong className="text-slate-800 font-semibold">{OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes} minutes Paper 2 (Comprehension & Summary)</strong>.
             </p>
           </div>
 

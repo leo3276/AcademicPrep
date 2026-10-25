@@ -17,27 +17,32 @@ export const maxDuration = 60;
  * Formats official Ghanaian WhatsApp exam alert (General announcement or 5-min countdown reminder)
  */
 function formatWeeklyExamWhatsApp(examUrl: string, is5MinReminder = false): string {
+  const subjectStr = `${OFFICIAL_SCHEDULED_EXAM.level} ${OFFICIAL_SCHEDULED_EXAM.subjectName}`;
+  const topicStr = OFFICIAL_SCHEDULED_EXAM.topicTitle;
+  const p1Str = `${OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes} Mins (Objectives - ${OFFICIAL_SCHEDULED_EXAM.paper1MaxMarks} Marks)`;
+  const p2Str = `${OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes} Mins (Comprehension & Summary - ${OFFICIAL_SCHEDULED_EXAM.paper2MaxMarks} Marks)`;
+
   if (is5MinReminder) {
-    return `🚨 *ACADEMICPREP WEEKLY EXAM: 5 MINUTES TO START!* 🔬\n\n` +
-      `*Subject:* JHS 3 Integrated Science\n` +
-      `*Topic:* Atomic Structure, Periodic Table & Chemical Bonding\n` +
+    return `🚨 *ACADEMICPREP WEEKLY EXAM: 5 MINUTES TO START!* 📝\n\n` +
+      `*Subject:* ${subjectStr}\n` +
+      `*Topic:* ${topicStr}\n` +
       `*Time:* Starting at 6:00 PM GMT SHARP (In 5 Minutes!)\n\n` +
       `*Examination Criteria:*\n` +
-      `  • *Paper 1:* 30 Mins (Objectives - 40 Marks)\n` +
-      `  • *Paper 2:* 1 Hour (WAEC Theory - 60 Marks)\n\n` +
+      `  • *Paper 1:* ${p1Str}\n` +
+      `  • *Paper 2:* ${p2Str}\n\n` +
       `⚠️ *PROCTORING CRITERIA:*\n` +
       `Leaving the window or switching tabs triggers a *5-minute penalty lockout* before re-entry, while your exam clock continues ticking down in real time!\n\n` +
       `👉 *Enter the Examination Hall Now:*\n${examUrl}\n\n` +
       `_Log in, prepare your scratch sheet, and take your seat now. Good luck, candidates!_ 🏆`;
   }
 
-  return `📢 *ACADEMICPREP SCHEDULED WEEKLY EXAMINATION ALERT* 🔬\n\n` +
-    `*Subject:* JHS 3 Integrated Science\n` +
-    `*Topic:* Atomic Structure, Periodic Table & Chemical Bonding\n` +
+  return `📢 *ACADEMICPREP SCHEDULED WEEKLY EXAMINATION ALERT* 📝\n\n` +
+    `*Subject:* ${subjectStr}\n` +
+    `*Topic:* ${topicStr}\n` +
     `*Time:* Today 6:00 PM – 12:00 AM GMT (Available until Midnight)\n` +
     `*Exam Structure:*\n` +
-    `  • *Paper 1:* 30 Mins (Objectives - 40 Marks)\n` +
-    `  • *Paper 2:* 1 Hour (WAEC Theory - 60 Marks)\n\n` +
+    `  • *Paper 1:* ${p1Str}\n` +
+    `  • *Paper 2:* ${p2Str}\n\n` +
     `⚠️ *PROCTORING CRITERIA:*\n` +
     `Leaving the exam window triggers a *5-minute penalty lockout* before re-entry, while your exam clock continues running in the background.\n\n` +
     `👉 *Enter the Examination Hall here:*\n${examUrl}\n\n` +

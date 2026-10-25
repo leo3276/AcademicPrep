@@ -945,7 +945,7 @@ export default function WeeklyExamPage() {
             </p>
             {activeScheduledPaper === 'paper1' && timeLeftSeconds <= 0 && (
               <p className="text-[11px] font-semibold text-amber-300 bg-amber-950/60 p-2 rounded-lg border border-amber-800/60">
-                Notice: Paper 1 (30 minutes) elapsed while waiting in lockout and has been auto-submitted. You will resume straight into Paper 2 (Theory).
+                Notice: Paper 1 ({OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes} minutes) elapsed while waiting in lockout and has been auto-submitted. You will resume straight into Paper 2.
               </p>
             )}
           </div>
@@ -1650,7 +1650,7 @@ export default function WeeklyExamPage() {
                   ? 'bg-emerald-700 text-white'
                   : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
               }`}>
-                {isScheduledMode ? 'SCHEDULED EXAM • PAPER 2: THEORY (1 HOUR)' : 'PAPER 2: SECTION B (THEORY)'}
+                {isScheduledMode ? `SCHEDULED EXAM • PAPER 2: SECTION B (${OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes} MINS)` : 'PAPER 2: SECTION B'}
               </span>
 
               {isScheduledMode && (
