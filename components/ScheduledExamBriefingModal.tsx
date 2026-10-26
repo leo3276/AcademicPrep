@@ -81,7 +81,7 @@ export default function ScheduledExamBriefingModal({
               Level: {OFFICIAL_SCHEDULED_EXAM.level} • Subject: {OFFICIAL_SCHEDULED_EXAM.subjectName} • Total Marks: {OFFICIAL_SCHEDULED_EXAM.totalMarks}
             </p>
             <p className="text-[11px] text-slate-600 font-medium pt-1 border-t border-blue-100/80">
-              Available Window: <strong>6:00 PM – 12:00 AM GMT (Midnight)</strong>.
+              Available Window: <strong>7:30 PM – 12:00 AM GMT (Midnight)</strong>.
             </p>
           </div>
 
@@ -211,7 +211,7 @@ export default function ScheduledExamBriefingModal({
                 disabled
                 className="px-5 py-2.5 rounded-xl font-bold text-xs bg-slate-200 text-slate-500 cursor-not-allowed flex items-center gap-1.5"
               >
-                <span>🔒 Hall Opens at 6:00 PM GMT</span>
+                <span>🔒 Hall Opens at 7:30 PM GMT</span>
               </button>
             </div>
           ) : (

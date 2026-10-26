@@ -26,7 +26,7 @@ function formatWeeklyExamWhatsApp(examUrl: string, is5MinReminder = false): stri
     return `🚨 *ACADEMICPREP WEEKLY EXAM: 5 MINUTES TO START!* 📝\n\n` +
       `*Subject:* ${subjectStr}\n` +
       `*Topic:* ${topicStr}\n` +
-      `*Time:* Starting at 6:00 PM GMT SHARP (In 5 Minutes!)\n\n` +
+      `*Time:* Starting at 7:30 PM GMT SHARP (In 5 Minutes!)\n\n` +
       `*Examination Criteria:*\n` +
       `  • *Paper 1:* ${p1Str}\n` +
       `  • *Paper 2:* ${p2Str}\n\n` +
@@ -39,7 +39,7 @@ function formatWeeklyExamWhatsApp(examUrl: string, is5MinReminder = false): stri
   return `📢 *ACADEMICPREP SCHEDULED WEEKLY EXAMINATION ALERT* 📝\n\n` +
     `*Subject:* ${subjectStr}\n` +
     `*Topic:* ${topicStr}\n` +
-    `*Time:* Today 6:00 PM – 12:00 AM GMT (Available until Midnight)\n` +
+    `*Time:* Today 7:30 PM – 12:00 AM GMT (Available until Midnight)\n` +
     `*Exam Structure:*\n` +
     `  • *Paper 1:* ${p1Str}\n` +
     `  • *Paper 2:* ${p2Str}\n\n` +
@@ -149,7 +149,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (channel === 'sms') {
-      const smsMessage = `AcademicPrep Alert: Weekly Science Exam (Atomic Structure) starts at 6:00 PM GMT sharp. 30m Objs + 1hr Theory. Enter: ${examUrl}`;
+      const smsMessage = `AcademicPrep Alert: Weekly ${OFFICIAL_SCHEDULED_EXAM.subjectName} Exam (${OFFICIAL_SCHEDULED_EXAM.topicTitle}) starts at 7:30 PM GMT sharp. ${OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes}m Objs + ${OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes}m Theory. Enter: ${examUrl}`;
       const smsResult = await sendBulkSms(phoneList, smsMessage);
       return NextResponse.json({
         success: true,

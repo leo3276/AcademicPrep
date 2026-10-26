@@ -306,7 +306,7 @@ export default function AdminDashboardPage() {
     const message = `📢 *ACADEMICPREP WEEKLY EXAMINATION* 🔬\n\n` +
       `*Subject:* ${OFFICIAL_SCHEDULED_EXAM.level} ${OFFICIAL_SCHEDULED_EXAM.subjectName}\n` +
       `*Topic:* ${OFFICIAL_SCHEDULED_EXAM.topicTitle}\n` +
-      `*Time:* Today 6:00 PM – 12:00 AM GMT (Available until Midnight)\n` +
+      `*Time:* Today 7:30 PM – 12:00 AM GMT (Available until Midnight)\n` +
       `*Examination Criteria:*\n` +
       `  • Paper 1: ${OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes} Mins (Objectives - ${OFFICIAL_SCHEDULED_EXAM.paper1MaxMarks} Marks)\n` +
       `  • Paper 2: ${OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes} Mins (Comprehension & Summary - ${OFFICIAL_SCHEDULED_EXAM.paper2MaxMarks} Marks)\n` +
@@ -314,7 +314,7 @@ export default function AdminDashboardPage() {
       `⚠️ *Proctoring Criteria:*\n` +
       `Strict Anti-Cheat. Leaving or minimizing the exam window activates a 5-minute penalty lockout before re-entry, while the exam timer continues running in real time.\n\n` +
       `👉 *Take Examination Here:*\n${examUrl}\n\n` +
-      `_All JHS 3 candidates are expected to take their seats before 6:00 PM. Good luck!_ 🏆`;
+      `_All JHS 3 candidates are expected to take their seats before 7:30 PM. Good luck!_ 🏆`;
     return { examUrl, message };
   };
 
@@ -325,7 +325,7 @@ export default function AdminDashboardPage() {
     } else if (platform === 'facebook') {
       window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(examUrl)}`, '_blank');
     } else if (platform === 'twitter') {
-      const tweetText = `AcademicPrep ${OFFICIAL_SCHEDULED_EXAM.level} ${OFFICIAL_SCHEDULED_EXAM.subjectName} Weekly Exam (${OFFICIAL_SCHEDULED_EXAM.topicTitle}) starts at 6:00 PM GMT sharp!\n\nTake the exam: ${examUrl}`;
+      const tweetText = `AcademicPrep ${OFFICIAL_SCHEDULED_EXAM.level} ${OFFICIAL_SCHEDULED_EXAM.subjectName} Weekly Exam (${OFFICIAL_SCHEDULED_EXAM.topicTitle}) starts at 7:30 PM GMT sharp!\n\nTake the exam: ${examUrl}`;
       window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`, '_blank');
     } else if (platform === 'telegram') {
       window.open(`https://t.me/share/url?url=${encodeURIComponent(examUrl)}&text=${encodeURIComponent(message)}`, '_blank');
@@ -4359,7 +4359,7 @@ export default function AdminDashboardPage() {
                       Scheduled Weekly Examination Broadcast
                     </h3>
                     <p className="text-[11px] text-slate-500">
-                      {OFFICIAL_SCHEDULED_EXAM.level} {OFFICIAL_SCHEDULED_EXAM.subjectName}: {OFFICIAL_SCHEDULED_EXAM.topicTitle} (Today at 6:00 PM GMT)
+                      {OFFICIAL_SCHEDULED_EXAM.level} {OFFICIAL_SCHEDULED_EXAM.subjectName}: {OFFICIAL_SCHEDULED_EXAM.topicTitle} (Today at 7:30 PM GMT)
                     </p>
                   </div>
                 </div>
@@ -4386,7 +4386,7 @@ export default function AdminDashboardPage() {
                   📢 *ACADEMICPREP SCHEDULED WEEKLY EXAMINATION ALERT* 🔬{'\n\n'}
                   *Subject:* {OFFICIAL_SCHEDULED_EXAM.level} {OFFICIAL_SCHEDULED_EXAM.subjectName}{'\n'}
                   *Topic:* {OFFICIAL_SCHEDULED_EXAM.topicTitle}{'\n'}
-                  *Time:* Today at 6:00 PM GMT Sharp!{'\n'}
+                  *Time:* Today at 7:30 PM GMT Sharp!{'\n'}
                   *Structure:* {OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes} Mins Paper 1 (Objectives) + {OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes} Mins Paper 2 (Comprehension & Summary){'\n\n'}
                   ⚠️ *Strict Proctoring Rule:* Leaving the page or switching tabs will immediately terminate and submit your paper.{'\n\n'}
                   👉 *Take the exam:* https://academicprep.com/jhs/weekly-exam?mode=scheduled
@@ -4415,7 +4415,7 @@ export default function AdminDashboardPage() {
 
                 <a
                   href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
-                    `📢 *ACADEMICPREP WEEKLY EXAM ALERT* 📖\n\n${OFFICIAL_SCHEDULED_EXAM.level} ${OFFICIAL_SCHEDULED_EXAM.subjectName}: ${OFFICIAL_SCHEDULED_EXAM.topicTitle}\nToday at 6:00 PM GMT Sharp!\n${OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes}m Objs + ${OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes}m Theory\n\nTake Exam: https://academicprep.com/jhs/weekly-exam?mode=scheduled`
+                    `📢 *ACADEMICPREP WEEKLY EXAM ALERT* 📖\n\n${OFFICIAL_SCHEDULED_EXAM.level} ${OFFICIAL_SCHEDULED_EXAM.subjectName}: ${OFFICIAL_SCHEDULED_EXAM.topicTitle}\nToday at 7:30 PM GMT Sharp!\n${OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes}m Objs + ${OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes}m Theory\n\nTake Exam: https://academicprep.com/jhs/weekly-exam?mode=scheduled`
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -4491,7 +4491,7 @@ export default function AdminDashboardPage() {
                 <div className="space-y-2 max-w-xl">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-amber-50 text-amber-800 border border-amber-200/80">
-                      🔒 Locked for Students until 6:00 PM GMT
+                      🔒 Locked for Students until 7:30 PM GMT
                     </span>
                     <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-600">
                       {OFFICIAL_SCHEDULED_EXAM.level} {OFFICIAL_SCHEDULED_EXAM.subjectName}
@@ -4504,7 +4504,7 @@ export default function AdminDashboardPage() {
                     {OFFICIAL_SCHEDULED_EXAM.topicTitle}
                   </h3>
                   <p className="text-xs text-slate-500 leading-relaxed">
-                    Dual paper format: {OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes} minutes Paper 1 (Objectives, {OFFICIAL_SCHEDULED_EXAM.paper1MaxMarks} marks) + {OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes} minutes Paper 2 (Comprehension & Summary, {OFFICIAL_SCHEDULED_EXAM.paper2MaxMarks} marks). Opens 6:00 PM GMT, available until 12:00 AM GMT (Midnight). Administrator has immediate unrestricted preview.
+                    Dual paper format: {OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes} minutes Paper 1 (Objectives, {OFFICIAL_SCHEDULED_EXAM.paper1MaxMarks} marks) + {OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes} minutes Paper 2 (Comprehension & Summary, {OFFICIAL_SCHEDULED_EXAM.paper2MaxMarks} marks). Opens 7:30 PM GMT, available until 12:00 AM GMT (Midnight). Administrator has immediate unrestricted preview.
                   </p>
                 </div>
 
@@ -4513,7 +4513,7 @@ export default function AdminDashboardPage() {
                     Scheduled Window
                   </span>
                   <span className="text-base sm:text-lg font-black font-mono text-slate-900 block">
-                    6:00 PM – 12:00 AM GMT
+                    7:30 PM – 12:00 AM GMT
                   </span>
                   <span className="text-[11px] text-emerald-600 block font-semibold">
                     Admin Preview: Unrestricted
@@ -4598,7 +4598,7 @@ export default function AdminDashboardPage() {
                       </div>
                       <div>
                         <h3 className="text-sm font-bold text-slate-900">
-                          5:55 PM Push Notification (Starts in 5 Mins)
+                          7:25 PM Push Notification (Starts in 5 Mins)
                         </h3>
                         <p className="text-[11px] text-slate-500">
                           Broadcast urgent countdown alert to all registered students
@@ -4606,7 +4606,7 @@ export default function AdminDashboardPage() {
                       </div>
                     </div>
                     <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">
-                      5:55 PM GMT
+                      7:25 PM GMT
                     </span>
                   </div>
 
@@ -4624,13 +4624,13 @@ export default function AdminDashboardPage() {
 
                   <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1.5">
                     <span className="text-[11px] font-bold text-slate-900 block">
-                      Preview of 5:55 PM WhatsApp Notification:
+                      Preview of 7:25 PM WhatsApp Notification:
                     </span>
                     <p className="font-mono text-[11px] text-slate-600 bg-white p-2.5 rounded-lg border border-slate-200 whitespace-pre-wrap leading-relaxed">
                       🚨 *ACADEMICPREP WEEKLY EXAM: 5 MINUTES TO START!* 🔬{'\n\n'}
                       *Subject:* {OFFICIAL_SCHEDULED_EXAM.level} {OFFICIAL_SCHEDULED_EXAM.subjectName}{'\n'}
                       *Topic:* {OFFICIAL_SCHEDULED_EXAM.topicTitle}{'\n'}
-                      *Time:* Starting at 6:00 PM GMT SHARP (In 5 Minutes!){'\n\n'}
+                      *Time:* Starting at 7:30 PM GMT SHARP (In 5 Minutes!){'\n\n'}
                       *Criteria:* {OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes} Mins Paper 1 (Objs) + {OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes} Mins Paper 2 (Comprehension & Summary){'\n'}
                       ⚠️ *Proctoring:* Leaving the window triggers a 5-minute penalty lockout!{'\n\n'}
                       👉 *Enter Hall Now:* https://academicprep.com/jhs/weekly-exam?mode=scheduled
@@ -4683,7 +4683,7 @@ export default function AdminDashboardPage() {
                       </div>
                       <div>
                         <span className="text-slate-400 block font-semibold">Scheduled Time</span>
-                        <span className="font-bold text-slate-800">Today at 6:00 PM GMT Sharp</span>
+                        <span className="font-bold text-slate-800">Today at 7:30 PM GMT Sharp</span>
                       </div>
                       <div className="col-span-2">
                         <span className="text-slate-400 block font-semibold">Topic</span>

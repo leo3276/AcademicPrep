@@ -48,7 +48,7 @@ export default function ScheduledExamBanner({ variant = 'full', className = '' }
     const text = `📢 *ACADEMICPREP ${OFFICIAL_SCHEDULED_EXAM.level.toUpperCase()} ${OFFICIAL_SCHEDULED_EXAM.subjectName.toUpperCase()} WEEKLY EXAM* 📝\n\n` +
       `*Subject:* ${OFFICIAL_SCHEDULED_EXAM.subjectName} (${OFFICIAL_SCHEDULED_EXAM.level})\n` +
       `*Topic:* ${OFFICIAL_SCHEDULED_EXAM.topicTitle}\n` +
-      `*Time:* Today 6:00 PM – 12:00 AM GMT (Available until Midnight)\n` +
+      `*Time:* Today 7:30 PM – 12:00 AM GMT (Available until Midnight)\n` +
       `*Structure:*\n` +
       `  • Paper 1: ${OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes} Mins (Objectives - ${OFFICIAL_SCHEDULED_EXAM.paper1MaxMarks} Marks)\n` +
       `  • Paper 2: ${OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes} Mins (Comprehension & Summary - ${OFFICIAL_SCHEDULED_EXAM.paper2MaxMarks} Marks)\n\n` +
@@ -82,7 +82,7 @@ export default function ScheduledExamBanner({ variant = 'full', className = '' }
             isLive ? 'bg-emerald-500' : is5MinWarning ? 'bg-amber-500 animate-pulse' : isEnded ? 'bg-slate-300' : 'bg-blue-500'
           }`} />
           <span className="font-semibold text-slate-900 truncate">
-            {is5MinWarning ? 'Starts in 5m:' : isLive ? 'Live Exam (Until 12 AM):' : isEnded ? 'Exam Closed:' : '6:00 PM Exam:'} {OFFICIAL_SCHEDULED_EXAM.level} {OFFICIAL_SCHEDULED_EXAM.subjectName} ({OFFICIAL_SCHEDULED_EXAM.topicTitle})
+            {is5MinWarning ? 'Starts in 5m:' : isLive ? 'Live Exam (Until 12 AM):' : isEnded ? 'Exam Closed:' : '7:30 PM Exam:'} {OFFICIAL_SCHEDULED_EXAM.level} {OFFICIAL_SCHEDULED_EXAM.subjectName} ({OFFICIAL_SCHEDULED_EXAM.topicTitle})
           </span>
           <span className="hidden md:inline text-slate-500">
             • {OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes}m Objs + {OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes}m Section B
@@ -182,7 +182,7 @@ export default function ScheduledExamBanner({ variant = 'full', className = '' }
           <div className="p-3.5 sm:p-4 rounded-xl bg-slate-50 border border-slate-200/80 text-left sm:text-right min-w-[210px] space-y-1">
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 flex items-center sm:justify-end gap-1.5">
               <Clock className="w-3.5 h-3.5 text-slate-400" />
-              {isLive ? 'Exam Hall Window' : isEnded ? 'Exam Closed' : 'Scheduled Start: 6:00 PM GMT'}
+              {isLive ? 'Exam Hall Window' : isEnded ? 'Exam Closed' : 'Scheduled Start: 7:30 PM GMT'}
             </span>
             <div className="text-2xl sm:text-3xl font-bold font-mono tracking-tight">
               {isLive ? (
@@ -245,7 +245,7 @@ export default function ScheduledExamBanner({ variant = 'full', className = '' }
                 className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs"
               >
                 <Lock className="w-3.5 h-3.5 text-slate-400" />
-                <span>Opens 6:00 PM (View Rules)</span>
+                <span>Opens 7:30 PM (View Rules)</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             )}

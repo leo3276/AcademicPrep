@@ -70,7 +70,7 @@ export const OFFICIAL_SCHEDULED_EXAM: ScheduledExamConfig = {
   subjectName: 'English Language',
   topicId: 'jhs3-eng-t7-t8-comprehension-summary',
   topicTitle: 'Reading Comprehension & Summary Rules',
-  scheduledStartUtc: '2026-10-25T18:00:00.000Z', // Sunday 6:00 PM GMT
+  scheduledStartUtc: '2026-10-25T19:30:00.000Z', // Sunday 7:30 PM GMT
   windowDurationHours: 6, // Available until 12:00 AM GMT (Midnight)
   paper1DurationMinutes: 20, // 20 Minutes Objectives
   paper2DurationMinutes: 40, // 40 Minutes Comprehension & Summary
