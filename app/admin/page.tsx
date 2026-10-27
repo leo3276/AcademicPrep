@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/authContext';
 import { EducationLevel, AccessPin } from '@/lib/types';
@@ -93,10 +93,18 @@ import {
   Sparkles,
   RefreshCw,
   FlaskConical,
+  GraduationCap,
   Share2
 } from 'lucide-react';
 import { parseVideoUrl } from '@/lib/mediaUtils';
 import BroadcastModal from '@/components/BroadcastModal';
+import { 
+  UniversitySlide, 
+  GHANAIAN_UNIVERSITIES, 
+  UNIVERSITY_LEVELS, 
+  UNIVERSITY_SEMESTERS, 
+  UNIVERSITY_DEPARTMENTS 
+} from '@/lib/universitySlideTypes';
 import {
   WhatsAppChannelConfig,
   fetchWhatsAppChannelConfig,
@@ -143,7 +151,7 @@ export default function AdminDashboardPage() {
   const [isSavingKeys, setIsSavingKeys] = useState(false);
   
   // Navigation Tabs: traffic, paid_access, momo_claims, completions, trial_mocks, pins, blog, comments, whatsapp, weekly_exams
-  const [activeTab, setActiveTab] = useState<'traffic' | 'paid_access' | 'momo_claims' | 'completions' | 'trial_mocks' | 'pins' | 'blog' | 'comments' | 'whatsapp' | 'weekly_exams'>('traffic');
+  const [activeTab, setActiveTab] = useState<'traffic' | 'paid_access' | 'momo_claims' | 'completions' | 'trial_mocks' | 'university_slides' | 'pins' | 'blog' | 'comments' | 'whatsapp' | 'weekly_exams'>('traffic');
 
   // Stores
   const [trafficData, setTrafficData] = useState<WebTrafficData>(() => {
@@ -153,6 +161,25 @@ export default function AdminDashboardPage() {
   const [students, setStudents] = useState<AdminStudentDetail[]>([]);
   // PDF Documents Store
   const [pdfDocuments, setPdfDocuments] = useState<UploadedPdfDocument[]>([]);
+
+  // University Slides Store
+  const [universitySlides, setUniversitySlides] = useState<UniversitySlide[]>([]);
+  const [loadingUniSlides, setLoadingUniSlides] = useState(false);
+  const [collaboratorLink, setCollaboratorLink] = useState('');
+  const [collabLinkCopied, setCollabLinkCopied] = useState(false);
+  const [uniUploadTitle, setUniUploadTitle] = useState('');
+  const [uniUploadCode, setUniUploadCode] = useState('');
+  const [uniUploadCourseTitle, setUniUploadCourseTitle] = useState('');
+  const [uniUploadUniversity, setUniUploadUniversity] = useState(GHANAIAN_UNIVERSITIES[0]);
+  const [uniUploadDepartment, setUniUploadDepartment] = useState(UNIVERSITY_DEPARTMENTS[0]);
+  const [uniUploadLevel, setUniUploadLevel] = useState(UNIVERSITY_LEVELS[0]);
+  const [uniUploadSemester, setUniUploadSemester] = useState(UNIVERSITY_SEMESTERS[0]);
+  const [uniUploadDescription, setUniUploadDescription] = useState('');
+  const [uniUploadFile, setUniUploadFile] = useState<File | null>(null);
+  const [uniUploading, setUniUploading] = useState(false);
+  const [uniUploadFeedback, setUniUploadFeedback] = useState<{ kind: 'ok' | 'bad'; text: string } | null>(null);
+  const [uniSlideFilter, setUniSlideFilter] = useState('');
+  const uniFileInputRef = useRef<HTMLInputElement>(null);
   const [pdfFilterCategory, setPdfFilterCategory] = useState<'ALL' | PdfCategory>('ALL');
   const [pdfFilterSubject, setPdfFilterSubject] = useState('ALL');
   const [showPdfUploadForm, setShowPdfUploadForm] = useState(false);
@@ -414,6 +441,112 @@ export default function AdminDashboardPage() {
   const [isGeneratingPins, setIsGeneratingPins] = useState(false);
   const [pinError, setPinError] = useState<string | null>(null);
   const [accessError, setAccessError] = useState<string | null>(null);
+
+  const loadUniversitySlides = async () => {
+    setLoadingUniSlides(true);
+    try {
+      const res = await fetch('/api/university/slides', { cache: 'no-store' });
+      const data = await res.json();
+      if (data.success && Array.isArray(data.slides)) {
+        setUniversitySlides(data.slides);
+      }
+    } catch (e) {
+      console.warn('Failed to load university slides:', e);
+    } finally {
+      setLoadingUniSlides(false);
+    }
+  };
+
+  const loadCollaboratorLink = async () => {
+    try {
+      const res = await fetch('/api/university/collaborator');
+      const data = await res.json();
+      if (data.success && data.inviteLink) {
+        setCollaboratorLink(data.inviteLink);
+      }
+    } catch {}
+  };
+
+  const handleRegenerateCollaboratorLink = async () => {
+    if (!confirm('Regenerate collaborator invite link? Anyone with the old link will no longer be able to upload until you share the new link.')) {
+      return;
+    }
+    try {
+      const res = await fetch('/api/university/collaborator', { method: 'POST' });
+      const data = await res.json();
+      if (data.success && data.inviteLink) {
+        setCollaboratorLink(data.inviteLink);
+        setCollabLinkCopied(false);
+      }
+    } catch (e: any) {
+      alert('Error regenerating link: ' + (e?.message || e));
+    }
+  };
+
+  const handleAdminUploadUniSlide = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!uniUploadCode.trim() || !uniUploadTitle.trim() || !uniUploadFile) {
+      setUniUploadFeedback({ kind: 'bad', text: 'Course code, title, and PDF file are required.' });
+      return;
+    }
+
+    setUniUploading(true);
+    setUniUploadFeedback(null);
+
+    try {
+      const fd = new FormData();
+      fd.append('file', uniUploadFile);
+      fd.append('title', uniUploadTitle.trim());
+      fd.append('courseCode', uniUploadCode.trim().toUpperCase());
+      fd.append('courseTitle', uniUploadCourseTitle.trim() || uniUploadTitle.trim());
+      fd.append('university', uniUploadUniversity);
+      fd.append('department', uniUploadDepartment);
+      fd.append('level', uniUploadLevel);
+      fd.append('semester', uniUploadSemester);
+      fd.append('description', uniUploadDescription.trim());
+      fd.append('uploadedBy', 'Admin');
+
+      const res = await fetch('/api/university/slides', {
+        method: 'POST',
+        body: fd,
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setUniUploadFeedback({ kind: 'ok', text: `Slide "${data.slide.title}" published successfully!` });
+        setUniUploadTitle('');
+        setUniUploadCode('');
+        setUniUploadCourseTitle('');
+        setUniUploadDescription('');
+        setUniUploadFile(null);
+        if (uniFileInputRef.current) uniFileInputRef.current.value = '';
+        await loadUniversitySlides();
+      } else {
+        setUniUploadFeedback({ kind: 'bad', text: data.error || 'Failed to upload slide.' });
+      }
+    } catch (err: any) {
+      setUniUploadFeedback({ kind: 'bad', text: err.message || 'Error uploading slide.' });
+    } finally {
+      setUniUploading(false);
+    }
+  };
+
+  const handleDeleteUniSlide = async (id: string, slideTitle: string) => {
+    if (!confirm(`Are you sure you want to remove "${slideTitle}"?`)) return;
+    try {
+      const res = await fetch(`/api/university/slides?id=${encodeURIComponent(id)}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setUniversitySlides(prev => prev.filter(s => s.id !== id));
+      } else {
+        alert(data.error || 'Could not delete slide.');
+      }
+    } catch (err: any) {
+      alert(err.message || 'Failed to delete slide.');
+    }
+  };
 
   const loadRealStudents = async () => {
     const { view, students: roster } = await fetchStudents();

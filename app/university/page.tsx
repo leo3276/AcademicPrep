@@ -29,7 +29,8 @@ import {
   Eye,
   Send,
   MessageSquare,
-  RotateCcw
+  RotateCcw,
+  GraduationCap
 } from 'lucide-react';
 import { 
   CompleteSlideStudyPackage, 
@@ -39,6 +40,12 @@ import {
   CondensedSlideGroup
 } from '@/lib/universitySlides';
 import { extractStructuredSlideFromItems } from '@/lib/slideTextCleaner';
+import { 
+  UniversitySlide, 
+  GHANAIAN_UNIVERSITIES, 
+  UNIVERSITY_LEVELS, 
+  UNIVERSITY_SEMESTERS 
+} from '@/lib/universitySlideTypes';
 
 // ─────────────────────────────────────────────────────────────
 // Lightweight IndexedDB Storage for PDF Binaries
@@ -152,6 +159,15 @@ export default function UniversityPortalPage() {
   const [targetGrade, setTargetGrade] = useState('A / First Class');
   const [filterHighYieldOnly, setFilterHighYieldOnly] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
+  // University Slides Catalog & Navigation State
+  const [adminSlides, setAdminSlides] = useState<UniversitySlide[]>([]);
+  const [loadingAdminSlides, setLoadingAdminSlides] = useState<boolean>(true);
+  const [portalMode, setPortalMode] = useState<'library' | 'custom_upload'>('library');
+  const [selectedUniFilter, setSelectedUniFilter] = useState<string>('All');
+  const [selectedLevelFilter, setSelectedLevelFilter] = useState<string>('All');
+  const [selectedSemesterFilter, setSelectedSemesterFilter] = useState<string>('All');
+  const [slideCatalogSearch, setSlideCatalogSearch] = useState<string>('');
 
   // Interactive user tracking
   const [revealedAnswers, setRevealedAnswers] = useState<Record<number, boolean>>({});
@@ -358,6 +374,136 @@ export default function UniversityPortalPage() {
     setMasteredSlides({});
     setCompletedSessions({});
   };
+
+  // Load university slides repository on mount
+  useEffect(() => {
+    const fetchSlides = async () => {
+      setLoadingAdminSlides(true);
+      try {
+        const res = await fetch('/api/university/slides', { cache: 'no-store' });
+        const data = await res.json();
+        if (data.success && Array.isArray(data.slides)) {
+          setAdminSlides(data.slides);
+
+          // Check if query param ?loadSlideId=... is set
+          if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            const loadId = params.get('loadSlideId');
+            if (loadId) {
+              const target = data.slides.find((s: UniversitySlide) => s.id === loadId);
+              if (target) {
+                handleLoadAdminSlide(target);
+              }
+            }
+          }
+        }
+      } catch (err) {
+        console.warn('Failed to fetch university slides:', err);
+      } finally {
+        setLoadingAdminSlides(false);
+      }
+    };
+    fetchSlides();
+  }, []);
+
+  const handleLoadAdminSlide = async (slide: UniversitySlide) => {
+    setLoading(true);
+    setLoadingStatus(`Fetching ${slide.courseCode} slides (${slide.title})...`);
+
+    try {
+      // 1. Fetch PDF binary from slide.fileUrl
+      const res = await fetch(slide.fileUrl);
+      if (!res.ok) {
+        throw new Error(`Failed to download slide PDF (HTTP ${res.status})`);
+      }
+      const buffer = await res.arrayBuffer();
+      setPdfBuffer(buffer);
+
+      // 2. Load with pdfjs
+      setLoadingStatus(`Extracting slide pages from ${slide.courseCode}...`);
+      const pdfjs = await getPdfJsLib();
+      if (!pdfjs) throw new Error('PDF.js engine failed to load');
+
+      const doc = await pdfjs.getDocument({ data: buffer.slice(0) }).promise;
+      setPdfDoc(doc);
+
+      const clientExtractedPages: Array<{ pageNumber: number; text: string }> = [];
+      for (let i = 1; i <= doc.numPages; i++) {
+        try {
+          const page = await doc.getPage(i);
+          const content = await page.getTextContent();
+          const structured = extractStructuredSlideFromItems(content.items);
+          clientExtractedPages.push({ pageNumber: i, text: structured.fullText || '' });
+        } catch {
+          clientExtractedPages.push({ pageNumber: i, text: '' });
+        }
+      }
+
+      setLoadingStatus(`Generating plain-English study guide for ${slide.courseCode}...`);
+
+      const analyzeRes = await fetch('/api/university/analyze-slides', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(customApiKey ? { 'x-gemini-api-key': customApiKey } : {})
+        },
+        body: JSON.stringify({
+          textChunks: clientExtractedPages,
+          fileName: slide.fileName || `${slide.courseCode}_Slides.pdf`,
+          daysUntilExam: 7,
+          dailyMinutes: 45,
+          targetGrade: 'A / First Class'
+        })
+      });
+
+      if (!analyzeRes.ok) {
+        throw new Error('Analysis failed with status ' + analyzeRes.status);
+      }
+
+      const analyzeData = await analyzeRes.json();
+      if (!analyzeData.success || !analyzeData.package) {
+        throw new Error(analyzeData.error || 'Failed to analyze slide deck');
+      }
+
+      const pkg = analyzeData.package;
+      pkg.deckTitle = `${slide.courseCode}: ${slide.title}`;
+
+      await savePdfToIDB(pkg.id, buffer);
+      setActivePackage(pkg);
+      setSelectedSlideIndex(0);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('academicprep_active_package', JSON.stringify(pkg));
+      }
+    } catch (err: any) {
+      alert(`Could not load slide deck: ${err.message || err}`);
+    } finally {
+      setLoading(false);
+      setLoadingStatus('');
+    }
+  };
+
+  const filteredAdminSlides = useMemo(() => {
+    return adminSlides.filter(s => {
+      if (selectedUniFilter !== 'All' && !selectedUniFilter.startsWith('All') && !s.university.toLowerCase().includes(selectedUniFilter.toLowerCase())) {
+        return false;
+      }
+      if (selectedLevelFilter !== 'All' && !selectedLevelFilter.startsWith('All') && s.level.toLowerCase() !== selectedLevelFilter.toLowerCase()) {
+        return false;
+      }
+      if (selectedSemesterFilter !== 'All' && !selectedSemesterFilter.startsWith('All') && s.semester.toLowerCase() !== selectedSemesterFilter.toLowerCase()) {
+        return false;
+      }
+      if (slideCatalogSearch.trim()) {
+        const q = slideCatalogSearch.toLowerCase();
+        return s.courseCode.toLowerCase().includes(q) ||
+               s.title.toLowerCase().includes(q) ||
+               (s.courseTitle && s.courseTitle.toLowerCase().includes(q)) ||
+               (s.description && s.description.toLowerCase().includes(q)) ||
+               (s.department && s.department.toLowerCase().includes(q));
+      }
+      return true;
+    });
+  }, [adminSlides, selectedUniFilter, selectedLevelFilter, selectedSemesterFilter, slideCatalogSearch]);
 
   const handleFileDrop = async (file: File) => {
     if (!file || !file.name.toLowerCase().endsWith('.pdf')) {
@@ -903,13 +1049,23 @@ export default function UniversityPortalPage() {
             </button>
 
             {activePackage && (
-              <button
-                onClick={() => window.print()}
-                className="text-neutral-600 hover:text-neutral-900 transition flex items-center gap-1.5"
-              >
-                <Printer className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Print Summary</span>
-              </button>
+              <>
+                <button
+                  onClick={handleClearDeck}
+                  className="text-neutral-700 hover:text-neutral-900 border border-neutral-200 hover:border-neutral-400 bg-neutral-50 px-2.5 py-1 rounded-md transition flex items-center gap-1.5 font-medium text-xs"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Slide Library</span>
+                </button>
+
+                <button
+                  onClick={() => window.print()}
+                  className="text-neutral-600 hover:text-neutral-900 transition flex items-center gap-1.5"
+                >
+                  <Printer className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Print Summary</span>
+                </button>
+              </>
             )}
           </div>
         </div>
@@ -919,124 +1075,343 @@ export default function UniversityPortalPage() {
           2. EMPTY STATE: CLEAN MINIMAL UPLOAD WORKSPACE
       ───────────────────────────────────────────────────────────── */}
       {!activePackage && (
-        <main className="max-w-3xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 space-y-10">
-          <div className="space-y-3 text-center max-w-xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-neutral-900 leading-tight">
-              Understand your lecture slides.
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 space-y-8">
+          
+          {/* Header Banner */}
+          <div className="space-y-2 text-center max-w-2xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-neutral-100 border border-neutral-200 text-[11px] font-medium text-neutral-700">
+              <GraduationCap className="w-3.5 h-3.5 text-neutral-800" />
+              <span>Tertiary & University Academic Center</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-neutral-900">
+              University Lecture Slides & Study Studio
             </h1>
-            <p className="text-sm text-neutral-600 leading-relaxed pt-1">
-              Upload your lecture PDF to read each slide side-by-side with plain-English explanations, formulas, and a study plan.
+            <p className="text-xs sm:text-sm text-neutral-500 max-w-xl mx-auto">
+              Access verified lecture slides uploaded by faculty & administrators across Ghanaian universities, or study your own custom slide decks with plain-English AI breakdowns.
             </p>
           </div>
 
-          {/* Minimal Drag & Drop Box */}
-          <div className="space-y-6">
-            <input 
-              ref={fileInputRef}
-              type="file" 
-              accept="application/pdf"
-              className="hidden" 
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) handleFileDrop(file);
-              }}
-            />
-
-            <div
-              onDragOver={(e) => { e.preventDefault(); setIsDragOver(true); }}
-              onDragLeave={() => setIsDragOver(false)}
-              onDrop={(e) => {
-                e.preventDefault();
-                setIsDragOver(false);
-                const file = e.dataTransfer.files?.[0];
-                if (file) handleFileDrop(file);
-              }}
-              onClick={() => fileInputRef.current?.click()}
-              className={`cursor-pointer rounded-2xl border border-dashed p-10 sm:p-14 text-center transition flex flex-col items-center justify-center gap-3 ${
-                isDragOver 
-                  ? 'border-neutral-900 bg-neutral-50' 
-                  : selectedFile 
-                  ? 'border-neutral-900 bg-neutral-50/50' 
-                  : 'border-neutral-300 hover:border-neutral-500 bg-white'
-              }`}
-            >
-              <div className="w-10 h-10 rounded-full bg-neutral-100 text-neutral-700 flex items-center justify-center">
-                <Upload className="w-4 h-4" />
-              </div>
-
-              {selectedFile ? (
-                <div className="space-y-1">
-                  <p className="text-sm font-semibold text-neutral-900">{selectedFile.name}</p>
-                  <p className="text-xs text-neutral-500 font-mono">
-                    {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB · Ready to analyze
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-neutral-900">
-                    Drop lecture slide PDF here, or <span className="underline underline-offset-4">browse</span>
-                  </p>
-                  <p className="text-xs text-neutral-500">Supports multi-page slide decks (up to 150+ pages)</p>
-                </div>
-              )}
-            </div>
-
-            {/* Pacing Configuration Controls */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-              <div className="p-3 rounded-xl border border-neutral-200 bg-white space-y-1.5">
-                <label className="text-neutral-500 font-medium block">Days Until Exam</label>
-                <select
-                  value={daysUntilExam}
-                  onChange={(e) => setDaysUntilExam(Number(e.target.value))}
-                  className="w-full font-semibold text-neutral-900 bg-transparent focus:outline-none cursor-pointer"
-                >
-                  <option value={3}>3 Days (Express Cram)</option>
-                  <option value={5}>5 Days</option>
-                  <option value={7}>7 Days (Standard)</option>
-                  <option value={14}>14 Days (Balanced)</option>
-                  <option value={30}>30 Days (Semester Final)</option>
-                </select>
-              </div>
-
-              <div className="p-3 rounded-xl border border-neutral-200 bg-white space-y-1.5">
-                <label className="text-neutral-500 font-medium block">Daily Time Budget</label>
-                <select
-                  value={dailyMinutes}
-                  onChange={(e) => setDailyMinutes(Number(e.target.value))}
-                  className="w-full font-semibold text-neutral-900 bg-transparent focus:outline-none cursor-pointer"
-                >
-                  <option value={30}>30 mins / day</option>
-                  <option value={45}>45 mins / day</option>
-                  <option value={60}>60 mins / day</option>
-                  <option value={90}>90 mins / day</option>
-                </select>
-              </div>
-
-              <div className="p-3 rounded-xl border border-neutral-200 bg-white space-y-1.5">
-                <label className="text-neutral-500 font-medium block">Target Grade</label>
-                <select
-                  value={targetGrade}
-                  onChange={(e) => setTargetGrade(e.target.value)}
-                  className="w-full font-semibold text-neutral-900 bg-transparent focus:outline-none cursor-pointer"
-                >
-                  <option value="A / First Class">A / First Class (90%+)</option>
-                  <option value="B+ / Second Upper">B+ / Second Upper</option>
-                  <option value="Pass">Solid Pass</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Action Button */}
-            <div className="text-center pt-2">
+          {/* Clean Segmented Tab Switcher */}
+          <div className="flex justify-center">
+            <div className="inline-flex p-1 rounded-xl bg-neutral-100 border border-neutral-200/80 text-xs font-semibold">
               <button
-                disabled={!selectedFile || loading}
-                onClick={handleProcessUpload}
-                className="w-full sm:w-auto px-8 py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:opacity-30 disabled:pointer-events-none text-white text-xs font-semibold transition tracking-tight shadow-sm"
+                onClick={() => setPortalMode('library')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition ${
+                  portalMode === 'library'
+                    ? 'bg-white text-neutral-900 shadow-xs'
+                    : 'text-neutral-500 hover:text-neutral-900'
+                }`}
               >
-                {loading ? 'Analyzing Slides...' : 'Analyze Lecture Slides'}
+                <BookOpen className="w-3.5 h-3.5" />
+                <span>Curated University Slides</span>
+                <span className="font-mono text-[10px] px-1.5 py-0.2 rounded-full bg-neutral-100 text-neutral-700 border border-neutral-200">
+                  {adminSlides.length}
+                </span>
+              </button>
+
+              <button
+                onClick={() => setPortalMode('custom_upload')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition ${
+                  portalMode === 'custom_upload'
+                    ? 'bg-white text-neutral-900 shadow-xs'
+                    : 'text-neutral-500 hover:text-neutral-900'
+                }`}
+              >
+                <Upload className="w-3.5 h-3.5" />
+                <span>AI Study Buddy (Upload Private Deck)</span>
               </button>
             </div>
           </div>
+
+          {/* TAB 1: CURATED UNIVERSITY SLIDES */}
+          {portalMode === 'library' && (
+            <div className="space-y-6">
+              
+              {/* Search & Filter Bar */}
+              <div className="bg-white border border-neutral-200 rounded-xl p-4 shadow-xs space-y-3">
+                <div className="flex flex-col sm:flex-row gap-3">
+                  
+                  {/* Search input */}
+                  <div className="relative flex-1">
+                    <Search className="w-4 h-4 text-neutral-400 absolute left-3 top-3" />
+                    <input
+                      type="text"
+                      value={slideCatalogSearch}
+                      onChange={(e) => setSlideCatalogSearch(e.target.value)}
+                      placeholder="Search by course code, topic, or slide title (e.g. DCIT, Microeconomics, Logic)..."
+                      className="w-full pl-9 pr-4 py-2 text-xs border border-neutral-200 rounded-lg focus:outline-hidden focus:border-neutral-900"
+                    />
+                  </div>
+
+                  {/* University Filter */}
+                  <div className="sm:w-64">
+                    <select
+                      value={selectedUniFilter}
+                      onChange={(e) => setSelectedUniFilter(e.target.value)}
+                      className="w-full px-3 py-2 text-xs border border-neutral-200 rounded-lg bg-white focus:outline-hidden focus:border-neutral-900 font-medium text-neutral-800"
+                    >
+                      <option value="All">All Universities in Ghana</option>
+                      {GHANAIAN_UNIVERSITIES.map(u => (
+                        <option key={u} value={u}>{u}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                {/* Level & Semester Pills */}
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-neutral-100 text-xs">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wide mr-1">Level:</span>
+                    {['All', ...UNIVERSITY_LEVELS].map(lvl => (
+                      <button
+                        key={lvl}
+                        onClick={() => setSelectedLevelFilter(lvl)}
+                        className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition ${
+                          selectedLevelFilter === lvl
+                            ? 'bg-neutral-900 text-white'
+                            : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                        }`}
+                      >
+                        {lvl}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wide mr-1">Semester:</span>
+                    {['All', ...UNIVERSITY_SEMESTERS].map(sem => (
+                      <button
+                        key={sem}
+                        onClick={() => setSelectedSemesterFilter(sem)}
+                        className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition ${
+                          selectedSemesterFilter === sem
+                            ? 'bg-neutral-900 text-white'
+                            : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                        }`}
+                      >
+                        {sem}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* SLIDES GRID */}
+              {loadingAdminSlides ? (
+                <div className="py-20 text-center text-xs text-neutral-400 space-y-2">
+                  <div className="w-5 h-5 border-2 border-neutral-900 border-t-transparent rounded-full animate-spin mx-auto" />
+                  <p>Loading university slides repository...</p>
+                </div>
+              ) : filteredAdminSlides.length === 0 ? (
+                <div className="py-20 text-center border border-dashed border-neutral-200 rounded-xl bg-white p-8 space-y-2">
+                  <BookOpen className="w-8 h-8 text-neutral-300 mx-auto" />
+                  <h3 className="text-sm font-semibold text-neutral-800">No course slides match your current filter</h3>
+                  <p className="text-xs text-neutral-500">
+                    Try clearing your search query or selecting a different level or university.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setSlideCatalogSearch('');
+                      setSelectedUniFilter('All');
+                      setSelectedLevelFilter('All');
+                      setSelectedSemesterFilter('All');
+                    }}
+                    className="mt-2 text-xs font-semibold text-neutral-900 underline underline-offset-4"
+                  >
+                    Reset all filters
+                  </button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {filteredAdminSlides.map((slide) => (
+                    <div 
+                      key={slide.id}
+                      className="bg-white border border-neutral-200 hover:border-neutral-300 rounded-xl p-4 shadow-2xs hover:shadow-xs transition flex flex-col justify-between space-y-4"
+                    >
+                      <div className="space-y-2.5">
+                        {/* Badges Row */}
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-neutral-900 text-white">
+                            {slide.courseCode}
+                          </span>
+                          <span className="text-[10px] font-medium px-2 py-0.5 rounded bg-neutral-100 text-neutral-700 border border-neutral-200 truncate">
+                            {slide.level} • {slide.semester}
+                          </span>
+                        </div>
+
+                        {/* Title */}
+                        <div>
+                          <h3 className="font-bold text-sm text-neutral-900 leading-snug line-clamp-2">
+                            {slide.title}
+                          </h3>
+                          <p className="text-[11px] text-neutral-500 font-medium mt-0.5 flex items-center gap-1">
+                            <span>{slide.university}</span>
+                            {slide.department ? <span>• {slide.department}</span> : null}
+                          </p>
+                        </div>
+
+                        {/* Description */}
+                        {slide.description && (
+                          <p className="text-xs text-neutral-600 line-clamp-2 leading-relaxed">
+                            {slide.description}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Footer & Actions */}
+                      <div className="pt-3 border-t border-neutral-100 space-y-3">
+                        <div className="flex items-center justify-between text-[10px] text-neutral-400 font-medium">
+                          <span>By {slide.uploadedBy || 'Admin'}</span>
+                          <span>{slide.fileSizeBytes ? `${(slide.fileSizeBytes / (1024 * 1024)).toFixed(1)} MB` : 'PDF Document'}</span>
+                        </div>
+
+                        <div className="grid grid-cols-12 gap-2">
+                          <button
+                            onClick={() => handleLoadAdminSlide(slide)}
+                            disabled={loading}
+                            className="col-span-8 py-2 px-3 rounded-lg bg-neutral-900 hover:bg-black text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition disabled:opacity-60"
+                          >
+                            <Sparkles className="w-3.5 h-3.5 text-neutral-300" />
+                            <span>Study in Studio ➔</span>
+                          </button>
+
+                          <a
+                            href={slide.fileUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="col-span-4 py-2 px-2 rounded-lg border border-neutral-200 hover:bg-neutral-50 text-neutral-700 text-xs font-medium flex items-center justify-center gap-1 transition"
+                            title="Download PDF"
+                          >
+                            <FileText className="w-3.5 h-3.5 text-neutral-500" />
+                            <span>PDF</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* TAB 2: CUSTOM PRIVATE SLIDE UPLOADER */}
+          {portalMode === 'custom_upload' && (
+            <div className="max-w-3xl mx-auto space-y-6">
+              <div className="space-y-1 text-center">
+                <h2 className="text-lg font-bold text-neutral-900">Upload Your Private Lecture Slides</h2>
+                <p className="text-xs text-neutral-500">
+                  Drop any personal lecture PDF to generate plain-English explanations, high-yield cram notes, and a custom study schedule.
+                </p>
+              </div>
+
+              {/* Minimal Drag & Drop Box */}
+              <input 
+                ref={fileInputRef}
+                type="file" 
+                accept="application/pdf"
+                className="hidden" 
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) handleFileDrop(file);
+                }}
+              />
+
+              <div
+                onDragOver={(e) => { e.preventDefault(); setIsDragOver(true); }}
+                onDragLeave={() => setIsDragOver(false)}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  setIsDragOver(false);
+                  const file = e.dataTransfer.files?.[0];
+                  if (file) handleFileDrop(file);
+                }}
+                onClick={() => fileInputRef.current?.click()}
+                className={`cursor-pointer rounded-2xl border border-dashed p-10 sm:p-14 text-center transition flex flex-col items-center justify-center gap-3 ${
+                  isDragOver 
+                    ? 'border-neutral-900 bg-neutral-50' 
+                    : selectedFile 
+                    ? 'border-neutral-900 bg-neutral-50/50' 
+                    : 'border-neutral-300 hover:border-neutral-500 bg-white'
+                }`}
+              >
+                <div className="w-10 h-10 rounded-full bg-neutral-100 text-neutral-700 flex items-center justify-center">
+                  <Upload className="w-4 h-4" />
+                </div>
+
+                {selectedFile ? (
+                  <div className="space-y-1">
+                    <p className="text-sm font-semibold text-neutral-900">{selectedFile.name}</p>
+                    <p className="text-xs text-neutral-500 font-mono">
+                      {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB · Ready to analyze
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium text-neutral-900">
+                      Drop lecture slide PDF here, or <span className="underline underline-offset-4">browse</span>
+                    </p>
+                    <p className="text-xs text-neutral-500">Supports multi-page slide decks (up to 150+ pages)</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Pacing Configuration Controls */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                <div className="p-3 rounded-xl border border-neutral-200 bg-white space-y-1.5">
+                  <label className="text-neutral-500 font-medium block">Days Until Exam</label>
+                  <select
+                    value={daysUntilExam}
+                    onChange={(e) => setDaysUntilExam(Number(e.target.value))}
+                    className="w-full font-semibold text-neutral-900 bg-transparent focus:outline-hidden cursor-pointer"
+                  >
+                    <option value={3}>3 Days (Express Cram)</option>
+                    <option value={5}>5 Days</option>
+                    <option value={7}>7 Days (Standard)</option>
+                    <option value={14}>14 Days (Balanced)</option>
+                    <option value={30}>30 Days (Semester Final)</option>
+                  </select>
+                </div>
+
+                <div className="p-3 rounded-xl border border-neutral-200 bg-white space-y-1.5">
+                  <label className="text-neutral-500 font-medium block">Daily Time Budget</label>
+                  <select
+                    value={dailyMinutes}
+                    onChange={(e) => setDailyMinutes(Number(e.target.value))}
+                    className="w-full font-semibold text-neutral-900 bg-transparent focus:outline-hidden cursor-pointer"
+                  >
+                    <option value={30}>30 mins / day</option>
+                    <option value={45}>45 mins / day</option>
+                    <option value={60}>60 mins / day</option>
+                    <option value={90}>90 mins / day</option>
+                  </select>
+                </div>
+
+                <div className="p-3 rounded-xl border border-neutral-200 bg-white space-y-1.5">
+                  <label className="text-neutral-500 font-medium block">Target Grade</label>
+                  <select
+                    value={targetGrade}
+                    onChange={(e) => setTargetGrade(e.target.value)}
+                    className="w-full font-semibold text-neutral-900 bg-transparent focus:outline-hidden cursor-pointer"
+                  >
+                    <option value="A / First Class">A / First Class (90%+)</option>
+                    <option value="B+ / Second Upper">B+ / Second Upper</option>
+                    <option value="Pass">Solid Pass</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Action Button */}
+              <div className="text-center pt-2">
+                <button
+                  disabled={!selectedFile || loading}
+                  onClick={handleProcessUpload}
+                  className="w-full sm:w-auto px-8 py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:opacity-30 disabled:pointer-events-none text-white text-xs font-semibold transition tracking-tight shadow-sm"
+                >
+                  {loading ? 'Analyzing Slides...' : 'Analyze Lecture Slides'}
+                </button>
+              </div>
+            </div>
+          )}
         </main>
       )}
 

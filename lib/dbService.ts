@@ -177,21 +177,40 @@ export async function fetchStudentsForAdmin(): Promise<any[]> {
     return [];
   }
 
-  const { data, error } = await supabaseAdmin
-    .from('students')
-    .select(
-      'id, phone_number, full_name, current_level, access_type, access_expires_at, ' +
-        'last_active_at, topics_completed_count, completed_topic_ids, avg_score_percentage, created_at'
-    )
-    .order('topics_completed_count', { ascending: false })
-    .order('avg_score_percentage', { ascending: false });
+  // Paginate through Supabase in chunks of 1000 to bypass PostgREST's default 1000 row cap
+  const allRows: any[] = [];
+  const batchSize = 1000;
+  let from = 0;
 
-  if (error) {
-    console.error('[dbService] admin student fetch failed:', error.message);
-    return [];
+  while (true) {
+    const { data, error } = await supabaseAdmin
+      .from('students')
+      .select(
+        'id, phone_number, full_name, current_level, access_type, access_expires_at, ' +
+          'last_active_at, topics_completed_count, completed_topic_ids, avg_score_percentage, created_at'
+      )
+      .order('created_at', { ascending: false })
+      .range(from, from + batchSize - 1);
+
+    if (error) {
+      console.error('[dbService] admin student fetch failed:', error.message);
+      break;
+    }
+
+    if (!data || data.length === 0) {
+      break;
+    }
+
+    allRows.push(...data);
+
+    if (data.length < batchSize) {
+      break;
+    }
+
+    from += batchSize;
   }
 
-  return (data || []).map((s: any) => ({
+  return allRows.map((s: any) => ({
     id: s.id,
     phone: s.phone_number,
     name: s.full_name,
