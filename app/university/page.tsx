@@ -1392,13 +1392,9 @@ export default function UniversityPortalPage() {
     return activePackage.studyPlan.phases.reduce((acc, p) => acc + p.sessions.length, 0);
   }, [activePackage]);
 
-  useEffect(() => {
-    if (mounted && !authLoading && !student) {
-      router.push('/login?redirect=/university');
-    }
-  }, [mounted, authLoading, student, router]);
+  const [dismissedBetaNotice, setDismissedBetaNotice] = useState<boolean>(false);
 
-  if (!mounted || authLoading || !student) {
+  if (!mounted) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white text-neutral-400">
         <div className="w-6 h-6 border-2 border-neutral-900 border-t-transparent rounded-full animate-spin" />
@@ -1427,15 +1423,38 @@ export default function UniversityPortalPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <Link
-              href="/login?redirect=/university"
-              className="text-neutral-600 hover:text-neutral-900 transition flex items-center gap-1.5 font-medium"
-            >
-              <span className="truncate max-w-[90px] sm:max-w-[160px]">{student.fullName}</span>
-              <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-700">
-                Tertiary
-              </span>
-            </Link>
+            {student ? (
+              <div className="flex items-center gap-2">
+                <Link
+                  href="/account"
+                  className="text-neutral-600 hover:text-neutral-900 transition flex items-center gap-1.5 font-medium"
+                >
+                  <span className="truncate max-w-[90px] sm:max-w-[160px]">{student.fullName}</span>
+                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-700">
+                    Tertiary
+                  </span>
+                </Link>
+                <button
+                  onClick={() => logoutStudent()}
+                  className="text-neutral-400 hover:text-neutral-600 text-[11px] underline hidden sm:inline"
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-medium">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  Open Beta Access
+                </span>
+                <Link
+                  href="/login?redirect=/university"
+                  className="text-blue-600 hover:text-blue-700 font-medium text-xs px-2.5 py-1 rounded-md bg-blue-50 hover:bg-blue-100 border border-blue-200 transition"
+                >
+                  Sign In
+                </Link>
+              </div>
+            )}
 
             <button
               onClick={() => setShowSettingsModal(true)}
@@ -1487,6 +1506,32 @@ export default function UniversityPortalPage() {
       ───────────────────────────────────────────────────────────── */}
       {!activePackage && (
         <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 space-y-8">
+          {/* Open Beta Preview Notice */}
+          {!dismissedBetaNotice && (
+            <div className="bg-blue-50/90 border border-blue-200/90 rounded-xl p-3 sm:p-3.5 text-xs flex items-center justify-between gap-3 shadow-2xs">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-6 h-6 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 font-bold">
+                  <GraduationCap className="w-3.5 h-3.5" />
+                </div>
+                <div className="min-w-0">
+                  <p className="font-semibold text-neutral-900">
+                    University Portal • Open Access Beta
+                  </p>
+                  <p className="text-[11px] text-neutral-600">
+                    All Ghanaian tertiary course slides, AI studio breakdowns, flashcards, and practice quizzes are currently open to all visitors while under active development. No account required.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setDismissedBetaNotice(true)}
+                className="p-1 rounded-md text-neutral-400 hover:text-neutral-600 transition cursor-pointer shrink-0"
+                title="Dismiss beta banner"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
+
           {/* Urgent Milestone Notification Banner */}
           {urgentDeadlines.length > 0 && !dismissedUrgentBanner && (
             <div className="bg-amber-50/90 border border-amber-200/90 rounded-xl p-3.5 sm:p-4 text-xs flex items-center justify-between gap-3 shadow-2xs">
