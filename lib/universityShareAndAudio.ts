@@ -1,6 +1,200 @@
 import { SlideAnalysis, CompleteSlideStudyPackage } from './universitySlides';
 
 /**
+ * Clean text for natural speech synthesis
+ * Converts abbreviations, formulas, and symbols into natural spoken English
+ */
+export function cleanTextForSpeech(raw: string): string {
+  if (!raw) return '';
+  return raw
+    // Strip markdown formatting
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/\*(.*?)\*/g, '$1')
+    .replace(/__(.*?)__/g, '$1')
+    .replace(/_(.*?)_/g, '$1')
+    .replace(/`(.*?)`/g, '$1')
+    .replace(/^#+\s+/gm, '')
+    .replace(/^[•\-\*]\s+/gm, '')
+    // Common academic abbreviations -> spoken words
+    .replace(/\be\.g\.,?\s*/gi, 'for example, ')
+    .replace(/\bi\.e\.,?\s*/gi, 'that is, ')
+    .replace(/\betc\.,?\s*/gi, 'and so forth, ')
+    .replace(/\bvs\.\s*/gi, 'versus ')
+    .replace(/\bvs\b/gi, 'versus')
+    .replace(/\bw\/\s*/gi, 'with ')
+    .replace(/\bw\/o\s*/gi, 'without ')
+    .replace(/\bdept\.\s*/gi, 'department ')
+    .replace(/\bcalc\.\s*/gi, 'calculation ')
+    .replace(/\bapprox\.\s*/gi, 'approximately ')
+    .replace(/\bfig\.\s*(\d+)/gi, 'figure $1')
+    .replace(/\bpg\.\s*(\d+)/gi, 'page $1')
+    .replace(/\bp\.\s*(\d+)/gi, 'page $1')
+    .replace(/\bno\.\s*(\d+)/gi, 'number $1')
+    // Mathematical / logical symbols -> spoken phrases
+    .replace(/\s*&\s*/g, ' and ')
+    .replace(/\s*\+\s*/g, ' plus ')
+    .replace(/\s*=\s*/g, ' equals ')
+    .replace(/\s*≠\s*/g, ' does not equal ')
+    .replace(/\s*≈\s*/g, ' is approximately equal to ')
+    .replace(/\s*%\s*/g, ' percent ')
+    .replace(/\s*\/\s*/g, ' or ')
+    .replace(/\s*→\s*/g, ' leads to ')
+    .replace(/\s*<=\s*|\s*≤\s*/g, ' is less than or equal to ')
+    .replace(/\s*>=\s*|\s*≥\s*/g, ' is greater than or equal to ')
+    // Remove unwanted citation brackets like [1], [Slide 4]
+    .replace(/\[\d+\]/g, '')
+    // Clean multiple spaces and hyphens
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
+export interface AudioSpeechSegment {
+  text: string;
+  pauseAfterMs: number;
+}
+
+/**
+ * Breaks a slide breakdown into natural conversational speech segments with human breathing pauses
+ */
+export function getSlideAudioSpeechSegments(
+  slide: SlideAnalysis,
+  deckTitle?: string
+): AudioSpeechSegment[] {
+  const segments: AudioSpeechSegment[] = [];
+
+  // 1. Slide Introduction (clear, conversational)
+  const cleanTitle = cleanTextForSpeech(slide.title);
+  segments.push({
+    text: `Slide ${slide.pageNumber}. ${cleanTitle}.`,
+    pauseAfterMs: 400
+  });
+
+  // 2. Why this slide matters
+  if (slide.whyItMatters && slide.whyItMatters.trim().length > 0) {
+    const cleanWhy = cleanTextForSpeech(slide.whyItMatters);
+    segments.push({
+      text: `Why does this matter? ${cleanWhy}`,
+      pauseAfterMs: 450
+    });
+  }
+
+  // 3. Core Exam Principle
+  if (slide.coreRule && slide.coreRule.trim().length > 0) {
+    const cleanRule = cleanTextForSpeech(slide.coreRule);
+    segments.push({
+      text: `Here is the core principle to remember: ${cleanRule}`,
+      pauseAfterMs: 500
+    });
+  }
+
+  // 4. Must-Know Key Definitions
+  if (slide.keyDefinitions && slide.keyDefinitions.length > 0) {
+    const validDefs = slide.keyDefinitions.slice(0, 3);
+    if (validDefs.length === 1) {
+      const kd = validDefs[0];
+      segments.push({
+        text: `The key term to know is ${cleanTextForSpeech(kd.term)}, which means: ${cleanTextForSpeech(kd.definition)}.`,
+        pauseAfterMs: 450
+      });
+    } else {
+      segments.push({
+        text: `There are ${validDefs.length} key terms to know on this slide.`,
+        pauseAfterMs: 300
+      });
+      validDefs.forEach((kd, idx) => {
+        const ordinal = idx === 0 ? 'First' : idx === 1 ? 'Second' : 'Third';
+        segments.push({
+          text: `${ordinal}, ${cleanTextForSpeech(kd.term)}: ${cleanTextForSpeech(kd.definition)}.`,
+          pauseAfterMs: 400
+        });
+      });
+    }
+  }
+
+  // 5. Formulas or key equations
+  if (slide.keyFormulas && slide.keyFormulas.length > 0) {
+    const cleanFormulas = slide.keyFormulas.slice(0, 2).map(f => cleanTextForSpeech(f)).join(', and ');
+    segments.push({
+      text: `Keep this formula in mind: ${cleanFormulas}.`,
+      pauseAfterMs: 450
+    });
+  }
+
+  // 6. Lecturer Exam Trap / Warning
+  if (slide.examTrap && slide.examTrap.trim().length > 0) {
+    const cleanTrap = cleanTextForSpeech(slide.examTrap);
+    segments.push({
+      text: `Now, watch out for this lecturer exam trap: ${cleanTrap}`,
+      pauseAfterMs: 550
+    });
+  }
+
+  // 7. Active Recall Practice Prompt
+  if (slide.activeRecallPrompt?.question && slide.activeRecallPrompt?.answer) {
+    const cleanQ = cleanTextForSpeech(slide.activeRecallPrompt.question);
+    const cleanA = cleanTextForSpeech(slide.activeRecallPrompt.answer);
+    segments.push({
+      text: `Let's test your active recall. Here is your question: ${cleanQ}`,
+      pauseAfterMs: 1200 // Extended thinking pause for the student
+    });
+    segments.push({
+      text: `The answer is: ${cleanA}`,
+      pauseAfterMs: 600
+    });
+  }
+
+  return segments;
+}
+
+/**
+ * Filter and rank voices for the most natural, human-sounding English voice available on device
+ */
+export function getBestNaturalVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
+  if (!voices || voices.length === 0) return null;
+
+  // Tier 1: Modern Natural Neural voices (Microsoft Edge Natural, Chrome Neural)
+  const tier1 = voices.find(v => 
+    v.lang.startsWith('en') && 
+    (v.name.includes('Natural') || v.name.includes('Neural') || v.name.includes('Jenny') || v.name.includes('Christopher') || v.name.includes('Aria') || v.name.includes('Guy'))
+  );
+  if (tier1) return tier1;
+
+  // Tier 2: Google Natural Voices (Chrome desktop & Android)
+  const tier2 = voices.find(v => 
+    v.lang.startsWith('en') && 
+    (v.name.includes('Google US English') || v.name.includes('Google UK English Female') || v.name.includes('Google UK English Male') || v.name.includes('Google'))
+  );
+  if (tier2) return tier2;
+
+  // Tier 3: Apple Enhanced Voices (iOS Safari, macOS)
+  const tier3 = voices.find(v => 
+    v.lang.startsWith('en') && 
+    (v.name.includes('Enhanced') || v.name.includes('Premium') || v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen'))
+  );
+  if (tier3) return tier3;
+
+  // Tier 4: Any English voice that is not a legacy robotic SAPI5 desktop voice
+  const tier4 = voices.find(v => 
+    v.lang.startsWith('en') && 
+    !v.name.includes('David Desktop') && 
+    !v.name.includes('Zira Desktop') && 
+    !v.name.includes('Desktop')
+  );
+  if (tier4) return tier4;
+
+  // Tier 5: Any English voice fallback
+  return voices.find(v => v.lang.startsWith('en')) || voices[0] || null;
+}
+
+/**
+ * Returns available English natural voices for user selection
+ */
+export function getAvailableNaturalVoices(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice[] {
+  if (!voices || voices.length === 0) return [];
+  return voices.filter(v => v.lang.startsWith('en'));
+}
+
+/**
  * Generate formatted WhatsApp markdown for a single slide
  */
 export function generateSlideWhatsAppText(
@@ -76,37 +270,15 @@ export function generateDeckWhatsAppText(pkg: CompleteSlideStudyPackage): string
 }
 
 /**
- * Generate a spoken conversational script for Audio Cram mode
+ * Legacy single-string generator for backwards compatibility
  */
 export function getSlideAudioScript(
   slide: SlideAnalysis,
   deckTitle?: string,
   totalSlides?: number
 ): string {
-  let script = `Slide ${slide.pageNumber}. ${slide.title}. `;
-
-  if (slide.whyItMatters) {
-    script += `Why this matters: ${slide.whyItMatters}. `;
-  }
-
-  script += `The core principle to remember is: ${slide.coreRule}. `;
-
-  if (slide.keyDefinitions && slide.keyDefinitions.length > 0) {
-    script += `Key terms you need to know. `;
-    slide.keyDefinitions.slice(0, 3).forEach((kd) => {
-      script += `${kd.term}. ${kd.definition}. `;
-    });
-  }
-
-  if (slide.examTrap) {
-    script += `Watch out for this lecturer exam trap: ${slide.examTrap}. `;
-  }
-
-  if (slide.activeRecallPrompt?.question) {
-    script += `Quick active recall question. ${slide.activeRecallPrompt.question}. The answer is: ${slide.activeRecallPrompt.answer}.`;
-  }
-
-  return script;
+  const segments = getSlideAudioSpeechSegments(slide, deckTitle);
+  return segments.map(s => s.text).join(' ');
 }
 
 /**
@@ -159,7 +331,6 @@ export function generateSummaryCardPngBlob(pkg: CompleteSlideStudyPackage): Prom
 
     let yOffset = 240;
 
-    // Helper to wrap text
     const wrapText = (text: string, x: number, y: number, maxWidth: number, lineHeight: number, maxLines = 4) => {
       const words = text.split(' ');
       let line = '';
@@ -193,7 +364,6 @@ export function generateSummaryCardPngBlob(pkg: CompleteSlideStudyPackage): Prom
     const theorems = pkg.cramSheetSummary.mustMemorizeTheorems.slice(0, 4);
     ctx.font = '22px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
     theorems.forEach((t, i) => {
-      // Pill card
       ctx.fillStyle = '#F8FAFC';
       ctx.fillRect(60, yOffset - 25, canvas.width - 120, 68);
       ctx.strokeStyle = '#E2E8F0';

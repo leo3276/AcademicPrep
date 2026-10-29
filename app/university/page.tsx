@@ -56,7 +56,11 @@ import {
   generateSlideWhatsAppText,
   generateDeckWhatsAppText,
   getSlideAudioScript,
-  generateSummaryCardPngBlob
+  getSlideAudioSpeechSegments,
+  getBestNaturalVoice,
+  getAvailableNaturalVoices,
+  generateSummaryCardPngBlob,
+  AudioSpeechSegment
 } from '@/lib/universityShareAndAudio';
 import { 
   requestNotificationPermission, 
@@ -1421,16 +1425,44 @@ export default function UniversityPortalPage() {
 
   const [dismissedBetaNotice, setDismissedBetaNotice] = useState<boolean>(false);
 
-  // ─── AUDIO CRAM ENGINE (Feature 4) ───────────────────────────
+  // ─── AUDIO CRAM ENGINE (Feature 4 - Natural Human Voice & Segmented Pacing) ───
   const [isAudioPlaying, setIsAudioPlaying] = useState<boolean>(false);
   const [isAudioPaused, setIsAudioPaused] = useState<boolean>(false);
-  const [audioSpeed, setAudioSpeed] = useState<number>(1.25);
+  const [audioSpeed, setAudioSpeed] = useState<number>(1.1); // 1.1x natural conversational pace
   const [audioAutoAdvance, setAudioAutoAdvance] = useState<boolean>(true);
   const [audioSlideIndex, setAudioSlideIndex] = useState<number>(0);
   const [audioProgressText, setAudioProgressText] = useState<string>('');
+  const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [selectedVoiceName, setSelectedVoiceName] = useState<string>('');
+
   const speechUtteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const segmentTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const currentSegmentIdxRef = useRef<number>(0);
+  const currentSegmentsListRef = useRef<AudioSpeechSegment[]>([]);
+
+  // Load natural voices on mount
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.speechSynthesis) return;
+
+    const populateVoices = () => {
+      const all = window.speechSynthesis.getVoices();
+      const natural = getAvailableNaturalVoices(all);
+      setAvailableVoices(natural);
+      if (!selectedVoiceName && natural.length > 0) {
+        const best = getBestNaturalVoice(natural);
+        if (best) setSelectedVoiceName(best.name);
+      }
+    };
+
+    populateVoices();
+    window.speechSynthesis.onvoiceschanged = populateVoices;
+  }, [selectedVoiceName]);
 
   const stopAudioCram = useCallback(() => {
+    if (segmentTimeoutRef.current) {
+      clearTimeout(segmentTimeoutRef.current);
+      segmentTimeoutRef.current = null;
+    }
     if (typeof window !== 'undefined' && window.speechSynthesis) {
       window.speechSynthesis.cancel();
     }
@@ -1445,54 +1477,82 @@ export default function UniversityPortalPage() {
     };
   }, [stopAudioCram]);
 
-  const speakSlideByIndex = useCallback((index: number, speed = audioSpeed, autoAdvance = audioAutoAdvance) => {
+  const speakSlideByIndex = useCallback((index: number, speed = audioSpeed, autoAdvance = audioAutoAdvance, voiceName = selectedVoiceName) => {
     if (typeof window === 'undefined' || !window.speechSynthesis || !activePackage) return;
     if (index < 0 || index >= activePackage.slides.length) {
       stopAudioCram();
       return;
     }
 
+    if (segmentTimeoutRef.current) {
+      clearTimeout(segmentTimeoutRef.current);
+      segmentTimeoutRef.current = null;
+    }
     window.speechSynthesis.cancel();
 
     const targetSlide = activePackage.slides[index];
     setAudioSlideIndex(index);
     setSelectedSlideIndex(index);
-    const script = getSlideAudioScript(targetSlide, activePackage.deckTitle, activePackage.slides.length);
 
-    const utterance = new SpeechSynthesisUtterance(script);
-    utterance.rate = speed;
-    utterance.pitch = 1.0;
+    const segments = getSlideAudioSpeechSegments(targetSlide, activePackage.deckTitle);
+    currentSegmentsListRef.current = segments;
+    currentSegmentIdxRef.current = 0;
 
-    const voices = window.speechSynthesis.getVoices();
-    const naturalVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel'))) || voices.find(v => v.lang.startsWith('en'));
-    if (naturalVoice) utterance.voice = naturalVoice;
+    const playSegment = (segIdx: number) => {
+      if (segIdx >= segments.length) {
+        if (autoAdvance && index < activePackage.slides.length - 1) {
+          // Natural 900ms pause between whole slide lectures
+          segmentTimeoutRef.current = setTimeout(() => {
+            speakSlideByIndex(index + 1, speed, autoAdvance, voiceName);
+          }, 900);
+        } else {
+          setIsAudioPlaying(false);
+          setIsAudioPaused(false);
+        }
+        return;
+      }
 
-    utterance.onstart = () => {
-      setIsAudioPlaying(true);
-      setIsAudioPaused(false);
-      setAudioProgressText(`Slide ${targetSlide.pageNumber} of ${activePackage.slides.length}`);
-    };
+      currentSegmentIdxRef.current = segIdx;
+      const seg = segments[segIdx];
+      const utterance = new SpeechSynthesisUtterance(seg.text);
+      utterance.rate = speed;
+      utterance.pitch = 1.0;
 
-    utterance.onend = () => {
-      if (autoAdvance && index < activePackage.slides.length - 1) {
-        setTimeout(() => {
-          speakSlideByIndex(index + 1, speed, autoAdvance);
-        }, 600);
-      } else {
+      const voices = window.speechSynthesis.getVoices();
+      let chosenVoice: SpeechSynthesisVoice | null = null;
+      if (voiceName) {
+        chosenVoice = voices.find(v => v.name === voiceName) || null;
+      }
+      if (!chosenVoice) {
+        chosenVoice = getBestNaturalVoice(voices);
+      }
+      if (chosenVoice) utterance.voice = chosenVoice;
+
+      utterance.onstart = () => {
+        setIsAudioPlaying(true);
+        setIsAudioPaused(false);
+        setAudioProgressText(`Slide ${targetSlide.pageNumber} of ${activePackage.slides.length}`);
+      };
+
+      utterance.onend = () => {
+        // Human breathing pause between thoughts!
+        segmentTimeoutRef.current = setTimeout(() => {
+          playSegment(segIdx + 1);
+        }, seg.pauseAfterMs || 400);
+      };
+
+      utterance.onerror = (e) => {
+        console.warn('Speech synthesis note:', e);
         setIsAudioPlaying(false);
         setIsAudioPaused(false);
-      }
+      };
+
+      speechUtteranceRef.current = utterance;
+      window.speechSynthesis.speak(utterance);
     };
 
-    utterance.onerror = (e) => {
-      console.warn('Speech synthesis note:', e);
-      setIsAudioPlaying(false);
-      setIsAudioPaused(false);
-    };
-
-    speechUtteranceRef.current = utterance;
-    window.speechSynthesis.speak(utterance);
-  }, [activePackage, audioSpeed, audioAutoAdvance, stopAudioCram]);
+    playSegment(0);
+  }, [activePackage, audioSpeed, audioAutoAdvance, selectedVoiceName, stopAudioCram]);
 
   const togglePlayPauseAudio = () => {
     if (typeof window === 'undefined' || !window.speechSynthesis) return;
@@ -1520,6 +1580,13 @@ export default function UniversityPortalPage() {
     setAudioSpeed(speed);
     if (isAudioPlaying && !isAudioPaused) {
       speakSlideByIndex(audioSlideIndex, speed);
+    }
+  };
+
+  const changeVoice = (name: string) => {
+    setSelectedVoiceName(name);
+    if (isAudioPlaying && !isAudioPaused) {
+      speakSlideByIndex(audioSlideIndex, audioSpeed, audioAutoAdvance, name);
     }
   };
 
@@ -1792,6 +1859,14 @@ export default function UniversityPortalPage() {
             <p className="text-xs sm:text-sm text-neutral-500 max-w-xl mx-auto">
               Access verified lecture slides uploaded by faculty & administrators across Ghanaian universities, or study your own custom slide decks with plain-English AI breakdowns.
             </p>
+
+            {/* Audio Feature Announcement */}
+            <div className="pt-1">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-medium border border-blue-200 shadow-2xs">
+                <Headphones className="w-3.5 h-3.5 text-blue-600" />
+                <span><b className="font-semibold text-blue-900">Audio Cram Mode:</b> Listen to conversational plain-English voice breakdowns of your slides on-the-go</span>
+              </span>
+            </div>
 
 
           </div>
@@ -2785,6 +2860,19 @@ export default function UniversityPortalPage() {
 
             {/* Quick Pacing Recalibration & Refresh */}
             <div className="flex flex-wrap items-center gap-2 self-start md:self-auto text-xs">
+              {/* Studio Audio Cram Launcher */}
+              <button
+                onClick={() => speakSlideByIndex(selectedSlideIndex)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition border flex items-center gap-1.5 cursor-pointer shadow-xs ${
+                  isAudioPlaying
+                    ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                    : 'bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-200'
+                }`}
+                title="Listen to conversational plain-English audio cram"
+              >
+                <Headphones className={`w-3.5 h-3.5 ${isAudioPlaying ? 'animate-pulse text-white' : 'text-blue-600'}`} />
+                <span>{isAudioPlaying ? 'Playing Audio Cram...' : 'Listen to Audio Cram'}</span>
+              </button>
               <button
                 onClick={handleReanalyze}
                 disabled={loading}
@@ -4158,6 +4246,22 @@ export default function UniversityPortalPage() {
                 </button>
               ))}
             </div>
+
+            {/* Natural Voice Selector */}
+            {availableVoices.length > 1 && (
+              <select
+                value={selectedVoiceName}
+                onChange={(e) => changeVoice(e.target.value)}
+                className="bg-slate-800 border border-slate-700 rounded-lg px-2 py-1 text-[11px] text-slate-300 focus:outline-none cursor-pointer max-w-[110px] truncate"
+                title="Choose voice tutor"
+              >
+                {availableVoices.map((v) => (
+                  <option key={v.name} value={v.name}>
+                    {v.name.replace(/Microsoft |Google |(Natural) |Online /g, '').substring(0, 14)}
+                  </option>
+                ))}
+              </select>
+            )}
 
             {/* Close / Stop */}
             <button
