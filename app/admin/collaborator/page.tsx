@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
@@ -250,7 +250,7 @@ export default function CollaboratorUploadPage() {
 
             <button
               type="submit"
-              className="w-full py-2.5 px-4 bg-slate-900 hover:bg-black text-white text-xs font-semibold rounded-lg transition"
+              className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition"
             >
               Verify Collaborator Access
             </button>
@@ -507,7 +507,7 @@ export default function CollaboratorUploadPage() {
               <button
                 type="submit"
                 disabled={uploading}
-                className="w-full py-2.5 px-4 bg-slate-900 hover:bg-black text-white font-semibold rounded-lg transition disabled:opacity-50 flex items-center justify-center gap-2"
+                className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {uploading ? (
                   <>
@@ -609,3 +609,4 @@ export default function CollaboratorUploadPage() {
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
@@ -1141,7 +1141,7 @@ export default function AdminDashboardPage() {
 
                 <button
                   type="submit"
-                  className="w-full py-2.5 px-4 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <span>Continue</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -1199,7 +1199,7 @@ export default function AdminDashboardPage() {
                   <button
                     type="submit"
                     disabled={isSigningIn}
-                    className="w-2/3 py-2.5 px-4 bg-slate-900 hover:bg-slate-800 disabled:opacity-60 text-white text-xs font-semibold rounded-lg transition shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                    className="w-2/3 py-2.5 px-4 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white text-xs font-semibold rounded-lg transition shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
                   >
                     <span>{isSigningIn ? 'Verifying…' : 'Sign In'}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -1844,7 +1844,7 @@ export default function AdminDashboardPage() {
                     setAccessError(null);
                     setShowGrantModal(true);
                   }}
-                  className="px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium transition flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium transition flex items-center gap-1.5 shadow-sm"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Grant Paid Pass</span>
@@ -1917,7 +1917,7 @@ export default function AdminDashboardPage() {
                     onClick={() => setStudentAccessFilter(filter)}
                     className={`px-2.5 py-1 rounded-md text-xs font-medium transition ${
                       studentAccessFilter === filter
-                        ? 'bg-slate-900 text-white'
+                        ? 'bg-blue-600 text-white'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                     }`}
                   >
@@ -1992,7 +1992,7 @@ export default function AdminDashboardPage() {
                                   setSelectedStudentForAccess(st);
                                   setShowGrantModal(true);
                                 }}
-                                className="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 text-white text-[11px] font-medium transition"
+                                className="px-2.5 py-1 rounded bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-medium transition"
                               >
                                 Grant Pass
                               </button>
@@ -2055,7 +2055,7 @@ export default function AdminDashboardPage() {
                           onClick={() => setGrantDurationDays(days)}
                           className={`py-2 rounded-lg text-xs font-medium border transition ${
                             grantDurationDays === days
-                              ? 'bg-slate-900 text-white border-slate-900'
+                              ? 'bg-blue-600 text-white border-blue-600'
                               : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
                           }`}
                         >
@@ -2080,7 +2080,7 @@ export default function AdminDashboardPage() {
                     </button>
                     <button
                       onClick={() => handleGrantAccess(selectedStudentForAccess)}
-                      className="px-4 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-medium shadow-sm transition"
+                      className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium shadow-sm transition"
                     >
                       Confirm Full Pass
                     </button>
@@ -2265,7 +2265,7 @@ export default function AdminDashboardPage() {
                     onClick={() => setMomoClaimsFilter(status)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition whitespace-nowrap cursor-pointer ${
                       momoClaimsFilter === status
-                        ? 'bg-slate-900 text-white'
+                        ? 'bg-blue-600 text-white'
                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                     }`}
                   >
@@ -2788,7 +2788,7 @@ export default function AdminDashboardPage() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setShowPdfUploadForm(!showPdfUploadForm)}
-                  className="px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-sm"
                 >
                   {showPdfUploadForm ? <XCircle className="w-3.5 h-3.5" /> : <Upload className="w-3.5 h-3.5" />}
                   <span>{showPdfUploadForm ? 'Close Uploader' : 'Upload Local PDF'}</span>
@@ -3048,7 +3048,7 @@ export default function AdminDashboardPage() {
                   <button
                     type="submit"
                     disabled={isUploadingPdf || !pdfFile}
-                    className="px-5 py-2 bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center gap-1.5"
+                    className="px-5 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center gap-1.5"
                   >
                     <Upload className="w-3.5 h-3.5" />
                     <span>{isUploadingPdf ? 'Uploading Document...' : 'Upload & Publish PDF'}</span>
@@ -3065,7 +3065,7 @@ export default function AdminDashboardPage() {
                     onClick={() => setPdfFilterCategory('ALL')}
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
                       pdfFilterCategory === 'ALL'
-                        ? 'bg-slate-900 text-white'
+                        ? 'bg-blue-600 text-white'
                         : 'bg-slate-100 text-slate-600 hover:text-slate-900'
                     }`}
                   >
@@ -3219,7 +3219,7 @@ export default function AdminDashboardPage() {
                                 <a
                                   href={doc.fileUrl}
                                   download={doc.fileName}
-                                  className="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 text-white text-[11px] font-medium transition flex items-center gap-1"
+                                  className="px-2.5 py-1 rounded bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-medium transition flex items-center gap-1"
                                 >
                                   <span>Download</span>
                                   <Download className="w-3 h-3" />
@@ -3332,7 +3332,7 @@ export default function AdminDashboardPage() {
                 <button
                   type="submit"
                   disabled={isGeneratingPins}
-                  className="w-full py-2 px-3 bg-slate-900 hover:bg-slate-800 disabled:opacity-60 text-white font-medium rounded-lg text-xs shadow-sm transition flex items-center justify-center gap-1.5"
+                  className="w-full py-2 px-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-medium rounded-lg text-xs shadow-sm transition flex items-center justify-center gap-1.5"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>{isGeneratingPins ? 'Minting…' : 'Generate Batch'}</span>
@@ -3499,7 +3499,7 @@ export default function AdminDashboardPage() {
                 className={`px-4 py-2 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow-sm ${
                   showBlogComposer
                     ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300'
-                    : 'bg-slate-900 hover:bg-slate-800 text-white'
+                    : 'bg-blue-600 hover:bg-blue-700 text-white'
                 }`}
               >
                 {showBlogComposer ? (
@@ -3635,7 +3635,7 @@ export default function AdminDashboardPage() {
                           }}
                           className={`px-2.5 py-1 rounded text-[11px] font-semibold transition ${
                             blogMediaType === 'none'
-                              ? 'bg-slate-900 text-white'
+                              ? 'bg-blue-600 text-white'
                               : 'text-slate-600 hover:text-slate-900'
                           }`}
                         >
@@ -4465,7 +4465,7 @@ export default function AdminDashboardPage() {
                   <button
                     type="submit"
                     disabled={savingWa}
-                    className="px-4 py-2 bg-slate-900 hover:bg-slate-800 disabled:opacity-60 text-white text-xs font-semibold rounded-lg transition shadow-xs"
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white text-xs font-semibold rounded-lg transition shadow-xs"
                   >
                     {savingWa ? 'Saving…' : 'Save Changes'}
                   </button>
@@ -4853,7 +4853,7 @@ export default function AdminDashboardPage() {
                     <button
                       type="button"
                       onClick={() => handleShareWeeklyExam('twitter')}
-                      className="py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs cursor-pointer"
+                      className="py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs cursor-pointer"
                     >
                       <span>X (Twitter)</span>
                     </button>
@@ -5276,7 +5276,7 @@ export default function AdminDashboardPage() {
                 <button
                   type="submit"
                   disabled={isSavingKeys}
-                  className="px-4 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:opacity-60 text-white text-xs font-bold transition shadow-xs"
+                  className="px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white text-xs font-bold transition shadow-xs"
                 >
                   {isSavingKeys ? 'Saving…' : 'Save Changes'}
                 </button>
@@ -5298,3 +5298,4 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
+

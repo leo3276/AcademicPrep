@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import Link from 'next/link';
@@ -1168,7 +1168,7 @@ export default function UniversityPortalPage() {
                         onClick={() => setSelectedLevelFilter(lvl)}
                         className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition ${
                           selectedLevelFilter === lvl
-                            ? 'bg-neutral-900 text-white'
+                            ? 'bg-blue-600 text-white'
                             : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
                         }`}
                       >
@@ -1185,7 +1185,7 @@ export default function UniversityPortalPage() {
                         onClick={() => setSelectedSemesterFilter(sem)}
                         className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition ${
                           selectedSemesterFilter === sem
-                            ? 'bg-neutral-900 text-white'
+                            ? 'bg-blue-600 text-white'
                             : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
                         }`}
                       >
@@ -1231,7 +1231,7 @@ export default function UniversityPortalPage() {
                       <div className="space-y-2.5">
                         {/* Badges Row */}
                         <div className="flex items-center justify-between gap-2">
-                          <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-neutral-900 text-white">
+                          <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-blue-600 text-white">
                             {slide.courseCode}
                           </span>
                           <span className="text-[10px] font-medium px-2 py-0.5 rounded bg-neutral-100 text-neutral-700 border border-neutral-200 truncate">
@@ -1269,7 +1269,7 @@ export default function UniversityPortalPage() {
                           <button
                             onClick={() => handleLoadAdminSlide(slide)}
                             disabled={loading}
-                            className="col-span-8 py-2 px-3 rounded-lg bg-neutral-900 hover:bg-black text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition disabled:opacity-60"
+                            className="col-span-8 py-2 px-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition disabled:opacity-60"
                           >
                             <Sparkles className="w-3.5 h-3.5 text-neutral-300" />
                             <span>Study in Studio ➔</span>
@@ -1405,7 +1405,7 @@ export default function UniversityPortalPage() {
                 <button
                   disabled={!selectedFile || loading}
                   onClick={handleProcessUpload}
-                  className="w-full sm:w-auto px-8 py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:opacity-30 disabled:pointer-events-none text-white text-xs font-semibold transition tracking-tight shadow-sm"
+                  className="w-full sm:w-auto px-8 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-30 disabled:pointer-events-none text-white text-xs font-semibold transition tracking-tight shadow-sm"
                 >
                   {loading ? 'Analyzing Slides...' : 'Analyze Lecture Slides'}
                 </button>
@@ -1579,7 +1579,7 @@ export default function UniversityPortalPage() {
                     onClick={() => setFilterHighYieldOnly(!filterHighYieldOnly)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-medium transition border ${
                       filterHighYieldOnly
-                        ? 'bg-neutral-900 text-white border-neutral-900'
+                        ? 'bg-blue-600 text-white border-blue-600'
                         : 'bg-white text-neutral-600 border-neutral-200 hover:bg-neutral-50'
                     }`}
                   >
@@ -1613,7 +1613,7 @@ export default function UniversityPortalPage() {
                       </span>
 
                       {currentSlide?.isLessonStart && (
-                        <span className="ml-1 text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-900 text-white font-semibold uppercase tracking-wider">
+                        <span className="ml-1 text-[10px] font-mono px-2 py-0.5 rounded bg-blue-600 text-white font-semibold uppercase tracking-wider">
                           Lesson Starts
                         </span>
                       )}
@@ -1700,7 +1700,7 @@ export default function UniversityPortalPage() {
                             onClick={() => setSelectedSlideIndex(idx)}
                             className={`shrink-0 h-8 px-2.5 rounded-lg font-mono text-[11px] font-medium transition flex items-center gap-1 border ${
                               isCurrent
-                                ? 'bg-neutral-900 text-white border-neutral-900 shadow-xs font-semibold'
+                                ? 'bg-blue-600 text-white border-blue-600 shadow-xs font-semibold'
                                 : isStart
                                 ? 'bg-neutral-50 text-neutral-900 border-neutral-900 font-semibold ring-1 ring-neutral-900/15'
                                 : isMastered
@@ -1786,7 +1786,7 @@ export default function UniversityPortalPage() {
                             onClick={() => toggleMastered(currentSlide.pageNumber)}
                             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition border flex items-center gap-1.5 ${
                               masteredSlides[currentSlide.pageNumber]
-                                ? 'bg-neutral-900 text-white border-neutral-900'
+                                ? 'bg-blue-600 text-white border-blue-600'
                                 : 'bg-white text-neutral-700 border-neutral-200 hover:bg-neutral-50'
                             }`}
                           >
@@ -1833,7 +1833,7 @@ export default function UniversityPortalPage() {
                               const startIdx = activePackage.slides.findIndex(s => s.pageNumber === activePackage.lessonStartPage);
                               if (startIdx !== -1) setSelectedSlideIndex(startIdx);
                             }}
-                            className="px-3 py-1.5 rounded-lg bg-neutral-900 text-white font-medium hover:bg-neutral-800 transition shrink-0 flex items-center gap-1.5 self-start sm:self-auto text-xs"
+                            className="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition shrink-0 flex items-center gap-1.5 self-start sm:self-auto text-xs"
                           >
                             <span>Go to Slide {activePackage.lessonStartPage}</span>
                             <ChevronRight className="w-3.5 h-3.5" />
@@ -1876,7 +1876,7 @@ export default function UniversityPortalPage() {
                             {currentSlide.detailedTakeaways.map((item, i) => (
                               <div key={i} className="p-3.5 rounded-xl border border-neutral-200/80 bg-neutral-50/40 space-y-1.5 text-xs">
                                 <div className="font-semibold text-neutral-900 text-xs flex items-center gap-2">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-neutral-900 shrink-0" />
+                                  <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0" />
                                   <span>{item.label}</span>
                                 </div>
                                 <p className="text-neutral-700 leading-relaxed text-xs pl-3.5">
@@ -1890,7 +1890,7 @@ export default function UniversityPortalPage() {
                         <ul className="space-y-2">
                           {currentSlide.simplifiedPoints.map((point, i) => (
                             <li key={i} className="flex items-start gap-2.5 text-xs text-neutral-700 leading-relaxed">
-                              <span className="w-1.5 h-1.5 rounded-full bg-neutral-900 mt-1.5 shrink-0" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 mt-1.5 shrink-0" />
                               <span>{point}</span>
                             </li>
                           ))}
@@ -1995,7 +1995,7 @@ export default function UniversityPortalPage() {
                         ) : (
                           <button
                             onClick={() => setRevealedAnswers(prev => ({ ...prev, [currentSlide.pageNumber]: true }))}
-                            className="px-3.5 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-medium transition"
+                            className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium transition"
                           >
                             Show Answer
                           </button>
@@ -2061,7 +2061,7 @@ export default function UniversityPortalPage() {
                                 <div
                                   className={`rounded-xl p-3 text-xs leading-relaxed max-w-[92%] ${
                                     msg.role === 'user'
-                                      ? 'bg-neutral-900 text-white font-medium'
+                                      ? 'bg-blue-600 text-white font-medium'
                                       : 'bg-neutral-50 border border-neutral-200/80 text-neutral-800 space-y-1.5'
                                   }`}
                                 >
@@ -2108,7 +2108,7 @@ export default function UniversityPortalPage() {
                           <button
                             type="submit"
                             disabled={!tutorInput.trim() || isTutorLoading}
-                            className="px-3.5 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 disabled:opacity-40 text-white text-xs font-medium transition flex items-center gap-1.5 shrink-0"
+                            className="px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-40 text-white text-xs font-medium transition flex items-center gap-1.5 shrink-0"
                           >
                             <span>Send</span>
                             <Send className="w-3 h-3" />
@@ -2357,7 +2357,7 @@ export default function UniversityPortalPage() {
                         <ul className="space-y-1.5">
                           {group.examPoints.map((pt, pIdx) => (
                             <li key={pIdx} className="flex items-start gap-2 text-neutral-700 leading-relaxed">
-                              <span className="w-1.5 h-1.5 rounded-full bg-neutral-900 mt-1.5 shrink-0" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 mt-1.5 shrink-0" />
                               <span>{pt}</span>
                             </li>
                           ))}
@@ -2390,7 +2390,7 @@ export default function UniversityPortalPage() {
                       ) : (
                         <button
                           onClick={() => setRevealedDigestAnswers(prev => ({ ...prev, [group.groupIndex]: true }))}
-                          className="px-3.5 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-medium transition"
+                          className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium transition"
                         >
                           Check Model Answer
                         </button>
@@ -2429,7 +2429,7 @@ export default function UniversityPortalPage() {
                               <button
                                 onClick={() => toggleSession(sessionId)}
                                 className={`w-4 h-4 rounded border flex items-center justify-center transition mt-0.5 shrink-0 ${
-                                  isDone ? 'bg-neutral-900 border-neutral-900 text-white' : 'border-neutral-300'
+                                  isDone ? 'bg-blue-600 border-blue-600 text-white' : 'border-neutral-300'
                                 }`}
                               >
                                 {isDone && <Check className="w-3 h-3" />}
@@ -2583,7 +2583,7 @@ export default function UniversityPortalPage() {
                               setSelectedSlideIndex(prev => prev + 1);
                             }
                           }}
-                          className="px-5 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-medium transition"
+                          className="px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium transition"
                         >
                           I Knew This
                         </button>
@@ -2602,7 +2602,7 @@ export default function UniversityPortalPage() {
                   ) : (
                     <button
                       onClick={() => setRevealedAnswers(prev => ({ ...prev, [currentSlide.pageNumber]: true }))}
-                      className="px-6 py-2.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-medium transition"
+                      className="px-6 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium transition"
                     >
                       Reveal Answer
                     </button>
@@ -2710,7 +2710,7 @@ export default function UniversityPortalPage() {
               </button>
               <button
                 onClick={() => saveApiKey(customApiKey)}
-                className="px-4 py-1.5 rounded-lg bg-neutral-900 text-white font-medium hover:bg-neutral-800 transition"
+                className="px-4 py-1.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
               >
                 Save
               </button>
@@ -2733,3 +2733,4 @@ export default function UniversityPortalPage() {
     </div>
   );
 }
+
