@@ -2921,16 +2921,6 @@ export default function UniversityPortalPage() {
             </div>
           </div>
 
-          {/* Step 5: Academic Integrity Notice */}
-          <div className="bg-blue-50/70 border border-blue-200/80 rounded-xl p-3 text-xs flex items-center justify-between gap-3 text-neutral-700 shadow-2xs">
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0" />
-              <p className="leading-snug">
-                <span className="font-bold text-neutral-900">Academic Integrity Notice:</span> Plain-English digests, flashcards, and quizzes are designed to reinforce student comprehension. Always cross-reference core formulas, exam scopes, and grading rubrics against your lecturer's official syllabus.
-              </p>
-            </div>
-          </div>
-
           {/* Minimal Navigation Tabs */}
           <div className="flex items-center gap-6 border-b border-neutral-200 text-xs font-medium overflow-x-auto">
             <button
@@ -4193,45 +4183,30 @@ export default function UniversityPortalPage() {
           FLOATING AUDIO CRAM PLAYER (Feature 4)
       ───────────────────────────────────────────────────────────── */}
       {(isAudioPlaying || isAudioPaused) && activePackage && (
-        <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-40 w-[95%] max-w-xl bg-slate-900/95 backdrop-blur-md text-white border border-slate-700/80 rounded-2xl p-3 sm:p-3.5 shadow-2xl flex items-center justify-between gap-3 animate-in fade-in slide-in-from-bottom-3 font-sans">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 font-bold shadow-xs">
-              <Headphones className="w-4 h-4 animate-pulse" />
-            </div>
-            <div className="min-w-0">
-              <div className="flex items-center gap-1.5 text-[11px] text-slate-400 font-mono">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span>AUDIO CRAM MODE</span>
-                <span>•</span>
-                <span className="truncate">{audioProgressText || `Slide ${audioSlideIndex + 1} of ${activePackage.slides.length}`}</span>
-              </div>
-              <p className="text-xs sm:text-sm font-semibold text-white truncate">
-                {activePackage.slides[audioSlideIndex]?.title || 'Slide Audio'}
-              </p>
+        <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-lg bg-slate-900 text-white rounded-xl px-4 py-2.5 shadow-2xl border border-slate-800 flex items-center justify-between gap-3 animate-in fade-in slide-in-from-bottom-2">
+          {/* Play/Pause Button */}
+          <button
+            onClick={togglePlayPauseAudio}
+            className="w-8 h-8 rounded-lg bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shrink-0 transition cursor-pointer"
+            title={isAudioPaused ? 'Resume' : 'Pause'}
+          >
+            {isAudioPaused ? <Play className="w-3.5 h-3.5 fill-current ml-0.5" /> : <Pause className="w-3.5 h-3.5 fill-current" />}
+          </button>
+
+          {/* Slide info & title */}
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-mono text-blue-400 font-semibold shrink-0">
+                Slide {audioSlideIndex + 1}/{activePackage.slides.length}
+              </span>
+              <span className="text-xs text-slate-200 font-medium truncate">
+                {activePackage.slides[audioSlideIndex]?.title || 'Audio Cram'}
+              </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-            {/* Prev */}
-            <button
-              onClick={() => skipAudioSlide('prev')}
-              disabled={audioSlideIndex <= 0}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-white disabled:opacity-30 transition cursor-pointer"
-              title="Previous Slide"
-            >
-              <SkipBack className="w-4 h-4" />
-            </button>
-
-            {/* Play / Pause */}
-            <button
-              onClick={togglePlayPauseAudio}
-              className="w-8 h-8 rounded-full bg-white text-slate-900 hover:bg-slate-100 flex items-center justify-center transition shadow-xs cursor-pointer"
-              title={isAudioPaused ? 'Resume Audio' : 'Pause Audio'}
-            >
-              {isAudioPaused ? <Play className="w-4 h-4 fill-current ml-0.5" /> : <Pause className="w-4 h-4 fill-current" />}
-            </button>
-
-            {/* Next */}
+          {/* Minimal Controls: Next, Speed, Close */}
+          <div className="flex items-center gap-1.5 shrink-0">
             <button
               onClick={() => skipAudioSlide('next')}
               disabled={audioSlideIndex >= activePackage.slides.length - 1}
@@ -4241,40 +4216,18 @@ export default function UniversityPortalPage() {
               <SkipForward className="w-4 h-4" />
             </button>
 
-            {/* Speed Selector */}
-            <div className="flex items-center bg-slate-800 rounded-lg p-0.5 border border-slate-700 text-[11px] font-mono">
-              {[1, 1.25, 1.5].map((spd) => (
-                <button
-                  key={spd}
-                  onClick={() => changeSpeed(spd)}
-                  className={`px-1.5 py-0.5 rounded transition cursor-pointer ${audioSpeed === spd ? 'bg-blue-600 text-white font-bold' : 'text-slate-400 hover:text-slate-200'}`}
-                >
-                  {spd}x
-                </button>
-              ))}
-            </div>
+            <button
+              onClick={() => changeSpeed(audioSpeed === 1 ? 1.25 : audioSpeed === 1.25 ? 1.5 : 1)}
+              className="px-2 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono font-semibold transition cursor-pointer"
+              title="Toggle speed: 1.0x -> 1.25x -> 1.5x"
+            >
+              {audioSpeed === 1 ? '1.0x' : `${audioSpeed}x`}
+            </button>
 
-            {/* Natural Voice Selector */}
-            {availableVoices.length > 1 && (
-              <select
-                value={selectedVoiceName}
-                onChange={(e) => changeVoice(e.target.value)}
-                className="bg-slate-800 border border-slate-700 rounded-lg px-2 py-1 text-[11px] text-slate-300 focus:outline-none cursor-pointer max-w-[110px] truncate"
-                title="Choose voice tutor"
-              >
-                {availableVoices.map((v) => (
-                  <option key={v.name} value={v.name}>
-                    {v.name.replace(/Microsoft |Google |(Natural) |Online /g, '').substring(0, 14)}
-                  </option>
-                ))}
-              </select>
-            )}
-
-            {/* Close / Stop */}
             <button
               onClick={stopAudioCram}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 transition ml-1 cursor-pointer"
-              title="Stop Audio Cram"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-white transition cursor-pointer"
+              title="Close Player"
             >
               <X className="w-4 h-4" />
             </button>
