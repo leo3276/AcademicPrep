@@ -94,6 +94,7 @@ import {
   RefreshCw,
   FlaskConical,
   GraduationCap,
+  Flag,
   Share2
 } from 'lucide-react';
 import { parseVideoUrl } from '@/lib/mediaUtils';
@@ -164,6 +165,11 @@ export default function AdminDashboardPage() {
 
   // University Slides Store
   const [universitySlides, setUniversitySlides] = useState<UniversitySlide[]>([]);
+  // University Content Reports Store (Step 3)
+  const [universityContentReports, setUniversityContentReports] = useState<any[]>([]);
+  const [loadingUniReports, setLoadingUniReports] = useState(false);
+  const [uniSubTab, setUniSubTab] = useState<'slides' | 'reports'>('slides');
+  const [uniReportFilter, setUniReportFilter] = useState<'all' | 'pending' | 'resolved' | 'dismissed'>('all');
   const [loadingUniSlides, setLoadingUniSlides] = useState(false);
   const [collaboratorLink, setCollaboratorLink] = useState('');
   const [collabLinkCopied, setCollabLinkCopied] = useState(false);
@@ -457,6 +463,40 @@ export default function AdminDashboardPage() {
     }
   };
 
+  const loadUniversityReports = async () => {
+    setLoadingUniReports(true);
+    try {
+      const res = await fetch('/api/university/reports', { cache: 'no-store' });
+      const data = await res.json();
+      if (data.success && Array.isArray(data.reports)) {
+        setUniversityContentReports(data.reports);
+      }
+    } catch (e) {
+      console.warn('Failed to load university reports:', e);
+    } finally {
+      setLoadingUniReports(false);
+    }
+  };
+
+  const handleUpdateReportStatus = async (id: string, status: 'resolved' | 'dismissed') => {
+    try {
+      const res = await fetch('/api/university/reports', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, status }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setUniversityContentReports(prev =>
+          prev.map(r => (r.id === id ? { ...r, status } : r))
+        );
+      } else {
+        alert(data.error || 'Failed to update report status');
+      }
+    } catch {
+      alert('Network error updating report');
+    }
+  };
   const loadCollaboratorLink = async () => {
     try {
       const res = await fetch('/api/university/collaborator');
@@ -1004,6 +1044,7 @@ export default function AdminDashboardPage() {
     if (activeTab === 'university_slides') {
       loadUniversitySlides();
       loadCollaboratorLink();
+      loadUniversityReports();
     }
   }, [activeTab]);
 
@@ -5198,7 +5239,57 @@ export default function AdminDashboardPage() {
               </div>
             </div>
 
-            {/* Special Collaborator Dispatch Link Box */}
+            {/* Sub-Tab Bar */}
+            <div className="flex items-center gap-2 border-b border-slate-200 pb-3">
+              <button
+                type="button"
+                onClick={() => setUniSubTab('slides')}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-2 ${
+                  uniSubTab === 'slides'
+                    ? 'bg-blue-600 text-white shadow-xs'
+                    : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+                }`}
+              >
+                <BookOpen className="w-3.5 h-3.5" />
+                <span>Published Slides</span>
+                <span className={`px-1.5 py-0.2 rounded-full font-mono text-[10px] ${
+                  uniSubTab === 'slides' ? 'bg-blue-700 text-white' : 'bg-slate-100 text-slate-600'
+                }`}>
+                  {universitySlides.length}
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setUniSubTab('reports');
+                  loadUniversityReports();
+                }}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-2 ${
+                  uniSubTab === 'reports'
+                    ? 'bg-blue-600 text-white shadow-xs'
+                    : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+                }`}
+              >
+                <Flag className="w-3.5 h-3.5" />
+                <span>Student Issue Reports</span>
+                {universityContentReports.filter(r => r.status === 'pending').length > 0 ? (
+                  <span className="px-1.5 py-0.2 rounded-full font-mono text-[10px] bg-amber-500 text-white font-bold">
+                    {universityContentReports.filter(r => r.status === 'pending').length}
+                  </span>
+                ) : (
+                  <span className={`px-1.5 py-0.2 rounded-full font-mono text-[10px] ${
+                    uniSubTab === 'reports' ? 'bg-blue-700 text-white' : 'bg-slate-100 text-slate-600'
+                  }`}>
+                    {universityContentReports.length}
+                  </span>
+                )}
+              </button>
+            </div>
+
+            {uniSubTab === 'slides' ? (
+              <>
+                {/* Special Collaborator Dispatch Link Box */}
             <div className="bg-gradient-to-r from-blue-50/60 via-slate-50 to-indigo-50/40 border border-blue-200/80 rounded-2xl p-5 shadow-xs space-y-3">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="space-y-0.5">
@@ -5604,6 +5695,200 @@ export default function AdminDashboardPage() {
                 );
               })()}
             </div>
+              </>
+            ) : (
+              /* STUDENT CONTENT ISSUE REPORTS REVIEW QUEUE */
+              <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+                <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center font-bold">
+                      <Flag className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-slate-900">Student Content Issue Reports</h3>
+                      <p className="text-[11px] text-slate-500">
+                        Review reports submitted by university students flagging outdated notes, typos, and broken slides.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg text-xs">
+                      <button
+                        type="button"
+                        onClick={() => setUniReportFilter('all')}
+                        className={`px-2.5 py-1 rounded-md transition cursor-pointer font-medium ${
+                          uniReportFilter === 'all' ? 'bg-white text-slate-900 shadow-2xs font-bold' : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                      >
+                        All ({universityContentReports.length})
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setUniReportFilter('pending')}
+                        className={`px-2.5 py-1 rounded-md transition cursor-pointer font-medium ${
+                          uniReportFilter === 'pending' ? 'bg-white text-amber-700 shadow-2xs font-bold' : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                      >
+                        Pending ({universityContentReports.filter(r => r.status === 'pending').length})
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setUniReportFilter('resolved')}
+                        className={`px-2.5 py-1 rounded-md transition cursor-pointer font-medium ${
+                          uniReportFilter === 'resolved' ? 'bg-white text-emerald-700 shadow-2xs font-bold' : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                      >
+                        Resolved ({universityContentReports.filter(r => r.status === 'resolved').length})
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setUniReportFilter('dismissed')}
+                        className={`px-2.5 py-1 rounded-md transition cursor-pointer font-medium ${
+                          uniReportFilter === 'dismissed' ? 'bg-white text-slate-700 shadow-2xs font-bold' : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                      >
+                        Dismissed ({universityContentReports.filter(r => r.status === 'dismissed').length})
+                      </button>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={loadUniversityReports}
+                      disabled={loadingUniReports}
+                      className="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 text-xs font-medium flex items-center gap-1 transition cursor-pointer"
+                    >
+                      <RefreshCw className={`w-3.5 h-3.5 ${loadingUniReports ? 'animate-spin' : ''}`} />
+                      <span>Refresh</span>
+                    </button>
+                  </div>
+                </div>
+
+                {loadingUniReports ? (
+                  <div className="py-16 text-center text-xs text-slate-400 space-y-2">
+                    <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
+                    <p>Loading issue reports...</p>
+                  </div>
+                ) : (() => {
+                  const displayedReports = universityContentReports.filter(r => {
+                    if (uniReportFilter === 'all') return true;
+                    return r.status === uniReportFilter;
+                  });
+
+                  if (displayedReports.length === 0) {
+                    return (
+                      <div className="py-16 text-center border border-dashed border-slate-200 rounded-xl p-8 space-y-2">
+                        <CheckCircle2 className="w-8 h-8 text-emerald-500 mx-auto" />
+                        <p className="text-xs font-semibold text-slate-800">
+                          {uniReportFilter === 'pending'
+                            ? 'No pending reports. All student content issues are resolved!'
+                            : 'No issue reports found for this filter.'}
+                        </p>
+                        <p className="text-[11px] text-slate-500 max-w-sm mx-auto">
+                          When university students flag outdated syllabi, typos, or corrupted slides in the portal, they will appear here.
+                        </p>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div className="overflow-x-auto border border-slate-200 rounded-xl">
+                      <table className="w-full text-left text-xs">
+                        <thead className="bg-slate-50 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                          <tr>
+                            <th className="px-4 py-3">Status</th>
+                            <th className="px-4 py-3">Course &amp; Title</th>
+                            <th className="px-4 py-3">Issue Category</th>
+                            <th className="px-4 py-3">Student Description</th>
+                            <th className="px-4 py-3">Reporter Contact</th>
+                            <th className="px-4 py-3">Date</th>
+                            <th className="px-4 py-3 text-right">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100">
+                          {displayedReports.map(rep => (
+                            <tr key={rep.id} className="hover:bg-slate-50/70 transition">
+                              <td className="px-4 py-3 whitespace-nowrap">
+                                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${
+                                  rep.status === 'resolved'
+                                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                    : rep.status === 'dismissed'
+                                    ? 'bg-slate-100 text-slate-600 border-slate-200'
+                                    : 'bg-amber-50 text-amber-700 border-amber-200 font-bold'
+                                }`}>
+                                  {rep.status === 'resolved' ? 'Resolved' : rep.status === 'dismissed' ? 'Dismissed' : 'Pending Review'}
+                                </span>
+                              </td>
+
+                              <td className="px-4 py-3 min-w-[160px]">
+                                <div className="space-y-0.5">
+                                  <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-600 text-white">
+                                    {rep.courseCode}
+                                  </span>
+                                  <p className="font-semibold text-slate-900 truncate max-w-xs">{rep.courseTitle}</p>
+                                  {rep.university && (
+                                    <p className="text-[10px] text-slate-500">{rep.university}</p>
+                                  )}
+                                </div>
+                              </td>
+
+                              <td className="px-4 py-3 whitespace-nowrap">
+                                <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-medium capitalize">
+                                  {rep.issueType.replace('_', ' ')}
+                                </span>
+                              </td>
+
+                              <td className="px-4 py-3 max-w-sm">
+                                <p className="text-slate-800 text-xs line-clamp-2 leading-relaxed">
+                                  {rep.description}
+                                </p>
+                              </td>
+
+                              <td className="px-4 py-3 whitespace-nowrap font-mono text-[11px] text-slate-600">
+                                {rep.contactEmail || <span className="text-slate-400 font-sans italic">Anonymous</span>}
+                              </td>
+
+                              <td className="px-4 py-3 whitespace-nowrap text-slate-400 font-mono text-[11px]">
+                                {new Date(rep.createdAt).toLocaleDateString()}
+                              </td>
+
+                              <td className="px-4 py-3 whitespace-nowrap text-right">
+                                <div className="flex items-center justify-end gap-1">
+                                  {rep.status === 'pending' && (
+                                    <>
+                                      <button
+                                        type="button"
+                                        onClick={() => handleUpdateReportStatus(rep.id, 'resolved')}
+                                        className="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 text-xs font-semibold flex items-center gap-1 transition cursor-pointer"
+                                        title="Mark issue as resolved"
+                                      >
+                                        <Check className="w-3 h-3" />
+                                        <span>Resolve</span>
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => handleUpdateReportStatus(rep.id, 'dismissed')}
+                                        className="p-1 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition cursor-pointer"
+                                        title="Dismiss report"
+                                      >
+                                        <X className="w-3.5 h-3.5" />
+                                      </button>
+                                    </>
+                                  )}
+                                  {rep.status !== 'pending' && (
+                                    <span className="text-[11px] text-slate-400 italic">Reviewed</span>
+                                  )}
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  );
+                })()}
+              </div>
+            )}
           </div>
         )}
 

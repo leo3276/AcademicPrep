@@ -248,3 +248,66 @@ export function downloadTimetableIcs(timetable: PersonalTimetable): void {
     } catch {}
   }, 60000);
 }
+
+// Generate single deadline / exam event for native phone calendar with alarms
+export function downloadDeadlineIcs(deadline: {
+  title: string;
+  courseCode: string;
+  dueDate: string;
+  dueTime?: string;
+  notes?: string;
+}): void {
+  if (typeof window === 'undefined') return;
+
+  const dateClean = deadline.dueDate.replace(/-/g, '');
+  const timeClean = deadline.dueTime ? deadline.dueTime.replace(/:/g, '') + '00' : '090000';
+  const dtStart = `${dateClean}T${timeClean}`;
+  const nowStr = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+
+  const summary = `AcademicPrep: [${deadline.courseCode}] ${deadline.title}`.replace(/[\r\n]+/g, ' ').trim();
+  const description = (deadline.notes || `Due date for ${deadline.courseCode}: ${deadline.title}`).replace(/[\r\n]+/g, ' ').trim();
+
+  const icsLines = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//AcademicPrep Ghana//University Planner//EN',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    'BEGIN:VEVENT',
+    `UID:deadline-${Date.now()}@academicprep.com`,
+    `DTSTAMP:${nowStr}`,
+    `DTSTART:${dtStart}`,
+    `DTEND:${dtStart}`,
+    `SUMMARY:${summary}`,
+    `DESCRIPTION:${description}`,
+    'STATUS:CONFIRMED',
+    'BEGIN:VALARM',
+    'TRIGGER:-PT15M',
+    'ACTION:DISPLAY',
+    'DESCRIPTION:Reminder: Upcoming AcademicPrep Deadline',
+    'END:VALARM',
+    'BEGIN:VALARM',
+    'TRIGGER:-PT1D',
+    'ACTION:DISPLAY',
+    'DESCRIPTION:Reminder: Deadline Due Tomorrow',
+    'END:VALARM',
+    'END:VEVENT',
+    'END:VCALENDAR',
+  ];
+
+  const blob = new Blob([icsLines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
+  const filename = `${deadline.courseCode}_${deadline.title.replace(/[^a-zA-Z0-9]/g, '_')}.ics`;
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  setTimeout(() => {
+    try {
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch {}
+  }, 60000);
+}
+

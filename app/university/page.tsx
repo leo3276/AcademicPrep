@@ -33,8 +33,18 @@ import {
   Bookmark,
   Plus,
   Trash2,
-  CheckCircle2
+  CheckCircle2,
+  Bell,
+  BellRing,
+  Flag,
+  Download,
+  AlertTriangle
 } from 'lucide-react';
+import { 
+  requestNotificationPermission, 
+  sendStudyNotification, 
+  downloadDeadlineIcs 
+} from '@/lib/timetableReminders';
 import { 
   CompleteSlideStudyPackage, 
   SlideAnalysis, 
@@ -291,6 +301,156 @@ export default function UniversityPortalPage() {
       return next;
     });
   };
+  // Currently opened admin slide deck in studio
+  const [currentAdminSlide, setCurrentAdminSlide] = useState<UniversitySlide | null>(null);
+
+  // Daily Reminder Notification System for Step 2
+  const [dailyRemindersEnabled, setDailyRemindersEnabled] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        return localStorage.getItem('academicprep_daily_reminders') === 'true';
+      } catch {
+        return false;
+      }
+    }
+    return false;
+  });
+  const [dismissedUrgentBanner, setDismissedUrgentBanner] = useState<boolean>(false);
+
+  // Urgent pending deadlines due today or tomorrow
+  const urgentDeadlines = useMemo(() => {
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    return deadlines.filter(d => {
+      if (d.isCompleted) return false;
+      const target = new Date(d.dueDate);
+      target.setHours(0, 0, 0, 0);
+      const diffDays = Math.ceil((target.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+      return diffDays <= 1; // due today or tomorrow or overdue
+    });
+  }, [deadlines]);
+
+  // Check and trigger daily reminder notifications once per day
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (!dailyRemindersEnabled) return;
+    if (typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
+
+    try {
+      const todayStr = new Date().toISOString().split('T')[0];
+      const lastNotifyDate = localStorage.getItem('academicprep_last_daily_deadline_check');
+
+      if (lastNotifyDate !== todayStr) {
+        const now = new Date();
+        now.setHours(0, 0, 0, 0);
+
+        const urgentList = deadlines.filter(d => {
+          if (d.isCompleted) return false;
+          const target = new Date(d.dueDate);
+          target.setHours(0, 0, 0, 0);
+          const diffDays = Math.ceil((target.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+          return diffDays <= 2;
+        });
+
+        if (urgentList.length > 0) {
+          const first = urgentList[0];
+          const target = new Date(first.dueDate);
+          target.setHours(0, 0, 0, 0);
+          const diffDays = Math.ceil((target.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+          const dueMsg = diffDays < 0 ? 'is overdue!' : diffDays === 0 ? 'is due today!' : diffDays === 1 ? 'is due tomorrow!' : 'is due in 2 days!';
+          const bodyText = urgentList.length === 1
+            ? first.courseCode + ': "' + first.title + '" ' + dueMsg
+            : 'You have ' + urgentList.length + ' deadlines due soon (' + first.courseCode + ' and more). Stay ahead on your revision!';
+
+          sendStudyNotification('AcademicPrep Deadline Reminder 🎓', bodyText, '/university?tab=planner');
+          localStorage.setItem('academicprep_last_daily_deadline_check', todayStr);
+        }
+      }
+    } catch {}
+  }, [dailyRemindersEnabled, deadlines]);
+
+  const handleToggleDailyReminders = async () => {
+    if (!dailyRemindersEnabled) {
+      const granted = await requestNotificationPermission();
+      if (granted) {
+        setDailyRemindersEnabled(true);
+        try {
+          localStorage.setItem('academicprep_daily_reminders', 'true');
+        } catch {}
+        sendStudyNotification(
+          'Daily Reminders Activated 🔔',
+          'AcademicPrep will send you a daily briefing for upcoming university exams & assignment deadlines.',
+          '/university?tab=planner'
+        );
+      } else {
+        alert('Please allow browser notifications so AcademicPrep can remind you of upcoming deadlines.');
+      }
+    } else {
+      setDailyRemindersEnabled(false);
+      try {
+        localStorage.setItem('academicprep_daily_reminders', 'false');
+      } catch {}
+    }
+  };
+
+  // Content Issue & Error Reporting (Step 3)
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportTarget, setReportTarget] = useState<{
+    slideId?: string;
+    courseCode: string;
+    courseTitle: string;
+    university?: string;
+  } | null>(null);
+  const [reportIssueType, setReportIssueType] = useState<'outdated' | 'typo_inaccuracy' | 'missing_pages' | 'broken_file' | 'wrong_course' | 'other'>('outdated');
+  const [reportDescription, setReportDescription] = useState('');
+  const [reportContactEmail, setReportContactEmail] = useState('');
+  const [reportSubmitting, setReportSubmitting] = useState(false);
+  const [reportSuccess, setReportSuccess] = useState(false);
+
+  const handleOpenReportModal = (target: { slideId?: string; courseCode: string; courseTitle: string; university?: string }) => {
+    setReportTarget(target);
+    setReportIssueType('outdated');
+    setReportDescription('');
+    setReportContactEmail('');
+    setReportSuccess(false);
+    setShowReportModal(true);
+  };
+
+  const handleSubmitReport = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!reportTarget || !reportDescription.trim()) return;
+
+    setReportSubmitting(true);
+    try {
+      const res = await fetch('/api/university/reports', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          slideId: reportTarget.slideId,
+          courseCode: reportTarget.courseCode,
+          courseTitle: reportTarget.courseTitle,
+          university: reportTarget.university,
+          issueType: reportIssueType,
+          description: reportDescription.trim(),
+          contactEmail: reportContactEmail.trim() || undefined,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setReportSuccess(true);
+        setTimeout(() => {
+          setShowReportModal(false);
+          setReportSuccess(false);
+        }, 1600);
+      } else {
+        alert(data.error || 'Failed to submit report');
+      }
+    } catch {
+      alert('Network error submitting report');
+    } finally {
+      setReportSubmitting(false);
+    }
+  };
   const [selectedUniFilter, setSelectedUniFilter] = useState<string>('All');
   const [selectedLevelFilter, setSelectedLevelFilter] = useState<string>('All');
   const [selectedSemesterFilter, setSelectedSemesterFilter] = useState<string>('All');
@@ -489,6 +649,7 @@ export default function UniversityPortalPage() {
   };
 
   const handleClearDeck = () => {
+    setCurrentAdminSlide(null);
     if (activePackage && typeof window !== 'undefined') {
       localStorage.removeItem('academicprep_active_package');
     }
@@ -534,6 +695,7 @@ export default function UniversityPortalPage() {
   }, []);
 
   const handleLoadAdminSlide = async (slide: UniversitySlide) => {
+    setCurrentAdminSlide(slide);
     setLoading(true);
     setLoadingStatus(`Fetching ${slide.courseCode} slides (${slide.title})...`);
 
@@ -1192,6 +1354,19 @@ export default function UniversityPortalPage() {
                   <Printer className="w-3.5 h-3.5" />
                   <span className="hidden sm:inline">Print Summary</span>
                 </button>
+                <button
+                  onClick={() => handleOpenReportModal({
+                    slideId: currentAdminSlide?.id,
+                    courseCode: currentAdminSlide?.courseCode || 'GENERAL',
+                    courseTitle: currentAdminSlide?.title || activePackage.deckTitle || 'Slide Deck',
+                    university: currentAdminSlide?.university,
+                  })}
+                  className="text-neutral-500 hover:text-amber-600 transition flex items-center gap-1.5"
+                  title="Report content issue or outdated notes"
+                >
+                  <Flag className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Report Issue</span>
+                </button>
               </>
             )}
           </div>
@@ -1203,6 +1378,39 @@ export default function UniversityPortalPage() {
       ───────────────────────────────────────────────────────────── */}
       {!activePackage && (
         <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 space-y-8">
+          {/* Urgent Milestone Notification Banner */}
+          {urgentDeadlines.length > 0 && !dismissedUrgentBanner && (
+            <div className="bg-amber-50/90 border border-amber-200/90 rounded-xl p-3.5 sm:p-4 text-xs flex items-center justify-between gap-3 shadow-2xs">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 font-bold">
+                  <AlertTriangle className="w-4 h-4" />
+                </div>
+                <div className="min-w-0">
+                  <p className="font-semibold text-neutral-900 truncate">
+                    Upcoming Milestone: <span className="font-mono text-amber-800 font-bold">{urgentDeadlines[0].courseCode}</span> {urgentDeadlines[0].title}
+                  </p>
+                  <p className="text-[11px] text-neutral-600">
+                    Due {urgentDeadlines[0].dueDate} • Keep up with your study schedule.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  onClick={() => setPortalMode('planner')}
+                  className="px-2.5 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-semibold text-[11px] transition shadow-2xs cursor-pointer"
+                >
+                  View Planner
+                </button>
+                <button
+                  onClick={() => setDismissedUrgentBanner(true)}
+                  className="p-1 rounded-md text-neutral-400 hover:text-neutral-600 transition cursor-pointer"
+                  title="Dismiss notification banner"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          )}
           
           {/* Header Banner */}
           <div className="space-y-2 text-center max-w-2xl mx-auto">
@@ -1418,6 +1626,24 @@ export default function UniversityPortalPage() {
                             <span className="text-[10px] font-medium px-2 py-0.5 rounded bg-neutral-100 text-neutral-700 border border-neutral-200 truncate max-w-[140px]">
                               {slide.level} • {slide.semester}
                             </span>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleOpenReportModal({
+                                  slideId: slide.id,
+                                  courseCode: slide.courseCode,
+                                  courseTitle: slide.title,
+                                  university: slide.university,
+                                });
+                              }}
+                              className="p-1.5 rounded-lg border border-neutral-200 text-neutral-400 hover:text-amber-600 hover:border-amber-200 transition cursor-pointer"
+                              title="Report Outdated Notes or Error"
+                              aria-label="Report Outdated Notes or Error"
+                            >
+                              <Flag className="w-3.5 h-3.5" />
+                            </button>
+
                             <button
                               type="button"
                               onClick={(e) => {
@@ -1659,13 +1885,38 @@ export default function UniversityPortalPage() {
                     </p>
                   </div>
 
-                  <button
-                    onClick={() => setShowAddDeadlineModal(true)}
-                    className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs flex items-center gap-1.5 transition shrink-0"
-                  >
-                    <Plus className="w-3.5 h-3.5" />
-                    <span>Add Deadline / Exam</span>
-                  </button>
+                  <div className="flex items-center gap-2 shrink-0 flex-wrap">
+                    <button
+                      type="button"
+                      onClick={handleToggleDailyReminders}
+                      className={`px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition border cursor-pointer ${
+                        dailyRemindersEnabled
+                          ? 'bg-blue-50 border-blue-300 text-blue-700 hover:bg-blue-100 shadow-2xs'
+                          : 'bg-white border-neutral-200 text-neutral-600 hover:bg-neutral-50'
+                      }`}
+                      title={dailyRemindersEnabled ? 'Daily reminders are active' : 'Turn on daily morning reminder notifications'}
+                    >
+                      {dailyRemindersEnabled ? (
+                        <>
+                          <BellRing className="w-3.5 h-3.5 text-blue-600" />
+                          <span>Reminders: ON</span>
+                        </>
+                      ) : (
+                        <>
+                          <Bell className="w-3.5 h-3.5 text-neutral-400" />
+                          <span>Reminders: OFF</span>
+                        </>
+                      )}
+                    </button>
+
+                    <button
+                      onClick={() => setShowAddDeadlineModal(true)}
+                      className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs flex items-center gap-1.5 transition shrink-0 cursor-pointer"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                      <span>Add Deadline / Exam</span>
+                    </button>
+                  </div>
                 </div>
 
                 {/* Filter Pills */}
@@ -1806,6 +2057,15 @@ export default function UniversityPortalPage() {
                           </div>
 
                           <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+                            <button
+                              type="button"
+                              onClick={() => downloadDeadlineIcs(item)}
+                              className="px-2.5 py-1.5 rounded-lg border border-neutral-200 hover:bg-neutral-50 text-neutral-600 text-xs font-medium flex items-center gap-1 transition cursor-pointer"
+                              title="Sync to Phone Calendar with alarms"
+                            >
+                              <Download className="w-3 h-3 text-neutral-400" />
+                              <span className="hidden sm:inline">Calendar</span>
+                            </button>
                             {matchingSlide && (
                               <button
                                 onClick={() => handleLoadAdminSlide(matchingSlide)}
@@ -3400,6 +3660,135 @@ export default function UniversityPortalPage() {
           <div className="text-center space-y-2">
             <div className="w-6 h-6 border-2 border-neutral-900 border-t-transparent rounded-full animate-spin mx-auto" />
             <p className="text-xs font-medium text-neutral-800">{loadingStatus}</p>
+          </div>
+        </div>
+      )}
+
+      {/* ─────────────────────────────────────────────────────────────
+          ISSUE & ERROR REPORT MODAL (STEP 3)
+      ───────────────────────────────────────────────────────────── */}
+      {showReportModal && reportTarget && (
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-150">
+          <div className="bg-white border border-neutral-200 rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-xl space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-neutral-100">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-lg bg-amber-50 text-amber-700 border border-amber-200 flex items-center justify-center font-bold">
+                  <Flag className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-neutral-900">Report Content Issue</h3>
+                  <p className="text-[11px] text-neutral-500">
+                    Flag outdated notes, typos, or incorrect syllabus content.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowReportModal(false)}
+                className="p-1 text-neutral-400 hover:text-neutral-700 rounded-lg hover:bg-neutral-100 transition cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {reportSuccess ? (
+              <div className="py-8 text-center space-y-2">
+                <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto border border-emerald-200">
+                  <Check className="w-5 h-5 stroke-[3]" />
+                </div>
+                <h4 className="text-sm font-bold text-neutral-900">Report Submitted</h4>
+                <p className="text-xs text-neutral-500 max-w-xs mx-auto">
+                  Thank you! Our academic team will review the issue and update the course slides.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmitReport} className="space-y-3.5 text-xs">
+                <div className="bg-neutral-50 border border-neutral-200 rounded-lg p-2.5 space-y-0.5">
+                  <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-600 text-white">
+                    {reportTarget.courseCode}
+                  </span>
+                  <p className="font-semibold text-neutral-900 text-xs truncate">
+                    {reportTarget.courseTitle}
+                  </p>
+                  {reportTarget.university && (
+                    <p className="text-[11px] text-neutral-500">
+                      {reportTarget.university}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="font-semibold text-neutral-700 block mb-1">
+                    Issue Category
+                  </label>
+                  <select
+                    value={reportIssueType}
+                    onChange={(e: any) => setReportIssueType(e.target.value)}
+                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-neutral-900 focus:outline-none focus:border-blue-500"
+                  >
+                    <option value="outdated">Outdated Notes / Changed Syllabus</option>
+                    <option value="typo_inaccuracy">Typo or Inaccurate Formula/Concept</option>
+                    <option value="missing_pages">Missing Pages or Corrupted Slides</option>
+                    <option value="broken_file">Cannot Open / Download PDF</option>
+                    <option value="wrong_course">Wrong Course / Wrong University</option>
+                    <option value="other">Other Inquiry / Suggestion</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="font-semibold text-neutral-700 block mb-1">
+                    Details &amp; Correction <span className="text-rose-500">*</span>
+                  </label>
+                  <textarea
+                    rows={3}
+                    required
+                    placeholder="Specify which page or concept needs correction..."
+                    value={reportDescription}
+                    onChange={e => setReportDescription(e.target.value)}
+                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 focus:outline-none focus:border-blue-500 resize-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="font-semibold text-neutral-700 block mb-1">
+                    Email / WhatsApp <span className="text-neutral-400 font-normal">(Optional, for notification when updated)</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. 0244123456 or student@ug.edu.gh"
+                    value={reportContactEmail}
+                    onChange={e => setReportContactEmail(e.target.value)}
+                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+
+                <div className="flex items-center justify-end gap-2 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowReportModal(false)}
+                    className="px-3.5 py-2 rounded-lg border border-neutral-200 hover:bg-neutral-50 text-neutral-600 font-medium transition cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={reportSubmitting || !reportDescription.trim()}
+                    className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold shadow-xs flex items-center gap-1.5 transition cursor-pointer"
+                  >
+                    {reportSubmitting ? (
+                      <>
+                        <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Flag className="w-3.5 h-3.5" />
+                        <span>Send Report</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       )}
