@@ -158,9 +158,10 @@ export async function POST(req: NextRequest) {
     // 1. Try Cloudflare R2
     if (isR2Configured) {
       try {
-        const uploadedKey = await uploadToR2(uniqueFileName, buffer, 'application/pdf');
-        if (uploadedKey) {
-          fileUrl = `${R2_PUBLIC_URL}/${uploadedKey}`;
+        const uploadedResult = await uploadToR2(uniqueFileName, buffer, 'application/pdf');
+        if (uploadedResult) {
+          // uploadToR2 already includes R2_PUBLIC_URL
+          fileUrl = uploadedResult.startsWith('http') ? uploadedResult : `${R2_PUBLIC_URL}/${uploadedResult}`;
         }
       } catch (r2Err) {
         console.warn('R2 upload failed, using local/storage fallback:', r2Err);

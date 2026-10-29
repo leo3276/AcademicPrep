@@ -810,7 +810,11 @@ export default function UniversityPortalPage() {
 
     try {
       // 1. Fetch PDF binary from slide.fileUrl
-      const res = await fetch(slide.fileUrl);
+      // Route external URLs through our edge /api/pdf-cdn proxy to eliminate CORS issues and boost delivery
+      const downloadUrl = slide.fileUrl.startsWith('http')
+        ? `/api/pdf-cdn?url=${encodeURIComponent(slide.fileUrl)}`
+        : slide.fileUrl;
+      const res = await fetch(downloadUrl);
       if (!res.ok) {
         throw new Error(`Failed to download slide PDF (HTTP ${res.status})`);
       }

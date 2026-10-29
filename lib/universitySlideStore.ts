@@ -66,6 +66,44 @@ export function validateCollaboratorToken(token?: string | null): boolean {
 }
 
 /**
+ * Sanitize slide URL to eliminate accidental double domain prefixes
+ */
+export function sanitizeSlideUrl(url?: string): string {
+  if (!url) return '';
+  let cleaned = url.trim();
+  const doublePrefix = `${R2_PUBLIC_URL}/${R2_PUBLIC_URL}/`;
+  if (cleaned.startsWith(doublePrefix)) {
+    cleaned = cleaned.replace(doublePrefix, `${R2_PUBLIC_URL}/`);
+  }
+  const match = cleaned.match(/^(https?:\/\/[^\/]+)\/(https?:\/\/[^\/]+)\/(.*)$/);
+  if (match && match[1] === match[2]) {
+    cleaned = `${match[1]}/${match[3]}`;
+  }
+  return cleaned;
+}
+
+function sanitizeSlideList(list: UniversitySlide[]): UniversitySlide[] {
+  let modified = false;
+  const cleaned = list.map(s => {
+    const freshUrl = sanitizeSlideUrl(s.fileUrl);
+    if (freshUrl !== s.fileUrl) {
+      modified = true;
+      return { ...s, fileUrl: freshUrl };
+    }
+    return s;
+  });
+
+  if (modified) {
+    // Asynchronously sync the clean manifest back to storage
+    saveStoredUniversitySlides(cleaned).catch(err => {
+      console.warn('[universitySlideStore] Auto-resync error:', err);
+    });
+  }
+
+  return cleaned;
+}
+
+/**
  * Fetch all university slides with Cloud storage + local file fallback
  */
 export async function getStoredUniversitySlides(): Promise<UniversitySlide[]> {
@@ -76,7 +114,7 @@ export async function getStoredUniversitySlides(): Promise<UniversitySlide[]> {
       if (res.ok) {
         const parsed = await res.json();
         if (Array.isArray(parsed)) {
-          return parsed;
+          return sanitizeSlideList(parsed);
         }
       }
     } catch (err) {
@@ -95,7 +133,7 @@ export async function getStoredUniversitySlides(): Promise<UniversitySlide[]> {
       if (res.ok) {
         const parsed = await res.json();
         if (Array.isArray(parsed)) {
-          return parsed;
+          return sanitizeSlideList(parsed);
         }
       }
     }
@@ -109,7 +147,7 @@ export async function getStoredUniversitySlides(): Promise<UniversitySlide[]> {
       const raw = fs.readFileSync(DATA_FILE, 'utf8');
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed)) {
-        return parsed;
+        return sanitizeSlideList(parsed);
       }
     }
   } catch (err) {
