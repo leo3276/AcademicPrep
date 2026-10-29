@@ -75,7 +75,7 @@ export async function getStoredUniversitySlides(): Promise<UniversitySlide[]> {
       const res = await fetch(`${R2_PUBLIC_URL}/${MANIFEST_FILE_NAME}?t=${Date.now()}`, { cache: 'no-store' });
       if (res.ok) {
         const parsed = await res.json();
-        if (Array.isArray(parsed) && parsed.length > 0) {
+        if (Array.isArray(parsed)) {
           return parsed;
         }
       }
@@ -94,7 +94,7 @@ export async function getStoredUniversitySlides(): Promise<UniversitySlide[]> {
       const res = await fetch(`${pubData.publicUrl}?t=${Date.now()}`, { cache: 'no-store' });
       if (res.ok) {
         const parsed = await res.json();
-        if (Array.isArray(parsed) && parsed.length > 0) {
+        if (Array.isArray(parsed)) {
           return parsed;
         }
       }

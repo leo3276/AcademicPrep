@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
@@ -481,6 +481,13 @@ export default function AdminDashboardPage() {
     } catch (e: any) {
       alert('Error regenerating link: ' + (e?.message || e));
     }
+  };
+
+  const handleCopyCollabLink = () => {
+    if (!collaboratorLink) return;
+    navigator.clipboard.writeText(collaboratorLink);
+    setCollabLinkCopied(true);
+    setTimeout(() => setCollabLinkCopied(false), 2500);
   };
 
   const handleAdminUploadUniSlide = async (e: React.FormEvent) => {
@@ -989,7 +996,16 @@ export default function AdminDashboardPage() {
     loadComments();
     refreshPins();
     loadWhatsAppConfig();
+    loadUniversitySlides();
+    loadCollaboratorLink();
   }, [isAdmin, refreshPins, loadBlogPosts, loadMomoClaims, loadComments, loadWhatsAppConfig]);
+
+  useEffect(() => {
+    if (activeTab === 'university_slides') {
+      loadUniversitySlides();
+      loadCollaboratorLink();
+    }
+  }, [activeTab]);
 
   if (!mounted) {
     return (
@@ -1622,6 +1638,21 @@ export default function AdminDashboardPage() {
               <span>Weekly Exams & Candidates</span>
               <span className="ml-1 text-[10px] bg-indigo-50 text-indigo-700 border border-indigo-200 px-1.5 py-0.5 rounded-full font-mono font-bold">
                 6:00 PM
+              </span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('university_slides')}
+              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+                activeTab === 'university_slides'
+                  ? 'border-blue-600 text-blue-900 font-bold'
+                  : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              <GraduationCap className="w-4 h-4 text-blue-600" />
+              <span>University Slides</span>
+              <span className="ml-1 text-[10px] bg-blue-50 text-blue-700 border border-blue-200 px-1.5 py-0.5 rounded-full font-mono font-bold">
+                {universitySlides.length}
               </span>
             </button>
           </nav>
@@ -5160,6 +5191,460 @@ export default function AdminDashboardPage() {
               </div>
             </div>
 
+          </div>
+        )}
+
+        {/* ============================================================ */}
+        {/* TAB 11: UNIVERSITY SLIDES & COLLABORATOR DISPATCH           */}
+        {/* ============================================================ */}
+        {activeTab === 'university_slides' && (
+          <div className="space-y-6">
+            {/* Header & Quick Actions */}
+            <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 font-bold">
+                    <GraduationCap className="w-4 h-4" />
+                  </div>
+                  <h2 className="text-base font-bold text-slate-900">
+                    University Slides Repository & Collaborator Dispatch
+                  </h2>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200 font-mono">
+                    {universitySlides.length} Slide Deck{universitySlides.length === 1 ? '' : 's'} Published
+                  </span>
+                </div>
+                <p className="text-xs text-slate-500">
+                  Publish official university lecture slides directly or issue special collaborator upload links to lecturers and course reps.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Link
+                  href="/university"
+                  target="_blank"
+                  className="px-3.5 py-2 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold flex items-center gap-1.5 shadow-2xs transition"
+                >
+                  <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+                  <span>View Student Portal</span>
+                </Link>
+                <button
+                  onClick={loadUniversitySlides}
+                  disabled={loadingUniSlides}
+                  className="px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-medium flex items-center gap-1.5 shadow-2xs transition disabled:opacity-50"
+                  title="Refresh slides list"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 text-slate-500 ${loadingUniSlides ? 'animate-spin' : ''}`} />
+                  <span>Refresh</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Special Collaborator Dispatch Link Box */}
+            <div className="bg-gradient-to-r from-blue-50/60 via-slate-50 to-indigo-50/40 border border-blue-200/80 rounded-2xl p-5 shadow-xs space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="space-y-0.5">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
+                    <h3 className="text-sm font-bold text-slate-900">Collaborator Upload Portal Link</h3>
+                    <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-blue-100 text-blue-800">
+                      Restricted Access
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-600 max-w-2xl">
+                    Share this unique invitation link with faculty, teaching assistants, or student reps. Collaborators can upload slides without viewing student records, revenue, or admin controls.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handleRegenerateCollaboratorLink}
+                    className="px-3 py-1.5 rounded-lg bg-white border border-slate-300 hover:border-slate-400 text-slate-700 text-xs font-medium transition shadow-2xs flex items-center gap-1.5"
+                    title="Rotate collaborator security token"
+                  >
+                    <RefreshCw className="w-3.5 h-3.5 text-slate-500" />
+                    <span>Regenerate Link</span>
+                  </button>
+                  {collaboratorLink && (
+                    <a
+                      href={collaboratorLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 rounded-lg bg-white border border-slate-300 hover:border-slate-400 text-slate-700 text-xs font-medium transition shadow-2xs flex items-center gap-1.5"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
+                      <span>Preview Portal</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-xl p-2 shadow-2xs">
+                <KeyRound className="w-4 h-4 text-slate-400 shrink-0 ml-1" />
+                <input
+                  type="text"
+                  readOnly
+                  value={collaboratorLink || 'Loading collaborator invite link...'}
+                  className="flex-1 text-xs font-mono text-slate-700 bg-transparent outline-none truncate"
+                />
+                <button
+                  onClick={handleCopyCollabLink}
+                  disabled={!collaboratorLink}
+                  className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center gap-1.5 shadow-xs transition shrink-0"
+                >
+                  {collabLinkCopied ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-white" />
+                      <span>Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5 text-white" />
+                      <span>Copy Collaborator Link</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Direct Admin Slide Upload Form */}
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                    <FilePlus className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-900">Upload Official University Slide Deck</h3>
+                    <p className="text-[11px] text-slate-500">Slides will appear on the student portal and be indexed for the AI Study Studio.</p>
+                  </div>
+                </div>
+              </div>
+
+              {uniUploadFeedback && (
+                <div
+                  className={`p-3 rounded-xl text-xs flex items-center gap-2 ${
+                    uniUploadFeedback.kind === 'ok'
+                      ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                      : 'bg-rose-50 text-rose-800 border border-rose-200'
+                  }`}
+                >
+                  {uniUploadFeedback.kind === 'ok' ? (
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  ) : (
+                    <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                  )}
+                  <span>{uniUploadFeedback.text}</span>
+                </div>
+              )}
+
+              <form onSubmit={handleAdminUploadUniSlide} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div>
+                    <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block mb-1">
+                      Course Code <span className="text-rose-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. DCIT 101 or UGBS 201"
+                      value={uniUploadCode}
+                      onChange={e => setUniUploadCode(e.target.value)}
+                      required
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 font-mono placeholder:font-sans focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block mb-1">
+                      Slide / Lecture Title <span className="text-rose-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Introduction to Computer Architecture"
+                      value={uniUploadTitle}
+                      onChange={e => setUniUploadTitle(e.target.value)}
+                      required
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block mb-1">
+                      Official Course Name
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Introduction to Computer Science"
+                      value={uniUploadCourseTitle}
+                      onChange={e => setUniUploadCourseTitle(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                  <div>
+                    <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block mb-1">
+                      Institution / University
+                    </label>
+                    <select
+                      value={uniUploadUniversity}
+                      onChange={e => setUniUploadUniversity(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-blue-500"
+                    >
+                      {GHANAIAN_UNIVERSITIES.map(u => (
+                        <option key={u} value={u}>{u}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block mb-1">
+                      Faculty / Department
+                    </label>
+                    <select
+                      value={uniUploadDepartment}
+                      onChange={e => setUniUploadDepartment(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-blue-500"
+                    >
+                      {UNIVERSITY_DEPARTMENTS.map(d => (
+                        <option key={d} value={d}>{d}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block mb-1">
+                      Academic Level
+                    </label>
+                    <select
+                      value={uniUploadLevel}
+                      onChange={e => setUniUploadLevel(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-blue-500"
+                    >
+                      {UNIVERSITY_LEVELS.map(l => (
+                        <option key={l} value={l}>{l}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block mb-1">
+                      Semester
+                    </label>
+                    <select
+                      value={uniUploadSemester}
+                      onChange={e => setUniUploadSemester(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-blue-500"
+                    >
+                      {UNIVERSITY_SEMESTERS.map(s => (
+                        <option key={s} value={s}>{s}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block mb-1">
+                    Topics Covered & Notes
+                  </label>
+                  <textarea
+                    rows={2}
+                    placeholder="Brief description of lecture topics, chapters, or syllabus references..."
+                    value={uniUploadDescription}
+                    onChange={e => setUniUploadDescription(e.target.value)}
+                    className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-blue-500 resize-none"
+                  />
+                </div>
+
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+                  <div className="flex items-center gap-3">
+                    <input
+                      ref={uniFileInputRef}
+                      type="file"
+                      accept=".pdf,application/pdf"
+                      required
+                      onChange={e => setUniUploadFile(e.target.files?.[0] || null)}
+                      className="text-xs text-slate-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"
+                    />
+                    {uniUploadFile && (
+                      <span className="text-[11px] text-slate-500 font-mono">
+                        ({(uniUploadFile.size / (1024 * 1024)).toFixed(2)} MB)
+                      </span>
+                    )}
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={uniUploading || !uniUploadFile || !uniUploadCode.trim() || !uniUploadTitle.trim()}
+                    className="px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-xs font-semibold shadow-xs flex items-center gap-2 transition"
+                  >
+                    {uniUploading ? (
+                      <>
+                        <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <span>Publishing Slide...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Upload className="w-3.5 h-3.5" />
+                        <span>Publish Slide to Student Portal</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            {/* Slide Catalog Table & Management */}
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center font-bold">
+                    <BookOpen className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-900">Published Slide Repository</h3>
+                    <p className="text-[11px] text-slate-500">
+                      Manage, preview, and moderate all active course slide decks.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <div className="relative">
+                    <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                    <input
+                      type="text"
+                      placeholder="Filter by course, title, or uni..."
+                      value={uniSlideFilter}
+                      onChange={e => setUniSlideFilter(e.target.value)}
+                      className="pl-8 pr-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 w-48 sm:w-64 focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+                  {uniSlideFilter && (
+                    <button
+                      onClick={() => setUniSlideFilter('')}
+                      className="text-xs text-slate-400 hover:text-slate-600 px-1"
+                    >
+                      Clear
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {loadingUniSlides ? (
+                <div className="py-16 text-center text-xs text-slate-400 space-y-2">
+                  <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
+                  <p>Loading slides...</p>
+                </div>
+              ) : (() => {
+                const q = uniSlideFilter.trim().toLowerCase();
+                const filtered = universitySlides.filter(s => {
+                  if (!q) return true;
+                  return (
+                    s.courseCode.toLowerCase().includes(q) ||
+                    s.title.toLowerCase().includes(q) ||
+                    s.university.toLowerCase().includes(q) ||
+                    (s.department && s.department.toLowerCase().includes(q)) ||
+                    (s.level && s.level.toLowerCase().includes(q))
+                  );
+                });
+
+                if (filtered.length === 0) {
+                  return (
+                    <div className="py-16 text-center border border-dashed border-slate-200 rounded-xl p-8 space-y-2">
+                      <BookOpen className="w-8 h-8 text-slate-300 mx-auto" />
+                      <p className="text-xs font-semibold text-slate-800">
+                        {universitySlides.length === 0
+                          ? 'No university slides published yet.'
+                          : 'No slides match your search filter.'}
+                      </p>
+                      <p className="text-[11px] text-slate-500 max-w-sm mx-auto">
+                        {universitySlides.length === 0
+                          ? 'Use the upload form above or share the collaborator link with course reps to publish the first lecture slide.'
+                          : 'Try searching with a different course code, university name, or keyword.'}
+                      </p>
+                    </div>
+                  );
+                }
+
+                return (
+                  <div className="overflow-x-auto border border-slate-200 rounded-xl">
+                    <table className="w-full text-left border-collapse text-xs">
+                      <thead>
+                        <tr className="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold uppercase text-[10px] tracking-wider">
+                          <th className="py-3 px-4">Course</th>
+                          <th className="py-3 px-4">Title & Details</th>
+                          <th className="py-3 px-4">Institution & Level</th>
+                          <th className="py-3 px-4">Uploader</th>
+                          <th className="py-3 px-4">File Size</th>
+                          <th className="py-3 px-4 text-right">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100">
+                        {filtered.map(slide => (
+                          <tr key={slide.id} className="hover:bg-slate-50/70 transition">
+                            <td className="py-3 px-4 whitespace-nowrap">
+                              <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 inline-block">
+                                {slide.courseCode}
+                              </span>
+                            </td>
+                            <td className="py-3 px-4 min-w-[200px]">
+                              <p className="font-semibold text-slate-900 leading-snug">{slide.title}</p>
+                              {slide.description && (
+                                <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">{slide.description}</p>
+                              )}
+                            </td>
+                            <td className="py-3 px-4 whitespace-nowrap text-[11px] text-slate-600">
+                              <div className="font-medium text-slate-800">{slide.university}</div>
+                              <div className="text-slate-400">{slide.level} • {slide.semester}</div>
+                            </td>
+                            <td className="py-3 px-4 whitespace-nowrap">
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-700">
+                                <UserCheck className="w-3 h-3 text-slate-500" />
+                                {slide.uploadedBy || 'Admin'}
+                              </span>
+                            </td>
+                            <td className="py-3 px-4 whitespace-nowrap font-mono text-[11px] text-slate-500">
+                              {slide.fileSizeBytes ? `${(slide.fileSizeBytes / (1024 * 1024)).toFixed(1)} MB` : 'PDF'}
+                            </td>
+                            <td className="py-3 px-4 whitespace-nowrap text-right">
+                              <div className="flex items-center justify-end gap-1.5">
+                                {slide.fileUrl && (
+                                  <a
+                                    href={slide.fileUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-600 transition"
+                                    title="View PDF"
+                                  >
+                                    <ExternalLink className="w-3.5 h-3.5" />
+                                  </a>
+                                )}
+                                <Link
+                                  href={`/university?loadSlideId=${encodeURIComponent(slide.id)}`}
+                                  target="_blank"
+                                  className="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold text-[11px] transition"
+                                  title="Open in Study Studio"
+                                >
+                                  Study Studio
+                                </Link>
+                                <button
+                                  onClick={() => handleDeleteUniSlide(slide.id, slide.title)}
+                                  className="p-1.5 rounded-lg border border-slate-200 hover:bg-rose-50 hover:border-rose-200 text-slate-400 hover:text-rose-600 transition"
+                                  title="Delete slide"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                );
+              })()}
+            </div>
           </div>
         )}
 
