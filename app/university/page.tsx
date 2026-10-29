@@ -39,8 +39,25 @@ import {
   Flag,
   Download,
   AlertTriangle,
-  ShieldCheck
+  ShieldCheck,
+  Headphones,
+  Volume2,
+  VolumeX,
+  Play,
+  Pause,
+  SkipForward,
+  SkipBack,
+  MessageCircle,
+  Copy,
+  Share2,
+  ImageIcon
 } from 'lucide-react';
+import {
+  generateSlideWhatsAppText,
+  generateDeckWhatsAppText,
+  getSlideAudioScript,
+  generateSummaryCardPngBlob
+} from '@/lib/universityShareAndAudio';
 import { 
   requestNotificationPermission, 
   sendStudyNotification, 
@@ -1397,6 +1414,177 @@ export default function UniversityPortalPage() {
   }, [activePackage]);
 
   const [dismissedBetaNotice, setDismissedBetaNotice] = useState<boolean>(false);
+
+  // ─── AUDIO CRAM ENGINE (Feature 4) ───────────────────────────
+  const [isAudioPlaying, setIsAudioPlaying] = useState<boolean>(false);
+  const [isAudioPaused, setIsAudioPaused] = useState<boolean>(false);
+  const [audioSpeed, setAudioSpeed] = useState<number>(1.25);
+  const [audioAutoAdvance, setAudioAutoAdvance] = useState<boolean>(true);
+  const [audioSlideIndex, setAudioSlideIndex] = useState<number>(0);
+  const [audioProgressText, setAudioProgressText] = useState<string>('');
+  const speechUtteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+
+  const stopAudioCram = useCallback(() => {
+    if (typeof window !== 'undefined' && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+    setIsAudioPlaying(false);
+    setIsAudioPaused(false);
+    speechUtteranceRef.current = null;
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      stopAudioCram();
+    };
+  }, [stopAudioCram]);
+
+  const speakSlideByIndex = useCallback((index: number, speed = audioSpeed, autoAdvance = audioAutoAdvance) => {
+    if (typeof window === 'undefined' || !window.speechSynthesis || !activePackage) return;
+    if (index < 0 || index >= activePackage.slides.length) {
+      stopAudioCram();
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    const targetSlide = activePackage.slides[index];
+    setAudioSlideIndex(index);
+    setSelectedSlideIndex(index);
+    const script = getSlideAudioScript(targetSlide, activePackage.deckTitle, activePackage.slides.length);
+
+    const utterance = new SpeechSynthesisUtterance(script);
+    utterance.rate = speed;
+    utterance.pitch = 1.0;
+
+    const voices = window.speechSynthesis.getVoices();
+    const naturalVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel'))) || voices.find(v => v.lang.startsWith('en'));
+    if (naturalVoice) utterance.voice = naturalVoice;
+
+    utterance.onstart = () => {
+      setIsAudioPlaying(true);
+      setIsAudioPaused(false);
+      setAudioProgressText(`Slide ${targetSlide.pageNumber} of ${activePackage.slides.length}`);
+    };
+
+    utterance.onend = () => {
+      if (autoAdvance && index < activePackage.slides.length - 1) {
+        setTimeout(() => {
+          speakSlideByIndex(index + 1, speed, autoAdvance);
+        }, 600);
+      } else {
+        setIsAudioPlaying(false);
+        setIsAudioPaused(false);
+      }
+    };
+
+    utterance.onerror = (e) => {
+      console.warn('Speech synthesis note:', e);
+      setIsAudioPlaying(false);
+      setIsAudioPaused(false);
+    };
+
+    speechUtteranceRef.current = utterance;
+    window.speechSynthesis.speak(utterance);
+  }, [activePackage, audioSpeed, audioAutoAdvance, stopAudioCram]);
+
+  const togglePlayPauseAudio = () => {
+    if (typeof window === 'undefined' || !window.speechSynthesis) return;
+
+    if (!isAudioPlaying) {
+      speakSlideByIndex(selectedSlideIndex);
+    } else if (isAudioPaused) {
+      window.speechSynthesis.resume();
+      setIsAudioPaused(false);
+    } else {
+      window.speechSynthesis.pause();
+      setIsAudioPaused(true);
+    }
+  };
+
+  const skipAudioSlide = (direction: 'prev' | 'next') => {
+    if (!activePackage) return;
+    const targetIdx = direction === 'next' ? audioSlideIndex + 1 : audioSlideIndex - 1;
+    if (targetIdx >= 0 && targetIdx < activePackage.slides.length) {
+      speakSlideByIndex(targetIdx);
+    }
+  };
+
+  const changeSpeed = (speed: number) => {
+    setAudioSpeed(speed);
+    if (isAudioPlaying && !isAudioPaused) {
+      speakSlideByIndex(audioSlideIndex, speed);
+    }
+  };
+
+  // ─── WHATSAPP & SUMMARY CARD HELPERS (Feature 2) ─────────────
+  const [copyToast, setCopyToast] = useState<string | null>(null);
+  const [downloadingCardImage, setDownloadingCardImage] = useState<boolean>(false);
+
+  const showCopyToast = (msg: string) => {
+    setCopyToast(msg);
+    setTimeout(() => setCopyToast(null), 2500);
+  };
+
+  const handleShareSlideWhatsApp = (targetSlide: SlideAnalysis) => {
+    if (!activePackage) return;
+    const shareText = generateSlideWhatsAppText(targetSlide, activePackage.deckTitle, currentAdminSlide?.courseCode || activePackage.courseCode);
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleCopySlideWhatsApp = async (targetSlide: SlideAnalysis) => {
+    if (!activePackage) return;
+    const shareText = generateSlideWhatsAppText(targetSlide, activePackage.deckTitle, currentAdminSlide?.courseCode || activePackage.courseCode);
+    try {
+      await navigator.clipboard.writeText(shareText);
+      showCopyToast('Copied slide digest for WhatsApp!');
+    } catch {
+      showCopyToast('Failed to copy text');
+    }
+  };
+
+  const handleShareDeckWhatsApp = () => {
+    if (!activePackage) return;
+    const shareText = generateDeckWhatsAppText(activePackage);
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleCopyDeckWhatsApp = async () => {
+    if (!activePackage) return;
+    const shareText = generateDeckWhatsAppText(activePackage);
+    try {
+      await navigator.clipboard.writeText(shareText);
+      showCopyToast('Copied full revision pack for WhatsApp!');
+    } catch {
+      showCopyToast('Failed to copy text');
+    }
+  };
+
+  const handleDownloadSummaryCardImage = async () => {
+    if (!activePackage) return;
+    setDownloadingCardImage(true);
+    try {
+      const blob = await generateSummaryCardPngBlob(activePackage);
+      if (!blob) throw new Error('Canvas rendering failed');
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      const cleanCode = (currentAdminSlide?.courseCode || activePackage.courseCode || 'SlideDeck').replace(/[^a-zA-Z0-9]/g, '_');
+      a.download = `${cleanCode}_1Page_Cheat_Sheet.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(blobUrl);
+      showCopyToast('1-Page Summary Card downloaded!');
+    } catch (err) {
+      console.error(err);
+      alert('Could not generate image card on this browser. Try Print / PDF instead.');
+    } finally {
+      setDownloadingCardImage(false);
+    }
+  };
 
   if (!mounted) {
     return (
@@ -2916,6 +3104,38 @@ export default function UniversityPortalPage() {
                             </button>
                           )}
 
+                          {/* Feature 4: Audio Cram Button */}
+                          <button
+                            onClick={() => speakSlideByIndex(selectedSlideIndex)}
+                            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition border flex items-center gap-1.5 cursor-pointer ${
+                              isAudioPlaying && audioSlideIndex === selectedSlideIndex
+                                ? 'bg-blue-600 text-white border-blue-600 font-semibold shadow-xs'
+                                : 'bg-white text-neutral-700 border-neutral-200 hover:bg-neutral-50 shadow-2xs'
+                            }`}
+                            title="Listen to plain-English voice summary for this slide"
+                          >
+                            <Headphones className={`w-3.5 h-3.5 ${isAudioPlaying && audioSlideIndex === selectedSlideIndex ? 'animate-pulse text-white' : 'text-blue-600'}`} />
+                            <span>{isAudioPlaying && audioSlideIndex === selectedSlideIndex ? 'Playing' : 'Audio Cram'}</span>
+                          </button>
+
+                          {/* Feature 2: WhatsApp Share Button */}
+                          <button
+                            onClick={() => handleShareSlideWhatsApp(currentSlide)}
+                            className="px-3 py-1.5 rounded-lg text-xs font-medium transition border border-emerald-300 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                            title="Share slide breakdown to WhatsApp class group"
+                          >
+                            <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
+                            <span className="hidden sm:inline">WhatsApp</span>
+                          </button>
+
+                          <button
+                            onClick={() => handleCopySlideWhatsApp(currentSlide)}
+                            className="p-1.5 rounded-lg border border-neutral-200 text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50 transition cursor-pointer"
+                            title="Copy formatted WhatsApp text to clipboard"
+                          >
+                            <Copy className="w-3.5 h-3.5" />
+                          </button>
+
                           <button
                             onClick={() => toggleMastered(currentSlide.pageNumber)}
                             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition border flex items-center gap-1.5 ${
@@ -3624,17 +3844,54 @@ export default function UniversityPortalPage() {
           ───────────────────────────────────────────────────────────── */}
           {activeTab === 'cram' && (
             <div className="border border-neutral-200 rounded-xl p-8 space-y-8 bg-white">
-              <div className="border-b border-neutral-200 pb-4 flex items-center justify-between">
+              <div className="border-b border-neutral-200 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <p className="font-mono text-[10px] uppercase text-neutral-400">High-Yield Revision Sheet</p>
+                  <div className="flex items-center gap-2">
+                    <p className="font-mono text-[10px] uppercase text-neutral-400">High-Yield Revision Sheet</p>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">
+                      WhatsApp Ready
+                    </span>
+                  </div>
                   <h3 className="text-xl font-bold text-neutral-900 mt-0.5">{activePackage.deckTitle}</h3>
                 </div>
-                <button
-                  onClick={() => window.print()}
-                  className="px-3 py-1.5 rounded-lg border border-neutral-200 hover:bg-neutral-50 text-xs font-medium transition"
-                >
-                  Print / Export PDF
-                </button>
+                
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    onClick={handleShareDeckWhatsApp}
+                    className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-xs cursor-pointer"
+                    title="Send full revision sheet to WhatsApp class group"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5 text-white" />
+                    <span>Share WhatsApp</span>
+                  </button>
+
+                  <button
+                    onClick={handleCopyDeckWhatsApp}
+                    className="px-3 py-1.5 rounded-lg border border-neutral-200 hover:bg-neutral-50 text-xs font-medium transition flex items-center gap-1.5 text-neutral-700 cursor-pointer"
+                    title="Copy formatted WhatsApp markdown"
+                  >
+                    <Copy className="w-3.5 h-3.5 text-neutral-500" />
+                    <span>Copy Text</span>
+                  </button>
+
+                  <button
+                    onClick={handleDownloadSummaryCardImage}
+                    disabled={downloadingCardImage}
+                    className="px-3 py-1.5 rounded-lg border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold transition flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                    title="Download 1-Page Summary Card as PNG image for WhatsApp status"
+                  >
+                    <Download className={`w-3.5 h-3.5 ${downloadingCardImage ? 'animate-bounce' : ''}`} />
+                    <span>{downloadingCardImage ? 'Generating...' : 'Download Image Card'}</span>
+                  </button>
+
+                  <button
+                    onClick={() => window.print()}
+                    className="px-3 py-1.5 rounded-lg border border-neutral-200 hover:bg-neutral-50 text-xs font-medium transition flex items-center gap-1.5 text-neutral-700 cursor-pointer"
+                  >
+                    <Printer className="w-3.5 h-3.5 text-neutral-500" />
+                    <span>Print PDF</span>
+                  </button>
+                </div>
               </div>
 
               {/* Theorems */}
@@ -3813,6 +4070,91 @@ export default function UniversityPortalPage() {
       {/* ─────────────────────────────────────────────────────────────
           5. MINIMAL GEMINI API KEY MODAL
       ───────────────────────────────────────────────────────────── */}
+      {/* ─────────────────────────────────────────────────────────────
+          FLOATING AUDIO CRAM PLAYER (Feature 4)
+      ───────────────────────────────────────────────────────────── */}
+      {(isAudioPlaying || isAudioPaused) && activePackage && (
+        <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-40 w-[95%] max-w-xl bg-slate-900/95 backdrop-blur-md text-white border border-slate-700/80 rounded-2xl p-3 sm:p-3.5 shadow-2xl flex items-center justify-between gap-3 animate-in fade-in slide-in-from-bottom-3 font-sans">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 font-bold shadow-xs">
+              <Headphones className="w-4 h-4 animate-pulse" />
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 text-[11px] text-slate-400 font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>AUDIO CRAM MODE</span>
+                <span>•</span>
+                <span className="truncate">{audioProgressText || `Slide ${audioSlideIndex + 1} of ${activePackage.slides.length}`}</span>
+              </div>
+              <p className="text-xs sm:text-sm font-semibold text-white truncate">
+                {activePackage.slides[audioSlideIndex]?.title || 'Slide Audio'}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            {/* Prev */}
+            <button
+              onClick={() => skipAudioSlide('prev')}
+              disabled={audioSlideIndex <= 0}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-white disabled:opacity-30 transition cursor-pointer"
+              title="Previous Slide"
+            >
+              <SkipBack className="w-4 h-4" />
+            </button>
+
+            {/* Play / Pause */}
+            <button
+              onClick={togglePlayPauseAudio}
+              className="w-8 h-8 rounded-full bg-white text-slate-900 hover:bg-slate-100 flex items-center justify-center transition shadow-xs cursor-pointer"
+              title={isAudioPaused ? 'Resume Audio' : 'Pause Audio'}
+            >
+              {isAudioPaused ? <Play className="w-4 h-4 fill-current ml-0.5" /> : <Pause className="w-4 h-4 fill-current" />}
+            </button>
+
+            {/* Next */}
+            <button
+              onClick={() => skipAudioSlide('next')}
+              disabled={audioSlideIndex >= activePackage.slides.length - 1}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-white disabled:opacity-30 transition cursor-pointer"
+              title="Next Slide"
+            >
+              <SkipForward className="w-4 h-4" />
+            </button>
+
+            {/* Speed Selector */}
+            <div className="flex items-center bg-slate-800 rounded-lg p-0.5 border border-slate-700 text-[11px] font-mono">
+              {[1, 1.25, 1.5].map((spd) => (
+                <button
+                  key={spd}
+                  onClick={() => changeSpeed(spd)}
+                  className={`px-1.5 py-0.5 rounded transition cursor-pointer ${audioSpeed === spd ? 'bg-blue-600 text-white font-bold' : 'text-slate-400 hover:text-slate-200'}`}
+                >
+                  {spd}x
+                </button>
+              ))}
+            </div>
+
+            {/* Close / Stop */}
+            <button
+              onClick={stopAudioCram}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 transition ml-1 cursor-pointer"
+              title="Stop Audio Cram"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Copy Feedback Toast */}
+      {copyToast && (
+        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-neutral-900 text-white text-xs font-medium px-4 py-2 rounded-full shadow-lg flex items-center gap-2 animate-in fade-in slide-in-from-bottom-2">
+          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+          <span>{copyToast}</span>
+        </div>
+      )}
+
       {showSettingsModal && (
         <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-sm w-full p-6 space-y-4 shadow-xl text-neutral-900">
