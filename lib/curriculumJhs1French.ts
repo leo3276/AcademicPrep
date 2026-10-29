@@ -14,8 +14,8 @@ export const JHS1_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Apprenez à saluer poliment, vous présenter, présenter un ami et prendre congé en français.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=hd0_GZHHMrE",
-    "youtubeId": "hd0_GZHHMrE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=q2DVIkSRc2A",
+    "youtubeId": "q2DVIkSRc2A",
     "keyNotes": "• Les Formules de Salutation selon le Moment de la Journée:\n  - Le matin et l'après-midi: \"Bonjour !\" (Good morning / Good day), \"Bonjour Monsieur / Madame / Mademoiselle !\"\n  - Le soir: \"Bonsoir !\" (Good evening).\n  - Entre amis et camarades (informel): \"Salut !\" (Hi / Hello), \"Coucou !\".\n• Demander et Dire Comment On Va:\n  - \"Comment vas-tu ?\" (informel) / \"Comment allez-vous ?\" (formel / pluriel).\n  - Réponses: \"Je vais bien, merci !\" (I am doing well, thank you), \"Très bien !\", \"Ça va bien\", \"Comme ci, comme ça\" (So-so).\n• Se Présenter (Introducing Yourself):\n  - \"Comment t'appelles-tu ?\" / \"Comment vous appelez-vous ?\"\n  - \"Je m'appelle Kwame Mensah.\" (My name is Kwame Mensah).\n  - \"Moi, c'est Kofi.\" (Me, I am Kofi).\n  - \"Enchanté !\" (Pleased to meet you - masculine) / \"Enchantée !\" (feminine).\n• Présenter Quelqu'un d'Autre (Introducing Someone Else):\n  - \"Voici mon ami, il s'appelle Kojo.\" (This is my friend, his name is Kojo).\n  - \"Je vous présente Madame Asantewaa, notre professeur de français.\"\n• Prendre Congé (Saying Goodbye):\n  - \"Au revoir !\" (Goodbye), \"À demain !\" (See you tomorrow), \"À bientôt !\" (See you soon), \"Bonne nuit !\" (Good night), \"Bonne journée !\" (Have a good day).",
     "examples": [
       {
@@ -132,8 +132,8 @@ export const JHS1_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Identifiez les fournitures scolaires et maîtrisez l'emploi des articles définis (le, la, les) et indéfinis (un, une, des).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=JbS3q1WlG3g",
-    "youtubeId": "JbS3q1WlG3g",
+    "youtubeUrl": "https://www.youtube.com/watch?v=nfAZhqQIjv0",
+    "youtubeId": "nfAZhqQIjv0",
     "keyNotes": "• Les Objets de la Classe et Fournitures Scolaires:\n  - Masculin: un livre (book), un cahier (exercise book), un stylo (pen), un crayon (pencil), un sac à dos (school bag), un taille-crayon (pencil sharpener), un tableau (board), un bureau (desk).\n  - Féminin: une règle (ruler), une gomme (eraser), une trousse (pencil case), une table (table), une chaise (chair), une porte (door), une fenêtre (window), une carte (map).\n• Les Deux Familles d'Articles en Français:\n  1. Les Articles Indéfinis (Indefinite Articles - 'a / an / some'):\n     - Masculin singulier: UN (un livre, un stylo).\n     - Féminin singulier: UNE (une règle, une gomme).\n     - Pluriel (masculin et féminin): DES (des livres, des règles).\n  2. Les Articles Définis (Definite Articles - 'the'):\n     - Masculin singulier devant consonne: LE (le tableau, le cahier).\n     - Féminin singulier devant consonne: LA (la classe, la porte).\n     - Singulier devant voyelle ou 'h' muet: L' (l'élève, l'ardoise, l'école).\n     - Pluriel (tous genres): LES (les stylos, les tables, les élèves).\n• Poser des Questions sur un Objet:\n  - \"Qu'est-ce que c'est ?\" (What is this / that?)\n  - Réponse: \"C'est un stylo.\" (It is a pen) / \"Ce sont des cahiers.\" (They are exercise books).\n  - \"Où est la règle ?\" (Where is the ruler?) → \"La règle est sur la table.\" (The ruler is on the table).",
     "examples": [
       {
@@ -173,8 +173,8 @@ export const JHS1_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Apprenez à indiquer votre nationalité, votre pays d'origine et le genre masculin/féminin des nationalités.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=k_jK7ZfW8uVo",
-    "youtubeId": "k_jK7ZfW8uVo",
+    "youtubeUrl": "https://www.youtube.com/watch?v=HguSifo7VjU",
+    "youtubeId": "HguSifo7VjU",
     "keyNotes": "• Exprimer Sa Nationalité (Using Verb ÊTRE):\n  - \"Je suis ghanéen.\" (I am Ghanaian - male speaker).\n  - \"Je suis ghanéenne.\" (I am Ghanaian - female speaker).\n  - \"Quelle est ta nationalité ?\" / \"De quelle nationalité es-tu ?\"\n• Règle de Formation du Féminin des Nationalités:\n  1. Règle générale: Ajouter un 'e' au masculin.\n     - ghanéen → ghanéenne (double consonne 'ne').\n     - togolais → togolaise.\n     - ivoirien → ivoirienne.\n     - nigérian → nigériane.\n     - sénégalais → sénégalaise.\n     - français → française.\n     - anglais → anglaise.\n  2. Les adjectifs se terminant déjà par 'e' ne changent pas:\n     - suisse → suisse.\n     - russe → russe.\n• Les Pays Voisins du Ghana et Leurs Prépositions:\n  - Le Ghana (pays masculin): \"J'habite au Ghana.\" (I live in Ghana).\n  - Le Togo: \"Il va au Togo.\"\n  - La Côte d'Ivoire (pays féminin se terminant par 'e'): \"Elle vit en Côte d'Ivoire.\"\n  - Le Burkina Faso: \"Ils voyagent au Burkina Faso.\"\n  - La France (féminin): \"Nous allons en France.\"\n• Règle des Prépositions de Lieu devant les Pays:\n  - Pays féminin (se termine par 'e') ou commençant par une voyelle: préposition EN (en Côte d'Ivoire, en France).\n  - Pays masculin (ne se termine pas par 'e'): préposition AU (au Ghana, au Togo, au Nigéria, au Sénégal).\n  - Pays au pluriel: préposition AUX (aux États-Unis).",
     "examples": [
       {
@@ -213,8 +213,8 @@ export const JHS1_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Nommez les membres de la famille et utilisez correctement les adjectifs possessifs (mon, ma, mes, ton, ta, tes).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=MFk9YmJvQ20",
-    "youtubeId": "MFk9YmJvQ20",
+    "youtubeUrl": "https://www.youtube.com/watch?v=LkCFQekMoYU",
+    "youtubeId": "LkCFQekMoYU",
     "keyNotes": "• Les Membres de la Famille (Family Members):\n  - Les grands-parents: le grand-père (grandfather), la grand-mère (grandmother).\n  - Les parents: le père / papa (father/dad), la mère / maman (mother/mom).\n  - Les enfants: le fils (son), la fille (daughter).\n  - Les frères et sœurs: le frère (brother), la sœur (sister).\n  - La parenté élargie: l'oncle (uncle), la tante (aunt), le cousin (male cousin), la cousine (female cousin), le neveu (nephew), la nièce (niece).\n• Les Adjectifs Possessifs (Possessive Adjectives):\n  - Pour 'Je' (My):\n    * Masculin singulier: MON (mon père, mon frère, mon oncle).\n    * Féminin singulier: MA (ma mère, ma sœur, ma tante).\n    * Devant mot féminin commençant par voyelle: MON (mon amie, mon école).\n    * Pluriel: MES (mes parents, mes frères, mes sœurs).\n  - Pour 'Tu' (Your - informel):\n    * Masculin singulier: TON (ton père).\n    * Féminin singulier: TA (ta mère).\n    * Pluriel: TES (tes frères).\n  - Pour 'Il / Elle' (His / Her):\n    * Masculin singulier: SON (son père).\n    * Féminin singulier: SA (sa mère).\n    * Pluriel: SES (ses parents).\n• Présenter Sa Famille:\n  - \"Dans ma famille, il y a cinq personnes: mon père, ma mère, mes deux frères et moi.\"\n  - \"Mon père est docteur et ma mère est institutrice.\"",
     "examples": [
       {
@@ -252,8 +252,8 @@ export const JHS1_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Identifiez les parties du corps, décrivez physiquement quelqu'un et exprimez la douleur avec 'avoir mal à'.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=B_97iWkL2kE",
-    "youtubeId": "B_97iWkL2kE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=aW0D7thepGM",
+    "youtubeId": "aW0D7thepGM",
     "keyNotes": "• Les Principales Parties du Corps Humain:\n  - La tête: les yeux (eyes - masc. pluriel), le nez (nose), la bouche (mouth), les oreilles (ears - fém. pluriel), les dents (teeth - fém. pluriel), les cheveux (hair - masc. pluriel).\n  - Le tronc: le cou (neck), la poitrine (chest), l'estomac / le ventre (stomach/belly), le dos (back).\n  - Les membres supérieurs: l'épaule (shoulder), le bras (arm), le coude (elbow), la main (hand), les doigts (fingers).\n  - Les membres inférieurs: la jambe (leg), le genou (knee), la cheville (ankle), le pied (foot).\n• Exprimer la Douleur: La Structure 'AVOIR MAL À...':\n  - À + le → AU: \"J'ai mal au ventre.\" (I have a stomach ache), \"J'ai mal au dos.\" (back pain).\n  - À + la → À LA: \"J'ai mal à la tête.\" (headache), \"J'ai mal à la gorge.\" (sore throat).\n  - À + l' → À L': \"J'ai mal à l'œil.\" (eye ache), \"J'ai mal à l'oreille.\" (ear ache).\n  - À + les → AUX: \"J'ai mal aux dents.\" (toothache), \"J'ai mal aux pieds.\" (sore feet).\n• Décrire Quelqu'un Physiquement:\n  - \"Il est grand / petit / mince / gros.\"\n  - \"Elle a les yeux marron et les cheveux noirs.\"\n  - \"Kojo est fort et courageux.\"",
     "examples": [
       {
@@ -291,8 +291,8 @@ export const JHS1_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Apprenez le vocabulaire des habits, des couleurs et les règles d'accord des adjectifs de couleur.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=F_fVq2wK4sA",
-    "youtubeId": "F_fVq2wK4sA",
+    "youtubeUrl": "https://www.youtube.com/watch?v=YutPNXEcadg",
+    "youtubeId": "YutPNXEcadg",
     "keyNotes": "• Les Vêtements et Accessoires:\n  - Masculin: un pantalon (trousers), un t-shirt, un manteau (coat), un costume (suit), un short, un chapeau (hat), un boubou, un kente.\n  - Féminin: une chemise (shirt), une robe (dress), une jupe (skirt), une veste (jacket), une cravate (tie), une ceinture (belt).\n  - Pluriel: des chaussures (shoes - fém.), des chaussettes (socks - fém.), des lunettes (spectacles - fém.).\n• Les Couleurs Courantes:\n  - Blanc (blanche), Noir (noire), Bleu (bleue), Vert (verte), Gris (grise).\n  - Rouge, Jaune, Rose (identiques au masculin et féminin car se terminent par 'e').\n  - Invariables: Marron (brown) et Orange ne changent JAMAIS (pas de 'e', pas de 's').\n• Règle d'Accord des Adjectifs de Couleur:\n  - L'adjectif de couleur se place généralement APRÈS le nom et s'accorde en genre (masculin/féminin) et en nombre (singulier/pluriel):\n    * Un pantalon blanc → Une robe blanche → Des pantalons blancs → Des robes blanches.\n    * Un t-shirt bleu → Une jupe bleue → Des jupes bleues.\n    * Des chemises orange (invariable: pas de 's' !).\n• Décrire Sa Tenue Vestimentaire (Verb PORTER):\n  - \"Aujourd'hui, je porte un pantalon noir et une chemise blanche.\" (Today, I am wearing black trousers and a white shirt).",
     "examples": [
       {
@@ -369,8 +369,8 @@ export const JHS1_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Demandez et donnez l'heure en français et décrivez votre routine quotidienne (la journée d'un élève).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=JbS3q1WlG3g",
-    "youtubeId": "JbS3q1WlG3g",
+    "youtubeUrl": "https://www.youtube.com/watch?v=6Tpb_NkWhpg",
+    "youtubeId": "6Tpb_NkWhpg",
     "keyNotes": "• Demander l'Heure:\n  - \"Quelle heure est-il ?\" (What time is it?) / \"Il est quelle heure ?\"\n• Donner l'Heure (Structure 'IL EST...'):\n  - Heure pile: \"Il est huit heures.\" (It is 8:00).\n  - Demi-heure: \"Il est huit heures et demie.\" (It is 8:30).\n  - Quart d'heure: \"Il est huit heures et quart.\" (It is 8:15).\n  - Moins le quart: \"Il est neuf heures moins le quart.\" (It is 8:45 / quarter to 9).\n  - Midi: \"Il est midi.\" (It is 12:00 PM / midday).\n  - Minuit: \"Il est minuit.\" (It is 12:00 AM / midnight).\n  - Note: N'oubliez pas le 's' à 'heures' à partir de deux heures: \"Il est deux heures.\"\n• Les Verbes de la Routine Quotidienne (Daily Routine):\n  - Se réveiller: \"Je me réveille à 6 heures du matin.\" (I wake up at 6 AM).\n  - Se laver / se doucher: \"Je me lave.\" (I take my bath).\n  - Prendre le petit-déjeuner: \"Je prends mon petit-déjeuner à 6h30.\"\n  - Aller à l'école: \"Je vais à l'école à 7 heures.\"\n  - Étudier en classe: \"J'étudie mes leçons.\"\n  - Rentrer à la maison: \"Je rentre à la maison à 15 heures.\"\n  - Se coucher: \"Je me couche à 21 heures.\" (I go to sleep at 9 PM).",
     "examples": [
       {
@@ -407,8 +407,8 @@ export const JHS1_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Apprenez les noms des animaux de la maison et de la brousse, et situez-les à l'aide des prépositions de lieu.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=yYkZ5r_qj8w",
-    "youtubeId": "yYkZ5r_qj8w",
+    "youtubeUrl": "https://www.youtube.com/watch?v=4e9yBYp6Pds",
+    "youtubeId": "4e9yBYp6Pds",
     "keyNotes": "• Les Animaux Domestiques (Domestic Pets & Farm Animals):\n  - Le chien (dog), la chienne (female dog).\n  - Le chat (cat), la chatte.\n  - La chèvre (goat), le bouc (he-goat).\n  - Le mouton (sheep), la brebis (ewe), l'agneau (lamb).\n  - La vache (cow), le bœuf (ox/bull).\n  - Le cheval (horse), l'âne (donkey).\n  - Le poulet / le coq (rooster), la poule (hen), le canard (duck).\n• Les Animaux Sauvages (Wild Animals in the Forest / Zoo):\n  - Le lion (lion) - le roi de la forêt.\n  - L'éléphant (elephant), la girafe (giraffe), le singe (monkey), le zèbre (zebra).\n  - Le léopard / la panthère (leopard).\n  - Le crocodile (crocodile), le serpent (snake), l'oiseau (bird).\n• Les Prépositions de Lieu pour Situer les Animaux:\n  - Sur (on): \"Le chat dort sur la table.\" (The cat sleeps on the table).\n  - Sous (under): \"Le chien est sous l'arbre.\" (The dog is under the tree).\n  - Dans (in / inside): \"Les poules sont dans la cour.\" (The hens are in the compound).\n  - Devant (in front of) / Derrière (behind): \"La chèvre est derrière la maison.\"\n  - À côté de (beside): \"Le canard est à côté de la rivière.\"",
     "examples": [
       {
@@ -444,8 +444,8 @@ export const JHS1_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Découvrez le vocabulaire de la cuisine, les trois repas du jour et l'emploi des articles partitifs (du, de la, des).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=MFk9YmJvQ20",
-    "youtubeId": "MFk9YmJvQ20",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3tSVKw-ikjU",
+    "youtubeId": "3tSVKw-ikjU",
     "keyNotes": "• Les Trois Principaux Repas de la Journée:\n  - Le matin: Le petit-déjeuner (breakfast).\n  - À midi: Le déjeuner (lunch).\n  - Le soir: Le dîner (dinner/supper).\n• Les Aliments et Plats Ghanéens:\n  - Le riz (rice), le poisson (fish), la viande (meat), le poulet (chicken).\n  - Le pain (bread), les œufs (eggs), le lait (milk), le café (coffee), le thé (tea).\n  - Les plats locaux: le fufu, le banku, le jollof, la sauce arachide (groundnut soup).\n• Les Fruits et Légumes:\n  - Fruits: la mangue (mango), la banane (banana), l'ananas (pineapple), l'orange (orange), la papaye (pawpaw).\n  - Légumes: la tomate (tomato), l'oignon (onion), le piment (pepper), le gombo (okra), la carotte.\n• Les Articles Partitifs (Partitive Articles - 'some'):\n  - On utilise les articles partitifs devant les aliments et boissons non comptables:\n    * Masculin singulier: DU (Je mange du riz, je bois du lait).\n    * Féminin singulier: DE LA (Je mange de la viande, de la salade).\n    * Devant voyelle: DE L' (Je bois de l'eau).\n    * Pluriel: DES (Je mange des bananes, des carottes).\n  - À la forme négative, du / de la / des deviennent DE / D':\n    * \"Je ne mange pas DE viande.\" (I do not eat meat).\n    * \"Je ne bois pas D'eau gazeuse.\"",
     "examples": [
       {
@@ -484,8 +484,8 @@ export const JHS1_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Apprenez à parler des métiers, à accorder les professions au féminin et à exprimer vos ambitions futures.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=yYkZ5r_qj8w",
-    "youtubeId": "yYkZ5r_qj8w",
+    "youtubeUrl": "https://www.youtube.com/watch?v=2XuxsdhRFhg",
+    "youtubeId": "2XuxsdhRFhg",
     "keyNotes": "• Les Noms de Métiers et Leurs Formes Féminines:\n  1. En -er → -ère:\n     - un fermier / une fermière (farmer).\n     - un boulanger / une boulangère (baker).\n     - un infirmier / une infirmière (nurse).\n  2. En -en → -enne:\n     - un pharmacien / une pharmacienne (pharmacist).\n     - un mécanicien / une mécanicienne (mechanic).\n     - un informaticien / une informaticienne (computer specialist).\n  3. En -eur → -euse:\n     - un chanteur / une chanteuse (singer).\n     - un vendeur / une vendeuse (salesperson).\n     - un coiffeur / une coiffeuse (hairdresser).\n  4. En -teur → -trice:\n     - un acteur / une actrice (actor/actress).\n     - un directeur / une directrice (director/headmaster).\n     - un instituteur / une institutrice (elementary teacher).\n  5. Identiques au masculin et féminin:\n     - un/une professeur (teacher), un/une médecin / docteur (doctor), un/une journaliste (journalist), un/une pilote (pilot), un/une avocat / avocate (lawyer).\n• Demander la Profession de Quelqu'un:\n  - \"Que fait ton père ?\" / \"Quelle est la profession de ta mère ?\"\n  - \"Il est médecin.\" / \"Elle est avocate.\" (Remarque: Pas d'article après le verbe être pour les professions: on dit \"Il est médecin\", PAS \"Il est un médecin\").\n• Exprimer Son Avenir Professionnel:\n  - \"À l'avenir, je veux être ingénieur.\" (In the future, I want to be an engineer).\n  - \"Quand je serai grand(e), je serai pilote.\" (When I grow up, I will be a pilot).",
     "examples": [
       {
@@ -522,8 +522,8 @@ export const JHS1_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Maîtrisez la règle de conjugaison des verbes en -ER (parler, habiter, aimer, regarder) au présent de l'indicatif.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=f-EZaV6sT8c",
-    "youtubeId": "f-EZaV6sT8c",
+    "youtubeUrl": "https://www.youtube.com/watch?v=gJ25k0J_kXQ",
+    "youtubeId": "gJ25k0J_kXQ",
     "keyNotes": "• Caractéristique des Verbes du 1er Groupe:\n  - Ce sont tous les verbes dont l'infinitif se termine par -ER (sauf le verbe irrégulier ALLER).\n  - Exemples courants: Parler (to speak), Habiter (to live), Aimer (to like/love), Regarder (to watch), Écouter (to listen), Travailler (to work), Manger (to eat), Danser (to dance), Chanter (to sing).\n• Règle de Conjugaison au Présent de l'Indicatif:\n  - Étape 1: Prendre le radical du verbe en enlevant la terminaison -ER (ex: Parl-er → radical = parl-).\n  - Étape 2: Ajouter les terminaisons du présent pour chaque pronom sujet:\n    * Je → -e (Je parle)\n    * Tu → -es (Tu parles)\n    * Il / Elle / On → -e (Il parle / Elle parle)\n    * Nous → -ons (Nous parlons)\n    * Vous → -ez (Vous parlez)\n    * Ils / Elles → -ent (Ils parlent / Elles parlent - attention: la terminaison '-ent' est muette !)\n• Modèle Complet de Conjugaison: PARLER (To speak):\n  - Je parle\n  - Tu parles\n  - Il / Elle parle\n  - Nous parlons\n  - Vous parlez\n  - Ils / Elles parlent\n• Particularités Orthographiques:\n  - Verbes commençant par une voyelle (Aimer, Habiter): 'Je' devient 'J'': \"J'aime\", \"J'habite\".\n  - Verbes en -ger (Manger): Pour garder le son doux /ʒ/, on ajoute un 'e' devant 'ons' avec Nous: \"Nous mangeons\" (au lieu de mangons).",
     "examples": [
       {
@@ -561,8 +561,8 @@ export const JHS1_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Maîtrisez les 4 verbes fondamentaux du français, la phrase négative (ne...pas) et les expressions BECE clés.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=JbS3q1WlG3g",
-    "youtubeId": "JbS3q1WlG3g",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7kgsD4hoznY",
+    "youtubeId": "7kgsD4hoznY",
     "keyNotes": "• Les 4 Piliers de la Conjugaison Française au Présent:\n  1. Le Verbe ÊTRE (To be):\n     - Je suis (I am), Tu es (You are), Il/Elle est (He/She is).\n     - Nous sommes (We are), Vous êtes (You are), Ils/Elles sont (They are).\n     - Emploi: Décrire l'identité, la nationalité, la profession, les qualités.\n  2. Le Verbe AVOIR (To have):\n     - J'ai (I have), Tu as (You have), Il/Elle a (He/She has).\n     - Nous avons (We have), Vous avez (You have), Ils/Elles ont (They have).\n     - Emploi: Exprimer l'âge (\"J'ai 12 ans\"), la possession, la faim, la soif, la douleur.\n  3. Le Verbe ALLER (To go):\n     - Je vais (I go), Tu vas (You go), Il/Elle va (He/She goes).\n     - Nous allons (We go), Vous allez (You go), Ils/Elles vont (They go).\n     - Emploi: Indiquer la destination (\"Je vais à l'école\") et saluer (\"Comment ça va ?\").\n  4. Le Verbe FAIRE (To do / make):\n     - Je fais, Tu fais, Il/Elle fait.\n     - Nous faisons, Vous faites, Ils/Elles font.\n     - Emploi: Les devoirs (\"Je fais mes devoirs\"), le sport, la météo (\"Il fait chaud\").\n• La Forme Négative (NE... PAS):\n  - Règle: Encadrer le verbe conjugué avec \"NE ... PAS\":\n    * \"Je suis fatigué\" → \"Je NE suis PAS fatigué.\"\n    * \"Kofi va au marché\" → \"Kofi NE va PAS au marché.\"\n  - Devant voyelle, \"ne\" devient \"n'\":\n    * \"J'ai un livre\" → \"Je N'ai PAS de livre.\"\n    * \"Elle aime le chocolat\" → \"Elle N'aime PAS le chocolat.\"",
     "examples": [
       {

@@ -14,8 +14,8 @@ export const JHS1_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Understand the physical and social environment, causes and effects of land degradation, pollution, and illegal mining (galamsey).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=4Ym5B5I2PqA",
-    "youtubeId": "4Ym5B5I2PqA",
+    "youtubeUrl": "https://www.youtube.com/watch?v=i1KBxx0VU68",
+    "youtubeId": "i1KBxx0VU68",
     "keyNotes": "• Environment refers to our total surroundings, comprising both the physical environment (water bodies, landforms, vegetation, air) and the social environment (human relationships, culture, institutions, settlements).\n• Environmental Degradation is the deterioration of the physical environment through human activities:\n  - Deforestation: Indiscriminate felling of trees for timber, firewood, and charcoal without replanting.\n  - Illegal Surface Mining (Galamsey): Washing gold in rivers like Pra, Ankobra, and Birim using toxic chemicals (mercury and cyanide).\n  - Improper Waste Disposal: Dumping plastic bags, e-waste, and untreated sewage into gutters, wetlands, and oceans.\n  - Bush Burning: Uncontrolled burning for hunting game and preparing farmlands that destroys soil humus and biodiversity.\n• Effects of Degradation: Destruction of aquatic life, extinction of rare flora/fauna, pollution of drinking water, climate change, and loss of arable topsoil.\n• Conservation Strategies: Afforestation (planting trees where none existed), Reforestation (replacing cut trees), enforcing environmental protection laws (EPA and Minerals Commission), and adopting recycling practices.",
     "examples": [
       {
@@ -50,8 +50,8 @@ export const JHS1_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Examine physical, emotional, and social changes during adolescence, reproductive health, menstruation, and resisting peer pressure.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0kFj7f8v-7U",
-    "youtubeId": "0kFj7f8v-7U",
+    "youtubeUrl": "https://www.youtube.com/watch?v=9lPFRxiJyGI",
+    "youtubeId": "9lPFRxiJyGI",
     "keyNotes": "• Adolescence is the transitional phase of physical and psychological development between childhood and adulthood (typically ages 10 to 19).\n• Puberty: The biological period during which a boy or girl becomes sexually mature and capable of reproduction.\n  - Physical Changes in Boys: Deepening of voice (breaking), broadening of shoulders and chest, growth of facial, underarm, and pubic hair, enlargement of testes and penis, wet dreams (nocturnal emissions).\n  - Physical Changes in Girls: Development of breasts, widening of hips, growth of underarm and pubic hair, onset of menstruation (menarche).\n• Personal Hygiene & Menstrual Management: Daily bathing, proper disposal of sanitary pads, wearing clean cotton undergarments, and maintaining oral and skin cleanliness.\n• Peer Pressure: Influence exerted by a peer group encouraging an adolescent to change their values or behavior.\n• Coping Strategies: Developing self-esteem, practicing assertiveness (learning to say a firm \"NO\"), seeking guidance from trusted school counselors and parents.",
     "examples": [
       {
@@ -88,8 +88,8 @@ export const JHS1_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Explore primary and secondary agents of socialization and the preservation of Ghanaian cultural heritage and values.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=k5qP8uYQ2kY",
-    "youtubeId": "k5qP8uYQ2kY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=CbnXgvCOuIg",
+    "youtubeId": "CbnXgvCOuIg",
     "keyNotes": "• Socialization is the lifelong process by which individuals learn and internalize the norms, customs, values, skills, and roles of their society.\n• Agents of Socialization:\n  - The Family (Primary Agent): Teaches mother tongue, table manners, fundamental morality, respect for elders, and emotional security.\n  - The School (Secondary Agent): Instills formal education, literacy, discipline, civic responsibility, and punctuality.\n  - Peer Group: Teaches egalitarian cooperation, sharing, teamwork, and social interaction among age-mates.\n  - Religious Institutions (Church, Mosque, Shrine): Cultivates spiritual values, honesty, charity, and reverence for God and humanity.\n  - The Mass Media (TV, Radio, Internet, Newspapers): Informs, educates, and disseminates global news and social knowledge.\n• Cultural Heritage: The legacy of physical artifacts (material culture: kente, adinkra symbols, forts and castles) and intangible attributes (non-material culture: proverbs, folklore, music, values of hospitality and communal spirit) inherited from ancestors.",
     "examples": [
       {
@@ -124,8 +124,8 @@ export const JHS1_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Analyze the nuclear and extended family systems, kinship relations, inheritance systems, and mutual family responsibilities.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=3uG7zC4p3rQ",
-    "youtubeId": "3uG7zC4p3rQ",
+    "youtubeUrl": "https://www.youtube.com/watch?v=g4lN90jyQR0",
+    "youtubeId": "g4lN90jyQR0",
     "keyNotes": "• The Family is the basic social unit consisting of parents and their children, or individuals connected by blood, marriage, or adoption.\n• Family Systems in Ghana:\n  - Nuclear Family: Consists of a father, mother, and their biological or adopted children.\n    * Advantages: Privacy, lower financial burden, easier decision-making.\n    * Disadvantages: Limited support during emergencies, potential loneliness.\n  - Extended Family: Includes the nuclear family plus grandparents, uncles, aunts, cousins, nieces, and in-laws.\n    * Advantages: Strong mutual social safety net, communal child upbringing, assistance during funerals and weddings.\n    * Disadvantages: Heavy financial strain on successful members, frequent family disputes, lack of individual privacy.\n• Systems of Inheritance:\n  - Matrilineal System (e.g. Asantes, Fantes): Lineage and property trace through the mother's bloodline (maternal uncle to nephew).\n  - Patrilineal System (e.g. Ewes, Gas, Dagombas): Lineage and ancestral property trace through the father's bloodline (father to biological son/daughter).\n  - PNDC Law 111 (Intestate Succession Law): Protects surviving spouses and children from being ejected by extended family members when a spouse dies without a written will.",
     "examples": [
       {
@@ -160,8 +160,8 @@ export const JHS1_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Explore major Ghanaian festivals (Homowo, Aboakyer, Hogbetsotso, Damba, Kundum) and their historical, social, and economic significance.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=FqG7b_e_XlU",
-    "youtubeId": "FqG7b_e_XlU",
+    "youtubeUrl": "https://www.youtube.com/watch?v=y1d-BWNJfwc",
+    "youtubeId": "y1d-BWNJfwc",
     "keyNotes": "• A Traditional Festival is a periodic cultural celebration commemorating past historical events, remembering ancestors, giving thanks for bountiful harvests, or performing purification rites.\n• Major Ghanaian Festivals:\n  - Homowo (Gas of Greater Accra): Commemorates victory over severe ancient famine; features sprinkling of traditional food 'kpekple' with palm nut soup and peaceful ban on drumming.\n  - Aboakyer (Effutus of Winneba): Deer-hunting festival where the Tuafo and Dentsifo Asafo companies compete to capture a live deer without weapons for sacrifice to the deity Penkye Otu.\n  - Hogbetsotso (Anlos of Volta Region): Commemorates the historic escape from the tyranny of King Agorkorli at Notsie by walking backwards to confuse pursuers.\n  - Damba (Dagombas, Gonjas, Mamprusis of Northern Ghana): Celebrates the birth and naming of Prophet Muhammad, featuring horseback displays, singing, and royal dancing.\n  - Kundum (Ahantas and Nzemas of Western Region): Harvest and thanksgiving festival featuring drumming, cleansing rituals, and dancing with colorful costumes.\n• Significance of Festivals:\n  - Historical: Keeps oral historical traditions and ancestral achievements alive.\n  - Social: Fosters communal peace, reconciliation, reunion of relatives, and marriage arrangements.\n  - Economic: Attracts local and international tourists, creates market for artisans, and provides a platform for raising development funds (durbars).",
     "examples": [
       {
@@ -197,8 +197,8 @@ export const JHS1_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Understand how Ghanaian citizenship is acquired, fundamental human rights in the 1992 Constitution, and civic duties of citizens.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=2Tz8-6e9K2Y",
-    "youtubeId": "2Tz8-6e9K2Y",
+    "youtubeUrl": "https://www.youtube.com/watch?v=JZe9AoeoawM",
+    "youtubeId": "JZe9AoeoawM",
     "keyNotes": "• A Citizen is a recognized legal member of a sovereign state who owes allegiance to the government and enjoys constitutional rights and state protection.\n• Methods of Acquiring Ghanaian Citizenship (Under the 1992 Constitution):\n  1. Citizenship by Birth: Born in or outside Ghana where at least one parent or grandparent was a citizen of Ghana.\n  2. Citizenship by Adoption: A child of not more than 16 years of age adopted by a Ghanaian citizen.\n  3. Citizenship by Registration: A foreign spouse married to a Ghanaian citizen who registers under statutory procedures.\n  4. Citizenship by Naturalization: A foreigner who has legally resided in Ghana for a required period, speaks an indigenous language, possesses good character, and renounces prior foreign allegiance.\n• Fundamental Human Rights: Right to life, freedom of speech, freedom of movement, right to education, freedom of worship, and right to fair trial.\n• Civic Responsibilities of Citizens: Defending the Constitution, paying lawful taxes promptly, protecting public property from vandalism, reporting criminals to the police, and voting in public elections.",
     "examples": [
       {
@@ -233,8 +233,8 @@ export const JHS1_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Master the Three Arms of Government (Executive, Legislature, Judiciary), the principle of Separation of Powers, and Checks and Balances.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=D-aU8rJv778",
-    "youtubeId": "D-aU8rJv778",
+    "youtubeUrl": "https://www.youtube.com/watch?v=le9DTn-JSvQ",
+    "youtubeId": "le9DTn-JSvQ",
     "keyNotes": "• Government is the institutional agency or machinery through which the political authority of a state is formulated, expressed, and executed.\n• The Three Arms of Government in Ghana:\n  1. The Executive:\n     - Composed of the President (Head of State, Head of Government, Commander-in-Chief of the Armed Forces), Vice President, and Ministers of State.\n     - Function: Formulates policies, enforces laws passed by Parliament, maintains national security, and directs foreign diplomacy.\n  2. The Legislature (Parliament):\n     - Composed of elected Members of Parliament (MPs) presided over by the Speaker of Parliament.\n     - Function: Enacts new laws (bills), amends existing statutes, debates national policies, and approves annual government budgets.\n  3. The Judiciary:\n     - Composed of the Chief Justice and judges of Superior Courts (Supreme Court, Court of Appeal, High Court) and Lower Courts (Circuit, District).\n     - Function: Interprets the Constitution, resolves civil and criminal disputes, and protects citizens from unlawful government actions.\n• Separation of Powers: Baron de Montesquieu's principle that government powers must not be concentrated in one person or institution to prevent tyranny.\n• Checks and Balances: Constitutional mechanisms allowing each arm to oversee and limit the actions of the other two arms.",
     "examples": [
       {
@@ -269,8 +269,8 @@ export const JHS1_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Explore the decentralization concept, Metropolitan, Municipal, and District Assemblies (MMDAs), and the roles of DCEs and Assembly Members.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=4l5-Yx-l3vI",
-    "youtubeId": "4l5-Yx-l3vI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=DM-YnD0UP1g",
+    "youtubeId": "DM-YnD0UP1g",
     "keyNotes": "• Decentralization is the transfer of administrative, legislative, planning, and financial powers from the central government in Accra to local grassroots authorities.\n• Structure of Local Government (MMDAs):\n  - Metropolitan Assemblies: Areas with a population of 250,000 people or more (e.g. Accra Metropolitan Assembly - AMA, Kumasi Metropolitan Assembly - KMA).\n  - Municipal Assemblies: One-town or urban areas with a population of 95,000 or more (e.g. Cape Coast, Sunyani, Ho).\n  - District Assemblies: Predominantly rural communities with a population of 75,000 or more.\n• Composition of District Assemblies:\n  - District Chief Executive (DCE / MCE / Mayor): Appointed by the President and approved by a two-thirds majority of Assembly members.\n  - Elected Assembly Members: Represent individual electoral areas (70% of total assembly).\n  - Appointed Assembly Members: Nominated by the President in consultation with traditional authorities (30% of total assembly).\n  - Member of Parliament (MP): Sits in the assembly with no voting rights.\n• Sources of Revenue for MMDAs:\n  - Internally Generated Funds (IGF): Market tolls, property rates, lorry park fees, building permits.\n  - External Transfers: District Assemblies Common Fund (DACF - constitutional grant from national revenue), donor agency support.",
     "examples": [
       {
@@ -306,8 +306,8 @@ export const JHS1_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Examine qualities of good leaders and good followers, democratic vs autocratic leadership styles, and roles of traditional authorities.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0hV1h7p-y0Y",
-    "youtubeId": "0hV1h7p-y0Y",
+    "youtubeUrl": "https://www.youtube.com/watch?v=m3Jbua8LaOk",
+    "youtubeId": "m3Jbua8LaOk",
     "keyNotes": "• A Leader is an individual who guides, directs, motivates, and influences a group of people towards accomplishing shared goals.\n• A Follower is an individual who accepts leadership guidance and actively collaborates to achieve collective objectives.\n• Styles of Leadership:\n  - Democratic (Participatory) Leadership: Involves subordinates in decision-making, welcomes constructive feedback, and respects the rule of law.\n  - Autocratic (Authoritarian) Leadership: Monopolizes all authority, dictates orders without consulting members, and brooks no opposition.\n  - Laissez-Faire (Free-rein) Leadership: Allows group members complete freedom to make decisions without clear guidance, often leading to anarchy.\n• Qualities of a Good Leader: Integrity, humility, vision, impartiality, accountability, empathy, and active listening.\n• Qualities of a Good Follower: Loyalty, obedience to legitimate rules, constructive criticism, punctuality, and active civic participation.\n• Traditional Leadership in Ghana: Chiefs (Nananom, Togbewo, Naawuni/Naaba) preserve ancestral customs, resolve chieftaincy disputes, and mobilize communal labor for local projects.",
     "examples": [
       {
@@ -342,8 +342,8 @@ export const JHS1_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Investigate bribery, corruption, armed robbery, juvenile delinquency, exam malpractice, and strategies for national moral renewal.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Fj0X7-wP9sI",
-    "youtubeId": "Fj0X7-wP9sI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=UzkDmdcZ_8o",
+    "youtubeId": "UzkDmdcZ_8o",
     "keyNotes": "• A Social Problem is an undesirable condition or behavior that affects a significant number of people in society and is widely recognized as requiring collective action.\n• Major Social Problems in Ghana:\n  - Bribery and Corruption: Abuse of public trust or power for private financial gain (kickbacks, embezzlement, extortion).\n  - Examination Malpractice: Cheating during WAEC/BECE examinations (carrying unauthorized materials, leakage of exam papers, impersonation).\n  - Teenage Pregnancy & Child Marriage: High school dropout, maternal mortality, and perpetuation of generational poverty.\n  - Armed Robbery and Cybercrime (Sakawa): Violent attacks and online internet fraud damaging Ghana's international reputation.\n  - Drug Abuse: Consumption of tramadol, marijuana, and synthetic substances leading to mental illness and youth crime.\n• Causes: Poverty, unemployment, greed, weak law enforcement, breakdown of traditional family values, and peer pressure.\n• Remedies: Enforcing anti-corruption laws through CHRAJ and the Office of the Special Prosecutor (OSP), value education in schools, job creation, and counseling.",
     "examples": [
       {
@@ -378,8 +378,8 @@ export const JHS1_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Learn essential map components (Title, Key, Compass Rose, Scale), linear scales, and techniques for locating geographical landmarks.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=3uG7zC4p3rQ",
-    "youtubeId": "3uG7zC4p3rQ",
+    "youtubeUrl": "https://www.youtube.com/watch?v=cwUuVdF8ohY",
+    "youtubeId": "cwUuVdF8ohY",
     "keyNotes": "• A Map is a representation of the Earth's surface or a portion of it drawn to scale on a flat plane as seen from directly above.\n• Essential Components of a Standard Map (TODALS):\n  - Title: Tells what the map represents (e.g. \"Political Map of Ghana Showing Regional Capitals\").\n  - Orientation / Compass Rose: Indicates the cardinal directions (North, South, East, West).\n  - Date: Indicates when the map was drawn or surveyed.\n  - Author: The cartographer or agency that created the map (e.g. Survey Department of Ghana).\n  - Legend / Key: Explains all symbols, colors, and line conventions used on the map.\n  - Scale: Shows the ratio between distance on the map and the corresponding real-world distance on the ground.\n• Types of Map Scales:\n  - Statement Scale: Expressed in words (e.g. \"1 cm represents 2 km\").\n  - Linear / Graphic Scale: A divided line showing distance directly in kilometers or miles.\n  - Representative Fraction (RF) Scale: Expressed as a ratio (e.g. 1:50,000, meaning 1 cm on the map represents 50,000 cm = 500 meters on the ground).",
     "examples": [
       {
@@ -418,8 +418,8 @@ export const JHS1_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Explore relief systems (mountains, plateaus, valleys), Lake Bosomtwe, the Volta River basin, and coastal lagoons.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0kFj7f8v-7U",
-    "youtubeId": "0kFj7f8v-7U",
+    "youtubeUrl": "https://www.youtube.com/watch?v=bdjahwKT0e0",
+    "youtubeId": "bdjahwKT0e0",
     "keyNotes": "• Relief refers to the differences in elevation and shape of the physical land surface (highlands, plateaus, lowlands).\n• Major Relief Features of Ghana:\n  - Highlands / Mountain Ranges:\n    * The Akwapim-Togo Ranges: Stretches from near Accra northeastwards through Volta Region to Togo. Includes Mount Afadjato (885 meters), the highest mountain peak in Ghana.\n    * Kwahu Plateau: Forms a prominent escarpment rising over 600 meters, separating the Volta basin from coastal rivers.\n    * Gambaga Escarpment: Rises steeply in the North East Region.\n  - Lowlands: Coastal Plains (Accra and Keta plains) and the interior Volta River Basin.\n• Drainage Systems (Rivers and Lakes):\n  - The Volta River System: The largest drainage basin, consisting of Black Volta, White Volta, Red Volta, and Oti River.\n  - Lake Volta: The largest man-made lake by surface area in the world, created by damming the Volta River at Akosombo in 1965.\n  - Coastal Rivers: Pra, Ankobra, Tano, Densu, Ayensu, Amissah.\n  - Lake Bosomtwe: Ghana's only natural lake, located in the Ashanti Region, formed in a meteorite impact crater.",
     "examples": [
       {
@@ -454,8 +454,8 @@ export const JHS1_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Classify renewable and non-renewable natural resources (gold, cocoa, timber, bauxite, crude oil) and methods for sustainable resource management.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=4Ym5B5I2PqA",
-    "youtubeId": "4Ym5B5I2PqA",
+    "youtubeUrl": "https://www.youtube.com/watch?v=jH_7wuIX9xA",
+    "youtubeId": "jH_7wuIX9xA",
     "keyNotes": "• Natural Resources are raw materials and natural wealth occurring in nature that can be exploited for economic production and human welfare.\n• Classification of Natural Resources:\n  - Renewable Resources: Can be naturally replenished or reproduced over time if managed sustainably (e.g. solar energy, wind, forests/timber, water bodies, fertile soil, wildlife).\n  - Non-Renewable (Exhaustible) Resources: Finite resources that exist in fixed quantities; once extracted and consumed, they cannot be regenerated within human lifespans (e.g. gold, crude oil, bauxite, diamond, manganese, natural gas).\n• Major Mineral Locations in Ghana:\n  - Gold: Obuasi, Tarkwa, Prestea, Bibiani.\n  - Crude Oil: Offshore Jubilee Field (Cape Three Points, Western Region), TEN fields.\n  - Bauxite (aluminum ore): Awaso (Western North Region), Nyinahin.\n  - Manganese: Nsuta (Western Region).\n  - Diamond: Akwatia (Eastern Region).\n• Sustainable Conservation: Enforcing quota logging, investing in solar power, combating galamsey, and establishing sovereign wealth funds (Ghana Petroleum Funds).",
     "examples": [
       {
@@ -493,8 +493,8 @@ export const JHS1_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Understand primary, secondary, and tertiary stages of production, types of business ownership (sole proprietorship, partnership, cooperatives), and entrepreneurship.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=k5qP8uYQ2kY",
-    "youtubeId": "k5qP8uYQ2kY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=2MSi53wiDiM",
+    "youtubeId": "2MSi53wiDiM",
     "keyNotes": "• Production is any economic activity directed towards the creation of utility (goods and services) to satisfy human needs and wants.\n• The Three Stages of Production:\n  1. Primary Production (Extractive): Harvesting or extracting raw materials directly from nature (e.g. cocoa farming in Sefwi, gold mining in Obuasi, deep-sea fishing in Elmina).\n  2. Secondary Production (Manufacturing & Processing): Transforming raw materials into finished consumer goods (e.g. Golden Tree chocolate factory in Tema, car assembly at Kantanka, oil refinery).\n  3. Tertiary Production (Commercial & Services): Distributing goods and rendering professional services (e.g. teaching, banking, healthcare, warehousing, transportation).\n• Types of Business Ownership:\n  - Sole Proprietorship: Owned and operated by one person (e.g. corner provision store, seamstress).\n    * Advantage: Easy to form, owner keeps all profits.\n    * Disadvantage: Unlimited liability, limited capital.\n  - Partnership: Owned by 2 to 20 persons bound by a partnership agreement.\n  - Limited Liability Company: Ownership divided into shares with distinct legal personality.\n  - Cooperative Society: Formed voluntarily by producers or consumers to promote mutual economic interests (e.g. Kuapa Kokoo cocoa cooperative).",
     "examples": [
       {
@@ -530,8 +530,8 @@ export const JHS1_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Analyze the causes and prevention of road accidents, understand traffic lights and road signs, and promote defensive driving and pedestrian safety.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=2Tz8-6e9K2Y",
-    "youtubeId": "2Tz8-6e9K2Y",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7TESgUA-JW4",
+    "youtubeId": "7TESgUA-JW4",
     "keyNotes": "• Road Safety refers to the measures, regulations, and practices designed to prevent road users (pedestrians, cyclists, motorists, passengers) from being killed or injured in traffic collisions.\n• Primary Causes of Road Accidents in Ghana:\n  - Human Errors (over 80%): Excessive speeding, driving under the influence of alcohol or drugs, distracted driving (making phone calls while driving), reckless overtaking, fatigue, and disregard for road signs.\n  - Vehicular Defects: Faulty braking systems, worn-out tires, malfunctioning headlights, overloaded commercial vehicles (trotros).\n  - Environmental & Road Factors: Potholes, poor road lighting, missing road signages, dense harmattan dust, and heavy downpours.\n• Traffic Lights System:\n  - RED: STOP completely behind the pedestrian stop line.\n  - AMBER (YELLOW): GET READY to stop; do not accelerate into the intersection.\n  - GREEN: GO if the intersection is clear.\n• Road Signs Categories:\n  - Regulatory Signs (Circular): Mandatory commands or prohibitions (e.g. Speed limit, No entry).\n  - Warning Signs (Triangular): Caution motorists of upcoming hazards (e.g. Sharp curve, Pedestrian crossing).\n  - Informative Signs (Rectangular): Provide directions and services (e.g. Hospital ahead, Fuel station).\n• Pedestrian Safety: Always use zebra crossings, footbridges (pedestrian overpasses), walk on sidewalks facing oncoming traffic, and wear reflective clothing at night.",
     "examples": [
       {

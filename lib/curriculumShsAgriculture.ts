@@ -11,6 +11,8 @@ import { CurriculumTopic } from './types';
 export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   {
     "id": "shs-agg-topic-01",
+    "youtubeUrl": "https://www.youtube.com/watch?v=1K4XTJFYA5E",
+    "youtubeId": "1K4XTJFYA5E",
     "subjectId": "general-agriculture",
     "level": "SHS 1",
     "term": 1,
@@ -106,6 +108,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-agg-topic-02",
+    "youtubeUrl": "https://www.youtube.com/watch?v=HjCK-qDDowA",
+    "youtubeId": "HjCK-qDDowA",
     "subjectId": "general-agriculture",
     "level": "SHS 1",
     "term": 1,
@@ -203,6 +207,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-agg-topic-03",
+    "youtubeUrl": "https://www.youtube.com/watch?v=GZ2g0xxktwo",
+    "youtubeId": "GZ2g0xxktwo",
     "subjectId": "general-agriculture",
     "level": "SHS 1",
     "term": 1,
@@ -298,6 +304,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-agg-topic-04",
+    "youtubeUrl": "https://www.youtube.com/watch?v=voWgADFhht8",
+    "youtubeId": "voWgADFhht8",
     "subjectId": "general-agriculture",
     "level": "SHS 1",
     "term": 1,
@@ -396,6 +404,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-agg-topic-05",
+    "youtubeUrl": "https://www.youtube.com/watch?v=e4VUCRCcKfI",
+    "youtubeId": "e4VUCRCcKfI",
     "subjectId": "general-agriculture",
     "level": "SHS 1",
     "term": 2,
@@ -489,6 +499,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-agg-topic-06",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Z9QTYqxAlYQ",
+    "youtubeId": "Z9QTYqxAlYQ",
     "subjectId": "general-agriculture",
     "level": "SHS 1",
     "term": 2,
@@ -582,6 +594,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-agg-topic-07",
+    "youtubeUrl": "https://www.youtube.com/watch?v=U2hLcyy1PmY",
+    "youtubeId": "U2hLcyy1PmY",
     "subjectId": "general-agriculture",
     "level": "SHS 1",
     "term": 2,
@@ -680,6 +694,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-agg-topic-08",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3dqsh2S8pxo",
+    "youtubeId": "3dqsh2S8pxo",
     "subjectId": "general-agriculture",
     "level": "SHS 1",
     "term": 2,
@@ -777,6 +793,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-agg-topic-09",
+    "youtubeUrl": "https://www.youtube.com/watch?v=-OEccdLCxRk",
+    "youtubeId": "-OEccdLCxRk",
     "subjectId": "general-agriculture",
     "level": "SHS 1",
     "term": 3,
@@ -874,6 +892,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-agg-topic-10",
+    "youtubeUrl": "https://www.youtube.com/watch?v=NGDggciXAdw",
+    "youtubeId": "NGDggciXAdw",
     "subjectId": "general-agriculture",
     "level": "SHS 1",
     "term": 3,
@@ -971,6 +991,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-agg-topic-11",
+    "youtubeUrl": "https://www.youtube.com/watch?v=B65rIjm9ayI",
+    "youtubeId": "B65rIjm9ayI",
     "subjectId": "general-agriculture",
     "level": "SHS 1",
     "term": 3,
@@ -1069,6 +1091,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-agg-topic-12",
+    "youtubeUrl": "https://www.youtube.com/watch?v=C3_CUxjRJBg",
+    "youtubeId": "C3_CUxjRJBg",
     "subjectId": "general-agriculture",
     "level": "SHS 1",
     "term": 3,
@@ -1164,6 +1188,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crp-topic-01",
+    "youtubeUrl": "https://www.youtube.com/watch?v=NjMl52h0ocE",
+    "youtubeId": "NjMl52h0ocE",
     "subjectId": "crop-husbandry",
     "level": "SHS 1",
     "term": 1,
@@ -1257,6 +1283,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crp-topic-02",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Itbf9yNrgLE",
+    "youtubeId": "Itbf9yNrgLE",
     "subjectId": "crop-husbandry",
     "level": "SHS 1",
     "term": 1,
@@ -1351,6 +1379,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crp-topic-03",
+    "youtubeUrl": "https://www.youtube.com/watch?v=TdiibRXXJ6g",
+    "youtubeId": "TdiibRXXJ6g",
     "subjectId": "crop-husbandry",
     "level": "SHS 1",
     "term": 1,
@@ -1449,6 +1479,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crp-topic-04",
+    "youtubeUrl": "https://www.youtube.com/watch?v=QjVY9KA5b4A",
+    "youtubeId": "QjVY9KA5b4A",
     "subjectId": "crop-husbandry",
     "level": "SHS 1",
     "term": 1,
@@ -1547,6 +1579,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crp-topic-05",
+    "youtubeUrl": "https://www.youtube.com/watch?v=pt3t6fDbnHE",
+    "youtubeId": "pt3t6fDbnHE",
     "subjectId": "crop-husbandry",
     "level": "SHS 1",
     "term": 2,
@@ -1642,6 +1676,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crp-topic-06",
+    "youtubeUrl": "https://www.youtube.com/watch?v=0CAVOpHFyTU",
+    "youtubeId": "0CAVOpHFyTU",
     "subjectId": "crop-husbandry",
     "level": "SHS 1",
     "term": 2,
@@ -1738,6 +1774,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crp-topic-07",
+    "youtubeUrl": "https://www.youtube.com/watch?v=jDav-Vgxov8",
+    "youtubeId": "jDav-Vgxov8",
     "subjectId": "crop-husbandry",
     "level": "SHS 1",
     "term": 2,
@@ -1833,6 +1871,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crp-topic-08",
+    "youtubeUrl": "https://www.youtube.com/watch?v=XI01j-TxKTc",
+    "youtubeId": "XI01j-TxKTc",
     "subjectId": "crop-husbandry",
     "level": "SHS 1",
     "term": 2,
@@ -1931,6 +1971,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crp-topic-09",
+    "youtubeUrl": "https://www.youtube.com/watch?v=cQ0UgXIGAZs",
+    "youtubeId": "cQ0UgXIGAZs",
     "subjectId": "crop-husbandry",
     "level": "SHS 1",
     "term": 3,
@@ -2029,6 +2071,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crp-topic-10",
+    "youtubeUrl": "https://www.youtube.com/watch?v=GkteUqsxAWw",
+    "youtubeId": "GkteUqsxAWw",
     "subjectId": "crop-husbandry",
     "level": "SHS 1",
     "term": 3,
@@ -2123,6 +2167,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crp-topic-11",
+    "youtubeUrl": "https://www.youtube.com/watch?v=4Egh23n-RNA",
+    "youtubeId": "4Egh23n-RNA",
     "subjectId": "crop-husbandry",
     "level": "SHS 1",
     "term": 3,
@@ -2219,6 +2265,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crp-topic-12",
+    "youtubeUrl": "https://www.youtube.com/watch?v=H-QXomjwkTU",
+    "youtubeId": "H-QXomjwkTU",
     "subjectId": "crop-husbandry",
     "level": "SHS 1",
     "term": 3,
@@ -2315,6 +2363,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-ani-topic-01",
+    "youtubeUrl": "https://www.youtube.com/watch?v=nUURC0413XA",
+    "youtubeId": "nUURC0413XA",
     "subjectId": "animal-husbandry",
     "level": "SHS 1",
     "term": 1,
@@ -2414,6 +2464,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-ani-topic-02",
+    "youtubeUrl": "https://www.youtube.com/watch?v=YvF_8DYgiM4",
+    "youtubeId": "YvF_8DYgiM4",
     "subjectId": "animal-husbandry",
     "level": "SHS 1",
     "term": 1,
@@ -2504,6 +2556,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-ani-topic-03",
+    "youtubeUrl": "https://www.youtube.com/watch?v=FD1pit9SRUk",
+    "youtubeId": "FD1pit9SRUk",
     "subjectId": "animal-husbandry",
     "level": "SHS 1",
     "term": 1,
@@ -2604,6 +2658,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-ani-topic-04",
+    "youtubeUrl": "https://www.youtube.com/watch?v=2e15FsLiAjs",
+    "youtubeId": "2e15FsLiAjs",
     "subjectId": "animal-husbandry",
     "level": "SHS 1",
     "term": 1,
@@ -2698,6 +2754,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-ani-topic-05",
+    "youtubeUrl": "https://www.youtube.com/watch?v=knEFsVZdnDo",
+    "youtubeId": "knEFsVZdnDo",
     "subjectId": "animal-husbandry",
     "level": "SHS 1",
     "term": 2,
@@ -2795,6 +2853,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-ani-topic-06",
+    "youtubeUrl": "https://www.youtube.com/watch?v=jcaMu6fIGOA",
+    "youtubeId": "jcaMu6fIGOA",
     "subjectId": "animal-husbandry",
     "level": "SHS 1",
     "term": 2,
@@ -2891,6 +2951,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-ani-topic-07",
+    "youtubeUrl": "https://www.youtube.com/watch?v=TcH_K2qnXJY",
+    "youtubeId": "TcH_K2qnXJY",
     "subjectId": "animal-husbandry",
     "level": "SHS 1",
     "term": 2,
@@ -2988,6 +3050,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-ani-topic-08",
+    "youtubeUrl": "https://www.youtube.com/watch?v=lIHkrDIh4O8",
+    "youtubeId": "lIHkrDIh4O8",
     "subjectId": "animal-husbandry",
     "level": "SHS 1",
     "term": 2,
@@ -3087,6 +3151,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-ani-topic-09",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Ibdk951MovY",
+    "youtubeId": "Ibdk951MovY",
     "subjectId": "animal-husbandry",
     "level": "SHS 1",
     "term": 3,
@@ -3184,6 +3250,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-ani-topic-10",
+    "youtubeUrl": "https://www.youtube.com/watch?v=AG8LGVKretk",
+    "youtubeId": "AG8LGVKretk",
     "subjectId": "animal-husbandry",
     "level": "SHS 1",
     "term": 3,
@@ -3283,6 +3351,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-ani-topic-11",
+    "youtubeUrl": "https://www.youtube.com/watch?v=9tE7LfZ9fSU",
+    "youtubeId": "9tE7LfZ9fSU",
     "subjectId": "animal-husbandry",
     "level": "SHS 1",
     "term": 3,
@@ -3380,6 +3450,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-ani-topic-12",
+    "youtubeUrl": "https://www.youtube.com/watch?v=czPrzAfxqSY",
+    "youtubeId": "czPrzAfxqSY",
     "subjectId": "animal-husbandry",
     "level": "SHS 1",
     "term": 3,
@@ -3477,6 +3549,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fsh-topic-01",
+    "youtubeUrl": "https://www.youtube.com/watch?v=BY2A7lW7Kg4",
+    "youtubeId": "BY2A7lW7Kg4",
     "subjectId": "fish-farming",
     "level": "SHS 1",
     "term": 1,
@@ -3572,6 +3646,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fsh-topic-02",
+    "youtubeUrl": "https://www.youtube.com/watch?v=BE9QIaP7sIU",
+    "youtubeId": "BE9QIaP7sIU",
     "subjectId": "fish-farming",
     "level": "SHS 1",
     "term": 1,
@@ -3667,6 +3743,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fsh-topic-03",
+    "youtubeUrl": "https://www.youtube.com/watch?v=jOL1Kr4km6M",
+    "youtubeId": "jOL1Kr4km6M",
     "subjectId": "fish-farming",
     "level": "SHS 1",
     "term": 1,
@@ -3763,6 +3841,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fsh-topic-04",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Hjz6SkEmaKs",
+    "youtubeId": "Hjz6SkEmaKs",
     "subjectId": "fish-farming",
     "level": "SHS 1",
     "term": 1,
@@ -3860,6 +3940,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fsh-topic-05",
+    "youtubeUrl": "https://www.youtube.com/watch?v=1fPqzQyebD4",
+    "youtubeId": "1fPqzQyebD4",
     "subjectId": "fish-farming",
     "level": "SHS 1",
     "term": 2,
@@ -3952,6 +4034,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fsh-topic-06",
+    "youtubeUrl": "https://www.youtube.com/watch?v=-pZabn7wNL8",
+    "youtubeId": "-pZabn7wNL8",
     "subjectId": "fish-farming",
     "level": "SHS 1",
     "term": 2,
@@ -4045,6 +4129,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fsh-topic-07",
+    "youtubeUrl": "https://www.youtube.com/watch?v=hXtj80pKzo4",
+    "youtubeId": "hXtj80pKzo4",
     "subjectId": "fish-farming",
     "level": "SHS 1",
     "term": 2,
@@ -4141,6 +4227,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fsh-topic-08",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ixbAd8EUYZU",
+    "youtubeId": "ixbAd8EUYZU",
     "subjectId": "fish-farming",
     "level": "SHS 1",
     "term": 2,
@@ -4235,6 +4323,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fsh-topic-09",
+    "youtubeUrl": "https://www.youtube.com/watch?v=h0Bwp-MBy_Q",
+    "youtubeId": "h0Bwp-MBy_Q",
     "subjectId": "fish-farming",
     "level": "SHS 1",
     "term": 3,
@@ -4332,6 +4422,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fsh-topic-10",
+    "youtubeUrl": "https://www.youtube.com/watch?v=-mfKeWxIcas",
+    "youtubeId": "-mfKeWxIcas",
     "subjectId": "fish-farming",
     "level": "SHS 1",
     "term": 3,
@@ -4425,6 +4517,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fsh-topic-11",
+    "youtubeUrl": "https://www.youtube.com/watch?v=YDXTNF0Lpw0",
+    "youtubeId": "YDXTNF0Lpw0",
     "subjectId": "fish-farming",
     "level": "SHS 1",
     "term": 3,
@@ -4521,6 +4615,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fsh-topic-12",
+    "youtubeUrl": "https://www.youtube.com/watch?v=t2NWYVXscfs",
+    "youtubeId": "t2NWYVXscfs",
     "subjectId": "fish-farming",
     "level": "SHS 1",
     "term": 3,
@@ -4622,6 +4718,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-for-topic-01",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Oc0s5nXUM_A",
+    "youtubeId": "Oc0s5nXUM_A",
     "subjectId": "forestry",
     "level": "SHS 1",
     "term": 1,
@@ -4720,6 +4818,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-for-topic-02",
+    "youtubeUrl": "https://www.youtube.com/watch?v=UHpnyRHRVg4",
+    "youtubeId": "UHpnyRHRVg4",
     "subjectId": "forestry",
     "level": "SHS 1",
     "term": 1,
@@ -4813,6 +4913,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-for-topic-03",
+    "youtubeUrl": "https://www.youtube.com/watch?v=libE1Iq8wgM",
+    "youtubeId": "libE1Iq8wgM",
     "subjectId": "forestry",
     "level": "SHS 1",
     "term": 1,
@@ -4910,6 +5012,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-for-topic-04",
+    "youtubeUrl": "https://www.youtube.com/watch?v=QSZJyNBLBCI",
+    "youtubeId": "QSZJyNBLBCI",
     "subjectId": "forestry",
     "level": "SHS 1",
     "term": 1,
@@ -5003,6 +5107,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-for-topic-05",
+    "youtubeUrl": "https://www.youtube.com/watch?v=1FB-wubM1vA",
+    "youtubeId": "1FB-wubM1vA",
     "subjectId": "forestry",
     "level": "SHS 1",
     "term": 2,
@@ -5102,6 +5208,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-for-topic-06",
+    "youtubeUrl": "https://www.youtube.com/watch?v=45jzuHBinug",
+    "youtubeId": "45jzuHBinug",
     "subjectId": "forestry",
     "level": "SHS 1",
     "term": 2,
@@ -5198,6 +5306,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-for-topic-07",
+    "youtubeUrl": "https://www.youtube.com/watch?v=RlUW-EdxxMc",
+    "youtubeId": "RlUW-EdxxMc",
     "subjectId": "forestry",
     "level": "SHS 1",
     "term": 2,
@@ -5294,6 +5404,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-for-topic-08",
+    "youtubeUrl": "https://www.youtube.com/watch?v=S95rBiZZjSA",
+    "youtubeId": "S95rBiZZjSA",
     "subjectId": "forestry",
     "level": "SHS 1",
     "term": 2,
@@ -5391,6 +5503,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-for-topic-09",
+    "youtubeUrl": "https://www.youtube.com/watch?v=NjtIjQ7DQsw",
+    "youtubeId": "NjtIjQ7DQsw",
     "subjectId": "forestry",
     "level": "SHS 1",
     "term": 3,
@@ -5485,6 +5599,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-for-topic-10",
+    "youtubeUrl": "https://www.youtube.com/watch?v=rzImtlqjdxo",
+    "youtubeId": "rzImtlqjdxo",
     "subjectId": "forestry",
     "level": "SHS 1",
     "term": 3,
@@ -5578,6 +5694,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-for-topic-11",
+    "youtubeUrl": "https://www.youtube.com/watch?v=UtjNSnaY3p0",
+    "youtubeId": "UtjNSnaY3p0",
     "subjectId": "forestry",
     "level": "SHS 1",
     "term": 3,
@@ -5676,6 +5794,8 @@ export const SHS_AGRICULTURE_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-for-topic-12",
+    "youtubeUrl": "https://www.youtube.com/watch?v=lIkY1svFluE",
+    "youtubeId": "lIkY1svFluE",
     "subjectId": "forestry",
     "level": "SHS 1",
     "term": 3,

@@ -14,8 +14,8 @@ export const JHS1_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Master Proper, Common, Collective, Abstract, Countable/Uncountable nouns, and Personal, Relative, Reflexive pronouns.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=6-O9v7rKqhs",
-    "youtubeId": "6-O9v7rKqhs",
+    "youtubeUrl": "https://www.youtube.com/watch?v=uOQgud5J-H0",
+    "youtubeId": "uOQgud5J-H0",
     "keyNotes": "• A Noun is a naming word for a person, place, animal, thing, or abstract idea.\n• Types of Nouns:\n  - Proper Nouns: Specific unique names, always capitalized (e.g. Kwame Nkrumah, Accra, Volta Lake, Ghana).\n  - Common Nouns: General names of everyday items (e.g. boy, school, desk, river).\n  - Collective Nouns: Names for groups taken as a single unit (e.g. a pride of lions, a flock of sheep, a fleet of ships, a jury).\n  - Abstract Nouns: Names of feelings, qualities, concepts, or states that cannot be perceived by the 5 physical senses (e.g. honesty, courage, wisdom, poverty, joy).\n  - Countable vs Uncountable: Countable nouns have singular and plural forms (book/books); Uncountable nouns have no plural and do not take 'a/an' (water, information, furniture, rice).\n• Pronouns: Words used in place of nouns to avoid monotonous repetition:\n  - Personal (Subject: I, he, she, they; Object: me, him, her, them).\n  - Possessive: mine, yours, hers, theirs.\n  - Relative: who, whom, whose, which, that.\n  - Reflexive: myself, himself, themselves (note: 'theirselves' does not exist in English!).",
     "examples": [
       {
@@ -91,8 +91,8 @@ export const JHS1_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Learn the proper usage of full stops, commas, apostrophes, question marks, quotation marks, and capitalization in BECE essays.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=G2wz8X2KKnk",
-    "youtubeId": "G2wz8X2KKnk",
+    "youtubeUrl": "https://www.youtube.com/watch?v=WHB-mpbh9z8",
+    "youtubeId": "WHB-mpbh9z8",
     "keyNotes": "Punctuation marks are traffic signals of written language; correct punctuation clarifies meaning and prevents ambiguity.\n• Full Stop (Period) [.]: Ends a complete declarative or imperative sentence; used in standard abbreviations.\n• Comma [,]:\n  - Separates items in a series/list (\"He bought yams, plantains, and garden eggs\").\n  - Separates introductory clauses from the main clause (\"When morning came, we set off\").\n  - Encloses parenthetical extra information (\"Kofi, my best friend, won the race\").\n  - Used after salutations in friendly letters (\"Dear Akosua,\").\n• Question Mark [?]: Ends a direct question (\"Where are you going?\"). Never use after indirect questions (\"He asked where I was going.\").\n• Apostrophe [']:\n  - Contraction: Replaces omitted letters (don't = do not; it's = it is / it has).\n  - Possession (Singular): Add 's (\"the boy's shirt\" = shirt of one boy).\n  - Possession (Plural ending in -s): Add apostrophe only (\"the boys' shirts\" = shirts of many boys).\n  - Note: \"Its\" (possessive) has NO apostrophe (\"The dog wagged its tail\").\n• Quotation Marks [ \" \" ]: Enclose direct speech spoken words. Punctuation goes inside quotes (\"I am ready,\" she said).",
     "examples": [
       {
@@ -128,8 +128,8 @@ export const JHS1_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Enrich your lexicon through synonyms, antonyms, prefixes/suffixes, and inferring word meanings from context in passages.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=qO-v5yR6g0k",
-    "youtubeId": "qO-v5yR6g0k",
+    "youtubeUrl": "https://www.youtube.com/watch?v=SzYrY77KK2g",
+    "youtubeId": "SzYrY77KK2g",
     "keyNotes": "A strong vocabulary is the foundation for high scores in both BECE Objective Lexis & Structure (Paper 1) and Reading Comprehension (Paper 2).\n• Synonyms: Words with identical or nearly identical meanings in a specific context:\n  - abundant = plentiful; diligent = hardworking; courageous = brave; candid = frank; terminate = end.\n• Antonyms: Words with opposite meanings:\n  - ancient ≠ modern; expand ≠ contract; obscure ≠ clear; scarce ≠ abundant; compulsory ≠ optional.\n• Word Formation with Affixes:\n  - Prefixes (added to beginning): un- (unhappy), dis- (disagree), mis- (misunderstand), im- (impossible), re- (rewrite).\n  - Suffixes (added to end, changing part of speech): -ment (enjoyment - noun), -ful (hopeful - adjective), -ly (quickly - adverb).\n• Register (Specialized Vocabulary):\n  - Medical: diagnosis, symptom, prescription, ward, physician.\n  - Legal: verdict, bail, prosecution, attorney, trial.\n  - Agricultural: tillage, silage, germination, pesticide, fertilizer.",
     "examples": [
       {
@@ -168,8 +168,8 @@ export const JHS1_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Master the WAEC BECE format for informal letters: single address, date, informal salutation, body paragraphs, and friendly sign-off.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Jv2Kk-tO9eE",
-    "youtubeId": "Jv2Kk-tO9eE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=PgwmAUJx248",
+    "youtubeId": "PgwmAUJx248",
     "keyNotes": "An informal letter (friendly letter) is written to someone you know well—a friend, sibling, parent, or classmate.\n• Standard BECE Format:\n  1. Writer's Address: Top right-hand corner; block or indented form; ends with a full stop on the town/country line.\n  2. Date: Written directly below the address (e.g. 24th September, 2026).\n  3. Salutation: Left-hand margin (e.g. Dear Kwame, / Dear Sister Akua,). Must end with a COMMA.\n  4. Body:\n     - Paragraph 1 (Introduction): Warm personal greetings, inquiring about health/school, stating the reason for writing.\n     - Paragraphs 2 & 3 (Body Details): Thoroughly addressing the specific questions or theme raised in the essay prompt.\n     - Final Paragraph (Conclusion): Sending warm regards to family and inviting a prompt reply.\n  5. Subscription / Sign-off: Right-hand corner (or left in block style):\n     - \"Yours sincerely,\" or \"Your friend,\" followed by a COMMA.\n     - First Name ONLY (e.g. Ama). NO surname and NO signature!\n• WAEC BECE Assessment Criteria (40 marks total):\n  - Content (10 marks): Addressing all parts of the question.\n  - Organization (10 marks): Paragraphing, logical sequencing, correct format.\n  - Expression (10 marks): Appropriate vocabulary, sentence variety, informal idioms.\n  - Mechanical Accuracy (10 marks): Punctuation, spelling, grammar, and concord (each error loses ½ mark).",
     "examples": [
       {
@@ -205,8 +205,8 @@ export const JHS1_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Learn comparative and superlative degrees, the Royal Order of Adjectives (DOSASCOMP), and adverbs of manner, time, and place.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=10mHPyv52-g",
-    "youtubeId": "10mHPyv52-g",
+    "youtubeUrl": "https://www.youtube.com/watch?v=0HPKwhngB-U",
+    "youtubeId": "0HPKwhngB-U",
     "keyNotes": "• Adjectives: Words that describe, qualify, or modify nouns and pronouns (e.g. tall boy, delicious fufu, five cedis).\n• Degrees of Comparison:\n  - Positive: Base form describing one item (\"Kwaku is tall\").\n  - Comparative: Compares two items, adding -er or 'more' (\"Kwaku is taller than Kofi\").\n  - Superlative: Compares three or more items, adding -est or 'most' (\"Kwaku is the tallest boy in class\").\n  - Irregular Comparisons: good/better/best; bad/worse/worst; many/more/most; little/less/least.\n• The Royal Order of Adjectives (DOSASCOMP):\n  When multiple adjectives describe a single noun, arrange them in this strict order:\n  1. Determiner / Article (a, the, three)\n  2. Opinion / Quality (beautiful, delicious, ugly)\n  3. Size (large, tiny, tall)\n  4. Age (old, young, modern)\n  5. Shape (round, square, oval)\n  6. Color (red, blue, black)\n  7. Origin / Nationality (Ghanaian, British, African)\n  8. Material (wooden, leather, gold, cotton)\n  9. Purpose (running shoes, dining table)\n  Example: \"A (1) beautiful (2) small (3) round (5) Ghanaian (7) wooden (8) stool.\"\n• Adverbs: Words that modify verbs, adjectives, or other adverbs:\n  - Manner (How?): gracefully, quickly, well.\n  - Time (When?): yesterday, soon, now.\n  - Place (Where?): here, outside, upstairs.\n  - Frequency (How often?): always, seldom, rarely.\n  - Degree (How much?): very, extremely, completely.",
     "examples": [
       {
@@ -285,8 +285,8 @@ export const JHS1_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Distinguish phrases from clauses, independent from dependent clauses, and master Simple, Compound, and Complex sentences.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=smgyeUhrSt8",
-    "youtubeId": "smgyeUhrSt8",
+    "youtubeUrl": "https://www.youtube.com/watch?v=jOw5a1rUx2I",
+    "youtubeId": "jOw5a1rUx2I",
     "keyNotes": "• Phrase: A group of related words without a subject-verb combination that functions as a single part of speech (e.g. \"under the mango tree\", \"with great joy\").\n• Clause: A group of words containing a subject and a finite verb:\n  - Independent (Main) Clause: Expresses a complete thought and can stand alone as a sentence (\"Kofi passed the exam\").\n  - Dependent (Subordinate) Clause: Contains a subject and verb but starts with a subordinating conjunction and cannot stand alone (\"Because he studied hard\").\n• Sentence Classification by Structure:\n  1. Simple Sentence: Contains ONE independent clause with a single complete idea:\n     - \"The eagle soared above the canopy.\"\n  2. Compound Sentence: Contains TWO OR MORE independent clauses joined by coordinating conjunctions (FANBOYS: for, and, nor, but, or, yet, so) or a semicolon:\n     - \"Ama loves dancing, BUT her brother prefers football.\"\n  3. Complex Sentence: Contains ONE independent clause and AT LEAST ONE dependent clause joined by subordinating conjunctions (although, because, since, unless, while):\n     - \"ALTHOUGH it rained heavily, the students arrived on time.\"\n• Sentence Classification by Purpose:\n  - Declarative (statement, ends with .): \"Ghana is in West Africa.\"\n  - Interrogative (question, ends with ?): \"Did you finish the homework?\"\n  - Imperative (command or request, ends with . or !): \"Close the window now.\"\n  - Exclamatory (strong emotion, ends with !): \"What a magnificent goal!\"",
     "examples": [
       {
@@ -324,8 +324,8 @@ export const JHS1_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Master strategies for answering literal, inferential, vocabulary, and grammatical questions in BECE Section B reading comprehension.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=gK8Z5Wf0Q_4",
-    "youtubeId": "gK8Z5Wf0Q_4",
+    "youtubeUrl": "https://www.youtube.com/watch?v=W7BW9gv_OkU",
+    "youtubeId": "W7BW9gv_OkU",
     "keyNotes": "Reading comprehension tests your ability to understand, interpret, analyze, and synthesize written English.\n• The 4 Main Types of BECE Comprehension Questions:\n  1. Direct / Literal Questions: Answers are explicitly stated in the text. Look for keywords, but rephrase in your own words rather than mindless word-for-word lifting!\n  2. Inferential / Deductive Questions: Answers are implied, not directly stated. Read between the lines using clues from characters' actions or statements.\n  3. Vocabulary Replacement: Replace a word from the passage with another single word or short phrase that fits grammatically and contextually. Must match the exact tense and part of speech!\n  4. Grammatical Name and Function: Identify a clause or phrase (e.g. Adverbial clause of time) and state what it modifies (e.g. \"Modifies the verb 'escaped'\").\n• Golden Rules for Answering:\n  - Always write answers in complete, grammatically correct sentences unless instructed otherwise.\n  - Do not introduce your own outside knowledge if it contradicts the passage.\n  - When replacing vocabulary: Never give two alternatives separated by a slash (e.g. \"happy/joyful\")—examiners will penalize both if one is wrong! Provide one precise word.",
     "examples": [
       {
@@ -362,8 +362,8 @@ export const JHS1_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Learn to paint vivid mental pictures using sensory details, rich adjectives, and logical spatial order when describing people, places, and events.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=hVn7aF3v_eA",
-    "youtubeId": "hVn7aF3v_eA",
+    "youtubeUrl": "https://www.youtube.com/watch?v=XSr1GmpwuAU",
+    "youtubeId": "XSr1GmpwuAU",
     "keyNotes": "A descriptive essay creates a vivid, sensory-rich mental picture of a person, place, object, or event for the reader.\n• The Five Senses:\n  - Sight: Colors, shapes, sizes, lighting (\"dazzling morning sunlight reflecting off tin roofs\").\n  - Sound: Buzzing, clattering, roaring, whispering (\"the deafening clamor of horn-honking tro-tros\").\n  - Smell: Fragrant, pungent, aromatic, putrid (\"the tantalizing aroma of grilled tilapia and spicy pepper\").\n  - Taste: Sweet, bitter, savory, tangy.\n  - Touch: Rough, silky, scalding, sticky, humid.\n• Structural Outline for Descriptive Writing:\n  1. Title: Bold, centered, and underlined (e.g. A VISIT TO MAKOLA MARKET).\n  2. Introduction: Introduce the subject, location, time, and overall dominant impression.\n  3. Body Paragraphs (Organized logically):\n     - Spatial Order (left to right, top to bottom, foreground to background).\n     - Focus on specific focal points with descriptive adjectives and figurative language.\n  4. Conclusion: Summarize personal feelings, lingering memories, and lasting impressions.",
     "examples": [
       {
@@ -400,8 +400,8 @@ export const JHS1_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Learn plot construction (exposition, climax, resolution), realistic dialogue punctuation, and narrative pacing for storytelling in BECE.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=e3Gf1Uj0Wnk",
-    "youtubeId": "e3Gf1Uj0Wnk",
+    "youtubeUrl": "https://www.youtube.com/watch?v=LAuok5Dx0qg",
+    "youtubeId": "LAuok5Dx0qg",
     "keyNotes": "A narrative essay tells a story about a real or imagined sequence of events with a clear beginning, middle, and end.\n• The 5 Elements of a Narrative Plot:\n  1. Exposition: Setting the scene (time and place) and introducing main characters.\n  2. Rising Action: A series of events and escalating conflicts that build tension and suspense.\n  3. Climax: The turning point and emotional peak of the story with the highest drama.\n  4. Falling Action: Events following the climax as characters deal with consequences.\n  5. Resolution: The conclusion where the conflict is resolved and a moral lesson is realized.\n• Crucial Narrative Writing Rules:\n  - Consistent Tense: Narratives are written predominantly in the PAST TENSE (Past Simple, Past Continuous, Past Perfect).\n  - First Person (\"I\", \"we\") vs Third Person (\"he\", \"she\", \"they\").\n  - Punctuation of Dialogue:\n    * Start a new indented line every time a new character speaks.\n    * Enclose exact spoken words in quotation marks: \"Hurry up,\" shouted Kofi, \"or we will miss the bus!\"\n    * Punctuation marks (comma, full stop, exclamation mark) go INSIDE the closing quotation mark.\n  - Proverbial Topics: If prompt asks to illustrate a proverb (\"A stitch in time saves nine\"), the climax must clearly show the consequence of ignoring or adhering to the proverb.",
     "examples": [
       {
@@ -438,8 +438,8 @@ export const JHS1_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Master the 2-address format, formal date, official salutation, title heading, dignified tone, and \"Yours faithfully\" sign-off for BECE exams.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=tO2k8W6L0qI",
-    "youtubeId": "tO2k8W6L0qI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=jJGUDYVAlco",
+    "youtubeId": "jJGUDYVAlco",
     "keyNotes": "A formal letter is an official business letter written to an authority figure (Headmaster, District Director of Education, Assembly Member, Editor of a newspaper).\n• Strict BECE Formal Letter Structure:\n  1. Writer's Address: Top right-hand corner (e.g. school or home postal address), followed by the DATE.\n  2. Recipient's Address (Inside Address): Left-hand margin below the date line. Must include official title:\n     - The Headmaster,\n     - Achimota Basic School,\n     - P.O. Box 11, Achimota, Accra.\n  3. Salutation: \"Dear Sir,\" or \"Dear Madam,\" (NEVER use first names!).\n  4. Heading / Title: Centered or left-aligned, written in ALL CAPITALS or title case underlined:\n     - APPLICATION FOR PERMISSION TO BE ABSENT FROM SCHOOL\n  5. Body: Formal, respectful, precise, and concise. NO SLANG, NO IDIOMS, and NO CONTRACTIONS (write \"do not\", not \"don't\"; \"I am writing\", not \"I'm writing\").\n     - Paragraph 1: State the clear purpose of writing immediately.\n     - Paragraph 2 & 3: Detailed explanation and supporting justification.\n     - Paragraph 4: Respectful concluding request for favorable consideration.\n  6. Subscription / Sign-off:\n     - \"Yours faithfully,\" (Capital 'Y', lowercase 'f', followed by a COMMA).\n     - Official Signature.\n     - Full Name in print (e.g. Kwabena Boateng).",
     "examples": [
       {
@@ -478,8 +478,8 @@ export const JHS1_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Master coordinating and subordinating conjunctions, and the rules of converting direct speech into reported speech with tense and pronoun shifts.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=ZIazFDOmnk4",
-    "youtubeId": "ZIazFDOmnk4",
+    "youtubeUrl": "https://www.youtube.com/watch?v=k7KjxyZ9W2I",
+    "youtubeId": "k7KjxyZ9W2I",
     "keyNotes": "• Conjunctions: Linking words that connect words, phrases, or clauses:\n  - Coordinating Conjunctions (FANBOYS): Connect equal grammatical units (For, And, Nor, But, Or, Yet, So).\n  - Subordinating Conjunctions: Connect dependent clauses to main clauses (because, although, since, unless, while, whereas).\n  - Correlative Conjunctions: Used in pairs (either...or, neither...nor, not only...but also).\n• Direct Speech vs Indirect (Reported) Speech:\n  - Direct Speech: Quotes the exact words of the speaker inside quotation marks:\n    * Kwame said, \"I am traveling to Kumasi tomorrow.\"\n  - Indirect Speech: Reports what someone said without exact quotes, introduced by a reporting verb (said, told, asked):\n    * Kwame said that he was traveling to Kumasi the following day.\n• Rules for Converting Direct Speech to Indirect Speech:\n  1. Remove all quotation marks and commas before speech.\n  2. Shift Tenses Backwards (Backshifting) if reporting verb is in the past (\"said\"):\n     - Simple Present → Simple Past (am/is → was; do → did; write → wrote).\n     - Present Continuous → Past Continuous (is running → was running).\n     - Simple Past → Past Perfect (went → had gone).\n     - Will / Can / May → Would / Could / Might.\n  3. Change Pronouns according to context:\n     - \"I\" → he/she; \"we\" → they; \"my\" → his/her.\n  4. Change Words Indicating Time and Place:\n     - now → then; today → that day; tomorrow → the next / following day; yesterday → the previous day; here → there; this → that.",
     "examples": [
       {
@@ -518,8 +518,8 @@ export const JHS1_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Identify and analyze similes, metaphors, personification, hyperbole, alliteration, onomatopoeia, and irony in BECE poetry and prose.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Jv2Kk-tO9eE",
-    "youtubeId": "Jv2Kk-tO9eE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=NBHi6myBbJk",
+    "youtubeId": "NBHi6myBbJk",
     "keyNotes": "Figures of speech are figurative literary expressions used to create vivid imagery, emphasize ideas, and beautify language.\n• Major Figures of Speech in the BECE Syllabus:\n  1. Simile: Direct comparison of two dissimilar things using \"as...as\" or \"like\":\n     - \"He runs LIKE a cheetah.\" / \"Her hands were AS cold AS ice.\"\n  2. Metaphor: An implicit, direct comparison stating that one thing IS another without using \"like\" or \"as\":\n     - \"Kwame is a lion in battle.\" / \"Life is a roller coaster.\"\n  3. Personification: Giving human attributes, emotions, or actions to non-human or inanimate objects:\n     - \"The angry wind howled through the night.\" / \"The dancing daffodils smiled at the sun.\"\n  4. Hyperbole: Deliberate, extreme exaggeration used for emphasis or humor:\n     - \"I have told you a million times to sit down!\" / \"I am so hungry I could eat an elephant!\"\n  5. Alliteration: The repetition of identical consonant sounds at the beginning of adjacent or closely connected words:\n     - \"Peter Piper picked a peck of pickled peppers.\" / \"The wild wind whistled west.\"\n  6. Onomatopoeia: Words that imitate the natural sound associated with the object or action:\n     - Buzz, hiss, bang, splash, clatter, whistle, drip.\n  7. Irony: A contrast between expectation and reality, where the literal words say the opposite of the intended truth:\n     - Saying \"What lovely weather!\" during a violent torrential thunderstorm.",
     "examples": [
       {
@@ -555,8 +555,8 @@ export const JHS1_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Master pure vowel sounds (monophthongs), consonant minimal pairs, silent letters, and syllable stress patterns for BECE Section A Phonetics.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=7L_8yX0T_Ew",
-    "youtubeId": "7L_8yX0T_Ew",
+    "youtubeUrl": "https://www.youtube.com/watch?v=gFBDxf-p0lE",
+    "youtubeId": "gFBDxf-p0lE",
     "keyNotes": "In the BECE English Language examination, the final 10 to 15 questions of Section A (Objective Test) focus on Phonetics, Speech Sounds, and Word Stress.\n• Pure Vowels (Monophthongs - 12 sounds):\n  - Short Vowels: /ɪ/ (sit), /e/ (bed), /æ/ (cat), /ɒ/ (pot), /ʌ/ (cup), /ʊ/ (book), /ə/ (sofa - schwa).\n  - Long Vowels (marked with colon :): /iː/ (seat, sheep), /ɑː/ (car, father), /ɔː/ (port, saw), /uː/ (shoot, food), /ɜː/ (bird, girl).\n• Common Minimal Pairs:\n  - /ɪ/ vs /iː/: ship vs sheep; live vs leave; hit vs heat; fit vs feet.\n  - /æ/ vs /ʌ/: bat vs but; cat vs cut; fan vs fun; hat vs hut.\n  - /p/ vs /b/: pat vs bat; pin vs bin.\n  - /s/ vs /z/: rice vs rise; price vs prize.\n• Silent Letters in English:\n  - Silent 'k': knife, knight, knot, knee, know.\n  - Silent 'b': comb, bomb, tomb, lamb, debt, doubt.\n  - Silent 'w': write, wrist, wrong, sword, answer.\n  - Silent 'l': calm, palm, half, chalk, walk, should.\n  - Silent 'g': sign, reign, gnome, foreign.\n  - Silent 'p': receipt, psalm, pneumatic, psychology.\n• Syllable Stress Patterns:\n  In two-syllable words that function as both nouns and verbs:\n  - NOUNS are stressed on the FIRST syllable: 'PREsent (gift), 'OBject (thing), 'REcord (document), 'INcrease (noun).\n  - VERBS are stressed on the SECOND syllable: pre'SENT (to give), ob'JECT (to oppose), re'CORD (to tape), in'CREASE (to enlarge).",
     "examples": [
       {

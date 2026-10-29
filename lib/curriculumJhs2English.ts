@@ -15,8 +15,8 @@ export const JHS2_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Distinguish between phrases and clauses, identify noun, adjectival, and adverbial structures and their grammatical functions in sentences.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0kFj7f8v-7U",
-    "youtubeId": "0kFj7f8v-7U",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ROpRmlYJh3A",
+    "youtubeId": "ROpRmlYJh3A",
     "keyNotes": "• Phrase: A group of related words without a finite verb that acts as a single part of speech (e.g., 'in the morning', 'the tall smart boy', 'very slowly').\n• Types of Phrases:\n  - Noun Phrase (NP): Functions as subject, object, or complement (e.g., 'The brilliant girl in JHS 2 won the quiz').\n  - Adjectival Phrase (AdjP): Modifies a noun or pronoun (e.g., 'a woman of noble character').\n  - Adverbial Phrase (AdvP): Modifies a verb, adjective, or adverb telling how, when, where, or why (e.g., 'with extreme care', 'at dawn').\n  - Prepositional Phrase: Begins with a preposition and ends with a noun object ('across the Volta River').\n• Clause: A group of words containing a subject and a finite predicate verb:\n  - Independent (Main) Clause: Expresses a complete thought and can stand alone as a sentence ('Ama passed her exam').\n  - Dependent (Subordinate) Clause: Cannot stand alone; begins with a subordinating conjunction or relative pronoun ('because she studied diligently').\n• Subordinate Clause Functions:\n  - Noun Clause: Acts as subject, direct object, or subject complement ('What you said surprised everyone').\n  - Adjectival (Relative) Clause: Modifies an antecedent noun ('The school which was built in 1952 has been renovated').\n  - Adverbial Clause: Modifies a verb indicating time, place, manner, reason, condition, concession, or result.",
     "examples": [
       {
@@ -55,8 +55,8 @@ export const JHS2_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Master sentence classifications by syntactic structure: simple, compound, complex, and compound-complex sentences.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=6-O9v7rKqhs",
-    "youtubeId": "6-O9v7rKqhs",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Z0bZ8wNfuYA",
+    "youtubeId": "Z0bZ8wNfuYA",
     "keyNotes": "• Structural Classification of Sentences:\n  1. Simple Sentence: Contains exactly one independent clause with a single subject-predicate focus ('Kofi completed his homework on time').\n  2. Compound Sentence: Contains two or more independent clauses joined by coordinating conjunctions (FANBOYS: For, And, Nor, But, Or, Yet, So) or a semicolon ('Kofi worked hard, yet he failed the trial test').\n  3. Complex Sentence: Contains one independent clause and at least one dependent (subordinate) clause joined by subordinating conjunctions (although, because, since, while, if, unless, when) or relative pronouns ('Although it rained heavily, the farmers went to their cocoa farms').\n  4. Compound-Complex Sentence: Contains at least two independent clauses and one or more dependent clauses ('When the headmaster arrived, the teachers stood up, and the students clapped enthusiastically').\n• Punctuation Rules: Use a comma after an introductory subordinate clause ('Although he was ill, he took the exam'). When the main clause comes first, usually no comma is needed ('He took the exam although he was ill').",
     "examples": [
       {
@@ -132,8 +132,8 @@ export const JHS2_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Master techniques to read actively, extract key ideas, scan for specific facts, make valid inferences, and decode contextual vocabulary.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=4Ym5B5I2PqA",
-    "youtubeId": "4Ym5B5I2PqA",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5hD8qMW9j3U",
+    "youtubeId": "5hD8qMW9j3U",
     "keyNotes": "• Core Reading Strategies:\n  - Skimming: Rapid reading across headings, topic sentences, and concluding paragraphs to grasp the overall gist or central message.\n  - Scanning: Searching rapidly through the text for specific details (dates, names, statistics, numbers, keywords) without reading every word.\n  - Detailed Reading: Reading critically for deep understanding, identifying author's purpose, tone, and rhetorical structure.\n• Types of Comprehension Questions in BECE:\n  1. Direct (Factual) Questions: Answers stated explicitly in the passage (rephrase in your own words; avoid verbatim lifting!).\n  2. Inferential Questions: Answers implied rather than directly stated; deduce logical conclusions using contextual clues.\n  3. Vocabulary Replacement: Finding words or phrases that mean the same and can replace target words without altering grammatical tense or meaning.\n  4. Grammatical Function Questions: Identifying clauses/phrases and naming their grammatical functions.\n  5. Figures of Speech: Identifying similes, metaphors, or personification used by the author.",
     "examples": [
       {
@@ -171,8 +171,8 @@ export const JHS2_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Identify and interpret similes, metaphors, personification, hyperbole, irony, alliteration, and onomatopoeia in prose, drama, and poetry.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0kFj7f8v-7U",
-    "youtubeId": "0kFj7f8v-7U",
+    "youtubeUrl": "https://www.youtube.com/watch?v=NBHi6myBbJk",
+    "youtubeId": "NBHi6myBbJk",
     "keyNotes": "• A Figure of Speech is figurative language that departs from literal meaning to create vivid imagery, emotional emphasis, or artistic effect.\n• Key Literary Devices:\n  - Simile: Direct comparison between two unlike things using 'as' or 'like' ('He fought like a lion in the battle', 'Her teeth are as white as snow').\n  - Metaphor: Implicit comparison where one thing is stated directly to be another without using 'like' or 'as' ('The classroom was a zoo', 'Kwame is a pillar of strength').\n  - Personification: Giving human qualities, feelings, or actions to inanimate objects or abstract ideas ('The wind whispered secrets through the trees').\n  - Hyperbole: Deliberate, obvious exaggeration for dramatic effect or humor ('I have told you this a million times!', 'He drank an ocean of water').\n  - Irony: When the actual outcome or meaning is the exact opposite of what is expected or said ('The fire station burned down to the ground').\n  - Alliteration: Repetition of identical consonant sounds at the beginning of adjacent words ('Peter Piper picked a peck of pickled peppers').\n  - Onomatopoeia: Words that imitate the natural sound associated with what they name ('The door slammed', 'bees buzzed', 'hiss', 'splash').",
     "examples": [
       {
@@ -208,8 +208,8 @@ export const JHS2_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Understand primary auxiliary verbs (be, do, have) and modal verbs (can, could, may, might, shall, should, will, would, must, ought to) expressing ability, permission, necessity, and probability.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=6-O9v7rKqhs",
-    "youtubeId": "6-O9v7rKqhs",
+    "youtubeUrl": "https://www.youtube.com/watch?v=lDzd7IR1yvw",
+    "youtubeId": "lDzd7IR1yvw",
     "keyNotes": "• Auxiliary (Helping) Verbs accompany main verbs to form tenses, aspects, voices, and questions.\n• Primary Auxiliaries: 'be' (is, am, are, was, were, been), 'do' (do, does, did), 'have' (have, has, had). They can also function as main verbs ('I have a pen').\n• Modal Auxiliary Verbs express the speaker's attitude or modality toward the action:\n  - Ability: 'can' (present ability: 'She can solve equations'), 'could' (past ability: 'He could run fast in primary school').\n  - Permission: 'may' (formal permission: 'May I leave the room?'), 'can' (informal permission: 'Can I borrow your pen?').\n  - Obligation / Necessity: 'must' (strong compulsory obligation: 'Candidates must bring their admission letters'), 'ought to' / 'should' (moral duty or strong advice: 'You ought to respect your elders').\n  - Possibility / Probability: 'might' / 'may' ('It might rain this evening').\n  - Willingness / Future Determination: 'will', 'shall'.\n• Key Grammatical Rule: Modal auxiliaries are followed directly by the bare infinitive (base form without 'to'), except 'ought to' and 'used to'. Never say 'He can to dance' or 'He must studies'!",
     "examples": [
       {
@@ -286,8 +286,8 @@ export const JHS2_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Master the structure, two-address layout, formal heading, polite professional register, and valediction of formal business and official letters.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=4Ym5B5I2PqA",
-    "youtubeId": "4Ym5B5I2PqA",
+    "youtubeUrl": "https://www.youtube.com/watch?v=PgwmAUJx248",
+    "youtubeId": "PgwmAUJx248",
     "keyNotes": "• Purpose of Formal Letters: Written to authorities, organizations, school heads, editors, or business managers for official purposes (applications, complaints, requests, permissions).\n• Structural Layout:\n  1. Writer's Address: Top right corner, with date below it.\n  2. Recipient's Designation & Address: Left margin below writer's address level (e.g., 'The Headmaster, Ridge Basic School, P.O. Box 45, Sunyani.').\n  3. Salutation: Formal on the left margin ('Dear Sir,' or 'Dear Madam,').\n  4. Heading / Title: Centered or left-aligned, capitalized or underlined (e.g., 'APPLICATION FOR THE POST OF LIBRARY PREFECT' or 'APPLICATION FOR LEAVE OF ABSENCE').\n  5. Body: Formal, courteous, precise paragraphs:\n     - Paragraph 1: State the explicit purpose directly without informal pleasantries.\n     - Body Paragraphs: Present justifications, relevant details, or evidence objectively.\n     - Concluding Paragraph: State expected action courteously ('I hope my application will be granted favorable consideration').\n  6. Subscription: 'Yours faithfully,' on the left or right margin, followed by the writer's handwritten signature, and full name in block letters below.\n• Critical Rule: Never use informal contractions (don't, can't, I'm) or slang in formal letters!",
     "examples": [
       {
@@ -323,8 +323,8 @@ export const JHS2_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Develop captivating narrative essays with engaging plots, characterization, and dialogue; craft descriptive essays with sensory details and figurative language.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0kFj7f8v-7U",
-    "youtubeId": "0kFj7f8v-7U",
+    "youtubeUrl": "https://www.youtube.com/watch?v=s1iMIjcGUu0",
+    "youtubeId": "s1iMIjcGUu0",
     "keyNotes": "• Narrative Essay (Telling a Story):\n  - Plot Structure: Orientation/Introduction (setting the scene, characters), Rising Action (developing conflict/problem), Climax (highest point of drama/tension), Falling Action, and Resolution (conclusion/moral lesson).\n  - Chronological Sequencing: Use transitional time expressions ('Suddenly', 'Meanwhile', 'A few moments later', 'Eventually').\n  - Past Tense: Stories are recounted predominantly in the past tense.\n  - Dialogue: Realistic dialogue enlivens characters and breaks monologue.\n• Descriptive Essay (Painting a Word Picture):\n  - Sensory Imagery: Appeal to all 5 human senses — Sight (vivid colors, shapes), Sound (clang, squeak, rustle), Smell (fragrance, pungent aroma), Taste (bitter, savory), Touch (rough, silky, scorching).\n  - Adjectives and Adverbs: Use precise, evocative modifiers (not just 'good' or 'bad', but 'breathtaking', 'dilapidated', 'monumental').\n  - Spatial Order: Organize descriptions logically (top-to-bottom, near-to-far, inside-to-outside).",
     "examples": [
       {
@@ -361,8 +361,8 @@ export const JHS2_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Analyze poetry elements (stanzas, rhythm, rhyme schemes, themes) and drama conventions (playwright, acts, scenes, dialogue, stage directions, dramatic conflict).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=6-O9v7rKqhs",
-    "youtubeId": "6-O9v7rKqhs",
+    "youtubeUrl": "https://www.youtube.com/watch?v=hOjMWLAXtFo",
+    "youtubeId": "hOjMWLAXtFo",
     "keyNotes": "• Appreciation of Poetry:\n  - Stanza: A grouped set of lines in a poem (couplet = 2 lines, tercet = 3, quatrain = 4, sestet = 6, octave = 8).\n  - Rhyme Scheme: The pattern of end rhymes denoted by letters (e.g., ABAB, AABB).\n  - Rhythm & Meter: The musical beat and stressed/unstressed syllable flow.\n  - Speaker (Persona): The imaginary voice or character who tells the poem (not necessarily the poet in real life!).\n  - Tone and Mood: The poet's attitude toward the subject (humorous, solemn, sarcastic) and the emotional atmosphere evoked in the reader.\n• Appreciation of Drama:\n  - Playwright: The author who writes the play.\n  - Structural Division: Plays are divided into major Acts, which are subdivided into smaller Scenes.\n  - Dialogue vs Monologue vs Soliloquy: Dialogue is spoken exchange between two or more characters; Monologue is a long speech by one character; Soliloquy is a character speaking their private thoughts aloud while alone on stage.\n  - Stage Directions: Italicized or bracketed instructions telling actors how to move, speak, or react, and describing stage lighting and props.\n  - Conflict: The struggle between opposing forces (Protagonist vs Antagonist).",
     "examples": [
       {
@@ -440,8 +440,8 @@ export const JHS2_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Master question tag rules: affirmative-negative contrast, auxiliary matching, subject pronoun agreement, and intonation patterns.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=4Ym5B5I2PqA",
-    "youtubeId": "4Ym5B5I2PqA",
+    "youtubeUrl": "https://www.youtube.com/watch?v=_1ILi7_JfIQ",
+    "youtubeId": "_1ILi7_JfIQ",
     "keyNotes": "• A Question Tag is a short question appended to the end of a statement, used to seek confirmation, agreement, or clarification.\n• The Golden Rule of Question Tags:\n  - Positive (Affirmative) Statement -> Negative Tag ('You are a student, aren't you?').\n  - Negative Statement -> Positive Tag ('Kofi did not attend the meeting, did he?').\n• Key Rules for Constructing Tags:\n  1. Match the Auxiliary Verb: If the statement contains an auxiliary (is, are, was, were, has, have, can, will, must), reuse it in the tag ('She can swim, can't she?').\n  2. Sentences with Main Verbs (No Auxiliary): Use the appropriate form of 'do / does / did' ('Kwame plays football, doesn't he?', 'They went home, didn't they?').\n  3. Subject Pronoun Agreement: The subject of the tag must always be a personal pronoun (he, she, it, they, we, you), never a proper or common noun ('Ama is kind, isn't she?' NOT 'isn't Ama?').\n  4. Special Irregular Tags:\n     - 'I am right, aren't I?' (Never say 'amn't I').\n     - Imperatives (Commands/Requests): 'Close the door, will you?' / 'Kindly assist me, won't you?'.\n     - Suggestions with 'Let's': 'Let us study, shall we?'.\n     - Statements with Negative Adverbs (barely, scarcely, hardly, seldom, never) take a POSITIVE tag ('He seldom comes late, does he?').",
     "examples": [
       {
@@ -480,8 +480,8 @@ export const JHS2_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Extract central themes and topic sentences, eliminate redundant examples and illustrations, and express core ideas concisely in candidate's own words.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0kFj7f8v-7U",
-    "youtubeId": "0kFj7f8v-7U",
+    "youtubeUrl": "https://www.youtube.com/watch?v=j104XC8JF4s",
+    "youtubeId": "j104XC8JF4s",
     "keyNotes": "• Definition of Summary: Presenting the essential main ideas of a text in a condensed, clear, and coherent form, stripped of non-essential details.\n• Cardinal Rules of Summary Writing in BECE:\n  1. Read the Question First: Understand precisely what specific points or aspects you are asked to summarize.\n  2. Identify Topic Sentences: Locate the core argument in each paragraph (often found at the beginning or end of paragraphs).\n  3. Discard Irrelevant Elements: Eliminate all figurative language, analogies, long anecdotes, rhetorical questions, and extensive lists of examples introduced by 'for instance' or 'such as'.\n  4. Paraphrase (Use Your Own Words): Express the selected points in fresh vocabulary and sentence structures without distorting the author's original meaning.\n  5. Adhere to Word Count & Sentence Requirements: If asked for 'three sentences, one for each factor', provide exactly three grammatically complete sentences. Writing phrases or fragments loses marks.\n  6. Maintain Objectivity: Do not inject your personal opinions or external knowledge not found in the passage.",
     "examples": [
       {
@@ -519,8 +519,8 @@ export const JHS2_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Write well-structured expository essays and articles for publication in school magazines or national newspapers (e.g. Junior Graphic) addressing national issues.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=6-O9v7rKqhs",
-    "youtubeId": "6-O9v7rKqhs",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ht-_dK_jOTI",
+    "youtubeId": "ht-_dK_jOTI",
     "keyNotes": "• Expository Writing: Writing that explains, informs, clarifies, or analyzes a topic logically and objectively with supporting facts and evidence.\n• Articles for Publication (e.g., in The Junior Graphic or School Magazine):\n  - Heading / Title: A catchy, relevant title written in bold capital letters or title case (e.g., 'THE MENACE OF TEENAGE PREGNANCY IN OUR COMMUNITY', 'HOW ROAD ACCIDENTS CAN BE CURBED').\n  - Introduction: Hooks the reader's attention, defines the topic or problem, and outlines the scope of discussion.\n  - Body Paragraphs (3–4 paragraphs): Each paragraph must have a clear topic sentence, followed by supporting explanations, factual statistics, and logical reasoning.\n  - Recommendations / Solutions: Suggest practical, actionable interventions by government, schools, parents, or youth.\n  - Conclusion: Summarizes the central thesis with a strong, memorable call to action.\n  - Byline: Writer's name and designation at the bottom or beneath the heading (e.g., 'By: Ama Serwaa, JHS 2 Prefect, Presby Basic School, Koforidua').\n• Tone & Style: Formal, persuasive, coherent, using rhetorical questions and cause-and-effect transitional devices ('Consequently', 'Furthermore', 'Moreover', 'In contrast').",
     "examples": [
       {

@@ -7,6 +7,8 @@ import { CurriculumTopic } from './types';
 export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   {
     "id": "shs1-che-t1-classification-matter-separation",
+    "youtubeUrl": "https://www.youtube.com/watch?v=qpZhc2Zn_TI",
+    "youtubeId": "qpZhc2Zn_TI",
     "subjectId": "chemistry",
     "level": "SHS 1",
     "term": 1,
@@ -214,6 +216,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-che-t1-structure-of-the-atom",
+    "youtubeUrl": "https://www.youtube.com/watch?v=p735Rfyuz9g",
+    "youtubeId": "p735Rfyuz9g",
     "subjectId": "chemistry",
     "level": "SHS 1",
     "term": 1,
@@ -418,6 +422,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-che-t1-atomic-structure-isotopes-relative-mass",
+    "youtubeUrl": "https://www.youtube.com/watch?v=-FBk8cNvJds",
+    "youtubeId": "-FBk8cNvJds",
     "subjectId": "chemistry",
     "level": "SHS 1",
     "term": 1,
@@ -605,6 +611,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-che-t1-reacting-masses-percentage-composition",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3rQ6iyhmbPc",
+    "youtubeId": "3rQ6iyhmbPc",
     "subjectId": "chemistry",
     "level": "SHS 1",
     "term": 1,
@@ -792,6 +800,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-che-t2-bonding-and-structure",
+    "youtubeUrl": "https://www.youtube.com/watch?v=9v9RCiYlIEw",
+    "youtubeId": "9v9RCiYlIEw",
     "subjectId": "chemistry",
     "level": "SHS 1",
     "term": 2,
@@ -997,6 +1007,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-che-t2-laboratory-practice-apparatus-safe-handling",
+    "youtubeUrl": "https://www.youtube.com/watch?v=xJx40uePLPk",
+    "youtubeId": "xJx40uePLPk",
     "subjectId": "chemistry",
     "level": "SHS 1",
     "term": 2,
@@ -1214,6 +1226,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-che-t2-gas-volumes-avogadro-molar-volume",
+    "youtubeUrl": "https://www.youtube.com/watch?v=rEA3EGZAscE",
+    "youtubeId": "rEA3EGZAscE",
     "subjectId": "chemistry",
     "level": "SHS 1",
     "term": 2,
@@ -1403,6 +1417,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-che-t2-chemical-formulae-valency-writing-compounds",
+    "youtubeUrl": "https://www.youtube.com/watch?v=VOVHqKg8T_o",
+    "youtubeId": "VOVHqKg8T_o",
     "subjectId": "chemistry",
     "level": "SHS 1",
     "term": 2,
@@ -1591,6 +1607,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-che-t3-laws-of-conservation-relative-masses",
+    "youtubeUrl": "https://www.youtube.com/watch?v=lVLQsr6A2C4",
+    "youtubeId": "lVLQsr6A2C4",
     "subjectId": "chemistry",
     "level": "SHS 1",
     "term": 3,
@@ -1809,6 +1827,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-che-t3-water-solutions-suspension-colloid",
+    "youtubeUrl": "https://www.youtube.com/watch?v=cuEHseI31kY",
+    "youtubeId": "cuEHseI31kY",
     "subjectId": "chemistry",
     "level": "SHS 1",
     "term": 3,
@@ -2026,6 +2046,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-che-t3-classification-of-oxides",
+    "youtubeUrl": "https://www.youtube.com/watch?v=6m_7uj5UZ9M",
+    "youtubeId": "6m_7uj5UZ9M",
     "subjectId": "chemistry",
     "level": "SHS 1",
     "term": 3,
@@ -2214,6 +2236,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-che-t3-energy-changes-in-reactions",
+    "youtubeUrl": "https://www.youtube.com/watch?v=l90RbgLK4jY",
+    "youtubeId": "l90RbgLK4jY",
     "subjectId": "chemistry",
     "level": "SHS 1",
     "term": 3,
@@ -2402,6 +2426,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-che-t1-gases-and-air",
+    "youtubeUrl": "https://www.youtube.com/watch?v=1rD0LhsOZKc",
+    "youtubeId": "1rD0LhsOZKc",
     "subjectId": "chemistry",
     "level": "SHS 2",
     "term": 1,
@@ -2603,6 +2629,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-che-t1-acids-bases-salts",
+    "youtubeUrl": "https://www.youtube.com/watch?v=jGOKug-dA0g",
+    "youtubeId": "jGOKug-dA0g",
     "subjectId": "chemistry",
     "level": "SHS 2",
     "term": 1,
@@ -2805,6 +2833,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-che-t1-halogens-group-vii-chemistry",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Z72FVDyTHqI",
+    "youtubeId": "Z72FVDyTHqI",
     "subjectId": "chemistry",
     "level": "SHS 2",
     "term": 1,
@@ -2993,6 +3023,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-che-t1-nitrogen-phosphorus-sulphur-chemistry",
+    "youtubeUrl": "https://www.youtube.com/watch?v=HuFo_mrT6O4",
+    "youtubeId": "HuFo_mrT6O4",
     "subjectId": "chemistry",
     "level": "SHS 2",
     "term": 1,
@@ -3179,6 +3211,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-che-t2-electrochemistry",
+    "youtubeUrl": "https://www.youtube.com/watch?v=LOR-3vcIJ6Y",
+    "youtubeId": "LOR-3vcIJ6Y",
     "subjectId": "chemistry",
     "level": "SHS 2",
     "term": 2,
@@ -3380,6 +3414,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-che-t2-periodic-table-and-trends",
+    "youtubeUrl": "https://www.youtube.com/watch?v=0MQa4WIpbYw",
+    "youtubeId": "0MQa4WIpbYw",
     "subjectId": "chemistry",
     "level": "SHS 2",
     "term": 2,
@@ -3581,6 +3617,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-che-t2-carbon-silicon-group-iv-compounds",
+    "youtubeUrl": "https://www.youtube.com/watch?v=_vKOe912E5I",
+    "youtubeId": "_vKOe912E5I",
     "subjectId": "chemistry",
     "level": "SHS 2",
     "term": 2,
@@ -3768,6 +3806,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-che-t2-alkali-alkaline-earth-metals",
+    "youtubeUrl": "https://www.youtube.com/watch?v=8qh5myTmcRs",
+    "youtubeId": "8qh5myTmcRs",
     "subjectId": "chemistry",
     "level": "SHS 2",
     "term": 2,
@@ -3954,6 +3994,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-che-t3-chemical-equations-ionic-reactions-stoichiometry",
+    "youtubeUrl": "https://www.youtube.com/watch?v=e_C-V5vJv80",
+    "youtubeId": "e_C-V5vJv80",
     "subjectId": "chemistry",
     "level": "SHS 2",
     "term": 3,
@@ -4172,6 +4214,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-che-t3-metals-nonmetals-extractive-chemistry",
+    "youtubeUrl": "https://www.youtube.com/watch?v=r3eCKqrt-t4",
+    "youtubeId": "r3eCKqrt-t4",
     "subjectId": "chemistry",
     "level": "SHS 2",
     "term": 3,
@@ -4390,6 +4434,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-che-t3-electrolysis-faraday-laws",
+    "youtubeUrl": "https://www.youtube.com/watch?v=v5qQusbk-j0",
+    "youtubeId": "v5qQusbk-j0",
     "subjectId": "chemistry",
     "level": "SHS 2",
     "term": 3,
@@ -4577,6 +4623,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-che-t3-qualitative-analysis-cation-anion-tests",
+    "youtubeUrl": "https://www.youtube.com/watch?v=BidKxjbEbJs",
+    "youtubeId": "BidKxjbEbJs",
     "subjectId": "chemistry",
     "level": "SHS 2",
     "term": 3,
@@ -4761,6 +4809,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-che-t1-kinetics-equilibria-and-energetics",
+    "youtubeUrl": "https://www.youtube.com/watch?v=JK7yPzO9POU",
+    "youtubeId": "JK7yPzO9POU",
     "subjectId": "chemistry",
     "level": "SHS 3",
     "term": 1,
@@ -4977,6 +5027,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-che-t1-chemical-equilibria-kc-yield",
+    "youtubeUrl": "https://www.youtube.com/watch?v=jyMB0OjAVpE",
+    "youtubeId": "jyMB0OjAVpE",
     "subjectId": "chemistry",
     "level": "SHS 3",
     "term": 1,
@@ -5163,6 +5215,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-che-t1-thermochemistry-enthalpy-hess-law",
+    "youtubeUrl": "https://www.youtube.com/watch?v=0Tm6JMeYX5g",
+    "youtubeId": "0Tm6JMeYX5g",
     "subjectId": "chemistry",
     "level": "SHS 3",
     "term": 1,
@@ -5349,6 +5403,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-che-t2-volumetric-analysis-and-stoichiometry",
+    "youtubeUrl": "https://www.youtube.com/watch?v=mwuMpRzSB_0",
+    "youtubeId": "mwuMpRzSB_0",
     "subjectId": "chemistry",
     "level": "SHS 3",
     "term": 2,
@@ -5568,6 +5624,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-che-t2-organic-chemistry-i",
+    "youtubeUrl": "https://www.youtube.com/watch?v=8KphNfxQex4",
+    "youtubeId": "8KphNfxQex4",
     "subjectId": "chemistry",
     "level": "SHS 3",
     "term": 2,
@@ -5772,6 +5830,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-che-t2-organic-iii-alcohols-acids-esters",
+    "youtubeUrl": "https://www.youtube.com/watch?v=J1-lU6sA-oE",
+    "youtubeId": "J1-lU6sA-oE",
     "subjectId": "chemistry",
     "level": "SHS 3",
     "term": 2,
@@ -5956,6 +6016,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-che-t2-polymers-petrochemicals-plastics-waste",
+    "youtubeUrl": "https://www.youtube.com/watch?v=vtMsNTAsWLw",
+    "youtubeId": "vtMsNTAsWLw",
     "subjectId": "chemistry",
     "level": "SHS 3",
     "term": 2,
@@ -6146,6 +6208,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-che-t2-biochemistry-carbohydrates-lipids-proteins",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7VD4uGGJSr8",
+    "youtubeId": "7VD4uGGJSr8",
     "subjectId": "chemistry",
     "level": "SHS 3",
     "term": 2,
@@ -6338,6 +6402,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-che-t3-organic-chemistry-ii-industry-chemicals",
+    "youtubeUrl": "https://www.youtube.com/watch?v=W4R29WJL5ws",
+    "youtubeId": "W4R29WJL5ws",
     "subjectId": "chemistry",
     "level": "SHS 3",
     "term": 3,
@@ -6544,6 +6610,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-che-t3-industrial-chemistry-fertilisers-environment",
+    "youtubeUrl": "https://www.youtube.com/watch?v=MLSCBrOi9U4",
+    "youtubeId": "MLSCBrOi9U4",
     "subjectId": "chemistry",
     "level": "SHS 3",
     "term": 3,
@@ -6762,6 +6830,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-che-t3-transition-metals-oxidation-states",
+    "youtubeUrl": "https://www.youtube.com/watch?v=WFwD7ZkmJ3k",
+    "youtubeId": "WFwD7ZkmJ3k",
     "subjectId": "chemistry",
     "level": "SHS 3",
     "term": 3,
@@ -6955,6 +7025,8 @@ export const SHS_CHEMISTRY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-che-t3-redox-electrode-potentials-cells",
+    "youtubeUrl": "https://www.youtube.com/watch?v=aJG_yAe6hLA",
+    "youtubeId": "aJG_yAe6hLA",
     "subjectId": "chemistry",
     "level": "SHS 3",
     "term": 3,

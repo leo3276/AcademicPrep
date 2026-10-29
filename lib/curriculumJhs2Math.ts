@@ -11,8 +11,8 @@ export const JHS2_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Master classification of numbers, operations with directed integers, order of operations (BODMAS), recurring decimals, and number line representation.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=tyDN4pXkYCY",
-    "youtubeId": "tyDN4pXkYCY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=sWpFNxkHHwY",
+    "youtubeId": "sWpFNxkHHwY",
     "keyNotes": "The Real Number System (ℝ) encompasses all numbers that can be represented on a continuous number line.\n• Natural Numbers (ℕ) = {1, 2, 3, ...}; Whole Numbers (𝕎) = {0, 1, 2, 3, ...}.\n• Integers (ℤ) = {..., -3, -2, -1, 0, 1, 2, 3, ...}.\n• Rational Numbers (ℚ): Any number that can be expressed as a/b, where a and b are integers and b ≠ 0.\n• Rules of Directed Numbers:\n  - Adding opposite signs: subtract smaller absolute value from larger, take the sign of the larger (e.g. -7 + 12 = +5; 4 + (-9) = -5).\n  - Subtracting a negative number is equivalent to adding its positive: a - (-b) = a + b (e.g. 5 - (-3) = 8).\n  - Multiplication/Division: Same signs yield positive ((+) × (+) = +, (-) × (-) = +); Opposite signs yield negative ((+) × (-) = -, (-) × (+) = -).\n• Order of Operations (BODMAS): Brackets, Orders (powers/roots), Division & Multiplication (left-to-right), Addition & Subtraction (left-to-right).\n• Recurring Decimals: Decimals with repeating digits (e.g. 0.333... = 0.3̇ = 1/3, 0.4545... = 0.4̇5̇ = 45/99 = 5/11).",
     "examples": [
       {
@@ -53,8 +53,8 @@ export const JHS2_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Explore the fundamental laws of indices, negative and zero exponents, and scientific notation (A × 10ⁿ where 1 ≤ A < 10).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=tyDN4pXkYCY",
-    "youtubeId": "tyDN4pXkYCY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=E2In2s3OBjI",
+    "youtubeId": "E2In2s3OBjI",
     "keyNotes": "An index (or exponent/power) shows how many times a base number is multiplied by itself: aⁿ = a × a × ... × a (n factors).\n• Laws of Indices:\n  1. Product Law: aᵐ × aⁿ = aᵐ⁺ⁿ (e.g. 2³ × 2⁴ = 2⁷).\n  2. Quotient Law: aᵐ ÷ aⁿ = aᵐ⁻ⁿ (e.g. 5⁶ ÷ 5² = 5⁴).\n  3. Power of a Power: (aᵐ)ⁿ = aᵐⁿ (e.g. (3²)³ = 3⁶).\n  4. Zero Index: a⁰ = 1 (for any a ≠ 0).\n  5. Negative Index: a⁻ⁿ = 1 / aⁿ and 1 / a⁻ⁿ = aⁿ.\n  6. Power of a Product: (ab)ⁿ = aⁿ bⁿ.\n  7. Power of a Quotient: (a/b)ⁿ = aⁿ / bⁿ.\n• Standard Form (Scientific Notation): Expressing numbers as A × 10ⁿ, where 1 ≤ A < 10 and n is an integer.\n  - Numbers ≥ 10 have positive powers of 10 (e.g. 450,000 = 4.5 × 10⁵).\n  - Numbers < 1 have negative powers of 10 (e.g. 0.00038 = 3.8 × 10⁻⁴).",
     "examples": [
       {
@@ -95,8 +95,8 @@ export const JHS2_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Master prime factor trees, index notation, and finding the Highest Common Factor (HCF) and Lowest Common Multiple (LCM) for real-world problem solving.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=tyDN4pXkYCY",
-    "youtubeId": "tyDN4pXkYCY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=SXPsfr-Fnu4",
+    "youtubeId": "SXPsfr-Fnu4",
     "keyNotes": "A prime number is a natural number greater than 1 with exactly two distinct factors: 1 and itself (2, 3, 5, 7, 11, 13, 17, 19, ...). Note: 1 is neither prime nor composite; 2 is the only even prime.\n• Prime Factorization: Breaking a composite number into a product of its prime factors.\n  Example: 72 = 2 × 2 × 2 × 3 × 3 = 2³ × 3²; 108 = 2² × 3³.\n• Highest Common Factor (HCF / GCD):\n  - In index notation, select only common prime bases with their lowest exponents.\n  - For 72 and 108: common bases are 2 and 3; lowest powers are 2² and 3² => HCF = 2² × 3² = 4 × 9 = 36.\n• Lowest Common Multiple (LCM):\n  - In index notation, select all prime bases present with their highest exponents.\n  - For 72 and 108: LCM = 2³ × 3³ = 8 × 27 = 216.\n• Golden Rule for Two Numbers a and b: HCF(a, b) × LCM(a, b) = a × b.\n• Word Problem Clues:\n  - \"Largest equal groups / dividing without remainder\" -> HCF.\n  - \"Occurring together / repeating at intervals / flashing together\" -> LCM.",
     "examples": [
       {
@@ -137,8 +137,8 @@ export const JHS2_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Solve problems involving simplified ratios, sharing in given proportions, direct and inverse proportion, and rate calculations.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=tyDN4pXkYCY",
-    "youtubeId": "tyDN4pXkYCY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=MTHFeBRnJrs",
+    "youtubeId": "MTHFeBRnJrs",
     "keyNotes": "A ratio compares two or more quantities of the same kind measured in the same units (written a : b or a/b). Ratios have no units.\n• Equivalent Ratios: Formed by multiplying or dividing all terms by the same non-zero number.\n• Sharing in a Given Ratio:\n  - Total parts = sum of all ratio terms.\n  - One part = Total Quantity ÷ Total Parts.\n  - Individual share = Individual parts × Value of one part.\n• Direct Proportion: Two quantities increase or decrease in the same ratio (x/y = k, a constant).\n  - Example: If 5 pens cost GH₵ 20, 8 pens cost (20 ÷ 5) × 8 = GH₵ 32.\n• Inverse (Indirect) Proportion: As one quantity increases, the other decreases such that their product is constant (x × y = k).\n  - Example: If 6 workers take 10 days to dig a trench, 1 worker takes 6 × 10 = 60 worker-days. 4 workers will take 60 ÷ 4 = 15 days.\n• Rates: Comparison of two quantities of different units (e.g. Speed = Distance ÷ Time in km/h or m/s; Price rate = GH₵/kg).",
     "examples": [
       {
@@ -179,8 +179,8 @@ export const JHS2_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Calculate percentage change, profit and loss, trade discount, sales commission, simple interest (I = PRT / 100), and hire purchase.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=tyDN4pXkYCY",
-    "youtubeId": "tyDN4pXkYCY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=-_oa0iixyuI",
+    "youtubeId": "-_oa0iixyuI",
     "keyNotes": "Financial mathematics applies percentages to economic transactions.\n• Percentage Increase / Decrease: Percentage Change = (Change ÷ Original Value) × 100%.\n• Profit and Loss:\n  - Profit = Selling Price (SP) - Cost Price (CP) (when SP > CP).\n  - Percentage Profit = (Profit ÷ CP) × 100%.\n  - Loss = Cost Price (CP) - Selling Price (SP) (when CP > SP).\n  - Percentage Loss = (Loss ÷ CP) × 100%. Note: Always divide by Cost Price (CP)!\n• Simple Interest Formula:\n  - I = (P × R × T) / 100, where:\n    P = Principal (amount invested or borrowed),\n    R = Rate of interest per annum (%),\n    T = Time period in years (convert months to years: m/12).\n  - Total Amount Payable / Accrued: A = P + I.\n• Discount: Reduction from marked price (SP = Marked Price - Discount).\n• Hire Purchase: Buying an item by paying an initial deposit followed by periodic installments.\n  - Hire Purchase Price = Deposit + Total Installments.\n  - Extra charge (carrying cost) = Hire Purchase Price - Cash Price.",
     "examples": [
       {
@@ -221,8 +221,8 @@ export const JHS2_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Master simplifying algebraic expressions, collecting like terms, expanding brackets, and binomial expansions including special products.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=tyDN4pXkYCY",
-    "youtubeId": "tyDN4pXkYCY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7f6MY3LSHwc",
+    "youtubeId": "7f6MY3LSHwc",
     "keyNotes": "Algebraic expressions combine constants, variables, and arithmetic operations.\n• Like Terms: Terms that possess the exact same variables raised to the exact same powers (e.g. 5x²y and -3x²y). Only like terms can be added or subtracted.\n• Distributive Law: a(b + c) = ab + ac and a(b - c) = ab - ac.\n• Expansion of Binomials (Two Terms × Two Terms):\n  - (a + b)(c + d) = a(c + d) + b(c + d) = ac + ad + bc + bd.\n• Special Algebraic Identities:\n  1. Perfect Square of a Sum: (a + b)² = a² + 2ab + b².\n  2. Perfect Square of a Difference: (a - b)² = a² - 2ab + b².\n  3. Difference of Two Squares: (a + b)(a - b) = a² - b².\n• Operations on Algebraic Fractions:\n  - Find the LCM of denominators before adding or subtracting.\n  - Simplify by canceling common factors from numerator and denominator.",
     "examples": [
       {
@@ -265,8 +265,8 @@ export const JHS2_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Learn techniques of algebraic factorization: highest common factors, grouping in pairs of four terms, difference of two squares, and quadratic trinomials.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=tyDN4pXkYCY",
-    "youtubeId": "tyDN4pXkYCY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ctqviXu-mTE",
+    "youtubeId": "ctqviXu-mTE",
     "keyNotes": "Factorization is the reverse process of expansion. It involves rewriting an algebraic sum or difference as a product of factors.\n• Methods of Factorization:\n  1. Common Monomial Factor:\n     - Find the HCF of all coefficients and common variable powers.\n     - Example: 12a²b - 18ab² = 6ab(2a - 3b).\n  2. Factorization by Grouping (4 terms):\n     - Pair terms with common factors: ax + ay + bx + by = a(x + y) + b(x + y).\n     - Extract common binomial: = (x + y)(a + b).\n  3. Difference of Two Squares:\n     - Form: a² - b² = (a - b)(a + b).\n     - Example: 25x² - 49 = (5x)² - 7² = (5x - 7)(5x + 7).\n  4. Quadratic Trinomials (x² + bx + c):\n     - Find two integers p and q such that p × q = c and p + q = b.\n     - Rewrite as (x + p)(x + q).\n     - Example: x² + 5x + 6 => p = 2, q = 3 (since 2 × 3 = 6 and 2 + 3 = 5) => (x + 2)(x + 3).",
     "examples": [
       {
@@ -307,8 +307,8 @@ export const JHS2_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Solve first-degree linear equations with parentheses and fractional coefficients, translate word problems into equations, and solve linear inequalities.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=tyDN4pXkYCY",
-    "youtubeId": "tyDN4pXkYCY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=crJI4iZ_DbI",
+    "youtubeId": "crJI4iZ_DbI",
     "keyNotes": "A linear equation is an equation of the first degree (the highest power of the variable is 1).\n• General Principles of Solving Equations:\n  - Whatever operation is applied to one side must be applied to the other side to keep the equation balanced.\n  - To clear fractions: Multiply EVERY term on both sides by the LCM of all denominators.\n  - Expand brackets, group like terms on one side (usually LHS) and constants on the other (RHS).\n• Linear Inequalities:\n  - Symbols: < (less than), > (greater than), ≤ (less than or equal to), ≥ (greater than or equal to).\n  - CRITICAL RULE: When you MULTIPLY or DIVIDE both sides of an inequality by a NEGATIVE number, the direction of the inequality sign MUST BE REVERSED (flipped).\n  - Number Line Representation:\n    - Hollow circle (○) for strict inequalities (< or >).\n    - Solid circle (●) for inclusive inequalities (≤ or ≥).",
     "examples": [
       {
@@ -351,8 +351,8 @@ export const JHS2_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Plot points on the Cartesian coordinate plane, generate tables of values, draw linear graphs, and calculate gradient (m = Δy/Δx) and intercepts.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=tyDN4pXkYCY",
-    "youtubeId": "tyDN4pXkYCY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ys0Dxj-jKTk",
+    "youtubeId": "ys0Dxj-jKTk",
     "keyNotes": "The Cartesian plane is formed by two perpendicular number lines: the horizontal x-axis and vertical y-axis intersecting at the origin (0, 0).\n• Coordinates: An ordered pair (x, y) where x is the abscissa (distance from y-axis) and y is the ordinate (distance from x-axis).\n• Equation of a Straight Line:\n  - Slope-Intercept Form: y = mx + c.\n  - m = gradient or slope (steepness and direction of the line).\n  - c = y-intercept (the value of y where the line crosses the y-axis, i.e., when x = 0).\n• Calculating Gradient (m):\n  - m = (Change in y) / (Change in x) = (y₂ - y₁) / (x₂ - x₁).\n  - Positive gradient: Line rises from left to right.\n  - Negative gradient: Line falls from left to right.\n  - Horizontal line (y = k): Gradient m = 0.\n  - Vertical line (x = k): Gradient m is undefined.\n• Table of Values: Substitute selected x-values into the linear relation to compute corresponding y-values, then plot points and join with a straight line.",
     "examples": [
       {
@@ -394,8 +394,8 @@ export const JHS2_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Explore angles on straight lines, vertically opposite angles, transversals through parallel lines (alternate, corresponding, interior), and angle sum of polygons.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=tyDN4pXkYCY",
-    "youtubeId": "tyDN4pXkYCY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=I5auyoXYoX0",
+    "youtubeId": "I5auyoXYoX0",
     "keyNotes": "Geometry studies shapes, sizes, relative positions of figures, and properties of space.\n• Fundamental Angle Relationships:\n  - Complementary Angles: Two angles that add up to 90°.\n  - Supplementary Angles: Two angles that add up to 180° (angles on a straight line).\n  - Angles at a point: Sum is always 360°.\n  - Vertically opposite angles: Equal when two lines intersect.\n• Angles Associated with Parallel Lines and a Transversal:\n  - Alternate Angles (Z-angles): Equal (e.g. ∠a = ∠b).\n  - Corresponding Angles (F-angles): Equal (e.g. ∠c = ∠d).\n  - Co-interior / Consecutive Interior Angles (C-angles): Add up to 180° (supplementary).\n• Polygons: Closed plane figures with 3 or more straight sides.\n  - Sum of Interior Angles of an n-sided polygon = (n - 2) × 180°.\n  - Each interior angle of a regular n-sided polygon = [(n - 2) × 180°] / n.\n  - Sum of Exterior Angles of ANY convex polygon = 360°.\n  - Each exterior angle of a regular polygon = 360° / n.\n  - Interior Angle + Adjacent Exterior Angle = 180°.",
     "examples": [
       {
@@ -436,8 +436,8 @@ export const JHS2_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Apply the Pythagorean relationship (a² + b² = c²), identify Pythagorean triples, and solve practical distance and height problems.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=tyDN4pXkYCY",
-    "youtubeId": "tyDN4pXkYCY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Ct7ZwoAZ0eo",
+    "youtubeId": "Ct7ZwoAZ0eo",
     "keyNotes": "Pythagoras' Theorem is a fundamental theorem in Euclidean geometry applicable strictly to right-angled triangles.\n• Statement: In any right-angled triangle, the square of the length of the hypotenuse (the side opposite the 90° angle) is equal to the sum of the squares of the lengths of the other two sides.\n  - Formula: c² = a² + b², where c is the hypotenuse, and a and b are the other two legs.\n  - To find hypotenuse: c = √(a² + b²).\n  - To find a leg: a = √(c² - b²) or b = √(c² - a²).\n• Pythagorean Triples: Sets of three positive integers that satisfy a² + b² = c².\n  - Primitive triples: (3, 4, 5), (5, 12, 13), (8, 15, 17), (7, 24, 25).\n  - Multiples of triples also satisfy the theorem: (6, 8, 10), (9, 12, 15), (10, 24, 26).\n• Converse of Pythagoras' Theorem: If a triangle with sides a, b, c satisfies a² + b² = c², then the angle opposite side c is exactly 90°.",
     "examples": [
       {
@@ -479,8 +479,8 @@ export const JHS2_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Calculate perimeters and areas of compound shapes, trapezia, parallelograms, rhombuses, and circles including arc lengths and sector areas.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=tyDN4pXkYCY",
-    "youtubeId": "tyDN4pXkYCY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=RILMSVYQuHc",
+    "youtubeId": "RILMSVYQuHc",
     "keyNotes": "Perimeter is the total boundary distance around a 2D closed figure. Area is the measure of the surface region enclosed inside.\n• Key Area Formulas:\n  - Triangle: Area = 1/2 × base × perpendicular height = 1/2 bh.\n  - Parallelogram: Area = base × perpendicular height = bh.\n  - Trapezium: Area = 1/2 (a + b)h, where a and b are lengths of parallel sides, and h is the perpendicular distance between them.\n  - Rhombus / Kite: Area = 1/2 × d₁ × d₂ (where d₁ and d₂ are diagonal lengths).\n• Circle Formulas (use π = 22/7 or 3.142):\n  - Circumference: C = 2πr = πd (where r = radius, d = diameter = 2r).\n  - Area of Circle: A = πr².\n  - Length of an Arc subtending angle θ: L = (θ / 360°) × 2πr.\n  - Area of a Sector of angle θ: Area = (θ / 360°) × πr².\n  - Perimeter of a Sector: Perimeter = Arc Length + 2r = L + 2r.",
     "examples": [
       {
@@ -521,8 +521,8 @@ export const JHS2_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Explore nets of 3D solids, calculate total surface area and volume of cuboids, triangular prisms, and circular cylinders, and solve liquid capacity problems.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=tyDN4pXkYCY",
-    "youtubeId": "tyDN4pXkYCY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3LZGk87GPL0",
+    "youtubeId": "3LZGk87GPL0",
     "keyNotes": "A prism is a 3D solid with uniform cross-section along its entire length.\n• General Prism Principles:\n  - Volume of any prism = Area of Cross-Section × Length (or height).\n  - Total Surface Area = Sum of areas of all outward faces = 2(base area) + (perimeter of base × height).\n• Specific Solids:\n  1. Cuboid (Rectangular Prism):\n     - Volume = length × width × height = l × w × h.\n     - Total Surface Area = 2(lw + lh + wh).\n  2. Cylinder (Circular Prism):\n     - Volume = πr²h.\n     - Curved Surface Area (CSA) = 2πrh.\n     - Total Surface Area (closed cylinder) = 2πr² + 2πrh = 2πr(r + h).\n     - Open cylinder (one circular base, like a bucket): A = πr² + 2πrh.\n     - Pipe / hollow open tube: A = 2πrh.\n• Capacity and Unit Conversions:\n  - 1 cm³ = 1 mL.\n  - 1,000 cm³ = 1 Liter.\n  - 1 m³ = 1,000,000 cm³ = 1,000 Liters.",
     "examples": [
       {
@@ -563,8 +563,8 @@ export const JHS2_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Construct frequency distribution tables, represent data using bar charts and pie charts, and calculate measures of central tendency (Mean, Median, Mode) and Range.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=tyDN4pXkYCY",
-    "youtubeId": "tyDN4pXkYCY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=2N7na6aBvpk",
+    "youtubeId": "2N7na6aBvpk",
     "keyNotes": "Statistics involves collecting, organizing, analyzing, and interpreting numerical information.\n• Data Organization:\n  - Raw data is arranged into frequency distribution tables using tallies.\n• Measures of Central Tendency:\n  1. Mean (Arithmetic Average):\n     - For ungrouped data: x̄ = (Sum of all values) / (Total count) = (Σx) / n.\n     - For frequency table: x̄ = (Σfx) / (Σf).\n  2. Median:\n     - The middle value when data is arranged in ascending or descending order.\n     - If count n is odd: middle term = (n + 1)/2 th position.\n     - If count n is even: average of the two middle terms: [n/2 th + (n/2 + 1)th] / 2.\n  3. Mode:\n     - The data value that occurs with the highest frequency. A dataset can be unimodal, bimodal, or have no mode.\n• Measure of Dispersion:\n  - Range = Highest Value - Lowest Value.\n• Graphical Representation:\n  - Pie Chart: Total angle of circle is 360°.\n  - Sector angle for item = (Frequency of item / Total Frequency) × 360°.",
     "examples": [
       {
@@ -606,8 +606,8 @@ export const JHS2_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Understand the probability scale (0 to 1), sample spaces, outcomes of single and combined events, and calculate theoretical probabilities of simple events.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=tyDN4pXkYCY",
-    "youtubeId": "tyDN4pXkYCY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Q5rgQXAf1rk",
+    "youtubeId": "Q5rgQXAf1rk",
     "keyNotes": "Probability is the mathematical measure of the likelihood or chance that a specific event will occur.\n• The Probability Scale:\n  - 0 ≤ P(Event) ≤ 1 (or 0% to 100%).\n  - P = 0: Impossible event (e.g. rolling an 8 on a standard 6-sided die).\n  - P = 1: Certain event (e.g. getting a number less than 7 on a standard die).\n  - P = 0.5: Even chance (e.g. getting Heads when tossing a fair coin).\n• Sample Space (S): The set of all possible outcomes of an experiment.\n  - Tossing a coin: S = {H, T}, n(S) = 2.\n  - Rolling a die: S = {1, 2, 3, 4, 5, 6}, n(S) = 6.\n• Theoretical Probability Formula:\n  - P(E) = (Number of favorable outcomes) / (Total number of possible outcomes) = n(E) / n(S).\n• Complementary Events:\n  - An event NOT happening is denoted E'.\n  - P(E') = 1 - P(E), and P(E) + P(E') = 1.",
     "examples": [
       {

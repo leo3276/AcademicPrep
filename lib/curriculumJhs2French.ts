@@ -15,8 +15,8 @@ export const JHS2_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Saluer poliment selon le contexte formel et informel, se présenter en détail (nom, âge, nationalité, profession) et présenter une tierce personne.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=hd0_GZHHMrE",
-    "youtubeId": "hd0_GZHHMrE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=pYV3mNFh35g",
+    "youtubeId": "pYV3mNFh35g",
     "keyNotes": "• Salutations Formelles et Informelles:\n  - Formel (adultes, professeurs, étrangers): \"Bonjour Monsieur/Madame\", \"Comment allez-vous ?\", \"Je vous présente...\".\n  - Informel (camarades, amis): \"Salut !\", \"Coucou !\", \"Ça va ?\", \"Comment vas-tu ?\".\n• Se Présenter en Détail:\n  - Identité: \"Je m'appelle Kwame Mensah\", \"Mon prénom est Kwame et mon nom de famille est Mensah.\"\n  - Âge: \"J'ai treize ans.\" (Attention: utiliser le verbe avoir, pas être !).\n  - Nationalité: \"Je suis ghanéen\" (masc.) / \"Je suis ghanéenne\" (fém.).\n  - Lieu de résidence: \"J'habite à Kumasi, au Ghana.\"\n• Présenter Quelqu'un d'Autre:\n  - \"Voici mon ami Koffi, il est togolais.\" / \"Je vous présente Mademoiselle Mansa.\"\n• Prise de Congé:\n  - \"Au revoir\", \"À tout à l'heure\", \"À demain\", \"Bonne journée\", \"Bonne nuit\".",
     "examples": [
       {
@@ -55,8 +55,8 @@ export const JHS2_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Identifier et décrire les membres de la famille nucléaire et élargie, et maîtriser les adjectifs possessifs.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=kYJjZfW8uVo",
-    "youtubeId": "kYJjZfW8uVo",
+    "youtubeUrl": "https://www.youtube.com/watch?v=dw-05yO2hn4",
+    "youtubeId": "dw-05yO2hn4",
     "keyNotes": "• Les Membres de la Famille:\n  - La famille nucléaire: le père, la mère, les parents, le fils, la fille, le frère, la sœur.\n  - La famille élargie: les grands-parents (le grand-père, la grand-mère), l'oncle, la tante, le cousin, la cousine, le neveu, la nièce, les petits-enfants.\n• Les Adjectifs Possessifs:\n  - Pour 'je': mon (masc. sing.), ma (fém. sing. - devient 'mon' devant voyelle), mes (pluriel).\n  - Pour 'tu': ton, ta, tes.\n  - Pour 'il/elle': son, sa, ses.\n  - Pour 'nous': notre (sing.), nos (pluriel).\n  - Pour 'vous': votre (sing.), vos (pluriel).\n  - Pour 'ils/elles': leur (sing.), leurs (pluriel).\n• Décrire la Structure Familiale:\n  - \"Dans ma famille, nous sommes cinq personnes.\"\n  - \"Mon père est instituteur et ma mère est commerçante.\"",
     "examples": [
       {
@@ -94,8 +94,8 @@ export const JHS2_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Décrire l'apparence physique (taille, teint, yeux, cheveux) et les traits de caractère/personnalité avec l'accord correct des adjectifs.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Fj2sXv0u-0g",
-    "youtubeId": "Fj2sXv0u-0g",
+    "youtubeUrl": "https://www.youtube.com/watch?v=74IyqbYC1YY",
+    "youtubeId": "74IyqbYC1YY",
     "keyNotes": "• Description Physique (Physical Appearance):\n  - La taille: grand(e) (tall), petit(e) (short), de taille moyenne (average height).\n  - La corpulence: mince (slim), gros(se) (stout/fat), robuste (strong), svelte.\n  - Le teint: noir(e), brun(e), clair(e).\n  - Les cheveux: courts, longs, noirs, crépus, tressés. (\"Il a les cheveux courts et noirs\").\n  - Les yeux: noirs, marron, bleus. (\"Elle a les yeux marron\").\n• Description Morale (Personality & Character Traits):\n  - Qualités: travailleur/travailleuse (hardworking), gentil(le) (kind), poli(e) (polite), intelligent(e), généreux/généreuse, honnête.\n  - Défauts: paresseux/paresseuse (lazy), bavard(e) (talkative), méchant(e) (wicked/mean), timide (shy).\n• Règle d'Accord des Adjectifs Qualificatifs:\n  - L'adjectif s'accorde en genre (masculin/féminin) et en nombre (singulier/pluriel) avec le nom qu'il qualifie.\n  - Ex: Un garçon intelligent -> Une fille intelligente; Des garçons intelligents -> Des filles intelligentes.",
     "examples": [
       {
@@ -136,8 +136,8 @@ export const JHS2_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Exprimer ses activités de tous les jours avec les verbes pronominaux et donner l'heure avec précision.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=F0k9L39Tsd4",
-    "youtubeId": "F0k9L39Tsd4",
+    "youtubeUrl": "https://www.youtube.com/watch?v=xYVNSws3x0s",
+    "youtubeId": "xYVNSws3x0s",
     "keyNotes": "• Les Verbes Pronominaux de la Routine Quotidienne:\n  - se réveiller (to wake up) -> Je me réveille\n  - se lever (to get up) -> Je me lève\n  - se laver / prendre une douche (to wash/shower) -> Je me lave\n  - se brosser les dents (to brush teeth) -> Je me brosse les dents\n  - s'habiller (to get dressed) -> Je m'habille\n  - se coucher (to go to bed) -> Je me couche\n• Dire l'Heure (Telling the Time):\n  - \"Quelle heure est-il ?\" (What time is it?)\n  - \"Il est six heures pile.\" (It is exactly 6 o'clock).\n  - \"Il est sept heures et quart.\" (It is 7:15).\n  - \"Il est huit heures et demie.\" (It is 8:30).\n  - \"Il est neuf heures moins le quart.\" (It is 8:45).\n  - \"Il est midi\" (12:00 PM) / \"Il est minuit\" (12:00 AM).\n• Les Moments de la Journée:\n  - le matin (morning), à midi (at noon), l'après-midi (afternoon), le soir (evening), la nuit (night).",
     "examples": [
       {
@@ -212,8 +212,8 @@ export const JHS2_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Nommer les aliments et plats ghanéens, exprimer la faim/soif, maîtriser les articles partitifs et commander au restaurant.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=FZGugFqDr60",
-    "youtubeId": "FZGugFqDr60",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ompVCIdkhL4",
+    "youtubeId": "ompVCIdkhL4",
     "keyNotes": "• Les Trois Principaux Repas:\n  - Le petit déjeuner (breakfast - le matin): du pain, du beurre, des œufs, du thé, du café, du porridge (koko).\n  - Le déjeuner (lunch - à midi): du riz gras (jollof), du fufu avec de la soupe d'arachide, du poulet, du poisson.\n  - Le dîner (dinner - le soir): de l'igname bouillie, de la soupe légère, des fruits.\n• Les Articles Partitifs (Partitive Articles - 'Some'):\n  - du: devant nom masculin singulier (du pain, du riz, du lait).\n  - de la: devant nom féminin singulier (de la viande, de la salade).\n  - de l': devant nom commençant par voyelle ou h muet (de l'eau, de l'huile).\n  - des: devant nom pluriel (des bananes, des œufs, des carottes).\n  - À la forme négative: du, de la, des deviennent TOUJOURS 'de' ou 'd'': \"Je ne mange pas de viande.\"\n• Expressions Utiles:\n  - \"J'ai faim\" (I am hungry) / \"J'ai soif\" (I am thirsty).\n  - Commander au restaurant: \"S'il vous plaît, je voudrais une assiette de riz jollof et une bouteille d'eau minérale.\"",
     "examples": [
       {
@@ -252,8 +252,8 @@ export const JHS2_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Décrire les vêtements, uniformes scolaires, tissus traditionnels (Kente), les couleurs et utiliser les adjectifs démonstratifs.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=J_j2tL2_oQ4",
-    "youtubeId": "J_j2tL2_oQ4",
+    "youtubeUrl": "https://www.youtube.com/watch?v=SFRhBEqDJ24",
+    "youtubeId": "SFRhBEqDJ24",
     "keyNotes": "• Les Vêtements et Accessoires (Clothing & Accessories):\n  - Pour hommes/garçons: une chemise (shirt), un pantalon (trousers), un t-shirt, une cravate, un short, une ceinture.\n  - Pour femmes/filles: une robe (dress), une jupe (skirt), un chemisier (blouse), un foulard.\n  - Chaussures: des chaussures (fém. pl.), des sandales, des baskets (trainers).\n  - Tissus ghanéens: le pagne traditionnel, le tissu Kente, le batakari.\n• Les Adjectifs Démonstratifs (Demonstrative Adjectives):\n  - ce: devant nom masc. sing. commençant par consonne (ce pantalon, ce garçon).\n  - cet: devant nom masc. sing. commençant par voyelle ou h muet (cet uniforme, cet homme).\n  - cette: devant nom fém. sing. (cette robe, cette chemise, cette école).\n  - ces: devant nom pluriel masc. ou fém. (ces chaussures, ces élèves, ces pantalons).\n• L'Accord des Couleurs:\n  - Les adjectifs de couleur s'accordent: blanc/blanche, noir/noire, vert/verte, bleu/bleue.\n  - Attention aux invariables: orange et marron ne changent JAMAIS (des jupes orange, des chaussures marron).",
     "examples": [
       {
@@ -291,8 +291,8 @@ export const JHS2_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Nommer les différentes pièces du logement, les meubles, les prépositions de lieu et décrire les corvées ménagères.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=kYv9d5c8gQw",
-    "youtubeId": "kYv9d5c8gQw",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7rTDb2lEzk4",
+    "youtubeId": "7rTDb2lEzk4",
     "keyNotes": "• Les Pièces de la Maison (Rooms in the House):\n  - le salon / la salle de séjour (living room), la chambre à coucher (bedroom), la cuisine (kitchen), la salle de bains (bathroom), les toilettes (restroom), la véranda / le balcon, le jardin, la cour.\n• Les Meubles et Appareils (Furniture & Appliances):\n  - le lit, la table, la chaise, l'armoire, le canapé / le fauteuil, le réfrigérateur (frigo), la cuisinière, le ventilateur, la télévision.\n• Les Prépositions de Lieu (Prepositions of Place):\n  - sur (on), sous (under), devant (in front of), derrière (behind), dans (in/inside), entre (between), à côté de (beside/next to), en face de (opposite).\n• Les Tâches Ménagères (Household Chores):\n  - balayer la chambre / la cour (to sweep), laver les assiettes / faire la vaisselle (to wash dishes), repasser les vêtements (to iron), faire le lit (to make the bed), jeter les ordures (to throw away trash).",
     "examples": [
       {
@@ -329,8 +329,8 @@ export const JHS2_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Parler de ses passe-temps préférés, des disciplines sportives avec 'jouer à' et 'faire de', et exprimer des projets au futur proche.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0eP2jN0sTqw",
-    "youtubeId": "0eP2jN0sTqw",
+    "youtubeUrl": "https://www.youtube.com/watch?v=4sCMCFQrw4A",
+    "youtubeId": "4sCMCFQrw4A",
     "keyNotes": "• Les Sports et Activités de Loisir:\n  - le football, le basketball, le volley-ball, la natation (swimming), l'athlétisme, la lecture, la musique, les jeux vidéo.\n• La Règle Grammaticale: 'Jouer à' vs 'Faire de':\n  1. Le verbe JOUER s'utilise avec la préposition 'À' pour les sports d'équipe et jeux:\n     - jouer au football (à + le = au), jouer au tennis, jouer aux dames (à + les = aux).\n     - (Note: 'jouer de' s'utilise pour les instruments de musique: jouer du piano, jouer de la guitare).\n  2. Le verbe FAIRE s'utilise avec la préposition 'DE' pour toutes les activités sportives générales:\n     - faire du vélo (de + le = du), faire de la natation, faire de l'athlétisme, faire des randonnées.\n• Le Futur Proche (Near Future Tense):\n  - Formation: Sujet + Verbe ALLER au présent + Verbe à l'Infinitif.\n  - Ex: \"Pendant les vacances prochaines, je vais visiter le parc national de Kakum à Cape Coast.\"",
     "examples": [
       {
@@ -446,8 +446,8 @@ export const JHS2_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Identifier les différents modes de déplacement, utiliser les prépositions 'en' et 'à', et demander ou indiquer un itinéraire dans la ville.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=hd0_GZHHMrE",
-    "youtubeId": "hd0_GZHHMrE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=0uXBoKQNO10",
+    "youtubeId": "0uXBoKQNO10",
     "keyNotes": "• Les Moyens de Transport (Modes of Transport):\n  - le bus / le car, le taxi, le trotro (minibus ghanéen), la voiture, le train, l'avion, le bateau / la pirogue, la moto, le vélo / la bicyclette.\n• Les Prépositions avec les Transports:\n  - Utiliser 'EN' pour les véhicules fermés où l'on entre à l'intérieur:\n    * en bus, en taxi, en train, en voiture, en avion, en bateau, en trotro.\n  - Utiliser 'À' pour les moyens où l'on monte sur l'engin ou à pied:\n    * à pied (on foot), à vélo (by bicycle), à moto (by motorbike), à cheval (on horseback).\n• Demander et Indiquer le Chemin (Asking & Giving Directions):\n  - Demander son chemin: \"Pardon Monsieur, où se trouve le marché central ?\" / \"Pour aller à la banque, s'il vous plaît ?\"\n  - Indiquer la direction:\n    * \"Allez tout droit !\" (Go straight ahead!)\n    * \"Tournez à droite !\" (Turn right!)\n    * \"Tournez à gauche !\" (Turn left!)\n    * \"Traversez le carrefour / le rond-point !\" (Cross the intersection/roundabout!)\n    * \"C'est en face de l'hôpital, à côté de la poste.\"",
     "examples": [
       {

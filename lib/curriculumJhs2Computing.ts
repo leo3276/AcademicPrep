@@ -15,8 +15,8 @@ export const JHS2_COMPUTING_TOPICS: CurriculumTopic[] = [
     "description": "Examine computer generations (1st to 5th), the CPU architecture (ALU, CU, Registers, System Bus), clock speed, and motherboard architecture.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=FZGugFqDr60",
-    "youtubeId": "FZGugFqDr60",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Ol8D69VKX2k",
+    "youtubeId": "Ol8D69VKX2k",
     "keyNotes": "• Five Generations of Computers:\n  1. 1st Generation (1940–1956): Vacuum Tubes (ENIAC, UNIVAC); massive size, consumed huge electricity, generated excessive heat, machine language.\n  2. 2nd Generation (1956–1963): Transistors; smaller, faster, cheaper, more energy-efficient, assembly language and early high-level languages (FORTRAN, COBOL).\n  3. 3rd Generation (1964–1971): Integrated Circuits (ICs); silicon semiconductor chips containing thousands of transistors; keyboards and monitors introduced; operating systems developed.\n  4. 4th Generation (1971–Present): Microprocessors (VLSI/VLSIC); thousands to millions of ICs on a single silicon chip (Intel 4004); birth of Personal Computers (PCs), laptops, and internet.\n  5. 5th Generation (Present & Beyond): Artificial Intelligence (AI) and Ultra Large Scale Integration (ULSI); quantum computing, parallel processing, natural language recognition.\n• Central Processing Unit (CPU) Architecture:\n  - Arithmetic Logic Unit (ALU): Performs all arithmetic operations (+, -, *, /) and logical comparisons (<, >, =, AND, OR, NOT).\n  - Control Unit (CU): The 'supervisor' of the CPU; directs flow of data and instructions between CPU, memory, and peripherals; executes the Fetch-Decode-Execute cycle.\n  - Registers: High-speed internal memory locations holding data immediately being processed (e.g., Program Counter, Accumulator, Instruction Register).\n  - System Clock: Generates quartz pulses measured in Megahertz (MHz) or Gigahertz (GHz) that synchronize CPU operations.",
     "examples": [
       {
@@ -131,8 +131,8 @@ export const JHS2_COMPUTING_TOPICS: CurriculumTopic[] = [
     "description": "Explore spreadsheet anatomy (workbooks, sheets, columns, rows, cell addresses), data types, and fundamental formulas (SUM, AVERAGE, COUNT, MIN, MAX).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=k1VUZEVuG14",
-    "youtubeId": "k1VUZEVuG14",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7Q2C9MB-YH4",
+    "youtubeId": "7Q2C9MB-YH4",
     "keyNotes": "• Spreadsheet Terminology:\n  - Workbook: An Excel file containing one or more worksheets (.xlsx).\n  - Worksheet: A single grid page made of horizontal Rows (numbered 1, 2, 3...) and vertical Columns (lettered A, B, C... Z, AA...).\n  - Cell: The intersection of a row and a column.\n  - Cell Address / Reference: Column letter followed by row number (e.g. B4 = column B, row 4).\n  - Active Cell: The currently selected cell highlighted with a bold border.\n  - Name Box: Displays the address of the active cell.\n  - Formula Bar: Displays the actual formula, function, or data content entered in the active cell.\n• Data Types in Spreadsheets:\n  - Labels (Text): Left-aligned automatically by default (e.g. 'Student Name').\n  - Values (Numbers): Right-aligned automatically by default (e.g. 85, 450.50).\n  - Formulas & Functions: Mathematical instructions that always begin with an equal sign (=).\n• Essential Built-in Functions:\n  - =SUM(A1:A10): Calculates the total of numbers in range A1 to A10.\n  - =AVERAGE(B2:B20): Computes the arithmetic mean.\n  - =COUNT(C1:C15): Counts the number of cells containing numerical values.\n  - =MAX(D1:D30): Returns the highest numerical value in the range.\n  - =MIN(D1:D30): Returns the lowest numerical value in the range.\n• Order of Operations: Spreadsheets strictly follow BODMAS / PEMDAS.",
     "examples": [
       {
@@ -245,8 +245,8 @@ export const JHS2_COMPUTING_TOPICS: CurriculumTopic[] = [
     "description": "Learn logical condition testing with IF statements, sorting and filtering data, and generating and formatting column, bar, and pie charts.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0kFj7f8v-7V",
-    "youtubeId": "0kFj7f8v-7V",
+    "youtubeUrl": "https://www.youtube.com/watch?v=hcqeC8PK8as",
+    "youtubeId": "hcqeC8PK8as",
     "keyNotes": "• The Logical IF Function:\n  - Syntax: =IF(logical_test, value_if_true, value_if_false)\n  - Purpose: Evaluates a condition and returns one value if the condition is TRUE, and another value if FALSE.\n  - Example: =IF(C2 >= 50, \"Pass\", \"Fail\")\n  - Nested IF: Placing an IF statement inside another IF statement to handle multiple grade boundaries (e.g. Grades 1 to 9).\n• Data Sorting & Filtering:\n  - Sorting: Arranging rows in ascending order (A to Z, smallest to largest) or descending order (Z to A, largest to smallest).\n  - Filtering: Temporarily displaying only rows that satisfy specific criteria (e.g. display only students with score > 80) while hiding other rows.\n• Chart Types & Applications:\n  - Column / Bar Chart: Compares discrete categories of data (e.g. comparing student scores across 4 subjects).\n  - Line Chart: Shows trends and changes continuous over time (e.g. temperature variations over 12 months).\n  - Pie Chart: Shows proportions of a whole (percentage breakdown of a household budget; slices must sum to 100%).\n• Chart Components: Chart Title, Legend (key explaining colors), Axes (X-axis category, Y-axis value), and Data Labels.",
     "examples": [
       {
@@ -363,8 +363,8 @@ export const JHS2_COMPUTING_TOPICS: CurriculumTopic[] = [
     "description": "Implement interactive programs using Scratch: sprites, stages, coordinates (X, Y), event triggers, loops, conditional blocks, and variables.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Z1KEJz4sJzE",
-    "youtubeId": "Z1KEJz4sJzE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=9SB57BAi0ls",
+    "youtubeId": "9SB57BAi0ls",
     "keyNotes": "• Block-Based Programming Environment (Scratch):\n  - Created by MIT Media Lab; allows learners to snap together graphical programming blocks like puzzle pieces, eliminating syntax errors.\n  - Stage: The background area where the interactive project plays out (dimensions: 480 pixels wide from X: -240 to +240; 360 pixels high from Y: -180 to +180). Center is (0, 0).\n  - Sprite: Visual objects, characters, or actors that perform actions based on coded scripts.\n• Major Block Palettes:\n  1. Motion (Blue): Controls position, movement, and direction (e.g. 'move 10 steps', 'go to x: 0 y: 0', 'point in direction 90').\n  2. Looks (Purple): Controls appearance, costumes, speech bubbles ('say Hello! for 2 secs').\n  3. Events (Yellow): Hat blocks that start scripts (e.g. 'when green flag clicked', 'when key space pressed').\n  4. Control (Orange): Manages execution flow with loops ('repeat 10', 'forever') and decisions ('if...then...else').\n  5. Sensing (Light Blue): Detects touching colors, mouse position, keyboard presses.\n  6. Variables (Dark Orange): Containers that store dynamic data values (e.g. 'Score', 'Lives', 'Timer').\n• Message Broadcasting: Allows sprites to communicate with each other by sending signals ('broadcast [Game Over]').",
     "examples": [
       {
@@ -479,8 +479,8 @@ export const JHS2_COMPUTING_TOPICS: CurriculumTopic[] = [
     "description": "Understand digital footprints, netiquette, intellectual property rights, software piracy, copyright infringement, open-source licensing, and ethical AI use.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=ottnH4kH6qE",
-    "youtubeId": "ottnH4kH6qE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=qp_IWVZoZhQ",
+    "youtubeId": "qp_IWVZoZhQ",
     "keyNotes": "• Digital Citizenship & Digital Footprint:\n  - Digital Footprint: The permanent record and trail of digital data left behind when using the internet (visited websites, social media posts, comments, photos, location logs).\n  - Passive Footprint: Collected without user direct intent (IP tracking, cookies).\n  - Active Footprint: Intentionally shared data (photos, blog posts, messages).\n  - Permanence: Content posted online can be archived, screenshotted, and retrieved years later by university admission boards and prospective employers.\n• Netiquette (Internet Etiquette):\n  - Respecting others online, avoiding cyberbullying and trolling, verifying information before sharing to combat fake news, and refraining from typing in ALL CAPS (viewed as shouting).\n• Intellectual Property and Copyright Law in Ghana:\n  - Copyright: Legal protection granted to creators of original literary, musical, artistic, and software works. (Copyright Act of Ghana 2005, Act 690).\n  - Plagiarism: Copying another person's creative work or ideas and passing them off as one's own without appropriate citation or attribution.\n  - Software Piracy: Unauthorized copying, downloading, distribution, or cracking of copyrighted commercial software (e.g. cracked Windows or games).\n• Software Licensing Models:\n  - Proprietary / Commercial: Source code is private; users must purchase a license (Microsoft Windows, Adobe Photoshop).\n  - Open Source: Source code is publicly available for anyone to inspect, modify, and enhance (Linux, Python, LibreOffice).\n  - Creative Commons (CC): Public licenses that grant creators flexible ways to license their works for free educational use with attribution.",
     "examples": [
       {

@@ -73,8 +73,8 @@ export const JHS1_COMPUTING_TOPICS: CurriculumTopic[] = [
     description: 'Learn how computers developed from early room-sized machines to modern smartphones and laptops.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=AkFi90lZ3rk',
-    youtubeId: 'AkFi90lZ3rk',
+    youtubeUrl: 'https://www.youtube.com/watch?v=-v_-FjTPwX8',
+    youtubeId: '-v_-FjTPwX8',
     keyNotes: `• Early Counting Tools:
   - Abacus: One of the earliest counting frames with beads, used for simple addition and subtraction.
   - Charles Babbage: Known as the "Father of the Computer" because he designed the first mechanical computer concepts (Difference Engine and Analytical Engine).
@@ -128,8 +128,8 @@ export const JHS1_COMPUTING_TOPICS: CurriculumTopic[] = [
     description: 'Explore the keyboard, mouse, touchscreens, optical scanners, and microphones used to give instructions to computers.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=sKq_O7a8Wv8',
-    youtubeId: 'sKq_O7a8Wv8',
+    youtubeUrl: 'https://www.youtube.com/watch?v=DtqzPrPTOOk',
+    youtubeId: 'DtqzPrPTOOk',
     keyNotes: `• What is an Input Device?
   - Any hardware equipment used to enter raw data, text, sound, images, or commands into a computer system.
 
@@ -175,8 +175,8 @@ export const JHS1_COMPUTING_TOPICS: CurriculumTopic[] = [
     description: 'Learn how computers show results: computer screens (monitors), printers, speakers, and multimedia classroom projectors.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=2Tz8-6e9K2Y',
-    youtubeId: '2Tz8-6e9K2Y',
+    youtubeUrl: 'https://www.youtube.com/watch?v=3iKrxg5n7iE',
+    youtubeId: '3iKrxg5n7iE',
     keyNotes: `• What is an Output Device?
   - Any hardware device that shows or presents processed information to the user in a way they can see, hear, or read.
 
@@ -228,8 +228,8 @@ export const JHS1_COMPUTING_TOPICS: CurriculumTopic[] = [
     description: 'Learn good sitting posture, how to protect your eyes, computer lab rules, and proper ways to turn computers on and off.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=k5qP8uYQ2kY',
-    youtubeId: 'k5qP8uYQ2kY',
+    youtubeUrl: 'https://www.youtube.com/watch?v=T8qGO7XQ0Uw',
+    youtubeId: 'T8qGO7XQ0Uw',
     keyNotes: `• Computer Lab Safety Rules:
   - No food or drinks near computers: Spilled water or juice causes electrical shocks and damages keyboards.
   - Do not touch loose cables or open sockets: Prevents electric shock.
@@ -285,8 +285,8 @@ export const JHS1_COMPUTING_TOPICS: CurriculumTopic[] = [
     description: 'Explore how computers and technology tools transform Ghanaian communities in education, healthcare, banking, and agriculture.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=tyDN4pXkYCY',
-    youtubeId: 'tyDN4pXkYCY',
+    youtubeUrl: 'https://www.youtube.com/watch?v=T9xVuQCcASI',
+    youtubeId: 'T9xVuQCcASI',
     keyNotes: `• How Technology Helps Our Community:
   - Technology tools (computers, smartphones, tablets, biometric machines) are used every day across Ghana to make work faster, easier, and more reliable.
 
@@ -341,8 +341,8 @@ export const JHS1_COMPUTING_TOPICS: CurriculumTopic[] = [
     description: 'Learn primary memory (RAM vs ROM), secondary storage (hard drives, flash drives, memory cards, cloud storage), and memory units (Byte, KB, MB, GB).',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=sKq_O7a8Wv8',
-    youtubeId: 'sKq_O7a8Wv8',
+    youtubeUrl: 'https://www.youtube.com/watch?v=Y3WHD5_mGCk',
+    youtubeId: 'Y3WHD5_mGCk',
     keyNotes: `• What is Storage?
   - The hardware parts where computers keep programs, pictures, videos, and files so they can be opened again later.
 
@@ -398,8 +398,8 @@ export const JHS1_COMPUTING_TOPICS: CurriculumTopic[] = [
     description: 'Learn what Windows, Android, and macOS do, and explore the Desktop, icons, taskbar, files, and folders.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=4Ym5B5I2PqA',
-    youtubeId: '4Ym5B5I2PqA',
+    youtubeUrl: 'https://www.youtube.com/watch?v=-fgB5sqzQAg',
+    youtubeId: '-fgB5sqzQAg',
     keyNotes: `• What is an Operating System (OS)?
   - The master software that controls the computer hardware and lets you run programs like games, word processors, and browsers.
   - Without an operating system, a computer or smartphone cannot start or work!
@@ -450,8 +450,8 @@ export const JHS1_COMPUTING_TOPICS: CurriculumTopic[] = [
     description: 'Master the QWERTY keyboard layout, the home row keys (ASDF JKL;), special command keys, and mouse clicking techniques.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=0hV1h7p-y0Y',
-    youtubeId: '0hV1h7p-y0Y',
+    youtubeUrl: 'https://www.youtube.com/watch?v=3yefDDyAa_k',
+    youtubeId: '3yefDDyAa_k',
     keyNotes: `• The Standard Keyboard (QWERTY):
   - The layout is named "QWERTY" after the first six letters on the top letter row.
 
@@ -510,8 +510,8 @@ export const JHS1_COMPUTING_TOPICS: CurriculumTopic[] = [
     description: 'Learn to use Microsoft Word and Google Docs: typing, selecting text, copy, cut, paste, undo, and saving files.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=Fj0X7-wP9sI',
-    youtubeId: 'Fj0X7-wP9sI',
+    youtubeUrl: 'https://www.youtube.com/watch?v=Pu03sKx-Ysk',
+    youtubeId: 'Pu03sKx-Ysk',
     keyNotes: `• What is a Word Processor?
   - A computer application used to create, edit, format, check spelling, and print written text documents (e.g., Microsoft Word, Google Docs).
 
@@ -568,8 +568,8 @@ export const JHS1_COMPUTING_TOPICS: CurriculumTopic[] = [
     description: 'Format documents with Bold, Italics, Underline, text alignments (left, center, right, justify), bullet lists, and simple tables.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=3uG7zC4p3rQ',
-    youtubeId: '3uG7zC4p3rQ',
+    youtubeUrl: 'https://www.youtube.com/watch?v=2Q0HAfTMySs',
+    youtubeId: '2Q0HAfTMySs',
     keyNotes: `• What is Formatting?
   - Changing the appearance, color, size, and layout of text to make a document look neat, professional, and easy to read.
 
@@ -626,8 +626,8 @@ export const JHS1_COMPUTING_TOPICS: CurriculumTopic[] = [
     description: 'Learn what spreadsheets are, understand rows, columns, and cell addresses (like A1, B5), and see how numbers are organized in Excel.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=0kFj7f8v-7U',
-    youtubeId: '0kFj7f8v-7U',
+    youtubeUrl: 'https://www.youtube.com/watch?v=GLOPzSkB0VU',
+    youtubeId: 'GLOPzSkB0VU',
     keyNotes: `• What is an Electronic Spreadsheet?
   - A computer software application designed to organize, calculate, and analyze numbers and data in rows and columns (e.g., Microsoft Excel, Google Sheets).
   - Used by teachers to calculate exam grades, shopkeepers to calculate daily sales, and accountants in banks.
@@ -678,8 +678,8 @@ export const JHS1_COMPUTING_TOPICS: CurriculumTopic[] = [
     description: 'Learn what a computer network is, the difference between LAN and WAN, and basic network shapes (Bus, Star, Ring).',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=2Tz8-6e9K2Y',
-    youtubeId: '2Tz8-6e9K2Y',
+    youtubeUrl: 'https://www.youtube.com/watch?v=vpKGcYFFYcA',
+    youtubeId: 'vpKGcYFFYcA',
     keyNotes: `• What is a Computer Network?
   - Two or more computers connected together so that they can share resources, files, and communicate with each other.
 
@@ -734,8 +734,8 @@ export const JHS1_COMPUTING_TOPICS: CurriculumTopic[] = [
     description: 'Explore the World Wide Web, web browsers (Chrome, Edge), web addresses (URLs), creating strong passwords, and avoiding online scams.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=k5qP8uYQ2kY',
-    youtubeId: 'k5qP8uYQ2kY',
+    youtubeUrl: 'https://www.youtube.com/watch?v=VAn537jgRCE',
+    youtubeId: 'VAn537jgRCE',
     keyNotes: `• What is the Internet?
   - A global network of millions of computers connected together worldwide.
 
@@ -786,8 +786,8 @@ export const JHS1_COMPUTING_TOPICS: CurriculumTopic[] = [
     description: 'Learn step-by-step problem solving, everyday algorithms, and basic flowchart symbols (Oval, Rectangle, Parallelogram, Diamond).',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=AkFi90lZ3rk',
-    youtubeId: 'AkFi90lZ3rk',
+    youtubeUrl: 'https://www.youtube.com/watch?v=_TWsmF8l418',
+    youtubeId: '_TWsmF8l418',
     keyNotes: `• What is an Algorithm?
   - A clear, step-by-step list of instructions to solve a problem or complete a task.
   - Everyday Example: A recipe for cooking jollof rice is an algorithm — it lists ingredients first, followed by steps to cook in order.

@@ -15,8 +15,8 @@ export const JHS3_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Master rational and irrational numbers, scientific notation (standard form A × 10^n), laws of indices (product, quotient, power, negative, fractional), and basic operations with surds.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=kIT7r3b_i68",
-    "youtubeId": "kIT7r3b_i68",
+    "youtubeUrl": "https://www.youtube.com/watch?v=aGBLe-Cxe3M",
+    "youtubeId": "aGBLe-Cxe3M",
     "keyNotes": "• The Real Number System (ℝ):\n  - Natural Numbers (ℕ) = {1, 2, 3, ...}\n  - Whole Numbers (𝕎) = {0, 1, 2, 3, ...}\n  - Integers (ℤ) = {..., -3, -2, -1, 0, 1, 2, 3, ...}\n  - Rational Numbers (ℚ): Any number that can be expressed as a/b where a, b ∈ ℤ and b ≠ 0 (terminating or recurring decimals).\n  - Irrational Numbers (ℚ'): Numbers that cannot be written as a/b; non-terminating, non-recurring decimals (e.g. √2, √3, π).\n• Standard Form (Scientific Notation):\n  - Form: A × 10^n where 1 ≤ A < 10 and n is an integer.\n  - Large numbers (n > 0): 450,000 = 4.5 × 10^5 (decimal moved 5 places left).\n  - Small numbers (n < 0): 0.00032 = 3.2 × 10^-4 (decimal moved 4 places right).\n• Laws of Indices:\n  1. Multiplication Law: a^m × a^n = a^(m + n)\n  2. Division Law: a^m ÷ a^n = a^(m - n)\n  3. Power Law: (a^m)^n = a^(m × n)\n  4. Zero Index: a^0 = 1 (a ≠ 0)\n  5. Negative Index: a^(-n) = 1 / a^n\n  6. Fractional Index: a^(1/n) = ⁿ√a and a^(m/n) = (ⁿ√a)^m = ⁿ√(a^m)\n• Introduction to Surds:\n  - A surd is an irrational root of a rational number (e.g. √2, √5, √12).\n  - Simplification: √(a × b) = √a × √b (e.g. √75 = √(25 × 3) = 5√3).\n  - Addition/Subtraction: Only like surds can be combined: 3√2 + 5√2 = 8√2; 4√3 - √3 = 3√3.\n  - Multiplication: √a × √a = a; √a × √b = √(ab).",
     "examples": [
       {
@@ -57,8 +57,8 @@ export const JHS3_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Expand binomial products (FOIL method), factorize by grouping four terms, factorize the difference of two squares (a² - b²), and factorize quadratic expressions of the form ax² + bx + c.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=b4O6N4tB3rM",
-    "youtubeId": "b4O6N4tB3rM",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7f6MY3LSHwc",
+    "youtubeId": "7f6MY3LSHwc",
     "keyNotes": "• Binomial Expansion:\n  - (a + b)(c + d) = a(c + d) + b(c + d) = ac + ad + bc + bd (FOIL: First, Outside, Inside, Last).\n  - Perfect Squares:\n    * (a + b)² = a² + 2ab + b²\n    * (a - b)² = a² - 2ab + b²\n    * Common mistake: (a + b)² ≠ a² + b²!\n• Factorization by Grouping (Four Terms):\n  - Group into pairs that share common factors: ax + ay + bx + by = a(x + y) + b(x + y) = (x + y)(a + b).\n  - Note negative signs carefully: ax - ay - bx + by = a(x - y) - b(x - y) = (x - y)(a - b).\n• Difference of Two Squares (DOTS):\n  - Formula: a² - b² = (a - b)(a + b).\n  - Examples:\n    * x² - 49 = x² - 7² = (x - 7)(x + 7)\n    * 4x² - 25y² = (2x)² - (5y)² = (2x - 5y)(2x + 5y)\n    * Numerical evaluation: 85² - 15² = (85 - 15)(85 + 15) = 70 × 100 = 7,000.\n• Factorizing Quadratic Expressions ax² + bx + c:\n  - When a = 1 (x² + bx + c): Find two factors of c whose sum is b.\n    * E.g. x² + 7x + 12: Factors of 12 that add to 7 are +3 and +4 -> (x + 3)(x + 4).\n  - When a ≠ 1 (ax² + bx + c):\n    1. Multiply a × c to get the product (ac).\n    2. Find two factors of (ac) whose sum is b.\n    3. Split the middle term bx into these two terms.\n    4. Factorize the four-term expression by grouping in pairs.",
     "examples": [
       {
@@ -99,8 +99,8 @@ export const JHS3_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Solve multi-step linear equations, equations containing algebraic fractions, word problems involving linear equations, and linear inequalities in one variable with number line graphing.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0X-b4v2C4tE",
-    "youtubeId": "0X-b4v2C4tE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7V-T2Jr9wXY",
+    "youtubeId": "7V-T2Jr9wXY",
     "keyNotes": "• Solving Linear Equations with Brackets:\n  - Clear brackets using the distributive property: a(bx + c) = abx + ac.\n  - Group variable terms on one side (usually LHS) and constant terms on the other (RHS).\n  - Combine like terms and divide by the coefficient of x.\n• Equations with Algebraic Fractions:\n  - Find the Least Common Multiple (LCM) of all denominators.\n  - Multiply EVERY term on BOTH sides of the equation by the LCM to clear fractions completely.\n  - Watch for negative signs in front of fractions: - (x - 3) becomes -x + 3!\n• Linear Inequalities in One Variable:\n  - Symbols: < (less than), > (greater than), ≤ (less than or equal to), ≥ (greater than or equal to).\n  - CRITICAL WAEC RULE: When multiplying or dividing both sides of an inequality by a NEGATIVE number, the inequality sign MUST BE REVERSED!\n    * E.g. -2x < 6 -> Divide by -2 -> x > -3.\n• Number Line Representation:\n  - Open circle (○): Used for strict inequalities (< or >) indicating the boundary number is NOT included.\n  - Solid circle (●): Used for inclusive inequalities (≤ or ≥) indicating the boundary number IS included.\n  - Arrow points right for > or ≥; arrow points left for < or ≤.\n• Truth Sets:\n  - Written in set builder notation: {x : x > -3} or for integers: {x : x ∈ ℤ, x ≥ 2} = {2, 3, 4, ...}.",
     "examples": [
       {
@@ -144,8 +144,8 @@ export const JHS3_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Solve systems of two linear equations in two variables using algebraic substitution, elimination, and graphical plotting of intersecting straight lines, with real-world applications.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=nok99JOhc30",
-    "youtubeId": "nok99JOhc30",
+    "youtubeUrl": "https://www.youtube.com/watch?v=UwEzEk-WSlc",
+    "youtubeId": "UwEzEk-WSlc",
     "keyNotes": "• Nature of Simultaneous Equations:\n  - A pair of equations containing two unknowns (usually x and y) that must be satisfied simultaneously:\n    * a₁x + b₁y = c₁\n    * a₂x + b₂y = c₂\n• Elimination Method:\n  1. Make the coefficients of one variable (x or y) equal in magnitude by multiplying one or both equations by suitable integers.\n  2. If the signs of the matching coefficients are the SAME, SUBTRACT the two equations.\n  3. If the signs are OPPOSITE, ADD the two equations.\n  4. Solve the resulting single-variable equation.\n  5. Substitute the obtained value back into either original equation to find the second variable.\n• Substitution Method:\n  1. Make one variable the subject from the simpler equation (e.g. x = 5 - 2y).\n  2. Substitute this expression into the OTHER equation in place of that variable.\n  3. Solve the resulting linear equation for the remaining variable.\n  4. Back-substitute to find the first variable.\n• Graphical Method:\n  - Generate a table of values (minimum 3 coordinates) for each straight line.\n  - Plot both linear graphs on the same Cartesian coordinate axes with given scale.\n  - The coordinates (x, y) of the POINT OF INTERSECTION give the simultaneous solution.\n  - If lines are parallel, there is no solution; if coincident, infinitely many solutions.\n• Real-World Problem Solving:\n  - Translate word problems into equations:\n    * E.g. 'The cost of 3 exercise books and 2 pens is GH₵ 29': 3b + 2p = 29.\n    * 'The perimeter of a rectangle is 36 cm and the length is 4 cm more than the width': 2(l + w) = 36 and l = w + 4.",
     "examples": [
       {
@@ -232,8 +232,8 @@ export const JHS3_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Rearrange mathematical, scientific, and engineering formulae to make any specified variable the subject, including terms involving roots, squares, and algebraic fractions.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0k1L2m8vT3s",
-    "youtubeId": "0k1L2m8vT3s",
+    "youtubeUrl": "https://www.youtube.com/watch?v=VZHpynwuhB4",
+    "youtubeId": "VZHpynwuhB4",
     "keyNotes": "• Definition:\n  - Making a variable the 'subject' of a formula means isolating that variable alone on the Left-Hand Side (LHS) with a coefficient of positive 1 and power of 1.\n• Systematic Algorithm for Rearranging Formulae:\n  1. Clear fractions: Multiply every term by the LCM of all denominators.\n  2. Clear brackets: Use distributive multiplication.\n  3. Clear radical signs (square roots): Isolate the radical term on one side, then square both sides: (√x)² = x.\n  4. Clear powers (squares): Isolate the squared term on one side, then take the square root of both sides: √(x²) = ±√k.\n  5. Group all terms containing the target variable on the LHS.\n  6. Move all terms NOT containing the target variable to the RHS.\n  7. Factor out the target variable if it appears in multiple terms: ax + bx = x(a + b).\n  8. Divide both sides by the cofactor of the target variable.",
     "examples": [
       {
@@ -273,8 +273,8 @@ export const JHS3_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Solve commercial problems involving cost price, selling price, percentage profit/loss, trade/cash discounts, Value Added Tax (VAT), Simple Interest (I = PRT/100), Compound Interest, and asset depreciation.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=R3n0m5WkP1w",
-    "youtubeId": "R3n0m5WkP1w",
+    "youtubeUrl": "https://www.youtube.com/watch?v=4XehxfeKA8s",
+    "youtubeId": "4XehxfeKA8s",
     "keyNotes": "• Profit and Loss:\n  - Profit = Selling Price (SP) - Cost Price (CP) [when SP > CP]\n  - Loss = Cost Price (CP) - Selling Price (SP) [when CP > SP]\n  - Percentage Profit = (Profit / CP) × 100%\n  - Percentage Loss = (Loss / CP) × 100%\n  - Note: Percentage profit/loss is ALWAYS calculated on the COST PRICE (CP), never on the selling price!\n  - SP = CP × [(100 + % Profit) / 100]\n  - CP = [SP × 100] / [100 + % Profit]\n• Discounts & Taxation:\n  - Discount = Marked Price - Cash Selling Price\n  - % Discount = (Discount / Marked Price) × 100%\n  - Value Added Tax (VAT): Consumption tax added to marked price. In Ghana, VAT is levied on the taxable value.\n• Simple Interest (I):\n  - Formula: I = (P × R × T) / 100\n    * P = Principal (amount borrowed or invested)\n    * R = Rate of interest per annum (%)\n    * T = Time in years (if given in months, divide by 12!)\n  - Total Amount (A) = Principal (P) + Interest (I) = P(1 + RT/100).\n• Compound Interest & Depreciation:\n  - Compound Interest: Interest is added to principal at the end of each period to earn further interest.\n    * A = P(1 + R/100)^n; Compound Interest (CI) = A - P.\n  - Depreciation: Loss in value of physical assets over time due to wear and tear.\n    * Depreciated Value = P(1 - R/100)^n.",
     "examples": [
       {
@@ -315,8 +315,8 @@ export const JHS3_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Solve problems involving sharing quantities in given ratios, direct variation (y = kx), inverse variation (y = k/x), map scales, and rates of work and average speed.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=F3q2A1bO4cI",
-    "youtubeId": "F3q2A1bO4cI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=AWH6wQBbpo0",
+    "youtubeId": "AWH6wQBbpo0",
     "keyNotes": "• Ratios & Proportional Sharing:\n  - A ratio compares quantities of the same kind; expressed in simplest form without units: a : b = a/b.\n  - Sharing Quantity Q in ratio a : b : c:\n    1. Sum of ratio parts = a + b + c.\n    2. First share = (a / Total Parts) × Q.\n    3. Second share = (b / Total Parts) × Q.\n    4. Third share = (c / Total Parts) × Q.\n• Direct Proportion (Variation):\n  - When two quantities x and y increase or decrease together in the same ratio: y ∝ x  =>  y = kx (where k is the constant of proportionality).\n  - Formula: y₁ / x₁ = y₂ / x₂.\n• Inverse Proportion (Variation):\n  - When an increase in one quantity causes a corresponding decrease in the other: y ∝ 1/x  =>  y = k/x  =>  xy = k.\n  - Formula: x₁ × y₁ = x₂ × y₂.\n  - Classic example: More workers take fewer days to complete a task.\n• Rates: Speed, Distance & Time:\n  - Speed = Distance / Time (units: km/h or m/s).\n  - Conversion: 1 km/h = (1000 m) / (3600 s) = 5/18 m/s. (Multiply by 5/18 to go from km/h to m/s; multiply by 18/5 to go from m/s to km/h).\n  - Average Speed = Total Distance Travelled / Total Time Taken (NEVER the average of two speeds!).",
     "examples": [
       {
@@ -357,8 +357,8 @@ export const JHS3_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Operate on 2D column vectors (addition, subtraction, scalar multiplication), calculate magnitude |u| = √(x² + y²), and solve navigator journeys using 3-figure bearings (000° to 360°).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0hW7V2kP3mI",
-    "youtubeId": "0hW7V2kP3mI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=McBQ_HSdofI",
+    "youtubeId": "McBQ_HSdofI",
     "keyNotes": "• Vectors in Two Dimensions:\n  - A vector is a quantity having both magnitude (length) and direction.\n  - Column vector notation: u = [x, y], where x is horizontal displacement (right +ve, left -ve) and y is vertical displacement (up +ve, down -ve).\n• Vector Algebra:\n  - Addition: [x₁, y₁] + [x₂, y₂] = [x₁ + x₂, y₁ + y₂]\n  - Subtraction: [x₁, y₁] - [x₂, y₂] = [x₁ - x₂, y₁ - y₂]\n  - Scalar Multiplication: k[x, y] = [kx, ky]\n  - Position Vectors: If point A is (x, y), its position vector relative to origin O is OA = [x, y].\n  - Displacement vector: AB = OB - OA.\n• Magnitude / Modulus of a Vector:\n  - If vector u = [x, y], magnitude |u| = √(x² + y²) (from Pythagoras' Theorem).\n  - Distance between two points A(x₁, y₁) and B(x₂, y₂): |AB| = √[(x₂ - x₁)² + (y₂ - y₁)²].\n• Three-Figure Bearings:\n  - Three cardinal rules of bearings:\n    1. Measured CLOCKWISE from True North (000°).\n    2. Always written with THREE digits (e.g. 045°, 090°, 270°).\n    3. Measured from the reference starting point ('from A' means place compass rose at A!).\n  - Cardinal Points: North = 000° / 360°, East = 090°, South = 180°, West = 270°.\n  - Back Bearing: The reverse bearing from B back to A.\n    * If forward bearing θ < 180°: Back Bearing = θ + 180°.\n    * If forward bearing θ ≥ 180°: Back Bearing = θ - 180°.",
     "examples": [
       {
@@ -442,8 +442,8 @@ export const JHS3_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Explore fundamental circle theorems: angles subtended at center vs circumference, angles in a semi-circle, angles in the same segment, opposite angles of cyclic quadrilaterals, and tangent-radius perpendicularity.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=9_6H4hE4b2E",
-    "youtubeId": "9_6H4hE4b2E",
+    "youtubeUrl": "https://www.youtube.com/watch?v=dBIlCD_JF9Q",
+    "youtubeId": "dBIlCD_JF9Q",
     "keyNotes": "• Essential Circle Theorems for BECE:\n  1. Angle at Center: The angle subtended by an arc at the center of a circle is twice the angle subtended by the same arc at any point on the circumference: ∠AOB = 2 × ∠APB.\n  2. Angle in a Semi-Circle: An angle subtended by a diameter at the circumference is always a right angle (90°).\n  3. Angles in the Same Segment: Angles subtended by the same chord/arc in the same segment are equal: ∠APB = ∠AQB.\n  4. Cyclic Quadrilateral Theorem: A quadrilateral whose four vertices lie on the circumference of a circle is a cyclic quadrilateral.\n     * Rule: Opposite angles of a cyclic quadrilateral are supplementary (sum to 180°): ∠A + ∠C = 180° and ∠B + ∠D = 180°.\n     * Exterior Angle Rule: The exterior angle of a cyclic quadrilateral is equal to the interior opposite angle.\n  5. Tangent & Radius Theorem: A tangent to a circle is perpendicular to the radius drawn to the point of contact: ∠OPT = 90°.\n  6. Tangents from an External Point: Two tangents drawn to a circle from the same external point are equal in length: TP = TQ.\n• Angle Properties of Polygons:\n  - Sum of interior angles of an n-sided polygon = (n - 2) × 180°.\n  - Each interior angle of a regular polygon = [(n - 2) × 180°] / n.\n  - Sum of exterior angles of ANY convex polygon = 360°.\n  - Each exterior angle of a regular polygon = 360° / n.",
     "examples": [
       {
@@ -483,8 +483,8 @@ export const JHS3_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Calculate arc lengths and sector areas, and determine total surface area and volume of three-dimensional geometric solids: cylinders, cones, pyramids, spheres, and composite containers.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=W3a4F2uQ1_o",
-    "youtubeId": "W3a4F2uQ1_o",
+    "youtubeUrl": "https://www.youtube.com/watch?v=DOZYIrAc64A",
+    "youtubeId": "DOZYIrAc64A",
     "keyNotes": "• Circles, Arcs & Sectors:\n  - Circumference of circle = 2πr; Area = πr².\n  - Arc Length (L) = (θ / 360°) × 2πr.\n  - Perimeter of a Sector = Arc Length + 2r = [(θ / 360°) × 2πr] + 2r.\n  - Area of a Sector = (θ / 360°) × πr².\n• Solid Cylinders (Radius r, Height h):\n  - Curved Surface Area (CSA) = 2πrh.\n  - Total Surface Area (TSA, closed) = 2πrh + 2πr² = 2πr(h + r).\n  - Open cylinder (one end open, e.g. bucket): TSA = 2πrh + πr².\n  - Volume (V) = πr²h.\n• Solid Cones (Base radius r, Vertical height h, Slant height l):\n  - Slant height relation: l² = r² + h²  =>  l = √(r² + h²).\n  - Curved Surface Area (CSA) = πrl.\n  - Total Surface Area (TSA) = πrl + πr² = πr(l + r).\n  - Volume (V) = (1/3)πr²h.\n• Spheres & Hemispheres (Radius r):\n  - Surface Area of Sphere = 4πr²; Volume of Sphere = (4/3)πr³.\n  - Solid Hemisphere: Curved area = 2πr²; Flat circular base = πr²; Total Surface Area = 3πr²; Volume = (2/3)πr³.\n• Pyramids (Base area A, Height h):\n  - Volume of Pyramid = (1/3) × Base Area × Height = (1/3)Ah.",
     "examples": [
       {
@@ -527,8 +527,8 @@ export const JHS3_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Map coordinates under geometric transformations: reflection in the axes and lines y = ±x, rotation about the origin (90°, 180°, 270°), translation by vector [a, b], and enlargement by scale factor k.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=3iXjV1_vM8g",
-    "youtubeId": "3iXjV1_vM8g",
+    "youtubeUrl": "https://www.youtube.com/watch?v=phmy0oc3QtA",
+    "youtubeId": "phmy0oc3QtA",
     "keyNotes": "• Coordinate Mapping Rules for Reflection:\n  - Reflection in the x-axis (y = 0): (x, y) -> (x, -y)\n  - Reflection in the y-axis (x = 0): (x, y) -> (-x, y)\n  - Reflection in the line y = x: (x, y) -> (y, x) (swap coordinates)\n  - Reflection in the line y = -x: (x, y) -> (-y, -x) (swap and negate)\n• Coordinate Mapping Rules for Rotation about Origin (0, 0):\n  - 90° Anti-clockwise (or 270° Clockwise): (x, y) -> (-y, x)\n  - 180° Rotation (Half turn): (x, y) -> (-x, -y)\n  - 270° Anti-clockwise (or 90° Clockwise): (x, y) -> (y, -x)\n• Translation by Vector [a, b]:\n  - Every point shifts by the vector: Image = Object + Translation Vector.\n  - Coordinate rule: (x, y) -> (x + a, y + b).\n• Enlargement with Center (0, 0) and Scale Factor k:\n  - Coordinate rule: (x, y) -> (kx, ky).\n  - Properties of Scale Factor k:\n    * If k > 1: Shape is enlarged (magnified).\n    * If 0 < k < 1: Shape is diminished (reduced).\n    * If k is negative: Image is inverted on the opposite side of the center.\n  - Relationship between Lengths, Areas, and Volumes:\n    * Image Length = |k| × Object Length.\n    * Image Area = k² × Object Area.\n    * Image Volume = |k|³ × Object Volume.",
     "examples": [
       {
@@ -568,8 +568,8 @@ export const JHS3_MATH_TOPICS: CurriculumTopic[] = [
     "description": "Construct grouped frequency tables, compute mean using assumed mean or class midpoints, construct cumulative frequency curves (ogive), determine median and quartiles, and calculate theoretical probability.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0k5Xo_L7s0Y",
-    "youtubeId": "0k5Xo_L7s0Y",
+    "youtubeUrl": "https://www.youtube.com/watch?v=2YtYsaKelmY",
+    "youtubeId": "2YtYsaKelmY",
     "keyNotes": "• Grouped Frequency Distributions:\n  - Class Interval (e.g. 10 - 19): Lower limit = 10, Upper limit = 19.\n  - Class Boundaries: Lower boundary = 9.5, Upper boundary = 19.5.\n  - Class Width / Size: Upper boundary - Lower boundary = 19.5 - 9.5 = 10.\n  - Class Midpoint / Mark (x): (Lower limit + Upper limit) / 2 = (10 + 19) / 2 = 14.5.\n• Measures of Central Tendency for Grouped Data:\n  - Mean (x̄) = Σ(fx) / Σf, where f = frequency of each class and x = class midpoint.\n  - Modal Class: The class interval with the highest frequency.\n• Cumulative Frequency & The Ogive Curve:\n  - Cumulative Frequency (cf): The running total of frequencies up to the upper boundary of each class.\n  - Plotting the Ogive: Plot Cumulative Frequency (y-axis) against Upper Class Boundaries (x-axis); join points with a smooth S-shaped curve starting from zero on the lowest boundary.\n  - Reading from Ogive:\n    * Median (Q₂): Value corresponding to cf = N / 2 (where N = Σf).\n    * Lower Quartile (Q₁): Value corresponding to cf = N / 4.\n    * Upper Quartile (Q₃): Value corresponding to cf = 3N / 4.\n    * Interquartile Range (IQR) = Q₃ - Q₁.\n• Theoretical Probability:\n  - Definition: P(Event E) = (Number of favorable outcomes n(E)) / (Total number of possible outcomes n(S)).\n  - Probability Scale: 0 ≤ P(E) ≤ 1. If P(E) = 0, event is impossible; if P(E) = 1, event is certain.\n  - Complementary Events: P(not E) = 1 - P(E).",
     "examples": [
       {

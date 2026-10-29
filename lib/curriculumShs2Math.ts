@@ -173,8 +173,8 @@ export const SHS2_MATH_TOPICS: CurriculumTopic[] = [
     description: "Solving systems with one linear and one quadratic equation using substitution; intersection of lines and curves.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=f23h-r39q9o',
-    youtubeId: 'f23h-r39q9o',
+    youtubeUrl: 'https://www.youtube.com/watch?v=33NBP07AD3U',
+    youtubeId: '33NBP07AD3U',
     keyNotes: `• Method of Solution:
   - Step 1: From the linear equation, make one variable the subject (e.g. y = mx + c).
   - Step 2: Substitute this expression into the quadratic equation.
@@ -250,8 +250,8 @@ export const SHS2_MATH_TOPICS: CurriculumTopic[] = [
     description: "Simple interest I = PRT/100, compound interest A = P(1 + r/100)ⁿ, periodic compounding, and reducing balance depreciation.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=ZQI4sJ_b3v0',
-    youtubeId: 'ZQI4sJ_b3v0',
+    youtubeUrl: 'https://www.youtube.com/watch?v=-_oa0iixyuI',
+    youtubeId: '-_oa0iixyuI',
     keyNotes: `• Simple Interest:
   - Interest I = (P × R × T) / 100.
   - Total Amount A = P + I.
@@ -326,8 +326,8 @@ export const SHS2_MATH_TOPICS: CurriculumTopic[] = [
     description: "Hire purchase price, deposit and installments, cost of credit, progressive income tax bands, SSNIT pension deductions, and VAT calculations.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=0b7qU4w7s0s',
-    youtubeId: '0b7qU4w7s0s',
+    youtubeUrl: 'https://www.youtube.com/watch?v=Vm2lfJh51BU',
+    youtubeId: 'Vm2lfJh51BU',
     keyNotes: `• Hire Purchase (HP):
   - HP Price = Deposit + (Number of Installments × Value of each Installment).
   - Cost of Credit (Carrying Charge) = HP Price - Cash Price.
@@ -403,8 +403,8 @@ export const SHS2_MATH_TOPICS: CurriculumTopic[] = [
     description: "Angle subtended at centre is twice angle at circumference, angle in a semicircle is 90°, angles in same segment are equal, chord bisection.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=F3zT-u58p3s',
-    youtubeId: 'F3zT-u58p3s',
+    youtubeUrl: 'https://www.youtube.com/watch?v=E2XVSBMmB0Y',
+    youtubeId: 'E2XVSBMmB0Y',
     keyNotes: `• Theorem 1 (Angle at Centre):
   - The angle subtended by an arc at the center is twice the angle subtended by the same arc at the circumference: ∠AOB = 2∠APB.
 • Theorem 2 (Angle in Semicircle):
@@ -479,8 +479,8 @@ export const SHS2_MATH_TOPICS: CurriculumTopic[] = [
     description: "Opposite angles of cyclic quadrilaterals, exterior angles, tangents perpendicular to radius, tangents from an external point, and alternate segment theorem.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=F3zT-u58p3s',
-    youtubeId: 'F3zT-u58p3s',
+    youtubeUrl: 'https://www.youtube.com/watch?v=LGfMrCfsbjY',
+    youtubeId: 'LGfMrCfsbjY',
     keyNotes: `• Cyclic Quadrilaterals:
   - All 4 vertices lie on the circumference.
   - Opposite angles are supplementary: ∠A + ∠C = 180°, ∠B + ∠D = 180°.
@@ -637,8 +637,8 @@ export const SHS2_MATH_TOPICS: CurriculumTopic[] = [
     description: "Gradient m = Δy/Δx, parallel lines m₁ = m₂, perpendicular lines m₁m₂ = -1, perpendicular bisectors, and point-slope line equations.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=2TzT3k8V-kE',
-    youtubeId: '2TzT3k8V-kE',
+    youtubeUrl: 'https://www.youtube.com/watch?v=mcHr_vtzNqo',
+    youtubeId: 'mcHr_vtzNqo',
     keyNotes: `• Gradient (Slope): m = (y₂ - y₁) / (x₂ - x₁).
 • Parallel Lines:
   - Lines L₁ and L₂ are parallel if and only if m₁ = m₂.
@@ -714,8 +714,8 @@ export const SHS2_MATH_TOPICS: CurriculumTopic[] = [
     description: "Column vectors, addition and subtraction, scalar multiplication, position vectors, magnitude |v| = √(x² + y²), parallel vectors, and triangle law.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=ml4C3x9alKC',
-    youtubeId: 'ml4C3x9alKC',
+    youtubeUrl: 'https://www.youtube.com/watch?v=h02d922Q5wk',
+    youtubeId: 'h02d922Q5wk',
     keyNotes: `• Vector Notation:
   - Column vector v = [x, y]ᵀ (or xi + yj).
   - Magnitude |v| = √(x² + y²).
@@ -794,8 +794,8 @@ export const SHS2_MATH_TOPICS: CurriculumTopic[] = [
     description: "Translations by vector T, reflections in x-axis, y-axis, y = ±x, rotations of 90° and 180° about the origin, and isometric congruence.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=Xdhb4F_vN3s',
-    youtubeId: 'Xdhb4F_vN3s',
+    youtubeUrl: 'https://www.youtube.com/watch?v=YD3HIMUae_4',
+    youtubeId: 'YD3HIMUae_4',
     keyNotes: `• Translation:
   - Vector T = [a, b]: (x, y) ↦ (x + a, y + b).
 • Reflection Mappings:
@@ -873,8 +873,8 @@ export const SHS2_MATH_TOPICS: CurriculumTopic[] = [
     description: "Enlargement from origin and arbitrary centers, positive and negative scale factors, invariant points, Area Scale Factor k², and Volume Scale Factor k³.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=kYyY7-V5h0s',
-    youtubeId: 'kYyY7-V5h0s',
+    youtubeUrl: 'https://www.youtube.com/watch?v=o44M74rtBLw',
+    youtubeId: 'o44M74rtBLw',
     keyNotes: `• Enlargement with Center (0, 0):
   - (x, y) ↦ (kx, ky) where k is the scale factor.
 • Enlargement with Arbitrary Center C(a, b):
@@ -954,8 +954,8 @@ export const SHS2_MATH_TOPICS: CurriculumTopic[] = [
     description: "Class intervals, boundaries, midpoints, class widths, computing grouped mean directly x̄ = ∑fx/∑f, and using assumed mean x̄ = A + ∑fd/∑f.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=0hYqZ4wLqFk',
-    youtubeId: '0hYqZ4wLqFk',
+    youtubeUrl: 'https://www.youtube.com/watch?v=0v-JEjeshdI',
+    youtubeId: '0v-JEjeshdI',
     keyNotes: `• Grouped Frequency Definitions:
   - Class Interval: e.g. 20 - 29.
   - Class Boundaries: 19.5 - 29.5 (subtract 0.5 from lower, add 0.5 to upper for discrete integers).
@@ -1030,8 +1030,8 @@ export const SHS2_MATH_TOPICS: CurriculumTopic[] = [
     description: "Constructing histograms with continuous class boundaries, drawing frequency polygons, and graphical estimation of the mode.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=0hYqZ4wLqFk',
-    youtubeId: '0hYqZ4wLqFk',
+    youtubeUrl: 'https://www.youtube.com/watch?v=8Y6WkVcUgn8',
+    youtubeId: '8Y6WkVcUgn8',
     keyNotes: `• Histograms:
   - Rectangular bars touch each other with no gaps.
   - Horizontal axis: Class boundaries.
@@ -1109,8 +1109,8 @@ export const SHS2_MATH_TOPICS: CurriculumTopic[] = [
     description: "Sample space, probability axioms 0 ≤ P(E) ≤ 1, complementary events P(E') = 1 - P(E), mutually exclusive events, and general addition law.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=0s_A1g4jKss',
-    youtubeId: '0s_A1g4jKss',
+    youtubeUrl: 'https://www.youtube.com/watch?v=AfWzp_WgTZs',
+    youtubeId: 'AfWzp_WgTZs',
     keyNotes: `• Basic Probability Definition:
   - P(E) = n(E) / n(S) (number of favorable outcomes / total sample space).
   - 0 ≤ P(E) ≤ 1.
@@ -1185,8 +1185,8 @@ export const SHS2_MATH_TOPICS: CurriculumTopic[] = [
     description: "Independent events, multiplication law P(A ∩ B) = P(A) × P(B), selection with and without replacement, and \"at least one\" problems.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=0s_A1g4jKss',
-    youtubeId: '0s_A1g4jKss',
+    youtubeUrl: 'https://www.youtube.com/watch?v=cvr41Ar6QPQ',
+    youtubeId: 'cvr41Ar6QPQ',
     keyNotes: `• Independent Events:
   - Event A has no impact on event B.
   - Multiplication Law: P(A ∩ B) = P(A) × P(B).
@@ -1259,8 +1259,8 @@ export const SHS2_MATH_TOPICS: CurriculumTopic[] = [
     description: "Congruence modulo n, operations (+, -, ×) in modulo n, additive and multiplicative inverses, solving linear congruences, and calendar math.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=s_z9p7hB5bU',
-    youtubeId: 's_z9p7hB5bU',
+    youtubeUrl: 'https://www.youtube.com/watch?v=vOM1MZJvGno',
+    youtubeId: 'vOM1MZJvGno',
     keyNotes: `• Definition of Congruence:
   - a ≡ b (mod n) means (a - b) is divisible by n, or a and b leave the same remainder when divided by n.
   - The standard set of residues modulo n is {0, 1, 2, ..., n - 1}.

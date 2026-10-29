@@ -7,6 +7,8 @@ import { CurriculumTopic } from './types';
 export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   {
     "id": "shs1-bio-t1-characteristics-of-living-things-cells",
+    "youtubeUrl": "https://www.youtube.com/watch?v=QdQZyOsuM28",
+    "youtubeId": "QdQZyOsuM28",
     "subjectId": "biology",
     "level": "SHS 1",
     "term": 1,
@@ -225,6 +227,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-bio-t1-support-movement-in-organisms",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3cxER3mdTFo",
+    "youtubeId": "3cxER3mdTFo",
     "subjectId": "biology",
     "level": "SHS 1",
     "term": 1,
@@ -444,6 +448,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-bio-t1-cell-biology-organelles-microscope",
+    "youtubeUrl": "https://www.youtube.com/watch?v=LiR0wNi1JHg",
+    "youtubeId": "LiR0wNi1JHg",
     "subjectId": "biology",
     "level": "SHS 1",
     "term": 1,
@@ -628,6 +634,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-bio-t1-diffusion-osmosis-active-transport",
+    "youtubeUrl": "https://www.youtube.com/watch?v=aLCtXDFH6hc",
+    "youtubeId": "aLCtXDFH6hc",
     "subjectId": "biology",
     "level": "SHS 1",
     "term": 1,
@@ -814,6 +822,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-bio-t2-transport-in-plants-and-animals",
+    "youtubeUrl": "https://www.youtube.com/watch?v=2jk_K0FSCnU",
+    "youtubeId": "2jk_K0FSCnU",
     "subjectId": "biology",
     "level": "SHS 1",
     "term": 2,
@@ -1032,6 +1042,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-bio-t2-form-function-of-flowering-plants",
+    "youtubeUrl": "https://www.youtube.com/watch?v=E5xdTDwxRK0",
+    "youtubeId": "E5xdTDwxRK0",
     "subjectId": "biology",
     "level": "SHS 1",
     "term": 2,
@@ -1233,6 +1245,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-bio-t2-mineral-nutrition-in-plants",
+    "youtubeUrl": "https://www.youtube.com/watch?v=wwFSYDNRGVo",
+    "youtubeId": "wwFSYDNRGVo",
     "subjectId": "biology",
     "level": "SHS 1",
     "term": 2,
@@ -1421,6 +1435,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-bio-t2-respiration-surfaces-experiments",
+    "youtubeUrl": "https://www.youtube.com/watch?v=SXjnQWEp3eo",
+    "youtubeId": "SXjnQWEp3eo",
     "subjectId": "biology",
     "level": "SHS 1",
     "term": 2,
@@ -1608,6 +1624,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-bio-t3-respiration-and-excretion",
+    "youtubeUrl": "https://www.youtube.com/watch?v=_5SjIAi5skg",
+    "youtubeId": "_5SjIAi5skg",
     "subjectId": "biology",
     "level": "SHS 1",
     "term": 3,
@@ -1828,6 +1846,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-bio-t3-photosynthesis-and-the-leaf",
+    "youtubeUrl": "https://www.youtube.com/watch?v=HxoAAmFT5A4",
+    "youtubeId": "HxoAAmFT5A4",
     "subjectId": "biology",
     "level": "SHS 1",
     "term": 3,
@@ -2031,6 +2051,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-bio-t3-circulation-blood-heart-vessels",
+    "youtubeUrl": "https://www.youtube.com/watch?v=HAKOO1Surg4",
+    "youtubeId": "HAKOO1Surg4",
     "subjectId": "biology",
     "level": "SHS 1",
     "term": 3,
@@ -2221,6 +2243,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-bio-t3-classification-of-living-things",
+    "youtubeUrl": "https://www.youtube.com/watch?v=6K4ASEykzNs",
+    "youtubeId": "6K4ASEykzNs",
     "subjectId": "biology",
     "level": "SHS 1",
     "term": 3,
@@ -2405,6 +2429,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-bio-t1-digestion-nutrition-absorption",
+    "youtubeUrl": "https://www.youtube.com/watch?v=mw_tqVbvabw",
+    "youtubeId": "mw_tqVbvabw",
     "subjectId": "biology",
     "level": "SHS 2",
     "term": 1,
@@ -2608,6 +2634,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-bio-t1-reproduction-in-plants",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Dfvyoir_SCY",
+    "youtubeId": "Dfvyoir_SCY",
     "subjectId": "biology",
     "level": "SHS 2",
     "term": 1,
@@ -2811,6 +2839,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-bio-t1-genetics-ii-dihybrid-sex-linkage",
+    "youtubeUrl": "https://www.youtube.com/watch?v=LVrF41PLVUI",
+    "youtubeId": "LVrF41PLVUI",
     "subjectId": "biology",
     "level": "SHS 2",
     "term": 1,
@@ -2995,6 +3025,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-bio-t1-population-ecology-field-sampling",
+    "youtubeUrl": "https://www.youtube.com/watch?v=KGE4QL4CBMs",
+    "youtubeId": "KGE4QL4CBMs",
     "subjectId": "biology",
     "level": "SHS 2",
     "term": 1,
@@ -3177,6 +3209,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-bio-t2-reproduction-in-animals-and-humans",
+    "youtubeUrl": "https://www.youtube.com/watch?v=N-FJTL0okjI",
+    "youtubeId": "N-FJTL0okjI",
     "subjectId": "biology",
     "level": "SHS 2",
     "term": 2,
@@ -3379,6 +3413,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-bio-t2-heredity-variation-genetics",
+    "youtubeUrl": "https://www.youtube.com/watch?v=QuayNyrR6Yk",
+    "youtubeId": "QuayNyrR6Yk",
     "subjectId": "biology",
     "level": "SHS 2",
     "term": 2,
@@ -3595,6 +3631,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-bio-t2-nervous-system-sense-organs-hormones",
+    "youtubeUrl": "https://www.youtube.com/watch?v=pDr6DDRHvUY",
+    "youtubeId": "pDr6DDRHvUY",
     "subjectId": "biology",
     "level": "SHS 2",
     "term": 2,
@@ -3777,6 +3815,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-bio-t2-reproduction-ii-pregnancy-infant-care",
+    "youtubeUrl": "https://www.youtube.com/watch?v=iKL3goUeVrk",
+    "youtubeId": "iKL3goUeVrk",
     "subjectId": "biology",
     "level": "SHS 2",
     "term": 2,
@@ -3960,6 +4000,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-bio-t3-defence-immunity-lymphatic-system",
+    "youtubeUrl": "https://www.youtube.com/watch?v=bGKsGEByr0w",
+    "youtubeId": "bGKsGEByr0w",
     "subjectId": "biology",
     "level": "SHS 2",
     "term": 3,
@@ -4163,6 +4205,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-bio-t3-growth-development-metamorphosis",
+    "youtubeUrl": "https://www.youtube.com/watch?v=jdWLhsv3vxA",
+    "youtubeId": "jdWLhsv3vxA",
     "subjectId": "biology",
     "level": "SHS 2",
     "term": 3,
@@ -4365,6 +4409,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-bio-t3-plant-responses-growth-substances",
+    "youtubeUrl": "https://www.youtube.com/watch?v=CuiJOYuXjDc",
+    "youtubeId": "CuiJOYuXjDc",
     "subjectId": "biology",
     "level": "SHS 2",
     "term": 3,
@@ -4554,6 +4600,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-bio-t3-micro-organisms-roles-in-ghana",
+    "youtubeUrl": "https://www.youtube.com/watch?v=W_19l07xZio",
+    "youtubeId": "W_19l07xZio",
     "subjectId": "biology",
     "level": "SHS 2",
     "term": 3,
@@ -4742,6 +4790,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-bio-t1-responses-coordination-and-regulation",
+    "youtubeUrl": "https://www.youtube.com/watch?v=eIuSSpj98uM",
+    "youtubeId": "eIuSSpj98uM",
     "subjectId": "biology",
     "level": "SHS 3",
     "term": 1,
@@ -4962,6 +5012,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-bio-t1-molecular-biology-dna-rna-protein",
+    "youtubeUrl": "https://www.youtube.com/watch?v=8wAwLwJAGHs",
+    "youtubeId": "8wAwLwJAGHs",
     "subjectId": "biology",
     "level": "SHS 3",
     "term": 1,
@@ -5151,6 +5203,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-bio-t1-plant-structure-tissues-transport",
+    "youtubeUrl": "https://www.youtube.com/watch?v=yJop_KKpOiI",
+    "youtubeId": "yJop_KKpOiI",
     "subjectId": "biology",
     "level": "SHS 3",
     "term": 1,
@@ -5342,6 +5396,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-bio-t2-ecology-and-the-environment",
+    "youtubeUrl": "https://www.youtube.com/watch?v=QXqYp2K_Xf8",
+    "youtubeId": "QXqYp2K_Xf8",
     "subjectId": "biology",
     "level": "SHS 3",
     "term": 2,
@@ -5562,6 +5618,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-bio-t2-adaptation-evolution-classification",
+    "youtubeUrl": "https://www.youtube.com/watch?v=giw2ELZr-bE",
+    "youtubeId": "giw2ELZr-bE",
     "subjectId": "biology",
     "level": "SHS 3",
     "term": 2,
@@ -5782,6 +5840,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-bio-t2-ecosystem-function-conservation",
+    "youtubeUrl": "https://www.youtube.com/watch?v=tVavrt-5SAM",
+    "youtubeId": "tVavrt-5SAM",
     "subjectId": "biology",
     "level": "SHS 3",
     "term": 2,
@@ -5973,6 +6033,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-bio-t2-evolution-evidence-mechanisms",
+    "youtubeUrl": "https://www.youtube.com/watch?v=mekCDGXMvUs",
+    "youtubeId": "mekCDGXMvUs",
     "subjectId": "biology",
     "level": "SHS 3",
     "term": 2,
@@ -6156,6 +6218,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-bio-t2-agriculture-crops-livestock-pests",
+    "youtubeUrl": "https://www.youtube.com/watch?v=MJ91W66xWBQ",
+    "youtubeId": "MJ91W66xWBQ",
     "subjectId": "biology",
     "level": "SHS 3",
     "term": 2,
@@ -6339,6 +6403,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-bio-t3-health-disease-and-applied-biology",
+    "youtubeUrl": "https://www.youtube.com/watch?v=9-p4EFZ_Dxo",
+    "youtubeId": "9-p4EFZ_Dxo",
     "subjectId": "biology",
     "level": "SHS 3",
     "term": 3,
@@ -6559,6 +6625,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-bio-t3-environmental-hygiene-public-health",
+    "youtubeUrl": "https://www.youtube.com/watch?v=0IzE3NHrHRo",
+    "youtubeId": "0IzE3NHrHRo",
     "subjectId": "biology",
     "level": "SHS 3",
     "term": 3,
@@ -6761,6 +6829,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-bio-t3-biotechnology-food-industries",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3ZuSXkyRvjg",
+    "youtubeId": "3ZuSXkyRvjg",
     "subjectId": "biology",
     "level": "SHS 3",
     "term": 3,
@@ -6944,6 +7014,8 @@ export const SHS_BIOLOGY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-bio-t3-practical-biology-investigation-skills",
+    "youtubeUrl": "https://www.youtube.com/watch?v=nTtXe7tMMn0",
+    "youtubeId": "nTtXe7tMMn0",
     "subjectId": "biology",
     "level": "SHS 3",
     "term": 3,

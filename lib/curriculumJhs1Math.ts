@@ -14,8 +14,8 @@ export const JHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: 'Master set notation, types of sets, union, intersection, and two-set Venn diagrams.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=tyDN4pXkYCY',
-    youtubeId: 'tyDN4pXkYCY',
+    youtubeUrl: 'https://www.youtube.com/watch?v=ceQmwJ0xGrQ',
+    youtubeId: 'ceQmwJ0xGrQ',
     keyNotes: `A set is a well-defined collection of distinct objects or elements.
 • Empty / Null Set: A set with no elements, denoted by ∅ or {}.
 • Finite Set: Elements can be counted (e.g. factors of 12).
@@ -90,8 +90,8 @@ export const JHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: 'Understand the hierarchy of real numbers, place values up to billions, and prime factorization.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=5qaph5O4r1g',
-    youtubeId: '5qaph5O4r1g',
+    youtubeUrl: 'https://www.youtube.com/watch?v=zsNPjAps0Qk',
+    youtubeId: 'zsNPjAps0Qk',
     keyNotes: `Real numbers include counting numbers, whole numbers, integers, and rational numbers.
 • Value = Digit × Place Value.
 • Prime numbers have exactly two factors: 1 and itself (2, 3, 5, 7, 11...).
@@ -279,8 +279,8 @@ export const JHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: 'Proper, improper, mixed fractions, operations using LCM, BODMAS, and percentage conversions.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=kcx5u2qQ_e0',
-    youtubeId: 'kcx5u2qQ_e0',
+    youtubeUrl: 'https://www.youtube.com/watch?v=uPc2m5Khffo',
+    youtubeId: 'uPc2m5Khffo',
     keyNotes: `Fractions represent equal parts of a whole quantity.
 • Addition/Subtraction: Convert to equivalent fractions with LCM denominator.
 • Multiplication: Multiply numerators and denominators (cancel common factors).
@@ -384,8 +384,8 @@ export const JHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: 'Solve first-degree equations, equations with brackets, clearing fractions, and word problems.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=DfZD5Wp_r_I',
-    youtubeId: 'DfZD5Wp_r_I',
+    youtubeUrl: 'https://www.youtube.com/watch?v=B3ysZqiJozM',
+    youtubeId: 'B3ysZqiJozM',
     keyNotes: `A linear equation contains an unknown variable with power 1 and an equals sign (=).
 • Golden Rule: Whatever you do to LHS, you must do to RHS.
 • Transposition: moving across = flips operation (+ becomes -, × becomes ÷).
@@ -434,8 +434,8 @@ export const JHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: 'Simplifying ratios, dividing quantities in given ratios, direct proportion, and inverse proportion.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=HQ3kO7V38Wc',
-    youtubeId: 'HQ3kO7V38Wc',
+    youtubeUrl: 'https://www.youtube.com/watch?v=djFApaAFIDY',
+    youtubeId: 'djFApaAFIDY',
     keyNotes: `A ratio compares quantities of the same kind by division.
 • Ratios have no units; quantities must have the same unit before comparing.
 • Sharing in ratio: 1 part = Total Amount / Total Parts.
@@ -537,8 +537,8 @@ export const JHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: 'Properties of triangles, quadrilaterals, exterior angle theorem, and polygon interior angle sum formula.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=6_333wLzYxQ',
-    youtubeId: '6_333wLzYxQ',
+    youtubeUrl: 'https://www.youtube.com/watch?v=NJb7zDOAupE',
+    youtubeId: 'NJb7zDOAupE',
     keyNotes: `A polygon is a closed 2D shape with straight sides.
 • Triangle angles sum = 180°. Exterior angle = sum of opposite interior angles.
 • Polygon Interior Angle Sum: S = (n - 2) × 180°.
@@ -591,8 +591,8 @@ export const JHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: 'Use ruler and compass to construct perpendicular bisectors, angle bisectors, 60°, 90°, 45°, 30°, and triangles.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=LdQh5q_924o',
-    youtubeId: 'LdQh5q_924o',
+    youtubeUrl: 'https://www.youtube.com/watch?v=jnXKJfezHVU',
+    youtubeId: 'jnXKJfezHVU',
     keyNotes: `Geometric construction uses only a straight edge and compasses.
 • Never erase construction arcs! Examiners look for intersecting arcs.
 • Bisect line segment: arcs of same radius above and below.
@@ -693,8 +693,8 @@ export const JHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: 'Tally charts, frequency distribution tables, vertical/horizontal bar charts, and pie chart sector angles.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=oI3hZASl19o',
-    youtubeId: 'oI3hZASl19o',
+    youtubeUrl: 'https://www.youtube.com/watch?v=JC7DG8Qko9I',
+    youtubeId: 'JC7DG8Qko9I',
     keyNotes: `Statistics starts with organizing raw numerical data:
 • Tally marks are bundled in groups of 5.
 • Frequency (f) is the count of occurrences.

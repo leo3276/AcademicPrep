@@ -16,8 +16,8 @@ export const SHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: "Universal sets, subsets, complements, De Morgan’s laws, and solving real-world word problems using three-set Venn diagrams.",
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=tyDN4pXkYCY',
-    youtubeId: 'tyDN4pXkYCY',
+    youtubeUrl: 'https://www.youtube.com/watch?v=WHfef-NghN8',
+    youtubeId: 'WHfef-NghN8',
     keyNotes: `• Definition & Notation:
   - Universal set (U or ξ), empty set (∅ or {}).
   - Subset (A ⊆ B), proper subset (A ⊂ B). Number of subsets = 2ⁿ.
@@ -96,8 +96,8 @@ export const SHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: "Rational vs irrational numbers, simplifying surds, rationalizing binomial surds, and scientific notation calculations.",
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=0k3P4U_0Jj0',
-    youtubeId: '0k3P4U_0Jj0',
+    youtubeUrl: 'https://www.youtube.com/watch?v=b3d789lbUb4',
+    youtubeId: 'b3d789lbUb4',
     keyNotes: `• Real Numbers (ℝ):
   - Natural (ℕ) ⊂ Integers (ℤ) ⊂ Rational (ℚ) ⊂ Real (ℝ).
   - Rational numbers can be written as a/b (b ≠ 0). Irrational numbers (like √2, π, √7) cannot.
@@ -175,8 +175,8 @@ export const SHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: "Laws of indices, fractional and negative exponents, exponential equations, and fundamental properties of logarithms.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=ZZGIpA_4aVs',
-    youtubeId: 'ZZGIpA_4aVs',
+    youtubeUrl: 'https://www.youtube.com/watch?v=0_FlzTVk6ls',
+    youtubeId: '0_FlzTVk6ls',
     keyNotes: `• Laws of Indices:
   - aᵐ × aⁿ = aᵐ⁺ⁿ
   - aᵐ ÷ aⁿ = aᵐ⁻ⁿ
@@ -259,8 +259,8 @@ export const SHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: "Expanding binomials and trinomials, factorization by grouping, difference of two squares, and quadratic trinomial factorization.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=N6J0WbO63eU',
-    youtubeId: 'N6J0WbO63eU',
+    youtubeUrl: 'https://www.youtube.com/watch?v=7f6MY3LSHwc',
+    youtubeId: '7f6MY3LSHwc',
     keyNotes: `• Algebraic Expansion:
   - Distributive law: a(b + c) = ab + ac.
   - Binomial expansion: (a + b)(c + d) = ac + ad + bc + bd.
@@ -337,8 +337,8 @@ export const SHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: "Simplifying algebraic fractions, condition for undefined fractions, and operations (+, -, ×, ÷) on rational expressions.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=q6g4rN9r4F8',
-    youtubeId: 'q6g4rN9r4F8',
+    youtubeUrl: 'https://www.youtube.com/watch?v=ItXncmeUN0g',
+    youtubeId: 'ItXncmeUN0g',
     keyNotes: `• Condition for Undefined Fractions:
   - An algebraic fraction P(x) / Q(x) is undefined when its denominator equals zero: Q(x) = 0.
 • Simplification:
@@ -417,8 +417,8 @@ export const SHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: "Techniques for solving multi-step linear equations, clearing algebraic fractions using LCM, and solving word problems.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=bAerID24QJ8',
-    youtubeId: 'bAerID24QJ8',
+    youtubeUrl: 'https://www.youtube.com/watch?v=B3ysZqiJozM',
+    youtubeId: 'B3ysZqiJozM',
     keyNotes: `• Linear Equations Strategy:
   - Step 1: Find the LCM of all denominators across the entire equation.
   - Step 2: Multiply every single term on both sides by this LCM to eliminate all fractions.
@@ -496,8 +496,8 @@ export const SHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: "Solving linear inequalities, the sign reversal rule, combined inequalities, and graphing solution sets on the real number line.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=3M5N-3N9rZk',
-    youtubeId: '3M5N-3N9rZk',
+    youtubeUrl: 'https://www.youtube.com/watch?v=nyD263X_Wos',
+    youtubeId: 'nyD263X_Wos',
     keyNotes: `• Inequality Symbols:
   - < (strictly less than), ≤ (less than or equal to).
   - > (strictly greater than), ≥ (greater than or equal to).
@@ -576,8 +576,8 @@ export const SHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: "Elimination method, substitution method, graphical intersection method, and practical commercial word problems.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=bokGYeXG_lY',
-    youtubeId: 'bokGYeXG_lY',
+    youtubeUrl: 'https://www.youtube.com/watch?v=T6yQw3AkT5Q',
+    youtubeId: 'T6yQw3AkT5Q',
     keyNotes: `• Methods of Solution:
   - Elimination Method: Multiply equations by constants so coefficients of one variable match (or are opposites), then add or subtract equations.
   - Substitution Method: Make one variable the subject from one equation and substitute into the second equation.
@@ -653,8 +653,8 @@ export const SHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: "Sharing in ratios, direct and inverse proportion, rates of work (man-hours, water pipes), profit/loss, and discount.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=34l-d21j38A',
-    youtubeId: '34l-d21j38A',
+    youtubeUrl: 'https://www.youtube.com/watch?v=djFApaAFIDY',
+    youtubeId: 'djFApaAFIDY',
     keyNotes: `• Ratios & Sharing:
   - Ratio a : b compares two quantities in the same units.
   - To share quantity Q in ratio a : b : c, total parts = a + b + c. Each share = (part / total) × Q.
@@ -732,8 +732,8 @@ export const SHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: "Transforming algebraic formulas, dealing with brackets, roots, powers, and variables appearing in multiple terms.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=e_Z_gD5h60w',
-    youtubeId: 'e_Z_gD5h60w',
+    youtubeUrl: 'https://www.youtube.com/watch?v=E6UFMI24nBw',
+    youtubeId: 'E6UFMI24nBw',
     keyNotes: `• Change of Subject Strategy:
   - Step 1: Clear all fractions by multiplying by the LCM of denominators.
   - Step 2: Clear square roots by squaring both sides (or cube roots by cubing).
@@ -885,8 +885,8 @@ export const SHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: "Constant of proportionality, modeling direct, inverse, joint, and partial variation, and solving real-world word problems.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=0kH8m9qQpBs',
-    youtubeId: '0kH8m9qQpBs',
+    youtubeUrl: 'https://www.youtube.com/watch?v=aheBIhuwy08',
+    youtubeId: 'aheBIhuwy08',
     keyNotes: `• Types of Variation:
   - Direct Variation: y ∝ x => y = kx (k is the constant of variation).
   - Inverse Variation: y ∝ 1/x => y = k/x or xy = k.
@@ -965,8 +965,8 @@ export const SHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: "Types of angles, complementary and supplementary angles, vertically opposite angles, and angles on parallel lines (alternate, corresponding, interior).",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=F3zT-u58p3s',
-    youtubeId: 'F3zT-u58p3s',
+    youtubeUrl: 'https://www.youtube.com/watch?v=I5auyoXYoX0',
+    youtubeId: 'I5auyoXYoX0',
     keyNotes: `• Fundamental Angle Theorems:
   - Angles on a straight line add up to 180°.
   - Angles around a point add up to 360°.
@@ -1044,8 +1044,8 @@ export const SHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: "Properties of convex polygons, sum of interior angles (2n - 4) × 90°, sum of exterior angles = 360°, regular polygons, and angle calculations.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=F3zT-u58p3s',
-    youtubeId: 'F3zT-u58p3s',
+    youtubeUrl: 'https://www.youtube.com/watch?v=1Je_5_GN29o',
+    youtubeId: '1Je_5_GN29o',
     keyNotes: `• Polygon Definitions & Angle Formulas:
   - Polygon: A closed plane figure bounded by straight line segments.
   - Number of sides = n.
@@ -1120,8 +1120,8 @@ export const SHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: "Length of line segment (distance formula), midpoint of two points, gradient (slope) of a straight line, and equation of a straight line (y = mx + c).",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=2TzT3k8V-kE',
-    youtubeId: '2TzT3k8V-kE',
+    youtubeUrl: 'https://www.youtube.com/watch?v=QdzyqnTZN8I',
+    youtubeId: 'QdzyqnTZN8I',
     keyNotes: `• Core Formulas for Points A(x₁, y₁) and B(x₂, y₂):
   - Distance Formula: d = √[(x₂ - x₁)² + (y₂ - y₁)²].
   - Midpoint Formula: M = ((x₁ + x₂)/2, (y₁ + y₂)/2).
@@ -1198,8 +1198,8 @@ export const SHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: "Perimeter and area of triangles, parallelograms, trapeziums, circles, sectors, segments, and composite plane figures.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=F3zT-u58p3s',
-    youtubeId: 'F3zT-u58p3s',
+    youtubeUrl: 'https://www.youtube.com/watch?v=pD1_Biel6es',
+    youtubeId: 'pD1_Biel6es',
     keyNotes: `• Area Formulas:
   - Triangle: A = ½ × base × height, or A = ½ab sin C, or Hero's formula A = √[s(s - a)(s - b)(s - c)] where s = (a + b + c)/2.
   - Parallelogram: A = base × perpendicular height.
@@ -1275,8 +1275,8 @@ export const SHS1_MATH_TOPICS: CurriculumTopic[] = [
     description: "Discrete and continuous data, tally charts, frequency distribution tables, bar charts, pie charts, and mean, median, mode of ungrouped data.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=0hYqZ4wLqFk',
-    youtubeId: '0hYqZ4wLqFk',
+    youtubeUrl: 'https://www.youtube.com/watch?v=6N2OA34zNEw',
+    youtubeId: '6N2OA34zNEw',
     keyNotes: `• Types of Data:
   - Qualitative (categorical) vs Quantitative (numerical).
   - Discrete (countable values, e.g. number of students) vs Continuous (measurable, e.g. mass, time, height).

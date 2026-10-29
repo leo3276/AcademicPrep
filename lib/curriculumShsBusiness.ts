@@ -9,6 +9,8 @@ import { CurriculumTopic } from './types';
 export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   {
     "id": "shs-bum-topic-01",
+    "youtubeUrl": "https://www.youtube.com/watch?v=wLtTdSbr5QQ",
+    "youtubeId": "wLtTdSbr5QQ",
     "subjectId": "business-management",
     "level": "SHS 1",
     "term": 1,
@@ -102,6 +104,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-bum-topic-02",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Zf4ozWJ-Z6s",
+    "youtubeId": "Zf4ozWJ-Z6s",
     "subjectId": "business-management",
     "level": "SHS 1",
     "term": 1,
@@ -197,6 +201,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-bum-topic-03",
+    "youtubeUrl": "https://www.youtube.com/watch?v=JsFy06IUzXA",
+    "youtubeId": "JsFy06IUzXA",
     "subjectId": "business-management",
     "level": "SHS 1",
     "term": 1,
@@ -293,6 +299,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-bum-topic-04",
+    "youtubeUrl": "https://www.youtube.com/watch?v=wpdnLkVTkGg",
+    "youtubeId": "wpdnLkVTkGg",
     "subjectId": "business-management",
     "level": "SHS 1",
     "term": 1,
@@ -387,6 +395,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-bum-topic-05",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7Rts70S_X3A",
+    "youtubeId": "7Rts70S_X3A",
     "subjectId": "business-management",
     "level": "SHS 1",
     "term": 1,
@@ -479,6 +489,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-bum-topic-06",
+    "youtubeUrl": "https://www.youtube.com/watch?v=vlzXuoNifSg",
+    "youtubeId": "vlzXuoNifSg",
     "subjectId": "business-management",
     "level": "SHS 1",
     "term": 1,
@@ -573,6 +585,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-bum-topic-07",
+    "youtubeUrl": "https://www.youtube.com/watch?v=xuGh-jzupzc",
+    "youtubeId": "xuGh-jzupzc",
     "subjectId": "business-management",
     "level": "SHS 1",
     "term": 2,
@@ -670,6 +684,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-bum-topic-08",
+    "youtubeUrl": "https://www.youtube.com/watch?v=KUllLF-lb2M",
+    "youtubeId": "KUllLF-lb2M",
     "subjectId": "business-management",
     "level": "SHS 1",
     "term": 2,
@@ -766,6 +782,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-bum-topic-09",
+    "youtubeUrl": "https://www.youtube.com/watch?v=SjE8bSqmkZg",
+    "youtubeId": "SjE8bSqmkZg",
     "subjectId": "business-management",
     "level": "SHS 1",
     "term": 2,
@@ -860,6 +878,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-bum-topic-10",
+    "youtubeUrl": "https://www.youtube.com/watch?v=j-pPai7dbAk",
+    "youtubeId": "j-pPai7dbAk",
     "subjectId": "business-management",
     "level": "SHS 1",
     "term": 2,
@@ -953,6 +973,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-bum-topic-11",
+    "youtubeUrl": "https://www.youtube.com/watch?v=mvLJuQaLKkg",
+    "youtubeId": "mvLJuQaLKkg",
     "subjectId": "business-management",
     "level": "SHS 1",
     "term": 2,
@@ -1053,6 +1075,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-bum-topic-12",
+    "youtubeUrl": "https://www.youtube.com/watch?v=renlXcpK9sk",
+    "youtubeId": "renlXcpK9sk",
     "subjectId": "business-management",
     "level": "SHS 1",
     "term": 2,
@@ -1147,6 +1171,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-bum-topic-13",
+    "youtubeUrl": "https://www.youtube.com/watch?v=g_gEOf0UePw",
+    "youtubeId": "g_gEOf0UePw",
     "subjectId": "business-management",
     "level": "SHS 1",
     "term": 3,
@@ -1244,6 +1270,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-bum-topic-14",
+    "youtubeUrl": "https://www.youtube.com/watch?v=OnIEJJl_wfU",
+    "youtubeId": "OnIEJJl_wfU",
     "subjectId": "business-management",
     "level": "SHS 1",
     "term": 3,
@@ -1338,6 +1366,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-bum-topic-15",
+    "youtubeUrl": "https://www.youtube.com/watch?v=2SFC849tAXo",
+    "youtubeId": "2SFC849tAXo",
     "subjectId": "business-management",
     "level": "SHS 1",
     "term": 3,
@@ -1435,6 +1465,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-bum-topic-16",
+    "youtubeUrl": "https://www.youtube.com/watch?v=kH65jJALRAM",
+    "youtubeId": "kH65jJALRAM",
     "subjectId": "business-management",
     "level": "SHS 1",
     "term": 3,
@@ -1525,6 +1557,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-bum-topic-17",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5wOheuSQPTk",
+    "youtubeId": "5wOheuSQPTk",
     "subjectId": "business-management",
     "level": "SHS 1",
     "term": 3,
@@ -1620,6 +1654,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-cst-topic-01",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Mn5kXiqoTgU",
+    "youtubeId": "Mn5kXiqoTgU",
     "subjectId": "costing",
     "level": "SHS 1",
     "term": 1,
@@ -1714,6 +1750,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-cst-topic-02",
+    "youtubeUrl": "https://www.youtube.com/watch?v=T8UjkWkXEHA",
+    "youtubeId": "T8UjkWkXEHA",
     "subjectId": "costing",
     "level": "SHS 1",
     "term": 1,
@@ -1812,6 +1850,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-cst-topic-03",
+    "youtubeUrl": "https://www.youtube.com/watch?v=x2RGYIYNLls",
+    "youtubeId": "x2RGYIYNLls",
     "subjectId": "costing",
     "level": "SHS 1",
     "term": 1,
@@ -1909,6 +1949,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-cst-topic-04",
+    "youtubeUrl": "https://www.youtube.com/watch?v=9vvrVi8U9Kw",
+    "youtubeId": "9vvrVi8U9Kw",
     "subjectId": "costing",
     "level": "SHS 1",
     "term": 1,
@@ -2000,6 +2042,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-cst-topic-05",
+    "youtubeUrl": "https://www.youtube.com/watch?v=nK-AQYJ5Q4Q",
+    "youtubeId": "nK-AQYJ5Q4Q",
     "subjectId": "costing",
     "level": "SHS 1",
     "term": 1,
@@ -2096,6 +2140,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-cst-topic-06",
+    "youtubeUrl": "https://www.youtube.com/watch?v=YGTR40SuQh8",
+    "youtubeId": "YGTR40SuQh8",
     "subjectId": "costing",
     "level": "SHS 1",
     "term": 2,
@@ -2190,6 +2236,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-cst-topic-07",
+    "youtubeUrl": "https://www.youtube.com/watch?v=xoSxyXzXLKQ",
+    "youtubeId": "xoSxyXzXLKQ",
     "subjectId": "costing",
     "level": "SHS 1",
     "term": 2,
@@ -2284,6 +2332,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-cst-topic-08",
+    "youtubeUrl": "https://www.youtube.com/watch?v=koN5x_tYa0M",
+    "youtubeId": "koN5x_tYa0M",
     "subjectId": "costing",
     "level": "SHS 1",
     "term": 2,
@@ -2381,6 +2431,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-cst-topic-09",
+    "youtubeUrl": "https://www.youtube.com/watch?v=qk4n30MaIDU",
+    "youtubeId": "qk4n30MaIDU",
     "subjectId": "costing",
     "level": "SHS 1",
     "term": 2,
@@ -2480,6 +2532,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-cst-topic-10",
+    "youtubeUrl": "https://www.youtube.com/watch?v=FnuDtblh6yQ",
+    "youtubeId": "FnuDtblh6yQ",
     "subjectId": "costing",
     "level": "SHS 1",
     "term": 2,
@@ -2574,6 +2628,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-cst-topic-11",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Gwo2fq29OUY",
+    "youtubeId": "Gwo2fq29OUY",
     "subjectId": "costing",
     "level": "SHS 1",
     "term": 3,
@@ -2670,6 +2726,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-cst-topic-12",
+    "youtubeUrl": "https://www.youtube.com/watch?v=rYBsiy0ARBQ",
+    "youtubeId": "rYBsiy0ARBQ",
     "subjectId": "costing",
     "level": "SHS 1",
     "term": 3,
@@ -2765,6 +2823,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-cst-topic-13",
+    "youtubeUrl": "https://www.youtube.com/watch?v=4GcKM5uqnEw",
+    "youtubeId": "4GcKM5uqnEw",
     "subjectId": "costing",
     "level": "SHS 1",
     "term": 3,
@@ -2860,6 +2920,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-cst-topic-14",
+    "youtubeUrl": "https://www.youtube.com/watch?v=tdFRcj97NfI",
+    "youtubeId": "tdFRcj97NfI",
     "subjectId": "costing",
     "level": "SHS 1",
     "term": 3,
@@ -2956,6 +3018,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-cst-topic-15",
+    "youtubeUrl": "https://www.youtube.com/watch?v=WWw1VopaaE8",
+    "youtubeId": "WWw1VopaaE8",
     "subjectId": "costing",
     "level": "SHS 1",
     "term": 3,
@@ -3051,6 +3115,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fac-topic-01",
+    "youtubeUrl": "https://www.youtube.com/watch?v=zvJG7CewkMM",
+    "youtubeId": "zvJG7CewkMM",
     "subjectId": "financial-accounting",
     "level": "SHS 1",
     "term": 1,
@@ -3151,6 +3217,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fac-topic-02",
+    "youtubeUrl": "https://www.youtube.com/watch?v=lwEolJH7rDI",
+    "youtubeId": "lwEolJH7rDI",
     "subjectId": "financial-accounting",
     "level": "SHS 1",
     "term": 1,
@@ -3250,6 +3318,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fac-topic-03",
+    "youtubeUrl": "https://www.youtube.com/watch?v=kyrOLeqtu6s",
+    "youtubeId": "kyrOLeqtu6s",
     "subjectId": "financial-accounting",
     "level": "SHS 1",
     "term": 1,
@@ -3345,6 +3415,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fac-topic-04",
+    "youtubeUrl": "https://www.youtube.com/watch?v=91dQlwdwf44",
+    "youtubeId": "91dQlwdwf44",
     "subjectId": "financial-accounting",
     "level": "SHS 1",
     "term": 1,
@@ -3435,6 +3507,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fac-topic-05",
+    "youtubeUrl": "https://www.youtube.com/watch?v=lmQ7D32Btz0",
+    "youtubeId": "lmQ7D32Btz0",
     "subjectId": "financial-accounting",
     "level": "SHS 1",
     "term": 1,
@@ -3533,6 +3607,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fac-topic-06",
+    "youtubeUrl": "https://www.youtube.com/watch?v=QzqxyM0l-Do",
+    "youtubeId": "QzqxyM0l-Do",
     "subjectId": "financial-accounting",
     "level": "SHS 1",
     "term": 1,
@@ -3623,6 +3699,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fac-topic-07",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7dUBuw3CmB4",
+    "youtubeId": "7dUBuw3CmB4",
     "subjectId": "financial-accounting",
     "level": "SHS 1",
     "term": 2,
@@ -3721,6 +3799,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fac-topic-08",
+    "youtubeUrl": "https://www.youtube.com/watch?v=lhxzgYw2DJg",
+    "youtubeId": "lhxzgYw2DJg",
     "subjectId": "financial-accounting",
     "level": "SHS 1",
     "term": 2,
@@ -3817,6 +3897,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fac-topic-09",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Lcig9kbGPoY",
+    "youtubeId": "Lcig9kbGPoY",
     "subjectId": "financial-accounting",
     "level": "SHS 1",
     "term": 2,
@@ -3915,6 +3997,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fac-topic-10",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ezyce6aVz2k",
+    "youtubeId": "ezyce6aVz2k",
     "subjectId": "financial-accounting",
     "level": "SHS 1",
     "term": 2,
@@ -4009,6 +4093,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fac-topic-11",
+    "youtubeUrl": "https://www.youtube.com/watch?v=UV5QDV4HYIM",
+    "youtubeId": "UV5QDV4HYIM",
     "subjectId": "financial-accounting",
     "level": "SHS 1",
     "term": 2,
@@ -4102,6 +4188,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fac-topic-12",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ATCqrvyE3uc",
+    "youtubeId": "ATCqrvyE3uc",
     "subjectId": "financial-accounting",
     "level": "SHS 1",
     "term": 2,
@@ -4202,6 +4290,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fac-topic-13",
+    "youtubeUrl": "https://www.youtube.com/watch?v=mr1_jRtPcYQ",
+    "youtubeId": "mr1_jRtPcYQ",
     "subjectId": "financial-accounting",
     "level": "SHS 1",
     "term": 3,
@@ -4298,6 +4388,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fac-topic-14",
+    "youtubeUrl": "https://www.youtube.com/watch?v=c8GMzUbxMqk",
+    "youtubeId": "c8GMzUbxMqk",
     "subjectId": "financial-accounting",
     "level": "SHS 1",
     "term": 3,
@@ -4393,6 +4485,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fac-topic-15",
+    "youtubeUrl": "https://www.youtube.com/watch?v=rIWeycaj7oQ",
+    "youtubeId": "rIWeycaj7oQ",
     "subjectId": "financial-accounting",
     "level": "SHS 1",
     "term": 3,
@@ -4491,6 +4585,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fac-topic-16",
+    "youtubeUrl": "https://www.youtube.com/watch?v=B9xPqYZDkSE",
+    "youtubeId": "B9xPqYZDkSE",
     "subjectId": "financial-accounting",
     "level": "SHS 1",
     "term": 3,
@@ -4589,6 +4685,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fac-topic-17",
+    "youtubeUrl": "https://www.youtube.com/watch?v=YA-RAVPOZeg",
+    "youtubeId": "YA-RAVPOZeg",
     "subjectId": "financial-accounting",
     "level": "SHS 1",
     "term": 3,
@@ -4682,6 +4780,8 @@ export const SHS_BUSINESS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-fac-topic-18",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3NeVwnqaebk",
+    "youtubeId": "3NeVwnqaebk",
     "subjectId": "financial-accounting",
     "level": "SHS 1",
     "term": 3,

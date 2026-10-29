@@ -15,8 +15,8 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Examine material and non-material cultural elements, cultural change, assimilation, acculturation, and elements forging Ghanaian national unity.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0hYV-8Xj56k",
-    "youtubeId": "0hYV-8Xj56k",
+    "youtubeUrl": "https://www.youtube.com/watch?v=U3aOD34-1jw",
+    "youtubeId": "U3aOD34-1jw",
     "keyNotes": "• Definition of Culture: The total way of life of a group of people, comprising language, beliefs, values, customs, dress, food, art, music, technology, and social institutions.\n• Components of Culture:\n  - Material Culture: Physical, tangible objects created and used by people (e.g., kente cloth, fufu mortar and pestle, talking drum/atumpan, clay pots, traditional stools).\n  - Non-Material Culture: Intangible ideas, norms, philosophies, folklore, taboos, moral values, religious beliefs, and language.\n• Dynamics of Cultural Change:\n  - Invention & Discovery: Internal innovation of tools, farming methods, or practices.\n  - Cultural Diffusion: The spread of cultural traits from one society to another through trade, education, and media.\n  - Acculturation: Cultural modification resulting from sustained contact between different cultures without complete loss of identity.\n  - Assimilation: When an individual or group completely adopts another culture and loses their original heritage.\n• National Identity & Integration:\n  - Common national symbols: The National Flag, National Anthem, National Pledge, Coat of Arms.\n  - Inter-ethnic marriages, national sports (Black Stars), centralized senior high schools, and national festivals (PANAFEST, National Festival of Arts and Culture - NAFAC).\n  - Importance: Fosters social cohesion, political stability, eliminates ethnic chauvinism, and promotes collaborative socio-economic growth.",
     "examples": [
       {
@@ -56,8 +56,8 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Analyze the structures, roles, and functions of nuclear and extended families, patrilineal vs. matrilineal inheritance, and agents of socialization.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=3-1j5mOQ5jU",
-    "youtubeId": "3-1j5mOQ5jU",
+    "youtubeUrl": "https://www.youtube.com/watch?v=tp1sKp_URWI",
+    "youtubeId": "tp1sKp_URWI",
     "keyNotes": "• Types of Family Structures in Ghana:\n  - Nuclear Family: Father, mother, and their dependent biological or adopted children.\n  - Extended Family: Includes nuclear family plus grandparents, uncles, aunts, cousins, nephews, and nieces spanning multiple generations.\n• Lineage and Kinship Systems:\n  - Matrilineal Descent: Tracing ancestry and inheritance through the mother's bloodline (e.g., Akans). A man's customary heirs are his maternal nephews (sister's children).\n  - Patrilineal Descent: Tracing ancestry and property inheritance through the father's bloodline (e.g., Ewes, Gas, Dagbombas, Frafra). Property passes from father to biological children.\n  - Intestate Succession Act (PNDC Law 111): Enacted in 1985 to protect surviving spouses and children from being disinherited when someone dies without leaving a valid will.\n• Socialization:\n  - The lifelong process through which individuals acquire societal norms, values, skills, and behavior patterns.\n  - Primary Socialization: Occurs within the family during early childhood.\n  - Secondary Socialization: Facilitated by schools, peer groups, religious institutions, mass media, and the workplace.\n• Functions of the Family: Procreation, emotional security, economic sustenance, moral guidance, social placement, and primary education.",
     "examples": [
       {
@@ -96,8 +96,8 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Understand map reading, grid lines, latitudes, longitudes, calculating local time differences, and interpreting relief features of Ghana.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=7hBqN7Q9Uu0",
-    "youtubeId": "7hBqN7Q9Uu0",
+    "youtubeUrl": "https://www.youtube.com/watch?v=lgFskjxLtlQ",
+    "youtubeId": "lgFskjxLtlQ",
     "keyNotes": "• Grid System on Earth:\n  - Latitudes (Parallels): Angular distance measured north or south of the Equator (0°). Key lines: Tropic of Cancer (23.5° N), Tropic of Capricorn (23.5° S), Arctic Circle (66.5° N), Antarctic Circle (66.5° S). Ghana lies between 4° 44' N and 11° 11' N.\n  - Longitudes (Meridians): Angular distance measured east or west of the Greenwich Meridian (0° Longitude). The Prime Meridian passes through Tema, Ghana. Ghana lies between 1° 12' E and 3° 15' W.\n• Time Calculations Using Longitudes:\n  - Earth rotates 360° in 24 hours -> 15° = 1 hour -> 1° = 4 minutes.\n  - Places East of the Prime Meridian are ahead in time (GMT +); places West are behind (GMT -).\n• Relief and Drainage Features in Ghana:\n  - Lowlands: Coastal Plains (Accra Plains, Akan Lowlands), Volta Basin.\n  - Highlands and Escarpments: Akwapim-Togo Ranges (Mount Afadjato - Ghana's highest peak at 885m), Kwahu Plateau, Gambaga Scarp.\n  - Major River Systems: River Volta (Black Volta, White Volta, Oti River), Pra, Ankobra, Tano, Densu, Birim.\n  - Major Lake: Lake Bosomtwe (crater lake in Ashanti Region), Lake Volta (man-made reservoir formed by Akosombo Dam).",
     "examples": [
       {
@@ -135,8 +135,8 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Differentiate weather from climate, analyze climatic elements and weather instruments, air masses affecting Ghana, and ecological vegetation zones.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=3-1j5mOQ5j8",
-    "youtubeId": "3-1j5mOQ5j8",
+    "youtubeUrl": "https://www.youtube.com/watch?v=j8d3MIhLqeQ",
+    "youtubeId": "j8d3MIhLqeQ",
     "keyNotes": "• Weather vs. Climate:\n  - Weather: Day-to-day atmospheric conditions of a specific place over a short period (temperature, rainfall, humidity, wind, pressure).\n  - Climate: Average atmospheric conditions of a large geographical area recorded over a prolonged period (typically 30–35 years).\n• Weather Instruments:\n  - Thermometer (Stevenson screen): Temperature (°C).\n  - Rain Gauge: Rainfall depth (mm).\n  - Barometer: Atmospheric pressure (hPa or mmHg).\n  - Hygrometer: Relative humidity (%).\n  - Anemometer & Wind Vane: Wind speed (km/h) and wind direction.\n• Prevailing Airmasses Dominating Ghana:\n  - South-West Monsoon Winds: Blow from the Atlantic Ocean, moisture-laden, bringing wet rainy seasons.\n  - North-East Trade Winds (Harmattan): Blow from the Sahara Desert, dry, dusty, cold nights, bringing dry season (November - February).\n• Major Vegetation Zones in Ghana:\n  - Tropical Rain Forest / Moist Semi-Deciduous Forest: Southwestern Ghana; tall hardwood trees (mahogany, odum, wawa), dense canopy, buttress roots, epiphytes.\n  - Coastal Savanna: Southeast coastal strip (Accra to Cape St. Paul); grassland, shrubs, baobab trees.\n  - Guinea Savanna: Covers over 60% of northern and central Ghana; drought-resistant deciduous trees (shea butter, dawadawa, baobab, neem) and tall grasses.\n  - Sudan Savanna: Extreme northeastern border; short grasses, sparse thorny bushes.\n  - Mangrove Swamp: Coastal estuaries and lagoons; stilt-rooted salt-tolerant mangrove trees.",
     "examples": [
       {
@@ -173,8 +173,8 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Explore legal avenues of acquiring Ghanaian citizenship, fundamental human rights in the 1992 Constitution, and civil duties of patriotic citizens.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=1-2-3-4-5-6-7",
-    "youtubeId": "1-2-3-4-5-6-7",
+    "youtubeUrl": "https://www.youtube.com/watch?v=JZe9AoeoawM",
+    "youtubeId": "JZe9AoeoawM",
     "keyNotes": "• Citizenship in Ghana (1992 Constitution, Chapter 3):\n  - Definition: Legal status of being an acknowledged member of a sovereign nation with full constitutional rights and reciprocal responsibilities.\n  - Ways of Becoming a Ghanaian Citizen:\n    1. By Birth: Born in or outside Ghana to parents/grandparents who are Ghanaian citizens.\n    2. By Adoption: Child under 16 adopted by a Ghanaian citizen.\n    3. By Registration: Foreign national married to a Ghanaian citizen who applies according to law.\n    4. By Naturalization: Foreign national residing lawfully in Ghana for prescribed years who meets good character, language, and residency criteria.\n• Fundamental Human Rights (Chapter 5, 1992 Constitution):\n  - Right to life, personal liberty, and human dignity.\n  - Freedom from torture, cruel or degrading treatment, and slavery.\n  - Freedom of speech, expression, thought, conscience, and religious worship.\n  - Freedom of peaceful assembly and association.\n  - Right to property, privacy, and fair trial before an independent judiciary.\n• Civic Responsibilities and Duties (Article 41):\n  - Defend the Constitution and the sovereignty of Ghana.\n  - Pay lawful taxes, levies, and rates promptly.\n  - Obey laws and respect the rights and freedoms of fellow citizens.\n  - Protect and preserve public property and combat waste and corruption.\n  - Participate actively in democratic governance (voting in public elections and referenda).\n  - Protect and maintain a healthy, sustainable environment.",
     "examples": [
       {
@@ -212,8 +212,8 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Explore the institution of chieftaincy, the hierarchy of traditional rulers, functions of traditional councils, the National House of Chiefs, and conflict resolution.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=3-1j5mOQ5j9",
-    "youtubeId": "3-1j5mOQ5j9",
+    "youtubeUrl": "https://www.youtube.com/watch?v=HSW3Grby9ak",
+    "youtubeId": "HSW3Grby9ak",
     "keyNotes": "• Chieftaincy Institution in Ghana:\n  - Guaranteed by Article 270 of the 1992 Constitution: Parliament has no power to enact any law that confers or withdraws recognition of a chief or abolishes the chieftaincy institution.\n  - Definition of a Chief: A person who, hailing from the appropriate royal family and lineage, has been validly nominated, elected or selected, enstooled or enkenned in accordance with the relevant customary law and usage.\n• Hierarchy in Traditional Administration:\n  - Paramount Chief (Omanhene / Togbe / Naa / Nene): Head of a paramountcy/traditional state.\n  - Divisional Chief (Ohene): Head of a division or traditional province.\n  - Sub-Chief (Adikro / Village Head): In charge of villages or smaller communities.\n  - Lineage/Clan Heads (Abusuapanin): Head of extended family lineage.\n  - Queen Mothers (Ohemaa / Mamaga): Play pivotal roles in selecting, vetting, and counseling chiefs, and championing women's and children's welfare.\n• Traditional Councils and Houses of Chiefs:\n  - Traditional Council: Comprises paramount and divisional chiefs of a traditional area.\n  - Regional House of Chiefs: Resolves customary disputes and chieftaincy petitions in each region.\n  - National House of Chiefs: Supreme customary body; undertakes customary law codification, advises government on traditional matters, and handles chieftaincy appellate cases.\n• Functions of Traditional Rulers:\n  - Custodians of stool/skin lands, cultural artifacts, ancestral traditions, and rituals.\n  - Maintain peace, settle domestic disputes, and adjudicate land disputes.\n  - Mobilize communal labor and spearhead local development (schools, water projects, community centers).",
     "examples": [
       {
@@ -250,8 +250,8 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Analyze the principles of constitutional democracy, separation of powers, checks and balances, and the three branches of government in Ghana.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=3-1j5mOQ5j7",
-    "youtubeId": "3-1j5mOQ5j7",
+    "youtubeUrl": "https://www.youtube.com/watch?v=XuDLkiUNocI",
+    "youtubeId": "XuDLkiUNocI",
     "keyNotes": "• The 1992 Constitution of the Fourth Republic:\n  - Supreme law of Ghana; any other law found inconsistent with it is null and void to the extent of the inconsistency.\n  - Promulgated on January 7, 1993, ushering in the Fourth Republic.\n• Principles of Democratic Governance:\n  - Popular Sovereignty: Power resides in the people of Ghana.\n  - Rule of Law: All citizens and institutions are equal before the law; no one is above the law.\n  - Fundamental Human Rights and Inherent Freedoms.\n  - Periodic, free, fair, and transparent democratic elections managed by the Electoral Commission (EC).\n• The Three Organs of Government:\n  1. The Executive:\n     - Headed by the President (Head of State, Head of Government, Commander-in-Chief of the Ghana Armed Forces).\n     - Comprises Vice President, Cabinet, Council of State, Ministers of State, and Civil Service.\n     - Function: Formulate national policies, implement laws passed by Parliament, and maintain internal order and defense.\n  2. The Legislature (Parliament):\n     - Unicameral Parliament headed by the Speaker of Parliament.\n     - 275 Members of Parliament (MPs) elected every 4 years.\n     - Function: Enact legislation, vet ministerial nominees, approve national budgets, and scrutinize government policies.\n  3. The Judiciary:\n     - Headed by the Chief Justice.\n     - Comprises Superior Courts of Judicature (Supreme Court, Court of Appeal, High Court, Regional Tribunal) and Lower Courts (Circuit, District Courts).\n     - Function: Interpret the Constitution, adjudicate civil and criminal disputes, and safeguard fundamental human rights.\n• Separation of Powers & Checks and Balances:\n  - Doctrine proposed by Baron de Montesquieu to prevent tyranny and abuse of power.\n  - Checks: Executive appoints judges with parliamentary vetting; Parliament passes laws but President assents; Judiciary can declare laws unconstitutional (Judicial Review).",
     "examples": [
       {
@@ -288,8 +288,8 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Understand the structure and objectives of decentralization, District Assemblies (MMDAs), sources of revenue, and roles of assembly members.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=3-1j5mOQ5j6",
-    "youtubeId": "3-1j5mOQ5j6",
+    "youtubeUrl": "https://www.youtube.com/watch?v=IDSYYrkP48E",
+    "youtubeId": "IDSYYrkP48E",
     "keyNotes": "• Concept of Decentralization:\n  - The devolution of administrative, political, and fiscal authority from the central government in Accra to local grassroots assemblies.\n  - Purpose: Accelerate grassroots community development, promote citizen participation in decision-making, and reduce bureaucratic red tape.\n• Classification of Assemblies (MMDAs):\n  1. Metropolitan Assembly: Population of 250,000 and above (e.g., Accra, Kumasi, Sekondi-Takoradi, Tamale).\n  2. Municipal Assembly: Population between 95,000 and 249,999 (e.g., Ho, Sunyani, Koforidua).\n  3. District Assembly: Minimum population of 75,000 (e.g., Ada East, Bole, Bongo).\n• Structure and Membership of MMDAs:\n  - Metropolitan/Municipal/District Chief Executive (MCE / DCE): Appointed by the President with approval of at least two-thirds of assembly members.\n  - Presiding Member (PM): Elected by assembly members to preside over assembly meetings.\n  - 70% of members elected directly by universal adult suffrage from electoral areas.\n  - 30% of members appointed by the President in consultation with traditional authorities and interest groups.\n  - Member(s) of Parliament from the constituency (non-voting members).\n• Sub-District Structures: Urban/Town/Zonal/Area Councils and Unit Committees.\n• Sources of Revenue for MMDAs:\n  - Internal Generated Funds (IGF): Property rates, market tolls, building permits, business licenses, lorry park fees.\n  - Central Government Transfers: District Assemblies Common Fund (DACF - minimum 5% of total national revenue allocated by Parliament).\n  - Development partner grants and loans.",
     "examples": [
       {
@@ -326,8 +326,8 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Examine British colonization of the Gold Coast, the Bond of 1844, Sagrenti War, Yaa Asantewaa War, the 1948 riots, UGCC, CPP, and achieving independence in 1957.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=3-1j5mOQ5j5",
-    "youtubeId": "3-1j5mOQ5j5",
+    "youtubeUrl": "https://www.youtube.com/watch?v=08reE8PqzSc",
+    "youtubeId": "08reE8PqzSc",
     "keyNotes": "• Evolution of British Rule in the Gold Coast:\n  - Bond of 1844: Signed on March 6, 1844, between British Lieutenant Governor H.W. Hill and Fante chiefs; chiefs acknowledged British jurisdiction over criminal justice, initiating formal colonial influence.\n  - Resistance Wars: Anglo-Asante Wars (including Sagrenti War 1874); Yaa Asantewaa War of 1900 to defend the Golden Stool (Sika Dwa Kofi) against Governor Frederick Hodgson.\n  - Annexation: In 1901, the British declared Ashanti a Crown Colony and the Northern Territories a British Protectorate.\n• The Rise of Nationalist Movements:\n  - Early Protest Groups: Aborigines' Rights Protection Society (ARPS, 1897) formed by John Mensah Sarbah and chiefs to oppose the Crown Lands Bill of 1897.\n  - United Gold Coast Convention (UGCC): Formed in August 1947 at Saltpond by George Grant, J.B. Danquah, Akufo-Addo, Obetsebi-Lamptey, William Ofori-Atta. Slogan: 'Self-government within the shortest possible time'. Invited Dr. Kwame Nkrumah as General Secretary.\n• Turning Point: The 1948 Christiansborg Crossroads Shooting & Riots:\n  - February 28, 1948: Ex-servicemen marching peacefully to present a petition to Governor Gerald Creasy were shot at by Police Superintendent Imray (killing Sgt. Adjetey, Cpl. Attipoe, Pte. Odartey Lamptey).\n  - Triggered nationwide riots and looting; colonial authorities arrested the 'Big Six'.\n  - Watson Commission set up to investigate root causes; recommended a new constitution drawn up by Ghanaians (Coussey Committee).\n• Formation of the Convention People's Party (CPP):\n  - Formed on June 12, 1949, by Dr. Kwame Nkrumah after breaking away from UGCC. Slogan: 'Self-government NOW'.\n  - 'Positive Action' launched in January 1950 (strikes, boycotts, non-violent civil disobedience).\n• March to Independence:\n  - 1951 Elections: CPP won overwhelmingly while Nkrumah was in prison; released to become Leader of Government Business (later Prime Minister).\n  - Independence achieved on March 6, 1957; Ghana became the first sub-Saharan African country to gain independence from colonial rule.",
     "examples": [
       {
@@ -365,8 +365,8 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Analyze population census, birth rates, death rates, dependency ratio, rural-urban migration, and human resource training for Ghana's economic development.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=3-1j5mOQ5j4",
-    "youtubeId": "3-1j5mOQ5j4",
+    "youtubeUrl": "https://www.youtube.com/watch?v=jKfojKK-8Zk",
+    "youtubeId": "jKfojKK-8Zk",
     "keyNotes": "• Population Concepts:\n  - Population: Total number of people living within a defined geographic boundary at a specific point in time.\n  - Population Census: Complete official counting and enumeration of persons in a country at regular intervals (usually every 10 years). Ghana's latest census was 2021 by the Ghana Statistical Service (GSS), recording 30.8 million.\n  - Crude Birth Rate (CBR): Number of live births per 1,000 population in a year.\n  - Crude Death Rate (CDR): Number of deaths per 1,000 population in a year.\n  - Natural Increase: Difference between Birth Rate and Death Rate (CBR - CDR).\n• Population Structure and Dependency Ratio:\n  - Age Structure: Proportion of population in age cohorts: Youth (0–14 years), Working age (15–64 years), Aged/Elderly (65+ years).\n  - High Dependency Burden: Developing countries like Ghana have a broad-based population pyramid with high child dependency, putting immense strain on education, health, and family finances.\n  - Dependency Ratio Formula: ((Population aged 0-14 + Population aged 65+) / Population aged 15-64) * 100.\n• Rural-Urban Migration:\n  - Push Factors: Rural poverty, lack of amenities (potable water, electricity, hospitals), crop failure, lack of secondary schools.\n  - Pull Factors: Perceived employment in cities, tertiary institutions, modern entertainment, improved social infrastructure.\n  - Consequences: Urban slums, pressure on social utilities, traffic congestion, unemployment, abandonment of rural agricultural lands.\n• Human Resource Development:\n  - Training, formal education, Technical and Vocational Education and Training (TVET), healthcare provision, and digital skills necessary to convert raw population into productive human capital.",
     "examples": [
       {
@@ -405,8 +405,8 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Examine Ghana's mineral, water, forest, and energy resources, environmental degradation caused by illegal mining (galamsey), and sustainable management.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=3-1j5mOQ5j3",
-    "youtubeId": "3-1j5mOQ5j3",
+    "youtubeUrl": "https://www.youtube.com/watch?v=iKc_luE56MA",
+    "youtubeId": "iKc_luE56MA",
     "keyNotes": "• Natural Resources Classification:\n  - Renewable Resources: Can regenerate naturally over time if sustainably harvested (forests, water bodies, solar energy, wind, fish stocks, fertile soil).\n  - Non-Renewable Resources: Exist in finite amounts and cannot regenerate once exhausted (gold, diamonds, bauxite, manganese, crude oil, natural gas).\n• Major Natural Resources in Ghana:\n  - Minerals: Gold (Obuasi, Tarkwa, Ahafo), Diamonds (Akwatia), Bauxite (Awaso, Nyinahin), Manganese (Nsuta), Petroleum / Crude Oil (Jubilee Field, TEN, Sankofa in Western offshore).\n  - Forest Timber: Mahogany, Odum, Sapele, Wawa, Teak from southwestern forest reserves.\n  - Water & Hydroelectric Energy: Volta River (Akosombo Dam, Kpong Dam, Bui Dam on the Black Volta).\n  - Cash Crops: Cocoa, oil palm, cashew, rubber, coffee, shea nuts.\n• Environmental Threats and 'Galamsey' (Illegal Small-Scale Mining):\n  - Water Pollution: Heavy metals (mercury, cyanide, lead) poisoning major rivers (Pra, Birim, Ankobra, Offin), severely raising water treatment costs for Ghana Water Company.\n  - Land Degradation: Destruction of cocoa farms, open uncovered pits causing fatalities, loss of arable agricultural soil.\n  - Deforestation: Loss of biodiversity, disruption of rainfall cycles, destruction of indigenous wildlife habitats.\n• Sustainable Conservation Strategies:\n  - Afforestation and re-afforestation programs (e.g., Green Ghana Day).\n  - Strict enforcement of environmental laws by EPA, Minerals Commission, and Forestry Commission.\n  - Community-based natural resource management and promoting eco-friendly alternative livelihoods.",
     "examples": [
       {
@@ -446,8 +446,8 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Explore the concepts of enterprise, entrepreneurship, budgeting, savings, banking services, prudent investment, and building financial resilience.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=3-1j5mOQ5j2",
-    "youtubeId": "3-1j5mOQ5j2",
+    "youtubeUrl": "https://www.youtube.com/watch?v=4j2emMn7UaI",
+    "youtubeId": "4j2emMn7UaI",
     "keyNotes": "• Enterprise and Entrepreneurship:\n  - Entrepreneur: A person who identifies an unmet market need, organizes resources, takes calculated risks, and launches an innovative enterprise.\n  - Qualities of a Successful Entrepreneur: Creativity, risk-taking, discipline, perseverance, integrity, leadership, financial prudence.\n  - Role of SMEs: Small and Medium-Scale Enterprises generate over 70% of employment and contribute significantly to Ghana's GDP.\n• Principles of Financial Literacy:\n  - Budgeting: An itemized financial plan tracking projected income against anticipated expenditures over a given time horizon.\n  - Needs vs. Wants: Prioritizing essential survival expenses (food, shelter, basic clothing, education, healthcare) over non-essential discretionary desires (luxury gadgets, impulse fashion, excessive parties).\n• Savings and Banking:\n  - Savings: The portion of current disposable income preserved for future consumption, emergencies, or capital investment.\n  - Forms of Saving: Commercial bank accounts (savings, current, fixed deposit), mobile money wallets (MoMo), credit unions, traditional Susu schemes.\n  - Benefits of Formal Banking: Capital safety, earned interest, access to loans, building a credible credit history, insurance protection.\n• Investment & Wealth Creation:\n  - Putting saved capital into productive assets that yield returns: Treasury bills (T-bills), government bonds, shares/stocks, mutual funds, real estate, starting a business.\n  - Danger of Ponzi/Pyramid Schemes: Unlicensed financial schemes promising unrealistically high returns that inevitably collapse, defrauding depositors.",
     "examples": [
       {
@@ -485,8 +485,8 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Examine tourism types, historical forts and castles, ecotourism destinations, economic benefits of the hospitality sector, and challenges facing tourism.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=3-1j5mOQ5j1",
-    "youtubeId": "3-1j5mOQ5j1",
+    "youtubeUrl": "https://www.youtube.com/watch?v=y64KICn82cc",
+    "youtubeId": "y64KICn82cc",
     "keyNotes": "• Concept of Tourism:\n  - The travel of people to places outside their usual domestic environment for leisure, business, cultural exploration, or educational purposes.\n  - Domestic Tourism: Citizens traveling within the territorial borders of Ghana.\n  - International Tourism: Foreign visitors entering Ghana for heritage, wildlife, conferences, or vacations.\n• Major Tourist Attractions in Ghana:\n  - Historical & Cultural Sites: Cape Coast Castle, Elmina Castle, Christiansborg (Osu) Castle, Fort Christiansborg, Manhyia Palace Museum, Larabanga Mosque (oldest mud-and-stick mosque).\n  - UNESCO World Heritage Sites: Forts and Castles of Ghana, Asante Traditional Buildings.\n  - Ecotourism & Nature Reserves: Kakum National Park (canopy walkway), Mole National Park (savanna wildlife/elephants), Wli Waterfalls (highest in West Africa), Boti Falls, Paga Crocodile Pond, Mount Afadjato, Shai Hills.\n  - Cultural Festivals: Homowo (Ga), Hogbetsotso (Anlo Ewe), Aboakyer (Winneba), Akwasidae (Asante), Kundum (Ahanta/Nzema), Damba (Dagbon), Bakatue (Elmina).\n• Socio-Economic Importance of Tourism:\n  - Foreign exchange earnings strengthening the Ghana Cedi.\n  - Employment generation (hotel staff, tour guides, artisans, transport operators, caterers).\n  - Revenue mobilization for government via taxes, airport passenger fees, and site admission fees.\n  - Fosters international cultural diplomacy and African diaspora heritage integration ('Year of Return' and 'Beyond the Return').\n• Challenges Facing Tourism in Ghana:\n  - Poor access roads leading to prominent tourist sites.\n  - Substandard sanitation and hygiene facilities at destinations.\n  - Expensive domestic hospitality accommodation and flight costs.\n  - Inadequate professional training for hospitality personnel.",
     "examples": [
       {
@@ -523,8 +523,8 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Analyze major social issues in Ghana: teenage pregnancy, substance abuse, juvenile delinquency, examination malpractice, and community remediation strategies.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=3-1j5mOQ5j0",
-    "youtubeId": "3-1j5mOQ5j0",
+    "youtubeUrl": "https://www.youtube.com/watch?v=FHijoZG-45E",
+    "youtubeId": "FHijoZG-45E",
     "keyNotes": "• Concept of a Social Problem:\n  - A condition or behavior that negatively impacts a large number of people in a community and is recognized by society as requiring collective corrective action.\n• Key Social Problems in Ghana:\n  1. Teenage Pregnancy:\n     - Causes: Poverty, lack of comprehensive sexuality education, peer pressure, parental neglect, sexual exploitation by older men ('sugar daddies').\n     - Effects: School dropout, maternal mortality risks, increased poverty cycle, child neglect.\n  2. Substance and Drug Abuse (Tramadol, Cannabis/Weed, Shisha, Alcohol):\n     - Causes: Youth unemployment, boredom, peer influence, mental stress, easy availability of illicit drugs.\n     - Effects: Organ damage (liver/kidney failure), psychosis/mental breakdown, violent crimes, loss of youthful productive potential.\n  3. Juvenile Delinquency & Streetism:\n     - Broken homes, domestic violence, parental abdication, leading minors to live on streets, engage in theft, pickpocketing, and cyber fraud ('sakawa').\n  4. Examination Malpractice:\n     - Causes: Inadequate preparation by candidates, fear of failure, commercial greed by rogue school operators and invigilators, pressure for high BECE placement.\n     - Effects: Cancellation of results by WAEC, devaluation of educational credentials, promoting dishonesty among future leaders.\n• Remedial Measures:\n  - Parental accountability and active supervision.\n  - Strengthening school guidance and counseling units.\n  - Strict enforcement of criminal laws by the Ghana Police Service, Narcotics Control Commission (NACOC), and WAEC.\n  - Creation of vocational and technical youth training programs to provide viable livelihoods.",
     "examples": [
       {
@@ -560,8 +560,8 @@ export const JHS2_SOCIAL_TOPICS: CurriculumTopic[] = [
     "description": "Understand the rationale for international cooperation, Ghana's historic contributions, and the objectives and organs of ECOWAS, the African Union, and the United Nations.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=3-1j5mOQ5jz",
-    "youtubeId": "3-1j5mOQ5jz",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7WEdn2Td1w8",
+    "youtubeId": "7WEdn2Td1w8",
     "keyNotes": "• Need for International Cooperation:\n  - No nation is entirely self-sufficient in resources, expertise, defense, or technology.\n  - Promotes global peace, trade expansion, climate change mitigation, humanitarian assistance, and disease containment.\n• Economic Community of West African States (ECOWAS):\n  - Established on May 28, 1975, through the Treaty of Lagos by 15 West African nations.\n  - Headquarters: Abuja, Nigeria.\n  - Key Objectives: Promote economic integration, free movement of goods, services, and persons across borders (ECOWAS Trade Liberalization Scheme - ETLS), monetary cooperation, and regional security (ECOMOG / Standby Force).\n• The African Union (AU):\n  - Transformed from the Organization of African Unity (OAU, founded May 25, 1963 in Addis Ababa with Dr. Kwame Nkrumah playing a pivotal founding role) to the AU in Durban, 2002.\n  - Headquarters: Addis Ababa, Ethiopia.\n  - Key Objectives: Achieve continental unity and solidarity, accelerate socio-economic integration (AfCFTA - African Continental Free Trade Area, headquartered in Accra, Ghana), defend sovereignty, and eradicate conflict.\n• The United Nations (UN):\n  - Formed on October 24, 1945, after World War II to preserve international peace and security.\n  - Headquarters: New York, USA.\n  - Principal Organs: General Assembly, Security Council (5 permanent members with veto powers), Economic and Social Council (ECOSOC), International Court of Justice (ICJ), Secretariat (headed by Secretary-General).\n  - Specialized Agencies: WHO, UNICEF, UNESCO, FAO, UNHCR, UNDP.\n  - Ghana's Contribution: Kofi Annan served as the 7th UN Secretary-General (1997–2006, Nobel Peace Laureate); Ghana Armed Forces rank among top global UN peacekeeping contributors (Lebanon, Congo, South Sudan, Rwanda).",
     "examples": [
       {

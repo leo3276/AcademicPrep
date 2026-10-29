@@ -15,8 +15,8 @@ export const JHS3_CAREER_TECH_TOPICS: CurriculumTopic[] = [
     "description": "Industrial safety regulations, identification of mechanical, chemical, electrical, and ergonomic hazards, PPE selection, fire classification (Classes A-D), and emergency First Aid procedures.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=safety-workshop-bece",
-    "youtubeId": "safety-workshop-bece",
+    "youtubeUrl": "https://www.youtube.com/watch?v=kcM9u4heDVk",
+    "youtubeId": "kcM9u4heDVk",
     "keyNotes": "• Workshop Safety Principles:\n  - Safety eliminates unsafe acts (carelessness, horseplay) and unsafe conditions (oil spills, exposed live wires, unguarded rotating parts).\n• Personal Protective Equipment (PPE):\n  - Eye protectors against metal chips; respirators against toxic wood dust/fumes; ear defenders against >85dB noise; steel-toe boots against falling heavy stock.\n• Fire Science & Extinguisher Classes:\n  - Fire Triangle: Fuel, Heat, and Oxygen. Removing any element stops combustion.\n  - Class A (ordinary combustibles: wood/paper) -> Water/Foam.\n  - Class B (flammable liquids: petrol/thinners) -> Foam, Dry Powder, CO2 (NEVER WATER).\n  - Class C (flammable gases); Class D (combustible metals); Electrical fires -> CO2 or Dry Powder.\n• Emergency First Aid Procedures:\n  - Thermal burns: Flood immediately with cool running water for 10-15 minutes; do not burst blisters or apply greasy ointments.\n  - Arterial bleeding: Apply direct digital pressure with a sterile pad, elevate limb above heart level, and bandage firmly.",
     "examples": [
       {
@@ -54,8 +54,8 @@ export const JHS3_CAREER_TECH_TOPICS: CurriculumTopic[] = [
     "description": "Classification into hardwoods and softwoods, trunk anatomy (pith, heartwood, sapwood, cambium, bark), conversion methods, moisture content calculations, and timber defects.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=timber-technology-ghana",
-    "youtubeId": "timber-technology-ghana",
+    "youtubeUrl": "https://www.youtube.com/watch?v=zfK7TLobsv0",
+    "youtubeId": "zfK7TLobsv0",
     "keyNotes": "• Botanical Classification:\n  - Hardwoods: Broad-leaved deciduous angiosperms (Odum, Mahogany, Sapele, Wawa, Teak); have open porous vessels.\n  - Softwoods: Needle-leaved evergreen gymnosperms (Pine, Fir, Cedar); simpler tracheid cellular structure.\n• Tree Trunk Cross-Section (Center Outwards):\n  - Pith (soft central core) -> Heartwood (dark, dense, decay-resistant dead wood) -> Sapwood (pale, living, conducts sap, prone to beetles) -> Cambium layer (active cell division ring) -> Inner bark (phloem) -> Outer protective bark.\n• Timber Conversion:\n  - Through-and-through (Plain) sawing: Cheap, fast, but boards are prone to cupping.\n  - Quarter sawing: Radial cuts across growth rings; producing stable, flat, wear-resistant boards with decorative ray figure.\n• Seasoning & Moisture Content:\n  - EMC in southern Ghana is 12% to 15% indoors.\n  - Moisture Content (%) = [(Wet Weight - Dry Weight) / Dry Weight] × 100%.\n  - Natural Air Seasoning (6-18 months) vs Artificial Kiln Seasoning (3-14 days; kills insect larvae).\n• Defects:\n  - Natural (Knots, Heart shake, Cup shake) vs Drying/Seasoning (Cupping across width, Bowing along face, Twisting).",
     "examples": [
       {
@@ -92,8 +92,8 @@ export const JHS3_CAREER_TECH_TOPICS: CurriculumTopic[] = [
     "description": "Ferrous metals and carbon content, non-ferrous metals, engineering alloys (brass, bronze, solder), and polymer classification (thermoplastics vs thermosetting plastics).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=metals-plastics-technology",
-    "youtubeId": "metals-plastics-technology",
+    "youtubeUrl": "https://www.youtube.com/watch?v=JZbw9R2zyAw",
+    "youtubeId": "JZbw9R2zyAw",
     "keyNotes": "• Ferrous Metals (Contain Iron, Magnetic, Prone to Rusting):\n  - Mild Steel (0.15%-0.30% C): Ductile, malleable, easily welded; used for car panels, bolts, desk frames.\n  - High Carbon Steel (0.7%-1.5% C): Extremely hard and wear-resistant; used for cutting tools, chisels, files.\n  - Cast Iron (2%-4% C): High compressive strength, excellent vibration damping; used for lathe beds, engine blocks.\n• Non-Ferrous Metals & Alloys (No Iron, Non-Magnetic, Corrosion-Resistant):\n  - Copper (cables, plumbing); Aluminum (cookware, overhead power cables, bauxite origin).\n  - Brass = Copper + Zinc (water taps, locks, screws).\n  - Bronze = Copper + Tin (marine ship propellers, statues).\n  - Soft Solder = Tin + Lead (electrical circuit soldering, low melting point ~188°C).\n• Plastics & Polymers:\n  - Thermoplastics: Linear polymer chains with weak secondary bonds; soften and melt repeatedly on heating; recyclable (PVC pipes, Acrylic, Polyethylene).\n  - Thermosetting Plastics: Permanently cross-linked molecular network; do not melt upon reheating (char instead); non-recyclable; excellent heat/electrical insulation (Bakelite plugs, Melamine countertops).",
     "examples": [
       {
@@ -129,8 +129,8 @@ export const JHS3_CAREER_TECH_TOPICS: CurriculumTopic[] = [
     "description": "Standard BS 8888 line types, dimensioning rules, first-angle and third-angle orthographic projections, projection symbols, and 3D pictorial drawing (isometric and oblique).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=technical-drawing-orthographic",
-    "youtubeId": "technical-drawing-orthographic",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5eoC-lDdFes",
+    "youtubeId": "5eoC-lDdFes",
     "keyNotes": "• Standard Line Conventions (BS 8888):\n  - Continuous thick (0.5-0.7 mm): Visible outlines and edges.\n  - Continuous thin (0.25-0.35 mm): Dimension, extension, hatching lines.\n  - Thin dashed line: Hidden outlines and edges.\n  - Chain thin line (long-and-short dash): Center lines, axes of symmetry.\n• Rules of Dimensioning:\n  - 1 mm clearance gap between object outline and extension line; closed, filled arrowheads (3:1 ratio); all units in millimeters (mm omitted from numerals).\n• Orthographic Projections:\n  - First-Angle: Plan is drawn BELOW Front Elevation; Left view on Right side.\n  - Third-Angle: Plan is drawn ABOVE Front Elevation; Left view on Left side.\n  - Projection symbol: Truncated cone (frustum) and concentric circles.\n• Pictorial Projections:\n  - Isometric: Three axes (one vertical, two at 30° to horizontal).\n  - Oblique: Front face true to size; receding axes at 45° (Cavalier = full scale; Cabinet = half scale 1:2).",
     "examples": [
       {
@@ -168,8 +168,8 @@ export const JHS3_CAREER_TECH_TOPICS: CurriculumTopic[] = [
     "description": "Precision measuring rules, try squares, sliding bevels, gauges (marking, mortise, cutting), metalworking layout tools (punches, scriber, surface plate), and micrometer reading.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=measuring-marking-tools",
-    "youtubeId": "measuring-marking-tools",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ys3p95gr0lc",
+    "youtubeId": "ys3p95gr0lc",
     "keyNotes": "• Testing Tools:\n  - Try Square: Tests 90° squareness and marks perpendicular lines.\n  - Sliding Bevel: Adjustable blade clamps at any angle for bevels/chamfers.\n  - Spirit Level: Curved vial with bubble indicates horizontal level and vertical plumb.\n• Woodworking Gauges:\n  - Marking Gauge: Single spur for scribing lines parallel to a face edge along grain.\n  - Mortise Gauge: Two spurs (one fixed, one adjustable) to scribe both mortise lines simultaneously.\n  - Cutting Gauge: Miniature knife blade slices cleanly across grain without tearing fibers.\n• Metalworking Layout Tools:\n  - Scriber: Hardened tool steel point (15°-20°) scratches fine lines on metal.\n  - Center Punch (90° point): Creates wide conical indentation to seat drill bits.\n  - Dot Punch (60° point): Small witness indentations along layout lines.\n• Precision Instruments:\n  - External Micrometer: Measures to 0.01 mm. Reading = Sleeve (mm) + Half-mm (if visible) + (Thimble division × 0.01 mm).\n  - Vernier Caliper: Measures internal, external, and depth to 0.02 mm.",
     "examples": [
       {
@@ -204,8 +204,8 @@ export const JHS3_CAREER_TECH_TOPICS: CurriculumTopic[] = [
     "description": "Saw tooth geometry and set, bench plane anatomy and tuning, chisel types, boring tools, cold chisels, files, and workshop abrasives.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=cutting-shaping-tools",
-    "youtubeId": "cutting-shaping-tools",
+    "youtubeUrl": "https://www.youtube.com/watch?v=yVSN8cjw6Ao",
+    "youtubeId": "yVSN8cjw6Ao",
     "keyNotes": "• Saws & Kerf Geometry:\n  - Saw Kerf: Width of cut slot. Saw teeth are set (bent alternately) to make kerf wider than the blade, preventing friction binding.\n  - Rip Saw (chisel-like teeth for ripping parallel to grain); Crosscut Saw (knife-like teeth for cutting across grain); Tenon Saw (brass back for joinery); Coping Saw (flexible blade in C-frame for curves).\n• Bench Planes:\n  - Jack Plane (truing rough timber); Trying Plane (longest sole 550-600 mm for straight edges); Smoothing Plane (final surface finish).\n  - Cap Iron (Chip Breaker): Screwed 0.5-1.0 mm behind cutting edge; curls and breaks shavings to prevent grain tear-out and damps chatter.\n  - Cutting iron: 25° grinding angle, 30° honing angle on oilstone.\n• Chisels:\n  - Firmer (general paring); Bevel-edge (reaches acute dovetail corners); Mortise (thick heavy blade for mortising with mallet); Cold Chisel (60° cutting angle for mild steel).\n• Files & Rasps:\n  - Cut: Single cut, Double cut, Rasp cut. Pinning is soft metal clogging teeth; cleared with a wire File Card.",
     "examples": [
       {
@@ -241,8 +241,8 @@ export const JHS3_CAREER_TECH_TOPICS: CurriculumTopic[] = [
     "description": "Woodworking framing and carcass joints, proportional rules, adhesives (PVA, contact cement, epoxy), and thermal metal joining (soft soldering vs brazing).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=wood-metal-joining",
-    "youtubeId": "wood-metal-joining",
+    "youtubeUrl": "https://www.youtube.com/watch?v=snjE9TF24dY",
+    "youtubeId": "snjE9TF24dY",
     "keyNotes": "• Woodworking Joints:\n  - Framing: Mortise and Tenon (tenon thickness = 1/3 timber thickness); Haunched Tenon (stub fills groove, stops twisting, protects stile relish); Halving; Bridle.\n  - Carcass/Box: Through Dovetail (wedge tails resist tensile pull in drawers); Lap Dovetail; Housing.\n  - Widening: Butt edge-to-edge, Tongue and Groove (T&G), Dowelled.\n• Modern Adhesives:\n  - PVA: Water-based white glue for interior timber joinery.\n  - Contact Adhesive: Applied to both sides, dried until tacky, bonds instantly without clamping (Formica laminates).\n  - Epoxy Resin: Two-part (resin + hardener), gap-filling, 100% waterproof for metals/wood/ceramics.\n• Thermal Metal Joining:\n  - Flux: Dissolves surface oxides, prevents re-oxidation, and promotes molten filler metal flow.\n  - Soft Soldering: Operates <450°C using Tin-Lead alloy (electronic circuits, copper plumbing).\n  - Brazing: Operates >450°C using Brass spelter rod (Copper-Zinc) and Borax flux; high structural strength.",
     "examples": [
       {
@@ -280,8 +280,8 @@ export const JHS3_CAREER_TECH_TOPICS: CurriculumTopic[] = [
     "description": "Classification of food commodities, causes of spoilage, microbial danger zone (5°C-63°C), traditional Ghanaian preservation (smoking, salting, drying, fermentation), and modern canning/pasteurization.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=food-preservation-ghana",
-    "youtubeId": "food-preservation-ghana",
+    "youtubeUrl": "https://www.youtube.com/watch?v=mhCgeaXOSK0",
+    "youtubeId": "mhCgeaXOSK0",
     "keyNotes": "• Food Commodity Perishability:\n  - Perishable (spoil in 1-2 days: fresh fish, meat, milk, tomatoes); Semi-perishable (1-3 weeks: yams, cassava, onions); Shelf-stable (months/years: dry maize, cowpeas, rice).\n• Spoilage Causes & Conditions:\n  - Endogenous enzymes (autolysis/browning); Microorganisms (bacteria, molds, yeasts); Lipid oxidation (rancidity).\n  - Microbial Danger Zone: 5°C to 63°C (exponential reproduction; optimum at 37°C).\n• Traditional Ghanaian Technologies:\n  - Sun Drying: Reduces water activity ($A_w < 0.65$), halting microbial enzyme function.\n  - Hot Smoking: Chorkor smoker deposits antimicrobial phenols/formaldehyde and dries fish.\n  - Dry Salting (Koobi): Hypertonic salt draws water out via Osmosis, causing bacterial plasmolysis.\n  - Fermentation (Kenkey, Gari): Lactic acid bacteria drop pH < 4.0, inhibiting pathogens.\n• Modern Technologies:\n  - Pasteurization: 72°C for 15 seconds (HTST) destroys pathogens; requires refrigeration.\n  - Canning (Sterilization): 121°C pressurized retort destroys Clostridium botulinum spores for ambient shelf stability.\n  - Freezing (-18°C): Suspends microbial multiplication without completely killing all bacteria.",
     "examples": [
       {
@@ -319,8 +319,8 @@ export const JHS3_CAREER_TECH_TOPICS: CurriculumTopic[] = [
     "description": "The six nutrients and deficiency diseases, Ghanaian 3-Star Diet and multi-mix planning, special diets (diabetics, hypertensives, adolescents), and hygienic indigenous cookery.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=ghanaian-cookery-meal-planning",
-    "youtubeId": "ghanaian-cookery-meal-planning",
+    "youtubeUrl": "https://www.youtube.com/watch?v=mvT5DTiLUpA",
+    "youtubeId": "mvT5DTiLUpA",
     "keyNotes": "• Six Essential Nutrients & Deficiencies:\n  - Carbohydrates (energy); Proteins (body-building; Kwashiorkor = protein deficiency with edema; Marasmus = total calorie starvation).\n  - Fats (concentrated energy, A/D/E/K carrier); Vitamins (Vit A = night blindness, Vit C = scurvy, Vit D = rickets).\n  - Minerals (Iron = nutritional anemia; Calcium = bones/teeth; Iodine = goiter); Water and Fiber (peristalsis).\n• Ghanaian 3-Star Diet Concept:\n  - Star 1: Energy staple (maize, yam, cassava, plantain).\n  - Star 2: Body-building protein (fish, beans, meat, eggs).\n  - Star 3: Protective food (kontomire leafy greens, fresh fruits).\n• Protein Complementarity:\n  - Cereals lack Lysine (have Methionine); Legumes lack Methionine (have Lysine). Combining them (Red-red: beans + gari/plantain) yields complete protein.\n• Special Diets:\n  - Diabetics: Unripe plantain ampesi (low glycemic index, slow glucose release), high fiber, zero refined sugars.\n  - Hypertensives: Strict reduction of dietary sodium (table salt, stock cubes, salty momoni); potassium-rich kontomire.\n  - Adolescents: Elevated protein, iron for blood volume/menstruation, calcium for bone growth.",
     "examples": [
       {
@@ -358,8 +358,8 @@ export const JHS3_CAREER_TECH_TOPICS: CurriculumTopic[] = [
     "description": "Sewing machine mechanisms, temporary vs permanent stitches, seam construction (plain, French, run-and-fell), and fullness control (darts, pleats, gathers).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=garment-making-stitches",
-    "youtubeId": "garment-making-stitches",
+    "youtubeUrl": "https://www.youtube.com/watch?v=n0c2TY5JKI4",
+    "youtubeId": "n0c2TY5JKI4",
     "keyNotes": "• Sewing Machine Mechanics:\n  - Feed dog advances fabric forward; presser foot holds cloth flat; tension discs regulate upper thread; shuttle hook forms lockstitch with bobbin.\n• Hand Stitches Classification:\n  - Temporary: Even basting (equal 6 mm stitches/spaces for fitting under strain); Uneven basting (quick tacking); Tailor's tacks (transferring pattern markings).\n  - Permanent Joining: Backstitch (strongest hand stitch, resembles machine stitching); Running stitch.\n  - Neatening: Overcasting (prevents raw edges from fraying); Blanket stitch; Buttonhole stitch.\n• Seam Construction:\n  - Plain Seam: Right sides together, stitched 15 mm from edge, pressed open, neatened.\n  - French Seam: Self-neatening enclosed seam worked in two steps (1st wrong sides together, trim to 3 mm; 2nd right sides together enclosing raw edges); ideal for sheer fabrics (chiffon, organza).\n  - Run and Fell (Machine Fell) Seam: Double-stitched, flat, exceptionally strong; used for denim jeans and school uniform shorts.\n• Fullness Control:\n  - Darts: Triangular folds stitched tapering to a point; shape flat 2D fabric over 3D body curves (bust, hips, waist).\n  - Pleats: Knife, box, and inverted pleats; Gathers: pulled loose stitches for soft fullness.",
     "examples": [
       {
@@ -396,8 +396,8 @@ export const JHS3_CAREER_TECH_TOPICS: CurriculumTopic[] = [
     "description": "Wood surface preparation, wood finishes (stains, sealers, polyurethane, French polish), metal corrosion prevention (red oxide, galvanizing, anodizing), and the 5S maintenance system.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=surface-finishing-maintenance",
-    "youtubeId": "surface-finishing-maintenance",
+    "youtubeUrl": "https://www.youtube.com/watch?v=h0RVEGKCtug",
+    "youtubeId": "h0RVEGKCtug",
     "keyNotes": "• Objectives of Finishing: 1. Aesthetic beautification; 2. Environmental protection against moisture, rot, and corrosion.\n• Wood Surface Preparation:\n  - Scrape dried glue; fill holes; sand strictly along the grain using progressive grits (80 -> 120 -> 240 grit). Sanding across grain severs fibers, causing ugly dark stain scratches.\n• Wood Finishes:\n  - Stains (enhance color without hiding grain); Sanding sealer (seals porous cells); Polyurethane varnish (tough, waterproof, scratch-resistant film for tables/doors); French polish (shellac in methylated spirit for antique mirror gloss).\n• Metal Corrosion Prevention:\n  - Rusting requires Oxygen (air) and Moisture (water) simultaneously.\n  - Barrier protection: Red oxide or zinc chromate primer followed by synthetic gloss enamel paint.\n  - Galvanizing: Hot-dip coating steel with Zinc. Zinc acts as a sacrificial anode, oxidizing preferentially to protect steel cathodically even when scratched.\n  - Anodizing: Electrolytically thickening aluminum oxide ($Al_2O_3$) protective film.\n• Workshop Maintenance & 5S:\n  - Sort (Seiri), Set in order (Seiton: shadow boards), Shine (Seiso), Standardize (Seiketsu), Sustain (Shitsuke).\n  - Wipe bare steel tools with light machine oil after use to prevent flash rusting.",
     "examples": [
       {
@@ -434,8 +434,8 @@ export const JHS3_CAREER_TECH_TOPICS: CurriculumTopic[] = [
     "description": "Entrepreneurial traits, production cost equations (prime cost, factory cost, selling price), operational cash budgeting, marketing mix (4 Ps), and CTVET career pathways.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=entrepreneurship-costing-tech",
-    "youtubeId": "entrepreneurship-costing-tech",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ELddtcZouP0",
+    "youtubeId": "ELddtcZouP0",
     "keyNotes": "• Entrepreneurial Mindset:\n  - Calculated risk-taking, innovativeness, resilience, integrity, identifying market gaps to provide goods/services at a profit.\n• Cost Equations:\n  - Direct Materials: Raw materials directly in the product (timber, fabric, steel).\n  - Direct Labor: Wages paid directly to craftsmen (carpenter, tailor, welder).\n  - Prime Cost = Direct Materials + Direct Labor + Direct Expenses.\n  - Factory Cost = Prime Cost + Factory Overheads (workshop rent, electricity, sandpaper).\n  - Total Production Cost = Factory Cost + Administrative & Selling Overheads.\n  - Selling Price = Total Production Cost + Desired Profit.\n• Enterprise Budgeting:\n  - A cash budget is a financial forecast of estimated income and expenditures over a future period, preventing cash deficits.\n• The Marketing Mix (4 Ps):\n  - Product (quality, design), Price (cost-based, competitive), Place (distribution channels), Promotion (advertising, social media).\n• TVET Pathways in Ghana:\n  - Commission for Technical and Vocational Education and Training (CTVET) oversees qualifications from technical institutes to Technical Universities (BTech/MTech).",
     "examples": [
       {

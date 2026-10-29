@@ -21,8 +21,8 @@ export const SHS3_ENGLISH_TOPICS: CurriculumTopic[] = [
     description: 'Consolidation of oral English for the final revision year: stressed and unstressed syllables, the schwa, stress-timed rhythm, the four intonation patterns and the meanings they carry, question and tag intonation, and contrastive stress.',
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=WUBo_J9hQRA',
-    youtubeId: 'WUBo_J9hQRA',
+    youtubeUrl: 'https://www.youtube.com/watch?v=pUYbpWgHe30',
+    youtubeId: 'pUYbpWgHe30',
     keyNotes: `• Every multi-syllable English word carries ONE primary stress, shown /' before the stressed syllable: re'cord (verb) versus 'record (noun).
 • Unstressed syllables reduce to the neutral schwa, the commonest sound in English, so a'bout is really /a'baʊt/.
 • Two-syllable nouns and adjectives usually stress the FIRST beat: 'table, 'happy; two-syllable verbs and prepositions stress the SECOND: be'gin, re'lax.
@@ -2431,8 +2431,8 @@ export const SHS3_ENGLISH_TOPICS: CurriculumTopic[] = [
     description: 'Reading the prompt as a marking scheme, hunting and ranking the required points, paraphrasing without distortion, fusing sentences, and surviving a strict word ceiling.',
     isFreeTrial: false,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=edlPRuVNJPI',
-    youtubeId: 'edlPRuVNJPI',
+    youtubeUrl: 'https://www.youtube.com/watch?v=NNq-RLy5bEY',
+    youtubeId: 'NNq-RLy5bEY',
     keyNotes: `• The summary instruction contains three orders: the QUANTUM of points (three effects, four causes), the LIMIT of words, and the TOPIC you must stay inside. Underline all three before reading the passage.
 • "In not more than 50 words" is a ceiling, not a target. Anything written beyond the ceiling normally earns nothing, so a candidate who oversubscribes loses the extra points rather than gaining them.
 • The marker counts points, not prose. Content marks are given for each distinct idea that the passage actually states; a beautiful paragraph carrying two ideas scores two.

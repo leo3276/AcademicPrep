@@ -7,6 +7,8 @@ import { CurriculumTopic } from './types';
 export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   {
     "id": "shs1-phy-t1-measurement-units-errors",
+    "youtubeUrl": "https://www.youtube.com/watch?v=kJQOlZDnLdk",
+    "youtubeId": "kJQOlZDnLdk",
     "subjectId": "physics",
     "level": "SHS 1",
     "term": 1,
@@ -216,6 +218,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-phy-t1-scalar-vector-motion-graphs",
+    "youtubeUrl": "https://www.youtube.com/watch?v=rZXqq-eQRQU",
+    "youtubeId": "rZXqq-eQRQU",
     "subjectId": "physics",
     "level": "SHS 1",
     "term": 1,
@@ -426,6 +430,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-phy-t1-kinetic-theory-states-of-matter",
+    "youtubeUrl": "https://www.youtube.com/watch?v=9TVOlTolKFA",
+    "youtubeId": "9TVOlTolKFA",
     "subjectId": "physics",
     "level": "SHS 1",
     "term": 1,
@@ -611,6 +617,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-phy-t1-density-relative-density-archimedes",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5u40QvMfpCU",
+    "youtubeId": "5u40QvMfpCU",
     "subjectId": "physics",
     "level": "SHS 1",
     "term": 1,
@@ -800,6 +808,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-phy-t2-forces-newtons-laws",
+    "youtubeUrl": "https://www.youtube.com/watch?v=4feAHLm6Q7A",
+    "youtubeId": "4feAHLm6Q7A",
     "subjectId": "physics",
     "level": "SHS 1",
     "term": 2,
@@ -1011,6 +1021,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-phy-t2-energy-sources-generation-household-wiring",
+    "youtubeUrl": "https://www.youtube.com/watch?v=jo_IRDLLSNU",
+    "youtubeId": "jo_IRDLLSNU",
     "subjectId": "physics",
     "level": "SHS 1",
     "term": 2,
@@ -1230,6 +1242,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-phy-t2-gas-pressure-boyles-law",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ogrf9dlggR0",
+    "youtubeId": "ogrf9dlggR0",
     "subjectId": "physics",
     "level": "SHS 1",
     "term": 2,
@@ -1416,6 +1430,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-phy-t2-hydraulics-pascal-law-machines",
+    "youtubeUrl": "https://www.youtube.com/watch?v=MfGB3vfXu4M",
+    "youtubeId": "MfGB3vfXu4M",
     "subjectId": "physics",
     "level": "SHS 1",
     "term": 2,
@@ -1602,6 +1618,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-phy-t2-relative-velocity-frames-of-reference",
+    "youtubeUrl": "https://www.youtube.com/watch?v=6wpYJlQkT2s",
+    "youtubeId": "6wpYJlQkT2s",
     "subjectId": "physics",
     "level": "SHS 1",
     "term": 2,
@@ -1792,6 +1810,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-phy-t3-work-energy-power-machines",
+    "youtubeUrl": "https://www.youtube.com/watch?v=vt6LGtQT1Ro",
+    "youtubeId": "vt6LGtQT1Ro",
     "subjectId": "physics",
     "level": "SHS 1",
     "term": 3,
@@ -2004,6 +2024,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-phy-t3-heat-transfer-conduction-convection-radiation",
+    "youtubeUrl": "https://www.youtube.com/watch?v=xoAvOVz3lp8",
+    "youtubeId": "xoAvOVz3lp8",
     "subjectId": "physics",
     "level": "SHS 1",
     "term": 3,
@@ -2223,6 +2245,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-phy-t3-gears-wheel-axle-inclined-plane",
+    "youtubeUrl": "https://www.youtube.com/watch?v=JN288NLF-44",
+    "youtubeId": "JN288NLF-44",
     "subjectId": "physics",
     "level": "SHS 1",
     "term": 3,
@@ -2413,6 +2437,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-phy-t3-experimental-physics-paper-3-skills",
+    "youtubeUrl": "https://www.youtube.com/watch?v=uUPWyY-MYAs",
+    "youtubeId": "uUPWyY-MYAs",
     "subjectId": "physics",
     "level": "SHS 1",
     "term": 3,
@@ -2599,6 +2625,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-phy-t1-elasticity-hooke-pressure",
+    "youtubeUrl": "https://www.youtube.com/watch?v=TkIPmkACHFA",
+    "youtubeId": "TkIPmkACHFA",
     "subjectId": "physics",
     "level": "SHS 2",
     "term": 1,
@@ -2817,6 +2845,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-phy-t1-temperature-thermal-expansion",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7wZWqJHNK9w",
+    "youtubeId": "7wZWqJHNK9w",
     "subjectId": "physics",
     "level": "SHS 2",
     "term": 1,
@@ -3031,6 +3061,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-phy-t1-fluids-in-motion-viscosity-bernoulli",
+    "youtubeUrl": "https://www.youtube.com/watch?v=PoG14wRRQmM",
+    "youtubeId": "PoG14wRRQmM",
     "subjectId": "physics",
     "level": "SHS 2",
     "term": 1,
@@ -3215,6 +3247,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-phy-t1-surface-tension-capillarity",
+    "youtubeUrl": "https://www.youtube.com/watch?v=eYPXO2rdr2g",
+    "youtubeId": "eYPXO2rdr2g",
     "subjectId": "physics",
     "level": "SHS 2",
     "term": 1,
@@ -3399,6 +3433,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-phy-t2-quantity-of-heat-changes-of-state",
+    "youtubeUrl": "https://www.youtube.com/watch?v=iazF6Ttog48",
+    "youtubeId": "iazF6Ttog48",
     "subjectId": "physics",
     "level": "SHS 2",
     "term": 2,
@@ -3614,6 +3650,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-phy-t2-wave-motion-sound",
+    "youtubeUrl": "https://www.youtube.com/watch?v=OQvP09m0guc",
+    "youtubeId": "OQvP09m0guc",
     "subjectId": "physics",
     "level": "SHS 2",
     "term": 2,
@@ -3826,6 +3864,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-phy-t2-thermodynamics-gas-laws-engines",
+    "youtubeUrl": "https://www.youtube.com/watch?v=O7HwhkYt6YU",
+    "youtubeId": "O7HwhkYt6YU",
     "subjectId": "physics",
     "level": "SHS 2",
     "term": 2,
@@ -4010,6 +4050,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-phy-t2-standing-waves-resonance-acoustics",
+    "youtubeUrl": "https://www.youtube.com/watch?v=wXRNKz0xMOU",
+    "youtubeId": "wXRNKz0xMOU",
     "subjectId": "physics",
     "level": "SHS 2",
     "term": 2,
@@ -4206,6 +4248,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-phy-t3-equations-of-motion-free-fall-projectiles",
+    "youtubeUrl": "https://www.youtube.com/watch?v=KLhmQMgs8ek",
+    "youtubeId": "KLhmQMgs8ek",
     "subjectId": "physics",
     "level": "SHS 2",
     "term": 3,
@@ -4426,6 +4470,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-phy-t3-simple-harmonic-motion-circular-motion",
+    "youtubeUrl": "https://www.youtube.com/watch?v=swsTKtK1sBo",
+    "youtubeId": "swsTKtK1sBo",
     "subjectId": "physics",
     "level": "SHS 2",
     "term": 3,
@@ -4646,6 +4692,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-phy-t3-newtons-laws-connected-bodies-lifts",
+    "youtubeUrl": "https://www.youtube.com/watch?v=-eN1x38_crc",
+    "youtubeId": "-eN1x38_crc",
     "subjectId": "physics",
     "level": "SHS 2",
     "term": 3,
@@ -4844,6 +4892,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-phy-t3-power-efficiency-engines-pumps",
+    "youtubeUrl": "https://www.youtube.com/watch?v=qlPHsdHrP54",
+    "youtubeId": "qlPHsdHrP54",
     "subjectId": "physics",
     "level": "SHS 2",
     "term": 3,
@@ -5046,6 +5096,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-phy-t1-light-optics-instruments",
+    "youtubeUrl": "https://www.youtube.com/watch?v=EVIP1fbZ8zc",
+    "youtubeId": "EVIP1fbZ8zc",
     "subjectId": "physics",
     "level": "SHS 3",
     "term": 1,
@@ -5266,6 +5318,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-phy-t1-wave-optics-interference-diffraction",
+    "youtubeUrl": "https://www.youtube.com/watch?v=cRJJlt9twAQ",
+    "youtubeId": "cRJJlt9twAQ",
     "subjectId": "physics",
     "level": "SHS 3",
     "term": 1,
@@ -5465,6 +5519,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-phy-t1-mechanics-of-materials-stress-strain",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7wn5GzOJkh8",
+    "youtubeId": "7wn5GzOJkh8",
     "subjectId": "physics",
     "level": "SHS 3",
     "term": 1,
@@ -5666,6 +5722,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-phy-t2-electrostatics-current-electricity",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Y65ZnhfIKXU",
+    "youtubeId": "Y65ZnhfIKXU",
     "subjectId": "physics",
     "level": "SHS 3",
     "term": 2,
@@ -5890,6 +5948,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-phy-t2-magnetism-electromagnetism",
+    "youtubeUrl": "https://www.youtube.com/watch?v=o0yfYTtR6go",
+    "youtubeId": "o0yfYTtR6go",
     "subjectId": "physics",
     "level": "SHS 3",
     "term": 2,
@@ -6113,6 +6173,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-phy-t2-dc-circuits-emf-internal-resistance",
+    "youtubeUrl": "https://www.youtube.com/watch?v=9r3Xgd79MFw",
+    "youtubeId": "9r3Xgd79MFw",
     "subjectId": "physics",
     "level": "SHS 3",
     "term": 2,
@@ -6303,6 +6365,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-phy-t2-alternating-current-national-grid",
+    "youtubeUrl": "https://www.youtube.com/watch?v=NGScG0qA1pk",
+    "youtubeId": "NGScG0qA1pk",
     "subjectId": "physics",
     "level": "SHS 3",
     "term": 2,
@@ -6493,6 +6557,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-phy-t2-solar-power-energy-storage",
+    "youtubeUrl": "https://www.youtube.com/watch?v=sQs7OqIpyHA",
+    "youtubeId": "sQs7OqIpyHA",
     "subjectId": "physics",
     "level": "SHS 3",
     "term": 2,
@@ -6684,6 +6750,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-phy-t3-modern-physics-electronics-atomic",
+    "youtubeUrl": "https://www.youtube.com/watch?v=lt5f4CT4VAU",
+    "youtubeId": "lt5f4CT4VAU",
     "subjectId": "physics",
     "level": "SHS 3",
     "term": 3,
@@ -6912,6 +6980,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-phy-t3-radiation-detection-medical-imaging-safety",
+    "youtubeUrl": "https://www.youtube.com/watch?v=FM-EOqYGNM0",
+    "youtubeId": "FM-EOqYGNM0",
     "subjectId": "physics",
     "level": "SHS 3",
     "term": 3,
@@ -7133,6 +7203,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-phy-t3-photoelectric-effect-line-spectra",
+    "youtubeUrl": "https://www.youtube.com/watch?v=VQ5BqW3BdFA",
+    "youtubeId": "VQ5BqW3BdFA",
     "subjectId": "physics",
     "level": "SHS 3",
     "term": 3,
@@ -7323,6 +7395,8 @@ export const SHS_PHYSICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-phy-t3-nuclear-energetics-decay-fission-fusion",
+    "youtubeUrl": "https://www.youtube.com/watch?v=WTQvfvoOF3g",
+    "youtubeId": "WTQvfvoOF3g",
     "subjectId": "physics",
     "level": "SHS 3",
     "term": 3,

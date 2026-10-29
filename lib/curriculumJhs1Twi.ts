@@ -14,8 +14,8 @@ export const JHS1_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua Akuapem Twi akyerɛwamba aduonu mmienu (22), anom nnyegyei, nnyegyepɛn ne nnyegyentia.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Fj2sXv0u-0g",
-    "youtubeId": "Fj2sXv0u-0g",
+    "youtubeUrl": "https://www.youtube.com/watch?v=qr0FU0i5e6E",
+    "youtubeId": "qr0FU0i5e6E",
     "keyNotes": "• Akuapem Twi Akyerɛwamba Aduonu Mmienu (22 Letters):\n  - Akyerɛwamba a yɛde twerɛ Akuapem Twi yɛ 22:\n    A, B, D, E, Ɛ, F, G, H, I, K, K, L, M, N, O, Ɔ, P, R, S, T, U, W, Y.\n  - Hyɛ no nsow: C, J, Q, V, X, Z nka Twi akyerɛwamba ho korakora.\n• Anom Nnyegyei Ason (7 Vowels):\n  - Twi anom nnyegyei yɛ ason (7): A, E, Ɛ, I, O, Ɔ, U.\n  - Nnyegyei Tsentsen (High/Tense Vowels): I, U, E, O.\n  - Nnyegyei Ntiantia (Low/Lax Vowels): Ɛ, Ɔ, A.\n• Hwene Nnyegyei (Nasal Vowels):\n  - Nnyegyei a ɛfa hwene mu berɛ a yɛrebɔ no: ã, ẽ, ɛ̃, ĩ, õ, ɔ̃, ũ (sɛ ebia: kã, tẽ, pɛ̃).\n• Nnyegyepɛn Horo (Digraphs):\n  - Nnyegyei mmienu a ɛkabom bɔ nnyegyei koro:\n    * gy (gya, gyina)\n    * ky (kye, kyerɛ)\n    * hy (hyɛ, hyia)\n    * ny (nya, nyame)\n    * tw (twa, twerɛ)\n    * dw (dwa, dwuma)\n    * kw (kwa, kwan)\n    * hw (hwe, hwɛ).\n• Nnyegyei Ho Nhyehyɛe:\n  - Twi kasa yɛ kasa a ɛwɔ nnyigyei soro ne fam (tone language - anofafa ne anonom nteɛso).",
     "examples": [
       {
@@ -53,8 +53,8 @@ export const JHS1_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua sɛnea anom nnyegyei koro ne ne yɔnko bɔ mu (vowel harmony) ne ahomtew wɔ Akuapem Twi mu.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=kYJjZfW8uVo",
-    "youtubeId": "kYJjZfW8uVo",
+    "youtubeUrl": "https://www.youtube.com/watch?v=nZgJMyDXz-0",
+    "youtubeId": "nZgJMyDXz-0",
     "keyNotes": "• Nnyegyekorɔ Nkyerɛase (Vowel Harmony):\n  - Nnyegyekorɔ kyerɛ sɛnea anom nnyegyei a ɛwɔ asɛmfua koro mu no hyia pɛpɛɛpɛ sɛ nnyegyei tsentsen (advanced tongue root) anaa nnyegyei ntiantia (unadvanced tongue root).\n  - Akuapem Twi mu no, asɛmfua mu anom nnyegyei nkyerɛkyerɛmu:\n    * Ekuo 1 (Tsentsen / +ATR): /i, e, o, u/ (sɛ ebia: firi, seisei, buo, kuruwa).\n    * Ekuo 2 (Ntiantia / -ATR): /ɛ, a, ɔ/ (sɛ ebia: kɛsɛ, bata, kɔkɔɔ, dɔteɛ).\n• Nkabom Ahyɛnsode ne Nnyegyekorɔ Nhwɛso:\n  - Sɛ yɛde 'o-' (edi akyi) to asɛmfua ano a:\n    * O-bisa (bisa wɔ /i/ nti ɛbɛyɛ /o/).\n    * Ɔ-kɔ (kɔ wɔ /ɔ/ nti ɛbɛyɛ /ɔ/).\n    * O-di (di wɔ /i/ nti ɛbɛyɛ /o/).\n    * Ɔ-ba (ba wɔ /a/ nti ɛbɛyɛ /ɔ/).\n• Ahomtew (Nasalization):\n  - Sɛ nnyegyei bi ba a, ɛma nea edi n'akyi no bɔ hwene mu:\n    * Ɔbaabun (ɔ-ba-a-bun)\n    * Anomaa (a-no-ma-a).\n• Nsɛmfua Ntam Nkabom ne Nsakrae:\n  - Sɛ nnyegyei mmienu hyia pɛnkoro a, nnyegyei koro betumi ayera anaa wasakra ayɛ koro:\n    * Me + ara → me ara / meara\n    * Ne + ara → no ara / noara.",
     "examples": [
       {
@@ -91,8 +91,8 @@ export const JHS1_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Hu edin horo (nouns) ne ne su, ne edin-nsiananmu (pronouns) wɔ Akuapem Twi kasa mu.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=5Qf7X4gY2mY",
-    "youtubeId": "5Qf7X4gY2mY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=lkIOxcbQN3c",
+    "youtubeId": "lkIOxcbQN3c",
     "keyNotes": "• Edin Nkyerɛase (The Noun):\n  - Edin yɛ asɛmfua a yɛde frɛ nipa, beae, aboa, baabi, adwene anaa biribi a ɛwɔ hɔ.\n  - Edin Horo (Types of Nouns):\n    1. Edin Pa (Proper Nouns): Edin pɔtee a yɛde to nipa anaa beae pɔtee bi (sɛ ebia: Kofi, Akosua, Akuapem, Akropong, Densu, Ghana). Ɛhyɛ aseɛ ne akyerɛw kɛse (capital letter).\n    2. Edin Kɛkɛ (Common Nouns): Nnoɔma a wɔwɔ baabiara edin (sɛ ebia: pono, sukuu, dua, ɔkraman, dadeɛ).\n    3. Edin Kabom (Collective Nouns): Nnoɔma anaa nnipa kuo bi edin (sɛ ebia: asraafo, kuo, nkurɔfo, dɔm).\n    4. Edin a Yɛntumi Nka Anaa Nnhu (Abstract Nouns): Suban anaa adwene bi a yɛntumi mfa yɛn nsa nka nanso yɛte nka (sɛ ebia: dɔ, ohu, anigye, anidaso, ahobrɛase).\n• Edin Dodow Kabea (Plural Formation of Nouns):\n  - Yɛnam ahyɛnsode nianim so na ɛyɛ edin dodow wɔ Twi mu:\n    * N- anaa M- nianim: dua → nnua; baa → mmaa; ɔhene → ahene.\n    * -nom akyidi (nipa ne ayɔnkofa ho): agya → agyanom; ɛna → ɛnanom; nua → nuanom.\n• Edin-nsiananmu (Pronouns):\n  - Asɛmfua a yɛde si edin ananmu wɔ kasamu mu sɛnea ɛbɛyɛ a yɛrensan mmɔ edin no bio mprenpren.\n  - Onipa a ɔrekasa (1st person): Me (I/me), Yɛn (we/us).\n  - Onipa a yɛne no rekasa (2nd person): Wo (you singular), Mo (you plural).\n  - Onipa a yɛrekasa ne ho (3rd person): Ɔno/Ɔ- (he/she), Wɔn/Wɔ- (they/them), Ɛno/Ɛ- (it - nnoɔma ne mmoa).",
     "examples": [
       {
@@ -130,8 +130,8 @@ export const JHS1_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua adeyɛ (verbs), ne kabea horo (tenses), ne ɔkyerɛfo (adjectives) ne ne dwumadie.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0w1vQjL36gQ",
-    "youtubeId": "0w1vQjL36gQ",
+    "youtubeUrl": "https://www.youtube.com/watch?v=U_KpYAuVBgM",
+    "youtubeId": "U_KpYAuVBgM",
     "keyNotes": "• Adeyɛ Nkyerɛase (The Verb):\n  - Adeyɛ yɛ asɛmfua a ɛkyerɛ nea nipa anaa aboa bi reyɛ, anaa biribi a ɛresi wɔ kasamu mu.\n  - Nhwɛso: didi, kɔ, ba, sa, kyerɛw, sua, kenkan, da, twa.\n• Adeyɛ Kabea Horo (Tenses of Verbs):\n  1. Mprempren Kabea (Present Continuous / Progressive):\n     - Yɛde 're-' hyɛ adeyɛ no anim: Me-re-kɔ (I am going), Ɔ-re-didi (He is eating).\n  2. Daa Kabea (Simple Present / Habitual):\n     - Adeyɛ no gyina hɔ kwa: Kofi kɔ sukuu daa (Kofi goes to school daily).\n  3. Bere a Atwam Kabea (Past Tense):\n     - Yɛtrɛw anom nnyegyei a ɛtwa to no mu: kɔ → kɔɔ; ba → bae; di → dii; twerɛ → twerɛe.\n  4. Daakye Kabea (Future Tense):\n     - Yɛde 'bɛ-' hyɛ adeyɛ no anim: Me-bɛ-ba (I will come), Yɛ-bɛ-kɔ (We will go).\n  5. Kabea a Awie (Perfect Tense):\n     - Yɛde 'a-' hyɛ adeyɛ no anim: W-a-didi (He has eaten), M'-a-ba (I have arrived).\n• Ɔkyerɛfo Nkyerɛase (The Adjective):\n  - Ɔkyerɛfo yɛ asɛmfua a ɛkyerɛ sɛnea edin bi te, ne su, ne kɛse, ne kɔla anaa ne dodow.\n  - Ɔkyerɛfo di edin akyi daa wɔ Twi mu (noun comes before adjective):\n    * Abarimaa tenten (Tall boy).\n    * Dua kɛse (Big tree).\n    * Ataade kɔkɔɔ (Red dress).\n    * Nsuo nwono (Cold water).\n• Ɔkyerɛfo Dodow (Plural of Adjectives):\n  - Ɔkyerɛfo dodow taa bɔ ne ho mprenu:\n    * tenten → atenten / tententen; kɛse → akɛse; tiawa → ntiawa.",
     "examples": [
       {
@@ -170,8 +170,8 @@ export const JHS1_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua kasamu mu nhyehyɛe (Subject, Verb, Object) ne akyerɛw ahyɛnsode (Punctuation) wɔ Akuapem Twi mu.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=wLcLb2oE8Lw",
-    "youtubeId": "wLcLb2oE8Lw",
+    "youtubeUrl": "https://www.youtube.com/watch?v=tdAAmsUwKok",
+    "youtubeId": "tdAAmsUwKok",
     "keyNotes": "• Kasamu Nkyerɛase (The Sentence):\n  - Kasamu yɛ nsɛmfua kuo a ɛkabom ma adwene a edi mu koraa.\n  - Kasamu Nsonsonoe Titiriw Mmiɛnsa:\n    1. Ɔyɛfo (Subject): Nipa anaa aboa a ɔyɛ adeyɛ no wɔ kasamu mu.\n    2. Adeyɛ (Verb): Adwuma anaa nneyɛe a ɔyɛfo no reyɛ.\n    3. Adeyɛde (Object): Nipa anaa biribi a adeyɛ no kɔka no.\n  - Nhwɛso: Kofi (Ɔyɛfo) + twaa (Adeyɛ) + dua no (Adeyɛde).\n• Kasamu Horo (Types of Sentences):\n  1. Kasamua (Simple Sentence): Kasamu a ɛwɔ adeyɛ baako pɛ (sɛ ebia: 'Kofi kɔɔ sukuu').\n  2. Kasamuntwea (Compound Sentence): Kasamu mmienu a nkabomde (ne, nanso, na, enti) kabom (sɛ ebia: 'Kofi kɔɔ sukuu na Ama nso kɔɔ afum').\n  3. Kasamukɛse (Complex Sentence): Kasamu a emu baako gyina ne ho so na baako nso de ne ho to foforo so.\n• Akyerɛw Nsɛnkyerɛnne Titiriw (Punctuation Marks):\n  - Akyi-pɔ (Full stop .): Ɛsi kasamu koraa a awie ano.\n  - Ahomegye nsɛnkyerɛnne / Kɔma (Comma ,): Ɛma ahomegye tiawa wɔ kasamu mu.\n  - Asɛmbisa nsɛnkyerɛnne (Question mark ?): Ɛsi asɛmbisa ano.\n  - Nsɛnkyerɛnne nwonwa (Exclamation mark !): Ɛkyerɛ ahodwiriw, abufuo anaa anigye kɛse.\n  - Nsɛm-a-yɛ-aka ahyɛnsode (Quotation marks \" \"): Ɛfa nsɛm pɔtee a nipa bi ka to mu.",
     "examples": [
       {
@@ -208,8 +208,8 @@ export const JHS1_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua Akanfo nkyea horo, nnyeso a ɛfata sɛnea bere ne nipa no te, ne obu a ɛwɔ nkyea mu.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0hY8-j2B9t0",
-    "youtubeId": "0hY8-j2B9t0",
+    "youtubeUrl": "https://www.youtube.com/watch?v=0jfyo8l2sng",
+    "youtubeId": "0jfyo8l2sng",
     "keyNotes": "• Obu a Ɛwɔ Nkyea mu wɔ Akanman mu:\n  - Wɔ Akuapem amammerɛ mu no, nkyea kyerɛ obu, nidie, ayɔnkofa ne abrabɔ pa.\n  - Obi a ɔnkyea nipa no, wobu no sɛ obi a onni abrabɔ pa, obi a ɔyɛ ahantanfo anaa onni akyi.\n• Nkyea Sɛnea Bere Te:\n  1. Anɔpa Nkyea (Morning Greeting):\n     - 'Mema wo akye' (I give you morning / Good morning).\n     - Informel / nkabom: 'Makye' anaa 'Makye oo'.\n  2. Awia Nkyea (Afternoon Greeting):\n     - 'Mema wo aha' (Good afternoon).\n     - Informel: 'Maha' anaa 'Maha oo'.\n  3. Anwummerɛ Nkyea (Evening Greeting):\n     - 'Mema wo adwo' (Good evening).\n     - Informel: 'Madwo' anaa 'Madwo oo'.\n• Nnyeso Sɛnea Nipa no ne Wo Te (Responses to Greetings):\n  - Yaa-Agya: Nnyeso a yɛde ma agya anaa barima a onyin te sɛ wo papa.\n  - Yaa-Ɛna: Nnyeso a yɛde ma ɛna anaa ɔbaa a onyin te sɛ wo maame.\n  - Yaa-Nua: Nnyeso a yɛde ma wo nua anaa wo tipɛn (camarade).\n  - Yaa-Asɔn / Yaagya: Nnyeso a agya de ma ne ba.\n  - Yaa-Oba: Nnyeso a ɛna de ma ne ba.\n  - Yaa-Anua: Nnyeso a yɛde gye obi a ɔne wo yɛ nuanom.\n  - Awisiado: Nnyeso ma obi a n'awofo awu.\n• Nkyea Ho Amanne Titiriw:\n  - Nsa Nifa Dwumadie: Yɛmfa nsa benkum nkyea nipa da! Fa wo nsa nifa kyea daa.\n  - Nhyiamu kɛse mu: Wɔ hyiadan anaa ahemfie no, yɛkyea firi NIFA kɔ BENKUM.\n  - Wopue baabi a, ɛwɔ sɛ wokyea nnipa a wɔwɔ hɔ no ansa na woatena ase.",
     "examples": [
       {
@@ -284,8 +284,8 @@ export const JHS1_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua Akanfo mmusuakuo nson anaa nwɔtwe, agya ne ɛna kuo, ne dwumadie a ɛda nuanom ntam.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Fj2sXv0u-0g",
-    "youtubeId": "Fj2sXv0u-0g",
+    "youtubeUrl": "https://www.youtube.com/watch?v=rlzCSWCmQQg",
+    "youtubeId": "rlzCSWCmQQg",
     "keyNotes": "• Abusua Nkyerɛase wɔ Akanfo mu:\n  - Akanfo yɛ nnipa a wɔdi wɔn ɛna mogya akyi (Matrilineal inheritance).\n  - Wɔbɔ abusua firi maame fam: abofra biara kɔ n'ena abusua mu.\n• Akanfo Mmusuakuo Nwɔtwe (The 8 Akan Clans) ne Wɔn Ahyɛnsode:\n  1. Oyoko: Ahyɛnsode ne Ɔkɔdeɛ (Eagle) - ahemfo abusua wɔ Manhyia ne baabi pii.\n  2. Bretuo: Ahyɛnsode ne Ɔsebɔ (Leopard) - akofoɔ abusua (Mampɔng).\n  3. Asona: Ahyɛnsode ne Kwaakwaadabi / Ɔkwao (Crow / Raven) - abusua kɛse a nkurɔfo dɔɔso wom pa ara.\n  4. Asakyiri: Ahyɛnsode ne Ɔkɔdeɛ anaa Akorɔma (Vulture / Hawk).\n  5. Aduana: Ahyɛnsode ne Ɔkraman a ɔkura ogya n'anom (Dog with fire) - ogya abusua.\n  6. Ɛkoɔna: Ahyɛnsode ne Ɛkoɔ / Anantwie (Buffalo).\n  7. Agona: Ahyɛnsode ne Akoo (Parrot) - nkɔmhyɛfo ne akyeame abusua.\n  8. Aseneɛ: Ahyɛnsode ne Apankyerane (Bat).\n• Agya Fam (Ntɔrɔ / Sunsum):\n  - Ɛwom sɛ wodi maame mogya akyi deɛ, nanso agya na ɔde sunsum ne ntɔrɔ ma ne ba (Bosommuru, Bosompra, Bosomtwe).\n• Asɔremma ne Abusuapanin:\n  - Abusuapanin: Ɔpanyin a ɔda abusua no nyinaa ano, ɔhwɛ nsɛm, awareɛ, asiei ne agyapade so.\n  - Wɔfa: Maame nuabarima a ɔhwɛ ne wɔfasefoɔ (nephews/nieces) so.\n  - Sewaa: Papa nuabaa.",
     "examples": [
       {
@@ -432,8 +432,8 @@ export const JHS1_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua Akuapem Odwira afahyɛ, ne mfiase, amanne a wɔyɛ, Adae afahyɛ (Akwasidae ne Awukudae), ne mfaso.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Fj2sXv0u-0g",
-    "youtubeId": "Fj2sXv0u-0g",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Smd-jz1KKA0",
+    "youtubeId": "Smd-jz1KKA0",
     "keyNotes": "• Akuapem Odwira Afahyɛ Ho Asɛm:\n  - Odwira yɛ afahyɛ kɛse a Okuapemhene ne Akuapem man nyinaa (Akropong, Amanokrom, Aburi, Larteh, Mamfe ne nea ɛkeka ho) di wɔ Ɔsanaa (September/October) bosome mu.\n  - Asɛmfua 'Odwira' firi 'dwira' mu a ɛkyerɛ 'ahotew' anaa ahomeka.\n• Odwira Amanne Horo wɔ Nnawɔtwe no mu:\n  - Dwowda (Monday): Akwambɔ - mmerante kɔtwa akwan a ɛkɔ amusiei ne abosomfie.\n  - Benada (Tuesday): Wɔkɔfa Odwira ba firi Amamprobi (amusiei kronkron), afei wɔbɔ dawuru gu kuro mu sɛ obiara nsu nkɔnkɔn bio.\n  - Wukuada (Wednesday): Nsamanfo da - wɔsu wɔn a wɔawuwu, to dwom na wɔhyɛ atade tuntum / kɔkɔɔ.\n  - Yawoada (Thursday): Bɔnefakyɛ ne Odwira didie - ahemfo ne nkurɔfo didi bɔ mu, kora bɔne firi akoma mu.\n  - Fida (Friday): Bagua Kɛse (Grand Durbar) - Okuapemhene tena dɔnkɛ mu, ahemfo fura kente fɛfɛɛfɛ, fontomfrom ne kete hyia ma anigye kɛse ba.\n• Adae Afahyɛ (Akwasidae ne Awukudae):\n  - Akanfo di Adae mprɛnsa wɔ nnafua aduanan mmienu (42 days) biara mu:\n    * Akwasidae: Di Kwasiada.\n    * Awukudae: Di Wukuada.\n  - Wɔkɔ nkonwafi kɔhohoro akonnwa tuntum ho, gu nsa na wɔde eto ma nananom nsamanfo.\n• Mfaso a Ɛwɔ Afahyɛ so:\n  - Ɛde biakoyɛ, asomdwoe ne mpuntuo ba ɔman mu.\n  - Ɛboaboa sika ano de yɛ sukuu, asopiti ne akwan.\n  - Ɛkora amammerɛ ne atetesɛm so ma mmabaa.",
     "examples": [
       {
@@ -469,8 +469,8 @@ export const JHS1_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua Akan abɛbusɛm, ne nkyerɛase, bere a ɛfata sɛ yɛbɔ abɛ, ne nyansa a ɛwɔ mu ma abrabɔ pa.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0hY8-j2B9t0",
-    "youtubeId": "0hY8-j2B9t0",
+    "youtubeUrl": "https://www.youtube.com/watch?v=hh9XxRmZ-Bg",
+    "youtubeId": "hh9XxRmZ-Bg",
     "keyNotes": "• Abɛbu Nkyerɛase (The Akan Proverb):\n  - Abɛbu yɛ nyansasɛm a nananom faa osuahu mu de to hɔ a ɛkura nkyerɛkyerɛ ne afotuo pa ma abrabɔ.\n  - Akanfo bu bɛ sɛ: 'Ɔbanyansafo, wobu no bɛ na wɔnnka no asɛm.'\n  - Ɛkyerɛ sɛ onipa a ɔwɔ nyansa no, wode bɛ tiawa koro pɛ kyerɛ no asɛm a ɔte ase ntɛm.\n• Abɛbu Titiriw ne Wɔn Nkyerɛase:\n  1. 'Baanu so a, ɛmmia':\n     - Nkyerɛase: Sɛ nnipa mmienu anaa dɔm kabom yɛ adwuma a, ɛnyɛ den; nkabom ma adwumaden yɛ mmerɛw.\n  2. 'Ti koro nko agyina':\n     - Nkyerɛase: Onipa baako ntumi nsi gyinae pa; ɛwɔ sɛ wotie afoforo adwene na woanya nyansa.\n  3. 'Woforo dua pa a, na yɛpia wo':\n     - Nkyerɛase: Sɛ woyɛ adwumapa anaa wopɛ mmoa wɔ biribi pa mu a, nnipa bɛboa wo.\n  4. 'Abofra a onnim bi no, ɔse me ne me nua pɛ':\n     - Nkyerɛase: Ɛkyerɛ obu a ɛsɛ sɛ mmɔfra de ma mpanyimfo; ɛnsɛ sɛ abofra bu ne ho sɛ ɔpanyin.\n  5. 'Obi mfa ne nsa benkum nkyerɛ n'agya akuraa':\n     - Nkyerɛase: Ɛkyerɛ obu a ɛsɛ sɛ yɛde ma yɛn man ne yɛn awofo; ɛnsɛ sɛ wogu w'awofo anim ase.\n  6. 'Sankofa a, yɛnnki':\n     - Nkyerɛase: Sɛ wo werɛ firi na wokɔfa nea akyi ba a, ɛnyɛ bɔne; sua ade firi wo mfomso mu.\n• Bere a Ɛsɛ sɛ Yɛbu Bɛ:\n  - Wɔ asɛnnie mu, agyina mu, kasa mu, anaa bere a yɛretu abofra fo.\n  - Sɛ abofra rebu bɛ akyerɛ panyin a, ɛwɔ sɛ ɔpa kyɛw ka sɛ: 'Mpanimfo se mɛbu mo bɛ bi nanso mpanin se...'",
     "examples": [
       {
@@ -506,8 +506,8 @@ export const JHS1_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua anansesɛm ahoro, ne mfaso, suban a ɛwɔ Kweku Ananse ho, ne mmoguo dwumadie wɔ akenkan mu.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Fj2sXv0u-0g",
-    "youtubeId": "Fj2sXv0u-0g",
+    "youtubeUrl": "https://www.youtube.com/watch?v=_iu6IHgJ024",
+    "youtubeId": "_iu6IHgJ024",
     "keyNotes": "• Anansesɛm Nkyerɛase (Akan Folktales):\n  - Anansesɛm yɛ atetesɛm anaa anansesɛm a nananom to anwummerɛ bere a osram apue de kyerɛkyerɛ mmɔfra nyansa.\n  - Wɔfrɛ no 'Anansesɛm' efisɛ Kweku Ananse na ɔtaa yɛ anansesɛm no mu nipa titiriw.\n• Kweku Ananse Suban (Character of Kweku Ananse):\n  - Nyansa ne Kontompo: Ɔwɔ nyansakessɛ nanso ɔtaa de yɛ anifere ne kɔnkɔnsa.\n  - Pɛsɛmenkominya (Selfishness): Ɔpɛ sɛ nnoɔma pa biara ba ne nko ara hɔ (sɛ ebia bere a ɔkɔfaa nyansa nyinaa guu toaa mu no).\n  - Akɔnnɔ ne Adidie (Greed): Aduane ho pɛ na ɛtaa de no kɔ amanehunu mu.\n  - Awiei Koraa: Ananse kɔnkɔnsa no wie fam daa ma abofra biara sua sɛ adifudepɛ nnye.\n• Ananse Abusuafo:\n  - Ɔyere: Okonore Yaa (Aso).\n  - Mma: Ntikuma (ne ba panyin a ɔtaa hu n'agya anifere), Tikenenkene, Afudohwedohwe, Nankonhwea.\n• Mmoguo Nkyerɛase ne Mfaso:\n  - Mmoguo yɛ dwom a atiefo anaa ɔkasafo to wɔ anansesɛm no mfinimfini.\n  - Mfaso:\n    * Ɛma anansesɛm no yɛ dɛ na ɛmma atiefo nna.\n    * Ɛma atiefo gye wɔn ahome na wɔde anigye tie nea ɛbɛba akyiri no.\n    * Ɛtrɛw asɛm no nkyerɛase mu.",
     "examples": [
       {

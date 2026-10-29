@@ -16,8 +16,8 @@ export const SHS3_MATH_TOPICS: CurriculumTopic[] = [
     description: "Sine rule a/sin A = b/sin B = c/sin C = 2R, solving AAS and SSA triangles, circumradius, and handling the ambiguous case.",
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=bdge_wD8Y48',
-    youtubeId: 'bdge_wD8Y48',
+    youtubeUrl: 'https://www.youtube.com/watch?v=1wgl9EguQCk',
+    youtubeId: '1wgl9EguQCk',
     keyNotes: `• The Sine Rule:
   - a / sin A = b / sin B = c / sin C = 2R (where R is circumradius).
 • When to Use:
@@ -95,8 +95,8 @@ export const SHS3_MATH_TOPICS: CurriculumTopic[] = [
     description: "Cosine rule a² = b² + c² - 2bc cos A, finding angles cos A = (b²+c²-a²)/(2bc), triangle area ½ab sin C, and Heron’s formula.",
     isFreeTrial: true,
     isVip: false,
-    youtubeUrl: 'https://www.youtube.com/watch?v=ZUpz_r_a4Y4',
-    youtubeId: 'ZUpz_r_a4Y4',
+    youtubeUrl: 'https://www.youtube.com/watch?v=fUxOeFY-b1k',
+    youtubeId: 'fUxOeFY-b1k',
     keyNotes: `• The Cosine Rule:
   - For Sides: a² = b² + c² - 2bc cos A (SAS).
   - For Angles: cos A = (b² + c² - a²) / (2bc) (SSS).
@@ -169,8 +169,8 @@ export const SHS3_MATH_TOPICS: CurriculumTopic[] = [
     description: "Three-figure bearings, back bearings, parallel North line theorems, and solving complex multi-leg journeys using Sine and Cosine rules.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=F3zT-u58p3s',
-    youtubeId: 'F3zT-u58p3s',
+    youtubeUrl: 'https://www.youtube.com/watch?v=zKVLuhQQRRc',
+    youtubeId: 'zKVLuhQQRRc',
     keyNotes: `• Bearing Conventions:
   - Three-figure bearing: Measured CLOCKWISE from TRUE NORTH (000° to 360°). Always 3 digits (e.g. 035°).
   - Back Bearing: Bearing of A from B = (Bearing of B from A) ± 180°.
@@ -244,8 +244,8 @@ export const SHS3_MATH_TOPICS: CurriculumTopic[] = [
     description: "Volume and total surface area of uniform prisms, closed, open, and hollow cylinders, pipes, and liquid capacity conversions.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=F3zT-u58p3s',
-    youtubeId: 'F3zT-u58p3s',
+    youtubeUrl: 'https://www.youtube.com/watch?v=3LZGk87GPL0',
+    youtubeId: '3LZGk87GPL0',
     keyNotes: `• Uniform Prisms:
   - Volume = Cross-Sectional Area × Length.
   - Total Surface Area = 2 × (Base Area) + (Base Perimeter × Length).
@@ -324,8 +324,8 @@ export const SHS3_MATH_TOPICS: CurriculumTopic[] = [
     description: "Volume V = ⅓Ah, slant heights using Pythagoras, curved surface area πrl of cones, pyramid face areas, and sector-to-cone conversions.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=F3zT-u58p3s',
-    youtubeId: 'F3zT-u58p3s',
+    youtubeUrl: 'https://www.youtube.com/watch?v=YsvKutwQtnU',
+    youtubeId: 'YsvKutwQtnU',
     keyNotes: `• Cones:
   - Volume V = ⅓ πr²h.
   - Slant height l = √(r² + h²).
@@ -401,8 +401,8 @@ export const SHS3_MATH_TOPICS: CurriculumTopic[] = [
     description: "Volume ⁴⁄₃πr³ and surface area 4πr² of spheres, solid hemispheres (TSA = 3πr²), and volume and surface area of frustums of cones and pyramids.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=F3zT-u58p3s',
-    youtubeId: 'F3zT-u58p3s',
+    youtubeUrl: 'https://www.youtube.com/watch?v=mGjZnvUwktM',
+    youtubeId: 'mGjZnvUwktM',
     keyNotes: `• Spheres & Hemispheres:
   - Sphere Volume V = ⁴⁄₃ πr³.
   - Sphere Surface Area A = 4πr².
@@ -480,8 +480,8 @@ export const SHS3_MATH_TOPICS: CurriculumTopic[] = [
     description: "Constructing cumulative frequency tables, class boundaries, plotting ogives, anchor points, and smooth curve conventions.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=0hYqZ4wLqFk',
-    youtubeId: '0hYqZ4wLqFk',
+    youtubeUrl: 'https://www.youtube.com/watch?v=Md2_E_hTvdQ',
+    youtubeId: 'Md2_E_hTvdQ',
     keyNotes: `• Cumulative Frequency (cf):
   - Running total of frequencies up to each class boundary.
 • Ogive Plotting Requirements:
@@ -555,8 +555,8 @@ export const SHS3_MATH_TOPICS: CurriculumTopic[] = [
     description: "Reading median Q₂, lower quartile Q₁, upper quartile Q₃, interquartile range (Q₃ - Q₁), percentiles, and pass/fail thresholds from ogives.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=0hYqZ4wLqFk',
-    youtubeId: '0hYqZ4wLqFk',
+    youtubeUrl: 'https://www.youtube.com/watch?v=0TulXwT_3ck',
+    youtubeId: '0TulXwT_3ck',
     keyNotes: `• Positions on Cumulative Frequency (Vertical) Axis:
   - Median (Q₂): at cf = N / 2 (50% of N).
   - Lower Quartile (Q₁): at cf = N / 4 (25% of N).
@@ -634,8 +634,8 @@ export const SHS3_MATH_TOPICS: CurriculumTopic[] = [
     description: "Variance s² = [∑f(x - x̄)²]/∑f and standard deviation s = √Variance, computational formula s² = [∑fx²/∑f] - (x̄)², and interpreting dispersion.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=0hYqZ4wLqFk',
-    youtubeId: '0hYqZ4wLqFk',
+    youtubeUrl: 'https://www.youtube.com/watch?v=yvKrZfvZWe0',
+    youtubeId: 'yvKrZfvZWe0',
     keyNotes: `• Definitions:
   - Mean: x̄ = (∑fx) / (∑f).
   - Variance (s²): The mean of squared deviations from the mean: s² = [∑f(x - x̄)²] / ∑f.
@@ -712,8 +712,8 @@ export const SHS3_MATH_TOPICS: CurriculumTopic[] = [
     description: "Constructing tree diagrams, branch probabilities summing to 1, multiplying along paths, adding mutually exclusive paths, and conditional probabilities.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=0s_A1g4jKss',
-    youtubeId: '0s_A1g4jKss',
+    youtubeUrl: 'https://www.youtube.com/watch?v=FcKAC9SGbK0',
+    youtubeId: 'FcKAC9SGbK0',
     keyNotes: `• Tree Diagram Principles:
   - Each set of branches from a single node represents all possible outcomes for that stage; their probabilities MUST sum to 1.
   - Multiplication Rule along Branches: To find probability of a sequence of outcomes, MULTIPLY probabilities along that path.
@@ -784,8 +784,8 @@ export const SHS3_MATH_TOPICS: CurriculumTopic[] = [
     description: "Dependent events, conditional probability P(B|A) = P(A ∩ B)/P(A), sampling without replacement, committee formation, and multi-stage dependent trials.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=0s_A1g4jKss',
-    youtubeId: '0s_A1g4jKss',
+    youtubeUrl: 'https://www.youtube.com/watch?v=Vy7Uc2yCUY4',
+    youtubeId: 'Vy7Uc2yCUY4',
     keyNotes: `• Selection Without Replacement:
   - First selection: n(E) / N.
   - Second selection: (n(E) - 1) / (N - 1) if same item, or n(other) / (N - 1) if different.
@@ -860,8 +860,8 @@ export const SHS3_MATH_TOPICS: CurriculumTopic[] = [
     description: "First term a, common difference d, nth term Tₙ = a + (n - 1)d, sum of n terms Sₙ = (n/2)[2a + (n - 1)d], and simultaneous term problems.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=F3zT-u58p3s',
-    youtubeId: 'F3zT-u58p3s',
+    youtubeUrl: 'https://www.youtube.com/watch?v=Tj89FA-d0f8',
+    youtubeId: 'Tj89FA-d0f8',
     keyNotes: `• Arithmetic Progression (AP):
   - Definition: Sequence with constant difference d = Tₙ - Tₙ₋₁.
   - nth Term Formula: Tₙ = a + (n - 1)d.
@@ -934,8 +934,8 @@ export const SHS3_MATH_TOPICS: CurriculumTopic[] = [
     description: "First term a, common ratio r, nth term Tₙ = arⁿ⁻¹, sum of n terms Sₙ, convergence condition |r| < 1, and sum to infinity S_∞ = a/(1 - r).",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=F3zT-u58p3s',
-    youtubeId: 'F3zT-u58p3s',
+    youtubeUrl: 'https://www.youtube.com/watch?v=ble00jFNvfo',
+    youtubeId: 'ble00jFNvfo',
     keyNotes: `• Geometric Progression (GP):
   - Common Ratio r = Tₙ / Tₙ₋₁.
   - nth Term Formula: Tₙ = a · rⁿ⁻¹.
@@ -1009,8 +1009,8 @@ export const SHS3_MATH_TOPICS: CurriculumTopic[] = [
     description: "Matrix dimensions m × n, addition, subtraction, scalar multiplication, matrix multiplication condition, row-by-column multiplication, and transpose.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=F3zT-u58p3s',
-    youtubeId: 'F3zT-u58p3s',
+    youtubeUrl: 'https://www.youtube.com/watch?v=w_Ompbzl2pA',
+    youtubeId: 'w_Ompbzl2pA',
     keyNotes: `• Matrix Order:
   - Rows (horizontal) × Columns (vertical): m × n.
 • Addition & Subtraction:
@@ -1088,8 +1088,8 @@ export const SHS3_MATH_TOPICS: CurriculumTopic[] = [
     description: "Determinant det(A) = ad - bc, condition for singular matrices (det = 0), adjoint matrix, multiplicative inverse A⁻¹ = (1/det) adj(A), and identity matrix I.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=F3zT-u58p3s',
-    youtubeId: 'F3zT-u58p3s',
+    youtubeUrl: 'https://www.youtube.com/watch?v=MnrxmqxbHCE',
+    youtubeId: 'MnrxmqxbHCE',
     keyNotes: `• For Matrix A = [[a, b], [c, d]]:
   - Determinant: det(A) = |A| = ad - bc.
   - Singular Matrix: det(A) = 0 (has NO inverse).
@@ -1163,8 +1163,8 @@ export const SHS3_MATH_TOPICS: CurriculumTopic[] = [
     description: "Matrix equation AX = B, solving via pre-multiplication X = A⁻¹B, Cramer’s rule x = D_x/D and y = D_y/D, and real-world word problems.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=F3zT-u58p3s',
-    youtubeId: 'F3zT-u58p3s',
+    youtubeUrl: 'https://www.youtube.com/watch?v=CWfuO_ksGQE',
+    youtubeId: 'CWfuO_ksGQE',
     keyNotes: `• Matrix Method (Inverse Method):
   - System: a₁x + b₁y = c₁ and a₂x + b₂y = c₂.
   - Matrix Form: AX = B => [[a₁, b₁], [a₂, b₂]] [[x], [y]] = [[c₁], [c₂]].
@@ -1241,8 +1241,8 @@ export const SHS3_MATH_TOPICS: CurriculumTopic[] = [
     description: "Propositions, truth tables for negation (~p), conjunction (p ∧ q), disjunction (p ∨ q), implication (p → q), equivalence (p ↔ q), and tautologies.",
     isFreeTrial: false,
     isVip: true,
-    youtubeUrl: 'https://www.youtube.com/watch?v=F3zT-u58p3s',
-    youtubeId: 'F3zT-u58p3s',
+    youtubeUrl: 'https://www.youtube.com/watch?v=A6xm9BBQyVg',
+    youtubeId: 'A6xm9BBQyVg',
     keyNotes: `• Logical Connectives:
   - Negation (~p or ¬p): Opposite truth value.
   - Conjunction (p ∧ q): TRUE only when BOTH are True.

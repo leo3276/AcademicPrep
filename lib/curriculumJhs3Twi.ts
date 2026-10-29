@@ -15,8 +15,8 @@ export const JHS3_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua Akanfo nkyia ahorow sɛnea aberɛ ne dibea teɛ, nkabomde (conjunctions) ahorow a wɔde ka nsɛm bom, ne kasamu nhyehyɛe (kasamu mmerɛw, kasamu frafra ne kasamu dennen) ma BECE sɔhwɛ.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=l_a6a0u5GfE",
-    "youtubeId": "l_a6a0u5GfE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=0N7-qItxJjM",
+    "youtubeId": "0N7-qItxJjM",
     "keyNotes": "• Akanfo Nkyia Ahoboa ne Mmuae:\n  - Anɔpa nkyia : 'Mema wo akye' (Mmuae : 'Yaa agya' / 'Yaa ɛna' / 'Yaa nua').\n  - Awia nkyia : 'Mema wo aha' (Mmuae : 'Yaa agya' / 'Yaa anua').\n  - Anwummere nkyia : 'Mema wo adwo' (Mmuae : 'Yaa agya' / 'Yaa ɛna').\n  - Dibea ne mfe nkyia : Nnipa a wanyin anaasɛ ahemfo de 'Nananom nkye' na wɔde kyea wɔn.\n• Nkabomde (Conjunctions) wɔ Twi Kasa mu:\n  - Nkabomde yɛ asɛmfua a wɔde ka nsɛm mmienu anaa kasamu mmienu bom.\n  - Nhwɛso : ne, nanso, na, efisɛ, sɛ, nti, anaasɛ, gye sɛ.\n  - Kasamu nhwɛso : 'Kofi kɔɔ gua so NA ɔtɔɔ nnuaba' ; 'Amma sua ade pii NANSO wantumi ampase'.\n• Kasamu Ahorow (Sentence Types):\n  - Kasamu Mmerɛw (Simple Sentence) : Ɛwɔ asɛntɔdwe baako ne adeyɔ baako pɛ (Nhwɛso: 'Abofra no redi ampesie').\n  - Kasamu Frafra (Compound Sentence) : Kasamu mmerɛw mmienu a nkabomde te sɛ 'na', 'nanso', 'anaasɛ' aka abom (Nhwɛso: 'Kofi bɔɔ bɔɔl na Amma nso kɔsaw').\n  - Kasamu Dennen (Complex Sentence) : Kasamu titiriw baako ne kasamu abataho baako a nkabomde te sɛ 'efisɛ', 'bere a', 'sɛ' bata ho.\n• Chief Examiner BECE Kɔkɔbɔ:\n  - Nhwɛ so na woanka sɛ 'Yaa asɔn' mma anɔpa nkyia gye sɛ aberantedan anaasɛ abusua pɔtee bi mu nko ara na wɔde gye so saa!",
     "examples": [
       {
@@ -51,8 +51,8 @@ export const JHS3_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua edin nsianimu (adjectives) ne adeyɔ nsianimu (adverbs) nhyehyɛe, adeyɔ ahoboa, mmrɛ ahorow (mprempren, daakye, bere a atwam), ne sɛnea wɔde yɛ kasamu ma BECE sɔhwɛ.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=l_a6a0u5GfE",
-    "youtubeId": "l_a6a0u5GfE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=IzY3lph-oss",
+    "youtubeId": "IzY3lph-oss",
     "keyNotes": "• Adeyɔ (Verbs) wɔ Twi Kasa mu:\n  - Adeyɔ yɛ asɛmfua a ɛkyerɛ nneyɛe, tebea anaasɛ biribi a ɛrekɔ so.\n  - Nhwɛso : di, kɔ, twerɛ, bɔ, sua, keka, gyina.\n• Adeyɔ Mmrɛ Ahorow (Tenses):\n  - Mprempren Mmrɛ (Present Continuous) : Wɔde nkyekyɛmu 're-' ka adeyɔ no ho (Nhwɛso: rekɔ, resua, redidi).\n  - Berɛ a Atwam (Past Tense) : Wɔde ahyɛnsode ma adeyɔ no (Nhwɛso: kɔɔ, dii, twerɛe).\n  - Daakye Mmrɛ (Future Tense) : Wɔde nkyekyɛmu 'bɛ-' ka adeyɔ no anim (Nhwɛso: bɛkɔ, bɛba, bɛsua).\n• Edin Nsianimu (Adjectives):\n  - Asɛmfua a ɛkyerɛ edin bi suban, ahosuo, kɛseɛ anaasɛ tebea.\n  - Nhwɛso : kɛse, tenten, fɛfɛ, tuntum, kɔkɔɔ, dɛ, nyansafo.\n  - Kasamu mu : 'Abawoɔ no yɛ kɛse' ; 'Ɔwɔ ataade fɛfɛ bi'.\n• Adeyɔ Nsianimu (Adverbs):\n  - Asɛmfua a ɛkyerɛ sɛnea, faako anaasɛ berɛ a adeyɔ bi kɔɔ so.\n  - Nhwɛso : ntɛmntɛm, brɛoo, pii, dodo, nkae, anɔpa.\n  - Kasamu mu : 'Ɔkraman no tuu mmirika ntɛmntɛm' ; 'Kofi kasa brɛoo'.\n• Chief Examiner BECE Kɔkɔbɔ:\n  - Edin nsianimu ba edin no akyi wɔ Twi kasa mu (ataade fɛfɛ), nanso adeyɔ nsianimu kyerɛ sɛnea nneyɛe no sii (tuu mmirika ntɛm).",
     "examples": [
       {
@@ -88,8 +88,8 @@ export const JHS3_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua kasamu ahoboa mfididwuma: asɛntɔdwe a ɛyɛ nneyɛe no, adeyɔ a ɛkura tumi, ne asɛnyiwa a nneyɛe no kɔka no (asɛnyiwa pɔtee ne asɛnyiwa pataa) wɔ Akuapem Twi mu.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=l_a6a0u5GfE",
-    "youtubeId": "l_a6a0u5GfE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=2VRFsotQZ1c",
+    "youtubeId": "2VRFsotQZ1c",
     "keyNotes": "• Kasamu Fã Ahorow Titiriw:\n  - 1. Asɛntɔdwe (Subject) : Onipa, aboa anaasɛ ade a ɔreyɛ nneyɛe no anaasɛ asɛm no fa ne ho wɔ kasamu no mu.\n  - 2. Adeyɔ (Verb) : Nneyɛe ankasa a asɛntɔdwe no reyɛ.\n  - 3. Asɛnyiwa (Object) : Onipa, aboa anaasɛ ade a nneyɛe no kɔka no anaasɛ ɛgye adeyɔ no.\n• Nhwɛso a Ɛda Adi Pefee:\n  - Kasamu : 'Ɔkyerɛkyerɛfo no kyerɛ sukuufo no Twi kasa.'\n  - Asɛntɔdwe : 'Ɔkyerɛkyerɛfo no'\n  - Adeyɔ : 'kyerɛ'\n  - Asɛnyiwa 1 (Indirect Object) : 'sukuufo no'\n  - Asɛnyiwa 2 (Direct Object) : 'Twi kasa'\n• Adeyɔ a Ɛhia Asɛnyiwa (Transitive Verb) ne Adeyɔ a Enhia Asɛnyiwa (Intransitive Verb):\n  - Adeyɔ a ɛhia asɛnyiwa : di (eduan), tɔ (ntama), bɔ (bɔɔl).\n  - Adeyɔ a enhia asɛnyiwa : da (ɔdae), wu (ɔwui), serew (ɔserewee).\n• Chief Examiner BECE Kɔkɔbɔ:\n  - Monhwɛ yiye na moamfa asɛntɔdwe anto asɛnyiwa ananmu! Asɛntɔdwe taa di kan ba kasamu mu na adeyɔ adi akyi.",
     "examples": [
       {
@@ -125,8 +125,8 @@ export const JHS3_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua Akanfo kasakoa (idioms), nkasafii ne kasasu (figures of speech: abɛbuo, sɛsodeɛ, animtiatwa, kasamfonini) a ɛma Twi kasa yɛ dɛ na ɛhyɛ nyansa ma BECE sɔhwɛ.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=l_a6a0u5GfE",
-    "youtubeId": "l_a6a0u5GfE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=j_wcNntw2-w",
+    "youtubeId": "j_wcNntw2-w",
     "keyNotes": "• Dɛn ne Kasakoa (Idioms)?\n  - Kasakoa yɛ asɛm a ne ntease nna adi pefee wɔ nsɛmfua no anom kɔkɔɔkɔ, na mmom ɛkura ntease a emu dɔ a ɛhyɛ aseɛ.\n  - Nhwɛso ne ne Ntease:\n    * 'Ne nsa yɛ duru' -> Ɔyɛ ɔkorɔmfo (he is a thief).\n    * 'Ne ti yɛ sumii' -> Ɔwɔ anyamesɛm / ne ti yɛ (he is lucky).\n    * 'Ne tirim yɛ den' -> Ɔnni ahummɔbɔrɔ / ne yam yɛ nwono (he is wicked/cruel).\n    * 'Odi ne nan akyi' -> Osuasua no (he imitates him).\n    * 'Ɔgyina n'afanan so' -> Wanya ahonyadeɛ / ontweri obiara (he is independent).\n• Kasasu (Figures of Speech) wɔ Twi Kasa mu:\n  - Sɛsodeɛ (Simile) : Wɔde nsɛmfua te sɛ 'sɛ', 'sɛnea', 'te sɛ' toto nneɛma mmienu ho (Nhwɛso: 'Ne ho yɛ fɛ te sɛ osutɔbrɛ mu nhwiren').\n  - Kasamfonini (Metaphor) : Wɔde ade baako to foforo ananmu koraa a wɔamfa 'te sɛ' anka ho (Nhwɛso: 'Kofi yɛ gyata wɔ akono').\n  - Nyinmabuo / Nnipadwuma a Wɔde Ma Nneɛma (Personification) : Wɔde onipa suban ma ade a enni nkwa (Nhwɛso: 'Nsuwansuwa no resaw na nnua no rebɔ nsam').\n  - Kasagyeene / Anintimbuo (Hyperbole/Exaggeration) : Asɛm a wɔapopa no kɛse aboro so (Nhwɛso: 'Metweaa me nsa no, me nusu guu bɔkiti ma').\n• Chief Examiner BECE Kɔkɔbɔ:\n  - Kasakoa ntease nkyerɛ nsɛmfua no ankasa a wɔakyerɛw no! Sɛ wɔka sɛ 'ne nsa aka' a, ɛkyerɛ sɛ 'wanya bi' na ɛnyɛ sɛ ne nsa pɔtee aka biribi.",
     "examples": [
       {
@@ -234,8 +234,8 @@ export const JHS3_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua Akanfo amammere a ɛfa mmabaa bragoro ho (dwumadie, suhyehyɛ, aniwuo a ɛwɔ kyirbra mu) ne babadintoɔ / dintoɔ amammere ne mfaso a ɛwɔ so ma nneɛma a atwa yɛn ho ahyia.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=l_a6a0u5GfE",
-    "youtubeId": "l_a6a0u5GfE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ldrZ6ZQDjLY",
+    "youtubeId": "ldrZ6ZQDjLY",
     "keyNotes": "• Dɛn ne Bragoro wɔ Akanfo Amammere mu?\n  - Bragoro yɛ amammere a wɔyɛ de gye ababaawa a wabu n'afe so anaasɛ watu mpanyin (menstruation) kɔ mpaninfe mu.\n  - Ne Botae : Ɛkyerɛ sɛ ababaawa no abere sɛ ɔware na watumi awo abofra.\n• Bragoro Nhyehyɛe Ahorow:\n  - 1. Amannɛbɔ : Ababaawa no ka kyerɛ ne maame, na ne maame kɔbɔ ɔhemmea (queen mother) amanneɛ.\n  - 2. Abosomguso : Ɔhemmea hu no wie a, wɔto nsa frɛ abusuakuo ma wɔbɔ nsuo gu fam kɔbɔ nananom nsamanfo amanneɛ.\n  - 3. Asubɔ ne Dwensuo : Wɔkɔguare no wɔ asubɔnten mu de popa fifi ne bɔne nyinaa.\n  - 4. Ɛtoɔ Di : Wɔnoa ɛtoɔ (mashed yam with eggs) ma no di na wɔpete bi gu abonten so ma nananom.\n  - 5. Ahosiesie ne Agoru : Wɔde kente, sika kɔkɔɔ ne ahenie siesie no ma ɔtena badwam ma nkurɔfo bɛkyea no na wɔde akyɛde brɛ no.\n• Kyirbra (Akyiwade Kɛse):\n  - Sɛ ababaawa bi nyinsɛn ansa na wayɛ bragoro a, wɔfrɛ no 'Kyirbra'.\n  - Ɛyɛ akyiwade kɛse a ɛde aniwuo, mmusu ne abosom abufuo brɛ abusua no ne ɔman no nyinaa. Wɔpata asase no ansa na asomdwoe aba.\n• Babadintoɔ / Dintoɔ (Naming Ceremony):\n  - Amammere a wɔde to abofra foforo din wɔ ne nna awotwe so (8th day after birth).\n  - Wɔbɔ edin pa ma no, na wɔde nsuo ne nsa ka n'anom ka sɛ: 'Woka nsuo a, nsuo ; woka nsa a, nsa' (nokwaredi ne ahobrɛase).\n• Chief Examiner BECE Kɔkɔbɔ:\n  - Monkae nsonosonoɔ a ɛda Bragoro (Akanfo) ne Dipo (Dangmefo) ntam pefee wɔ sɔhwɛ mu!",
     "examples": [
       {
@@ -270,8 +270,8 @@ export const JHS3_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua kwan a wɔfa so gye awareɛ wɔ Akanman mu (opɔnkɔbɔ, ti-nsa, tiri-aseda), awaregyeɛ mfaso, ne agyapadeɛ di nhyehyɛe (wofa-ase di adeɛ ne PNDC Law 111 mfaso).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=l_a6a0u5GfE",
-    "youtubeId": "l_a6a0u5GfE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=1bFN7KGTdB0",
+    "youtubeId": "1bFN7KGTdB0",
     "keyNotes": "• Kwan a Wɔfa so Gye Awareɛ wɔ Akanfo Mu:\n  - 1. Kasasie / Ɔpɛ : Aberanteɛ no hu abaayewa no na ɔne no kɔ nkitahodi.\n  - 2. Ahwehwɛmu : Mmusuakuo mmienu no mu biara kɔyɛ nhwehwɛmu a emu dɔ fa ɔfoforo no abusua ho (sɛ abusuafie no wɔ asonoma, amene, amamfõ, kokoram anaa akyiwade bi).\n  - 3. Kɔkɔɔkɔ / Abowmubɔ (The Knocking) : Aberanteɛ no awofo kɔbɔ ababaawa no fie apon mu kyerɛ wɔn anisoadehunu de nsa brɛ wɔn.\n  - 4. Tiri-nsa ne Tiri-aseda : Aberanteɛ no abusua ma ti-nsa, ntoma, akyɛde ma maame ne papa, ne danta sika.\n  - 5. Awareɛ Agoru : Ayeforohyia a nkurɔfo ba bɛkyea wɔn, ma wɔn nkyerɛkyerɛ ne ahotoso.\n• Akanfo Agyapadeɛ Di (Inheritance System):\n  - Akanfo de mogya na ɛdi adeɛ (Matrilineal System) : Ɔbarima wu a, ne nua barima anaa ne wofase (ne nuabea ba) na odi n'adeɛ.\n  - Ɔyere ne mma no di agyapadeɛ a ɔbarima no de n'anom ahyɛde maa wɔn anaa afum a ɔne wɔn yɛe.\n• PNDC Mmara 111 (Intestate Succession Law, 1985):\n  - Mmara a aban hyɛe de bɔɔ akunafo ne mma a wɔn papa anaa wɔn maame wui a wantwerɛ samansiw (will) ho ban.\n  - Ɛkyɛ agyapade no mu ma ɔyere, mma ne abusuafo pɛpɛɛpɛ sɛnea obiara nsa bɛka bi a obiara nteetee.\n• Chief Examiner BECE Kɔkɔbɔ:\n  - Mma mo werɛ mfiri sɛ Akanfo kora abusua mogya mu (matrilineal) na mmom Ewefo ne Gafo de agya nananom kwan (patrilineal) so na ɛdi adeɛ.",
     "examples": [
       {
@@ -306,8 +306,8 @@ export const JHS3_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua Akanfo gyidi wɔ owuo ho, asamando nsɛm, ayie nhyehyɛe (nsiesie, nsuoguso, nsamanfo ahotoso) ne sɛnea obi fa so bɛyɛ nananom samanwura pa.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=l_a6a0u5GfE",
-    "youtubeId": "l_a6a0u5GfE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ZMrliGe-kUw",
+    "youtubeId": "ZMrliGe-kUw",
     "keyNotes": "• Akanfo Adwene wɔ Owuo Ho:\n  - Akanfo gye di sɛ owuo nyɛ onipa no awiei koraa, na mmom ɛyɛ akwantu a onipa tu fi wiase ha kɔ Asamando (the ancestral world).\n  - Owuo pa : Nea wanyin pɛpɛɛpɛ, woo mma, bɔɔ bra pa, na owui fam kwan so a mmusu biara nni ho.\n  - Atɔfowuo (Abominable Death) : Nea okum ne ho (suicide), nea woguu ne so tuo, nea nsu faa no, anaasɛ owuu yarebɔne mu. Wonsie no ayie pa mu.\n• Kwan a Wɔfa so Bɛyɛ Nananom Samanfo (Ancestorhood Criteria):\n  - 1. Onipa no nyinii kɔɔ n'awiei mu pa ara (Ripe old age).\n  - 2. Ɔwaree woo mma (Marriage and children to preserve the lineage).\n  - 3. Ɔbɔɔ bra pa a aniwuo biara nni ho (Moral integrity).\n  - 4. Owuu owuo pa a mmusu nni ho (Natural, peaceful death).\n• Nsuoguso ne Nsamanfo Mpaebɔ (Libation):\n  - Wɔgu nsa gu fam de to nsa frɛ Otweaduampon Nyame, abosom ne nananom nsamanfo sɛ wɔmmɛgye nsa nnom na wɔnhyira abusuafo.\n• Ayie Dodoɔ no Ho Kɔkɔbɔ:\n  - Sika kɛse a wɔsɛe no wɔ ayie ase (adaka a ne bo yɛ den, aduan ne nsa, akyiretwerɛ) ma mmusuafo kɔka bosea de hia ba afie mu.\n• Chief Examiner BECE Kɔkɔbɔ:\n  - Mma mo werɛ mfiri ahwehwɛde anan a ɛma obi bɛyɛ saman pa (ripe age, children, moral life, natural death)!",
     "examples": [
       {

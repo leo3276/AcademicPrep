@@ -15,8 +15,8 @@ export const JHS3_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Maîtriser la présentation personnelle approfondie : nom, âge, nationalité, profession des parents, adresse, traits physiques et moraux, et remplissage de fiches d'identité officielles pour l'examen du BECE.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=hd0_GZHHMrE",
-    "youtubeId": "hd0_GZHHMrE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=k5gHEDm7st0",
+    "youtubeId": "k5gHEDm7st0",
     "keyNotes": "• Les Éléments Essentiels de la Présentation Personnelle:\n  - L'état civil : Je m'appelle..., Mon prénom est..., Mon nom de famille est...\n  - L'âge : J'ai quinze ans (Attention : en français, on utilise le verbe AVOIR, jamais ÊTRE pour l'âge).\n  - La nationalité : Je suis ghanéen / ghanéenne (accord en genre).\n  - L'origine et la résidence : Je viens de Kumasi ; j'habite à Accra au quartier Dansoman.\n  - La date et le lieu de naissance : Je suis né(e) le 12 mars 2011 à Cape Coast.\n• La Description Physique et Morale:\n  - Physique : Je suis de taille moyenne, élancé(e), teint noir/clair, cheveux courts et noirs.\n  - Caractère/Moral : Je suis travailleur/travailleuse, poli(e), courtois(e), ponctuel(le) et ambitieux/ambitieuse.\n• Remplir une Fiche d'Identité BECE:\n  - Nom (Surname), Prénom (First name), Date de naissance (Date of birth), Lieu de naissance (Place of birth), Nationalité (Nationality), Établissement scolaire (School), Classe (Form/Class).\n• Chief Examiner BECE Warning:\n  - Erreur fréquente : Ne dites jamais \"Je suis 15 ans\" (calque de l'anglais \"I am 15 years old\") ! Dites toujours : \"J'ai 15 ans\".\n  - N'oubliez pas d'accorder la nationalité : un garçon dit \"Je suis ghanéen\", une fille dit \"Je suis ghanéenne\".",
     "examples": [
       {
@@ -55,8 +55,8 @@ export const JHS3_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Explorer le vocabulaire de la famille nucléaire et élargie : grands-parents, parents, frères/sœurs, oncles/tantes, cousins/cousines, liens de parenté et utilisation précise des adjectifs possessifs (mon, ma, mes / son, sa, ses).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=H2Z4vX1Vv14",
-    "youtubeId": "H2Z4vX1Vv14",
+    "youtubeUrl": "https://www.youtube.com/watch?v=dw-05yO2hn4",
+    "youtubeId": "dw-05yO2hn4",
     "keyNotes": "• La Famille Nucléaire et Élargie (Extended Family):\n  - Les grands-parents : le grand-père, la grand-mère, les aïeux.\n  - Les parents : le père (papa), la mère (maman).\n  - Les enfants : le fils, la fille, le frère aîné (elder brother), la sœur cadette (younger sister), les jumeaux / jumelles (twins).\n  - La parenté élargie : l'oncle (maternel/paternel), la tante, le cousin, la cousine, le neveu (nephew), la nièce (niece).\n  - La belle-famille : le beau-père, la belle-mère, le beau-frère.\n• Les Adjectifs Possessifs:\n  - Masculin singulier : mon, ton, son (mon père, son oncle).\n  - Féminin singulier : ma, ta, sa (ma mère, sa tante).\n  - Devant un nom féminin commençant par une voyelle ou un h muet : on utilise MON, TON, SON pour l'euphonie (mon école, son amie, mon histoire).\n  - Pluriel : mes, tes, ses / nos, vos, leurs.\n• Les Professions des Membres de la Famille:\n  - Mon père est enseignant / commerçant / avocat / agriculteur / mécanicien.\n  - Ma mère est infirmière / couturière / banquière / pharmacienne.\n• Chief Examiner BECE Warning:\n  - Attention à l'euphonie : Ne dites jamais \"ma amie\" ou \"sa école\" ! Dites impérativement : \"mon amie\", \"son école\".",
     "examples": [
       {
@@ -93,8 +93,8 @@ export const JHS3_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Exprimer les sensations physiques, décrire les parties du corps, formuler des douleurs avec la structure 'avoir mal à...', dialoguer chez le médecin ou à la pharmacie, et donner des conseils d'hygiène préventive.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Fj-sZ4p2T1E",
-    "youtubeId": "Fj-sZ4p2T1E",
+    "youtubeUrl": "https://www.youtube.com/watch?v=uj4Ju6qdjIg",
+    "youtubeId": "uj4Ju6qdjIg",
     "keyNotes": "• Les Parties Principales du Corps Humain:\n  - La tête : les yeux, le nez, la bouche, les oreilles, les dents, la gorge.\n  - Le tronc : le cou, la poitrine, le cœur, le ventre, le dos.\n  - Les membres : le bras, le coude, la main, les doigts, la jambe, le genou, le pied.\n• La Structure 'Avoir Mal À + Partie du Corps':\n  - À + le = AU : J'ai mal au ventre, au dos, au genou, au pied.\n  - À + la = À LA : J'ai mal à la tête, à la gorge, à la jambe.\n  - À + l' = À L' : J'ai mal à l'œil, à l'oreille, à l'estomac.\n  - À + les = AUX : J'ai mal aux dents, aux yeux, aux oreilles.\n• Les Maladies Courantes au Ghana:\n  - Le paludisme (malaria), le rhume (cold), la fièvre (fever), la toux (cough), la diarrhée (diarrhea), la migraine.\n  - Symptômes : J'ai de la fièvre, je tousse, j'ai des frissons, je vomis, je me sens faible.\n• Chez le Médecin et à la Pharmacie:\n  - Le médecin : 'Où avez-vous mal ? Depuis quand souffrez-vous de ce mal ?'\n  - L'ordonnance : Prenez ces comprimés trois fois par jour après les repas ; buvez beaucoup d'eau.\n• Chief Examiner BECE Warning:\n  - N'oubliez pas les contractions obligatoires : à + le = au ; à + les = aux ! Dire \"J'ai mal à le ventre\" est une faute pénalisée par les correcteurs du WAEC.",
     "examples": [
       {
@@ -132,8 +132,8 @@ export const JHS3_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Décrire la journée scolaire, exprimer ses matières préférées, formuler ses ambitions professionnelles et maîtriser l'expression du futur pour le BECE (médecin, ingénieur, diplomate, enseignant, entrepreneur).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=QkUjYv0_aQE",
-    "youtubeId": "QkUjYv0_aQE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=CleyL1EFT_0",
+    "youtubeId": "CleyL1EFT_0",
     "keyNotes": "• Les Lieux et les Personnes à l'École:\n  - Lieux : la salle de classe, le laboratoire d'informatique, la bibliothèque, la cour de récréation, le bureau du directeur (headmaster's office), le terrain de football.\n  - Personnes : le directeur / la directrice, l'enseignant / l'enseignante, le préfet / la préfète, les camarades de classe.\n• Les Matières Scolaires:\n  - Le français, l'anglais, les mathématiques, les sciences intégrées, les sciences sociales, l'informatique (ICT), l'éducation religieuse et morale (RME), le dessin technique.\n  - Exprimer ses préférences : Ma matière préférée est..., J'adore les mathématiques parce que c'est passionnant, Je trouve l'histoire très intéressante.\n• Les Métiers et Carrières Futures:\n  - Métiers : médecin, chirurgien, infirmier/infirmière, ingénieur, informaticien, avocat/avocate, diplomate, journaliste, pilote, agronome, menuisier, électricien.\n  - Exprimer son projet : Quand je serai grand(e)..., À l'avenir, je voudrais devenir..., Mon rêve est de travailler comme...\n• Le Futur Simple pour exprimer les Projets:\n  - Verbes réguliers : radical de l'infinitif + terminaisons (-ai, -as, -a, -ons, -ez, -ont).\n  - Exemples : Je réussirai mon examen du BECE, j'étudierai les sciences au lycée.\n• Chief Examiner BECE Warning:\n  - Pour les professions, n'utilisez pas d'article indéfini après le verbe être : Dites \"Je veux être médecin\", NON \"Je veux être un médecin\" !",
     "examples": [
       {
@@ -170,8 +170,8 @@ export const JHS3_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Décrire son logement (pièces, meubles), situer des bâtiments dans sa ville/village, indiquer un itinéraire urbain et aborder les thèmes écologiques d'actualité : propreté, recyclage et lutte contre la pollution.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Fj-sZ4p2T1E",
-    "youtubeId": "Fj-sZ4p2T1E",
+    "youtubeUrl": "https://www.youtube.com/watch?v=qQjC1bnZ4n0",
+    "youtubeId": "qQjC1bnZ4n0",
     "keyNotes": "• Les Pièces de la Maison et les Meubles:\n  - Les pièces : le salon (living room), la salle à manger, la cuisine, la chambre à coucher, la salle de bains, les toilettes, la véranda, le jardin, la cour.\n  - Le mobilier : le canapé, le fauteuil, la table, la chaise, le lit, l'armoire, le réfrigérateur, la cuisinière, le ventilateur.\n• Situer dans l'Espace et Indiquer un Chemin (Directions):\n  - Prépositions de lieu : devant, derrière, à côté de, en face de, entre, près de, loin de, au coin de.\n  - Verbes d'orientation : tourner à gauche, tourner à droite, continuer tout droit, traverser la rue, prendre la première rue à droite.\n• L'Environnement et le Développement Durable:\n  - Vocabulaire vert : protéger l'environnement, planter des arbres, nettoyer les caniveaux (gutters), jeter les ordures dans la poubelle, recycler le plastique.\n  - Les fléaux écologiques : la pollution des rivières, l'orpaillage clandestin (galamsey), le déboisement (deforestation), les inondations urbaines.\n• Chief Examiner BECE Warning:\n  - Faites attention à la contraction avec 'de' : à côté de + le = à côté du ; en face de + les = en face des !",
     "examples": [
       {
@@ -207,8 +207,8 @@ export const JHS3_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Explorer le vocabulaire culinaire ghanéen et francophone : commander un repas au restaurant, marchander au grand marché, et employer rigoureusement les articles partitifs (du, de la, de l', des) et les expressions de quantité.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=481M3d95m20",
-    "youtubeId": "481M3d95m20",
+    "youtubeUrl": "https://www.youtube.com/watch?v=uz48MDqH_GY",
+    "youtubeId": "uz48MDqH_GY",
     "keyNotes": "• Les Repas de la Journée:\n  - Le petit déjeuner (le matin) : du pain, du beurre, des œufs, du thé, du chocolat chaud, de la bouillie de maïs (koko).\n  - Le déjeuner (à midi) : du riz au gras (jollof rice), du foutou avec de la soupe de poisson, du waakye.\n  - Le dîner (le soir) : de l'igname bouillie, du plantain frit (kelewele), de la soupe légère.\n• Les Plats Traditionnels Ghanéens en Français:\n  - Le fufu : le foutou d'igname / de manioc avec de la sauce aux noix de palme (palm nut soup) ou sauce claire (light soup).\n  - Le riz jollof : le riz au gras à la tomate avec du poulet grillé ou du poisson frit.\n  - Les fruits et légumes : des bananes, des ananas, des mangues, des tomates, des oignons, du piment.\n• Les Articles Partitifs:\n  - Masculin singulier : DU (Je mange du pain, du riz, du poulet).\n  - Féminin singulier : DE LA (Elle boit de la soupe, de la limonade).\n  - Devant voyelle : DE L' (Je bois de l'eau, de l'huile).\n  - Pluriel : DES (Il mange des ignames, des oranges).\n  - Règle capitale à la forme négative : DU, DE LA, DE L', DES deviennent obligatoirement DE ou D' (Je ne mange pas DE viande ; Je ne bois pas D'eau).\n• Chief Examiner BECE Warning:\n  - Ne dites JAMAIS \"Je ne mange pas du viande\" ! À la négation, les partitifs se transforment toujours en 'DE' ou 'D''.",
     "examples": [
       {
@@ -244,8 +244,8 @@ export const JHS3_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Identifier et décrire les vêtements traditionnels et modernes : pagne kente, batakari, chemises, robes, chaussures, couleurs, matières (coton, soie), adjectifs démonstratifs (ce, cet, cette, ces) et scènes d'achat.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Fj-sZ4p2T1E",
-    "youtubeId": "Fj-sZ4p2T1E",
+    "youtubeUrl": "https://www.youtube.com/watch?v=fFgyrez1ySA",
+    "youtubeId": "fFgyrez1ySA",
     "keyNotes": "• Les Vêtements Traditionnels et Modernes:\n  - Traditionnels : le tissu kente tissé à la main, le boubou / batakari du Nord, le pagne traditionnel en coton wax.\n  - Hommes : la chemise, le pantalon, le costume, la cravate, le short, les sandales en cuir.\n  - Femmes : la robe, la jupe, le chemisier, le foulard, le sac à main, les chaussures à talons.\n• Les Couleurs et les Accords:\n  - Les adjectifs de couleur s'accordent en genre et en nombre avec le nom : une chemise bleue, des chaussures noires, un pantalon blanc.\n  - Exceptions invariables : marron et orange ne s'accordent jamais (des robes marron, des chemises orange).\n• Les Adjectifs Démonstratifs:\n  - Masculin singulier devant consonne : CE (ce pantalon, ce pagne).\n  - Masculin singulier devant voyelle ou h muet : CET (cet homme, cet imperméable, cet habit).\n  - Féminin singulier : CETTE (cette robe, cette jupe, cette chemise).\n  - Pluriel : CES (ces vêtements, ces chaussures, ces pagnes).\n• Acheter et Marchander au Marché:\n  - 'Combien coûte ce tissu kente ?' / 'C'est trop cher ! Vous pouvez diminuer un peu le prix ?'\n• Chief Examiner BECE Warning:\n  - Attention à l'adjectif démonstratif CET : employez CET impérativement devant un nom masculin qui débute par une voyelle (ex: cet enfant, cet anorak), jamais CE !",
     "examples": [
       {
@@ -282,8 +282,8 @@ export const JHS3_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Préparer un voyage, utiliser les moyens de transport urbains et interurbains (trotro, taxi, car, train, avion), demander son chemin et faire visiter des sites touristiques renommés du Ghana (château de Cape Coast, parc de Kakum).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Fj-sZ4p2T1E",
-    "youtubeId": "Fj-sZ4p2T1E",
+    "youtubeUrl": "https://www.youtube.com/watch?v=VLo69LRTzm8",
+    "youtubeId": "VLo69LRTzm8",
     "keyNotes": "• Les Moyens de Transport et les Prépositions Associées:\n  - Moyens fermés (véhicules dans lesquels on entre) : EN (en voiture, en bus, en train, en avion, en taxi, en trotro).\n  - Moyens ouverts (sur lesquels on monte) : À (à vélo, à moto, à cheval, à pied).\n• À la Gare Routière (Lorry Station):\n  - Vocabulaire : acheter un billet/ticket, le chauffeur, le contrôleur (mate), les bagages, le départ, l'arrivée, monter dans le bus, descendre du car.\n  - Dialogues : 'Combien coûte le trajet Accra-Kumasi ?', 'À quelle heure part le prochain car ?'\n• Les Sites Touristiques Célèbres du Ghana en Français:\n  - Le Château de Cape Coast et le Fort d'Elmina (sites historiques de l'esclavage).\n  - La passerelle dans les arbres du Parc National de Kakum (canopy walkway).\n  - Les cascades de Wli dans la région de la Volta (les plus hautes d'Afrique de l'Ouest).\n  - Le village sur pilotis de Nzulezu près de Beyin.\n  - Le parc national de Mole avec ses éléphants sauvages dans le Nord.\n• Chief Examiner BECE Warning:\n  - Attention aux prépositions : Dites \"Je voyage EN bus\", mais \"Je vais à l'école À pied\" ! Ne confondez pas EN et À pour les transports.",
     "examples": [
       {
@@ -319,8 +319,8 @@ export const JHS3_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Décrire les conditions atmosphériques, la météo quotidienne, les saisons tropicales du Ghana (harmattan, saison des pluies, saison sèche), et associer chaque climat aux activités et loisirs appropriés.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Fj-sZ4p2T1E",
-    "youtubeId": "Fj-sZ4p2T1E",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Z8guRWob5HA",
+    "youtubeId": "Z8guRWob5HA",
     "keyNotes": "• Les Expressions Météorologiques avec 'IL FAIT':\n  - Il fait beau (good weather), il fait mauvais (bad weather).\n  - Il fait chaud (hot), il fait froid (cold), il fait frais (cool/chilly).\n  - Il fait du soleil (sunny), il fait du vent (windy).\n• Les Autres Expressions Météorologiques:\n  - Il pleut (It rains - verbe pleuvoir).\n  - Le ciel est couvert / nuageux (cloudy).\n  - Il y a des éclairs et du tonnerre (lightning and thunder).\n• Les Saisons au Ghana:\n  - La saison des pluies : de mai à juillet et de septembre à octobre. Il pleut abondamment, les rivières débordent.\n  - La saison sèche : le soleil brille ardemment, la chaleur est étouffante.\n  - L'harmattan : de décembre à février. Vent sec et poussiéreux venant du Sahara, matinées fraîches et brumeuses.\n• Les Activités de Loisirs selon le Temps:\n  - Quand il fait beau : nous jouons au football, nous allons à la plage de Labadi, nous faisons un pique-nique.\n  - Quand il pleut : nous restons à la maison pour lire des contes, regarder la télévision ou faire des jeux de société.\n• Chief Examiner BECE Warning:\n  - Ne confondez pas \"Il fait chaud\" (météo) avec \"J'ai chaud\" (sensation corporelle d'une personne) ! Ne dites jamais \"La météo est chaude\".",
     "examples": [
       {
@@ -355,8 +355,8 @@ export const JHS3_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Maîtriser la distinction essentielle entre le Passé Composé (actions ponctuelles et achevées) et l'Imparfait (descriptions, habitudes passées), l'accord du participe passé avec Être et Avoir, et les verbes irréguliers fréquents au BECE.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=kY3jXWjK2t8",
-    "youtubeId": "kY3jXWjK2t8",
+    "youtubeUrl": "https://www.youtube.com/watch?v=nx5mc2vnBMs",
+    "youtubeId": "nx5mc2vnBMs",
     "keyNotes": "• Formation du Passé Composé:\n  - Auxiliaire AVOIR ou ÊTRE au présent + Participe Passé du verbe.\n  - La plupart des verbes utilisent AVOIR : J'ai mangé, tu as fini, nous avons vendu.\n  - Les 16 verbes de mouvement / changement d'état (la Maison d'Être) + les verbes pronominaux utilisent ÊTRE : aller, venir, arriver, partir, entrer, sortir, monter, descendre, naître, mourir, rester, tomber, retourner, passer.\n• Règle d'Accord avec Être:\n  - Le participe passé conjugué avec ÊTRE s'accorde obligatoirement en genre (e) et en nombre (s) avec le sujet :\n    * Koffi est allé à l'école.\n    * Ama est allée à l'école.\n    * Les garçons sont arrivés à midi.\n    * Les filles sont parties hier soir.\n• L'Imparfait de l'Indicatif:\n  - Emploi : Habitudes passées, descriptions de paysages ou d'états d'âme, actions continues interrompues par un événement ponctuel.\n  - Terminaisons universelles de l'imparfait : -ais, -ais, -ait, -ions, -iez, -aient.\n• Passé Composé vs. Imparfait:\n  - L'imparfait plante le décor (background) : 'Il pleuvait et il faisait froid...'\n  - Le passé composé marque l'action soudaine (foreground) : '...soudain, le téléphone a sonné.'\n• Chief Examiner BECE Warning:\n  - Pour les verbes conjugués avec ÊTRE, n'oubliez jamais l'accord du participe passé avec le sujet féminin ou pluriel (ex: 'Elle est venue', 'Elles sont arrivées') !",
     "examples": [
       {
@@ -392,8 +392,8 @@ export const JHS3_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Exprimer des actions futures certaines et des projets scolaires au Futur Simple, formuler des hypothèses avec 'Si + Présent -> Futur Simple', et utiliser le conditionnel de politesse pour exprimer des souhaits (aimerait, voudrait).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=kY3jXWjK2t8",
-    "youtubeId": "kY3jXWjK2t8",
+    "youtubeUrl": "https://www.youtube.com/watch?v=VzV-XjfCO-w",
+    "youtubeId": "VzV-XjfCO-w",
     "keyNotes": "• La Formation du Futur Simple:\n  - Règle générale : Infinitif complet du verbe + terminaisons (-ai, -as, -a, -ons, -ez, -ont).\n  - Verbes réguliers : parlerai, finiras, vendra, dormirons, choisirez, chanteront.\n  - Radicaux irréguliers fréquents au BECE :\n    * Être -> ser- (je serai)\n    * Avoir -> aur- (j'aurai)\n    * Aller -> ir- (j'irai)\n    * Faire -> fer- (je ferai)\n    * Pouvoir -> pourr- (je pourrai)\n    * Vouloir -> voudr- (je voudrai)\n    * Venir -> viendr- (je viendrai)\n    * Voir -> verr- (je verrai)\n• La Règle Hypothétique avec 'SI' (1er Conditionnel):\n  - Structure : SI + VERBE AU PRÉSENT -> VERBE AU FUTUR SIMPLE.\n  - Exemples :\n    * Si j'étudie bien, je réussirai à mon examen du BECE.\n    * Si nous avons de l'argent, nous voyagerons en France pendant les vacances.\n• Exprimer un Souhait avec Politesse (Conditionnel Présent):\n  - Verbes clés :\n    * Je voudrais + infinitif (Je voudrais devenir avocat).\n    * J'aimerais + infinitif (J'aimerais visiter le musée national).\n• Chief Examiner BECE Warning:\n  - Après 'SI' de condition, n'employez JAMAIS le futur simple ! Dire \"Si j'étudierai, je réussirai\" est une erreur grave. Dites impérativement : \"Si j'étudie (présent), je réussirai (futur)\".",
     "examples": [
       {
@@ -430,8 +430,8 @@ export const JHS3_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Structurer avec succès les épreuves écrites du BECE français : en-tête et formules de la lettre amicale, développement par paragraphes, connecteurs logiques, vocabulaire expressif et vérification finale.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=hd0_GZHHMrE",
-    "youtubeId": "hd0_GZHHMrE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=YOEdLLlTlTU",
+    "youtubeId": "YOEdLLlTlTU",
     "keyNotes": "• Structure Canonique de la Lettre Amicale (Friendly Letter) au BECE:\n  1. Le Lieu et la Date (en haut à droite) : Accra, le 15 juin 2026.\n  2. La Formule d'Appel (à gauche) : Cher Kofi, / Chère Ama, / Mon cher ami,\n  3. L'Introduction : Comment vas-tu ? J'espère que tu te portes bien ainsi que toute ta famille. Quant à moi, je vais très bien par la grâce de Dieu.\n  4. Le Corps du Texte (2 à 3 paragraphes) : Développer le sujet demandé (raconter des vacances, décrire un festival, inviter à un anniversaire).\n  5. La Conclusion : Transmets mes salutations chaleureuses à tes parents. Écris-moi bientôt.\n  6. La Formule de Prise de Congé : Ton ami dévoué, / Amitiés, / Affectueusement,\n  7. La Signature (prénom uniquement) : Kwame.\n• Connecteurs Logiques pour Enrichir la Rédaction:\n  - Pour commencer : D'abord, Tout d'abord, Premièrement.\n  - Pour continuer : Ensuite, Puis, De plus, En outre.\n  - Pour marquer l'opposition : Mais, Cependant, Pourtant.\n  - Pour conclure : Enfin, Finalement, En conclusion.\n• Les Pièges Sanctionnés au BECE par le WAEC:\n  - Oublier la date ou signer avec son nom complet (en lettre amicale, écrivez seulement le prénom !).\n  - Écrire un seul long bloc de texte sans sauts de ligne ni paragraphes.\n  - Faire des calques mot à mot de l'anglais vers le français.",
     "examples": [
       {

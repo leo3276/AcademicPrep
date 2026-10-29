@@ -89,8 +89,8 @@ export const JHS2_RME_TOPICS: CurriculumTopic[] = [
     "description": "Study the character, governance, and leadership of the Four Rightly Guided Caliphs (Khulafa-ur-Rashidun) and pioneer Muslim scholars in Ghana.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=J_j2tL2_oQ4",
-    "youtubeId": "J_j2tL2_oQ4",
+    "youtubeUrl": "https://www.youtube.com/watch?v=c1MYbLLLmxQ",
+    "youtubeId": "c1MYbLLLmxQ",
     "keyNotes": "• The Four Rightly Guided Caliphs (Al-Khulafa-ur-Rashidun):\n  1. Abu Bakr As-Siddiq (632–634 CE):\n     - Known for truthfulness (As-Siddiq), calm wisdom, and unwavering loyalty to Prophet Muhammad.\n     - Preserved unity during the Riddah (apostasy) wars and initiated the historic compilation of the Holy Quran into a single codex (Mushaf).\n  2. Umar ibn Al-Khattab (634–644 CE):\n     - Known as Al-Faruq (the one who distinguishes truth from falsehood).\n     - Exemplified rigorous justice, simplicity, and institutional innovation: established the Islamic calendar (Hijri), public treasury (Bayt al-Mal), judicial system (Qadis), and social pensions.\n  3. Uthman ibn Affan (644–656 CE):\n     - Known as Dhu an-Nurayn (possessor of two lights) and for exceptional generosity and modesty.\n     - Standardized the official pronunciation and written text of the Holy Quran, distributing copies to all Islamic administrative capitals.\n  4. Ali ibn Abi Talib (656–661 CE):\n     - Cousin and son-in-law of the Prophet; celebrated for unmatched courage, deep philosophical wisdom, and Eloquence.\n• Advent and Expansion of Islam in Ghana:\n  - Trans-Saharan trade routes: Wangara and Dyula traders brought Islam into ancient northern Ghana (Mande, Dagbon, Gonja, Mamprusi) by the 14th century.\n  - Larabanga Mosque (oldest mosque in Ghana, Sudanese architectural style).\n  - Indigenous Muslim leaders and scholars: Mallam Al-Hasan, Sheikh Osman Nuhu Sharubutu (National Chief Imam of Ghana, renowned globally for interfaith harmony and peacemaking).",
     "examples": [
       {
@@ -127,8 +127,8 @@ export const JHS2_RME_TOPICS: CurriculumTopic[] = [
     "description": "Understand the roles, functions, and moral responsibilities of traditional religious functionaries: Ancestors (Nananom Nsamanfo), Traditional Priests/Priestesses (Okomfo/Tsofo), and Chiefs.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0eP2jN0sTqw",
-    "youtubeId": "0eP2jN0sTqw",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Ej_-WbItcEE",
+    "youtubeId": "Ej_-WbItcEE",
     "keyNotes": "• Traditional Priests and Priestesses (Akomfo / Osofo / Wulomei / Tindana):\n  - Mediators between the Supreme Being (Onyame), lesser deities (abosom), and humanity.\n  - Roles: Divination (consulting deities), herbal healing and psychiatric care, performing purification rituals, leading seasonal festival rites, and enforcing community taboos.\n  - Qualities: High moral probity, obedience to spiritual taboos (e.g. dietary restrictions, sobriety, chastity before rituals), and deep knowledge of medicinal plants and oral folklore.\n• The Ancestors (Nananom Nsamanfo / Torgbewo):\n  - Qualifications to become an Ancestor:\n    1. Lived to a ripe old age.\n    2. Led a morally blameless life of integrity and service.\n    3. Had children (perpetuated the lineage).\n    4. Died a peaceful, natural death (not through suicide, shameful crimes, or contagious plague).\n  - Roles: Guardians of family morality; intercessors between living humans and God; rewarders of virtue and punishers of secret wrongdoing.\n• Traditional Chiefs (Nana / Togbe / Nii / Naa) as Sacred Leaders:\n  - Occupies the sacred ancestral stool/skin; acts as political ruler and spiritual custodian.\n  - Performs libation pouring to seek ancestral blessings for peace and development.",
     "examples": [
       {
@@ -205,8 +205,8 @@ export const JHS2_RME_TOPICS: CurriculumTopic[] = [
     "description": "Analyze the origins, rituals, moral lessons, and socio-economic contributions of Christian, Islamic, and Traditional festivals in Ghana.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=kYv9d5c8gQw",
-    "youtubeId": "kYv9d5c8gQw",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3LkUm2NdbEA",
+    "youtubeId": "3LkUm2NdbEA",
     "keyNotes": "• Major Religious Festivals in Ghana:\n  1. Christian Festivals:\n     - Christmas: Celebrates the Nativity/incarnation of Jesus Christ; teaches humility, giving, and goodwill.\n     - Easter: Commemorates the passion, crucifixion (Good Friday), and resurrection (Easter Sunday) of Jesus Christ; central foundation of Christian hope, victory over sin and death, and reconciliation.\n     - Pentecost: Marks the descent of the Holy Spirit on the Apostles.\n  2. Islamic Festivals:\n     - Eid-ul-Fitr: Festival of breaking the 29/30-day fast of Ramadan; marked by Zakat-ul-Fitr (charity to the poor), congregational Eid prayers, and family feasts.\n     - Eid-ul-Adha: Festival of Sacrifice commemorating Prophet Ibrahim's willing obedience to sacrifice his son Ismail; marked by slaughtering sheep/cattle and sharing meat with neighbors and needy; coincides with Hajj pilgrimage.\n     - Mawlid an-Nabi: Celebration of Prophet Muhammad's birth.\n  3. Traditional Festivals in Ghana:\n     - Homowo (Ga): 'Hooting at hunger' following ancient famine; sprinkling Kpokpoi and ban on drumming.\n     - Hogbetsotso (Anlo Ewe): Commemorates legendary escape from tyrannical King Agorkorli of Notsie; features peace reconciliation and misego dance.\n     - Aboakyer (Effutu of Winneba): Deer-hunting festival commemorating migration from Western Sudan.\n     - Odwira (Akuapem / Akwamu): Cleansing, purification, and gratitude for harvest.\n     - Damba (Dagbon, Gonja, Mamprusi): Commemorates birth and naming of the Prophet Muhammad; displays royal equestrian pageantry and cultural drumming.\n• Socio-Economic and Moral Values of Festivals:\n  - Promotes unity, reconciliation, settling of chieftaincy/family disputes.\n  - Mobilizes community funds for development projects (schools, boreholes, clinics).\n  - Boosts domestic tourism, local crafts, hospitality, and cultural preservation.",
     "examples": [
       {
@@ -242,8 +242,8 @@ export const JHS2_RME_TOPICS: CurriculumTopic[] = [
     "description": "Examine puberty rites across Ghanaian ethnic groups (Bragoro among Ashantis, Dipo among Krobos), their significance, moral values, and modern adaptations.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=F0k9L39Tsd4",
-    "youtubeId": "F0k9L39Tsd4",
+    "youtubeUrl": "https://www.youtube.com/watch?v=69cnrjVVyUw",
+    "youtubeId": "69cnrjVVyUw",
     "keyNotes": "• Concept of Puberty Rites:\n  - Ceremonies marking the physical, psychological, and social transition of young persons from childhood into adult community membership.\n  - Traditionally performed strictly for girls who had reached menarche (first menstruation) without getting pregnant.\n• Specific Ghanaian Puberty Rites:\n  1. Bragoro / Brafo (Akan - Asante):\n     - Initiated when a girl notices her first menstruation; reported to the queen mother (Ɔhemmaa) for physical examination to ensure she is not pregnant.\n     - Ritual bathing at the sacred river, eating boiled eggs whole (symbolizing fertility and health), spiritual purification, and public celebration in kente and gold ornaments.\n     - Motherhood and domestic education by elderly women.\n  2. Dipo (Krobo / Dangme):\n     - Ritual bath and wearing of waist beads (otwe); confinement where initiates are taught cooking, housekeeping, childcare, and seduction/marital etiquette.\n     - Climbing the sacred sacred rock (Tɛgbɛtɛ) at the Klama shrine: only a chaste girl sits safely on the stone; an unchaste or pregnant girl is said to slip or be exposed.\n     - Grand durbar where initiates dance Klama in breathtaking traditional beads, calico, and headgear.\n• Moral, Social, and Health Significance:\n  - Promoted premarital chastity and prevented teenage pregnancy and sexually transmitted infections (STIs).\n  - Prepared girls for responsible motherhood, home management, and marital fidelity.\n  - Granted social recognition, dignity, and elevated status to the initiate and her family.\n• Modern Challenges and Adaptations:\n  - Conflicts with formal Western schooling and religious beliefs (some Christian denominations viewing rituals as fetish).\n  - Replaced or complemented by Christian confirmation, Muslim teenage mentoring programs, and school health clubs.",
     "examples": [
       {
@@ -279,8 +279,8 @@ export const JHS2_RME_TOPICS: CurriculumTopic[] = [
     "description": "Compare marriage procedures in Christian, Islamic, and Ghanaian Traditional systems, examining the rights, responsibilities, and causes of marital breakdown.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0eP2jN0sTqw",
-    "youtubeId": "0eP2jN0sTqw",
+    "youtubeUrl": "https://www.youtube.com/watch?v=9qKZ4Sj_cDo",
+    "youtubeId": "9qKZ4Sj_cDo",
     "keyNotes": "• Types of Marriage Recognized under Ghanaian Law:\n  1. Customary Marriage:\n     - Union between two families (not just two individuals); valid upon payment of bride price (Tir Nsa / Dowry) and acceptance of drinks by bride's clan.\n     - Potentially polygynous; recognized under the Customary Marriage and Divorce (Registration) Act.\n     - Stages: Knocking ceremony (Kookoo ko / Kasagye) where intentions are declared; background investigation of health, character, hereditary diseases, criminal record; presentation of bride price and wedding celebration.\n  2. Christian / Ordinance Marriage:\n     - Governed by the Marriages Act (Cap 127); strictly monogamous (one man, one woman for life).\n     - Solemnized in a licensed church or registrar's office after publication of marriage banns for 21 days; vows exchanged: 'till death do us part'.\n  3. Islamic Marriage (Nikah):\n     - Contractual union solemnized according to Sharia law; potentially polygynous (up to four wives under strict conditions of equal treatment).\n     - Essential pillars: Consent of bride and groom; Wali (bride's guardian consent); Mahr (mandatory gift/dowry given directly to the bride by the groom); two upright Muslim male witnesses; official Imam to conduct the Nikah.\n• Roles and Responsibilities in the Family:\n  - Mutual love, respect, companionship, and sexual fidelity.\n  - Joint provision for children's feeding, shelter, health, and formal education.\n  - Imparting moral and spiritual values to children.\n• Causes and Prevention of Marital Breakdown:\n  - Infidelity, financial dishonesty/poverty, interference by in-laws, domestic violence, barrenness/infertility.\n  - Prevention: Premarital counseling, transparent communication, patience, forgiveness, and mutual respect.",
     "examples": [
       {
@@ -355,8 +355,8 @@ export const JHS2_RME_TOPICS: CurriculumTopic[] = [
     "description": "Understand the theological and traditional beliefs regarding divine justice, retributive punishment, earthly rewards, and life after death in the three religions.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Fj7w0E3_eM8",
-    "youtubeId": "Fj7w0E3_eM8",
+    "youtubeUrl": "https://www.youtube.com/watch?v=H8O5mg2BExk",
+    "youtubeId": "H8O5mg2BExk",
     "keyNotes": "• Divine Justice and Accountability:\n  - Universal religious principle: Every human action, whether open or hidden, has moral consequences.\n  - Good deeds attract divine favor, inner peace, and eternal reward; wicked actions lead to misery, guilt, divine wrath, and condemnation.\n• Concept of Reward across Religions:\n  - Christianity: Righteous living yields earthly peace, divine protection, and ultimately eternal life in Heaven (the Kingdom of God) with Christ (Matthew 25).\n  - Islam: Good deeds (Amal Salih) lead to Barakah (divine blessing) on earth and admission to Jannah (Paradise), described as lush gardens with flowing rivers of peace.\n  - ATR: Earthly rewards include long life, good health, bountiful harvests, healthy children, and elevation to the status of an honored Ancestor (Osaman Pa) in the spirit world (Asamando).\n• Concept of Punishment:\n  - Christianity: The unrepentant wicked face spiritual death, separation from God, and judgment in Hell (Gehenna / lake of fire).\n  - Islam: Evil deeds and disbelief lead to Jahannam (Hellfire), where the wicked suffer intense retribution according to their crimes.\n  - ATR: Punishment on earth through misfortunes, sudden diseases, struck down by thunder (Nana Burukung/Xevioso), or premature tragic death; after death, wicked souls are banished as restless, wandering tormentors (Osaman bɔne / Atɔfo).\n• Influence on Personal and Civic Integrity:\n  - The certainty of final judgment motivates believers to refrain from corruption, bribery, secret theft, and wickedness even when police are absent.",
     "examples": [
       {
@@ -393,8 +393,8 @@ export const JHS2_RME_TOPICS: CurriculumTopic[] = [
     "description": "Explore traditional Ghanaian and religious standards of modesty, greetings, respectful speech, table manners, and dressing etiquette.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0eP2jN0sTqw",
-    "youtubeId": "0eP2jN0sTqw",
+    "youtubeUrl": "https://www.youtube.com/watch?v=yRBVjjJG4fc",
+    "youtubeId": "yRBVjjJG4fc",
     "keyNotes": "• Concepts of Manners and Decency:\n  - Manners: The customary code of polite, considerate behavior in society.\n  - Decency: Conforming to recognized standards of propriety, good taste, morality, and modesty.\n• Traditional Ghanaian Etiquette:\n  1. Greetings: Greeting is mandatory whenever meeting people; passing by without greeting is considered gross disrespect and pride. Greeting from right to left in gatherings.\n  2. Use of Hands: The right hand is the hand of respect; using the left hand to give, receive, gesture, or point at elders is considered a grave insult (akyiwadeɛ).\n  3. Body Postures: Removing hands from pockets when addressing elders; bowing or bending knees slightly when greeting chiefs or older persons; not looking directly into an elder's eyes with defiance.\n  4. Dressing Modesty: Covering sensitive body parts; wearing neat, dignified clothes; removing hats before entering a palace, church, or when talking to an elder.\n• Religious Perspectives on Decency:\n  - Christianity: 1 Corinthians 14:40 ('Let all things be done decently and in order'); 1 Timothy 2:9 encourages modesty and good deeds rather than ostentatious vanity.\n  - Islam: Concept of Haya (modesty/shyness) is considered half of faith; Islamic dress code (Hijab for women, covering Awrah from navel to knee for men); lowering the gaze.\n  - ATR: Character (Suban) is the measure of a person; a well-bred youth is described as 'Ɔwɔ anidie' (possesses reverence).\n• Table Manners:\n  - Washing hands before eating; eating with the right hand; chewing quietly with closed mouth; not speaking with food in mouth; leaving food for siblings.",
     "examples": [
       {
@@ -430,8 +430,8 @@ export const JHS2_RME_TOPICS: CurriculumTopic[] = [
     "description": "Analyze the causes, religious condemnations, health consequences, and prevention strategies of alcohol, tobacco, marijuana, tramadol, and shisha abuse.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=F0k9L39Tsd4",
-    "youtubeId": "F0k9L39Tsd4",
+    "youtubeUrl": "https://www.youtube.com/watch?v=OtZUZrttxZQ",
+    "youtubeId": "OtZUZrttxZQ",
     "keyNotes": "• Definitions:\n  - Drug Abuse: The non-medical use of drugs or chemicals in ways that impair physical, mental, or emotional well-being.\n  - Commonly Abused Substances in Ghana: Alcohol (akpeteshie, beer), tobacco/cigarettes, cannabis (wee), tramadol (synthetic opioid), shisha, cocaine, inhalants (glue).\n• Religious Teachings on Substance Abuse:\n  1. Christianity:\n     - 1 Corinthians 6:19-20: 'Your body is the temple of the Holy Spirit... therefore honor God with your bodies.'\n     - Proverbs 20:1: 'Wine is a mocker and beer a brawler; whoever is led astray by them is not wise.'\n     - Drunkenness impairs spiritual alertness, leads to immorality, violence, and financial ruin.\n  2. Islam:\n     - Absolute prohibition (Haram) of all intoxicants (Khamr): Surah Al-Ma'idah 5:90 declares intoxicants and gambling as an abomination of Satan's handiwork.\n     - The Prophet Muhammad said: 'Whatever intoxicates in large quantities, a small quantity of it is forbidden.'\n  3. ATR:\n     - Although alcohol (palm wine/schnapps) is used sacramentally for libation, chronic drunkenness is severely condemned; a drunkard is disqualified from becoming a chief, elder, or ancestor.\n• Consequences of Substance Abuse:\n  - Health: Liver cirrhosis, lung cancer, brain damage, addiction, psychiatric psychosis, overdose death.\n  - Social: School dropout, teenage pregnancy, violent crime, broken homes, financial destitution.\n• Prevention:\n  - Resisting negative peer pressure, public health education, seeking counseling, engaging in productive sports and religious youth activities.",
     "examples": [
       {
@@ -468,8 +468,8 @@ export const JHS2_RME_TOPICS: CurriculumTopic[] = [
     "description": "Examine the religious value of hard work, honest livelihood, the menace of laziness and get-rich-quick mentality, and the healthy balance between work and rest.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=kYv9d5c8gQw",
-    "youtubeId": "kYv9d5c8gQw",
+    "youtubeUrl": "https://www.youtube.com/watch?v=WZ38bI2ZHms",
+    "youtubeId": "WZ38bI2ZHms",
     "keyNotes": "• The Religious Dignity of Labor:\n  - Work is a divine commandment and noble responsibility, not a curse.\n  - Christianity:\n    * Genesis 2:15: God placed Adam in Eden to work and take care of it before the fall.\n    * 2 Thessalonians 3:10: 'The one who is unwilling to work shall not eat.'\n    * Jesus worked as a carpenter (Mark 6:3); Apostle Paul made tents to support his ministry.\n  - Islam:\n    * The Prophet Muhammad taught: 'No one has ever eaten better food than what he earned from the work of his own hands' (Bukhari).\n    * Honest business and craftsmanship are celebrated as forms of worship (Ibadah).\n  - ATR:\n    * Great premium placed on hard work (Adwumaden) and farming.\n    * Proverb: 'Nsa a ɛyɛ adwuma na edi ade pa' (The hand that works is the one that eats good food).\n    * Laziness (akwadaeɛ) brings shame and poverty on the entire extended family.\n• The Menace of Get-Rich-Quick Syndrome:\n  - Illegal mining (galamsey), cyber fraud (sakawa), ritual money schemes (sika duro), and sports betting among youth lead to destruction, prison, and spiritual ruin.\n• The Importance of Rest and Leisure:\n  - God instituted the Sabbath (rest day) after six days of creation (Exodus 20:8-11).\n  - Leisure refreshes the mind and body, prevents burnout, restores physical energy, and strengthens family and community bonds.\n  - Healthy leisure activities: Reading, sports, religious fellowship, volunteering, listening to music.",
     "examples": [
       {
@@ -506,8 +506,8 @@ export const JHS2_RME_TOPICS: CurriculumTopic[] = [
     "description": "Analyze the principles of interfaith dialogue, religious tolerance, traditional and legal conflict resolution methods, and maintaining national unity in Ghana.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=J_j2tL2_oQ4",
-    "youtubeId": "J_j2tL2_oQ4",
+    "youtubeUrl": "https://www.youtube.com/watch?v=v10v0J19zO8",
+    "youtubeId": "v10v0J19zO8",
     "keyNotes": "• Concept of Religious Tolerance:\n  - Accepting and respecting the rights of people to hold and practice religious beliefs different from one's own without discrimination, hostility, or persecution.\n  - Ghana is globally recognized as an oasis of peace where Christians (71%), Muslims (20%), and Traditionalists (3%) live side-by-side in families, schools, and workplaces without sectarian bloodshed.\n• Theological Foundations for Tolerance:\n  - Christianity: Romans 12:18 ('As far as it depends on you, live at peace with everyone'); Jesus commended the Good Samaritan (a religious outsider) for supreme love.\n  - Islam: Surah Al-Kafirun 109:6 ('To you be your religion, and to me my religion'); Surah Al-Baqarah 2:256 ('There is no compulsion in religion').\n  - ATR: Inherently pluralistic; recognizes multiple paths and deities leading to the one Supreme Being (Onyame).\n• Agents of Peace and Conflict Resolution in Ghana:\n  - The National Peace Council (NPC): Brings together leaders of Christian denominations, Muslim councils, and traditional rulers to mediate national political and chieftaincy disputes.\n  - Chieftaincy institutions and Council of Elders: Settle land and family disputes through mediation and customary consensus.\n  - Exemplary leaders: Sheikh Dr. Osman Nuhu Sharubutu (National Chief Imam) and Christian prelates working together on national platforms.\n• Practical Conflict Resolution Steps:\n  1. Identify the root cause of the dispute objectively.\n  2. Active listening without verbal aggression or prejudgment.\n  3. Mediation by trusted, neutral third parties.\n  4. Willingness to forgive, compromise, and build consensus.",
     "examples": [
       {

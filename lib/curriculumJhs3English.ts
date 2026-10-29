@@ -15,8 +15,8 @@ export const JHS3_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Master formal letter writing for the BECE: two addresses, date, formal salutation, underlined capitalized heading, formal body paragraphs, valediction ('Yours faithfully'), signature, and full official name.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Jm3Vw6sE2fI",
-    "youtubeId": "Jm3Vw6sE2fI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=KyKAq3gpbs0",
+    "youtubeId": "KyKAq3gpbs0",
     "keyNotes": "• BECE Formal Letter Structure (30 Marks Scheme):\n  - Writer's Address: Top right corner, neat punctuation (block or indented), date written in full (e.g. 15th July, 2026).\n  - Recipient's Official Designation & Address: Top left, below writer's address level (e.g. The District Director of Education, Ghana Education Service, P.O. Box 45, Koforidua).\n  - Salutation: 'Dear Sir,' or 'Dear Madam,' (never 'Dear Sir/Madam' or 'Dear Mr. Mensah' in strictly formal letters).\n  - Heading/Title: Centered or aligned left; in FULL CAPITALS and underlined, or Title Case and underlined (e.g. APPLICATION FOR THE POST OF LIBRARY ASSISTANT).\n  - Body (3-4 paragraphs):\n    * Paragraph 1: Purpose of letter stated immediately without pleasantries.\n    * Paragraphs 2-3: Core content, logical arguments, specific details, official tone.\n    * Paragraph 4: Conclusion, courteous call to action or expression of gratitude.\n  - Subscription / Valediction: 'Yours faithfully,' followed by a comma (Capital Y, lowercase f).\n  - Signature and Full Name: Sign above your full name written in capital or title case.\n• WAEC 4-Domain Marking Breakdown:\n  1. Content (10 Marks): Addressing all prompts thoroughly with convincing arguments.\n  2. Organization (6 Marks): Proper layout, address positioning, paragraph flow, transitions.\n  3. Expression (8 Marks): Formal vocabulary, varied sentence structures, absence of slang.\n  4. Mechanical Accuracy (6 Marks): Grammar, spelling, punctuation (every punctuation error deducts 1/2 mark).\n• Chief Examiner Warnings:\n  - Never include personal greetings ('How are you doing?') in a formal letter.\n  - 'Yours faithfully' must have a small 'f' (writing 'Yours Faithfully' penalizes Organization).\n  - The heading must be concise and underlined.",
     "examples": [
       {
@@ -56,8 +56,8 @@ export const JHS3_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Write engaging informal letters to friends and relatives and respectful semi-formal letters to teachers, housemasters, and respected family elders, balancing warmth with grammatical precision.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Jm3Vw6sE2fI",
-    "youtubeId": "Jm3Vw6sE2fI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=FC8Od8Vhfhg",
+    "youtubeId": "FC8Od8Vhfhg",
     "keyNotes": "• Informal Letter Characteristics:\n  - Recipient: Close friend, sibling, classmate, peer.\n  - Layout: Single address (writer's address top right with date); informal salutation ('Dear Kwame,' or 'Dearest Mama,'). No heading/title!\n  - Tone & Register: Warm, affectionate, conversational, colloquial idioms allowed, but standard grammar and punctuation are strictly required.\n  - Introductory Paragraph: Warm inquiries ('How are you and the family?', 'I hope this letter finds you in good health and high spirits').\n  - Valediction: 'Yours sincerely,' 'Yours ever,' 'Your loving friend,' followed by first name only (no official signature!).\n• Semi-Formal Letter Characteristics:\n  - Recipient: Class teacher, housemaster, elder relative (uncle/aunt), family friend.\n  - Layout: Single address or two addresses depending on context; formal/respectful salutation ('Dear Uncle Kwesi,' 'Dear Mr. Boateng,').\n  - Tone: Courteous, respectful, warm yet polite; avoid slang, vulgarities, or excessively casual language.\n  - Valediction: 'Yours sincerely,' followed by full name.\n• Chief Examiner Warnings:\n  - Never write 'Yours affectionately' to a teacher or school authority.\n  - Do NOT write text-messaging abbreviations (e.g. 'u', 'pls', 'cos', 'r u ok?'). In BECE, SMS abbreviations are penalized as severe spelling/slang errors under Expression and Mechanical Accuracy.",
     "examples": [
       {
@@ -96,8 +96,8 @@ export const JHS3_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Master narrative storytelling (exposition, rising action, climax, falling action, resolution) and descriptive writing using vivid sensory imagery, evocative figurative language, and atmospheric scene creation.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Jm3Vw6sE2fI",
-    "youtubeId": "Jm3Vw6sE2fI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=lDT9oCDJELY",
+    "youtubeId": "lDT9oCDJELY",
     "keyNotes": "• Narrative Writing Essentials:\n  - Narrative Arc:\n    1. Exposition: Introducing characters, setting (time and place), and opening atmosphere.\n    2. Inciting Incident & Rising Action: Series of events building tension, conflict, or obstacles.\n    3. Climax: Peak emotional crisis or moment of highest dramatic tension.\n    4. Falling Action: The immediate aftermath of the climax.\n    5. Resolution / Moral: How the conflict ends and lessons learned.\n  - Techniques: Dialogue (correctly punctuated with quotation marks), suspense, foreshadowing, time shifts.\n  - Tense Consistency: Narratives are written almost exclusively in the PAST TENSE (Past Simple, Past Continuous, Past Perfect).\n• Descriptive Writing Essentials:\n  - Objective: Paint a vivid picture in the reader's imagination using words.\n  - Sensory Details: Sight (visual), Sound (auditory), Smell (olfactory), Taste (gustatory), Touch (tactile).\n  - Figurative Devices: Similes, metaphors, personification, onomatopoeia, alliteration.\n  - Spatial Organization: Describe from near to far, top to bottom, or inside to outside.\n• Chief Examiner Warnings:\n  - Candidates often switch erratically between past tense and present tense ('He walked to the gate and sees a dog'). Maintain consistent past tense!\n  - Avoid cliché openings like 'Once upon a time' or 'It was a bright Saturday morning'. Hook the reader with action or dialogue.",
     "examples": [
       {
@@ -137,8 +137,8 @@ export const JHS3_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Construct persuasive argumentative essays and debate speeches: vocatives, clear proposition stance, topic sentences, robust supporting evidence, refutation of opposing counter-arguments, and persuasive rhetorical devices.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Jm3Vw6sE2fI",
-    "youtubeId": "Jm3Vw6sE2fI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=pTedc7NSdnk",
+    "youtubeId": "pTedc7NSdnk",
     "keyNotes": "• Argumentative Essay Structure:\n  - Title: Stating the debate motion or topic clearly.\n  - Introduction: Define key terms, state background context, and declare your unequivocal stance (whether proposing or opposing).\n  - Body Paragraphs (PEEL Technique):\n    * Point: State the main argument in a clear topic sentence.\n    * Explanation: Elaborate on why and how this point is true.\n    * Evidence / Example: Provide factual evidence, statistics, or real-life illustrations.\n    * Link: Conclude the paragraph by linking back to your central thesis.\n  - Counter-Argument & Rebuttal: Acknowledge the strongest opposing argument, then logically dismantle and refute it.\n  - Conclusion: Summarize primary arguments and deliver a powerful final appeal.\n• Debate Speech Format (Distinction from Essays):\n  - Vocatives / Salutation: Must begin with: 'Mr. Chairman, Panel of Judges, Accurate Timekeeper, Co-debaters, Ladies and Gentlemen...'\n  - Motion Declaration: 'I stand before you today to passionately support/oppose the motion which states that...'\n  - Audience Engagement: Use rhetorical questions, direct appeals ('You will agree with me that...'), and dramatic pauses.\n  - Ending: 'Thank you for your kind attention' or 'With these few points of mine, I hope I have convinced you that...'.\n• Chief Examiner Warnings:\n  - In a debate, candidates who omit the vocatives lose substantial marks under Organization.\n  - Never sit on the fence (e.g. arguing that both sides are equally good). You must take one definitive side and defend it vigorously.",
     "examples": [
       {
@@ -179,8 +179,8 @@ export const JHS3_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Write informative expository essays and articles for publication in national newspapers (e.g. Daily Graphic, Ghanaian Times) or school magazines, featuring catchy headlines, bylines, and objective analytical paragraphs.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Jm3Vw6sE2fI",
-    "youtubeId": "Jm3Vw6sE2fI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ht-_dK_jOTI",
+    "youtubeId": "ht-_dK_jOTI",
     "keyNotes": "• Article for Publication Format:\n  - Title / Headline: Centered, bold, underlined, catchy, and concise (e.g. THE SCOURGE OF GALAMSEY: A CALL TO SAVE OUR WATER BODIES).\n  - Byline: Placed immediately beneath the title or at the end: 'By Kofi Mensah' or 'By a Concerned JHS Student'.\n  - Introduction: Hook the reader, outline the scope of the problem, and provide relevant background facts or statistics.\n  - Body Paragraphs:\n    * Paragraph 1: Root causes of the phenomenon.\n    * Paragraph 2: Detrimental consequences to community, economy, or environment.\n    * Paragraph 3: Actionable, realistic recommendations for government, community leaders, and citizens.\n  - Conclusion: A forward-looking, inspiring summary call to action.\n• Register & Tone:\n  - Objective, analytical, formal, informative, and persuasive.\n  - Avoid conversational slang or personal narrative anecdotes unless directly relevant as an illustration.\n• Chief Examiner Warnings:\n  - Do NOT write addresses or 'Dear Editor' in an article for publication! (If the question asks for a 'Letter to the Editor', use formal letter format; if it asks for an 'Article for publication in a national newspaper', use Headline + Byline format).\n  - Ensure the byline includes your full name or school designation.",
     "examples": [
       {
@@ -219,8 +219,8 @@ export const JHS3_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Write captivating speeches for official school and community occasions (Speech and Prize-Giving Day, SRC hand-over, Valedictory address, PTA meeting, public health enlightenment campaigns).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Jm3Vw6sE2fI",
-    "youtubeId": "Jm3Vw6sE2fI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=tqNGncdCJS0",
+    "youtubeId": "tqNGncdCJS0",
     "keyNotes": "• Speech Writing Layout & Conventions:\n  - Title / Heading: Stating nature of speech, occasion, speaker, and venue:\n    * E.g.: 'A SPEECH DELIVERED BY THE OUTGOING HEAD BOY, MASTER KWAME MENSAH, ON THE OCCASION OF THE 25TH SPEECH AND PRIZE-GIVING DAY OF ACCRA BASIC SCHOOL ON 12TH AUGUST, 2026'.\n  - Vocatives (Protocol list strictly ordered by seniority):\n    * 'Mr. Chairman, Honorable Regional Director of Education, Headmistress, Dedicated Teachers, Invited Guests, Fellow Students...'\n  - Introduction: Express gratitude for the privilege to address the gathering and state the theme of the address.\n  - Body:\n    * Speak directly to audience using first person ('I', 'We') and second person ('You').\n    * Incorporate rhetorical questions, anecdotes, and rhythmic parallelisms.\n    * Maintain oratory tone designed to be spoken aloud.\n  - Periodic Vocative Reminders: Pepper paragraphs with 'Mr. Chairman...', 'Ladies and Gentlemen...'.\n  - Conclusion: Express sincere appreciation, restate vision, and end with 'Thank you for your attention' or 'God bless our school'.\n• Chief Examiner Warnings:\n  - Speeches must NEVER have postal addresses or 'Yours faithfully' at the end.\n  - Failure to observe protocol hierarchy (e.g. greeting students before the Chairman or Headteacher) loses marks under Organization.",
     "examples": [
       {
@@ -262,8 +262,8 @@ export const JHS3_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Tackle BECE Section B reading comprehension passages: literal vs inferential questions, grammatical functions of highlighted words/expressions, figures of speech in context, and precision vocabulary replacement.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Jm3Vw6sE2fI",
-    "youtubeId": "Jm3Vw6sE2fI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=1hmJZh74qFw",
+    "youtubeId": "1hmJZh74qFw",
     "keyNotes": "• Question Typology in BECE Comprehension Passages:\n  1. Direct / Literal Questions: Answers stated explicitly in the passage. Use scanning and skimming skills; answer in full, grammatically correct sentences without mindless word-for-word lifting.\n  2. Inferential / Deductive Questions: Answers implied rather than explicitly stated ('Why did Mr. Mensah hesitate before opening the door?'). Read between the lines.\n  3. Grammatical Function Questions: Identify what part of speech a word is, or identify a clause/phrase and state its syntactic function (e.g. 'Adverbial clause of time, modifying the verb walked').\n  4. Figures of Speech: Identify literary devices used in context (e.g. 'The sun smiled warmly on the fields' -> Personification).\n  5. Vocabulary Replacement: Replace words with suitable synonyms that fit the EXACT grammatical tense, number, and meaning in the sentence without altering meaning.\n• Chief Examiner Warnings:\n  - In vocabulary replacement, replacing a past tense verb with a present tense verb (e.g. replacing 'commenced' with 'start' instead of 'started') forfeits the mark completely!\n  - Avoid answering with single fragmented words unless explicitly instructed. Always write complete grammatical sentences.",
     "examples": [
       {
@@ -300,8 +300,8 @@ export const JHS3_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Extract core information from dense prose: distinguish main ideas from illustrative examples, eliminate redundant fluff, paraphrase in your own words, and construct concise, complete sentences.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Jm3Vw6sE2fI",
-    "youtubeId": "Jm3Vw6sE2fI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ebYHcObfCic",
+    "youtubeId": "ebYHcObfCic",
     "keyNotes": "• Principles of Effective Summary Writing:\n  1. Identify the Question Target: Read the summary prompt first before reading the passage so you know precisely what information to hunt for.\n  2. Locate Key Topic Sentences: Topic sentences containing the central point usually appear at the beginning or end of paragraphs.\n  3. Strip Away the Fluff: Delete examples, statistics, repetitions, rhetorical questions, and personal analogies.\n  4. Paraphrase in Your Own Words: Rephrase the central idea using your own vocabulary and sentence structures while preserving the original meaning.\n  5. One Point Per Sentence: Structure your response into clearly numbered, complete grammatical sentences matching the prompt (e.g. '(a) State three causes... (b) State two solutions...').\n• Chief Examiner Warnings:\n  - Do NOT copy long phrases verbatim from the passage (mindless lifting is penalized severely).\n  - Never write answers in incomplete fragments or bullet points without verbs; each point must be a full grammatical sentence.\n  - Adding personal opinions or outside knowledge not contained in the passage results in an automatic zero for that point!",
     "examples": [
       {
@@ -339,8 +339,8 @@ export const JHS3_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Deep grammatical analysis: abstract and collective nouns, relative pronouns, transitive vs intransitive verbs, gradable adjectives, adverbs of degree and manner, prepositions of position/direction, and coordinating vs subordinating conjunctions.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Jm3Vw6sE2fI",
-    "youtubeId": "Jm3Vw6sE2fI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=SceDmiBEESI",
+    "youtubeId": "SceDmiBEESI",
     "keyNotes": "• The 8 Parts of Speech in Advanced Syntax:\n  1. Nouns: Concrete, Abstract, Collective (e.g. a pride of lions, a fleet of ships), Countable vs Uncountable. Functions as Subject, Direct Object, Indirect Object, Subject Complement, Object of Preposition.\n  2. Pronouns: Personal, Possessive, Reflexive, Relative (who, whom, whose, which, that), Demonstrative, Indefinite (everyone, somebody - takes SINGULAR verbs!).\n  3. Verbs: Transitive (requires a direct object) vs Intransitive (does not take an object); Linking/Copular verbs (be, become, seem).\n  4. Adjectives: Attributive (before noun: 'a diligent student') vs Predicative (after linking verb: 'The student is diligent'); Degrees of comparison (positive, comparative, superlative).\n  5. Adverbs: Modify verbs, adjectives, or other adverbs. Types: Manner (how), Time (when), Place (where), Frequency (how often), Degree (to what extent: very, extremely, barely).\n  6. Prepositions: Show spatial, temporal, or logical relationships (in, on, between, among, despite, in spite of).\n  7. Conjunctions: Coordinating (FANBOYS: For, And, Nor, But, Or, Yet, So), Subordinating (because, although, since, unless), Correlative (either...or, neither...nor, not only...but also).\n  8. Interjections: Exclamatory expressions conveying strong emotion (Ouch!, Alas!, Hurray!).\n• Chief Examiner Warnings:\n  - 'Between' is used for TWO entities; 'Among' is used for THREE or MORE entities.\n  - 'Despite' is NEVER followed by 'of' (write 'Despite the rain' OR 'In spite of the rain', never 'Despite of').",
     "examples": [
       {
@@ -376,8 +376,8 @@ export const JHS3_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Master primary and continuous tenses, perfective aspect, active vs passive voice transformations, and fundamental subject-verb agreement (concord) rules in complex sentence constructions.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Jm3Vw6sE2fI",
-    "youtubeId": "Jm3Vw6sE2fI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=sCiG6rlk2Bc",
+    "youtubeId": "sCiG6rlk2Bc",
     "keyNotes": "• Master Rules of Subject-Verb Concord:\n  1. Singular Subject -> Singular Verb; Plural Subject -> Plural Verb: 'The boy sings', 'The boys sing'.\n  2. Indefinite Pronouns: 'Everyone', 'everybody', 'someone', 'nobody', 'each', 'either', 'neither' are strictly SINGULAR: 'Everyone has (not have) submitted their script'.\n  3. Intervening Phrases: Words between subject and verb (e.g. 'as well as', 'together with', 'in addition to', 'accompanied by') do NOT alter the number of the subject: 'The teacher, together with his students, IS (not are) attending the lecture'.\n  4. Either...or / Neither...nor (Proximity Rule): The verb agrees in number with the CLOSER subject: 'Neither the headmaster nor the teachers WERE present'; 'Neither the teachers nor the headmaster WAS present'.\n  5. Collective Nouns: Singular when acting as a unified unit ('The committee has reached a verdict'); plural when acting as individuals ('The committee are arguing among themselves').\n  6. Plural in Form, Singular in Meaning: 'Mathematics', 'Physics', 'Civics', 'News', 'Measles' take SINGULAR verbs: 'Mathematics IS my favorite subject'.\n• Active and Passive Voice:\n  - Active: Subject performs action: 'The dog bit the boy.'\n  - Passive: Subject receives action: 'The boy was bitten by the dog.'\n  - Rule: Object becomes Subject + appropriate form of 'to be' + Past Participle (V3) + 'by' + Agent.",
     "examples": [
       {
@@ -416,8 +416,8 @@ export const JHS3_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Distinguish between phrases and clauses, analyze noun/adjectival/adverbial clauses, and master structural sentence classifications: Simple, Compound, Complex, and Compound-Complex sentences.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Jm3Vw6sE2fI",
-    "youtubeId": "Jm3Vw6sE2fI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=jOw5a1rUx2I",
+    "youtubeId": "jOw5a1rUx2I",
     "keyNotes": "• Phrase vs Clause:\n  - Phrase: A group of related words WITHOUT a finite subject-verb combination (e.g. 'in the morning', 'a very old man', 'running down the road').\n  - Clause: A group of words containing a finite SUBJECT and a PREDICATE (verb).\n• Types of Dependent (Subordinate) Clauses:\n  1. Noun Clause: Functions as a noun (Subject, Object, Complement). Often introduced by 'that', 'what', 'who', 'how': 'What he said surprised everyone' (Subject of verb 'surprised').\n  2. Adjectival (Relative) Clause: Modifies a noun or pronoun. Introduced by relative pronouns (who, whom, whose, which, that): 'The boy who stole the watch has been apprehended' (Modifies noun 'boy').\n  3. Adverbial Clause: Modifies a verb, adjective, or adverb. Types: Time (when, while), Reason (because, since), Condition (if, unless), Concession (although, though), Manner (as if, as though).\n• Structural Sentence Classifications:\n  1. Simple Sentence: Exactly ONE independent clause (one subject-predicate): 'The teacher explained the lesson clearly.'\n  2. Compound Sentence: TWO or more independent clauses joined by coordinating conjunctions (FANBOYS) or a semicolon: 'The rain fell heavily, but the farmers continued working.'\n  3. Complex Sentence: ONE independent clause + AT LEAST ONE subordinate clause: 'Although it rained heavily, the football match was not postponed.'\n  4. Compound-Complex Sentence: TWO or more independent clauses + AT LEAST ONE subordinate clause.",
     "examples": [
       {
@@ -454,8 +454,8 @@ export const JHS3_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Transform sentences between Direct Speech and Reported Speech: tense back-shifting rules, pronoun transformations, time/place adverb shifts, reporting questions, commands, and punctuation conventions.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Jm3Vw6sE2fI",
-    "youtubeId": "Jm3Vw6sE2fI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=OxhUQIgVKc8",
+    "youtubeId": "OxhUQIgVKc8",
     "keyNotes": "• Rules for Converting Direct to Reported Speech:\n  1. Tense Back-Shift (when reporting verb is in the past tense, e.g. 'said', 'told'):\n    * Present Simple -> Past Simple: 'I play' -> he played.\n    * Present Continuous -> Past Continuous: 'I am reading' -> he was reading.\n    * Present Perfect -> Past Perfect: 'I have eaten' -> he had eaten.\n    * Past Simple -> Past Perfect: 'I went' -> he had gone.\n    * Modal Shifts: will -> would; can -> could; may -> might; must -> had to.\n  2. Pronoun & Possessive Shifts: 'I' -> he/she; 'we' -> they; 'my' -> his/her; 'our' -> their.\n  3. Time and Place Adverb Shifts:\n    * 'now' -> then; 'today' -> that day; 'yesterday' -> the previous day / the day before.\n    * 'tomorrow' -> the following day / the next day; 'here' -> there; 'this' -> that; 'these' -> those.\n  4. Reporting Questions:\n    * Wh-questions: Retain question word, change to statement word order (no inversion, no question mark): 'Where are you going?' -> He asked me where I was going.\n    * Yes/No questions: Use 'if' or 'whether': 'Are you ready?' -> She asked if I was ready.\n  5. Reporting Commands & Requests: Use infinitive 'to' + base verb: 'Be quiet!' -> The teacher ordered them to be quiet.\n• Chief Examiner Warnings:\n  - In reported speech, REMOVE quotation marks and question marks entirely.\n  - Do not back-shift tenses if the statement is a permanent universal truth: 'The teacher said that the earth revolves (not revolved) around the sun.'",
     "examples": [
       {
@@ -496,8 +496,8 @@ export const JHS3_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Expand lexical precision for BECE Section A: vocabulary registers (legal, medical, agricultural, computing), idiomatic expressions, separable/inseparable phrasal verbs, and figures of speech.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Jm3Vw6sE2fI",
-    "youtubeId": "Jm3Vw6sE2fI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=IhDYDpvC0YM",
+    "youtubeId": "IhDYDpvC0YM",
     "keyNotes": "• Common Figures of Speech for BECE:\n  1. Simile: Direct comparison using 'like' or 'as' ('He fought like a lion in battle'; 'Her face was as bright as the morning sun').\n  2. Metaphor: Direct implied comparison WITHOUT using 'like' or 'as' ('The classroom was a zoo'; 'He is a pillar of strength').\n  3. Personification: Giving human qualities or actions to inanimate objects or abstract ideas ('The gentle wind whispered through the trees'; 'Death laid his icy hands on the king').\n  4. Hyperbole: Deliberate, dramatic exaggeration for emphasis ('I have told you a million times!'; 'His bag weighed a ton').\n  5. Irony: Contrast between expectation and reality, or words meaning the opposite of their literal meaning.\n  6. Onomatopoeia: Words that imitate natural sounds (buzz, hiss, clang, splash).\n• Phrasal Verbs:\n  - Verb + Preposition/Adverb with non-literal meaning:\n    * 'Put off' = postpone; 'Put out' = extinguish (a fire); 'Put up with' = tolerate.\n    * 'Give up' = surrender/quit; 'Give in' = yield; 'Give out' = distribute.\n    * 'Look into' = investigate; 'Look forward to' = anticipate eagerly.\n• Idiomatic Expressions:\n  - 'Bite the bullet' = face a difficult situation with courage.\n  - 'Spill the beans' = reveal a secret prematurely.\n  - 'Burn the midnight oil' = study or work late into the night.\n  - 'At the eleventh hour' = at the very last possible moment.",
     "examples": [
       {
@@ -533,8 +533,8 @@ export const JHS3_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Appreciate literary genres prescribed for the BECE: structural elements of prose (plot, theme, characterization), drama (dialogue, stage directions, dramatic irony), and poetry (stanza, meter, rhyme scheme, symbolism).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Jm3Vw6sE2fI",
-    "youtubeId": "Jm3Vw6sE2fI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=h8rXJY7V0pQ",
+    "youtubeId": "h8rXJY7V0pQ",
     "keyNotes": "• The Three Major Literary Genres:\n  1. Prose: Written in continuous narrative sentences and paragraphs:\n    * Fiction (novels, short stories) vs Non-Fiction (biography, autobiography, travelogues).\n    * Core Elements: Plot (chronological series of events), Setting (time and place), Characters (Protagonist = central hero; Antagonist = opposing rival; Flat vs Round characters), Theme (underlying central message/philosophy), Point of View (First person 'I', Third person omniscient).\n  2. Drama (Plays): Literature meant to be performed on stage before an audience:\n    * Forms: Tragedy (serious theme, ends disastrously/death for hero), Comedy (humorous, ends happily), Tragicomedy.\n    * Conventions: Dialogue (conversation between characters), Monologue (long speech by one character to others), Soliloquy (character speaking thoughts aloud alone on stage), Stage Directions (italicized instructions guiding actor movements and lighting).\n    * Dramatic Irony: The audience or reader knows a vital truth that a character on stage remains unaware of.\n  3. Poetry: Literature composed in metered lines and stanzas using concentrated figurative language, rhythm, and imagery:\n    * Forms: Lyric (expresses personal emotions/songs), Sonnet (14-line poem with specific rhyme scheme), Ballad (narrative poem telling a folk story), Elegy (mournful poem lamenting the dead), Ode (poem praising a person or object).\n    * Poetic Devices: Stanza (poetic paragraph), Rhyme Scheme (e.g. ABAB CDCD), Alliteration, Assonance, Consonance, Imagery, Symbolism.",
     "examples": [
       {

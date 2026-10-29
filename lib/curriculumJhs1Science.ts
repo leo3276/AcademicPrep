@@ -51,8 +51,8 @@ export const JHS1_SCIENCE_TOPICS: CurriculumTopic[] = [
     "description": "Master SI units for length, mass, time, volume, and calculate the density of regular and irregular solids.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=1004h1G0zfg",
-    "youtubeId": "1004h1G0zfg",
+    "youtubeUrl": "https://www.youtube.com/watch?v=oStm8sGk6U8",
+    "youtubeId": "oStm8sGk6U8",
     "keyNotes": "Measurement is the comparison of an unknown physical quantity with a known standard unit.\n• Fundamental Quantities & SI Units:\n  - Length: Metre (m) [measured with metre rule, tape measure, vernier caliper].\n  - Mass: Kilogram (kg) [measured with beam balance, electronic balance].\n  - Time: Second (s) [measured with stopwatch, clock].\n  - Temperature: Kelvin (K) or Degree Celsius (°C) [measured with thermometer].\n• Derived Quantities:\n  - Volume (m³ or cm³): Space occupied by matter. For cuboid: V = l × w × h.\n  - Density (kg/m³ or g/cm³): Mass per unit volume. Formula: Density (ρ) = Mass (m) / Volume (V).\n• Measuring Irregular Solids: Volume by water displacement using a measuring cylinder or eureka (displacement) can.",
     "examples": [
       {
@@ -164,8 +164,8 @@ export const JHS1_SCIENCE_TOPICS: CurriculumTopic[] = [
     "description": "Differentiate mixtures from compounds, and master separation techniques: filtration, evaporation, distillation, magnetic separation, and chromatography.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=q3pE1r5sLqY",
-    "youtubeId": "q3pE1r5sLqY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=YgdrzYaG91A",
+    "youtubeId": "YgdrzYaG91A",
     "keyNotes": "A mixture consists of two or more substances physically combined in any proportion without chemical bonding.\n• Homogeneous Mixture (Solution): Uniform composition throughout (e.g. salt dissolved in water, air).\n• Heterogeneous Mixture (Suspension): Non-uniform composition with visible boundaries (e.g. muddy water, sand and iron filings).\n• Separation Techniques:\n  - Filtration: Separates an insoluble solid from a liquid using filter paper (e.g. sand and water). Residue remains on filter; filtrate passes through.\n  - Evaporation: Recovers a dissolved solid solute from a solvent by boiling away the liquid (e.g. obtaining salt from salt solution).\n  - Simple Distillation: Recovers both the pure liquid solvent and the dissolved solute (e.g. pure water from sea water). Uses Liebig condenser.\n  - Magnetic Separation: Separates magnetic substances (iron, steel) from non-magnetic mixtures (e.g. iron filings from sulfur).\n  - Paper Chromatography: Separates mixtures of colored pigments or dyes based on their differential solubility and travel speed on paper.\n  - Sublimation: Separates a sublimable solid (ammonium chloride, camphor, iodine) from non-sublimable solids (salt, sand).",
     "examples": [
       {
@@ -241,8 +241,8 @@ export const JHS1_SCIENCE_TOPICS: CurriculumTopic[] = [
     "description": "Learn the characteristics of living organisms (MR NIGER D) and the five-kingdom classification system (Monera, Protista, Fungi, Plantae, Animalia).",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=vQXomJIBGcY",
-    "youtubeId": "vQXomJIBGcY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=xwFM006dacM",
+    "youtubeId": "xwFM006dacM",
     "keyNotes": "• The 7 Characteristics of Living Organisms (MR NIGER D):\n  - Movement, Respiration, Nutrition, Irritability (Sensitivity), Growth, Excretion, Reproduction, and Death.\n• Why We Classify:\n  - To bring order to the enormous diversity of living organisms and facilitate easy identification and scientific communication.\n• The Five Kingdoms of Living Things:\n  1. Monera (Prokaryotes): Single-celled microscopic organisms without a true nucleus (e.g. Bacteria, Blue-green algae).\n  2. Protista (Protoctista): Single-celled eukaryotes with a true nucleus (e.g. Amoeba, Paramecium, Euglena, Spirogyra).\n  3. Fungi: Non-green organisms with chitinous cell walls that feed saprophytically on decaying matter (e.g. Mushrooms, Yeast, Bread mold / Rhizopus).\n  4. Plantae: Multicellular autotrophic green plants with cellulose cell walls capable of photosynthesis (e.g. Maize, Ferns, Mosses, Mango trees).\n  5. Animalia: Multicellular heterotrophic organisms without cell walls capable of locomotion (e.g. Insects, Fish, Birds, Mammals).",
     "examples": [
       {
@@ -278,8 +278,8 @@ export const JHS1_SCIENCE_TOPICS: CurriculumTopic[] = [
     "description": "Explore the human alimentary canal, mechanical and chemical digestion, digestive enzymes, and absorption in the small intestine.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=b20VRR9C37Q",
-    "youtubeId": "b20VRR9C37Q",
+    "youtubeUrl": "https://www.youtube.com/watch?v=-J_WkB7b2NM",
+    "youtubeId": "-J_WkB7b2NM",
     "keyNotes": "Digestion is the breakdown of large, complex, insoluble food molecules into small, simple, soluble molecules that can be absorbed into the bloodstream.\n• Alimentary Canal Organs & Sequence:\n  - Mouth (Teeth chew food mechanically; Salivary Amylase / Ptyalin breaks starch into maltose).\n  - Oesophagus (Gullet): Food bolus moves down by Peristalsis (rhythmic wave-like muscular contractions).\n  - Stomach: Secretes Gastric Juice containing Hydrochloric Acid (kills bacteria, provides acidic pH) and Pepsin (digests proteins into peptones).\n  - Duodenum: First part of small intestine; receives Bile (from liver/gall bladder to emulsify fats) and Pancreatic Juice (Amylase, Trypsin, Lipase).\n  - Ileum (Small Intestine): Longest section; completes digestion of all food classes; lined with Villi for absorption of nutrients into capillaries.\n  - Large Intestine (Colon): Absorbs water and mineral salts from undigested residue.\n  - Rectum & Anus: Stores and eliminates faeces (Egestion).\n• Three Main Digestive Enzyme Groups:\n  - Carbohydrases (Amylase): Starch → Maltose → Glucose.\n  - Proteases (Pepsin, Trypsin): Proteins → Peptides → Amino acids.\n  - Lipases: Fats and oils (Lipids) → Fatty acids and Glycerol.",
     "examples": [
       {
@@ -353,8 +353,8 @@ export const JHS1_SCIENCE_TOPICS: CurriculumTopic[] = [
     "description": "Learn the photosynthesis equation, conditions necessary for photosynthesis, testing a green leaf for starch, and plant transport vessels.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=UPBMG5EIsh8",
-    "youtubeId": "UPBMG5EIsh8",
+    "youtubeUrl": "https://www.youtube.com/watch?v=UKH-wPkgaQM",
+    "youtubeId": "UKH-wPkgaQM",
     "keyNotes": "Photosynthesis is the process by which green plants manufacture carbohydrates (glucose/starch) from carbon dioxide and water using sunlight absorbed by chlorophyll.\n• Word Equation:\n  - Carbon dioxide + Water --[Sunlight / Chlorophyll]--> Glucose + Oxygen.\n• Chemical Equation:\n  - 6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂.\n• Essential Conditions for Photosynthesis:\n  - Sunlight (provides light energy).\n  - Chlorophyll (green pigment that traps solar energy).\n  - Carbon dioxide (enters leaf through stomata by diffusion).\n  - Water (absorbed from soil by root hairs and conducted by xylem).\n• Testing a Green Leaf for Starch:\n  1. Boil leaf in water for 1 minute (kills leaf cells and stops enzymatic reactions).\n  2. Boil leaf in methylated spirit / ethanol in a water bath (decolorizes leaf by dissolving chlorophyll). [NEVER heat ethanol over an open flame - it is flammable!].\n  3. Dip leaf in warm water (softens the brittle leaf).\n  4. Spread leaf on a white tile and add drops of Iodine solution: Blue-black color confirms presence of starch; yellow-brown indicates no starch.\n• Vascular Bundles:\n  - Xylem: Transports water and dissolved mineral salts upwards from roots to leaves.\n  - Phloem: Transports manufactured food (sucrose) from leaves to all parts of the plant (Translocation).",
     "examples": [
       {
@@ -468,8 +468,8 @@ export const JHS1_SCIENCE_TOPICS: CurriculumTopic[] = [
     "description": "Understand the Law of Conservation of Energy, kinetic and potential energy, renewable vs non-renewable sources, and energy transformations.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=jCrOtF4y2HY",
-    "youtubeId": "jCrOtF4y2HY",
+    "youtubeUrl": "https://www.youtube.com/watch?v=9gu7WNZDmnw",
+    "youtubeId": "9gu7WNZDmnw",
     "keyNotes": "Energy is defined as the capacity or ability to do work. The SI unit of energy is the Joule (J).\n• Forms of Energy:\n  - Kinetic Energy: Energy possessed by any moving body (e.g. running student, moving vehicle, rolling ball).\n  - Potential Energy: Stored energy due to position, condition, or chemical state (e.g. stretched catapult rubber, stone held up high, energy stored in food or dry cells).\n  - Other Forms: Light, Sound, Thermal (Heat), Chemical (in food, batteries, charcoal), and Electrical energy.\n• The Law of Conservation of Energy:\n  - Energy cannot be created or destroyed; it can only be transformed from one form to another.\n• Everyday Energy Transformations:\n  - Torch / Flashlight: Chemical energy (battery) → Electrical energy → Light energy + Heat energy.\n  - Electric Iron: Electrical energy → Heat (thermal) energy.\n  - Radio / Phone Speaker: Electrical energy → Sound energy.\n  - Akosombo Dam: Potential energy (dam water) → Kinetic energy (falling water) → Mechanical energy (turbine) → Electrical energy (generator).\n• Sources of Energy in Ghana:\n  - Renewable (naturally replaced, cannot run out): Solar (sunlight), Wind, Hydroelectric (Akosombo and Bui dams), Biomass.\n  - Non-Renewable (finite, can be used up): Petroleum (crude oil, petrol, diesel), Coal, Natural gas.",
     "examples": [
       {
