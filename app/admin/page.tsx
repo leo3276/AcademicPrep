@@ -3998,11 +3998,12 @@ export default function AdminDashboardPage() {
                           return matchesCat && matchesSearch;
                         })
                         .map((post) => (
-                          <tr key={post.id} className="hover:bg-slate-50/60 transition">
+                          <tr key={post.id} className="hover:bg-slate-50/70 transition">
                             <td className="px-4 py-3">
-                              <div className="flex items-start gap-3 max-w-md">
-                                {post.mediaType === 'image' && post.mediaUrl ? (
-                                  <div className="w-11 h-11 rounded-lg overflow-hidden shrink-0 border border-slate-200 bg-slate-100">
+                              <div className="flex items-center gap-3 max-w-lg">
+                                {/* Clean Neutral Thumbnail */}
+                                <div className="w-10 h-10 rounded-lg overflow-hidden shrink-0 border border-slate-200 bg-slate-100 flex items-center justify-center text-slate-500">
+                                  {post.mediaType === 'image' && post.mediaUrl ? (
                                     <img
                                       src={post.mediaUrl}
                                       alt=""
@@ -4011,170 +4012,128 @@ export default function AdminDashboardPage() {
                                         (e.target as any).style.display = 'none';
                                       }}
                                     />
-                                  </div>
-                                ) : post.mediaType === 'video' && post.mediaUrl ? (
-                                  <div className="w-11 h-11 rounded-lg shrink-0 bg-slate-900 border border-slate-700 flex items-center justify-center text-white" title="Contains Video">
-                                    <VideoIcon className="w-4 h-4 text-blue-400" />
-                                  </div>
-                                ) : null}
+                                  ) : post.mediaType === 'video' ? (
+                                    <VideoIcon className="w-4 h-4 text-slate-600" />
+                                  ) : (
+                                    <FileText className="w-4 h-4 text-slate-400" />
+                                  )}
+                                </div>
 
-                                <div className="min-w-0">
-                                  <div className="flex items-center gap-1.5 flex-wrap">
+                                <div className="min-w-0 flex-1">
+                                  <div className="flex items-center gap-2 flex-wrap">
                                     {post.featured && (
-                                      <span className="shrink-0 px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 text-[10px] font-bold" title="Featured Post">
+                                      <span className="shrink-0 px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200/80 text-[10px] font-semibold" title="Featured Article">
                                         ★ Featured
                                       </span>
                                     )}
                                     {post.mediaType === 'video' && (
-                                      <span className="shrink-0 px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 text-[9px] font-bold">
-                                        VIDEO
-                                      </span>
-                                    )}
-                                    {post.mediaType === 'image' && (
-                                      <span className="shrink-0 px-1.5 py-0.5 rounded bg-blue-100 text-blue-700 text-[9px] font-bold">
-                                        PHOTO
+                                      <span className="shrink-0 px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200 text-[10px] font-medium">
+                                        Video
                                       </span>
                                     )}
                                     <Link
                                       href={`/blog/${post.id}`}
                                       target="_blank"
-                                      className="font-semibold text-slate-900 hover:text-blue-600 transition flex items-center gap-1 group truncate"
+                                      className="font-semibold text-slate-900 hover:text-blue-600 transition inline-flex items-center gap-1 group truncate text-xs"
                                     >
-                                      <span>{post.title}</span>
+                                      <span className="truncate">{post.title}</span>
                                       <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-blue-600 shrink-0" />
                                     </Link>
                                   </div>
-                                  <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
-                                    {post.excerpt}
-                                  </p>
-                                  <div className="flex items-center gap-2 mt-1">
-                                    <button
-                                      type="button"
-                                      onClick={() => handleCopyPostLink(post)}
-                                      className="inline-flex items-center gap-1 text-[10px] text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-2 py-0.5 rounded font-mono transition cursor-pointer"
-                                      title="Click to copy direct URL"
-                                    >
-                                      {copiedPostId === post.id ? (
-                                        <>
-                                          <Check className="w-3 h-3 text-emerald-600" />
-                                          <span className="text-emerald-700 font-bold">Copied!</span>
-                                        </>
-                                      ) : (
-                                        <>
-                                          <Copy className="w-3 h-3 text-blue-500" />
-                                          <span>academicprep.com/blog/{post.id}</span>
-                                        </>
-                                      )}
-                                    </button>
-
-                                    <button
-                                      type="button"
-                                      onClick={() => handleSharePostWhatsApp(post)}
-                                      className="inline-flex items-center gap-1 text-[10px] text-emerald-700 hover:text-emerald-900 bg-emerald-50 hover:bg-emerald-100 px-2 py-0.5 rounded font-semibold transition cursor-pointer"
-                                      title="Broadcast on WhatsApp"
-                                    >
-                                      <MessageCircle className="w-3 h-3 text-emerald-600" />
-                                      <span>WhatsApp</span>
-                                    </button>
-
-                                    <button
-                                      type="button"
-                                      onClick={() => {
-                                        setBroadcastPost(post);
-                                        setIsBroadcastModalOpen(true);
-                                      }}
-                                      className="inline-flex items-center gap-1 text-[10px] text-blue-700 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 px-2 py-0.5 rounded font-semibold transition cursor-pointer"
-                                      title="Broadcast directly to students via SMS or WhatsApp"
-                                    >
-                                      <Radio className="w-3 h-3 text-blue-600" />
-                                      <span>Broadcast (SMS/WA)</span>
-                                    </button>
-                                  </div>
+                                  {post.excerpt && (
+                                    <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
+                                      {post.excerpt}
+                                    </p>
+                                  )}
                                 </div>
                               </div>
                             </td>
 
                             <td className="px-4 py-3 whitespace-nowrap">
-                              <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                              <span className="px-2.5 py-1 rounded-full text-[10px] font-medium bg-slate-100 text-slate-700 border border-slate-200">
                                 {post.category}
                               </span>
                             </td>
 
-                            <td className="px-4 py-3 whitespace-nowrap font-medium text-slate-700">
+                            <td className="px-4 py-3 whitespace-nowrap font-medium text-slate-700 text-xs">
                               {post.author}
                             </td>
 
-                            <td className="px-4 py-3 whitespace-nowrap text-slate-500 font-mono">
+                            <td className="px-4 py-3 whitespace-nowrap text-slate-500 font-mono text-xs">
                               {post.readTimeMinutes} min
                             </td>
 
-                            <td className="px-4 py-3 whitespace-nowrap text-slate-500 font-mono">
+                            <td className="px-4 py-3 whitespace-nowrap text-slate-500 font-mono text-xs">
                               {new Date(post.publishedAt).toLocaleDateString()}
                             </td>
 
-                            <td className="px-4 py-3 whitespace-nowrap text-right space-x-1">
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setBroadcastPost(post);
-                                  setIsBroadcastModalOpen(true);
-                                }}
-                                className="p-1.5 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition cursor-pointer"
-                                title="Broadcast to Students (SMS &amp; WhatsApp)"
-                              >
-                                <Radio className="w-3.5 h-3.5" />
-                              </button>
+                            <td className="px-4 py-3 whitespace-nowrap text-right">
+                              <div className="flex items-center justify-end gap-1.5">
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setBroadcastPost(post);
+                                    setIsBroadcastModalOpen(true);
+                                  }}
+                                  className="p-1.5 rounded-lg border border-slate-200 hover:border-blue-300 hover:bg-blue-50 text-slate-500 hover:text-blue-600 transition cursor-pointer"
+                                  title="Broadcast via SMS / WhatsApp"
+                                >
+                                  <Radio className="w-3.5 h-3.5" />
+                                </button>
 
-                              <button
-                                type="button"
-                                onClick={() => handleSharePostWhatsApp(post)}
-                                className="p-1.5 rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition cursor-pointer"
-                                title="Share to WhatsApp"
-                              >
-                                <MessageCircle className="w-3.5 h-3.5" />
-                              </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleSharePostWhatsApp(post)}
+                                  className="p-1.5 rounded-lg border border-slate-200 hover:border-emerald-300 hover:bg-emerald-50 text-slate-500 hover:text-emerald-600 transition cursor-pointer"
+                                  title="Share to WhatsApp Channel"
+                                >
+                                  <MessageCircle className="w-3.5 h-3.5" />
+                                </button>
 
-                              <button
-                                type="button"
-                                onClick={() => handleCopyPostLink(post)}
-                                className="p-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition cursor-pointer"
-                                title="Copy direct public link"
-                              >
-                                {copiedPostId === post.id ? (
-                                  <Check className="w-3.5 h-3.5 text-emerald-600" />
-                                ) : (
-                                  <Copy className="w-3.5 h-3.5" />
-                                )}
-                              </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleCopyPostLink(post)}
+                                  className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition cursor-pointer"
+                                  title={copiedPostId === post.id ? 'Copied URL!' : 'Copy Direct URL'}
+                                >
+                                  {copiedPostId === post.id ? (
+                                    <Check className="w-3.5 h-3.5 text-emerald-600" />
+                                  ) : (
+                                    <Copy className="w-3.5 h-3.5" />
+                                  )}
+                                </button>
 
-                              <button
-                                type="button"
-                                onClick={() => handleToggleFeatured(post)}
-                                className={`p-1.5 rounded-lg border transition ${
-                                  post.featured
-                                    ? 'bg-amber-50 border-amber-200 text-amber-700 hover:bg-amber-100'
-                                    : 'border-slate-200 text-slate-400 hover:text-slate-700 hover:bg-slate-100'
-                                }`}
-                                title={post.featured ? 'Unfeature' : 'Set as Featured Article'}
-                              >
-                                <Flame className="w-3.5 h-3.5" />
-                              </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleToggleFeatured(post)}
+                                  className={`p-1.5 rounded-lg border transition cursor-pointer ${
+                                    post.featured
+                                      ? 'bg-amber-50 border-amber-200 text-amber-600 hover:bg-amber-100'
+                                      : 'border-slate-200 text-slate-400 hover:text-slate-700 hover:bg-slate-50'
+                                  }`}
+                                  title={post.featured ? 'Remove Featured Status' : 'Mark as Featured'}
+                                >
+                                  <Flame className="w-3.5 h-3.5" />
+                                </button>
 
-                              <button
-                                onClick={() => handleStartEditPost(post)}
-                                className="p-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition"
-                                title="Edit Article"
-                              >
-                                <Edit className="w-3.5 h-3.5" />
-                              </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleStartEditPost(post)}
+                                  className="p-1.5 rounded-lg border border-slate-200 hover:border-blue-300 hover:bg-blue-50 text-slate-500 hover:text-blue-600 transition cursor-pointer"
+                                  title="Edit Article"
+                                >
+                                  <Edit className="w-3.5 h-3.5" />
+                                </button>
 
-                              <button
-                                onClick={() => handleDeleteBlogPost(post)}
-                                className="p-1.5 rounded-lg border border-slate-200 text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition"
-                                title="Delete Article"
-                              >
-                                <Trash2 className="w-3.5 h-3.5" />
-                              </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteBlogPost(post)}
+                                  className="p-1.5 rounded-lg border border-slate-200 hover:border-rose-300 hover:bg-rose-50 text-slate-400 hover:text-rose-600 transition cursor-pointer"
+                                  title="Delete Article"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
                             </td>
                           </tr>
                         ))}
