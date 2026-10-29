@@ -168,8 +168,12 @@ export default function AdminDashboardPage() {
   // University Content Reports Store (Step 3)
   const [universityContentReports, setUniversityContentReports] = useState<any[]>([]);
   const [loadingUniReports, setLoadingUniReports] = useState(false);
-  const [uniSubTab, setUniSubTab] = useState<'slides' | 'reports'>('slides');
+  const [uniSubTab, setUniSubTab] = useState<'slides' | 'reports' | 'requests'>('slides');
   const [uniReportFilter, setUniReportFilter] = useState<'all' | 'pending' | 'resolved' | 'dismissed'>('all');
+  // University Course Requests Store (Step 5)
+  const [universityCourseRequests, setUniversityCourseRequests] = useState<any[]>([]);
+  const [loadingUniRequests, setLoadingUniRequests] = useState(false);
+  const [uniRequestFilter, setUniRequestFilter] = useState<'all' | 'pending' | 'fulfilled' | 'dismissed'>('all');
   const [loadingUniSlides, setLoadingUniSlides] = useState(false);
   const [collaboratorLink, setCollaboratorLink] = useState('');
   const [collabLinkCopied, setCollabLinkCopied] = useState(false);
@@ -495,6 +499,40 @@ export default function AdminDashboardPage() {
       }
     } catch {
       alert('Network error updating report');
+    }
+  };
+  const loadUniversityRequests = async () => {
+    setLoadingUniRequests(true);
+    try {
+      const res = await fetch('/api/university/requests', { cache: 'no-store' });
+      const data = await res.json();
+      if (data.success && Array.isArray(data.requests)) {
+        setUniversityCourseRequests(data.requests);
+      }
+    } catch (e) {
+      console.warn('Failed to load university course requests:', e);
+    } finally {
+      setLoadingUniRequests(false);
+    }
+  };
+
+  const handleUpdateCourseRequestStatus = async (id: string, status: 'fulfilled' | 'dismissed') => {
+    try {
+      const res = await fetch('/api/university/requests', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, status }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setUniversityCourseRequests(prev =>
+          prev.map(r => (r.id === id ? { ...r, status } : r))
+        );
+      } else {
+        alert(data.error || 'Failed to update course request');
+      }
+    } catch {
+      alert('Network error updating course request');
     }
   };
   const loadCollaboratorLink = async () => {
@@ -1045,6 +1083,7 @@ export default function AdminDashboardPage() {
       loadUniversitySlides();
       loadCollaboratorLink();
       loadUniversityReports();
+      loadUniversityRequests();
     }
   }, [activeTab]);
 
@@ -5285,9 +5324,36 @@ export default function AdminDashboardPage() {
                   </span>
                 )}
               </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setUniSubTab('requests');
+                  loadUniversityRequests();
+                }}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-2 ${
+                  uniSubTab === 'requests'
+                    ? 'bg-blue-600 text-white shadow-xs'
+                    : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+                }`}
+              >
+                <FileText className="w-3.5 h-3.5" />
+                <span>Course Requests</span>
+                {universityCourseRequests.filter(r => r.status === 'pending').length > 0 ? (
+                  <span className="px-1.5 py-0.2 rounded-full font-mono text-[10px] bg-blue-600 text-white font-bold">
+                    {universityCourseRequests.filter(r => r.status === 'pending').length}
+                  </span>
+                ) : (
+                  <span className={`px-1.5 py-0.2 rounded-full font-mono text-[10px] ${
+                    uniSubTab === 'requests' ? 'bg-blue-700 text-white' : 'bg-slate-100 text-slate-600'
+                  }`}>
+                    {universityCourseRequests.length}
+                  </span>
+                )}
+              </button>
             </div>
 
-            {uniSubTab === 'slides' ? (
+            {uniSubTab === 'slides' && (
               <>
                 {/* Special Collaborator Dispatch Link Box */}
             <div className="bg-gradient-to-r from-blue-50/60 via-slate-50 to-indigo-50/40 border border-blue-200/80 rounded-2xl p-5 shadow-xs space-y-3">
@@ -5696,8 +5762,9 @@ export default function AdminDashboardPage() {
               })()}
             </div>
               </>
-            ) : (
-              /* STUDENT CONTENT ISSUE REPORTS REVIEW QUEUE */
+            )}
+
+            {uniSubTab === 'reports' && (
               <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
                 <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100">
                   <div className="flex items-center gap-2">
@@ -5877,6 +5944,197 @@ export default function AdminDashboardPage() {
                                   )}
                                   {rep.status !== 'pending' && (
                                     <span className="text-[11px] text-slate-400 italic">Reviewed</span>
+                                  )}
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  );
+                })()}
+              </div>
+            )}
+
+            {uniSubTab === 'requests' && (
+              <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+                <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 border border-blue-200 flex items-center justify-center font-bold">
+                      <FileText className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-slate-900">Student Course &amp; Slide Requests</h3>
+                      <p className="text-[11px] text-slate-500">
+                        Demand analytics from university students requesting slide decks not yet in the catalog.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg text-xs">
+                      <button
+                        type="button"
+                        onClick={() => setUniRequestFilter('all')}
+                        className={`px-2.5 py-1 rounded-md transition cursor-pointer font-medium ${
+                          uniRequestFilter === 'all' ? 'bg-white text-slate-900 shadow-2xs font-bold' : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                      >
+                        All ({universityCourseRequests.length})
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setUniRequestFilter('pending')}
+                        className={`px-2.5 py-1 rounded-md transition cursor-pointer font-medium ${
+                          uniRequestFilter === 'pending' ? 'bg-white text-blue-700 shadow-2xs font-bold' : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                      >
+                        Pending ({universityCourseRequests.filter(r => r.status === 'pending').length})
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setUniRequestFilter('fulfilled')}
+                        className={`px-2.5 py-1 rounded-md transition cursor-pointer font-medium ${
+                          uniRequestFilter === 'fulfilled' ? 'bg-white text-emerald-700 shadow-2xs font-bold' : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                      >
+                        Fulfilled ({universityCourseRequests.filter(r => r.status === 'fulfilled').length})
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setUniRequestFilter('dismissed')}
+                        className={`px-2.5 py-1 rounded-md transition cursor-pointer font-medium ${
+                          uniRequestFilter === 'dismissed' ? 'bg-white text-slate-700 shadow-2xs font-bold' : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                      >
+                        Dismissed ({universityCourseRequests.filter(r => r.status === 'dismissed').length})
+                      </button>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={loadUniversityRequests}
+                      disabled={loadingUniRequests}
+                      className="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 text-xs font-medium flex items-center gap-1 transition cursor-pointer"
+                    >
+                      <RefreshCw className={`w-3.5 h-3.5 ${loadingUniRequests ? 'animate-spin' : ''}`} />
+                      <span>Refresh</span>
+                    </button>
+                  </div>
+                </div>
+
+                {loadingUniRequests ? (
+                  <div className="py-16 text-center text-xs text-slate-400 space-y-2">
+                    <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
+                    <p>Loading course requests...</p>
+                  </div>
+                ) : (() => {
+                  const displayedRequests = universityCourseRequests.filter(r => {
+                    if (uniRequestFilter === 'all') return true;
+                    return r.status === uniRequestFilter;
+                  });
+
+                  if (displayedRequests.length === 0) {
+                    return (
+                      <div className="py-16 text-center border border-dashed border-slate-200 rounded-xl p-8 space-y-2">
+                        <FileText className="w-8 h-8 text-slate-300 mx-auto" />
+                        <p className="text-xs font-semibold text-slate-800">
+                          {uniRequestFilter === 'pending'
+                            ? 'No pending course requests.'
+                            : 'No requests found for this filter.'}
+                        </p>
+                        <p className="text-[11px] text-slate-500 max-w-sm mx-auto">
+                          When students request slides for specific courses across UG, KNUST, UCC, or other universities, they will appear here.
+                        </p>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div className="overflow-x-auto border border-slate-200 rounded-xl">
+                      <table className="w-full text-left text-xs">
+                        <thead className="bg-slate-50 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
+                          <tr>
+                            <th className="px-4 py-3">Status</th>
+                            <th className="px-4 py-3">Course Code &amp; Title</th>
+                            <th className="px-4 py-3">University &amp; Level</th>
+                            <th className="px-4 py-3">Lecturer / Notes</th>
+                            <th className="px-4 py-3">Student Contact</th>
+                            <th className="px-4 py-3">Date</th>
+                            <th className="px-4 py-3 text-right">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100">
+                          {displayedRequests.map(req => (
+                            <tr key={req.id} className="hover:bg-slate-50/70 transition">
+                              <td className="px-4 py-3 whitespace-nowrap">
+                                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${
+                                  req.status === 'fulfilled'
+                                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                    : req.status === 'dismissed'
+                                    ? 'bg-slate-100 text-slate-600 border-slate-200'
+                                    : 'bg-blue-50 text-blue-700 border-blue-200 font-bold'
+                                }`}>
+                                  {req.status === 'fulfilled' ? 'Fulfilled' : req.status === 'dismissed' ? 'Dismissed' : 'Pending Upload'}
+                                </span>
+                              </td>
+
+                              <td className="px-4 py-3 min-w-[160px]">
+                                <div className="space-y-0.5">
+                                  <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-600 text-white">
+                                    {req.courseCode}
+                                  </span>
+                                  <p className="font-semibold text-slate-900 truncate max-w-xs">{req.courseTitle}</p>
+                                </div>
+                              </td>
+
+                              <td className="px-4 py-3 whitespace-nowrap">
+                                <div className="space-y-0.5">
+                                  <p className="font-medium text-slate-800 text-[11px]">{req.university}</p>
+                                  <p className="text-[10px] text-slate-400">{req.level} • {req.semester}</p>
+                                </div>
+                              </td>
+
+                              <td className="px-4 py-3 max-w-xs">
+                                <p className="text-slate-700 text-xs line-clamp-2 leading-relaxed">
+                                  {req.lecturerName ? `Lecturer: ${req.lecturerName}. ` : ''}{req.notes || 'No specific notes'}
+                                </p>
+                              </td>
+
+                              <td className="px-4 py-3 whitespace-nowrap font-mono text-[11px] text-slate-600">
+                                {req.studentContact || <span className="text-slate-400 font-sans italic">Anonymous</span>}
+                              </td>
+
+                              <td className="px-4 py-3 whitespace-nowrap text-slate-400 font-mono text-[11px]">
+                                {new Date(req.createdAt).toLocaleDateString()}
+                              </td>
+
+                              <td className="px-4 py-3 whitespace-nowrap text-right">
+                                <div className="flex items-center justify-end gap-1">
+                                  {req.status === 'pending' && (
+                                    <>
+                                      <button
+                                        type="button"
+                                        onClick={() => handleUpdateCourseRequestStatus(req.id, 'fulfilled')}
+                                        className="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 text-xs font-semibold flex items-center gap-1 transition cursor-pointer"
+                                        title="Mark request as fulfilled"
+                                      >
+                                        <Check className="w-3 h-3" />
+                                        <span>Fulfilled</span>
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => handleUpdateCourseRequestStatus(req.id, 'dismissed')}
+                                        className="p-1 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition cursor-pointer"
+                                        title="Dismiss request"
+                                      >
+                                        <X className="w-3.5 h-3.5" />
+                                      </button>
+                                    </>
+                                  )}
+                                  {req.status !== 'pending' && (
+                                    <span className="text-[11px] text-slate-400 italic">Completed</span>
                                   )}
                                 </div>
                               </td>

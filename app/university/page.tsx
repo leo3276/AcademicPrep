@@ -38,7 +38,8 @@ import {
   BellRing,
   Flag,
   Download,
-  AlertTriangle
+  AlertTriangle,
+  ShieldCheck
 } from 'lucide-react';
 import { 
   requestNotificationPermission, 
@@ -162,7 +163,7 @@ export default function UniversityPortalPage() {
 
   const [activePackage, setActivePackage] = useState<CompleteSlideStudyPackage | null>(null);
   const [selectedSlideIndex, setSelectedSlideIndex] = useState(0);
-  const [activeTab, setActiveTab] = useState<'slides' | 'digest' | 'plan' | 'cram' | 'flashcards'>('slides');
+  const [activeTab, setActiveTab] = useState<'slides' | 'digest' | 'plan' | 'cram' | 'flashcards' | 'quiz'>('slides');
   const [condensedGroupSize, setCondensedGroupSize] = useState<number>(10);
   const [revealedDigestAnswers, setRevealedDigestAnswers] = useState<Record<number, boolean>>({});
 
@@ -393,6 +394,114 @@ export default function UniversityPortalPage() {
     }
   };
 
+  // Step 4: Course Quiz Engine & Active Recall Testing
+  const [quizAnswers, setQuizAnswers] = useState<Record<number, number>>({});
+  const [quizSubmitted, setQuizSubmitted] = useState<boolean>(false);
+  const [quizFilter, setQuizFilter] = useState<'all' | 'incorrect'>('all');
+
+  // Step 5: Course Request System & Academic Disclaimer
+  const [showCourseRequestModal, setShowCourseRequestModal] = useState<boolean>(false);
+  const [reqUniversity, setReqUniversity] = useState<string>(GHANAIAN_UNIVERSITIES[0]);
+  const [reqCourseCode, setReqCourseCode] = useState<string>('');
+  const [reqCourseTitle, setReqCourseTitle] = useState<string>('');
+  const [reqLevel, setReqLevel] = useState<string>('Level 100');
+  const [reqSemester, setReqSemester] = useState<string>('Semester 1');
+  const [reqLecturerName, setReqLecturerName] = useState<string>('');
+  const [reqNotes, setReqNotes] = useState<string>('');
+  const [reqStudentContact, setReqStudentContact] = useState<string>('');
+  const [reqSubmitting, setReqSubmitting] = useState<boolean>(false);
+  const [reqSuccess, setReqSuccess] = useState<boolean>(false);
+
+  const handleSubmitCourseRequest = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!reqCourseCode.trim()) return;
+    setReqSubmitting(true);
+    try {
+      const res = await fetch('/api/university/requests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          university: reqUniversity,
+          courseCode: reqCourseCode.trim().toUpperCase(),
+          courseTitle: reqCourseTitle.trim() || reqCourseCode.trim().toUpperCase(),
+          level: reqLevel,
+          semester: reqSemester,
+          lecturerName: reqLecturerName.trim() || undefined,
+          notes: reqNotes.trim() || undefined,
+          studentContact: reqStudentContact.trim() || undefined,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setReqSuccess(true);
+        setTimeout(() => {
+          setShowCourseRequestModal(false);
+          setReqSuccess(false);
+          setReqCourseCode('');
+          setReqCourseTitle('');
+          setReqLecturerName('');
+          setReqNotes('');
+        }, 1600);
+      } else {
+        alert(data.error || 'Failed to submit course request');
+      }
+    } catch {
+      alert('Network error submitting course request');
+    } finally {
+      setReqSubmitting(false);
+    }
+  };
+
+  // Build Practice Quiz Questions dynamically from slide deck
+  const quizQuestions = useMemo(() => {
+    if (!activePackage || !Array.isArray(activePackage.slides)) return [];
+    const eligible = activePackage.slides.filter(s => s.activeRecallPrompt?.question && s.activeRecallPrompt?.answer);
+    if (eligible.length === 0) return [];
+
+    const allAnswers = eligible.map(s => s.activeRecallPrompt.answer);
+    const allDefs = eligible.flatMap(s => s.keyDefinitions || []).map(d => `${d.term}: ${d.definition}`);
+
+    return eligible.slice(0, 15).map((slide, sIdx) => {
+      const questionText = slide.activeRecallPrompt.question;
+      const correctAnswer = slide.activeRecallPrompt.answer;
+      const otherAnswers = allAnswers.filter(a => a !== correctAnswer);
+      let distractors = otherAnswers.slice(0, 3);
+
+      if (distractors.length < 3) {
+        const extra = allDefs.filter(d => d !== correctAnswer).slice(0, 3 - distractors.length);
+        distractors = [...distractors, ...extra];
+      }
+      if (distractors.length < 3) {
+        if (slide.examTrap) {
+          distractors.push(`Exam trap: ${slide.examTrap.replace(/^Remember that /i, '')}`);
+        }
+        distractors.push('This principle applies only under baseline calibration.');
+        distractors.push('None of the stated conditions are satisfied in this case.');
+      }
+      distractors = distractors.slice(0, 3);
+      const correctOptionIndex = sIdx % 4;
+      const options = [...distractors];
+      options.splice(correctOptionIndex, 0, correctAnswer);
+
+      return {
+        id: `q_${slide.pageNumber}_${sIdx}`,
+        slidePage: slide.pageNumber,
+        slideTitle: slide.title,
+        question: questionText,
+        options,
+        correctOptionIndex,
+        explanation: slide.coreRule || slide.activeRecallPrompt.stepByStepSolution || slide.activeRecallPrompt.answer,
+        category: slide.categoryTag || 'Core Concept',
+      };
+    });
+  }, [activePackage]);
+
+  // Reset quiz answers when a new deck loads
+  useEffect(() => {
+    setQuizAnswers({});
+    setQuizSubmitted(false);
+    setQuizFilter('all');
+  }, [activePackage?.id]);
   // Content Issue & Error Reporting (Step 3)
   const [showReportModal, setShowReportModal] = useState(false);
   const [reportTarget, setReportTarget] = useState<{
@@ -1529,6 +1638,16 @@ export default function UniversityPortalPage() {
                       ))}
                     </select>
                   </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setShowCourseRequestModal(true)}
+                    className="px-3.5 py-2 rounded-lg bg-blue-50 border border-blue-200 hover:bg-blue-100 text-blue-700 text-xs font-semibold flex items-center justify-center gap-1.5 transition shrink-0 cursor-pointer"
+                    title="Request slides for a course not yet in the catalog"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Request Course</span>
+                  </button>
                 </div>
 
                 {/* Level & Semester Pills */}
@@ -1597,6 +1716,18 @@ export default function UniversityPortalPage() {
                   <p className="text-xs text-neutral-500">
                     Try clearing your search query or selecting a different level or university.
                   </p>
+                  <div className="pt-2">
+                    <button
+                      onClick={() => {
+                        setReqCourseCode(slideCatalogSearch.toUpperCase().trim());
+                        setShowCourseRequestModal(true);
+                      }}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition cursor-pointer"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                      <span>Request "{slideCatalogSearch || 'Your Course'}" Slides</span>
+                    </button>
+                  </div>
                   <button
                     onClick={() => {
                       setSlideCatalogSearch('');
@@ -2434,6 +2565,16 @@ export default function UniversityPortalPage() {
             </div>
           </div>
 
+          {/* Step 5: Academic Integrity Notice */}
+          <div className="bg-blue-50/70 border border-blue-200/80 rounded-xl p-3 text-xs flex items-center justify-between gap-3 text-neutral-700 shadow-2xs">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0" />
+              <p className="leading-snug">
+                <span className="font-bold text-neutral-900">Academic Integrity Notice:</span> Plain-English digests, flashcards, and quizzes are designed to reinforce student comprehension. Always cross-reference core formulas, exam scopes, and grading rubrics against your lecturer's official syllabus.
+              </p>
+            </div>
+          </div>
+
           {/* Minimal Navigation Tabs */}
           <div className="flex items-center gap-6 border-b border-neutral-200 text-xs font-medium overflow-x-auto">
             <button
@@ -2485,6 +2626,17 @@ export default function UniversityPortalPage() {
               }`}
             >
               Active Recall Drill
+            </button>
+            <button
+              onClick={() => setActiveTab('quiz')}
+              className={`pb-3 border-b-2 transition shrink-0 flex items-center gap-1.5 ${
+                activeTab === 'quiz' 
+                  ? 'border-blue-600 text-blue-600 font-semibold' 
+                  : 'border-transparent text-neutral-500 hover:text-neutral-900'
+              }`}
+            >
+              <HelpCircle className="w-3.5 h-3.5" />
+              <span>Practice Quiz ({quizQuestions.length})</span>
             </button>
           </div>
 
@@ -3664,6 +3816,171 @@ export default function UniversityPortalPage() {
         </div>
       )}
 
+      {/* ─────────────────────────────────────────────────────────────
+          COURSE REQUEST MODAL (STEP 5)
+      ───────────────────────────────────────────────────────────── */}
+      {showCourseRequestModal && (
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-150">
+          <div className="bg-white border border-neutral-200 rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-xl space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-neutral-100">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 border border-blue-200 flex items-center justify-center font-bold">
+                  <Plus className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-neutral-900">Request Course Slides</h3>
+                  <p className="text-[11px] text-neutral-500">
+                    Can't find your course? Tell us and we will source and upload the verified slides.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowCourseRequestModal(false)}
+                className="p-1 text-neutral-400 hover:text-neutral-700 rounded-lg hover:bg-neutral-100 transition cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {reqSuccess ? (
+              <div className="py-8 text-center space-y-2">
+                <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto border border-emerald-200">
+                  <Check className="w-5 h-5 stroke-[3]" />
+                </div>
+                <h4 className="text-sm font-bold text-neutral-900">Request Received</h4>
+                <p className="text-xs text-neutral-500 max-w-xs mx-auto">
+                  We have recorded your course request. You will be notified once the slides are verified and published.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmitCourseRequest} className="space-y-3.5 text-xs">
+                <div>
+                  <label className="font-semibold text-neutral-700 block mb-1">
+                    University
+                  </label>
+                  <select
+                    value={reqUniversity}
+                    onChange={e => setReqUniversity(e.target.value)}
+                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-neutral-900 focus:outline-none focus:border-blue-500"
+                  >
+                    {GHANAIAN_UNIVERSITIES.map(u => (
+                      <option key={u} value={u}>{u}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="font-semibold text-neutral-700 block mb-1">
+                      Course Code <span className="text-rose-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. DCIT 205"
+                      value={reqCourseCode}
+                      onChange={e => setReqCourseCode(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 font-mono uppercase focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="font-semibold text-neutral-700 block mb-1">
+                      Course Title
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Web Apps"
+                      value={reqCourseTitle}
+                      onChange={e => setReqCourseTitle(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="font-semibold text-neutral-700 block mb-1">Level</label>
+                    <select
+                      value={reqLevel}
+                      onChange={e => setReqLevel(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-neutral-900 focus:outline-none focus:border-blue-500"
+                    >
+                      {UNIVERSITY_LEVELS.map(lvl => (
+                        <option key={lvl} value={lvl}>{lvl}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="font-semibold text-neutral-700 block mb-1">Semester</label>
+                    <select
+                      value={reqSemester}
+                      onChange={e => setReqSemester(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-neutral-900 focus:outline-none focus:border-blue-500"
+                    >
+                      {UNIVERSITY_SEMESTERS.map(sem => (
+                        <option key={sem} value={sem}>{sem}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="font-semibold text-neutral-700 block mb-1">
+                    Lecturer / Professor Name <span className="text-neutral-400 font-normal">(Optional)</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Dr. Mensah or Prof. Boateng"
+                    value={reqLecturerName}
+                    onChange={e => setReqLecturerName(e.target.value)}
+                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="font-semibold text-neutral-700 block mb-1">
+                    WhatsApp / Email <span className="text-neutral-400 font-normal">(To notify you when published)</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. 0244123456 or student@ug.edu.gh"
+                    value={reqStudentContact}
+                    onChange={e => setReqStudentContact(e.target.value)}
+                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+
+                <div className="flex items-center justify-end gap-2 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowCourseRequestModal(false)}
+                    className="px-3.5 py-2 rounded-lg border border-neutral-200 hover:bg-neutral-50 text-neutral-600 font-medium transition cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={reqSubmitting || !reqCourseCode.trim()}
+                    className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold shadow-xs flex items-center gap-1.5 transition cursor-pointer"
+                  >
+                    {reqSubmitting ? (
+                      <>
+                        <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Plus className="w-3.5 h-3.5" />
+                        <span>Submit Request</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
       {/* ─────────────────────────────────────────────────────────────
           ISSUE & ERROR REPORT MODAL (STEP 3)
       ───────────────────────────────────────────────────────────── */}
