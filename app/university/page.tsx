@@ -23,7 +23,6 @@ import {
   X,
   Maximize2,
   Minimize2,
-  Sparkles,
   BookOpen,
   HelpCircle,
   Eye,
@@ -1286,7 +1285,7 @@ export default function UniversityPortalPage() {
                             disabled={loading}
                             className="col-span-8 py-2 px-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition disabled:opacity-60"
                           >
-                            <Sparkles className="w-3.5 h-3.5 text-neutral-300" />
+                            <BookOpen className="w-3.5 h-3.5" />
                             <span>Study in Studio ➔</span>
                           </button>
 
@@ -1763,8 +1762,8 @@ export default function UniversityPortalPage() {
                               <>
                                 <span>•</span>
                                 <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-700 font-medium flex items-center gap-1">
-                                  <Sparkles className="w-2.5 h-2.5 text-neutral-700" />
-                                  <span>AI Simplified</span>
+                                  <BookOpen className="w-2.5 h-2.5 text-neutral-700" />
+                                  <span>Simplified</span>
                                 </span>
                               </>
                             )}
@@ -1784,9 +1783,9 @@ export default function UniversityPortalPage() {
                                   ? 'bg-neutral-50 text-neutral-900 border-neutral-300 font-semibold hover:bg-neutral-100'
                                   : 'bg-white text-neutral-700 border-neutral-200 hover:bg-neutral-50 shadow-2xs'
                               }`}
-                              title="Generate bespoke AI plain-English simplification for this slide"
+                              title="Generate plain-English breakdown for this slide"
                             >
-                              <Sparkles className={`w-3.5 h-3.5 text-neutral-700 ${isAiSimplifying && aiSimplifyingSlideNum === currentSlide.pageNumber ? 'animate-spin' : ''}`} />
+                              <BookOpen className={`w-3.5 h-3.5 text-neutral-700 ${isAiSimplifying && aiSimplifyingSlideNum === currentSlide.pageNumber ? 'animate-spin' : ''}`} />
                               <span>
                                 {isAiSimplifying && aiSimplifyingSlideNum === currentSlide.pageNumber
                                   ? 'Simplifying...'
@@ -1860,8 +1859,8 @@ export default function UniversityPortalPage() {
                       {currentSlide.coreRule && (
                         <div className="border-l-2 border-neutral-900 pl-4 py-2 space-y-1 bg-neutral-50/50 rounded-r-xl p-3.5">
                           <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-500 font-semibold flex items-center gap-1.5">
-                            <Sparkles className="w-3 h-3 text-neutral-700" />
-                            <span>In Plain English (The Big Idea)</span>
+                            <BookOpen className="w-3 h-3 text-neutral-700" />
+                            <span>Key Takeaway (The Big Idea)</span>
                           </span>
                           <p className="text-xs sm:text-sm text-neutral-800 leading-relaxed">
                             {currentSlide.coreRule}
