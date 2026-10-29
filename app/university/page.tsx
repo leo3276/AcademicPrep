@@ -29,7 +29,8 @@ import {
   Send,
   MessageSquare,
   RotateCcw,
-  GraduationCap
+  GraduationCap,
+  Bookmark
 } from 'lucide-react';
 import { 
   CompleteSlideStudyPackage, 
@@ -162,7 +163,31 @@ export default function UniversityPortalPage() {
   // University Slides Catalog & Navigation State
   const [adminSlides, setAdminSlides] = useState<UniversitySlide[]>([]);
   const [loadingAdminSlides, setLoadingAdminSlides] = useState<boolean>(true);
-  const [portalMode, setPortalMode] = useState<'library' | 'custom_upload'>('library');
+  const [portalMode, setPortalMode] = useState<'library' | 'my_courses' | 'custom_upload'>('library');
+  const [enrolledSlideIds, setEnrolledSlideIds] = useState<string[]>([]);
+
+  // Load enrolled courses from localStorage on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('academicprep_enrolled_courses');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) setEnrolledSlideIds(parsed);
+      }
+    } catch {}
+  }, []);
+
+  const toggleEnrollCourse = (slideId: string) => {
+    setEnrolledSlideIds(prev => {
+      const next = prev.includes(slideId)
+        ? prev.filter(id => id !== slideId)
+        : [...prev, slideId];
+      try {
+        localStorage.setItem('academicprep_enrolled_courses', JSON.stringify(next));
+      } catch {}
+      return next;
+    });
+  };
   const [selectedUniFilter, setSelectedUniFilter] = useState<string>('All');
   const [selectedLevelFilter, setSelectedLevelFilter] = useState<string>('All');
   const [selectedSemesterFilter, setSelectedSemesterFilter] = useState<string>('All');
@@ -1091,33 +1116,52 @@ export default function UniversityPortalPage() {
           </div>
 
           {/* Clean Segmented Tab Switcher */}
-          <div className="flex justify-center">
+          <div className="flex justify-center overflow-x-auto pb-1">
             <div className="inline-flex p-1 rounded-xl bg-neutral-100 border border-neutral-200/80 text-xs font-semibold">
               <button
                 onClick={() => setPortalMode('library')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition ${
+                className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg transition shrink-0 ${
                   portalMode === 'library'
-                    ? 'bg-white text-neutral-900 shadow-xs'
+                    ? 'bg-white text-neutral-900 shadow-xs font-bold'
                     : 'text-neutral-500 hover:text-neutral-900'
                 }`}
               >
-                <BookOpen className="w-3.5 h-3.5" />
-                <span>Curated University Slides</span>
+                <BookOpen className="w-3.5 h-3.5 text-blue-600" />
+                <span>All Courses</span>
                 <span className="font-mono text-[10px] px-1.5 py-0.2 rounded-full bg-neutral-100 text-neutral-700 border border-neutral-200">
                   {adminSlides.length}
                 </span>
               </button>
 
               <button
-                onClick={() => setPortalMode('custom_upload')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition ${
-                  portalMode === 'custom_upload'
-                    ? 'bg-white text-neutral-900 shadow-xs'
+                onClick={() => setPortalMode('my_courses')}
+                className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg transition shrink-0 ${
+                  portalMode === 'my_courses'
+                    ? 'bg-white text-neutral-900 shadow-xs font-bold'
                     : 'text-neutral-500 hover:text-neutral-900'
                 }`}
               >
-                <Upload className="w-3.5 h-3.5" />
-                <span>AI Study Buddy (Upload Private Deck)</span>
+                <Bookmark className={`w-3.5 h-3.5 ${enrolledSlideIds.length > 0 ? 'fill-blue-600 text-blue-600' : 'text-slate-400'}`} />
+                <span>My Courses</span>
+                <span className={`font-mono text-[10px] px-1.5 py-0.2 rounded-full border ${
+                  enrolledSlideIds.length > 0
+                    ? 'bg-blue-50 text-blue-700 border-blue-200 font-bold'
+                    : 'bg-neutral-100 text-neutral-600 border-neutral-200'
+                }`}>
+                  {enrolledSlideIds.length}
+                </span>
+              </button>
+
+              <button
+                onClick={() => setPortalMode('custom_upload')}
+                className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg transition shrink-0 ${
+                  portalMode === 'custom_upload'
+                    ? 'bg-white text-neutral-900 shadow-xs font-bold'
+                    : 'text-neutral-500 hover:text-neutral-900'
+                }`}
+              >
+                <Upload className="w-3.5 h-3.5 text-blue-600" />
+                <span>AI Study Buddy (Upload)</span>
               </button>
             </div>
           </div>
@@ -1248,9 +1292,27 @@ export default function UniversityPortalPage() {
                           <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-blue-600 text-white">
                             {slide.courseCode}
                           </span>
-                          <span className="text-[10px] font-medium px-2 py-0.5 rounded bg-neutral-100 text-neutral-700 border border-neutral-200 truncate">
-                            {slide.level} • {slide.semester}
-                          </span>
+                          <div className="flex items-center gap-1.5 shrink-0">
+                            <span className="text-[10px] font-medium px-2 py-0.5 rounded bg-neutral-100 text-neutral-700 border border-neutral-200 truncate max-w-[140px]">
+                              {slide.level} • {slide.semester}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleEnrollCourse(slide.id);
+                              }}
+                              className={`p-1.5 rounded-lg border transition ${
+                                enrolledSlideIds.includes(slide.id)
+                                  ? 'bg-blue-50 border-blue-200 text-blue-600 hover:bg-blue-100'
+                                  : 'bg-white border-neutral-200 text-neutral-400 hover:text-blue-600 hover:border-blue-200'
+                              }`}
+                              title={enrolledSlideIds.includes(slide.id) ? 'Remove from My Courses' : 'Save to My Courses'}
+                              aria-label={enrolledSlideIds.includes(slide.id) ? 'Remove from My Courses' : 'Save to My Courses'}
+                            >
+                              <Bookmark className={`w-3.5 h-3.5 ${enrolledSlideIds.includes(slide.id) ? 'fill-blue-600 text-blue-600' : ''}`} />
+                            </button>
+                          </div>
                         </div>
 
                         {/* Title */}
@@ -1307,6 +1369,138 @@ export default function UniversityPortalPage() {
               )}
             </div>
           )}
+
+          {/* TAB 2: MY ENROLLED COURSES */}
+          {portalMode === 'my_courses' && (() => {
+            const enrolledSlides = adminSlides.filter(s => enrolledSlideIds.includes(s.id));
+            return (
+              <div className="space-y-6">
+                {/* My Courses Banner */}
+                <div className="bg-white border border-neutral-200 rounded-xl p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 font-bold">
+                        <Bookmark className="w-3.5 h-3.5 fill-blue-600 text-blue-600" />
+                      </div>
+                      <h2 className="text-sm sm:text-base font-bold text-neutral-900">
+                        My Enrolled Semester Courses
+                      </h2>
+                      <span className="font-mono text-xs font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                        {enrolledSlides.length} Course{enrolledSlides.length === 1 ? '' : 's'}
+                      </span>
+                    </div>
+                    <p className="text-xs text-neutral-500 mt-1 max-w-xl">
+                      Your active courses for this semester. Jump directly into the Study Studio to review lecture slides, 10-to-1 digests, and flashcard drills.
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => setPortalMode('library')}
+                    className="px-3.5 py-1.5 rounded-lg border border-neutral-200 hover:bg-neutral-50 text-xs font-semibold text-neutral-700 transition shrink-0"
+                  >
+                    + Browse Course Catalog
+                  </button>
+                </div>
+
+                {enrolledSlides.length === 0 ? (
+                  <div className="py-16 text-center border border-dashed border-neutral-200 rounded-xl bg-white p-8 space-y-3 max-w-lg mx-auto">
+                    <div className="w-12 h-12 rounded-full bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center mx-auto">
+                      <Bookmark className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-base font-bold text-neutral-900">No Courses Saved Yet</h3>
+                    <p className="text-xs text-neutral-500 leading-relaxed">
+                      You haven&apos;t enrolled in any university courses yet. Browse the catalog and tap the bookmark icon on the courses you&apos;re taking this semester to keep them on your dashboard.
+                    </p>
+                    <button
+                      onClick={() => setPortalMode('library')}
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition"
+                    >
+                      <BookOpen className="w-3.5 h-3.5" />
+                      <span>Browse Course Catalog</span>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {enrolledSlides.map((slide) => (
+                      <div
+                        key={slide.id}
+                        className="bg-white border border-neutral-200 hover:border-neutral-300 rounded-xl p-4 shadow-2xs hover:shadow-xs transition flex flex-col justify-between space-y-4"
+                      >
+                        <div className="space-y-2.5">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-blue-600 text-white">
+                              {slide.courseCode}
+                            </span>
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              <span className="text-[10px] font-medium px-2 py-0.5 rounded bg-neutral-100 text-neutral-700 border border-neutral-200 truncate max-w-[140px]">
+                                {slide.level} • {slide.semester}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  toggleEnrollCourse(slide.id);
+                                }}
+                                className="p-1.5 rounded-lg border bg-blue-50 border-blue-200 text-blue-600 hover:bg-blue-100 transition"
+                                title="Remove from My Courses"
+                              >
+                                <Bookmark className="w-3.5 h-3.5 fill-blue-600 text-blue-600" />
+                              </button>
+                            </div>
+                          </div>
+
+                          <div>
+                            <h3 className="font-bold text-sm text-neutral-900 leading-snug line-clamp-2">
+                              {slide.title}
+                            </h3>
+                            <p className="text-[11px] text-neutral-500 font-medium mt-0.5 flex items-center gap-1">
+                              <span>{slide.university}</span>
+                              {slide.department ? <span>• {slide.department}</span> : null}
+                            </p>
+                          </div>
+
+                          {slide.description && (
+                            <p className="text-xs text-neutral-600 line-clamp-2 leading-relaxed">
+                              {slide.description}
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="pt-3 border-t border-neutral-100 space-y-3">
+                          <div className="flex items-center justify-between text-[10px] text-neutral-400 font-medium">
+                            <span>By {slide.uploadedBy || 'Admin'}</span>
+                            <span>{slide.fileSizeBytes ? `${(slide.fileSizeBytes / (1024 * 1024)).toFixed(1)} MB` : 'PDF Document'}</span>
+                          </div>
+
+                          <div className="grid grid-cols-12 gap-2">
+                            <button
+                              onClick={() => handleLoadAdminSlide(slide)}
+                              disabled={loading}
+                              className="col-span-8 py-2 px-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition disabled:opacity-60"
+                            >
+                              <BookOpen className="w-3.5 h-3.5" />
+                              <span>Study in Studio ➔</span>
+                            </button>
+
+                            <a
+                              href={slide.fileUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="col-span-4 py-2 px-2 rounded-lg border border-neutral-200 hover:bg-neutral-50 text-neutral-700 text-xs font-medium flex items-center justify-center gap-1 transition"
+                              title="Download PDF"
+                            >
+                              <FileText className="w-3.5 h-3.5 text-neutral-500" />
+                              <span>PDF</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })()}
 
           {/* TAB 2: CUSTOM PRIVATE SLIDE UPLOADER */}
           {portalMode === 'custom_upload' && (
