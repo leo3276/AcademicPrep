@@ -1857,12 +1857,20 @@ export default function UniversityPortalPage() {
               University Lecture Slides & Study Studio
             </h1>
             <p className="text-xs sm:text-sm text-neutral-500 max-w-xl mx-auto">
-              Access verified lecture slides uploaded by faculty & administrators across Ghanaian universities, with plain-English study notes and hands-free Audio Cram mode.
+              Access verified lecture slides uploaded by faculty & administrators across Ghanaian universities, or study your own custom slide decks with plain-English breakdowns.
             </p>
 
-
-
-
+            {/* Apple iOS Clean Announcement Chip */}
+            <div className="pt-2 flex justify-center">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-neutral-200/90 shadow-xs text-xs">
+                <span className="w-5 h-5 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-800 shrink-0">
+                  <Headphones className="w-3 h-3 text-neutral-700" />
+                </span>
+                <span className="font-semibold text-neutral-900">Audio Cram Mode</span>
+                <span className="text-neutral-300">•</span>
+                <span className="text-neutral-500 font-normal">Listen to conversational breakdowns on the go</span>
+              </div>
+            </div>
           </div>
 
           {/* Clean Segmented Tab Switcher */}
