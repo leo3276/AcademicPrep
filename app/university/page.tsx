@@ -1428,7 +1428,7 @@ export default function UniversityPortalPage() {
   // ─── AUDIO CRAM ENGINE (Feature 4 - Natural Human Voice & Segmented Pacing) ───
   const [isAudioPlaying, setIsAudioPlaying] = useState<boolean>(false);
   const [isAudioPaused, setIsAudioPaused] = useState<boolean>(false);
-  const [audioSpeed, setAudioSpeed] = useState<number>(1.1); // 1.1x natural conversational pace
+  const [audioSpeed, setAudioSpeed] = useState<number>(1.0); // 1.0x default speed
   const [audioAutoAdvance, setAudioAutoAdvance] = useState<boolean>(true);
   const [audioSlideIndex, setAudioSlideIndex] = useState<number>(0);
   const [audioProgressText, setAudioProgressText] = useState<string>('');
@@ -1477,7 +1477,13 @@ export default function UniversityPortalPage() {
     };
   }, [stopAudioCram]);
 
-  const speakSlideByIndex = useCallback((index: number, speed = audioSpeed, autoAdvance = audioAutoAdvance, voiceName = selectedVoiceName) => {
+  const speakSlideByIndex = useCallback((
+    index: number, 
+    speed = audioSpeed, 
+    autoAdvance = audioAutoAdvance, 
+    voiceName = selectedVoiceName,
+    isAdvancing = false
+  ) => {
     if (typeof window === 'undefined' || !window.speechSynthesis || !activePackage) return;
     if (index < 0 || index >= activePackage.slides.length) {
       stopAudioCram();
@@ -1494,17 +1500,17 @@ export default function UniversityPortalPage() {
     setAudioSlideIndex(index);
     setSelectedSlideIndex(index);
 
-    const segments = getSlideAudioSpeechSegments(targetSlide, activePackage.deckTitle);
+    const segments = getSlideAudioSpeechSegments(targetSlide, activePackage.deckTitle, isAdvancing);
     currentSegmentsListRef.current = segments;
     currentSegmentIdxRef.current = 0;
 
     const playSegment = (segIdx: number) => {
       if (segIdx >= segments.length) {
         if (autoAdvance && index < activePackage.slides.length - 1) {
-          // Natural 900ms pause between whole slide lectures
+          // Natural pause before announcing the next slide
           segmentTimeoutRef.current = setTimeout(() => {
-            speakSlideByIndex(index + 1, speed, autoAdvance, voiceName);
-          }, 900);
+            speakSlideByIndex(index + 1, speed, autoAdvance, voiceName, true);
+          }, 800);
         } else {
           setIsAudioPlaying(false);
           setIsAudioPaused(false);
@@ -1535,10 +1541,9 @@ export default function UniversityPortalPage() {
       };
 
       utterance.onend = () => {
-        // Human breathing pause between thoughts!
         segmentTimeoutRef.current = setTimeout(() => {
           playSegment(segIdx + 1);
-        }, seg.pauseAfterMs || 400);
+        }, seg.pauseAfterMs || 600);
       };
 
       utterance.onerror = (e) => {
@@ -1572,7 +1577,7 @@ export default function UniversityPortalPage() {
     if (!activePackage) return;
     const targetIdx = direction === 'next' ? audioSlideIndex + 1 : audioSlideIndex - 1;
     if (targetIdx >= 0 && targetIdx < activePackage.slides.length) {
-      speakSlideByIndex(targetIdx);
+      speakSlideByIndex(targetIdx, audioSpeed, audioAutoAdvance, selectedVoiceName, direction === 'next');
     }
   };
 

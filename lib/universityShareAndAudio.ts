@@ -54,135 +54,79 @@ export interface AudioSpeechSegment {
 }
 
 /**
- * Breaks a slide breakdown into natural conversational speech segments with human breathing pauses
+ * Extract clean plain-English key takeaway for a slide
  */
-export function getSlideAudioSpeechSegments(
-  slide: SlideAnalysis,
-  deckTitle?: string
-): AudioSpeechSegment[] {
-  const segments: AudioSpeechSegment[] = [];
-
-  // 1. Slide Introduction (clear, conversational)
-  const cleanTitle = cleanTextForSpeech(slide.title);
-  segments.push({
-    text: `Slide ${slide.pageNumber}. ${cleanTitle}.`,
-    pauseAfterMs: 400
-  });
-
-  // 2. Why this slide matters
-  if (slide.whyItMatters && slide.whyItMatters.trim().length > 0) {
-    const cleanWhy = cleanTextForSpeech(slide.whyItMatters);
-    segments.push({
-      text: `Why does this matter? ${cleanWhy}`,
-      pauseAfterMs: 450
-    });
-  }
-
-  // 3. Core Exam Principle
+export function getSlideKeyTakeawayText(slide: SlideAnalysis): string {
   if (slide.coreRule && slide.coreRule.trim().length > 0) {
-    const cleanRule = cleanTextForSpeech(slide.coreRule);
-    segments.push({
-      text: `Here is the core principle to remember: ${cleanRule}`,
-      pauseAfterMs: 500
-    });
+    return cleanTextForSpeech(slide.coreRule);
   }
-
-  // 4. Must-Know Key Definitions
-  if (slide.keyDefinitions && slide.keyDefinitions.length > 0) {
-    const validDefs = slide.keyDefinitions.slice(0, 3);
-    if (validDefs.length === 1) {
-      const kd = validDefs[0];
-      segments.push({
-        text: `The key term to know is ${cleanTextForSpeech(kd.term)}, which means: ${cleanTextForSpeech(kd.definition)}.`,
-        pauseAfterMs: 450
-      });
-    } else {
-      segments.push({
-        text: `There are ${validDefs.length} key terms to know on this slide.`,
-        pauseAfterMs: 300
-      });
-      validDefs.forEach((kd, idx) => {
-        const ordinal = idx === 0 ? 'First' : idx === 1 ? 'Second' : 'Third';
-        segments.push({
-          text: `${ordinal}, ${cleanTextForSpeech(kd.term)}: ${cleanTextForSpeech(kd.definition)}.`,
-          pauseAfterMs: 400
-        });
-      });
-    }
+  if (slide.detailedTakeaways && slide.detailedTakeaways.length > 0 && slide.detailedTakeaways[0].explanation) {
+    return cleanTextForSpeech(slide.detailedTakeaways[0].explanation);
   }
-
-  // 5. Formulas or key equations
-  if (slide.keyFormulas && slide.keyFormulas.length > 0) {
-    const cleanFormulas = slide.keyFormulas.slice(0, 2).map(f => cleanTextForSpeech(f)).join(', and ');
-    segments.push({
-      text: `Keep this formula in mind: ${cleanFormulas}.`,
-      pauseAfterMs: 450
-    });
+  if (slide.simplifiedPoints && slide.simplifiedPoints.length > 0) {
+    return cleanTextForSpeech(slide.simplifiedPoints[0]);
   }
-
-  // 6. Lecturer Exam Trap / Warning
-  if (slide.examTrap && slide.examTrap.trim().length > 0) {
-    const cleanTrap = cleanTextForSpeech(slide.examTrap);
-    segments.push({
-      text: `Now, watch out for this lecturer exam trap: ${cleanTrap}`,
-      pauseAfterMs: 550
-    });
-  }
-
-  // 7. Active Recall Practice Prompt
-  if (slide.activeRecallPrompt?.question && slide.activeRecallPrompt?.answer) {
-    const cleanQ = cleanTextForSpeech(slide.activeRecallPrompt.question);
-    const cleanA = cleanTextForSpeech(slide.activeRecallPrompt.answer);
-    segments.push({
-      text: `Let's test your active recall. Here is your question: ${cleanQ}`,
-      pauseAfterMs: 1200 // Extended thinking pause for the student
-    });
-    segments.push({
-      text: `The answer is: ${cleanA}`,
-      pauseAfterMs: 600
-    });
-  }
-
-  return segments;
+  return cleanTextForSpeech(slide.title);
 }
 
 /**
- * Filter and rank voices for the most natural, human-sounding English voice available on device
+ * Concise, focused audio cram: only reads the key takeaway.
+ * If advancing, announces "Next slide. Slide X." then reads its key takeaway.
+ */
+export function getSlideAudioSpeechSegments(
+  slide: SlideAnalysis,
+  deckTitle?: string,
+  isAdvancing: boolean = false
+): AudioSpeechSegment[] {
+  const takeaway = getSlideKeyTakeawayText(slide);
+  const prefix = isAdvancing 
+    ? `Next slide. Slide ${slide.pageNumber}.` 
+    : `Slide ${slide.pageNumber}.`;
+
+  return [
+    {
+      text: `${prefix} ${takeaway}`,
+      pauseAfterMs: 750
+    }
+  ];
+}
+
+/**
+ * Filter and rank voices for speech synthesis.
+ * Default priority: David (as requested), followed by modern natural/neural voices.
  */
 export function getBestNaturalVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
   if (!voices || voices.length === 0) return null;
 
+  // Tier 0 (Default): David voice (Microsoft David Desktop, Microsoft David, etc.)
+  const david = voices.find(v => 
+    v.lang.startsWith('en') && 
+    v.name.toLowerCase().includes('david')
+  );
+  if (david) return david;
+
   // Tier 1: Modern Natural Neural voices (Microsoft Edge Natural, Chrome Neural)
   const tier1 = voices.find(v => 
     v.lang.startsWith('en') && 
-    (v.name.includes('Natural') || v.name.includes('Neural') || v.name.includes('Jenny') || v.name.includes('Christopher') || v.name.includes('Aria') || v.name.includes('Guy'))
+    (v.name.includes('Natural') || v.name.includes('Neural') || v.name.includes('Christopher') || v.name.includes('Guy') || v.name.includes('Aria') || v.name.includes('Jenny'))
   );
   if (tier1) return tier1;
 
   // Tier 2: Google Natural Voices (Chrome desktop & Android)
   const tier2 = voices.find(v => 
     v.lang.startsWith('en') && 
-    (v.name.includes('Google US English') || v.name.includes('Google UK English Female') || v.name.includes('Google UK English Male') || v.name.includes('Google'))
+    (v.name.includes('Google US English') || v.name.includes('Google UK English Male') || v.name.includes('Google'))
   );
   if (tier2) return tier2;
 
   // Tier 3: Apple Enhanced Voices (iOS Safari, macOS)
   const tier3 = voices.find(v => 
     v.lang.startsWith('en') && 
-    (v.name.includes('Enhanced') || v.name.includes('Premium') || v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen'))
+    (v.name.includes('Daniel') || v.name.includes('Samantha') || v.name.includes('Enhanced') || v.name.includes('Premium'))
   );
   if (tier3) return tier3;
 
-  // Tier 4: Any English voice that is not a legacy robotic SAPI5 desktop voice
-  const tier4 = voices.find(v => 
-    v.lang.startsWith('en') && 
-    !v.name.includes('David Desktop') && 
-    !v.name.includes('Zira Desktop') && 
-    !v.name.includes('Desktop')
-  );
-  if (tier4) return tier4;
-
-  // Tier 5: Any English voice fallback
+  // Tier 4: Any English voice fallback
   return voices.find(v => v.lang.startsWith('en')) || voices[0] || null;
 }
 
