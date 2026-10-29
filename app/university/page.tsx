@@ -820,7 +820,7 @@ export default function UniversityPortalPage() {
     fetchSlides();
   }, []);
 
-  const handleLoadAdminSlide = async (slide: UniversitySlide) => {
+  const handleLoadAdminSlide = async (slide: UniversitySlide, autoStartAudio = false) => {
     setCurrentAdminSlide(slide);
     setLoading(true);
     setLoadingStatus(`Fetching ${slide.courseCode} slides (${slide.title})...`);
@@ -892,6 +892,12 @@ export default function UniversityPortalPage() {
       setSelectedSlideIndex(0);
       if (typeof window !== 'undefined') {
         localStorage.setItem('academicprep_active_package', JSON.stringify(pkg));
+      }
+
+      if (autoStartAudio) {
+        setTimeout(() => {
+          speakSlideByIndex(0);
+        }, 500);
       }
     } catch (err: any) {
       alert(`Could not load slide deck: ${err.message || err}`);
@@ -1544,6 +1550,22 @@ export default function UniversityPortalPage() {
     }
   };
 
+  const handleShareCourseWhatsApp = (targetSlide: UniversitySlide) => {
+    let msg = `🎓 *${targetSlide.courseCode}: ${targetSlide.title}*\n`;
+    msg += `🏛️ *${targetSlide.university}* (${targetSlide.level || 'Tertiary'})\n\n`;
+    if (targetSlide.description) {
+      msg += `📌 *Course Overview:*\n${targetSlide.description}\n\n`;
+    }
+    msg += `⚡ *Features Available:*\n`;
+    msg += `• 🎧 Hands-free Audio Cram Mode (Voice summaries on-the-go)\n`;
+    msg += `• 📖 10-to-1 Plain-English Slide Breakdown\n`;
+    msg += `• 📋 1-Page Exam Revision Cheat Sheet\n`;
+    msg += `• 🎯 Active Recall Flashcards & Topic Quizzes\n\n`;
+    msg += `🔗 *Study this slide deck free now on AcademicPrep:*\nhttps://academicprep.app/university?loadSlideId=${targetSlide.id}`;
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
   const handleShareDeckWhatsApp = () => {
     if (!activePackage) return;
     const shareText = generateDeckWhatsAppText(activePackage);
@@ -1770,6 +1792,22 @@ export default function UniversityPortalPage() {
             <p className="text-xs sm:text-sm text-neutral-500 max-w-xl mx-auto">
               Access verified lecture slides uploaded by faculty & administrators across Ghanaian universities, or study your own custom slide decks with plain-English AI breakdowns.
             </p>
+
+            {/* Feature Pills */}
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-2 text-xs">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 font-semibold border border-blue-200 shadow-2xs">
+                <Headphones className="w-3.5 h-3.5 text-blue-600" />
+                <span>Audio Cram Mode</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200 shadow-2xs">
+                <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
+                <span>1-Click WhatsApp Digests</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-700 font-semibold border border-slate-200 shadow-2xs">
+                <FileText className="w-3.5 h-3.5 text-slate-600" />
+                <span>1-Page Cheat Sheet Cards</span>
+              </span>
+            </div>
           </div>
 
           {/* Clean Segmented Tab Switcher */}
@@ -2057,26 +2095,49 @@ export default function UniversityPortalPage() {
                           <span>{slide.fileSizeBytes ? `${(slide.fileSizeBytes / (1024 * 1024)).toFixed(1)} MB` : 'PDF Document'}</span>
                         </div>
 
-                        <div className="grid grid-cols-12 gap-2">
+                        {/* Quick feature tags on card */}
+                        <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-blue-50 text-blue-700 text-[10px] font-semibold border border-blue-200">
+                            <Headphones className="w-2.5 h-2.5 text-blue-600" />
+                            <span>Audio Cram</span>
+                          </span>
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 text-[10px] font-semibold border border-emerald-200">
+                            <MessageCircle className="w-2.5 h-2.5 text-emerald-600" />
+                            <span>WhatsApp</span>
+                          </span>
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-[10px] font-semibold border border-slate-200">
+                            <span>1-Page Card</span>
+                          </span>
+                        </div>
+
+                        <div className="grid grid-cols-12 gap-2 pt-1">
                           <button
                             onClick={() => handleLoadAdminSlide(slide)}
                             disabled={loading}
-                            className="col-span-8 py-2 px-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition disabled:opacity-60"
+                            className="col-span-6 py-2 px-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition disabled:opacity-60 cursor-pointer shadow-xs"
                           >
                             <BookOpen className="w-3.5 h-3.5" />
-                            <span>Study in Studio ➔</span>
+                            <span>Study Studio</span>
                           </button>
 
-                          <a
-                            href={slide.fileUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="col-span-4 py-2 px-2 rounded-lg border border-neutral-200 hover:bg-neutral-50 text-neutral-700 text-xs font-medium flex items-center justify-center gap-1 transition"
-                            title="Download PDF"
+                          <button
+                            onClick={() => handleLoadAdminSlide(slide, true)}
+                            disabled={loading}
+                            className="col-span-3 py-2 px-2 rounded-lg border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold flex items-center justify-center gap-1 transition cursor-pointer"
+                            title="Listen to Hands-Free Audio Cram"
                           >
-                            <FileText className="w-3.5 h-3.5 text-neutral-500" />
-                            <span>PDF</span>
-                          </a>
+                            <Headphones className="w-3.5 h-3.5 text-blue-600" />
+                            <span className="hidden sm:inline">Audio</span>
+                          </button>
+
+                          <button
+                            onClick={() => handleShareCourseWhatsApp(slide)}
+                            className="col-span-3 py-2 px-2 rounded-lg border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold flex items-center justify-center gap-1 transition cursor-pointer"
+                            title="Share course notes to WhatsApp"
+                          >
+                            <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
+                            <span className="hidden sm:inline">Share</span>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -2188,26 +2249,49 @@ export default function UniversityPortalPage() {
                             <span>{slide.fileSizeBytes ? `${(slide.fileSizeBytes / (1024 * 1024)).toFixed(1)} MB` : 'PDF Document'}</span>
                           </div>
 
-                          <div className="grid grid-cols-12 gap-2">
+                          {/* Quick feature tags on card */}
+                          <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-blue-50 text-blue-700 text-[10px] font-semibold border border-blue-200">
+                              <Headphones className="w-2.5 h-2.5 text-blue-600" />
+                              <span>Audio Cram</span>
+                            </span>
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 text-[10px] font-semibold border border-emerald-200">
+                              <MessageCircle className="w-2.5 h-2.5 text-emerald-600" />
+                              <span>WhatsApp</span>
+                            </span>
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-[10px] font-semibold border border-slate-200">
+                              <span>1-Page Card</span>
+                            </span>
+                          </div>
+
+                          <div className="grid grid-cols-12 gap-2 pt-1">
                             <button
                               onClick={() => handleLoadAdminSlide(slide)}
                               disabled={loading}
-                              className="col-span-8 py-2 px-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition disabled:opacity-60"
+                              className="col-span-6 py-2 px-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition disabled:opacity-60 cursor-pointer shadow-xs"
                             >
                               <BookOpen className="w-3.5 h-3.5" />
-                              <span>Study in Studio ➔</span>
+                              <span>Study Studio</span>
                             </button>
 
-                            <a
-                              href={slide.fileUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="col-span-4 py-2 px-2 rounded-lg border border-neutral-200 hover:bg-neutral-50 text-neutral-700 text-xs font-medium flex items-center justify-center gap-1 transition"
-                              title="Download PDF"
+                            <button
+                              onClick={() => handleLoadAdminSlide(slide, true)}
+                              disabled={loading}
+                              className="col-span-3 py-2 px-2 rounded-lg border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold flex items-center justify-center gap-1 transition cursor-pointer"
+                              title="Listen to Hands-Free Audio Cram"
                             >
-                              <FileText className="w-3.5 h-3.5 text-neutral-500" />
-                              <span>PDF</span>
-                            </a>
+                              <Headphones className="w-3.5 h-3.5 text-blue-600" />
+                              <span className="hidden sm:inline">Audio</span>
+                            </button>
+
+                            <button
+                              onClick={() => handleShareCourseWhatsApp(slide)}
+                              className="col-span-3 py-2 px-2 rounded-lg border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold flex items-center justify-center gap-1 transition cursor-pointer"
+                              title="Share course notes to WhatsApp"
+                            >
+                              <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
+                              <span className="hidden sm:inline">Share</span>
+                            </button>
                           </div>
                         </div>
                       </div>
