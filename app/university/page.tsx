@@ -1820,14 +1820,14 @@ export default function UniversityPortalPage() {
 
           {/* Urgent Milestone Notification Banner */}
           {urgentDeadlines.length > 0 && !dismissedUrgentBanner && (
-            <div className="bg-amber-50/90 border border-amber-200/90 rounded-xl p-3.5 sm:p-4 text-xs flex items-center justify-between gap-3 shadow-2xs">
+            <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 sm:p-3.5 text-xs flex items-center justify-between gap-3 shadow-2xs">
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 font-bold">
-                  <AlertTriangle className="w-4 h-4" />
+                <div className="w-6 h-6 rounded-lg bg-neutral-900 text-white flex items-center justify-center shrink-0 font-bold">
+                  <AlertTriangle className="w-3.5 h-3.5" />
                 </div>
                 <div className="min-w-0">
                   <p className="font-semibold text-neutral-900 truncate">
-                    Upcoming Milestone: <span className="font-mono text-amber-800 font-bold">{urgentDeadlines[0].courseCode}</span> {urgentDeadlines[0].title}
+                    Upcoming Milestone • <span className="font-mono font-bold">{urgentDeadlines[0].courseCode}</span>: {urgentDeadlines[0].title}
                   </p>
                   <p className="text-[11px] text-neutral-600">
                     Due {urgentDeadlines[0].dueDate} • Keep up with your study schedule.
@@ -1837,7 +1837,7 @@ export default function UniversityPortalPage() {
               <div className="flex items-center gap-2 shrink-0">
                 <button
                   onClick={() => setPortalMode('planner')}
-                  className="px-2.5 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-semibold text-[11px] transition shadow-2xs cursor-pointer"
+                  className="px-2.5 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-[11px] transition shadow-2xs cursor-pointer"
                 >
                   View Planner
                 </button>

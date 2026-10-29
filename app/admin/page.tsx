@@ -1964,7 +1964,7 @@ export default function AdminDashboardPage() {
             </div>
 
             {accessError && !showGrantModal && (
-              <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-lg text-xs font-medium flex items-start justify-between gap-3">
+              <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 sm:p-3.5 text-xs flex items-center justify-between gap-3 shadow-2xs text-neutral-900">
                 <span className="flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 shrink-0" />
                   {accessError}
@@ -3451,7 +3451,7 @@ export default function AdminDashboardPage() {
               </form>
 
               {pinError && (
-                <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-lg text-xs font-medium flex items-center gap-2">
+                <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 sm:p-3.5 text-xs flex items-center gap-2 shadow-2xs text-neutral-900">
                   <AlertCircle className="w-4 h-4 shrink-0" />
                   <span>{pinError}</span>
                 </div>
@@ -4572,14 +4572,26 @@ export default function AdminDashboardPage() {
               </div>
 
               {examBroadcastFeedback && (
-                <div
-                  className={`p-3 rounded-lg border text-xs font-medium ${
-                    examBroadcastFeedback.kind === 'ok'
-                      ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
-                      : 'bg-rose-50 text-rose-800 border-rose-200'
-                  }`}
-                >
-                  {examBroadcastFeedback.text}
+                <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 sm:p-3.5 text-xs flex items-center justify-between gap-3 shadow-2xs">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-6 h-6 rounded-lg bg-neutral-900 text-white flex items-center justify-center shrink-0 font-bold">
+                      {examBroadcastFeedback.kind === 'ok' ? (
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                      ) : (
+                        <AlertCircle className="w-3.5 h-3.5" />
+                      )}
+                    </div>
+                    <p className="font-semibold text-neutral-900">
+                      {examBroadcastFeedback.text}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setExamBroadcastFeedback(null)}
+                    className="p-1 rounded-md text-neutral-400 hover:text-neutral-600 transition cursor-pointer shrink-0"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
                 </div>
               )}
 
@@ -4814,14 +4826,26 @@ export default function AdminDashboardPage() {
                   </div>
 
                   {reminder5MinFeedback && (
-                    <div
-                      className={`p-3 rounded-xl border text-xs font-semibold ${
-                        reminder5MinFeedback.kind === 'ok'
-                          ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
-                          : 'bg-rose-50 text-rose-800 border-rose-200'
-                      }`}
-                    >
-                      {reminder5MinFeedback.text}
+                    <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 sm:p-3.5 text-xs flex items-center justify-between gap-3 shadow-2xs">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <div className="w-6 h-6 rounded-lg bg-neutral-900 text-white flex items-center justify-center shrink-0 font-bold">
+                          {reminder5MinFeedback.kind === 'ok' ? (
+                            <CheckCircle2 className="w-3.5 h-3.5" />
+                          ) : (
+                            <AlertCircle className="w-3.5 h-3.5" />
+                          )}
+                        </div>
+                        <p className="font-semibold text-neutral-900">
+                          {reminder5MinFeedback.text}
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setReminder5MinFeedback(null)}
+                        className="p-1 rounded-md text-neutral-400 hover:text-neutral-600 transition cursor-pointer shrink-0"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
                     </div>
                   )}
 
@@ -5356,20 +5380,20 @@ export default function AdminDashboardPage() {
             {uniSubTab === 'slides' && (
               <>
                 {/* Special Collaborator Dispatch Link Box */}
-            <div className="bg-white border border-neutral-200/90 rounded-2xl p-5 shadow-xs space-y-3">
+            <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-4 sm:p-5 shadow-2xs space-y-3">
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="space-y-0.5">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-                    <h3 className="text-sm font-bold text-slate-900">Collaborator Upload Portal Link</h3>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-neutral-200/90 text-neutral-800 text-[11px] font-semibold shadow-2xs">
-                      <span className="w-1.5 h-1.5 rounded-full bg-neutral-900" />
-                      <span>Restricted Access</span>
-                    </span>
+                <div className="flex items-start gap-2.5 min-w-0">
+                  <div className="w-6 h-6 rounded-lg bg-neutral-900 text-white flex items-center justify-center shrink-0 font-bold mt-0.5">
+                    <KeyRound className="w-3.5 h-3.5" />
                   </div>
-                  <p className="text-xs text-slate-600 max-w-2xl">
-                    Share this unique invitation link with faculty, teaching assistants, or student reps. Collaborators can upload slides without viewing student records, revenue, or admin controls.
-                  </p>
+                  <div className="min-w-0">
+                    <p className="font-semibold text-neutral-900">
+                      Collaborator Upload Portal Link • Restricted Access
+                    </p>
+                    <p className="text-[11px] text-neutral-600 max-w-2xl">
+                      Share this unique invitation link with faculty, teaching assistants, or student reps. Collaborators can upload slides without viewing student records, revenue, or admin controls.
+                    </p>
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -5438,19 +5462,25 @@ export default function AdminDashboardPage() {
               </div>
 
               {uniUploadFeedback && (
-                <div
-                  className={`p-3 rounded-xl text-xs flex items-center gap-2 ${
-                    uniUploadFeedback.kind === 'ok'
-                      ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                      : 'bg-rose-50 text-rose-800 border border-rose-200'
-                  }`}
-                >
-                  {uniUploadFeedback.kind === 'ok' ? (
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  ) : (
-                    <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
-                  )}
-                  <span>{uniUploadFeedback.text}</span>
+                <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 sm:p-3.5 text-xs flex items-center justify-between gap-3 shadow-2xs">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-6 h-6 rounded-lg bg-neutral-900 text-white flex items-center justify-center shrink-0 font-bold">
+                      {uniUploadFeedback.kind === 'ok' ? (
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                      ) : (
+                        <AlertCircle className="w-3.5 h-3.5" />
+                      )}
+                    </div>
+                    <p className="font-semibold text-neutral-900">
+                      {uniUploadFeedback.text}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setUniUploadFeedback(null)}
+                    className="p-1 rounded-md text-neutral-400 hover:text-neutral-600 transition cursor-pointer shrink-0"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
                 </div>
               )}
 
