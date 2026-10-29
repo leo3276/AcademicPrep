@@ -1789,9 +1789,9 @@ export default function UniversityPortalPage() {
         <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 space-y-8">
           {/* Open Beta Preview Notice */}
           {!dismissedBetaNotice && (
-            <div className="bg-blue-50/90 border border-blue-200/90 rounded-xl p-3 sm:p-3.5 text-xs flex items-center justify-between gap-3 shadow-2xs">
+            <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 sm:p-3.5 text-xs flex items-center justify-between gap-3 shadow-2xs">
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-6 h-6 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 font-bold">
+                <div className="w-6 h-6 rounded-lg bg-neutral-900 text-white flex items-center justify-center shrink-0 font-bold">
                   <GraduationCap className="w-3.5 h-3.5" />
                 </div>
                 <div className="min-w-0">
@@ -1857,16 +1857,10 @@ export default function UniversityPortalPage() {
               University Lecture Slides & Study Studio
             </h1>
             <p className="text-xs sm:text-sm text-neutral-500 max-w-xl mx-auto">
-              Access verified lecture slides uploaded by faculty & administrators across Ghanaian universities, or study your own custom slide decks with plain-English AI breakdowns.
+              Access verified lecture slides uploaded by faculty & administrators across Ghanaian universities, with plain-English study notes and hands-free Audio Cram mode.
             </p>
 
-            {/* Audio Feature Announcement */}
-            <div className="pt-1">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-medium border border-blue-200 shadow-2xs">
-                <Headphones className="w-3.5 h-3.5 text-blue-600" />
-                <span><b className="font-semibold text-blue-900">Audio Cram Mode:</b> Listen to conversational plain-English voice breakdowns of your slides on-the-go</span>
-              </span>
-            </div>
+
 
 
           </div>
