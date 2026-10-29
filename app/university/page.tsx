@@ -1025,7 +1025,7 @@ export default function UniversityPortalPage() {
               <span>AcademicPrep</span>
             </Link>
             <span className="text-neutral-300">/</span>
-            <span className="font-medium text-neutral-900">University Slide Studio</span>
+            <span className="font-medium text-neutral-900 truncate max-w-[120px] sm:max-w-none">University Slide Studio</span>
           </div>
 
           <div className="flex items-center gap-3">
@@ -1033,7 +1033,7 @@ export default function UniversityPortalPage() {
               href="/login?redirect=/university"
               className="text-neutral-600 hover:text-neutral-900 transition flex items-center gap-1.5 font-medium"
             >
-              <span>{student.fullName}</span>
+              <span className="truncate max-w-[90px] sm:max-w-[160px]">{student.fullName}</span>
               <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-700">
                 Tertiary
               </span>
@@ -1177,7 +1177,7 @@ export default function UniversityPortalPage() {
                     ))}
                   </div>
 
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 flex-wrap">
                     <span className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wide mr-1">Semester:</span>
                     {['All', ...UNIVERSITY_SEMESTERS].map(sem => (
                       <button
@@ -1522,7 +1522,7 @@ export default function UniversityPortalPage() {
               onClick={() => setActiveTab('slides')}
               className={`pb-3 border-b-2 transition shrink-0 ${
                 activeTab === 'slides' 
-                  ? 'border-neutral-900 text-neutral-900 font-semibold' 
+                  ? 'border-blue-600 text-blue-600 font-semibold' 
                   : 'border-transparent text-neutral-500 hover:text-neutral-900'
               }`}
             >
@@ -1532,7 +1532,7 @@ export default function UniversityPortalPage() {
               onClick={() => setActiveTab('digest')}
               className={`pb-3 border-b-2 transition shrink-0 ${
                 activeTab === 'digest' 
-                  ? 'border-neutral-900 text-neutral-900 font-semibold' 
+                  ? 'border-blue-600 text-blue-600 font-semibold' 
                   : 'border-transparent text-neutral-500 hover:text-neutral-900'
               }`}
             >
@@ -1542,7 +1542,7 @@ export default function UniversityPortalPage() {
               onClick={() => setActiveTab('plan')}
               className={`pb-3 border-b-2 transition shrink-0 ${
                 activeTab === 'plan' 
-                  ? 'border-neutral-900 text-neutral-900 font-semibold' 
+                  ? 'border-blue-600 text-blue-600 font-semibold' 
                   : 'border-transparent text-neutral-500 hover:text-neutral-900'
               }`}
             >
@@ -1552,7 +1552,7 @@ export default function UniversityPortalPage() {
               onClick={() => setActiveTab('cram')}
               className={`pb-3 border-b-2 transition shrink-0 ${
                 activeTab === 'cram' 
-                  ? 'border-neutral-900 text-neutral-900 font-semibold' 
+                  ? 'border-blue-600 text-blue-600 font-semibold' 
                   : 'border-transparent text-neutral-500 hover:text-neutral-900'
               }`}
             >
@@ -1562,7 +1562,7 @@ export default function UniversityPortalPage() {
               onClick={() => setActiveTab('flashcards')}
               className={`pb-3 border-b-2 transition shrink-0 ${
                 activeTab === 'flashcards' 
-                  ? 'border-neutral-900 text-neutral-900 font-semibold' 
+                  ? 'border-blue-600 text-blue-600 font-semibold' 
                   : 'border-transparent text-neutral-500 hover:text-neutral-900'
               }`}
             >
@@ -1602,7 +1602,7 @@ export default function UniversityPortalPage() {
                   </button>
                 </div>
 
-                <div className="flex items-center gap-2 text-neutral-500 font-mono text-[11px]">
+                <div className="hidden sm:flex items-center gap-2 text-neutral-500 font-mono text-[11px]">
                   <span>Use <kbd className="px-1.5 py-0.5 bg-neutral-100 border border-neutral-200 rounded text-neutral-700 font-sans">←</kbd> <kbd className="px-1.5 py-0.5 bg-neutral-100 border border-neutral-200 rounded text-neutral-700 font-sans">→</kbd> keys to flip slides</span>
                 </div>
               </div>

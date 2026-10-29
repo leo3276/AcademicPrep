@@ -293,8 +293,8 @@ export default function CollaboratorUploadPage() {
             </Link>
             <span className="text-slate-300">/</span>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-slate-900">Faculty & Collaborator Portal</span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
+              <span className="font-bold text-slate-900 truncate max-w-[130px] sm:max-w-none">Faculty & Collaborator Portal</span>
+              <span className="hidden sm:inline-block text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
                 Verified Contributor
               </span>
             </div>

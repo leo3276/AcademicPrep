@@ -5278,7 +5278,7 @@ export default function AdminDashboardPage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-xl p-2 shadow-2xs">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-white border border-slate-200 rounded-xl p-2 shadow-2xs">
                 <KeyRound className="w-4 h-4 text-slate-400 shrink-0 ml-1" />
                 <input
                   type="text"
@@ -5289,7 +5289,7 @@ export default function AdminDashboardPage() {
                 <button
                   onClick={handleCopyCollabLink}
                   disabled={!collaboratorLink}
-                  className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center gap-1.5 shadow-xs transition shrink-0"
+                  className="px-3.5 py-2 sm:py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-xs transition shrink-0 w-full sm:w-auto"
                 >
                   {collabLinkCopied ? (
                     <>
