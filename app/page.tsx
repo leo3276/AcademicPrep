@@ -328,8 +328,8 @@ export default function HomePage() {
               <div>
                 <div className="flex items-center justify-between">
                   <h3 className="text-xl font-bold text-slate-900">University &amp; Tertiary</h3>
-                  <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
-                    AI Live
+                  <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200 font-semibold">
+                    In Development
                   </span>
                 </div>
                 <p className="text-xs text-slate-500 font-medium mt-0.5">Slide Intelligence &amp; Spaced Study Planner</p>
@@ -356,13 +356,10 @@ export default function HomePage() {
             </div>
 
             <div className="pt-6">
-              <Link
-                href="/university"
-                className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-medium text-xs transition flex items-center justify-center gap-1.5"
-              >
-                <span>Open Slide Studio</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+              <div className="w-full py-2.5 px-4 rounded-xl bg-slate-100 text-slate-500 font-medium text-xs flex items-center justify-center gap-2 border border-slate-200 select-none">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                <span>Under Development • Coming Soon</span>
+              </div>
             </div>
           </div>
         </div>

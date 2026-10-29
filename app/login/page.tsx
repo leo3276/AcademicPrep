@@ -26,7 +26,7 @@ function LoginFormContent() {
   const levelParam = searchParams.get('level') as EducationLevel | null;
   const isUniversityIntent = redirectUrl.startsWith('/university') || levelParam === 'UNIVERSITY';
   const isShsIntent = redirectUrl.startsWith('/shs') || (levelParam && levelParam.startsWith('SHS'));
-  const initialMode = searchParams.get('mode') === 'register' || isUniversityIntent ? 'register' : 'signin';
+  const initialMode = searchParams.get('mode') === 'register' ? 'register' : 'signin';
 
   const { student, signInStudent, registerStudent, logoutStudent, isTrialActive, trialDaysRemaining } = useAuth();
 
@@ -43,10 +43,9 @@ function LoginFormContent() {
   const [regFullName, setRegFullName] = useState('');
   const [regPhone, setRegPhone] = useState('');
   const [regLevel, setRegLevel] = useState<EducationLevel>(() => {
-    if (levelParam && ['JHS 1', 'JHS 2', 'JHS 3', 'SHS 1', 'SHS 2', 'SHS 3', 'UNIVERSITY'].includes(levelParam)) {
+    if (levelParam && ['JHS 1', 'JHS 2', 'JHS 3', 'SHS 1', 'SHS 2', 'SHS 3'].includes(levelParam)) {
       return levelParam;
     }
-    if (isUniversityIntent) return 'UNIVERSITY';
     return isShsIntent ? 'SHS 1' : 'JHS 1';
   });
   const [regPassword, setRegPassword] = useState('');
@@ -138,10 +137,7 @@ function LoginFormContent() {
                 setRegPhone('');
                 setRegPassword('');
                 setRegAccessPin('');
-                if (isUniversityIntent) {
-                  setRegLevel('UNIVERSITY');
-                  setActiveTab('register');
-                }
+
               }}
               className="w-full py-2.5 rounded-xl border border-red-200 bg-red-50/50 hover:bg-red-50 text-red-600 font-bold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer mt-1"
             >
@@ -258,7 +254,7 @@ function LoginFormContent() {
           <p className="text-xs text-slate-500 leading-relaxed">
             {activeTab === 'signin' 
               ? 'Access your individual dashboard, weakness reports, and exam records.' 
-              : 'Sign up for JHS, SHS, or Tertiary to start your 30-day unrestricted free trial, or enter a PIN for immediate VIP access.'}
+              : 'Sign up for JHS or SHS to start your 30-day unrestricted free trial, or enter a PIN for immediate VIP access.'}
           </p>
         </div>
 
@@ -446,9 +442,6 @@ function LoginFormContent() {
                 onChange={(e) => setRegLevel(e.target.value as EducationLevel)}
                 className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <optgroup label="Tertiary / University">
-                  <option value="UNIVERSITY">Tertiary / University (Slide Studio)</option>
-                </optgroup>
                 <optgroup label="Senior High School (SHS)">
                   <option value="SHS 1">Senior High School 1 (SHS 1)</option>
                   <option value="SHS 2">Senior High School 2 (SHS 2)</option>
@@ -569,7 +562,6 @@ function LoginFormContent() {
           </p>
           <div className="text-[11px] text-slate-600 space-y-1">
             <p>• <b>Isolated Data:</b> Every student has their own unique Supabase profile, progress score, and weakness ledger.</p>
-            <p>• <b>Tertiary Access:</b> Selecting Tertiary / University unlocks the Slide Studio, 10-to-1 Digest, and Spaced Study Planner.</p>
             <p>• <b>VIP Pass:</b> Unlocks all topics, BECE/WASSCE Past Question PDFs, and Adaptive Weekly Examinations.</p>
           </div>
         </div>
