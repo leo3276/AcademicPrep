@@ -129,34 +129,54 @@ export function getSlideAudioSpeechSegments(
 }
 
 /**
- * Dedicated Sol Voice Resolver.
- * Sol is the exclusive voice across AcademicPrep:
- * Prioritizes warm, natural male baritone voices (Microsoft Natural Andrew/Brian/Guy/Christopher or Microsoft David).
+ * Dedicated Sol Voice Resolver (ChatGPT "Sol" persona: "Savvy and relaxed" — warm, smooth, laid-back feminine alto).
+ * Strictly prioritizes cloud neural feminine voices (Edge Online Natural Ava/Emma/Aria/Jenny, Chrome Google US English,
+ * Apple Ava/Samantha) over offline OS SAPI5 robotic voices.
  */
 export function getSolVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
   if (!voices || voices.length === 0) return null;
 
-  // Tier 1: Warm Neural Baritone voices if available in browser (Edge / Chrome Neural)
-  const neuralSol = voices.find(v =>
-    v.lang.startsWith('en') &&
-    (v.name.includes('Natural') || v.name.includes('Online')) &&
-    (v.name.includes('Andrew') || v.name.includes('Brian') || v.name.includes('Christopher') || v.name.includes('Guy') || v.name.includes('Steffan') || v.name.includes('Roger'))
-  );
-  if (neuralSol) return neuralSol;
+  // Tier 1: Microsoft Edge Cloud Neural Feminine voices (Ava & Emma are warm, relaxed, conversational alto voices closest to Sol)
+  const edgeNeuralOrder = ['ava', 'emma', 'jenny', 'aria', 'michelle', 'sonia', 'libby', 'natasha'];
+  for (const keyword of edgeNeuralOrder) {
+    const match = voices.find(v =>
+      v.lang.startsWith('en') &&
+      (v.name.includes('Natural') || v.name.includes('Online') || !v.localService) &&
+      v.name.toLowerCase().includes(keyword)
+    );
+    if (match) return match;
+  }
 
-  // Tier 2: David voice (Microsoft David / Desktop David - tuned to Sol baritone)
-  const david = voices.find(v =>
-    v.lang.startsWith('en') &&
-    v.name.toLowerCase().includes('david')
+  // Tier 2: Chrome Cloud Neural Voice ("Google US English" in Chrome is a smooth, warm online feminine voice)
+  const googleUS = voices.find(v =>
+    v.name === 'Google US English' ||
+    (v.lang === 'en-US' && v.name.includes('Google'))
   );
-  if (david) return david;
+  if (googleUS) return googleUS;
 
-  // Tier 3: Google UK/US Male or Apple Daniel
-  const warmMale = voices.find(v =>
-    v.lang.startsWith('en') &&
-    (v.name.includes('Google UK English Male') || v.name.includes('Daniel') || v.name.includes('Google US English') || v.name.includes('Alex'))
+  const googleUKFemale = voices.find(v =>
+    v.name.includes('Google UK English Female') ||
+    (v.lang.startsWith('en') && v.name.includes('Google') && !v.name.includes('Male'))
   );
-  if (warmMale) return warmMale;
+  if (googleUKFemale) return googleUKFemale;
+
+  // Tier 3: Apple macOS / iOS Premium & Enhanced Feminine voices
+  const appleOrder = ['ava', 'allison', 'samantha', 'serena', 'karen', 'moira'];
+  for (const keyword of appleOrder) {
+    const match = voices.find(v =>
+      v.lang.startsWith('en') &&
+      v.name.toLowerCase().includes(keyword)
+    );
+    if (match) return match;
+  }
+
+  // Tier 4: Any other online/network English voice (!localService)
+  const anyCloudEn = voices.find(v => v.lang.startsWith('en') && !v.localService);
+  if (anyCloudEn) return anyCloudEn;
+
+  // Tier 5: Offline Windows Feminine fallback (Zira) — never David/Mark
+  const zira = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('zira'));
+  if (zira) return zira;
 
   // Universal English Fallback
   return voices.find(v => v.lang.startsWith('en')) || voices[0] || null;
@@ -164,19 +184,24 @@ export function getSolVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoic
 
 /**
  * Returns optimal Sol pitch and rate for the resolved voice engine.
- * - For SAPI5 David: lowers pitch to 0.92 and rate to 0.96*speed to create a warm, grounded baritone.
- * - For Neural voices: keeps pitch at 0.96 and rate at 0.98*speed for crisp, natural warmth.
+ * ChatGPT's "Sol" voice has a savvy, relaxed, warm alto quality (slightly lower feminine pitch ~0.94-0.96, unhurried cadence).
  */
 export function getSolVoiceProsody(voice: SpeechSynthesisVoice | null, baseSpeed: number = 1.0): { pitch: number; rate: number } {
-  const isNeural = voice && (voice.name.includes('Natural') || voice.name.includes('Online') || voice.name.includes('Google'));
-  if (isNeural) {
+  const name = voice?.name?.toLowerCase() || '';
+  if (name.includes('google us english') || name.includes('google')) {
+    return {
+      pitch: 0.94,
+      rate: Number((baseSpeed * 0.97).toFixed(2))
+    };
+  }
+  if (name.includes('natural') || name.includes('online')) {
     return {
       pitch: 0.96,
       rate: Number((baseSpeed * 0.98).toFixed(2))
     };
   }
   return {
-    pitch: 0.92,
+    pitch: 0.93,
     rate: Number((baseSpeed * 0.96).toFixed(2))
   };
 }

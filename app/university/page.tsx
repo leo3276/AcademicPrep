@@ -1594,9 +1594,10 @@ export default function UniversityPortalPage() {
       const seg = segments[segIdx];
       const utterance = new SpeechSynthesisUtterance(seg.text);
 
-      // Strictly resolve to Sol voice and apply calibrated Sol prosody
-      const chosenVoice = solVoiceRef.current || getSolVoice(window.speechSynthesis.getVoices());
+      // Strictly resolve to Sol voice (re-query live voices so Chrome/Edge cloud neural voices are always preferred)
+      const chosenVoice = getSolVoice(window.speechSynthesis.getVoices()) || solVoiceRef.current;
       if (chosenVoice) {
+        solVoiceRef.current = chosenVoice;
         utterance.voice = chosenVoice;
       }
       const prosody = getSolVoiceProsody(chosenVoice, speed);
