@@ -1436,6 +1436,7 @@ export default function UniversityPortalPage() {
   const [selectedVoiceName, setSelectedVoiceName] = useState<string>('');
 
   const speechUtteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const silentAudioRef = useRef<HTMLAudioElement | null>(null);
   const segmentTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const currentSegmentIdxRef = useRef<number>(0);
   const currentSegmentsListRef = useRef<AudioSpeechSegment[]>([]);
@@ -1466,6 +1467,13 @@ export default function UniversityPortalPage() {
     if (typeof window !== 'undefined' && window.speechSynthesis) {
       window.speechSynthesis.cancel();
     }
+    if (silentAudioRef.current) {
+      silentAudioRef.current.pause();
+      silentAudioRef.current.currentTime = 0;
+    }
+    if (typeof window !== 'undefined' && 'mediaSession' in navigator) {
+      navigator.mediaSession.playbackState = 'none';
+    }
     setIsAudioPlaying(false);
     setIsAudioPaused(false);
     speechUtteranceRef.current = null;
@@ -1476,6 +1484,11 @@ export default function UniversityPortalPage() {
       stopAudioCram();
     };
   }, [stopAudioCram]);
+
+  const replayCurrentSlide = useCallback(() => {
+    if (!activePackage) return;
+    speakSlideByIndex(audioSlideIndex, audioSpeed, audioAutoAdvance, selectedVoiceName, false);
+  }, [activePackage, audioSlideIndex, audioSpeed, audioAutoAdvance, selectedVoiceName]);
 
   const speakSlideByIndex = useCallback((
     index: number, 
@@ -1500,6 +1513,69 @@ export default function UniversityPortalPage() {
     setAudioSlideIndex(index);
     setSelectedSlideIndex(index);
 
+    // Auto-scroll the quick jump button into view so active slide is always visible
+    if (typeof document !== 'undefined') {
+      const jumpPill = document.getElementById(`quick-jump-slide-${targetSlide.pageNumber}`);
+      if (jumpPill) {
+        jumpPill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+
+    // Initialize & keep alive background audio for Mobile Screen-Lock / Background Playback
+    if (!silentAudioRef.current && typeof Audio !== 'undefined') {
+      // 1-second silent WAV loop to keep iOS / Android audio sessions awake in background
+      const silentAudio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA');
+      silentAudio.loop = true;
+      silentAudio.volume = 0.01;
+      silentAudioRef.current = silentAudio;
+    }
+    if (silentAudioRef.current) {
+      silentAudioRef.current.play().catch(() => {});
+    }
+
+    // Configure Native Lock-Screen MediaSession Controls (iOS / Android / Desktop)
+    if (typeof window !== 'undefined' && 'mediaSession' in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: `Slide ${targetSlide.pageNumber}: ${targetSlide.title || 'Key Takeaway'}`,
+        artist: 'AcademicPrep Audio Cram (Sol Voice)',
+        album: activePackage.deckTitle || 'University Slides',
+        artwork: [
+          { src: '/icon.png', sizes: '192x192', type: 'image/png' },
+          { src: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png' }
+        ]
+      });
+      navigator.mediaSession.playbackState = 'playing';
+
+      try {
+        navigator.mediaSession.setActionHandler('play', () => {
+          if (typeof window !== 'undefined' && window.speechSynthesis) {
+            window.speechSynthesis.resume();
+            setIsAudioPaused(false);
+            if (silentAudioRef.current) silentAudioRef.current.play().catch(() => {});
+          }
+        });
+        navigator.mediaSession.setActionHandler('pause', () => {
+          if (typeof window !== 'undefined' && window.speechSynthesis) {
+            window.speechSynthesis.pause();
+            setIsAudioPaused(true);
+            if (silentAudioRef.current) silentAudioRef.current.pause();
+          }
+        });
+        navigator.mediaSession.setActionHandler('nexttrack', () => {
+          if (index < activePackage.slides.length - 1) {
+            speakSlideByIndex(index + 1, speed, autoAdvance, voiceName, true);
+          }
+        });
+        navigator.mediaSession.setActionHandler('previoustrack', () => {
+          if (index > 0) {
+            speakSlideByIndex(index - 1, speed, autoAdvance, voiceName, false);
+          }
+        });
+      } catch (e) {
+        // Safe catch for unsupported media session handlers
+      }
+    }
+
     const segments = getSlideAudioSpeechSegments(targetSlide, activePackage.deckTitle, isAdvancing);
     currentSegmentsListRef.current = segments;
     currentSegmentIdxRef.current = 0;
@@ -1507,13 +1583,16 @@ export default function UniversityPortalPage() {
     const playSegment = (segIdx: number) => {
       if (segIdx >= segments.length) {
         if (autoAdvance && index < activePackage.slides.length - 1) {
-          // Natural pause before announcing the next slide
+          // Sol-style natural thinking pause before progressing to the next slide
           segmentTimeoutRef.current = setTimeout(() => {
             speakSlideByIndex(index + 1, speed, autoAdvance, voiceName, true);
-          }, 800);
+          }, 750);
         } else {
           setIsAudioPlaying(false);
           setIsAudioPaused(false);
+          if (typeof window !== 'undefined' && 'mediaSession' in navigator) {
+            navigator.mediaSession.playbackState = 'none';
+          }
         }
         return;
       }
@@ -1521,8 +1600,12 @@ export default function UniversityPortalPage() {
       currentSegmentIdxRef.current = segIdx;
       const seg = segments[segIdx];
       const utterance = new SpeechSynthesisUtterance(seg.text);
-      utterance.rate = speed;
-      utterance.pitch = 1.0;
+      
+      // CHATGPT "SOL" VOICE PROFILE TUNING:
+      // Rate: unhurried, steady conversational cadence (0.96 * speed)
+      // Pitch: 0.92 warm baritone (transforms David into deep, resonant Sol tone)
+      utterance.rate = speed * 0.96;
+      utterance.pitch = 0.92;
 
       const voices = window.speechSynthesis.getVoices();
       let chosenVoice: SpeechSynthesisVoice | null = null;
@@ -1543,7 +1626,7 @@ export default function UniversityPortalPage() {
       utterance.onend = () => {
         segmentTimeoutRef.current = setTimeout(() => {
           playSegment(segIdx + 1);
-        }, seg.pauseAfterMs || 600);
+        }, seg.pauseAfterMs || 500);
       };
 
       utterance.onerror = (e) => {
@@ -1567,9 +1650,13 @@ export default function UniversityPortalPage() {
     } else if (isAudioPaused) {
       window.speechSynthesis.resume();
       setIsAudioPaused(false);
+      if (silentAudioRef.current) silentAudioRef.current.play().catch(() => {});
+      if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
     } else {
       window.speechSynthesis.pause();
       setIsAudioPaused(true);
+      if (silentAudioRef.current) silentAudioRef.current.pause();
+      if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
     }
   };
 
@@ -3128,6 +3215,7 @@ export default function UniversityPortalPage() {
                         return (
                           <button
                             key={slide.pageNumber}
+                            id={`quick-jump-slide-${slide.pageNumber}`}
                             onClick={() => setSelectedSlideIndex(idx)}
                             className={`shrink-0 h-8 px-2.5 rounded-lg font-mono text-[11px] font-medium transition flex items-center gap-1 border ${
                               isCurrent
@@ -4191,6 +4279,15 @@ export default function UniversityPortalPage() {
             title={isAudioPaused ? 'Resume' : 'Pause'}
           >
             {isAudioPaused ? <Play className="w-3.5 h-3.5 fill-current ml-0.5" /> : <Pause className="w-3.5 h-3.5 fill-current" />}
+          </button>
+
+          {/* Say That Again (Replay Current Slide) */}
+          <button
+            onClick={replayCurrentSlide}
+            className="p-1.5 rounded-lg text-slate-400 hover:text-white transition cursor-pointer shrink-0"
+            title="Replay this slide (Say that again)"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
           </button>
 
           {/* Slide info & title */}

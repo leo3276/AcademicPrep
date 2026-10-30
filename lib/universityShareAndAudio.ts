@@ -79,14 +79,20 @@ export function getSlideAudioSpeechSegments(
   isAdvancing: boolean = false
 ): AudioSpeechSegment[] {
   const takeaway = getSlideKeyTakeawayText(slide);
-  const prefix = isAdvancing 
+  
+  // Sol Cadence: Announcement followed by a thoughtful breath pause before the core idea
+  const announcement = isAdvancing 
     ? `Next slide. Slide ${slide.pageNumber}.` 
     : `Slide ${slide.pageNumber}.`;
 
   return [
     {
-      text: `${prefix} ${takeaway}`,
-      pauseAfterMs: 750
+      text: announcement,
+      pauseAfterMs: 380 // Natural human breath pause between slide number and content
+    },
+    {
+      text: takeaway,
+      pauseAfterMs: 700 // Absorption pause after finishing the key takeaway
     }
   ];
 }
