@@ -57,7 +57,7 @@ import {
   generateDeckWhatsAppText,
   getSlideAudioScript,
   getSlideAudioSpeechSegments,
-  getBestNaturalVoice,
+  getSolVoice,
   getAvailableNaturalVoices,
   generateSummaryCardPngBlob,
   AudioSpeechSegment
@@ -1487,14 +1487,13 @@ export default function UniversityPortalPage() {
 
   const replayCurrentSlide = useCallback(() => {
     if (!activePackage) return;
-    speakSlideByIndex(audioSlideIndex, audioSpeed, audioAutoAdvance, selectedVoiceName, false);
-  }, [activePackage, audioSlideIndex, audioSpeed, audioAutoAdvance, selectedVoiceName]);
+    speakSlideByIndex(audioSlideIndex, audioSpeed, audioAutoAdvance, false);
+  }, [activePackage, audioSlideIndex, audioSpeed, audioAutoAdvance]);
 
   const speakSlideByIndex = useCallback((
     index: number, 
     speed = audioSpeed, 
     autoAdvance = audioAutoAdvance, 
-    voiceName = selectedVoiceName,
     isAdvancing = false
   ) => {
     if (typeof window === 'undefined' || !window.speechSynthesis || !activePackage) return;
@@ -1563,12 +1562,12 @@ export default function UniversityPortalPage() {
         });
         navigator.mediaSession.setActionHandler('nexttrack', () => {
           if (index < activePackage.slides.length - 1) {
-            speakSlideByIndex(index + 1, speed, autoAdvance, voiceName, true);
+            speakSlideByIndex(index + 1, speed, autoAdvance, true);
           }
         });
         navigator.mediaSession.setActionHandler('previoustrack', () => {
           if (index > 0) {
-            speakSlideByIndex(index - 1, speed, autoAdvance, voiceName, false);
+            speakSlideByIndex(index - 1, speed, autoAdvance, false);
           }
         });
       } catch (e) {
@@ -1607,14 +1606,8 @@ export default function UniversityPortalPage() {
       utterance.rate = speed * 0.96;
       utterance.pitch = 0.92;
 
-      const voices = window.speechSynthesis.getVoices();
-      let chosenVoice: SpeechSynthesisVoice | null = null;
-      if (voiceName) {
-        chosenVoice = voices.find(v => v.name === voiceName) || null;
-      }
-      if (!chosenVoice) {
-        chosenVoice = getBestNaturalVoice(voices);
-      }
+      // Strictly use Sol voice
+      const chosenVoice = solVoiceRef.current || getSolVoice(window.speechSynthesis.getVoices());
       if (chosenVoice) utterance.voice = chosenVoice;
 
       utterance.onstart = () => {
@@ -1640,7 +1633,7 @@ export default function UniversityPortalPage() {
     };
 
     playSegment(0);
-  }, [activePackage, audioSpeed, audioAutoAdvance, selectedVoiceName, stopAudioCram]);
+  }, [activePackage, audioSpeed, audioAutoAdvance, stopAudioCram]);
 
   const togglePlayPauseAudio = () => {
     if (typeof window === 'undefined' || !window.speechSynthesis) return;
@@ -1664,7 +1657,7 @@ export default function UniversityPortalPage() {
     if (!activePackage) return;
     const targetIdx = direction === 'next' ? audioSlideIndex + 1 : audioSlideIndex - 1;
     if (targetIdx >= 0 && targetIdx < activePackage.slides.length) {
-      speakSlideByIndex(targetIdx, audioSpeed, audioAutoAdvance, selectedVoiceName, direction === 'next');
+      speakSlideByIndex(targetIdx, audioSpeed, audioAutoAdvance, direction === 'next');
     }
   };
 
@@ -4290,7 +4283,7 @@ export default function UniversityPortalPage() {
             <RotateCcw className="w-3.5 h-3.5" />
           </button>
 
-          {/* Slide info & title */}
+          {/* Slide info & title with exclusive Sol Voice badge */}
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
               <span className="text-[11px] font-mono text-blue-400 font-semibold shrink-0">
@@ -4298,6 +4291,9 @@ export default function UniversityPortalPage() {
               </span>
               <span className="text-xs text-slate-200 font-medium truncate">
                 {activePackage.slides[audioSlideIndex]?.title || 'Audio Cram'}
+              </span>
+              <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-800 text-blue-300 border border-slate-700 shrink-0 hidden sm:inline-block">
+                Voice: Sol
               </span>
             </div>
           </div>

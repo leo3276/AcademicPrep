@@ -98,50 +98,43 @@ export function getSlideAudioSpeechSegments(
 }
 
 /**
- * Filter and rank voices for speech synthesis.
- * Default priority: David (as requested), followed by modern natural/neural voices.
+ * Dedicated Sol Voice Engine.
+ * Sol is the exclusive voice across AcademicPrep.
+ * Calibrated specifically with David's acoustic profile tuned to warm baritone and measured cadence.
  */
-export function getBestNaturalVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
+export function getSolVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
   if (!voices || voices.length === 0) return null;
 
-  // Tier 0 (Default): David voice (Microsoft David Desktop, Microsoft David, etc.)
+  // Primary: David voice (Microsoft David / Desktop David)
   const david = voices.find(v => 
     v.lang.startsWith('en') && 
     v.name.toLowerCase().includes('david')
   );
   if (david) return david;
 
-  // Tier 1: Modern Natural Neural voices (Microsoft Edge Natural, Chrome Neural)
-  const tier1 = voices.find(v => 
+  // Secondary Natural baritone voices (Edge / Chrome on devices without David)
+  const naturalBaritone = voices.find(v => 
     v.lang.startsWith('en') && 
-    (v.name.includes('Natural') || v.name.includes('Neural') || v.name.includes('Christopher') || v.name.includes('Guy') || v.name.includes('Aria') || v.name.includes('Jenny'))
+    (v.name.includes('Guy') || v.name.includes('Christopher') || v.name.includes('Google UK English Male') || v.name.includes('Google US English'))
   );
-  if (tier1) return tier1;
+  if (naturalBaritone) return naturalBaritone;
 
-  // Tier 2: Google Natural Voices (Chrome desktop & Android)
-  const tier2 = voices.find(v => 
+  // Tertiary Apple / iOS male voices (iPhone / iPad / Mac)
+  const appleMale = voices.find(v => 
     v.lang.startsWith('en') && 
-    (v.name.includes('Google US English') || v.name.includes('Google UK English Male') || v.name.includes('Google'))
+    (v.name.includes('Daniel') || v.name.includes('Fred') || v.name.includes('Alex'))
   );
-  if (tier2) return tier2;
+  if (appleMale) return appleMale;
 
-  // Tier 3: Apple Enhanced Voices (iOS Safari, macOS)
-  const tier3 = voices.find(v => 
-    v.lang.startsWith('en') && 
-    (v.name.includes('Daniel') || v.name.includes('Samantha') || v.name.includes('Enhanced') || v.name.includes('Premium'))
-  );
-  if (tier3) return tier3;
-
-  // Tier 4: Any English voice fallback
+  // Universal English Fallback
   return voices.find(v => v.lang.startsWith('en')) || voices[0] || null;
 }
 
-/**
- * Returns available English natural voices for user selection
- */
+// Backwards-compatible alias for existing imports
+export const getBestNaturalVoice = getSolVoice;
 export function getAvailableNaturalVoices(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice[] {
-  if (!voices || voices.length === 0) return [];
-  return voices.filter(v => v.lang.startsWith('en'));
+  const sol = getSolVoice(voices);
+  return sol ? [sol] : [];
 }
 
 /**
