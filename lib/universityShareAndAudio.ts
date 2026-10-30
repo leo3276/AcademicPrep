@@ -1,8 +1,8 @@
 import { SlideAnalysis, CompleteSlideStudyPackage } from './universitySlides';
 
 /**
- * Clean text for natural speech synthesis
- * Converts abbreviations, formulas, and symbols into natural spoken English
+ * Clean text for natural conversational speech synthesis (Sol Voice Profile)
+ * Converts abbreviations, numbered lists, formulas, and symbols into warm, natural spoken English
  */
 export function cleanTextForSpeech(raw: string): string {
   if (!raw) return '';
@@ -15,10 +15,18 @@ export function cleanTextForSpeech(raw: string): string {
     .replace(/`(.*?)`/g, '$1')
     .replace(/^#+\s+/gm, '')
     .replace(/^[•\-\*]\s+/gm, '')
+    // Convert inline numbered lists (1), (2), (3) into natural spoken ordinals
+    .replace(/\(1\)\s*/g, 'First, ')
+    .replace(/\(2\)\s*/g, 'Second, ')
+    .replace(/\(3\)\s*/g, 'Third, ')
+    .replace(/\(4\)\s*/g, 'Fourth, ')
+    .replace(/\(5\)\s*/g, 'Fifth, ')
+    .replace(/\(6\)\s*/g, 'Sixth, ')
+    .replace(/\(7\)\s*/g, 'Seventh, ')
     // Common academic abbreviations -> spoken words
     .replace(/\be\.g\.,?\s*/gi, 'for example, ')
     .replace(/\bi\.e\.,?\s*/gi, 'that is, ')
-    .replace(/\betc\.,?\s*/gi, 'and so forth, ')
+    .replace(/\betc\.,?\s*/gi, 'and so on, ')
     .replace(/\bvs\.\s*/gi, 'versus ')
     .replace(/\bvs\b/gi, 'versus')
     .replace(/\bw\/\s*/gi, 'with ')
@@ -35,15 +43,17 @@ export function cleanTextForSpeech(raw: string): string {
     .replace(/\s*\+\s*/g, ' plus ')
     .replace(/\s*=\s*/g, ' equals ')
     .replace(/\s*≠\s*/g, ' does not equal ')
-    .replace(/\s*≈\s*/g, ' is approximately equal to ')
+    .replace(/\s*≈\s*/g, ' is approximately ')
     .replace(/\s*%\s*/g, ' percent ')
     .replace(/\s*\/\s*/g, ' or ')
-    .replace(/\s*→\s*/g, ' leads to ')
+    .replace(/\s*→\s*/g, ', which leads to ')
     .replace(/\s*<=\s*|\s*≤\s*/g, ' is less than or equal to ')
     .replace(/\s*>=\s*|\s*≥\s*/g, ' is greater than or equal to ')
+    // Turn em-dashes and semicolons into natural comma breath pauses
+    .replace(/\s*[—–;]\s*/g, ', ')
     // Remove unwanted citation brackets like [1], [Slide 4]
     .replace(/\[\d+\]/g, '')
-    // Clean multiple spaces and hyphens
+    // Clean multiple spaces
     .replace(/\s{2,}/g, ' ')
     .trim();
 }
@@ -70,67 +80,108 @@ export function getSlideKeyTakeawayText(slide: SlideAnalysis): string {
 }
 
 /**
- * Concise, focused audio cram: only reads the key takeaway.
- * If advancing, announces "Next slide. Slide X." then reads its key takeaway.
+ * Splits a paragraph into natural sentence-level thought units so Sol speaks
+ * with calm, measured human breathing pauses between sentences.
+ */
+function splitIntoConversationalSentences(text: string): string[] {
+  if (!text) return [];
+  const rawSentences = text
+    .split(/(?<=[.!?])\s+/)
+    .map(s => s.trim())
+    .filter(s => s.length > 0);
+  return rawSentences.length > 0 ? rawSentences : [text];
+}
+
+/**
+ * Concise, focused Sol Audio Cram:
+ * 1. Announces slide ("Slide 1." or "Next slide. Slide 2.")
+ * 2. Speaks ONLY the Key Takeaway sentence-by-sentence with natural human pauses.
  */
 export function getSlideAudioSpeechSegments(
   slide: SlideAnalysis,
   deckTitle?: string,
   isAdvancing: boolean = false
 ): AudioSpeechSegment[] {
+  const segments: AudioSpeechSegment[] = [];
   const takeaway = getSlideKeyTakeawayText(slide);
-  
-  // Sol Cadence: Announcement followed by a thoughtful breath pause before the core idea
-  const announcement = isAdvancing 
-    ? `Next slide. Slide ${slide.pageNumber}.` 
+
+  // 1. Calm slide announcement with thoughtful breath pause
+  const announcement = isAdvancing
+    ? `Next slide. Slide ${slide.pageNumber}.`
     : `Slide ${slide.pageNumber}.`;
 
-  return [
-    {
-      text: announcement,
-      pauseAfterMs: 380 // Natural human breath pause between slide number and content
-    },
-    {
-      text: takeaway,
-      pauseAfterMs: 700 // Absorption pause after finishing the key takeaway
-    }
-  ];
+  segments.push({
+    text: announcement,
+    pauseAfterMs: 380
+  });
+
+  // 2. Sentence-by-sentence delivery for natural human cadence (Sol style)
+  const sentences = splitIntoConversationalSentences(takeaway);
+  sentences.forEach((sentence, idx) => {
+    const isLast = idx === sentences.length - 1;
+    segments.push({
+      text: sentence,
+      pauseAfterMs: isLast ? 750 : 420
+    });
+  });
+
+  return segments;
 }
 
 /**
- * Dedicated Sol Voice Engine.
- * Sol is the exclusive voice across AcademicPrep.
- * Calibrated specifically with David's acoustic profile tuned to warm baritone and measured cadence.
+ * Dedicated Sol Voice Resolver.
+ * Sol is the exclusive voice across AcademicPrep:
+ * Prioritizes warm, natural male baritone voices (Microsoft Natural Andrew/Brian/Guy/Christopher or Microsoft David).
  */
 export function getSolVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
   if (!voices || voices.length === 0) return null;
 
-  // Primary: David voice (Microsoft David / Desktop David)
-  const david = voices.find(v => 
-    v.lang.startsWith('en') && 
+  // Tier 1: Warm Neural Baritone voices if available in browser (Edge / Chrome Neural)
+  const neuralSol = voices.find(v =>
+    v.lang.startsWith('en') &&
+    (v.name.includes('Natural') || v.name.includes('Online')) &&
+    (v.name.includes('Andrew') || v.name.includes('Brian') || v.name.includes('Christopher') || v.name.includes('Guy') || v.name.includes('Steffan') || v.name.includes('Roger'))
+  );
+  if (neuralSol) return neuralSol;
+
+  // Tier 2: David voice (Microsoft David / Desktop David - tuned to Sol baritone)
+  const david = voices.find(v =>
+    v.lang.startsWith('en') &&
     v.name.toLowerCase().includes('david')
   );
   if (david) return david;
 
-  // Secondary Natural baritone voices (Edge / Chrome on devices without David)
-  const naturalBaritone = voices.find(v => 
-    v.lang.startsWith('en') && 
-    (v.name.includes('Guy') || v.name.includes('Christopher') || v.name.includes('Google UK English Male') || v.name.includes('Google US English'))
+  // Tier 3: Google UK/US Male or Apple Daniel
+  const warmMale = voices.find(v =>
+    v.lang.startsWith('en') &&
+    (v.name.includes('Google UK English Male') || v.name.includes('Daniel') || v.name.includes('Google US English') || v.name.includes('Alex'))
   );
-  if (naturalBaritone) return naturalBaritone;
-
-  // Tertiary Apple / iOS male voices (iPhone / iPad / Mac)
-  const appleMale = voices.find(v => 
-    v.lang.startsWith('en') && 
-    (v.name.includes('Daniel') || v.name.includes('Fred') || v.name.includes('Alex'))
-  );
-  if (appleMale) return appleMale;
+  if (warmMale) return warmMale;
 
   // Universal English Fallback
   return voices.find(v => v.lang.startsWith('en')) || voices[0] || null;
 }
 
-// Backwards-compatible alias for existing imports
+/**
+ * Returns optimal Sol pitch and rate for the resolved voice engine.
+ * - For SAPI5 David: lowers pitch to 0.92 and rate to 0.96*speed to create a warm, grounded baritone.
+ * - For Neural voices: keeps pitch at 0.96 and rate at 0.98*speed for crisp, natural warmth.
+ */
+export function getSolVoiceProsody(voice: SpeechSynthesisVoice | null, baseSpeed: number = 1.0): { pitch: number; rate: number } {
+  const isNeural = voice && (voice.name.includes('Natural') || voice.name.includes('Online') || voice.name.includes('Google'));
+  if (isNeural) {
+    return {
+      pitch: 0.96,
+      rate: Number((baseSpeed * 0.98).toFixed(2))
+    };
+  }
+  return {
+    pitch: 0.92,
+    rate: Number((baseSpeed * 0.96).toFixed(2))
+  };
+}
+
+// Backwards-compatible exports
 export const getBestNaturalVoice = getSolVoice;
 export function getAvailableNaturalVoices(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice[] {
   const sol = getSolVoice(voices);

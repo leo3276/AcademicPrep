@@ -58,6 +58,8 @@ import {
   getSlideAudioScript,
   getSlideAudioSpeechSegments,
   getSolVoice,
+  getSolVoiceProsody,
+  getBestNaturalVoice,
   getAvailableNaturalVoices,
   generateSummaryCardPngBlob,
   AudioSpeechSegment
@@ -1425,39 +1427,37 @@ export default function UniversityPortalPage() {
 
   const [dismissedBetaNotice, setDismissedBetaNotice] = useState<boolean>(false);
 
-  // ─── AUDIO CRAM ENGINE (Feature 4 - Natural Human Voice & Segmented Pacing) ───
+  // ─── AUDIO CRAM ENGINE (Sol Exclusive Voice & Lock-Screen MediaSession) ───
   const [isAudioPlaying, setIsAudioPlaying] = useState<boolean>(false);
   const [isAudioPaused, setIsAudioPaused] = useState<boolean>(false);
   const [audioSpeed, setAudioSpeed] = useState<number>(1.0); // 1.0x default speed
   const [audioAutoAdvance, setAudioAutoAdvance] = useState<boolean>(true);
   const [audioSlideIndex, setAudioSlideIndex] = useState<number>(0);
   const [audioProgressText, setAudioProgressText] = useState<string>('');
-  const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
-  const [selectedVoiceName, setSelectedVoiceName] = useState<string>('');
 
+  // Sol is the exclusive voice across AcademicPrep
+  const solVoiceRef = useRef<SpeechSynthesisVoice | null>(null);
   const speechUtteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const silentAudioRef = useRef<HTMLAudioElement | null>(null);
   const segmentTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const currentSegmentIdxRef = useRef<number>(0);
   const currentSegmentsListRef = useRef<AudioSpeechSegment[]>([]);
 
-  // Load natural voices on mount
+  // Bind Sol voice on mount & when voices load
   useEffect(() => {
     if (typeof window === 'undefined' || !window.speechSynthesis) return;
 
-    const populateVoices = () => {
+    const bindSolVoice = () => {
       const all = window.speechSynthesis.getVoices();
-      const natural = getAvailableNaturalVoices(all);
-      setAvailableVoices(natural);
-      if (!selectedVoiceName && natural.length > 0) {
-        const best = getBestNaturalVoice(natural);
-        if (best) setSelectedVoiceName(best.name);
+      const resolved = getSolVoice(all);
+      if (resolved) {
+        solVoiceRef.current = resolved;
       }
     };
 
-    populateVoices();
-    window.speechSynthesis.onvoiceschanged = populateVoices;
-  }, [selectedVoiceName]);
+    bindSolVoice();
+    window.speechSynthesis.onvoiceschanged = bindSolVoice;
+  }, []);
 
   const stopAudioCram = useCallback(() => {
     if (segmentTimeoutRef.current) {
@@ -1485,15 +1485,10 @@ export default function UniversityPortalPage() {
     };
   }, [stopAudioCram]);
 
-  const replayCurrentSlide = useCallback(() => {
-    if (!activePackage) return;
-    speakSlideByIndex(audioSlideIndex, audioSpeed, audioAutoAdvance, false);
-  }, [activePackage, audioSlideIndex, audioSpeed, audioAutoAdvance]);
-
   const speakSlideByIndex = useCallback((
-    index: number, 
-    speed = audioSpeed, 
-    autoAdvance = audioAutoAdvance, 
+    index: number,
+    speed = audioSpeed,
+    autoAdvance = audioAutoAdvance,
     isAdvancing = false
   ) => {
     if (typeof window === 'undefined' || !window.speechSynthesis || !activePackage) return;
@@ -1522,7 +1517,6 @@ export default function UniversityPortalPage() {
 
     // Initialize & keep alive background audio for Mobile Screen-Lock / Background Playback
     if (!silentAudioRef.current && typeof Audio !== 'undefined') {
-      // 1-second silent WAV loop to keep iOS / Android audio sessions awake in background
       const silentAudio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA');
       silentAudio.loop = true;
       silentAudio.volume = 0.01;
@@ -1536,7 +1530,7 @@ export default function UniversityPortalPage() {
     if (typeof window !== 'undefined' && 'mediaSession' in navigator) {
       navigator.mediaSession.metadata = new MediaMetadata({
         title: `Slide ${targetSlide.pageNumber}: ${targetSlide.title || 'Key Takeaway'}`,
-        artist: 'AcademicPrep Audio Cram (Sol Voice)',
+        artist: 'Sol • AcademicPrep Audio Cram',
         album: activePackage.deckTitle || 'University Slides',
         artwork: [
           { src: '/icon.png', sizes: '192x192', type: 'image/png' },
@@ -1584,7 +1578,7 @@ export default function UniversityPortalPage() {
         if (autoAdvance && index < activePackage.slides.length - 1) {
           // Sol-style natural thinking pause before progressing to the next slide
           segmentTimeoutRef.current = setTimeout(() => {
-            speakSlideByIndex(index + 1, speed, autoAdvance, voiceName, true);
+            speakSlideByIndex(index + 1, speed, autoAdvance, true);
           }, 750);
         } else {
           setIsAudioPlaying(false);
@@ -1599,16 +1593,15 @@ export default function UniversityPortalPage() {
       currentSegmentIdxRef.current = segIdx;
       const seg = segments[segIdx];
       const utterance = new SpeechSynthesisUtterance(seg.text);
-      
-      // CHATGPT "SOL" VOICE PROFILE TUNING:
-      // Rate: unhurried, steady conversational cadence (0.96 * speed)
-      // Pitch: 0.92 warm baritone (transforms David into deep, resonant Sol tone)
-      utterance.rate = speed * 0.96;
-      utterance.pitch = 0.92;
 
-      // Strictly use Sol voice
+      // Strictly resolve to Sol voice and apply calibrated Sol prosody
       const chosenVoice = solVoiceRef.current || getSolVoice(window.speechSynthesis.getVoices());
-      if (chosenVoice) utterance.voice = chosenVoice;
+      if (chosenVoice) {
+        utterance.voice = chosenVoice;
+      }
+      const prosody = getSolVoiceProsody(chosenVoice, speed);
+      utterance.rate = prosody.rate;
+      utterance.pitch = prosody.pitch;
 
       utterance.onstart = () => {
         setIsAudioPlaying(true);
@@ -1619,7 +1612,7 @@ export default function UniversityPortalPage() {
       utterance.onend = () => {
         segmentTimeoutRef.current = setTimeout(() => {
           playSegment(segIdx + 1);
-        }, seg.pauseAfterMs || 500);
+        }, seg.pauseAfterMs || 420);
       };
 
       utterance.onerror = (e) => {
@@ -1634,6 +1627,11 @@ export default function UniversityPortalPage() {
 
     playSegment(0);
   }, [activePackage, audioSpeed, audioAutoAdvance, stopAudioCram]);
+
+  const replayCurrentSlide = useCallback(() => {
+    if (!activePackage) return;
+    speakSlideByIndex(audioSlideIndex, audioSpeed, audioAutoAdvance, false);
+  }, [activePackage, audioSlideIndex, audioSpeed, audioAutoAdvance, speakSlideByIndex]);
 
   const togglePlayPauseAudio = () => {
     if (typeof window === 'undefined' || !window.speechSynthesis) return;
@@ -1664,14 +1662,7 @@ export default function UniversityPortalPage() {
   const changeSpeed = (speed: number) => {
     setAudioSpeed(speed);
     if (isAudioPlaying && !isAudioPaused) {
-      speakSlideByIndex(audioSlideIndex, speed);
-    }
-  };
-
-  const changeVoice = (name: string) => {
-    setSelectedVoiceName(name);
-    if (isAudioPlaying && !isAudioPaused) {
-      speakSlideByIndex(audioSlideIndex, audioSpeed, audioAutoAdvance, name);
+      speakSlideByIndex(audioSlideIndex, speed, audioAutoAdvance, false);
     }
   };
 
