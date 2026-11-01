@@ -4238,6 +4238,253 @@ export default function UniversityPortalPage() {
               )}
             </div>
           )}
+
+          {/* ─────────────────────────────────────────────────────────────
+              TAB 5: PRACTICE QUIZ (INTERACTIVE MCQ EXAM DRILL)
+          ───────────────────────────────────────────────────────────── */}
+          {activeTab === 'quiz' && (
+            <div className="max-w-3xl mx-auto space-y-6 pt-4">
+              {/* Top Quiz Summary & Controls Bar */}
+              <div className="border border-neutral-200 rounded-2xl p-5 sm:p-6 bg-white shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 text-xs font-mono text-neutral-400">
+                    <span>PRACTICE QUIZ</span>
+                    <span>•</span>
+                    <span>{quizQuestions.length} QUESTIONS</span>
+                    <span>•</span>
+                    <span>{Object.keys(quizAnswers).length}/{quizQuestions.length} ANSWERED</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-neutral-900">
+                    {activePackage.courseCode ? `${activePackage.courseCode}: ` : ''}{activePackage.deckTitle} Exam Drill
+                  </h3>
+                  <p className="text-xs text-neutral-500">
+                    Select an option for each question to test your understanding, then submit to view your score and slide explanations.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2 shrink-0">
+                  {quizSubmitted && (
+                    <div className="flex items-center gap-1 bg-neutral-100 p-1 rounded-lg border border-neutral-200 text-xs">
+                      <button
+                        onClick={() => setQuizFilter('all')}
+                        className={`px-2.5 py-1 rounded-md font-medium transition ${
+                          quizFilter === 'all'
+                            ? 'bg-white text-neutral-900 shadow-2xs'
+                            : 'text-neutral-600 hover:text-neutral-900'
+                        }`}
+                      >
+                        All ({quizQuestions.length})
+                      </button>
+                      <button
+                        onClick={() => setQuizFilter('incorrect')}
+                        className={`px-2.5 py-1 rounded-md font-medium transition ${
+                          quizFilter === 'incorrect'
+                            ? 'bg-white text-neutral-900 shadow-2xs'
+                            : 'text-neutral-600 hover:text-neutral-900'
+                        }`}
+                      >
+                        Mistakes Only
+                      </button>
+                    </div>
+                  )}
+
+                  {quizSubmitted ? (
+                    <button
+                      onClick={() => {
+                        setQuizAnswers({});
+                        setQuizSubmitted(false);
+                        setQuizFilter('all');
+                      }}
+                      className="px-4 py-2 rounded-lg border border-neutral-200 bg-white hover:bg-neutral-50 text-neutral-800 text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <RotateCcw className="w-3.5 h-3.5" />
+                      <span>Retake Quiz</span>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => setQuizSubmitted(true)}
+                      disabled={Object.keys(quizAnswers).length === 0}
+                      className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-40 text-white text-xs font-semibold transition cursor-pointer"
+                    >
+                      Submit Quiz ({Object.keys(quizAnswers).length}/{quizQuestions.length})
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Score Summary Banner after Submission */}
+              {quizSubmitted && (() => {
+                const total = quizQuestions.length;
+                const correctCount = quizQuestions.reduce((acc, q, idx) => {
+                  return acc + (quizAnswers[idx] === q.correctOptionIndex ? 1 : 0);
+                }, 0);
+                const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+                return (
+                  <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-neutral-900 text-white flex items-center justify-center shrink-0 font-mono text-xs font-bold">
+                        {pct}%
+                      </div>
+                      <div className="space-y-0.5">
+                        <p className="text-sm font-bold text-neutral-900">
+                          You scored {correctCount} out of {total} ({pct}%)
+                        </p>
+                        <p className="text-xs text-neutral-600">
+                          {pct >= 80
+                            ? 'Strong mastery of the core concepts in this slide deck.'
+                            : 'Review the explanations below and jump back to any slide you missed.'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* Questions List */}
+              {quizQuestions.length === 0 ? (
+                <div className="border border-neutral-200 rounded-2xl p-10 text-center bg-white space-y-2">
+                  <p className="text-sm font-semibold text-neutral-800">No Practice Questions Available</p>
+                  <p className="text-xs text-neutral-500">Select or upload a course slide deck to generate practice quiz questions.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {quizQuestions.map((q, qIdx) => {
+                    const userChoice = quizAnswers[qIdx];
+                    const isAnswered = userChoice !== undefined;
+                    const isCorrect = userChoice === q.correctOptionIndex;
+
+                    if (quizSubmitted && quizFilter === 'incorrect' && isCorrect) {
+                      return null;
+                    }
+
+                    return (
+                      <div
+                        key={q.id}
+                        className="border border-neutral-200 rounded-2xl p-5 sm:p-6 bg-white space-y-4 shadow-xs"
+                      >
+                        <div className="flex items-center justify-between gap-2 text-xs font-mono text-neutral-400 border-b border-neutral-100 pb-3">
+                          <div className="flex items-center gap-2">
+                            <span className="px-2 py-0.5 rounded bg-neutral-900 text-white font-bold text-[11px]">
+                              Q{qIdx + 1}
+                            </span>
+                            <span>SLIDE {String(q.slidePage).padStart(2, '0')}</span>
+                            <span>•</span>
+                            <span className="text-neutral-600 font-sans font-medium truncate max-w-[220px] sm:max-w-xs">
+                              {q.slideTitle}
+                            </span>
+                          </div>
+
+                          <button
+                            onClick={() => {
+                              const sIdx = activePackage.slides.findIndex(s => s.pageNumber === q.slidePage);
+                              if (sIdx !== -1) {
+                                setSelectedSlideIndex(sIdx);
+                                setActiveTab('slides');
+                              }
+                            }}
+                            className="text-neutral-600 hover:text-neutral-900 font-sans font-medium hover:underline text-xs shrink-0"
+                          >
+                            View Slide {q.slidePage} →
+                          </button>
+                        </div>
+
+                        <h4 className="text-sm sm:text-base font-semibold text-neutral-900 leading-snug">
+                          {q.question}
+                        </h4>
+
+                        <div className="space-y-2">
+                          {q.options.map((opt, optIdx) => {
+                            const isSelected = userChoice === optIdx;
+                            const isRightOption = optIdx === q.correctOptionIndex;
+                            const optionLetter = String.fromCharCode(65 + optIdx);
+
+                            let btnStyle = 'bg-white border-neutral-200 text-neutral-800 hover:bg-neutral-50';
+                            let badgeStyle = 'bg-neutral-100 text-neutral-700 border border-neutral-200';
+
+                            if (!quizSubmitted && isSelected) {
+                              btnStyle = 'bg-blue-50/60 border-blue-600 text-neutral-900 font-medium ring-1 ring-blue-600/20';
+                              badgeStyle = 'bg-blue-600 text-white border-blue-600';
+                            } else if (quizSubmitted) {
+                              if (isRightOption) {
+                                btnStyle = 'bg-neutral-50 border-neutral-900 text-neutral-900 font-semibold';
+                                badgeStyle = 'bg-neutral-900 text-white border-neutral-900';
+                              } else if (isSelected && !isRightOption) {
+                                btnStyle = 'bg-neutral-50 border-neutral-300 text-neutral-500 line-through';
+                                badgeStyle = 'bg-neutral-200 text-neutral-600 border-neutral-300';
+                              } else {
+                                btnStyle = 'bg-white border-neutral-200 text-neutral-500 opacity-75';
+                              }
+                            }
+
+                            return (
+                              <button
+                                key={optIdx}
+                                disabled={quizSubmitted}
+                                onClick={() => setQuizAnswers(prev => ({ ...prev, [qIdx]: optIdx }))}
+                                className={`w-full text-left p-3 sm:p-3.5 rounded-xl border text-xs sm:text-sm transition flex items-start gap-3 cursor-pointer disabled:cursor-default ${btnStyle}`}
+                              >
+                                <span className={`w-6 h-6 rounded-lg font-mono text-xs font-bold flex items-center justify-center shrink-0 mt-0.5 ${badgeStyle}`}>
+                                  {optionLetter}
+                                </span>
+                                <span className="flex-1 leading-relaxed">{opt}</span>
+                                {quizSubmitted && isRightOption && (
+                                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-neutral-900 text-white font-semibold shrink-0 self-center">
+                                    Correct
+                                  </span>
+                                )}
+                                {quizSubmitted && isSelected && !isRightOption && (
+                                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-neutral-200 text-neutral-700 font-semibold shrink-0 self-center">
+                                    Your Choice
+                                  </span>
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        {/* Explanation Box (shown once answered or when quiz is submitted) */}
+                        {(quizSubmitted || isAnswered) && (
+                          <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3.5 flex items-start gap-3 text-xs">
+                            <div className="w-6 h-6 rounded-lg bg-neutral-900 text-white flex items-center justify-center shrink-0 mt-0.5">
+                              <BookOpen className="w-3.5 h-3.5" />
+                            </div>
+                            <div className="space-y-1 flex-1">
+                              <div className="flex items-center justify-between">
+                                <span className="font-semibold text-neutral-900">
+                                  {isAnswered
+                                    ? isCorrect
+                                      ? 'Correct — Slide Key Takeaway'
+                                      : `Not quite — Correct Answer is ${String.fromCharCode(65 + q.correctOptionIndex)}`
+                                    : 'Slide Key Takeaway'}
+                                </span>
+                              </div>
+                              <p className="text-neutral-600 leading-relaxed">
+                                {q.explanation}
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Bottom Submit / Retake Bar */}
+              {quizQuestions.length > 0 && !quizSubmitted && (
+                <div className="flex justify-end pt-2">
+                  <button
+                    onClick={() => setQuizSubmitted(true)}
+                    disabled={Object.keys(quizAnswers).length === 0}
+                    className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-40 text-white text-xs sm:text-sm font-semibold transition shadow-xs cursor-pointer"
+                  >
+                    Submit & Grade Quiz ({Object.keys(quizAnswers).length}/{quizQuestions.length} Answered)
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
 
