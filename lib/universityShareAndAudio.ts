@@ -2,7 +2,7 @@ import { SlideAnalysis, CompleteSlideStudyPackage } from './universitySlides';
 
 /**
  * Clean text for natural conversational speech synthesis (Sol Voice Profile)
- * Converts abbreviations, numbered lists, formulas, and symbols into warm, natural spoken English
+ * Converts abbreviations, numbered lists, formulas, units, and symbols into warm, natural spoken English
  */
 export function cleanTextForSpeech(raw: string): string {
   if (!raw) return '';
@@ -29,8 +29,8 @@ export function cleanTextForSpeech(raw: string): string {
     .replace(/\betc\.,?\s*/gi, 'and so on, ')
     .replace(/\bvs\.\s*/gi, 'versus ')
     .replace(/\bvs\b/gi, 'versus')
-    .replace(/\bw\/\s*/gi, 'with ')
     .replace(/\bw\/o\s*/gi, 'without ')
+    .replace(/\bw\/\s*/gi, 'with ')
     .replace(/\bdept\.\s*/gi, 'department ')
     .replace(/\bcalc\.\s*/gi, 'calculation ')
     .replace(/\bapprox\.\s*/gi, 'approximately ')
@@ -38,6 +38,34 @@ export function cleanTextForSpeech(raw: string): string {
     .replace(/\bpg\.\s*(\d+)/gi, 'page $1')
     .replace(/\bp\.\s*(\d+)/gi, 'page $1')
     .replace(/\bno\.\s*(\d+)/gi, 'number $1')
+    // Big-O and exponents / chemical formulas -> natural speech
+    .replace(/\bO\(1\)/g, 'Big O of 1')
+    .replace(/\bO\(n\)/gi, 'Big O of n')
+    .replace(/\bO\(log\s*n\)/gi, 'Big O of log n')
+    .replace(/\bO\(n\s*log\s*n\)/gi, 'Big O of n log n')
+    .replace(/\bO\(n(?:\^2|²)\)/gi, 'Big O of n squared')
+    .replace(/\bO\(n(?:\^3|³)\)/gi, 'Big O of n cubed')
+    .replace(/([a-zA-Z0-9])\^2\b|([a-zA-Z0-9])²/g, '$1$2 squared')
+    .replace(/([a-zA-Z0-9])\^3\b|([a-zA-Z0-9])³/g, '$1$2 cubed')
+    .replace(/\bH2O\b|\bH₂O\b/g, 'H 2 O')
+    .replace(/\bCO2\b|\bCO₂\b/g, 'C O 2')
+    .replace(/\bO2\b|\bO₂\b/g, 'O 2')
+    // Preserve technical slash terms & scientific units before handling generic slashes
+    .replace(/\bTCP\/IP\b/gi, 'T C P I P')
+    .replace(/\bI\/O\b/g, 'input output')
+    .replace(/\bCI\/CD\b/gi, 'C I C D')
+    .replace(/\bUI\/UX\b/gi, 'U I U X')
+    .replace(/\bAC\/DC\b/gi, 'A C D C')
+    .replace(/\bm\/s(?:\^2|²)\b/g, 'meters per second squared')
+    .replace(/\bm\/s\b/g, 'meters per second')
+    .replace(/\bkm\/h\b/g, 'kilometers per hour')
+    .replace(/\b1\/2\b/g, 'one half')
+    .replace(/\b1\/3\b/g, 'one third')
+    .replace(/\b1\/4\b/g, 'one quarter')
+    .replace(/\b3\/4\b/g, 'three quarters')
+    .replace(/\band\/or\b/gi, 'and or')
+    // Only turn slash between two lowercase/alphabetic words into " or "
+    .replace(/\b([a-zA-Z]{2,})\s*\/\s*([a-zA-Z]{2,})\b/g, '$1 or $2')
     // Mathematical / logical symbols -> spoken phrases
     .replace(/\s*&\s*/g, ' and ')
     .replace(/\s*\+\s*/g, ' plus ')
@@ -45,7 +73,6 @@ export function cleanTextForSpeech(raw: string): string {
     .replace(/\s*≠\s*/g, ' does not equal ')
     .replace(/\s*≈\s*/g, ' is approximately ')
     .replace(/\s*%\s*/g, ' percent ')
-    .replace(/\s*\/\s*/g, ' or ')
     .replace(/\s*→\s*/g, ', which leads to ')
     .replace(/\s*<=\s*|\s*≤\s*/g, ' is less than or equal to ')
     .replace(/\s*>=\s*|\s*≥\s*/g, ' is greater than or equal to ')
@@ -81,7 +108,9 @@ export function getSlideKeyTakeawayText(slide: SlideAnalysis): string {
 
 /**
  * Splits a paragraph into natural sentence-level thought units so Sol speaks
- * with calm, measured human breathing pauses between sentences.
+ * with calm, measured human breathing pauses between sentences, and splits
+ * overly long sentences (>160 chars) at natural clause boundaries so Chrome's
+ * cloud neural voice never stalls mid-sentence.
  */
 function splitIntoConversationalSentences(text: string): string[] {
   if (!text) return [];
@@ -89,7 +118,26 @@ function splitIntoConversationalSentences(text: string): string[] {
     .split(/(?<=[.!?])\s+/)
     .map(s => s.trim())
     .filter(s => s.length > 0);
-  return rawSentences.length > 0 ? rawSentences : [text];
+
+  const chunks: string[] = [];
+  for (const sentence of rawSentences) {
+    if (sentence.length <= 165) {
+      chunks.push(sentence);
+    } else {
+      // Split long sentences at natural conversational clause transitions
+      const clauseParts = sentence
+        .split(/(?<=,)\s+(?=(?:which|where|while|whereas|meaning|because|so that|allowing|ensuring|making|and|but)\b)/i)
+        .map(p => p.trim())
+        .filter(p => p.length > 0);
+      if (clauseParts.length > 1) {
+        chunks.push(...clauseParts);
+      } else {
+        chunks.push(sentence);
+      }
+    }
+  }
+
+  return chunks.length > 0 ? chunks : [text];
 }
 
 /**
@@ -112,7 +160,7 @@ export function getSlideAudioSpeechSegments(
 
   segments.push({
     text: announcement,
-    pauseAfterMs: 380
+    pauseAfterMs: 360
   });
 
   // 2. Sentence-by-sentence delivery for natural human cadence (Sol style)
@@ -121,7 +169,7 @@ export function getSlideAudioSpeechSegments(
     const isLast = idx === sentences.length - 1;
     segments.push({
       text: sentence,
-      pauseAfterMs: isLast ? 750 : 420
+      pauseAfterMs: isLast ? 650 : 380
     });
   });
 
@@ -251,7 +299,7 @@ export function generateSlideWhatsAppText(
     text += `🎯 *Likely Exam Question:*\n*Q:* ${slide.activeRecallPrompt.question}\n*A:* ${slide.activeRecallPrompt.answer}\n\n`;
   }
 
-  text += `📖 _Study full slides, AI breakdowns & practice quizzes on AcademicPrep:_\nhttps://academicprep.app/university`;
+  text += `📖 _Study full slides, AI breakdowns & practice quizzes on AcademicPrep:_\nhttps://academicprep.com/university`;
   return text;
 }
 
@@ -284,7 +332,7 @@ export function generateDeckWhatsAppText(pkg: CompleteSlideStudyPackage): string
   text += `\n`;
 
   text += `📊 _${pkg.totalSlides} Slides Analyzed • Plain-English Study Studio_\n`;
-  text += `🔗 _Study free with interactive quizzes & flashcards:_\nhttps://academicprep.app/university`;
+  text += `🔗 _Study free with interactive quizzes & flashcards:_\nhttps://academicprep.com/university`;
   return text;
 }
 
@@ -301,7 +349,7 @@ export function getSlideAudioScript(
 }
 
 /**
- * Client-side Canvas generator to download a clean Apple-style 1-Page Summary Card as PNG
+ * Client-side Canvas generator to download a clean Minimalist Neutral 1-Page Summary Card as PNG
  */
 export function generateSummaryCardPngBlob(pkg: CompleteSlideStudyPackage): Promise<Blob | null> {
   return new Promise((resolve) => {
@@ -319,38 +367,65 @@ export function generateSummaryCardPngBlob(pkg: CompleteSlideStudyPackage): Prom
       return;
     }
 
-    // 1. Background
+    // Helper for rounded rectangles
+    const drawRoundedCard = (x: number, y: number, w: number, h: number, r: number, fill: string, stroke?: string) => {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+      ctx.fillStyle = fill;
+      ctx.fill();
+      if (stroke) {
+        ctx.strokeStyle = stroke;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+    };
+
+    // 1. Pure White Minimalist Canvas Background
     ctx.fillStyle = '#FFFFFF';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Subtle outer border
-    ctx.strokeStyle = '#E2E8F0';
-    ctx.lineWidth = 16;
-    ctx.strokeRect(8, 8, canvas.width - 16, canvas.height - 16);
+    // Subtle neutral outer frame
+    ctx.strokeStyle = '#E5E5E5';
+    ctx.lineWidth = 12;
+    ctx.strokeRect(6, 6, canvas.width - 12, canvas.height - 12);
 
-    // 2. Header Top Banner (Slate 900)
-    ctx.fillStyle = '#0F172A';
-    ctx.fillRect(16, 16, canvas.width - 32, 180);
+    // 2. Minimalist Neutral Header Banner
+    drawRoundedCard(40, 40, canvas.width - 80, 175, 20, '#FAFAFA', '#E5E5E5');
+
+    // Brand Badge inside Header
+    drawRoundedCard(72, 68, 44, 44, 10, '#2563EB');
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif';
+    ctx.fillText('AP', 80, 98);
 
     // Top Brand Subtitle
-    ctx.font = 'bold 20px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
-    ctx.fillStyle = '#94A3B8';
-    ctx.fillText('ACADEMICPREP • GHANA TERTIARY REVISION CO-PILOT', 60, 65);
+    ctx.font = 'bold 18px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
+    ctx.fillStyle = '#525252';
+    ctx.fillText('ACADEMICPREP.COM • UNIVERSITY REVISION SHEET', 132, 96);
 
     // Deck Title
-    ctx.font = 'bold 44px -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif';
-    ctx.fillStyle = '#FFFFFF';
-    const cleanTitle = pkg.deckTitle.length > 40 ? pkg.deckTitle.substring(0, 38) + '...' : pkg.deckTitle;
-    ctx.fillText(cleanTitle, 60, 125);
+    ctx.font = 'bold 38px -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif';
+    ctx.fillStyle = '#171717';
+    const cleanTitle = pkg.deckTitle.length > 44 ? pkg.deckTitle.substring(0, 42) + '...' : pkg.deckTitle;
+    ctx.fillText(cleanTitle, 72, 152);
 
-    // Metadata pill
-    ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
-    ctx.fillStyle = '#38BDF8';
-    ctx.fillText(`${pkg.courseCode || 'COURSE'} • 1-PAGE HIGH-YIELD CHEAT SHEET • ${pkg.totalSlides} SLIDES`, 60, 165);
+    // Course Metadata
+    ctx.font = '600 19px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
+    ctx.fillStyle = '#525252';
+    ctx.fillText(`${pkg.courseCode || 'UNIVERSITY COURSE'}  •  ${pkg.totalSlides} SLIDES ANALYZED  •  KEY TAKEAWAYS`, 72, 188);
 
-    let yOffset = 240;
+    let yOffset = 265;
 
-    const wrapText = (text: string, x: number, y: number, maxWidth: number, lineHeight: number, maxLines = 4) => {
+    const wrapText = (text: string, x: number, y: number, maxWidth: number, lineHeight: number, maxLines = 2) => {
       const words = text.split(' ');
       let line = '';
       let linesDrawn = 0;
@@ -358,109 +433,103 @@ export function generateSummaryCardPngBlob(pkg: CompleteSlideStudyPackage): Prom
         const testLine = line + words[n] + ' ';
         const metrics = ctx.measureText(testLine);
         if (metrics.width > maxWidth && n > 0) {
-          ctx.fillText(line, x, y);
+          ctx.fillText(line.trim(), x, y);
           line = words[n] + ' ';
           y += lineHeight;
           linesDrawn++;
           if (linesDrawn >= maxLines - 1 && n < words.length - 1) {
-            ctx.fillText(line.trim() + '...', x, y);
+            let remaining = line + words.slice(n + 1).join(' ');
+            while (ctx.measureText(remaining + '...').width > maxWidth && remaining.length > 0) {
+              remaining = remaining.slice(0, -1).trim();
+            }
+            ctx.fillText(remaining + (remaining.length < (line + words.slice(n + 1).join(' ')).length ? '...' : ''), x, y);
             return y + lineHeight;
           }
         } else {
           line = testLine;
         }
       }
-      ctx.fillText(line, x, y);
+      ctx.fillText(line.trim(), x, y);
       return y + lineHeight;
     };
 
     // SECTION 1: MUST-MEMORIZE PRINCIPLES
-    ctx.fillStyle = '#1E293B';
-    ctx.font = 'bold 26px -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif';
-    ctx.fillText('📌 MUST-MEMORIZE PRINCIPLES', 60, yOffset);
-    yOffset += 40;
+    ctx.fillStyle = '#171717';
+    ctx.font = 'bold 23px -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif';
+    ctx.fillText('KEY TAKEAWAYS & CORE PRINCIPLES', 56, yOffset);
+    yOffset += 24;
 
     const theorems = pkg.cramSheetSummary.mustMemorizeTheorems.slice(0, 4);
-    ctx.font = '22px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
     theorems.forEach((t, i) => {
-      ctx.fillStyle = '#F8FAFC';
-      ctx.fillRect(60, yOffset - 25, canvas.width - 120, 68);
-      ctx.strokeStyle = '#E2E8F0';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(60, yOffset - 25, canvas.width - 120, 68);
+      drawRoundedCard(56, yOffset, canvas.width - 112, 86, 16, '#FAFAFA', '#E5E5E5');
+      drawRoundedCard(76, yOffset + 21, 36, 36, 9, '#171717');
 
-      ctx.fillStyle = '#0F172A';
-      ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
-      ctx.fillText(`${i + 1}.`, 80, yOffset + 16);
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 18px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
+      ctx.fillText(`${i + 1}`, 89, yOffset + 45);
 
-      ctx.fillStyle = '#334155';
-      ctx.font = '20px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
-      const truncated = t.length > 90 ? t.substring(0, 88) + '...' : t;
-      ctx.fillText(truncated, 115, yOffset + 16);
-      yOffset += 82;
+      ctx.fillStyle = '#262626';
+      ctx.font = '19px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
+      wrapText(t, 128, yOffset + 36, canvas.width - 210, 26, 2);
+      yOffset += 100;
     });
 
-    yOffset += 30;
+    yOffset += 22;
 
-    // SECTION 2: ESSENTIAL FORMULAS & RULES
+    // SECTION 2: ESSENTIAL FORMULAS & DEFINITIONS
     if (pkg.cramSheetSummary.formulasToRecite && pkg.cramSheetSummary.formulasToRecite.length > 0) {
-      ctx.fillStyle = '#1E293B';
-      ctx.font = 'bold 26px -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif';
-      ctx.fillText('📐 ESSENTIAL FORMULAS & DEFINITIONS', 60, yOffset);
-      yOffset += 40;
+      ctx.fillStyle = '#171717';
+      ctx.font = 'bold 23px -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif';
+      ctx.fillText('ESSENTIAL FORMULAS & DEFINITIONS', 56, yOffset);
+      yOffset += 24;
 
       const formulas = pkg.cramSheetSummary.formulasToRecite.slice(0, 4);
-      formulas.forEach((f) => {
-        ctx.fillStyle = '#EFF6FF';
-        ctx.fillRect(60, yOffset - 22, canvas.width - 120, 56);
-        ctx.strokeStyle = '#BFDBFE';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(60, yOffset - 22, canvas.width - 120, 56);
+      formulas.forEach((f, i) => {
+        drawRoundedCard(56, yOffset, canvas.width - 112, 68, 14, '#FAFAFA', '#E5E5E5');
+        drawRoundedCard(76, yOffset + 16, 36, 36, 9, '#171717');
 
-        ctx.fillStyle = '#1E40AF';
-        ctx.font = 'bold 20px monospace, -apple-system, sans-serif';
-        const truncated = f.length > 70 ? f.substring(0, 68) + '...' : f;
-        ctx.fillText(truncated, 85, yOffset + 13);
-        yOffset += 68;
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 16px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
+        ctx.fillText(`F${i + 1}`, 84, yOffset + 40);
+
+        ctx.fillStyle = '#171717';
+        ctx.font = '600 19px monospace, -apple-system, sans-serif';
+        wrapText(f, 128, yOffset + 40, canvas.width - 210, 24, 1);
+        yOffset += 80;
       });
-      yOffset += 30;
+      yOffset += 22;
     }
 
     // SECTION 3: TOP EXAMINER QUESTIONS
-    ctx.fillStyle = '#1E293B';
-    ctx.font = 'bold 26px -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif';
-    ctx.fillText('🎯 TOP EXAM QUESTIONS TO MASTER', 60, yOffset);
-    yOffset += 40;
+    ctx.fillStyle = '#171717';
+    ctx.font = 'bold 23px -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif';
+    ctx.fillText('HIGH-FREQUENCY EXAM QUESTIONS', 56, yOffset);
+    yOffset += 24;
 
     const questions = pkg.cramSheetSummary.highFrequencyQuestions.slice(0, 3);
     questions.forEach((q, i) => {
-      ctx.fillStyle = '#FFFBEB';
-      ctx.fillRect(60, yOffset - 22, canvas.width - 120, 75);
-      ctx.strokeStyle = '#FDE68A';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(60, yOffset - 22, canvas.width - 120, 75);
+      drawRoundedCard(56, yOffset, canvas.width - 112, 86, 16, '#FAFAFA', '#E5E5E5');
+      drawRoundedCard(76, yOffset + 21, 36, 36, 9, '#171717');
 
-      ctx.fillStyle = '#92400E';
-      ctx.font = 'bold 20px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
-      ctx.fillText(`Q${i + 1}:`, 80, yOffset + 14);
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 16px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
+      ctx.fillText(`Q${i + 1}`, 83, yOffset + 45);
 
-      ctx.fillStyle = '#78350F';
+      ctx.fillStyle = '#262626';
       ctx.font = '19px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
-      wrapText(q, 125, yOffset + 14, canvas.width - 270, 26, 2);
-      yOffset += 92;
+      wrapText(q, 128, yOffset + 36, canvas.width - 210, 26, 2);
+      yOffset += 100;
     });
 
     // FOOTER
-    ctx.fillStyle = '#0F172A';
-    ctx.fillRect(16, canvas.height - 100, canvas.width - 32, 84);
-
-    ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
+    drawRoundedCard(40, canvas.height - 96, canvas.width - 80, 64, 14, '#171717');
+    ctx.font = 'bold 20px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
     ctx.fillStyle = '#FFFFFF';
-    ctx.fillText('AcademicPrep.app', 60, canvas.height - 50);
+    ctx.fillText('academicprep.com', 72, canvas.height - 57);
 
-    ctx.font = '18px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
-    ctx.fillStyle = '#94A3B8';
-    ctx.fillText('Interactive Lecture Slides • AI Studio Breakdown • Spaced Repetition Timetables', 300, canvas.height - 50);
+    ctx.font = '17px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
+    ctx.fillStyle = '#A3A3A3';
+    ctx.fillText('University Lecture Slides  •  Sol Audio Cram  •  Plain-English Revision Studio', 290, canvas.height - 57);
 
     canvas.toBlob((blob) => {
       resolve(blob);

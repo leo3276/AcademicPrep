@@ -1442,6 +1442,8 @@ export default function UniversityPortalPage() {
   const segmentTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const currentSegmentIdxRef = useRef<number>(0);
   const currentSegmentsListRef = useRef<AudioSpeechSegment[]>([]);
+  const isPausedBetweenSegmentsRef = useRef<boolean>(false);
+  const playSegmentFnRef = useRef<((segIdx: number) => void) | null>(null);
 
   // Bind Sol voice on mount & when voices load
   useEffect(() => {
@@ -1464,6 +1466,8 @@ export default function UniversityPortalPage() {
       clearTimeout(segmentTimeoutRef.current);
       segmentTimeoutRef.current = null;
     }
+    isPausedBetweenSegmentsRef.current = false;
+    playSegmentFnRef.current = null;
     if (typeof window !== 'undefined' && window.speechSynthesis) {
       window.speechSynthesis.cancel();
     }
@@ -1501,6 +1505,7 @@ export default function UniversityPortalPage() {
       clearTimeout(segmentTimeoutRef.current);
       segmentTimeoutRef.current = null;
     }
+    isPausedBetweenSegmentsRef.current = false;
     window.speechSynthesis.cancel();
 
     const targetSlide = activePackage.slides[index];
@@ -1526,49 +1531,6 @@ export default function UniversityPortalPage() {
       silentAudioRef.current.play().catch(() => {});
     }
 
-    // Configure Native Lock-Screen MediaSession Controls (iOS / Android / Desktop)
-    if (typeof window !== 'undefined' && 'mediaSession' in navigator) {
-      navigator.mediaSession.metadata = new MediaMetadata({
-        title: `Slide ${targetSlide.pageNumber}: ${targetSlide.title || 'Key Takeaway'}`,
-        artist: 'Sol • AcademicPrep Audio Cram',
-        album: activePackage.deckTitle || 'University Slides',
-        artwork: [
-          { src: '/icon.png', sizes: '192x192', type: 'image/png' },
-          { src: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png' }
-        ]
-      });
-      navigator.mediaSession.playbackState = 'playing';
-
-      try {
-        navigator.mediaSession.setActionHandler('play', () => {
-          if (typeof window !== 'undefined' && window.speechSynthesis) {
-            window.speechSynthesis.resume();
-            setIsAudioPaused(false);
-            if (silentAudioRef.current) silentAudioRef.current.play().catch(() => {});
-          }
-        });
-        navigator.mediaSession.setActionHandler('pause', () => {
-          if (typeof window !== 'undefined' && window.speechSynthesis) {
-            window.speechSynthesis.pause();
-            setIsAudioPaused(true);
-            if (silentAudioRef.current) silentAudioRef.current.pause();
-          }
-        });
-        navigator.mediaSession.setActionHandler('nexttrack', () => {
-          if (index < activePackage.slides.length - 1) {
-            speakSlideByIndex(index + 1, speed, autoAdvance, true);
-          }
-        });
-        navigator.mediaSession.setActionHandler('previoustrack', () => {
-          if (index > 0) {
-            speakSlideByIndex(index - 1, speed, autoAdvance, false);
-          }
-        });
-      } catch (e) {
-        // Safe catch for unsupported media session handlers
-      }
-    }
-
     const segments = getSlideAudioSpeechSegments(targetSlide, activePackage.deckTitle, isAdvancing);
     currentSegmentsListRef.current = segments;
     currentSegmentIdxRef.current = 0;
@@ -1576,10 +1538,7 @@ export default function UniversityPortalPage() {
     const playSegment = (segIdx: number) => {
       if (segIdx >= segments.length) {
         if (autoAdvance && index < activePackage.slides.length - 1) {
-          // Sol-style natural thinking pause before progressing to the next slide
-          segmentTimeoutRef.current = setTimeout(() => {
-            speakSlideByIndex(index + 1, speed, autoAdvance, true);
-          }, 750);
+          speakSlideByIndex(index + 1, speed, autoAdvance, true);
         } else {
           setIsAudioPlaying(false);
           setIsAudioPaused(false);
@@ -1591,6 +1550,7 @@ export default function UniversityPortalPage() {
       }
 
       currentSegmentIdxRef.current = segIdx;
+      isPausedBetweenSegmentsRef.current = false;
       const seg = segments[segIdx];
       const utterance = new SpeechSynthesisUtterance(seg.text);
 
@@ -1612,12 +1572,17 @@ export default function UniversityPortalPage() {
 
       utterance.onend = () => {
         segmentTimeoutRef.current = setTimeout(() => {
+          segmentTimeoutRef.current = null;
           playSegment(segIdx + 1);
-        }, seg.pauseAfterMs || 420);
+        }, seg.pauseAfterMs || 380);
       };
 
-      utterance.onerror = (e) => {
-        console.warn('Speech synthesis note:', e);
+      utterance.onerror = (e: SpeechSynthesisErrorEvent) => {
+        // Ignore expected cancel/interrupted events when user skips slides or stops playback
+        if (e.error === 'canceled' || e.error === 'interrupted') {
+          return;
+        }
+        console.warn('Speech synthesis note:', e.error);
         setIsAudioPlaying(false);
         setIsAudioPaused(false);
       };
@@ -1625,6 +1590,65 @@ export default function UniversityPortalPage() {
       speechUtteranceRef.current = utterance;
       window.speechSynthesis.speak(utterance);
     };
+
+    playSegmentFnRef.current = playSegment;
+
+    // Configure Native Lock-Screen MediaSession Controls (iOS / Android / Desktop)
+    if (typeof window !== 'undefined' && 'mediaSession' in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: `Slide ${targetSlide.pageNumber}: ${targetSlide.title || 'Key Takeaway'}`,
+        artist: 'Sol • AcademicPrep Audio Cram',
+        album: activePackage.deckTitle || 'University Slides',
+        artwork: [
+          { src: '/icon.png', sizes: '192x192', type: 'image/png' },
+          { src: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png' }
+        ]
+      });
+      navigator.mediaSession.playbackState = 'playing';
+
+      try {
+        navigator.mediaSession.setActionHandler('play', () => {
+          if (typeof window !== 'undefined' && window.speechSynthesis) {
+            setIsAudioPaused(false);
+            if (silentAudioRef.current) silentAudioRef.current.play().catch(() => {});
+            navigator.mediaSession.playbackState = 'playing';
+            if (isPausedBetweenSegmentsRef.current && playSegmentFnRef.current) {
+              isPausedBetweenSegmentsRef.current = false;
+              playSegmentFnRef.current(currentSegmentIdxRef.current);
+            } else {
+              window.speechSynthesis.resume();
+            }
+          }
+        });
+        navigator.mediaSession.setActionHandler('pause', () => {
+          if (typeof window !== 'undefined' && window.speechSynthesis) {
+            if (segmentTimeoutRef.current) {
+              clearTimeout(segmentTimeoutRef.current);
+              segmentTimeoutRef.current = null;
+              currentSegmentIdxRef.current += 1;
+              isPausedBetweenSegmentsRef.current = true;
+            } else {
+              window.speechSynthesis.pause();
+            }
+            setIsAudioPaused(true);
+            if (silentAudioRef.current) silentAudioRef.current.pause();
+            navigator.mediaSession.playbackState = 'paused';
+          }
+        });
+        navigator.mediaSession.setActionHandler('nexttrack', () => {
+          if (index < activePackage.slides.length - 1) {
+            speakSlideByIndex(index + 1, speed, autoAdvance, true);
+          }
+        });
+        navigator.mediaSession.setActionHandler('previoustrack', () => {
+          if (index > 0) {
+            speakSlideByIndex(index - 1, speed, autoAdvance, false);
+          }
+        });
+      } catch (e) {
+        // Safe catch for unsupported media session handlers
+      }
+    }
 
     playSegment(0);
   }, [activePackage, audioSpeed, audioAutoAdvance, stopAudioCram]);
@@ -1640,12 +1664,24 @@ export default function UniversityPortalPage() {
     if (!isAudioPlaying) {
       speakSlideByIndex(selectedSlideIndex);
     } else if (isAudioPaused) {
-      window.speechSynthesis.resume();
       setIsAudioPaused(false);
       if (silentAudioRef.current) silentAudioRef.current.play().catch(() => {});
       if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
+      if (isPausedBetweenSegmentsRef.current && playSegmentFnRef.current) {
+        isPausedBetweenSegmentsRef.current = false;
+        playSegmentFnRef.current(currentSegmentIdxRef.current);
+      } else {
+        window.speechSynthesis.resume();
+      }
     } else {
-      window.speechSynthesis.pause();
+      if (segmentTimeoutRef.current) {
+        clearTimeout(segmentTimeoutRef.current);
+        segmentTimeoutRef.current = null;
+        currentSegmentIdxRef.current += 1;
+        isPausedBetweenSegmentsRef.current = true;
+      } else {
+        window.speechSynthesis.pause();
+      }
       setIsAudioPaused(true);
       if (silentAudioRef.current) silentAudioRef.current.pause();
       if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
