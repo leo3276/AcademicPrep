@@ -1202,7 +1202,8 @@ export default function UniversityPortalPage() {
   // Keyboard navigation for flipping slides (Left / Right Arrow)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (activeTab !== 'slides' || !activePackage) return;
+      if (!activePackage) return;
+      if (activeTab !== 'slides' && activeTab !== 'quiz') return;
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
 
       if (activeTab === 'quiz') {
@@ -2020,7 +2021,7 @@ export default function UniversityPortalPage() {
           </div>
 
           {/* Clean Segmented Tab Switcher */}
-          <div className="flex justify-center overflow-x-auto pb-1">
+          <div className="flex justify-center overflow-x-auto pb-1 no-scrollbar">
             <div className="inline-flex p-1 rounded-xl bg-neutral-100 border border-neutral-200/80 text-xs font-semibold">
               <button
                 onClick={() => setPortalMode('library')}
@@ -3063,7 +3064,7 @@ export default function UniversityPortalPage() {
           </div>
 
           {/* Minimal Navigation Tabs */}
-          <div className="flex items-center gap-6 border-b border-neutral-200 text-xs font-medium overflow-x-auto">
+          <div className="flex items-center gap-6 border-b border-neutral-200 text-xs font-medium overflow-x-auto no-scrollbar scroll-smooth">
             <button
               onClick={() => setActiveTab('slides')}
               className={`pb-3 border-b-2 transition shrink-0 ${
@@ -3255,10 +3256,40 @@ export default function UniversityPortalPage() {
                   <div className="space-y-1.5 pt-1 shrink-0">
                     <div className="flex items-center justify-between text-[11px] text-neutral-400 font-mono">
                       <span>QUICK JUMP</span>
-                      <span>{filteredSlides.length} slides</span>
+                      <div className="flex items-center gap-2">
+                        <span>{filteredSlides.length} slides</span>
+                        <div className="flex items-center gap-0.5">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const el = document.getElementById('quick-jump-container');
+                              el?.scrollBy({ left: -160, behavior: 'smooth' });
+                            }}
+                            className="p-0.5 rounded hover:bg-neutral-100 text-neutral-500 hover:text-neutral-900 transition cursor-pointer"
+                            title="Scroll slides left"
+                          >
+                            <ChevronLeft className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const el = document.getElementById('quick-jump-container');
+                              el?.scrollBy({ left: 160, behavior: 'smooth' });
+                            }}
+                            className="p-0.5 rounded hover:bg-neutral-100 text-neutral-500 hover:text-neutral-900 transition cursor-pointer"
+                            title="Scroll slides right"
+                          >
+                            <ChevronRight className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="flex items-center gap-1.5 overflow-x-auto py-1 scrollbar-thin">
+                    <div 
+                      id="quick-jump-container"
+                      className="flex items-center gap-1.5 overflow-x-auto py-1.5 no-scrollbar scroll-smooth"
+                      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                    >
                       {filteredSlides.map((slide, idx) => {
                         const isCurrent = selectedSlideIndex === idx;
                         const isMastered = masteredSlides[slide.pageNumber];
@@ -3298,21 +3329,21 @@ export default function UniversityPortalPage() {
                 {/* ─────────────────────────────────────────────────────────
                     RIGHT PANEL: THE SIMPLIFIED STUDENT BREAKDOWN (EQUAL HEIGHT WITH LEFT PANEL)
                 ───────────────────────────────────────────────────────── */}
-                <div 
-                  ref={breakdownScrollRef}
-                  className="lg:col-span-6 lg:h-[640px] border border-neutral-200 rounded-2xl p-5 sm:p-6 bg-white space-y-5 shadow-xs lg:overflow-y-auto overflow-x-hidden scrollbar-thin"
-                >
+                <div className="lg:col-span-6 lg:h-[640px] border border-neutral-200 rounded-2xl bg-white shadow-xs flex flex-col overflow-hidden">
                   {currentSlide ? (
                     <>
-                      {/* Slide Title & Status Bar */}
-                      <div className="space-y-3 border-b border-neutral-100 pb-4">
-                        <div className="flex flex-wrap items-center justify-between gap-2">
-                          <div className="flex items-center gap-2 text-xs font-mono text-neutral-400 whitespace-nowrap">
-                            <span className="font-semibold text-neutral-500">SLIDE {String(currentSlide.pageNumber).padStart(2, '0')}</span>
+                      {/* Pinned Header: Title & Actions (Never scroll away, never clip, no scrollbar collision) */}
+                      <div className="p-4 sm:p-5 border-b border-neutral-100 bg-white shrink-0 space-y-3">
+                        {/* Row 1: Slide metadata & Done toggle */}
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-2 text-xs font-mono text-neutral-400">
+                            <span className="font-semibold text-neutral-700 bg-neutral-100 px-2 py-0.5 rounded">
+                              SLIDE {String(currentSlide.pageNumber).padStart(2, '0')}
+                            </span>
                             {currentSlide.categoryTag && (
                               <>
                                 <span>•</span>
-                                <span className="text-neutral-600 font-medium">
+                                <span className="text-neutral-600 font-medium truncate max-w-[160px]">
                                   {currentSlide.categoryTag}
                                 </span>
                               </>
@@ -3320,87 +3351,96 @@ export default function UniversityPortalPage() {
                             {currentSlide.aiSimplified && (
                               <>
                                 <span>•</span>
-                                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-700 font-medium inline-flex items-center gap-1">
-                                  <BookOpen className="w-2.5 h-2.5 text-neutral-700" />
+                                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-medium inline-flex items-center gap-1 border border-blue-100">
+                                  <BookOpen className="w-2.5 h-2.5 text-blue-700" />
                                   <span>Simplified</span>
                                 </span>
                               </>
                             )}
                           </div>
 
-                          <div className="flex flex-wrap items-center gap-1.5">
-                            {!currentSlide.isIntroLogistics && (
-                              <button
-                                onClick={() => handleDeepAiSimplify(currentSlide)}
-                                disabled={isAiSimplifying}
-                                className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition border flex items-center gap-1.5 whitespace-nowrap ${
-                                  currentSlide.aiSimplified
-                                    ? 'bg-neutral-50 text-neutral-900 border-neutral-300 font-semibold hover:bg-neutral-100'
-                                    : 'bg-white text-neutral-700 border-neutral-200 hover:bg-neutral-50 shadow-2xs'
-                                }`}
-                                title="Generate plain-English breakdown for this slide"
-                              >
-                                <BookOpen className={`w-3.5 h-3.5 text-neutral-700 shrink-0 ${isAiSimplifying && aiSimplifyingSlideNum === currentSlide.pageNumber ? 'animate-spin' : ''}`} />
-                                <span>
-                                  {isAiSimplifying && aiSimplifyingSlideNum === currentSlide.pageNumber
-                                    ? 'Simplifying...'
-                                    : currentSlide.aiSimplified
-                                    ? 'Re-Simplify'
-                                    : 'Simplify'}
-                                </span>
-                              </button>
-                            )}
-
-                            {/* Feature 4: Audio Cram Button */}
-                            <button
-                              onClick={() => speakSlideByIndex(selectedSlideIndex)}
-                              className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition border flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
-                                isAudioPlaying && audioSlideIndex === selectedSlideIndex
-                                  ? 'bg-blue-600 text-white border-blue-600 font-semibold shadow-xs'
-                                  : 'bg-white text-neutral-700 border-neutral-200 hover:bg-neutral-50 shadow-2xs'
-                              }`}
-                              title="Listen to plain-English voice summary for this slide"
-                            >
-                              <Headphones className={`w-3.5 h-3.5 shrink-0 ${isAudioPlaying && audioSlideIndex === selectedSlideIndex ? 'animate-pulse text-white' : 'text-blue-600'}`} />
-                              <span>{isAudioPlaying && audioSlideIndex === selectedSlideIndex ? 'Playing' : 'Audio Cram'}</span>
-                            </button>
-
-                            {/* Feature 2: WhatsApp Share Button */}
-                            <button
-                              onClick={() => handleShareSlideWhatsApp(currentSlide)}
-                              className="px-2.5 py-1.5 rounded-lg text-xs font-medium transition border border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50 flex items-center gap-1.5 cursor-pointer shadow-2xs whitespace-nowrap"
-                              title="Share slide breakdown to WhatsApp class group"
-                            >
-                              <MessageCircle className="w-3.5 h-3.5 text-neutral-700 shrink-0" />
-                              <span className="hidden sm:inline">WhatsApp</span>
-                            </button>
-
-                            <button
-                              onClick={() => handleCopySlideWhatsApp(currentSlide)}
-                              className="p-1.5 rounded-lg border border-neutral-200 text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50 transition cursor-pointer"
-                              title="Copy formatted WhatsApp text to clipboard"
-                            >
-                              <Copy className="w-3.5 h-3.5" />
-                            </button>
-
-                            <button
-                              onClick={() => toggleMastered(currentSlide.pageNumber)}
-                              className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition border flex items-center gap-1.5 whitespace-nowrap ${
-                                masteredSlides[currentSlide.pageNumber]
-                                  ? 'bg-blue-600 text-white border-blue-600'
-                                  : 'bg-white text-neutral-700 border-neutral-200 hover:bg-neutral-50'
-                              }`}
-                            >
-                              <Check className="w-3.5 h-3.5 shrink-0" />
-                              <span>{masteredSlides[currentSlide.pageNumber] ? 'Done' : 'Mark Done'}</span>
-                            </button>
-                          </div>
+                          <button
+                            onClick={() => toggleMastered(currentSlide.pageNumber)}
+                            className={`px-2.5 py-1 rounded-lg text-xs font-medium transition border flex items-center gap-1.5 shrink-0 ${
+                              masteredSlides[currentSlide.pageNumber]
+                                ? 'bg-blue-600 text-white border-blue-600 shadow-2xs font-semibold'
+                                : 'bg-white text-neutral-600 border-neutral-200 hover:bg-neutral-50'
+                            }`}
+                          >
+                            <Check className="w-3.5 h-3.5 shrink-0" />
+                            <span>{masteredSlides[currentSlide.pageNumber] ? 'Mastered' : 'Mark Done'}</span>
+                          </button>
                         </div>
 
-                        <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-900 leading-snug">
+                        {/* Row 2: Slide Title */}
+                        <h3 className="text-lg sm:text-xl font-bold tracking-tight text-neutral-900 leading-snug line-clamp-2">
                           {currentSlide.title}
                         </h3>
+
+                        {/* Row 3: Action Toolbar - perfectly spaced with room to breathe */}
+                        <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                          {!currentSlide.isIntroLogistics && (
+                            <button
+                              onClick={() => handleDeepAiSimplify(currentSlide)}
+                              disabled={isAiSimplifying}
+                              className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition border flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
+                                currentSlide.aiSimplified
+                                  ? 'bg-neutral-50 text-neutral-900 border-neutral-300 font-semibold hover:bg-neutral-100'
+                                  : 'bg-white text-neutral-700 border-neutral-200 hover:bg-neutral-50 shadow-2xs'
+                              }`}
+                              title="Generate plain-English breakdown for this slide"
+                            >
+                              <BookOpen className={`w-3.5 h-3.5 text-neutral-700 shrink-0 ${isAiSimplifying && aiSimplifyingSlideNum === currentSlide.pageNumber ? 'animate-spin' : ''}`} />
+                              <span className="whitespace-nowrap">
+                                {isAiSimplifying && aiSimplifyingSlideNum === currentSlide.pageNumber
+                                  ? 'Simplifying...'
+                                  : currentSlide.aiSimplified
+                                  ? 'Re-Simplify'
+                                  : 'Simplify'}
+                              </span>
+                            </button>
+                          )}
+
+                          {/* Feature 4: Audio Cram Button */}
+                          <button
+                            onClick={() => speakSlideByIndex(selectedSlideIndex)}
+                            className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition border flex items-center gap-1.5 cursor-pointer shrink-0 whitespace-nowrap ${
+                              isAudioPlaying && audioSlideIndex === selectedSlideIndex
+                                ? 'bg-blue-600 text-white border-blue-600 font-semibold shadow-xs'
+                                : 'bg-white text-neutral-700 border-neutral-200 hover:bg-neutral-50 shadow-2xs'
+                            }`}
+                            title="Listen to plain-English voice summary for this slide"
+                          >
+                            <Headphones className={`w-3.5 h-3.5 shrink-0 ${isAudioPlaying && audioSlideIndex === selectedSlideIndex ? 'animate-pulse text-white' : 'text-blue-600'}`} />
+                            <span className="whitespace-nowrap">{isAudioPlaying && audioSlideIndex === selectedSlideIndex ? 'Playing' : 'Audio Cram'}</span>
+                          </button>
+
+                          {/* Feature 2: WhatsApp Share Button */}
+                          <button
+                            onClick={() => handleShareSlideWhatsApp(currentSlide)}
+                            className="px-2.5 py-1.5 rounded-lg text-xs font-medium transition border border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50 flex items-center gap-1.5 cursor-pointer shadow-2xs shrink-0 whitespace-nowrap"
+                            title="Share slide breakdown to WhatsApp class group"
+                          >
+                            <MessageCircle className="w-3.5 h-3.5 text-neutral-700 shrink-0" />
+                            <span className="whitespace-nowrap">WhatsApp</span>
+                          </button>
+
+                          <button
+                            onClick={() => handleCopySlideWhatsApp(currentSlide)}
+                            className="p-1.5 rounded-lg border border-neutral-200 text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50 transition cursor-pointer shrink-0"
+                            title="Copy formatted WhatsApp text to clipboard"
+                          >
+                            <Copy className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
                       </div>
+
+                      {/* Scrollable Breakdown Content Body (strict 0 horizontal scroll) */}
+                      <div 
+                        ref={breakdownScrollRef}
+                        className="flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-5 space-y-4 max-w-full break-words scrollbar-thin"
+                        style={{ overflowX: 'hidden' }}
+                      >
 
                       {/* Link to 10-Slide Conjunction Module */}
                       {currentSlideGroup && (
@@ -3512,7 +3552,7 @@ export default function UniversityPortalPage() {
                           <div className="space-y-3">
                             {currentSlide.decodedFormulas.map((df, i) => (
                               <div key={i} className="border border-neutral-200 rounded-xl p-4 bg-neutral-50/50 space-y-2.5 text-xs">
-                                <div className="font-mono text-sm bg-white px-3 py-1.5 rounded-lg border border-neutral-200 font-bold text-neutral-900 w-fit">
+                                <div className="font-mono text-sm bg-white px-3 py-1.5 rounded-lg border border-neutral-200 font-bold text-neutral-900 max-w-full break-words">
                                   {df.formula}
                                 </div>
                                 <p className="text-neutral-600 leading-relaxed text-xs">
@@ -3539,7 +3579,7 @@ export default function UniversityPortalPage() {
                           </span>
                           <div className="space-y-1.5">
                             {currentSlide.keyFormulas.map((f, i) => (
-                              <div key={i} className="font-mono text-xs bg-white px-2.5 py-1.5 rounded border border-neutral-200 text-neutral-900 font-semibold overflow-x-auto">
+                              <div key={i} className="font-mono text-xs bg-white px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 font-semibold break-words whitespace-pre-wrap leading-relaxed">
                                 {f}
                               </div>
                             ))}
@@ -3742,7 +3782,8 @@ export default function UniversityPortalPage() {
                           <ChevronRight className="w-4 h-4" />
                         </button>
                       </div>
-                    </>
+                    </div>
+                  </>
                   ) : (
                     <div className="p-12 text-center text-xs text-neutral-400">
                       Select a slide from the index.
@@ -4431,7 +4472,10 @@ export default function UniversityPortalPage() {
                     </div>
 
                     {/* Horizontal Question Jump Pills */}
-                    <div className="flex items-center gap-1.5 overflow-x-auto py-1 scrollbar-thin">
+                    <div 
+                      className="flex items-center gap-1.5 overflow-x-auto py-1.5 no-scrollbar scroll-smooth"
+                      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                    >
                       {visibleQuizQuestions.map((q, idx) => {
                         const isCurrent = idx === safeQuizIndex;
                         const choice = quizAnswers[q.originalIndex];
