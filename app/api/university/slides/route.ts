@@ -9,11 +9,13 @@ import {
   validateCollaboratorToken 
 } from '@/lib/universitySlideStore';
 import { uploadToR2, isR2Configured, R2_PUBLIC_URL } from '@/lib/r2Client';
+import { supabaseAdmin, isSupabaseConfigured } from '@/lib/supabaseClient';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads', 'university');
+const DOCUMENTS_BUCKET = 'documents';
 
 /**
  * Check if request has either valid Admin session or valid Collaborator Token
@@ -164,18 +166,56 @@ export async function POST(req: NextRequest) {
           fileUrl = uploadedResult.startsWith('http') ? uploadedResult : `${R2_PUBLIC_URL}/${uploadedResult}`;
         }
       } catch (r2Err) {
-        console.warn('R2 upload failed, using local/storage fallback:', r2Err);
+        console.warn('R2 upload failed, falling back to Supabase Storage:', r2Err);
       }
     }
 
-    // 2. Local filesystem upload fallback
-    if (!fileUrl) {
+    // 2. Supabase Storage (100% Free Forever, safe on Vercel)
+    if (!fileUrl && isSupabaseConfigured) {
+      try {
+        const storagePath = `university/${uniqueFileName}`;
+        const { data: uploadData, error: uploadError } = await supabaseAdmin.storage
+          .from(DOCUMENTS_BUCKET)
+          .upload(storagePath, buffer, {
+            contentType: 'application/pdf',
+            upsert: true,
+          });
+
+        if (!uploadError && uploadData) {
+          const { data: publicUrlData } = supabaseAdmin.storage
+            .from(DOCUMENTS_BUCKET)
+            .getPublicUrl(storagePath);
+
+          if (publicUrlData?.publicUrl) {
+            fileUrl = publicUrlData.publicUrl;
+          }
+        } else if (uploadError) {
+          console.warn('[universitySlideUpload] Supabase storage upload note:', uploadError);
+        }
+      } catch (supErr) {
+        console.warn('[universitySlideUpload] Supabase upload failed:', supErr);
+      }
+    }
+
+    // 3. Local filesystem write fallback (safe for local development, ignored on read-only serverless/Vercel)
+    try {
       if (!fs.existsSync(UPLOAD_DIR)) {
         fs.mkdirSync(UPLOAD_DIR, { recursive: true });
       }
       const localFilePath = path.join(UPLOAD_DIR, uniqueFileName);
       fs.writeFileSync(localFilePath, buffer);
-      fileUrl = `/uploads/university/${uniqueFileName}`;
+      if (!fileUrl) {
+        fileUrl = `/uploads/university/${uniqueFileName}`;
+      }
+    } catch {
+      // Ignored: On Vercel filesystem is read-only, Supabase CDN is used
+    }
+
+    if (!fileUrl) {
+      return NextResponse.json(
+        { success: false, error: 'Failed to upload slide to cloud storage. Please verify Supabase credentials.' },
+        { status: 500 }
+      );
     }
 
     const created = await addUniversitySlide({

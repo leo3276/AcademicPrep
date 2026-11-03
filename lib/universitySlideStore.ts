@@ -227,8 +227,22 @@ export async function addUniversitySlide(slide: Omit<UniversitySlide, 'id' | 'up
  */
 export async function deleteUniversitySlide(id: string): Promise<boolean> {
   const slides = await getStoredUniversitySlides();
+  const target = slides.find(s => s.id === id);
   const filtered = slides.filter(s => s.id !== id);
   if (filtered.length === slides.length) return false;
   await saveStoredUniversitySlides(filtered);
+
+  // If slide was stored on Supabase Storage, delete the file to save free tier storage
+  if (target?.fileUrl && target.fileUrl.includes('supabase.co')) {
+    try {
+      const match = target.fileUrl.match(/documents\/(.+)$/);
+      if (match && match[1]) {
+        await supabaseAdmin.storage.from(DOCUMENTS_BUCKET).remove([decodeURIComponent(match[1])]);
+      }
+    } catch (err) {
+      console.warn('[universitySlideStore] Supabase slide file cleanup note:', err);
+    }
+  }
+
   return true;
 }
