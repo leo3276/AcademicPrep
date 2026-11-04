@@ -213,6 +213,8 @@ export const SHS_PICTURE_CRAFTING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-pc-t1-elements-of-art-in-picture-making",
+    "youtubeUrl": "https://www.youtube.com/watch?v=vvTO9JhY4qA",
+    "youtubeId": "vvTO9JhY4qA",
     "subjectId": "picture-crafting",
     "level": "SHS 1",
     "term": 1,
@@ -419,6 +421,8 @@ export const SHS_PICTURE_CRAFTING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-pc-t1-colour-fundamentals-theory",
+    "youtubeUrl": "https://www.youtube.com/watch?v=YeI6Wqn4I78",
+    "youtubeId": "YeI6Wqn4I78",
     "subjectId": "picture-crafting",
     "level": "SHS 1",
     "term": 1,
@@ -638,6 +642,8 @@ export const SHS_PICTURE_CRAFTING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-pc-t2-texture-techniques",
+    "youtubeUrl": "https://www.youtube.com/watch?v=JRgD8K-xdd4",
+    "youtubeId": "JRgD8K-xdd4",
     "subjectId": "picture-crafting",
     "level": "SHS 1",
     "term": 2,
@@ -844,6 +850,8 @@ export const SHS_PICTURE_CRAFTING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-pc-t3-collage-assemblage-found-materials",
+    "youtubeUrl": "https://www.youtube.com/watch?v=pTmXPVS_zZ8",
+    "youtubeId": "pTmXPVS_zZ8",
     "subjectId": "picture-crafting",
     "level": "SHS 1",
     "term": 3,
@@ -1062,6 +1070,8 @@ export const SHS_PICTURE_CRAFTING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-pc-t1-composition-layout",
+    "youtubeUrl": "https://www.youtube.com/watch?v=oAPXep8wPts",
+    "youtubeId": "oAPXep8wPts",
     "subjectId": "picture-crafting",
     "level": "SHS 2",
     "term": 1,
@@ -1278,6 +1288,8 @@ export const SHS_PICTURE_CRAFTING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-pc-t1-water-based-media-painting",
+    "youtubeUrl": "https://www.youtube.com/watch?v=JyxnlVCEoyU",
+    "youtubeId": "JyxnlVCEoyU",
     "subjectId": "picture-crafting",
     "level": "SHS 2",
     "term": 1,
@@ -1496,6 +1508,8 @@ export const SHS_PICTURE_CRAFTING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-pc-t2-oil-acrylic-encaustic",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Y-h45Sq9Nts",
+    "youtubeId": "Y-h45Sq9Nts",
     "subjectId": "picture-crafting",
     "level": "SHS 2",
     "term": 2,
@@ -1714,6 +1728,8 @@ export const SHS_PICTURE_CRAFTING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-pc-t2-masking-stencil-spray",
+    "youtubeUrl": "https://www.youtube.com/watch?v=_5Y8YfCBfio",
+    "youtubeId": "_5Y8YfCBfio",
     "subjectId": "picture-crafting",
     "level": "SHS 2",
     "term": 2,
@@ -1912,6 +1928,8 @@ export const SHS_PICTURE_CRAFTING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-pc-t3-motif-development-ghanaian-sources",
+    "youtubeUrl": "https://www.youtube.com/watch?v=u3Q5tZ1Wz5w",
+    "youtubeId": "u3Q5tZ1Wz5w",
     "subjectId": "picture-crafting",
     "level": "SHS 2",
     "term": 3,
@@ -2109,6 +2127,8 @@ export const SHS_PICTURE_CRAFTING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-pc-t1-figure-and-portrait-painting",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3sI5SiJdanM",
+    "youtubeId": "3sI5SiJdanM",
     "subjectId": "picture-crafting",
     "level": "SHS 3",
     "term": 1,
@@ -2307,6 +2327,8 @@ export const SHS_PICTURE_CRAFTING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-pc-t2-narrative-thematic-picture-making",
+    "youtubeUrl": "https://www.youtube.com/watch?v=8q4PzMw9Bgg",
+    "youtubeId": "8q4PzMw9Bgg",
     "subjectId": "picture-crafting",
     "level": "SHS 3",
     "term": 2,
@@ -2513,6 +2535,8 @@ export const SHS_PICTURE_CRAFTING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-pc-t2-framing-mounting-finishing",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Xn1bzUmuVwM",
+    "youtubeId": "Xn1bzUmuVwM",
     "subjectId": "picture-crafting",
     "level": "SHS 3",
     "term": 2,
@@ -2719,6 +2743,8 @@ export const SHS_PICTURE_CRAFTING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-pc-t3-craft-business-exhibition",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Q2oamlFoqcM",
+    "youtubeId": "Q2oamlFoqcM",
     "subjectId": "picture-crafting",
     "level": "SHS 3",
     "term": 3,

@@ -1300,15 +1300,49 @@ function synthesizeDynamicSlidePedagogy(
     .slice(0, 4)
     .map(t => `${t.label}: ${simplifyAcademicPhrasing(t.explanation.split(/(?<=[.?!])\s+/)[0])}`);
 
-  // 6. Comprehension Practice Question & Explanatory Answer
+  // 6. Crisp Flashcard Question & Answer (1 Main Card Per Page)
   const firstTakeaway = detailedTakeaways[0];
   const secondTakeaway = detailedTakeaways[1];
-  const examQuestion = secondTakeaway
-    ? `In your own words, explain how "${firstTakeaway.label}" and "${secondTakeaway.label}" work within ${cleanTitle}, and why the distinction matters.`
-    : `In simple terms, what is the main idea behind "${firstTakeaway.label}" in ${cleanTitle}, and how does it work in practice?`;
-  const examAnswer = secondTakeaway
-    ? `1. ${firstTakeaway.label}: ${firstTakeaway.explanation}\n\n2. ${secondTakeaway.label}: ${secondTakeaway.explanation}`
-    : `${firstTakeaway.label}: ${firstTakeaway.explanation}\n\n${whyItMatters}`;
+
+  let examQuestion = '';
+  let examAnswer = '';
+
+  if (definitions.length > 0 && definitions[0].term && definitions[0].definition) {
+    examQuestion = `What is "${definitions[0].term}" (${cleanTitle})?`;
+    examAnswer = `${definitions[0].definition}${
+      secondTakeaway ? `\n\n• ${secondTakeaway.label}: ${secondTakeaway.explanation}` : ''
+    }`;
+  } else if (formulas.length > 0) {
+    examQuestion = `What is the formula for ${cleanTitle}, and what does it calculate?`;
+    examAnswer = `Formula: ${formulas[0]}\n\n${coreRule}`;
+  } else if (
+    /^(types|functions|characteristics|features|principles|factors|steps|stages|components|advantages|disadvantages|differences|objectives|roles|elements|methods|categories|causes|effects|importance|benefits)\b/i.test(
+      cleanTitle
+    )
+  ) {
+    examQuestion = `What are the main ${cleanTitle.toLowerCase()}?`;
+    examAnswer = detailedTakeaways
+      .slice(0, 4)
+      .map((t, idx) => `${idx + 1}. ${t.label}: ${t.explanation}`)
+      .join('\n\n');
+  } else if (cleanTitle.endsWith('?')) {
+    examQuestion = cleanTitle;
+    examAnswer = `${coreRule}\n\n• ${firstTakeaway.label}: ${firstTakeaway.explanation}`;
+  } else {
+    const qVariant = pageNum % 3;
+    if (qVariant === 0) {
+      examQuestion = `What is the main concept covered in "${cleanTitle}"?`;
+    } else if (qVariant === 1) {
+      examQuestion = `Explain "${firstTakeaway.label}" in the context of ${cleanTitle}.`;
+    } else {
+      examQuestion = secondTakeaway
+        ? `How do "${firstTakeaway.label}" and "${secondTakeaway.label}" work in ${cleanTitle}?`
+        : `What is "${firstTakeaway.label}" and why is it important in ${cleanTitle}?`;
+    }
+    examAnswer = secondTakeaway
+      ? `• ${firstTakeaway.label}: ${firstTakeaway.explanation}\n\n• ${secondTakeaway.label}: ${secondTakeaway.explanation}`
+      : `${firstTakeaway.label}: ${firstTakeaway.explanation}\n\n${coreRule}`;
+  }
 
   return {
     title: cleanTitle,

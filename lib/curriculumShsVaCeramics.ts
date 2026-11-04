@@ -7,6 +7,8 @@ import { CurriculumTopic } from './types';
 export const SHS_CERAMICS_TOPICS: CurriculumTopic[] = [
   {
     "id": "shs1-ce-t1-clay-types-properties-testing",
+    "youtubeUrl": "https://www.youtube.com/watch?v=8RjgZgtBrsw",
+    "youtubeId": "8RjgZgtBrsw",
     "subjectId": "ceramics",
     "level": "SHS 1",
     "term": 1,
@@ -210,6 +212,8 @@ export const SHS_CERAMICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-ce-t1-hand-building-pinch-coil-slab",
+    "youtubeUrl": "https://www.youtube.com/watch?v=-mlyN7Bj1iM",
+    "youtubeId": "-mlyN7Bj1iM",
     "subjectId": "ceramics",
     "level": "SHS 1",
     "term": 1,
@@ -413,6 +417,8 @@ export const SHS_CERAMICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-ce-t2-surface-decoration",
+    "youtubeUrl": "https://www.youtube.com/watch?v=QpXuZPYYCKw",
+    "youtubeId": "QpXuZPYYCKw",
     "subjectId": "ceramics",
     "level": "SHS 1",
     "term": 2,
@@ -617,6 +623,8 @@ export const SHS_CERAMICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-ce-t3-drying-firing-safety",
+    "youtubeUrl": "https://www.youtube.com/watch?v=xG41Ub3BZ_M",
+    "youtubeId": "xG41Ub3BZ_M",
     "subjectId": "ceramics",
     "level": "SHS 1",
     "term": 3,
@@ -823,6 +831,8 @@ export const SHS_CERAMICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-ce-t1-wheel-throwing",
+    "youtubeUrl": "https://www.youtube.com/watch?v=dmgMKbHyDFw",
+    "youtubeId": "dmgMKbHyDFw",
     "subjectId": "ceramics",
     "level": "SHS 2",
     "term": 1,
@@ -1041,6 +1051,8 @@ export const SHS_CERAMICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-ce-t1-modelling-sculptural-ceramics",
+    "youtubeUrl": "https://www.youtube.com/watch?v=L-DvYrO8Aus",
+    "youtubeId": "L-DvYrO8Aus",
     "subjectId": "ceramics",
     "level": "SHS 2",
     "term": 1,
@@ -1257,6 +1269,8 @@ export const SHS_CERAMICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-ce-t2-slip-casting-plaster-moulds",
+    "youtubeUrl": "https://www.youtube.com/watch?v=oSC5MtwqquM",
+    "youtubeId": "oSC5MtwqquM",
     "subjectId": "ceramics",
     "level": "SHS 2",
     "term": 2,
@@ -1478,6 +1492,8 @@ export const SHS_CERAMICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-ce-t2-glazing-techniques",
+    "youtubeUrl": "https://www.youtube.com/watch?v=vhvKVBM_nVk",
+    "youtubeId": "vhvKVBM_nVk",
     "subjectId": "ceramics",
     "level": "SHS 2",
     "term": 2,
@@ -1694,6 +1710,8 @@ export const SHS_CERAMICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-ce-t3-alternative-firing-raku-pit",
+    "youtubeUrl": "https://www.youtube.com/watch?v=dKcrPhypg7s",
+    "youtubeId": "dKcrPhypg7s",
     "subjectId": "ceramics",
     "level": "SHS 2",
     "term": 3,
@@ -1910,6 +1928,8 @@ export const SHS_CERAMICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-ce-t1-kilns-clay-bodies-firing-schedules",
+    "youtubeUrl": "https://www.youtube.com/watch?v=wzPgY6wlWKI",
+    "youtubeId": "wzPgY6wlWKI",
     "subjectId": "ceramics",
     "level": "SHS 3",
     "term": 1,
@@ -2126,6 +2146,8 @@ export const SHS_CERAMICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-ce-t2-functional-ceramics-tableware",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7jV15aPEsOI",
+    "youtubeId": "7jV15aPEsOI",
     "subjectId": "ceramics",
     "level": "SHS 3",
     "term": 2,
@@ -2338,6 +2360,8 @@ export const SHS_CERAMICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-ce-t2-ceramics-portfolio-craft-business",
+    "youtubeUrl": "https://www.youtube.com/watch?v=POf0xtoSKeg",
+    "youtubeId": "POf0xtoSKeg",
     "subjectId": "ceramics",
     "level": "SHS 3",
     "term": 2,
@@ -2549,6 +2573,8 @@ export const SHS_CERAMICS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-ce-t3-wassce-ceramics-project",
+    "youtubeUrl": "https://www.youtube.com/watch?v=wckFUD44Jo8",
+    "youtubeId": "wckFUD44Jo8",
     "subjectId": "ceramics",
     "level": "SHS 3",
     "term": 3,

@@ -7,6 +7,8 @@ import { CurriculumTopic } from './types';
 export const SHS_TEXTILES_TOPICS: CurriculumTopic[] = [
   {
     "id": "shs1-tx-t1-fibres-identification",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ht_fAOpGnvk",
+    "youtubeId": "ht_fAOpGnvk",
     "subjectId": "textiles",
     "level": "SHS 1",
     "term": 1,
@@ -211,6 +213,8 @@ export const SHS_TEXTILES_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-tx-t1-yarn-fabric-construction",
+    "youtubeUrl": "https://www.youtube.com/watch?v=F-0HgOcMsGc",
+    "youtubeId": "F-0HgOcMsGc",
     "subjectId": "textiles",
     "level": "SHS 1",
     "term": 1,
@@ -414,6 +418,8 @@ export const SHS_TEXTILES_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-tx-t2-hand-sewing-garment-basics",
+    "youtubeUrl": "https://www.youtube.com/watch?v=EGfRN0Jue2M",
+    "youtubeId": "EGfRN0Jue2M",
     "subjectId": "textiles",
     "level": "SHS 1",
     "term": 2,
@@ -619,6 +625,8 @@ export const SHS_TEXTILES_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-tx-t2-batik-wax-resist-dyeing",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Nd0e2YH-zeo",
+    "youtubeId": "Nd0e2YH-zeo",
     "subjectId": "textiles",
     "level": "SHS 1",
     "term": 2,
@@ -824,6 +832,8 @@ export const SHS_TEXTILES_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-tx-t3-tie-dye-resist-methods",
+    "youtubeUrl": "https://www.youtube.com/watch?v=WvlIV7wtliA",
+    "youtubeId": "WvlIV7wtliA",
     "subjectId": "textiles",
     "level": "SHS 1",
     "term": 3,
@@ -1029,6 +1039,8 @@ export const SHS_TEXTILES_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-tx-t1-adinkra-stamping-symbolism",
+    "youtubeUrl": "https://www.youtube.com/watch?v=UtYemJ5gNMU",
+    "youtubeId": "UtYemJ5gNMU",
     "subjectId": "textiles",
     "level": "SHS 2",
     "term": 1,
@@ -1235,6 +1247,8 @@ export const SHS_TEXTILES_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-tx-t1-kente-narrow-loom-weaving",
+    "youtubeUrl": "https://www.youtube.com/watch?v=x3aFqXSK8vw",
+    "youtubeId": "x3aFqXSK8vw",
     "subjectId": "textiles",
     "level": "SHS 2",
     "term": 1,
@@ -1441,6 +1455,8 @@ export const SHS_TEXTILES_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-tx-t2-fabric-printing-repeat-design",
+    "youtubeUrl": "https://www.youtube.com/watch?v=biiIvz1RsFg",
+    "youtubeId": "biiIvz1RsFg",
     "subjectId": "textiles",
     "level": "SHS 2",
     "term": 2,
@@ -1647,6 +1663,8 @@ export const SHS_TEXTILES_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-tx-t2-garment-construction-pattern-drafting",
+    "youtubeUrl": "https://www.youtube.com/watch?v=49pnGcEVaig",
+    "youtubeId": "49pnGcEVaig",
     "subjectId": "textiles",
     "level": "SHS 2",
     "term": 2,
@@ -1849,6 +1867,8 @@ export const SHS_TEXTILES_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-tx-t3-beadwork-accessories",
+    "youtubeUrl": "https://www.youtube.com/watch?v=buEKXpjV04A",
+    "youtubeId": "buEKXpjV04A",
     "subjectId": "textiles",
     "level": "SHS 2",
     "term": 3,
@@ -2052,6 +2072,8 @@ export const SHS_TEXTILES_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-tx-t1-embroidery-stitches",
+    "youtubeUrl": "https://www.youtube.com/watch?v=EU5GR4EE4XY",
+    "youtubeId": "EU5GR4EE4XY",
     "subjectId": "textiles",
     "level": "SHS 3",
     "term": 1,
@@ -2255,6 +2277,8 @@ export const SHS_TEXTILES_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-tx-t2-fabric-manipulation-fashion-illustration",
+    "youtubeUrl": "https://www.youtube.com/watch?v=wKAj7ipSgDA",
+    "youtubeId": "wKAj7ipSgDA",
     "subjectId": "textiles",
     "level": "SHS 3",
     "term": 2,
@@ -2459,6 +2483,8 @@ export const SHS_TEXTILES_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-tx-t2-textile-care-conservation",
+    "youtubeUrl": "https://www.youtube.com/watch?v=OzcTxPynqB4",
+    "youtubeId": "OzcTxPynqB4",
     "subjectId": "textiles",
     "level": "SHS 3",
     "term": 2,
@@ -2663,6 +2689,8 @@ export const SHS_TEXTILES_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-tx-t3-wassce-textiles-project",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ejjK4ZbKJz4",
+    "youtubeId": "ejjK4ZbKJz4",
     "subjectId": "textiles",
     "level": "SHS 3",
     "term": 3,

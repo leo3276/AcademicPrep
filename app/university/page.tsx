@@ -83,6 +83,8 @@ import {
   UNIVERSITY_LEVELS, 
   UNIVERSITY_SEMESTERS 
 } from '@/lib/universitySlideTypes';
+import LeoFlashcardStudio from '@/components/LeoFlashcardStudio';
+import { syncPackageToLeoDeck } from '@/lib/leoFlashcardStore';
 
 // ─────────────────────────────────────────────────────────────
 // Lightweight IndexedDB Storage for PDF Binaries
@@ -922,6 +924,7 @@ export default function UniversityPortalPage() {
       setSelectedSlideIndex(0);
       if (typeof window !== 'undefined') {
         localStorage.setItem('academicprep_active_package', JSON.stringify(pkg));
+        syncPackageToLeoDeck(pkg);
       }
 
       if (autoStartAudio) {
@@ -1074,9 +1077,10 @@ export default function UniversityPortalPage() {
         setCompletedSessions({});
         setActiveTab('slides');
 
-        // Persist locally
+        // Persist locally & auto-generate 1-card-per-page Flashcard Deck in localStorage
         if (typeof window !== 'undefined') {
           localStorage.setItem('academicprep_active_package', JSON.stringify(data.package));
+          syncPackageToLeoDeck(data.package);
         }
         if (currentBuffer) {
           savePdfToIDB(data.package.id, currentBuffer);
@@ -1871,10 +1875,7 @@ export default function UniversityPortalPage() {
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-medium">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  Open Beta Access
-                </span>
+                
                 <Link
                   href="/login?redirect=/university"
                   className="text-blue-600 hover:text-blue-700 font-medium text-xs px-2.5 py-1 rounded-md bg-blue-50 hover:bg-blue-100 border border-blue-200 transition"
@@ -1934,32 +1935,6 @@ export default function UniversityPortalPage() {
       ───────────────────────────────────────────────────────────── */}
       {!activePackage && (
         <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 space-y-8">
-          {/* Open Beta Preview Notice */}
-          {!dismissedBetaNotice && (
-            <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 sm:p-3.5 text-xs flex items-center justify-between gap-3 shadow-2xs">
-              <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-6 h-6 rounded-lg bg-neutral-900 text-white flex items-center justify-center shrink-0 font-bold">
-                  <GraduationCap className="w-3.5 h-3.5" />
-                </div>
-                <div className="min-w-0">
-                  <p className="font-semibold text-neutral-900">
-                    University Portal • Open Access Beta
-                  </p>
-                  <p className="text-[11px] text-neutral-600">
-                    All Ghanaian tertiary course slides, AI studio breakdowns, flashcards, and practice quizzes are currently open to all visitors while under active development. No account required.
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={() => setDismissedBetaNotice(true)}
-                className="p-1 rounded-md text-neutral-400 hover:text-neutral-600 transition cursor-pointer shrink-0"
-                title="Dismiss beta banner"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          )}
-
           {/* Urgent Milestone Notification Banner */}
           {urgentDeadlines.length > 0 && !dismissedUrgentBanner && (
             <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 sm:p-3.5 text-xs flex items-center justify-between gap-3 shadow-2xs">
@@ -3076,6 +3051,28 @@ export default function UniversityPortalPage() {
               Slide Studio ({filteredSlides.length})
             </button>
             <button
+              onClick={() => setActiveTab('flashcards')}
+              className={`pb-3 border-b-2 transition shrink-0 flex items-center gap-1.5 ${
+                activeTab === 'flashcards' 
+                  ? 'border-blue-600 text-blue-600 font-semibold' 
+                  : 'border-transparent text-neutral-500 hover:text-neutral-900'
+              }`}
+            >
+              <Layers className="w-3.5 h-3.5" />
+              <span>Flashcard Deck ({activePackage.slides.length})</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('quiz')}
+              className={`pb-3 border-b-2 transition shrink-0 flex items-center gap-1.5 ${
+                activeTab === 'quiz' 
+                  ? 'border-blue-600 text-blue-600 font-semibold' 
+                  : 'border-transparent text-neutral-500 hover:text-neutral-900'
+              }`}
+            >
+              <HelpCircle className="w-3.5 h-3.5" />
+              <span>Practice Quiz ({quizQuestions.length})</span>
+            </button>
+            <button
               onClick={() => setActiveTab('digest')}
               className={`pb-3 border-b-2 transition shrink-0 ${
                 activeTab === 'digest' 
@@ -3104,27 +3101,6 @@ export default function UniversityPortalPage() {
               }`}
             >
               1-Page Cheat Sheet
-            </button>
-            <button
-              onClick={() => setActiveTab('flashcards')}
-              className={`pb-3 border-b-2 transition shrink-0 ${
-                activeTab === 'flashcards' 
-                  ? 'border-blue-600 text-blue-600 font-semibold' 
-                  : 'border-transparent text-neutral-500 hover:text-neutral-900'
-              }`}
-            >
-              Active Recall Drill
-            </button>
-            <button
-              onClick={() => setActiveTab('quiz')}
-              className={`pb-3 border-b-2 transition shrink-0 flex items-center gap-1.5 ${
-                activeTab === 'quiz' 
-                  ? 'border-blue-600 text-blue-600 font-semibold' 
-                  : 'border-transparent text-neutral-500 hover:text-neutral-900'
-              }`}
-            >
-              <HelpCircle className="w-3.5 h-3.5" />
-              <span>Practice Quiz ({quizQuestions.length})</span>
             </button>
           </div>
 
@@ -4233,84 +4209,19 @@ export default function UniversityPortalPage() {
           )}
 
           {/* ─────────────────────────────────────────────────────────────
-              TAB 4: ACTIVE RECALL DRILL (FLASHCARDS MODE)
+              TAB 4: FLASHCARD DECK STUDIO (LEO'S LEARNING TOOL ENGINE)
           ───────────────────────────────────────────────────────────── */}
           {activeTab === 'flashcards' && (
-            <div className="max-w-xl mx-auto space-y-6 pt-6">
-              {currentSlide && (
-                <div className="border border-neutral-200 rounded-2xl p-8 space-y-6 text-center bg-white shadow-xs">
-                  <div className="flex items-center justify-between text-[11px] font-mono text-neutral-400 border-b border-neutral-100 pb-3">
-                    <span>Card {selectedSlideIndex + 1} of {filteredSlides.length}</span>
-                    <span>Slide {String(currentSlide.pageNumber).padStart(2, '0')}</span>
-                    <span>{masteredSlides[currentSlide.pageNumber] ? 'Mastered' : 'Unmastered'}</span>
-                  </div>
-
-                  <div className="py-6 space-y-3">
-                    <p className="text-xs text-neutral-400 font-mono uppercase">{currentSlide.title}</p>
-                    <h4 className="text-lg font-semibold text-neutral-900 leading-snug">
-                      {currentSlide.activeRecallPrompt.question}
-                    </h4>
-                  </div>
-
-                  {revealedAnswers[currentSlide.pageNumber] ? (
-                    <div className="pt-4 border-t border-neutral-100 space-y-4 animate-in fade-in">
-                      <div className="p-4 rounded-xl bg-neutral-50 border border-neutral-100 text-left text-xs text-neutral-800 leading-relaxed">
-                        <span className="font-mono text-[10px] uppercase text-neutral-400 block mb-1">Answer</span>
-                        {currentSlide.activeRecallPrompt.answer}
-                      </div>
-
-                      <div className="flex items-center justify-center gap-3">
-                        <button
-                          onClick={() => {
-                            toggleMastered(currentSlide.pageNumber);
-                            if (selectedSlideIndex < filteredSlides.length - 1) {
-                              setSelectedSlideIndex(prev => prev + 1);
-                            }
-                          }}
-                          className="px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium transition"
-                        >
-                          I Knew This
-                        </button>
-                        <button
-                          onClick={() => {
-                            if (selectedSlideIndex < filteredSlides.length - 1) {
-                              setSelectedSlideIndex(prev => prev + 1);
-                            }
-                          }}
-                          className="px-4 py-2 rounded-lg border border-neutral-200 hover:bg-neutral-50 text-neutral-700 text-xs transition"
-                        >
-                          Review Later
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() => setRevealedAnswers(prev => ({ ...prev, [currentSlide.pageNumber]: true }))}
-                      className="px-6 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium transition"
-                    >
-                      Reveal Answer
-                    </button>
-                  )}
-
-                  <div className="flex items-center justify-between text-xs text-neutral-500 pt-2 border-t border-neutral-100">
-                    <button
-                      disabled={selectedSlideIndex <= 0}
-                      onClick={() => setSelectedSlideIndex(prev => Math.max(0, prev - 1))}
-                      className="hover:text-neutral-900 disabled:opacity-30 transition flex items-center gap-1"
-                    >
-                      <ChevronLeft className="w-4 h-4" /> Previous
-                    </button>
-                    <button
-                      disabled={selectedSlideIndex >= filteredSlides.length - 1}
-                      onClick={() => setSelectedSlideIndex(prev => Math.min(filteredSlides.length - 1, prev + 1))}
-                      className="hover:text-neutral-900 disabled:opacity-30 transition flex items-center gap-1"
-                    >
-                      Next <ChevronRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
+            <LeoFlashcardStudio
+              activePackage={activePackage}
+              onJumpToSlidePage={(pageNum) => {
+                const idx = filteredSlides.findIndex(s => s.pageNumber === pageNum);
+                if (idx >= 0) {
+                  setSelectedSlideIndex(idx);
+                }
+                setActiveTab('slides');
+              }}
+            />
           )}
 
           {/* ─────────────────────────────────────────────────────────────

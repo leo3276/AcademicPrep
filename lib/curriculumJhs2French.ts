@@ -174,8 +174,8 @@ export const JHS2_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Décrire son établissement scolaire, nommer les matières enseignées, parler de son emploi du temps et exprimer ses goûts.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=26QPDBe-NB8",
-    "youtubeId": "26QPDBe-NB8",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Whz9G_JoWlE",
+    "youtubeId": "Whz9G_JoWlE",
     "keyNotes": "• Les Lieux et Bâtiments de l'École:\n  - la salle de classe (classroom), la bibliothèque (library), le laboratoire scientifique, la cour de récréation (playground), le bureau du directeur, le terrain de football, la cantine.\n• Les Matières Scolaires (School Subjects):\n  - le français, l'anglais, les mathématiques (les maths), les sciences intégrées, les études sociales, l'informatique, l'éducation religieuse et morale (ERM), la technologie professionnelle.\n• Exprimer ses Préférences Scolaires:\n  - aimer: \"J'aime les mathématiques.\"\n  - adorer: \"J'adore le français parce que c'est une langue internationale.\"\n  - préférer: \"Je préfère l'informatique aux études sociales.\"\n  - détester: \"Je déteste les devoirs difficiles.\"\n• Parler de son Emploi du Temps:\n  - \"Le lundi matin, nous avons deux heures de sciences.\"\n  - \"La récréation commence à dix heures et demie.\"",
     "examples": [
       {
@@ -369,8 +369,8 @@ export const JHS2_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Nommer diverses professions, maîtriser le féminin des noms de métiers et exprimer ses ambitions professionnelles avec 'vouloir devenir'.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=teu7BCZTgDs",
-    "youtubeId": "teu7BCZTgDs",
+    "youtubeUrl": "https://www.youtube.com/watch?v=vCAGpsqoR7I",
+    "youtubeId": "vCAGpsqoR7I",
     "keyNotes": "• Vocabulaire des Métiers et Professions:\n  - Santé: le médecin / le docteur, l'infirmier / l'infirmière, le pharmacien / la pharmacienne.\n  - Éducation: le professeur (l'enseignant / l'enseignante), le directeur.\n  - Droit & Sécurité: l'avocat / l'avocate, le juge, le policier / la policière, le soldat.\n  - Artisanat & Technique: le mécanicien, le menuisier (carpenter), le maçon, le tailleur / la couturière, l'électricien, le chauffeur.\n  - Technologie: l'ingénieur, l'informaticien / l'informaticienne.\n• Formation du Féminin des Noms de Métiers:\n  - Règle générale (+e): avocat -> avocate, enseignant -> enseignante.\n  - Terminaison en -er -> -ère: infirmier -> infirmière, cuisinier -> cuisinière, boulanger -> boulangère.\n  - Terminaison en -ien -> -ienne: pharmacien -> pharmacienne, informaticien -> informaticienne.\n  - Terminaison en -eur -> -euse: chanteur -> chanteuse, danseur -> danseuse.\n  - Terminaison en -teur -> -trice: agriculteur -> agricultrice, directeur -> directrice.\n• Exprimer ses Ambitions d'Avenir:\n  - \"À l'avenir, je voudrais devenir médecin pour soigner les malades au Ghana.\"",
     "examples": [
       {
@@ -409,8 +409,8 @@ export const JHS2_FRENCH_TOPICS: CurriculumTopic[] = [
     "description": "Nommer les parties du corps humain, exprimer des douleurs avec 'avoir mal à...', décrire des symptômes et donner des conseils de santé.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=5xuZxGirWQI",
-    "youtubeId": "5xuZxGirWQI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=psLHuVtJGf0",
+    "youtubeId": "psLHuVtJGf0",
     "keyNotes": "• Les Parties du Corps Humain (Parts of the Body):\n  - la tête (head), les yeux (eyes), le nez (nose), la bouche (mouth), les oreilles (ears), le cou (neck).\n  - le bras (arm), la main (hand), les doigts (fingers), la poitrine (chest), le ventre / l'estomac (belly/stomach).\n  - la jambe (leg), le genou (knee), le pied (foot), les orteils (toes).\n• Exprimer la Douleur: 'Avoir mal à...':\n  - au (+ masc. sing.): \"J'ai mal au ventre\", \"J'ai mal au dos\" (back), \"J'ai mal au pied\".\n  - à la (+ fém. sing.): \"J'ai mal à la tête\" (headache), \"J'ai mal à la gorge\" (sore throat).\n  - à l' (+ voyelle): \"J'ai mal à l'œil\" (eye), \"J'ai mal à l'oreille\" (ear).\n  - aux (+ pluriel): \"J'ai mal aux dents\" (toothache), \"J'ai mal aux yeux\".\n• Les Symptômes et Maladies Courantes:\n  - la fièvre (fever), le paludisme (malaria), le rhume (cold), la toux (cough), la diarrhée.\n  - \"J'ai de la fièvre et je tousse beaucoup.\"\n• Conseils du Médecin avec l'Impératif:\n  - \"Prenez vos comprimés trois fois par jour !\" (Take your pills 3 times daily).\n  - \"Buvez beaucoup d'eau propre et reposez-vous !\"",
     "examples": [
       {

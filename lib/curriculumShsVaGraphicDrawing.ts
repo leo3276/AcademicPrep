@@ -7,6 +7,8 @@ import { CurriculumTopic } from './types';
 export const SHS_GRAPHIC_DRAWING_TOPICS: CurriculumTopic[] = [
   {
     "id": "shs1-gd-t1-workroom-tools-drafting-equipment",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Pmj87veIVrc",
+    "youtubeId": "Pmj87veIVrc",
     "subjectId": "graphic-drawing",
     "level": "SHS 1",
     "term": 1,
@@ -210,6 +212,8 @@ export const SHS_GRAPHIC_DRAWING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-gd-t1-line-quality-mark-making",
+    "youtubeUrl": "https://www.youtube.com/watch?v=hbdiH-HZJJA",
+    "youtubeId": "hbdiH-HZJJA",
     "subjectId": "graphic-drawing",
     "level": "SHS 1",
     "term": 1,
@@ -413,6 +417,8 @@ export const SHS_GRAPHIC_DRAWING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-gd-t2-geometric-construction-patterns",
+    "youtubeUrl": "https://www.youtube.com/watch?v=U9Tn1aF8S18",
+    "youtubeId": "U9Tn1aF8S18",
     "subjectId": "graphic-drawing",
     "level": "SHS 1",
     "term": 2,
@@ -617,6 +623,8 @@ export const SHS_GRAPHIC_DRAWING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-gd-t3-two-point-perspective-form",
+    "youtubeUrl": "https://www.youtube.com/watch?v=nTV_fWs8QUU",
+    "youtubeId": "nTV_fWs8QUU",
     "subjectId": "graphic-drawing",
     "level": "SHS 1",
     "term": 3,
@@ -821,6 +829,8 @@ export const SHS_GRAPHIC_DRAWING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-gd-t1-freehand-observation-sketching",
+    "youtubeUrl": "https://www.youtube.com/watch?v=K9N0nYRPSl4",
+    "youtubeId": "K9N0nYRPSl4",
     "subjectId": "graphic-drawing",
     "level": "SHS 2",
     "term": 1,
@@ -1024,6 +1034,8 @@ export const SHS_GRAPHIC_DRAWING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-gd-t1-tonal-rendering-light-value",
+    "youtubeUrl": "https://www.youtube.com/watch?v=qNawqTqUrP0",
+    "youtubeId": "qNawqTqUrP0",
     "subjectId": "graphic-drawing",
     "level": "SHS 2",
     "term": 1,
@@ -1228,6 +1240,8 @@ export const SHS_GRAPHIC_DRAWING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-gd-t2-design-principles-composition",
+    "youtubeUrl": "https://www.youtube.com/watch?v=a5KYlHNKQB8",
+    "youtubeId": "a5KYlHNKQB8",
     "subjectId": "graphic-drawing",
     "level": "SHS 2",
     "term": 2,
@@ -1433,6 +1447,8 @@ export const SHS_GRAPHIC_DRAWING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-gd-t2-lettering-signage-graphic-design",
+    "youtubeUrl": "https://www.youtube.com/watch?v=SIBkz6TJH6A",
+    "youtubeId": "SIBkz6TJH6A",
     "subjectId": "graphic-drawing",
     "level": "SHS 2",
     "term": 2,
@@ -1638,6 +1654,8 @@ export const SHS_GRAPHIC_DRAWING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-gd-t1-human-proportion-figure-drawing",
+    "youtubeUrl": "https://www.youtube.com/watch?v=IH9hDNGcfBs",
+    "youtubeId": "IH9hDNGcfBs",
     "subjectId": "graphic-drawing",
     "level": "SHS 3",
     "term": 1,
@@ -1856,6 +1874,8 @@ export const SHS_GRAPHIC_DRAWING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-gd-t2-orthographic-isometric-drawing",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5eoC-lDdFes",
+    "youtubeId": "5eoC-lDdFes",
     "subjectId": "graphic-drawing",
     "level": "SHS 3",
     "term": 2,
@@ -2074,6 +2094,8 @@ export const SHS_GRAPHIC_DRAWING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-gd-t2-mixed-media-illustration-portfolio",
+    "youtubeUrl": "https://www.youtube.com/watch?v=G-znJ6b4ZyQ",
+    "youtubeId": "G-znJ6b4ZyQ",
     "subjectId": "graphic-drawing",
     "level": "SHS 3",
     "term": 2,
@@ -2292,6 +2314,8 @@ export const SHS_GRAPHIC_DRAWING_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-gd-t3-wassce-graphic-drawing-project",
+    "youtubeUrl": "https://www.youtube.com/watch?v=VSA-5yBkOMI",
+    "youtubeId": "VSA-5yBkOMI",
     "subjectId": "graphic-drawing",
     "level": "SHS 3",
     "term": 3,

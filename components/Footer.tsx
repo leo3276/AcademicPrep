@@ -50,9 +50,11 @@ export default function Footer() {
                   <span>Android App (APK)</span>
                 </Link>
               </li>
-              <li className="text-slate-400 flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
-                University & Tertiary (Coming)
+              <li>
+                <Link href="/university" className="text-slate-300 hover:text-white transition-colors flex items-center gap-1.5 font-medium">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                  University &amp; Tertiary (Live)
+                </Link>
               </li>
             </ul>
           </div>

@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { supabaseAdmin, isSupabaseConfigured } from './supabaseClient';
 
 export interface CourseRequest {
   id: string;
@@ -17,27 +18,70 @@ export interface CourseRequest {
 }
 
 const REQUESTS_FILE = path.join(process.cwd(), 'data', 'university_requests.json');
-
-function ensureDataDir(): void {
-  const dir = path.dirname(REQUESTS_FILE);
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
-}
+const REQUESTS_MANIFEST = 'university_requests_manifest.json';
+const DOCUMENTS_BUCKET = 'documents';
 
 export async function getStoredCourseRequests(): Promise<CourseRequest[]> {
-  try {
-    ensureDataDir();
-    if (!fs.existsSync(REQUESTS_FILE)) {
-      fs.writeFileSync(REQUESTS_FILE, JSON.stringify([], null, 2), 'utf8');
-      return [];
+  // 1. Primary on Cloud / Vercel: Supabase Storage
+  if (isSupabaseConfigured) {
+    try {
+      const { data: pubData } = supabaseAdmin.storage
+        .from(DOCUMENTS_BUCKET)
+        .getPublicUrl(REQUESTS_MANIFEST);
+
+      if (pubData?.publicUrl) {
+        const res = await fetch(`${pubData.publicUrl}?t=${Date.now()}`, { cache: 'no-store' });
+        if (res.ok) {
+          const parsed = await res.json();
+          if (Array.isArray(parsed)) return parsed;
+        }
+      }
+    } catch (err) {
+      console.warn('[universityRequestsStore] Supabase fetch note:', err);
     }
-    const raw = fs.readFileSync(REQUESTS_FILE, 'utf8');
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
+  }
+
+  // 2. Local fallback
+  try {
+    if (fs.existsSync(REQUESTS_FILE)) {
+      const raw = fs.readFileSync(REQUESTS_FILE, 'utf8');
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    }
   } catch (err) {
-    console.warn('[universityRequestsStore] Error reading requests:', err);
-    return [];
+    console.warn('[universityRequestsStore] Local read note:', err);
+  }
+
+  return [];
+}
+
+async function saveCourseRequests(requests: CourseRequest[]): Promise<void> {
+  const payload = JSON.stringify(requests, null, 2);
+
+  // 1. Safe local write (ignored on read-only Vercel serverless)
+  try {
+    const dir = path.dirname(REQUESTS_FILE);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    fs.writeFileSync(REQUESTS_FILE, payload, 'utf8');
+  } catch {
+    // Read-only filesystem on Vercel
+  }
+
+  // 2. Supabase Storage persistence
+  if (isSupabaseConfigured) {
+    try {
+      await supabaseAdmin.storage
+        .from(DOCUMENTS_BUCKET)
+        .upload(REQUESTS_MANIFEST, Buffer.from(payload), {
+          contentType: 'application/json',
+          upsert: true,
+          cacheControl: '0'
+        });
+    } catch (err) {
+      console.warn('[universityRequestsStore] Supabase save note:', err);
+    }
   }
 }
 
@@ -53,8 +97,7 @@ export async function addCourseRequest(
   };
 
   const updated = [newReq, ...existing];
-  ensureDataDir();
-  fs.writeFileSync(REQUESTS_FILE, JSON.stringify(updated, null, 2), 'utf8');
+  await saveCourseRequests(updated);
   return newReq;
 }
 
@@ -72,7 +115,6 @@ export async function updateCourseRequestStatus(
     ...(status === 'fulfilled' ? { fulfilledAt: new Date().toISOString() } : {}),
   };
 
-  ensureDataDir();
-  fs.writeFileSync(REQUESTS_FILE, JSON.stringify(existing, null, 2), 'utf8');
+  await saveCourseRequests(existing);
   return existing[index];
 }

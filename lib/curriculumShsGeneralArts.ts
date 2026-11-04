@@ -12,6 +12,8 @@ import { CurriculumTopic } from './types';
 export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   {
     "id": "shs-lit-topic-01",
+    "youtubeUrl": "https://www.youtube.com/watch?v=1vnnS3nvn0c",
+    "youtubeId": "1vnnS3nvn0c",
     "subjectId": "literature",
     "level": "SHS 1",
     "term": 1,
@@ -46,6 +48,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghanaian playwrights like Efua Sutherland (The Marriage of Anansewa) use oral storytelling drama to critique modern marriage traditions."
         }
       ],
+"commonMistakes":         [
+            "Calling any printed material literature and forgetting the imaginative, artistic use of language",
+            "Confusing a narrative voice with the author, so the narrator of a novel is treated as Achebe speaking",
+            "Listing genres without distinguishing features, which earns the name marks only and not the explanation marks",
+            "Retelling the story in an appreciation answer instead of naming the device and stating its effect",
+            "Writing drama as prose in an examination answer, ignoring speech headings and stage directions",
+            "Claiming poetry must rhyme, so free verse and blank verse are wrongly dismissed as not poetry"
+          ],
       "wassceExamTips": [
         "In Paper 1 (Objectives), questions testing literary appreciation always distinguish between tone, mood, and diction.",
         "Always quote or cite specific lines to support thematic claims in Section B essays."
@@ -56,6 +66,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Differentiate between subject matter and central theme in literary appreciation"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-lit-01-1",
+            "title": "Balancing a set-book list by genre: how much reading is literature really",
+            "problem": "A SHS 1 teacher lists 15 titles for the year: 6 prose works averaging 180 pages, 5 drama texts averaging 90 pages, and 4 poetry collections averaging 60 pages. Work out the number of titles, the page load of each genre, the total page load, the weekly reading rate for a 45-week year, and the share of the reading carried by prose. [20 marks]",
+            "stepByStepSolution": [
+              "Count the set list: 6 prose works, 5 drama texts and 4 poetry collections, so 6 plus 5 plus 4 = 15 titles in all. [3 marks]",
+              "Prose load: 6 times 180 = 1,080 pages of prose. [4 marks]",
+              "Drama load: 5 times 90 = 450 pages, and poetry load: 4 times 60 = 240 pages. [3 marks]",
+              "Whole reading load: 1,080 plus 450 plus 240 = 1,770 pages for the year. [4 marks]",
+              "Spread over a 45-week teaching year: 1,770 divided by 45 = 39.3 pages a week. [3 marks]",
+              "Prose dominates the year: 1,080 divided by 1,770 times 100 = 61 per cent of the pages, so the three genres do not demand equal reading work even though prose is only 6 of the 15 titles. [3 marks]"
+            ],
+            "keyTakeaway": "Literature is measured in pages and in marks: know which genre carries the load before you plan the year."
+          },
+          {
+            "id": "ex-lit-01-2",
+            "title": "Building a 25-mark answer on the meaning and genres of literature",
+            "problem": "In an essay paper a candidate is asked to define literature, name its three major genres and give two distinguishing features of each, then illustrate the answer. The question is worth 25 marks and the candidate has 40 minutes. Define the term, lay out the genres, count the features to be discussed, and convert the marks into a working time plan. [25 marks]",
+            "stepByStepSolution": [
+              "Open by defining literature as an imaginative representation of human life in language; the word traces to the Latin littera, meaning a letter, so the term is about written art, not any printed matter. [4 marks]",
+              "Name the three major genres in order: prose, drama and poetry. [3 marks]",
+              "Two features are required for every genre, so 3 times 2 = 6 features must be discussed. [6 marks]",
+              "Prose is written in sentences and paragraphs and reaches the reader through a narrator; drama is written in speech headings with stage directions and exists to be performed; poetry is written in lines with metre, stanzaic pattern and concentrated imagery. [6 marks]",
+              "Marks already secured: 4 plus 3 plus 6 = 13 marks, leaving 25 minus 13 = 12 marks for illustration, organisation and expression. [4 marks]",
+              "Time plan: 40 divided by 25 = 1.6 minutes to a mark, so the 13 content marks should take 13 times 1.6 = 20.8 minutes and the rest goes on examples from set texts and a neat conclusion. [2 marks]"
+            ],
+            "keyTakeaway": "A definition plus three genres plus six features is only half a 25-mark answer; the other half is illustration and expression."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-lit-topic-01",
       "topicId": "shs-lit-topic-01",
@@ -107,6 +147,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-lit-topic-02",
+    "youtubeUrl": "https://www.youtube.com/watch?v=btqPEzLbORI",
+    "youtubeId": "btqPEzLbORI",
     "subjectId": "literature",
     "level": "SHS 1",
     "term": 1,
@@ -146,6 +188,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Highlife and Hiplife musicians in Ghana routinely employ metaphors and proverbs to communicate social critique without direct confrontation."
         }
       ],
+"commonMistakes":         [
+            "Naming a metaphor a simile because the two things being compared are obvious to the reader",
+            "Calling every reference to nature personification when no human action or speech is actually given",
+            "Writing the rhyme scheme in capital letters, which in examination usage marks a different sound from the lower-case letter",
+            "Identifying a figure of speech and stopping there, so the effect mark is never attempted",
+            "Mistaking hyperbole for lie or error in the poem instead of deliberate overstatement for emphasis",
+            "Confusing alliteration with assonance: repeated initial consonant sounds against repeated vowel sounds"
+          ],
       "wassceExamTips": [
         "WAEC often tests the distinction between oxymoron (two juxtaposed words) and paradox (a full statement).",
         "Never just name the device; explain what it illustrates in the context of the passage."
@@ -156,6 +206,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate the effect of sound devices and imagery on meaning and tone"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-lit-02-1",
+            "title": "Sorting twelve phrases into simile, metaphor and personification",
+            "problem": "A 12-line extract contains 12 figures of speech: 5 of them compare with like or as, 4 compare without those words, and the remaining 3 give human action or speech to non-human things. Identify each class by its signal, count what remains at each stage, and work out how the marks for identification and effect are earned on a 20-mark question. [20 marks]",
+            "stepByStepSolution": [
+              "Sort by signal: a figure that compares two things using like or as is a simile, and 5 of the phrases carry those compare-words. [3 marks]",
+              "A comparison made without like or as, in which one thing is directly called the other, is a metaphor: 12 minus 5 = 7 phrases remain, and 4 of them are metaphors. [4 marks]",
+              "Giving human action, speech or feeling to a non-human thing is personification: 7 minus 4 = 3 phrases are left, and all 3 of them do exactly this. [3 marks]",
+              "Identification is worth 1 mark a phrase, so 12 times 1 = 12 marks come from naming the figures correctly. [4 marks]",
+              "Effect is worth 1 mark a phrase, so another 12 marks follow, and content alone is worth 12 plus 12 = 24 marks on a question set at 20 marks. [3 marks]",
+              "Answer the strongest pair fully rather than all twelve weakly: 8 plus 8 = 16 marks of content, after which 20 minus 16 = 4 marks rest on arrangement and expression. [3 marks]"
+            ],
+            "keyTakeaway": "The compare-word settles the argument: like or as means simile, its absence means metaphor, and human verbs on a non-human thing mean personification."
+          },
+          {
+            "id": "ex-lit-02-2",
+            "title": "Reading off a rhyme scheme and counting sound patterns",
+            "problem": "A 16-line poem is written in quatrains with the scheme abab in every stanza. One line quoted for practice reads, the fair breeze blew, the white foam flew. Label the end-sounds, count the quatrains and the rhyme sounds, and measure the alliteration in the quoted line. [15 marks]",
+            "stepByStepSolution": [
+              "Label the end-words of the first four lines with letters in order of first appearance; when line 1 answers line 3 and line 2 answers line 4, the scheme is written abab. [2 marks]",
+              "The quatrain carries 2 rhyme sounds across 4 lines, so 4 divided by 2 = 2 lines are bound to each sound. [3 marks]",
+              "The poem is 16 lines laid out in quatrains, so 16 divided by 4 = 4 quatrains. [3 marks]",
+              "Rhyme sounds in the whole poem: 4 times 2 = 8 sounds, and the pattern never changes, which gives the stanza a balanced, returning music. [3 marks]",
+              "In the quoted line 3 of the 8 words begin with the sound f, so 3 divided by 8 times 100 = 37.5 per cent of the words alliterate. [2 marks]",
+              "The other words carry no alliteration: 8 minus 3 = 5 words, and the repeated f sound slows the reader down on the moving air and water. [2 marks]"
+            ],
+            "keyTakeaway": "Rhyme schemes are letters, not guesses: label each end-sound as it first appears, then count lines per sound."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-lit-topic-02",
       "topicId": "shs-lit-topic-02",
@@ -207,6 +287,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-lit-topic-03",
+    "youtubeUrl": "https://www.youtube.com/watch?v=4LCgxjQEzf0",
+    "youtubeId": "4LCgxjQEzf0",
     "subjectId": "literature",
     "level": "SHS 1",
     "term": 1,
@@ -244,6 +326,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghanaian concert parties and National Theatre productions rely heavily on dramatic irony and asides to engage active audience response."
         }
       ],
+"commonMistakes":         [
+            "Calling a soliloquy an aside, or treating any private speech as both without checking whether the speaker is alone",
+            "Confusing dramatic irony with verbal irony spoken by a character who knows the truth",
+            "Defining catharsis as sadness rather than the purging of pity and fear that tragedy produces",
+            "Naming a tragic flaw as simply a bad event in the hero's life instead of a quality in the hero",
+            "Treating stage directions as spoken dialogue when quoting evidence from a play",
+            "Answering a drama question with chapter references instead of act and scene numbers"
+          ],
       "wassceExamTips": [
         "When analyzing dramatic irony, clearly identify: (1) what the audience knows, (2) what the character mistakenly thinks, and (3) the resulting tension."
       ],
@@ -253,6 +343,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Understand Aristotle's concepts of hamartia, hubris, peripeteia, and catharsis"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-lit-03-1",
+            "title": "Mapping the structure of a five-act tragedy",
+            "problem": "A tragedy is written in 5 acts of 3 scenes each. Its cast list names 11 speaking characters, 4 of whom appear in 9 of the scenes between them. The performance lasts 2 hours 30 minutes. Count the scenes, locate the crisis, divide the cast, and convert the running time into a per-scene rate. [20 marks]",
+            "stepByStepSolution": [
+              "Scenes in the play: 5 times 3 = 15 scenes. [3 marks]",
+              "Name the tragic markers as they appear on the map: a person of high degree, a tragic flaw in that person, a reversal of fortune, a moment of recognition, and the purging of pity and fear in the audience. [4 marks]",
+              "The crisis conventionally sits near the middle: 15 divided by 2 = 7.5, so the turning point falls at scene 8, where the upward movement stops and the fall begins. [3 marks]",
+              "Cast division: 11 speakers are listed, but 4 of them carry 9 scenes between them, so 11 minus 4 = 7 minor speakers who hold the remaining 6 scenes. [3 marks]",
+              "Running time: 2 hours 30 minutes is 150 minutes, and 150 divided by 15 = 10 minutes to a scene. [4 marks]",
+              "Examiner expectation: for a technique question, name the technique, quote the line that shows it, and state one sentence of effect; a 200-word retell of the plot earns no technique mark. [3 marks]"
+            ],
+            "keyTakeaway": "Structure is arithmetic in disguise: acts, scenes, the midpoint crisis and the running time can all be counted before they are interpreted."
+          },
+          {
+            "id": "ex-lit-03-2",
+            "title": "Dramatic irony, soliloquy and aside in Anowa",
+            "problem": "In Ama Ata Aidoo's Anowa the audience learns the heroine's resolve before the household understands it, and the action closes with the deaths of husband and wife. A candidate quotes 20 lines as evidence, of which 4 show dramatic irony, and must answer a 15-mark question in 25 minutes. Define the technique, apply it, and measure the evidence and the clock. [15 marks]",
+            "stepByStepSolution": [
+              "Define dramatic irony: the audience or reader knows something that a character on the stage does not know, so the character's words mean more than the speaker intends. [3 marks]",
+              "Apply it to the play: the audience sees Anowa's determination and her reading of the prophecy while the other figures in the house still speak in ignorance, which turns ordinary lines into warnings. [3 marks]",
+              "The action closes in death in the household: 1 husband plus 1 wife = 2 deaths, and the audience had been led to expect them long before the characters understood. [2 marks]",
+              "Share of evidence that is ironic: 4 divided by 20 times 100 = 20 per cent of the 20 quoted lines. [3 marks]",
+              "Separate the two private speeches: a soliloquy is a long utterance by a character alone on the stage, while an aside is a brief remark the other characters on stage are not meant to hear. [2 marks]",
+              "Time budget: 25 divided by 15 = 1.7 minutes to a mark, so the definition and the two applications should be written inside the first 6 minutes. [2 marks]"
+            ],
+            "keyTakeaway": "Dramatic irony lives in the gap between what the audience knows and what the speaker knows; name that gap in every answer."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-lit-topic-03",
       "topicId": "shs-lit-topic-03",
@@ -304,6 +424,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-lit-topic-04",
+    "youtubeUrl": "https://www.youtube.com/watch?v=a1QNCsJoJto",
+    "youtubeId": "a1QNCsJoJto",
     "subjectId": "literature",
     "level": "SHS 1",
     "term": 1,
@@ -342,6 +464,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Traditional Ghanaian dirges (such as Akan apae or Ewe halo poetry) share structural similarities with the classical Western elegy."
         }
       ],
+"commonMistakes":         [
+            "Calling any 14-line poem a Petrarchan sonnet without checking the octave-sestet division and the turn",
+            "Scanning metre by eye instead of by syllable, so a 9-syllable line is reported as iambic pentameter",
+            "Describing the couplet of a Shakespearean sonnet as part of the third quatrain",
+            "Confusing rhyme scheme with stanza form and reporting abab as the name of the stanza",
+            "Naming an elegy a sonnet because it is sad, or an ode a lyric because it sings",
+            "Quoting a whole stanza to prove one device instead of the single line that carries it"
+          ],
       "wassceExamTips": [
         "Shakespearean sonnet rhyme scheme is always ABAB CDCD EFEF GG with a concluding volta/couplet."
       ],
@@ -351,6 +481,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Differentiate between poetic tone (speaker's attitude) and mood (reader's feeling)"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-lit-04-1",
+            "title": "The arithmetic of the sonnet: line counts, rhyme and metre",
+            "problem": "Compare a Shakespearean sonnet, built from 3 quatrains and a couplet with the scheme abab cdcd efef gg, with a Petrarchan sonnet built from an octave and a sestet. Both are written in iambic pentameter. Count the lines of each form, the rhyme sounds, the syllables per line and per poem, and locate the turn. [20 marks]",
+            "stepByStepSolution": [
+              "Shakespearean form: 3 times 4 = 12 lines in the quatrains, then 12 plus 2 = 14 lines when the closing couplet is added. [4 marks]",
+              "Petrarchan form: 8 plus 6 = 14 lines, the same total reached by a different division of the poem. [3 marks]",
+              "The scheme abab cdcd efef gg uses 7 distinct rhyme sounds, so 14 divided by 7 = 2 lines answer each sound. [3 marks]",
+              "Iambic pentameter means 5 feet to a line and an iamb is 2 syllables, so 5 times 2 = 10 syllables to a line. [3 marks]",
+              "Whole poem in syllables: 14 times 10 = 140 syllables, which is why a sonnet reads aloud in under a minute and holds one argument, not many. [4 marks]",
+              "The Petrarchan turn falls after the octave, at 8 divided by 14 times 100 = 57 per cent through the poem, while the Shakespearean turn usually arrives in the couplet that closes the argument. [3 marks]"
+            ],
+            "keyTakeaway": "Form is countable: 14 lines, 7 rhyme sounds, 140 syllables and one turn describe a sonnet more exactly than any adjective."
+          },
+          {
+            "id": "ex-lit-04-2",
+            "title": "Common metre, stanzas and rhyme in a ballad",
+            "problem": "A narrative ballad is written in common metre, alternating 8-syllable and 6-syllable lines in quatrains with the rhyme scheme abcb. The poem runs to 20 stanzas. Count the syllables in a stanza and in the poem, the lines and the rhymed lines, and state the difference between a ballad, a lyric, an elegy and an ode. [15 marks]",
+            "stepByStepSolution": [
+              "Common metre alternates 8 syllables and 6 syllables, so one quatrain runs 8 plus 6 plus 8 plus 6 = 28 syllables. [3 marks]",
+              "Syllables per line on average: 28 divided by 4 = 7 syllables. [3 marks]",
+              "Lines in the whole poem: 20 stanzas times 4 lines = 80 lines. [2 marks]",
+              "The scheme abcb binds only the second and third lines, so 20 times 2 = 40 rhymed lines. [3 marks]",
+              "Unrhymed lines: 80 minus 40 = 40 lines, and that open second line in each stanza is what gives the ballad its plain, speaking sound. [2 marks]",
+              "Distinguish the forms by purpose: the ballad tells a story in stanzas, the lyric voices a single feeling in a short compass, the elegy mourns the dead, and the ode addresses one elevated subject with dignity. [2 marks]"
+            ],
+            "keyTakeaway": "A ballad is a story told in counted stanzas: half its lines may not rhyme, and that is the form, not a fault."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-lit-topic-04",
       "topicId": "shs-lit-topic-04",
@@ -402,6 +562,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-lit-topic-05",
+    "youtubeUrl": "https://www.youtube.com/watch?v=t0jGCrkSHKY",
+    "youtubeId": "t0jGCrkSHKY",
     "subjectId": "literature",
     "level": "SHS 1",
     "term": 2,
@@ -438,6 +600,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghanaian novelists such as Ayi Kwei Armah (The Beautyful Ones Are Not Yet Born) critiqued post-independence bribery and infrastructural decay."
         }
       ],
+"commonMistakes":         [
+            "Calling Okonkwo a simple villain instead of a tragic figure whose own rigidity destroys him",
+            "Reporting the events of the novel in order and never naming the technique that presents them",
+            "Treating the missionaries as a foreign accident rather than as the force that exposes the society's internal strain",
+            "Writing Igbo customs as strange or primitive instead of as a coherent social order with its own logic",
+            "Naming a motif as a single repeated word rather than a recurring image that carries the theme",
+            "Attributing the narrator's judgments to Achebe himself"
+          ],
       "wassceExamTips": [
         "Avoid merely summarizing the plot of the novel; focus your essay on character motives, literary devices, and the author's thematic intention."
       ],
@@ -447,6 +617,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Assess character development and thematic relevance in prescribed African novels"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-lit-05-1",
+            "title": "Parts, chapters and the colonial collision in Things Fall Apart",
+            "problem": "Chinua Achebe's Things Fall Apart is arranged in 3 parts of 10, 3 and 8 chapters. Part 2 covers the 7 years of the hero's exile. A candidate must read the novel in 3 weeks and answer a question on the collision between Igbo society and the missionaries. Count the chapters, measure each part as a share of the book, and build a reading plan. [20 marks]",
+            "stepByStepSolution": [
+              "Chapters in the novel: 10 plus 3 plus 8 = 21 chapters. [3 marks]",
+              "Part 2 is 3 chapters long yet covers the whole 7-year banishment for the accidental killing of Ezeudu's son, so it fills 3 divided by 21 times 100 = 14.3 per cent of the book. [3 marks]",
+              "Part 3, which holds the return, the growing Christian community and the final collision, is 8 divided by 21 times 100 = 38.1 per cent of the novel. [3 marks]",
+              "Reading plan: 21 chapters in 3 weeks is 21 divided by 3 = 7 chapters a week, so 7 divided by 7 = 1 chapter a day. [4 marks]",
+              "Achebe announces his own standard early: proverbs are said to be the palm-oil with which words are eaten, so the community prizes skilful speech, and the later missionary speeches answer that art with plain, literal statement. [4 marks]",
+              "Balance the two forces in the answer: Okonkwo's rigid self-discipline and the colonial arrival are 2 causes, so in a 10-mark part each should be given 10 divided by 2 = 5 marks worth of attention. [3 marks]"
+            ],
+            "keyTakeaway": "The fall of the book's hero and the fall of his society are plotted in chapters: measure the parts before you argue the theme."
+          },
+          {
+            "id": "ex-lit-05-2",
+            "title": "Motif tracking and the summary-to-analysis ratio in The Beautyful Ones Are Not Yet Born",
+            "problem": "Ayi Kwei-Armah's novel keeps returning to refuse, rot and dirt in the city as the outward sign of the moral decay of the new republic, while its hero refuses the small corrupt gains offered to him. A candidate drafts 900 words, of which 300 retell the plot, and has a 132-page edition to read in 6 days for a 15-mark question. Name the motif, state the hero's choice, and repair the draft. [15 marks]",
+            "stepByStepSolution": [
+              "Name the governing motif: dirt, garbage and decay in the streets and in the railway station mirror the corruption eating the men of independence. [3 marks]",
+              "State the central choice: the man will not take the drink of corruption that his brother-in-law accepts, and that single refusal organises every episode of the novel. [3 marks]",
+              "Measure the draft: 300 divided by 900 times 100 = 33.3 per cent of the answer is plot retelling. [2 marks]",
+              "The examination rewards analysis, so the target is 25 per cent narrative or less: 900 times 25 divided by 100 = 225 words of retelling. [3 marks]",
+              "Words to be struck out: 300 minus 225 = 75 words, and the same 75 words are then spent on the motif of filth and on the man's silence. [2 marks]",
+              "Reading rate: 132 divided by 6 = 22 pages a day keeps the candidate ahead of the question. [2 marks]"
+            ],
+            "keyTakeaway": "One motif, one refusal, and a draft that analyses three times more than it retells: that is a full-mark answer on this novel."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-lit-topic-05",
       "topicId": "shs-lit-topic-05",
@@ -498,6 +698,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-lit-topic-06",
+    "youtubeUrl": "https://www.youtube.com/watch?v=eVDmxMmE71o",
+    "youtubeId": "eVDmxMmE71o",
     "subjectId": "literature",
     "level": "SHS 1",
     "term": 2,
@@ -532,6 +734,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Universal conflicts such as social mobility and economic hardship portrayed in Dickens or Steinbeck parallel modern Ghanaian youth aspirations."
         }
       ],
+"commonMistakes":         [
+            "Reading Animal Farm as a farm story and never naming the historical allegory it carries",
+            "Summarising the rebellion chapter by chapter instead of tracing how each revision of the law is justified",
+            "Calling the pigs' behaviour simple hypocrisy rather than a studied seizure of language and memory",
+            "Describing setting as scenery instead of as a force that pressures the character",
+            "Naming the theme as one word such as power or freedom without stating what the book says about it",
+            "Quoting a famous line and explaining nothing, so the quotation does the marks the candidate should have done"
+          ],
       "wassceExamTips": [
         "Highlight how the author's historical background influenced their choice of setting and characters in Section B answers."
       ],
@@ -541,6 +751,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate character foils and stylistic choices of non-African authors"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-lit-06-1",
+            "title": "Revolution betrayed: chapter counts and eroded law in Animal Farm",
+            "problem": "George Orwell's Animal Farm runs to 14 chapters and announces its rebellion in chapter 1. The animals inscribe 7 Commandments, which are revised one by one until a single maxim is left. Suppose the harvest of 500 baskets is shared so that the pigs claim 150 baskets, and Napoleon takes 9 puppies from their mothers. Count the chapters, measure the loss of law, and plan a 20-mark answer in 4 paragraphs. [20 marks]",
+            "stepByStepSolution": [
+              "The novel has 14 chapters, and Old Major's speech that starts the rebellion sits in chapter 1, so the whole arc of hope and betrayal is told in 14 units. [3 marks]",
+              "The Commandments are pared back until one remains: 7 minus 6 = 1 maxim survives to the closing chapter. [4 marks]",
+              "Share of the law destroyed: 6 divided by 7 times 100 = 85.7 per cent, which is the arithmetic form of the novel's argument. [3 marks]",
+              "The pigs' claim on the harvest: 150 divided by 500 times 100 = 30 per cent of the baskets, taken quietly and justified after the fact. [3 marks]",
+              "Napoleon seizes 9 puppies at birth and raises them into a private force; no other animal on the farm holds armed loyalty, so monopoly of violence rests on those 9 animals. [4 marks]",
+              "Paragraph plan for a 20-mark essay: 20 divided by 4 = 5 marks to a paragraph, so each paragraph must carry one argument, one quotation and one line of effect. [3 marks]"
+            ],
+            "keyTakeaway": "Satire can be counted: six deleted Commandments out of seven is 85.7 per cent of a revolution eaten by its own leaders."
+          },
+          {
+            "id": "ex-lit-06-2",
+            "title": "Inner conflict and a 15-mark answer that fits the clock",
+            "problem": "A non-African prose question worth 15 marks asks how the setting presses on a character's private conflict. The candidate plans 5 paragraphs of 120 words, writes at a steady 20 words a minute, and has 30 minutes for the question. State the conflict and the function of setting, then test whether the plan fits the time. [15 marks]",
+            "stepByStepSolution": [
+              "State the conflict in one clause: what the character wants placed against what the character fears or owes, so the struggle is inside the mind and not only in events. [3 marks]",
+              "Name the function of setting: place works as pressure on the character, ranking, climate and household restricting what the character may attempt. [3 marks]",
+              "Planned length: 5 times 120 = 600 words. [2 marks]",
+              "Words the clock allows: 30 times 20 = 600 words, so the plan matches the time exactly and leaves no room for a mistake. [3 marks]",
+              "Build in a margin: 600 minus 60 = 540 words of answer, which is 540 divided by 15 = 36 words to each mark. [2 marks]",
+              "Every claim needs evidence: an assertion about the character's conflict with no page reference forfeits the 2 marks set aside for illustration. [2 marks]"
+            ],
+            "keyTakeaway": "A 15-mark answer is 36 words of argument and evidence to a mark, and it must be planned before the first line is written."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-lit-topic-06",
       "topicId": "shs-lit-topic-06",
@@ -592,6 +832,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-lit-topic-07",
+    "youtubeUrl": "https://www.youtube.com/watch?v=LKsYMtvBgOs",
+    "youtubeId": "LKsYMtvBgOs",
     "subjectId": "literature",
     "level": "SHS 1",
     "term": 2,
@@ -627,6 +869,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Plays like Wole Soyinka's Death and the King's Horseman dramatize the sacred clash between traditional Yoruba duty and British colonial intervention."
         }
       ],
+"commonMistakes":         [
+            "Writing the chorus as background singers instead of a character that judges the action",
+            "Describing drum and dance as decoration and failing to state what narrative work they do",
+            "Reading a ritual scene as superstition instead of as the community's way of settling a conflict",
+            "Opposing tradition and modernity as good and bad rather than as two systems with costs",
+            "Quoting stage directions as if they were spoken by a character",
+            "Discussing the play as a novel, using chapters and narrator where acts, scenes and speakers belong"
+          ],
       "wassceExamTips": [
         "Do not treat dramatic scripts as novels; reference stagecraft, character movements, and auditory elements in your answers."
       ],
@@ -636,6 +886,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Trace dramatic plot structure from exposition to denouement"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-lit-07-1",
+            "title": "Staging a community play: chorus, drummers, dancers and the old square",
+            "problem": "An amateur production of a village play mounts 12 speaking actors, a chorus of 6 singers, 3 drummers and 2 dancers. The performance runs 90 minutes in 3 scenes, and 2 of the scenes are set in the old square while 1 is set in the new town. Count everyone on the stage, measure the chorus as a share of the company, and work out the rate per scene. [20 marks]",
+            "stepByStepSolution": [
+              "Company on the stage: 12 plus 6 plus 3 plus 2 = 23 performers. [3 marks]",
+              "Only the 12 actors speak; the rest carry the performance by voice and body, so 6 plus 3 plus 2 = 11 performers tell the story without a written line. [4 marks]",
+              "Chorus as a share of the company: 6 divided by 23 times 100 = 26.1 per cent. [3 marks]",
+              "Setting as argument: 2 scenes of the 3 stand in the old square, so 2 divided by 3 times 100 = 66.7 per cent of the action is placed on traditional ground against 1 scene in the new town. [3 marks]",
+              "Rate of performance: 90 divided by 3 = 30 minutes to a scene, and within that time the drum, the dance and the chant must each be given room to speak. [4 marks]",
+              "Examiners want the functions named: the chorus comments on the action and represents communal opinion, mime carries narrative without words, and music and dance mark ritual moments rather than decorating them. [3 marks]"
+            ],
+            "keyTakeaway": "African drama is composite theatre: count the singers, drummers and dancers as narrators, not as entertainment added to the play."
+          },
+          {
+            "id": "ex-lit-07-2",
+            "title": "Three movements in The Lion and the Jewel",
+            "problem": "Wole Soyinka's The Lion and the Jewel moves through the morning quarrel over bride price, the photograph trick that raises Sidi above the village, and the dance that ends with the huntress choosing the older hunter over the schoolmaster. A staged version runs 1 hour 15 minutes. Divide the play into its 3 movements, measure the dance, and plan a 15-mark answer. [15 marks]",
+            "stepByStepSolution": [
+              "The play turns on 3 characters at its centre, Sidi, Baraka and Lakunle, whose desires pull traditional and modern values against each other. [3 marks]",
+              "Total running time: 1 hour 15 minutes is 75 minutes. [2 marks]",
+              "Length of each movement: 75 divided by 3 = 25 minutes. [3 marks]",
+              "Share of the play carried by the dance: 1 movement of 3, so 1 divided by 3 times 100 = 33.3 per cent of the performance is spoken through the body rather than through dialogue. [3 marks]",
+              "Name the issue in the bride-price quarrel: the schoolmaster refuses the payment and calls it a purchase, while the hunter pays and calls it honour, so the play stages a disagreement about what a custom means. [2 marks]",
+              "Marks and time: 15 divided by 3 = 5 marks to each of the 3 points, and in 20 minutes that allows 20 divided by 15 = 1.3 minutes to a mark. [2 marks]"
+            ],
+            "keyTakeaway": "In African drama the dance is a scene: measure it as structure, and read the custom as an argument rather than as colour."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-lit-topic-07",
       "topicId": "shs-lit-topic-07",
@@ -687,6 +967,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-lit-topic-08",
+    "youtubeUrl": "https://www.youtube.com/watch?v=OMGxuFonqGE",
+    "youtubeId": "OMGxuFonqGE",
     "subjectId": "literature",
     "level": "SHS 1",
     "term": 3,
@@ -721,6 +1003,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Shakespearean themes of political betrayal and ruthless ambition (Macbeth, Julius Caesar) mirror modern political power struggles globally."
         }
       ],
+"commonMistakes":         [
+            "Applying African stage conventions such as chorus and dance to a classical or modern European text",
+            "Calling the hero's error a coincidence and so losing the argument about fate and responsibility",
+            "Confusing the five-act structure with the chapter division of a novel",
+            "Describing deception as mere lying instead of a dramatic device that feeds dramatic irony",
+            "Ignoring the interval and the single set as stagecraft choices that shape meaning",
+            "Writing the answer as a review of the production instead of an analysis of the text"
+          ],
       "wassceExamTips": [
         "In WASSCE context questions, identify the speaker, addressee, immediate circumstance, and the significance of the extract to the whole play."
       ],
@@ -730,6 +1020,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Examine social realism and modern dramatic themes"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-lit-08-1",
+            "title": "Running a five-act classical tragedy in modern dress",
+            "problem": "A company stages a classical five-act tragedy of 18 scenes in 3 hours, with a single interval of 20 minutes. A candidate must write about fate against free will and about political ambition and deception in the play. Find the playing time, the average scene length, and the average number of scenes per act. [20 marks]",
+            "stepByStepSolution": [
+              "Total clock time: 3 hours is 180 minutes. [3 marks]",
+              "Playing time after the interval: 180 minus 20 = 160 minutes. [3 marks]",
+              "Average scene length: 160 divided by 18 = 8.9 minutes. [4 marks]",
+              "Scenes per act: 18 divided by 5 = 3.6 scenes in an average act, so the acts are not equal bodies and the long act carries the turning point. [3 marks]",
+              "Playing time per act: 160 divided by 5 = 32 minutes, which is the margin within which the hero's rise and fall must be made visible. [4 marks]",
+              "For the essay, keep the two forces apart: fate works through oracle and prophecy, while free will works through the hero's own decisions, and deception belongs to the second, not the first. [3 marks]"
+            ],
+            "keyTakeaway": "Even the clock argues the case: 32 minutes to an act is the space in which a hero seems to choose what fate already decreed."
+          },
+          {
+            "id": "ex-lit-08-2",
+            "title": "One room, twelve jurors: the counting of a modern drama",
+            "problem": "In a modern courtroom drama 12 jurors must reach a unanimous verdict on a boy accused of killing his father. At the first show of hands 11 vote guilty and 1 dissents. Later 3 more jurors change to not guilty. Work out the shares and the holdouts, and say what the single setting does for the tension. [15 marks]",
+            "stepByStepSolution": [
+              "At the first ballot 12 minus 1 = 11 jurors vote guilty. [3 marks]",
+              "Share pressing for conviction at the start: 11 divided by 12 times 100 = 91.7 per cent. [3 marks]",
+              "After 3 jurors change side the tally is 11 minus 3 = 8 for conviction, and 1 plus 3 = 4 for doubt. [2 marks]",
+              "Holdouts still to be persuaded: a verdict must be unanimous, so 12 minus 8 = 4 jurors stand between the prosecution and the boy's life. [3 marks]",
+              "Modern stagecraft in one room: 1 setting holds 12 speakers, so the play generates movement from argument, weather and a single reconstruction of the murder rather from scene changes. [2 marks]",
+              "Marks: on a 15-mark question, 15 divided by 3 = 5 marks to each of the 3 ideas of reasonable doubt, mob pressure and the individual conscience. [2 marks]"
+            ],
+            "keyTakeaway": "Modern drama often replaces the five-act architecture with one room and a count: 11 against 1 is already a plot."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-lit-topic-08",
       "topicId": "shs-lit-topic-08",
@@ -781,6 +1101,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-lit-topic-09",
+    "youtubeUrl": "https://www.youtube.com/watch?v=zBsHUVpOoJM",
+    "youtubeId": "zBsHUVpOoJM",
     "subjectId": "literature",
     "level": "SHS 1",
     "term": 3,
@@ -817,6 +1139,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Kofi Awoonor's poetry (Songs of Sorrow) draws directly from traditional Ewe funeral dirge forms to mourn cultural dislocation."
         }
       ],
+"commonMistakes":         [
+            "Treating praise poetry as flattery and missing its obligation to name a lineage and its duties",
+            "Calling a dirge a sad poem without stating the occasion, the community and the loss it repairs",
+            "Reading anti-colonial protest as general anger instead of an accusation with a named target",
+            "Dating all African poetry to independence and ignoring the oral forms behind it",
+            "Quoting a poem and describing its mood instead of its diction and rhythm",
+            "Confusing Negritude with African poetry written in English, though the movement was francophone"
+          ],
       "wassceExamTips": [
         "Always identify the speaker (persona) in the poem. The persona is rarely identical to the biographical poet."
       ],
@@ -826,6 +1156,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Interpret themes of anti-colonial resistance and socio-political protest in African poems"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-lit-09-1",
+            "title": "Praise names, dirge lines and the three oral functions",
+            "problem": "An oríkì recited at a chieftaincy ceremony gives the chief 9 praise names and recounts 12 feats. A dirge for the same chief runs to 6 stanzas of 4 lines each. A candidate must relate these oral forms to written African poetry and answer a 20-mark question in 5 points. Count the oral material and find the rates. [20 marks]",
+            "stepByStepSolution": [
+              "Items carried by the praise poem: 9 plus 12 = 21 names and deeds. [3 marks]",
+              "Lines in the dirge: 6 times 4 = 24 lines. [3 marks]",
+              "Dirge room for each oral item: 24 divided by 21 = 1.1 lines, which shows how tightly praise poetry must move. [3 marks]",
+              "Name the three inherited functions and keep them apart: praise poetry exalts a person or lineage, the dirge mourns and repairs a loss, and the protest poem accuses a power. [4 marks]",
+              "Trace the movement into print: Negritude writers associated with Léopold Sédar Senghor and Aimé Césaire reclaimed African cultural value against colonial contempt, and oral rhythm and address passed into written African verse. [4 marks]",
+              "Marks: 20 divided by 5 = 4 marks to each of the 5 points, and each point must carry one quoted line from an African poem. [3 marks]"
+            ],
+            "keyTakeaway": "African written poetry inherits countable oral jobs: to praise, to mourn, and to accuse."
+          },
+          {
+            "id": "ex-lit-09-2",
+            "title": "Line counts across an anthology of protest poems",
+            "problem": "An anthology gives 5 protest poems with line counts of 12, 16, 20, 8 and 24. Each poem attacks one abuse. Find the total, the average, the share taken by the longest poem, and the mark value of each poem in a 15-mark answer. [15 marks]",
+            "stepByStepSolution": [
+              "Lines in the five poems: 12 plus 16 plus 20 plus 8 plus 24 = 80 lines. [3 marks]",
+              "Average length: 80 divided by 5 = 16 lines to a poem. [3 marks]",
+              "Share of the anthology held by the longest poem: 24 divided by 80 times 100 = 30 per cent. [2 marks]",
+              "The other poems together: 80 minus 8 = 72 lines remain once the shortest is set aside, and 72 divided by 4 = 18 lines each. [3 marks]",
+              "One abuse to one poem: 5 poems carry 5 accusations, so an answer that merges them into one general complaint about suffering loses the precision the marker is looking for. [2 marks]",
+              "Marks: 15 divided by 5 = 3 marks to a poem, which buys 1 quotation and 2 lines of comment on the technique used. [2 marks]"
+            ],
+            "keyTakeaway": "Protest poetry is specific: name the abuse, the poem and the technique, and pay out 3 marks at a time."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-lit-topic-09",
       "topicId": "shs-lit-topic-09",
@@ -877,6 +1237,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-lit-topic-10",
+    "youtubeUrl": "https://www.youtube.com/watch?v=n76x4nnbpHg",
+    "youtubeId": "n76x4nnbpHg",
     "subjectId": "literature",
     "level": "SHS 1",
     "term": 3,
@@ -909,6 +1271,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Literary criticism skills equip students to critically analyze political speeches, media adverts, and editorial journalism in Ghana."
         }
       ],
+"commonMistakes":         [
+            "Retelling the unseen passage in the first paragraph instead of stating the theme",
+            "Naming an abstract noun such as sadness as the tone when an adjective of attitude is required",
+            "Asserting a figure of speech that is not in the lines and then explaining the error",
+            "Answering only the part of the question that was memorised at home",
+            "Writing one long paragraph, so the marker cannot find the four strands of the answer",
+            "Spending the reading time on the previous question and writing against the clock"
+          ],
       "wassceExamTips": [
         "In unseen questions, the answer is ALWAYS anchored in the text provided. Do not invent external background facts."
       ],
@@ -918,6 +1288,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Formulate concise, evidence-based answers to objective and essay questions"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-lit-10-1",
+            "title": "A 16-line unseen poem in a 1 hour 45 minute paper",
+            "problem": "An unseen poem of 16 lines is set with a 20-mark question in a paper of 1 hour 45 minutes that offers 3 questions. A candidate reads the poem 3 times silently, spends 5 minutes planning, then writes at 20 words a minute. Find the time per question, the minutes per mark, the evidence needed and the length of the answer. [20 marks]",
+            "stepByStepSolution": [
+              "Time on the paper: 1 hour 45 minutes is 105 minutes, so 105 divided by 3 = 35 minutes to a question. [3 marks]",
+              "Lines read before writing: 3 times 16 = 48 lines pass under the candidate's eye. [3 marks]",
+              "Writing time: 35 minus 5 = 30 minutes, so 30 divided by 20 = 1.5 minutes to a mark. [4 marks]",
+              "Four strands must be answered, theme, voice, diction and figures, so 20 divided by 4 = 5 marks rest on each strand. [3 marks]",
+              "Evidence: 1 quotation a strand uses 4 lines of the poem, and 4 divided by 16 times 100 = 25 per cent of the poem is worked as evidence. [4 marks]",
+              "Length: 20 times 30 = 600 words, so 600 divided by 20 = 30 words are written to each mark. [3 marks]"
+            ],
+            "keyTakeaway": "Unseen work is a timed grid: 1.5 minutes and 30 words to a mark, one quotation on each of four strands."
+          },
+          {
+            "id": "ex-lit-10-2",
+            "title": "Sorting tone words for an unseen prose extract",
+            "problem": "For an unseen prose extract a candidate first writes down 12 adjectives that might describe the tone, then discards 5 that the wording of the extract does not support. The surviving words are grouped into 3 sets, and the question is worth 15 marks to be answered in 25 minutes. Measure the sorting, the groups and the marks. [15 marks]",
+            "stepByStepSolution": [
+              "Group the surviving words: 12 adjectives sorted into 3 sets gives 12 divided by 3 = 4 words to a set. [3 marks]",
+              "Discard the unsupported ones: 12 minus 5 = 7 tone words stand, and each must be proved by a phrase from the extract. [2 marks]",
+              "Name 3 fields of vocabulary in the diction, such as legal, domestic and religious words, and give 1 example each from the surviving 7 words. [3 marks]",
+              "State the theme in 1 sentence of about 25 words, and check that the sentence can be proved from the extract without adding events the writer never gave. [2 marks]",
+              "Marks recovered by tone work: 7 surviving words at 1 mark each is 7 marks, so 15 minus 7 = 8 marks come from theme, diction and effect. [3 marks]",
+              "Pace: 25 divided by 15 = 1.7 minutes to a mark, and the 8 marks of theme and effect need 8 times 1.7 = 13.6 minutes. [2 marks]"
+            ],
+            "keyTakeaway": "Build the tone list, then cut it down and prove every surviving word with a phrase from the passage."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-lit-topic-10",
       "topicId": "shs-lit-topic-10",
@@ -969,6 +1369,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-lit-topic-11",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ZwzAMTEJNuM",
+    "youtubeId": "ZwzAMTEJNuM",
     "subjectId": "literature",
     "level": "SHS 1",
     "term": 2,
@@ -1004,6 +1406,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ola Rotimi adapted Sophocles' Oedipus Rex into a celebrated Nigerian cultural drama, The Gods Are Not To Blame."
         }
       ],
+"commonMistakes":         [
+            "Calling hamartia a moral sin rather than an error of judgment in a good man",
+            "Confusing the chorus's opinion with the playwright's final judgment on the hero",
+            "Saying the hero is helpless against fate and ignoring that his own searches bring the prophecy about",
+            "Reporting the myth as though Sophocles invented the plot instead of shaping it",
+            "Naming pity and fear as the moral of the play instead of the effect tragedy produces in the audience",
+            "Quoting a modern translation as if the words were the Greek text"
+          ],
       "wassceExamTips": [
         "Trace the stages: Hamartia (fatal error) -> Hubris (pride) -> Peripeteia (reversal) -> Anagnorisis (recognition) -> Catharsis."
       ],
@@ -1013,6 +1423,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Identify dramatic irony, hamartia, and anagnorisis in dramatic excerpts"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-lit-11-1",
+            "title": "The riddle, the reversal and the search in Oedipus the King",
+            "problem": "In Sophocles' Oedipus the King the hero answers the Sphinx by naming a creature that walks on 4 feet in the morning of life, 2 at noon and 3 in the evening. He then searches for the murderer of Laius while a plague presses on Thebes, and the inquiry turns on a reversal and a recognition that arrive together. On a 20-mark essay in 4 paragraphs, work out the riddle, the machinery of the tragedy and the share of Aristotle's devices delivered at one stroke. [20 marks]",
+            "stepByStepSolution": [
+              "Footings in the riddle: 4 plus 2 plus 3 = 9 footings describe one creature through three ages, and Oedipus answers, man, who crawls on all fours as an infant, walks on two feet in adulthood and uses a stick as a third leg in old age. [4 marks]",
+              "Name the required machinery of Aristotle's perfect tragedy: a good but not flawless protagonist, error or tragic flaw in that protagonist, a reversal of fortune, a recognition, and the arousal of pity and fear. [3 marks]",
+              "In this play the two great movements are fused: 1 reversal plus 1 recognition = 2 changes of fortune and knowledge in a single scene, when the messenger's report that should comfort Oedipus instead destroys him. [3 marks]",
+              "Share of the machinery delivered at once: 2 devices out of 4 required movements, so 2 divided by 4 times 100 = 50 per cent of the tragic work is done in that one scene. [3 marks]",
+              "Fate against free will: Oedipus leaves Corinth to avoid the oracle about his parents and takes the road where three ways meet, so every act of escape carries the fulfilment nearer, and the play argues that the flight is the route. [4 marks]",
+              "Paragraph budget: 20 divided by 4 = 5 marks to a paragraph, and each paragraph must hold one device, one quotation and one sentence of effect. [3 marks]"
+            ],
+            "keyTakeaway": "Classical tragedy is engineered: reversal and recognition can be counted, and in Sophocles they land in the same scene."
+          },
+          {
+            "id": "ex-lit-11-2",
+            "title": "How much of Sophocles survives, and what the chorus does",
+            "problem": "Sophocles is credited with some 120 plays, of which 7 survive complete, and tradition gives him the credit for raising the tragic chorus from 12 singers to 15. A candidate answering a 15-mark question on the chorus, the law and the city works in 3 points. Measure the survival, the loss and the choral strength. [15 marks]",
+            "stepByStepSolution": [
+              "Share of the work that survives: 7 divided by 120 times 100 = 5.8 per cent. [3 marks]",
+              "Plays lost to the record: 120 minus 7 = 113 titles and fragments. [3 marks]",
+              "The chorus is given 15 members in the classical Attic practice associated with Sophocles, so 15 minus 12 = 3 added singers stand between the older choral size and the later one. [2 marks]",
+              "State what the enlarged chorus does: it comments on the action, speaks for the citizens of Thebes or Colonus, and answers the hero without deciding the case for him. [3 marks]",
+              "Choral structure of a performance: a parodos, alternating episodes and stasima, and an exit song, so 1 play with 5 episodes and 4 stasima runs 5 plus 4 plus 2 = 11 numbered musical and spoken units. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of the 3 points, and the 20 minutes allowed for the question gives 20 divided by 15 = 1.3 minutes to a mark. [2 marks]"
+            ],
+            "keyTakeaway": "The surviving canon is small, 5.8 per cent of the attributed work, so every choral ode carries weight the lost plays cannot show."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-lit-topic-11",
       "topicId": "shs-lit-topic-11",
@@ -1064,6 +1504,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-lit-topic-12",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Ntlss_3riXA",
+    "youtubeId": "Ntlss_3riXA",
     "subjectId": "literature",
     "level": "SHS 1",
     "term": 2,
@@ -1099,6 +1541,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghanaian dramatists like Mohammed ben Abdallah (The Fall of Kumbi) use historical satire to comment on modern governance failures."
         }
       ],
+"commonMistakes":         [
+            "Reading satire as personal attack on one character instead of criticism of a whole system",
+            "Confusing parody with satire, so a comic imitation is reported as moral criticism",
+            "Laughing at the caricature and failing to name the abuse it is aimed at",
+            "Calling the comic play hopeless tragedy and missing the farce machinery that carries the attack",
+            "Describing irony in general terms without showing the one line that reverses its own meaning",
+            "Treating neocolonialism as a foreign theme rather than the local politics the play is exposing"
+          ],
       "wassceExamTips": [
         "When analyzing satire, always state: (1) what is being ridiculed, (2) the device used (caricature, irony), and (3) the author's moral lesson."
       ],
@@ -1108,6 +1558,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Differentiate between light horizontal Horatian satire and harsh biting Juvenalian satire"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-lit-12-1",
+            "title": "Caricature, exposure scenes and protest songs in a satirical drama",
+            "problem": "A satirical play stages a council of 6 officials. The playwright draws 4 of them as caricatures, writes 6 scenes of exposure, and inserts 3 songs that mock the regime. A candidate must answer a 20-mark question on satire and socio-political critique in 5 devices. Count the figures and the rates. [20 marks]",
+            "stepByStepSolution": [
+              "Officials on the council: 6, of whom 4 are exaggerated figures, so 6 minus 4 = 2 are drawn round enough to look like whole human beings. [3 marks]",
+              "Share of the council held up to ridicule: 4 divided by 6 times 100 = 66.7 per cent. [3 marks]",
+              "Scenes of exposure to officials: 6 divided by 6 = 1 scene of exposure for every official, which is how the play builds its case rather than shouting it. [4 marks]",
+              "Songs as a running comment: 3 songs among 6 scenes, so 3 divided by 6 times 100 = 50 per cent of the scenes are answered by a song. [3 marks]",
+              "Keep the three means apart: exaggeration enlarges a real trait, inversion makes the criminal the wise man and the servant the teacher, and parody borrows the enemy's own solemn language to empty it. [4 marks]",
+              "Marks: 20 divided by 5 = 4 marks to each of the 5 devices named, and each device must be proved with one line of dialogue. [3 marks]"
+            ],
+            "keyTakeaway": "Satire proves its case by counting: one exposure scene per official, one song per two scenes, two thirds of the council ridiculed."
+          },
+          {
+            "id": "ex-lit-12-2",
+            "title": "Three targets of the comic expose in a play about a false prophet",
+            "problem": "In Wole Soyinka's comedy about the self-styled prophet Brother Jero, the playwright exposes the prophet, the crowd that buys his deliverance, and the politicians who use religion for cover. A candidate drafts a 450-word, 15-mark answer using 3 quotations of 20 words each and has 20 minutes for the question. Plan the answer and measure the comment against the quotation. [15 marks]",
+            "stepByStepSolution": [
+              "Name the 3 targets and keep them separate: the trader in miracles, the credulous congregation, and the public men who borrow the pulpit. [3 marks]",
+              "Words of quotation: 3 times 20 = 60 words quoted from the play. [2 marks]",
+              "Words left for the candidate's own argument: 450 minus 60 = 390 words. [3 marks]",
+              "Comment density: 390 divided by 60 = 6.5 words of analysis to every word of quotation, which is the ratio examiners reward. [3 marks]",
+              "Irony inventory: 1 line in which the prophet means the opposite of what he says, and 2 lines in which he is unknowingly right about his own fraud. [2 marks]",
+              "Pace: 20 divided by 15 = 1.3 minutes to a mark, so the 3 targets are settled in the first 10 minutes and the closing paragraph on comic method is written in the last 4. [2 marks]"
+            ],
+            "keyTakeaway": "Satire laughs at a system, not a person: name the prophet, the buyer and the politician, and keep 6 words of comment to every word quoted."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-lit-topic-12",
       "topicId": "shs-lit-topic-12",
@@ -1159,6 +1639,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-lit-topic-13",
+    "youtubeUrl": "https://www.youtube.com/watch?v=t5R0VcGXtBA",
+    "youtubeId": "t5R0VcGXtBA",
     "subjectId": "literature",
     "level": "SHS 1",
     "term": 3,
@@ -1190,6 +1672,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Romantic poetry's reverence for pristine nature mirrors contemporary global and Ghanaian environmental conservation movements."
         }
       ],
+"commonMistakes":         [
+            "Calling any poem about scenery a Romantic poem and ignoring the revolt against reason and industry",
+            "Paraphrasing the daffodils instead of naming the inward eye as the poem real subject",
+            "Confusing the speaker of a Romantic poem with Wordsworth himself in the biographical sense",
+            "Reporting sublime nature as pretty nature and losing the terror in the mountain and the wreck",
+            "Attributing Ozymandias to Keats, or the compass conceit to Shelley",
+            "Treating imagination as daydreaming rather than as the Romantic faculty that shapes knowledge"
+          ],
       "wassceExamTips": [
         "In Romantic poetry essays, look for nature personified as a healing, maternal, or divine spiritual force."
       ],
@@ -1199,6 +1689,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate Romanticism's critique of urban industrial squalor"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-lit-13-1",
+            "title": "Counting the daffodils: stanza, rhyme and metre in Wordsworth",
+            "problem": "William Wordsworth's poem on the host of golden daffodils runs to 4 stanzas of 6 lines each, in the rhyme scheme ababcc and in iambic tetrameter. Its closing stanza moves from the field to the inward eye. Find the number of lines, the rhyme load, the syllable count of a line and of the whole poem, and the share of the poem given to memory. [20 marks]",
+            "stepByStepSolution": [
+              "Lines in the poem: 4 times 6 = 24 lines. [3 marks]",
+              "The scheme ababcc uses 3 rhyme sounds across 6 lines, so 6 divided by 3 = 2 lines answer each sound. [3 marks]",
+              "Iambic tetrameter means 4 feet of 2 syllables, so 4 times 2 = 8 syllables to a line. [3 marks]",
+              "Whole poem in syllables: 24 times 8 = 192 syllables, which is why the lines move so quickly and sing so easily. [3 marks]",
+              "The turn to the inward eye occupies the closing stanza, so 1 divided by 4 times 100 = 25 per cent of the poem is memory and contemplation rather than the walk itself. [4 marks]",
+              "Marks: on a 20-mark question the 4 stanzas carry equal weight, so 20 divided by 4 = 5 marks to each, and every stanza must be quoted at least once. [4 marks]"
+            ],
+            "keyTakeaway": "Romantic simplicity is engineered: 24 lines, 3 rhyme sounds and 192 syllables give the poem its singing, plain-air movement."
+          },
+          {
+            "id": "ex-lit-13-2",
+            "title": "Shelley's sonnet on a broken king and the Romantic reply to industry",
+            "problem": "Percy Bysshe Shelley's Ozymandias is a sonnet of 14 lines whose octave rhymes abbaabba. It reports a traveller's account of two trunk-less legs of stone and a shattered visage in the desert. A candidate must set the poem against the Romantic rejection of industrialisation and answer in 5 points. Measure the form and the ruins. [15 marks]",
+            "stepByStepSolution": [
+              "A sonnet runs 14 lines, and Shelley keeps the old division of 8 plus 6 = 14, an octave that sets the scene and a sestet that delivers the rebuke. [3 marks]",
+              "The octave's scheme abbaabba holds 2 rhyme sounds in 8 lines, so 8 divided by 2 = 4 lines ring with each sound, which gives the opening its closed, monumental feel. [2 marks]",
+              "Name the four Romantic commitments the poem works with: imagination over bare reason, feeling over calculation, nature as teacher, and the ordinary word rather than the courtly one. [3 marks]",
+              "Wordsworth's own definition holds that poetry is emotion recollected in tranquillity, so the Romantic poem is a remembered feeling, not a report of the moment. [3 marks]",
+              "Keats trusted sensation and beauty over moral teaching while Shelley turned the same Romantic force against tyranny, so 2 poets answer 1 demand for a new imaginative liberty. [2 marks]",
+              "Marks: 15 divided by 5 = 3 marks to each of the 5 points, and 1 quotation is expected with each. [2 marks]"
+            ],
+            "keyTakeaway": "Romantic poetry preaches with a counted form: 2 rhyme sounds locked through 8 lines, then the desert and the broken boast."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-lit-topic-13",
       "topicId": "shs-lit-topic-13",
@@ -1250,6 +1770,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-lit-topic-14",
+    "youtubeUrl": "https://www.youtube.com/watch?v=hsl3uHkj6yc",
+    "youtubeId": "hsl3uHkj6yc",
     "subjectId": "literature",
     "level": "SHS 1",
     "term": 3,
@@ -1283,6 +1805,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Gabriel Okara's \"Piano and Drums\" portrays the psychological dilemma experienced by educated Ghanaian and West African youth."
         }
       ],
+"commonMistakes":         [
+            "Reading post-colonial protest as anti-white alone and missing the attack on African leaders",
+            "Calling Lawino a backward wife instead of the poem's critic of mimicry",
+            "Describing cultural dislocation as a theme without naming the image that carries it",
+            "Assuming every African poem written after 1957 is post-colonial by date rather than by argument",
+            "Treating the search for an authentic language as a quarrel with English itself",
+            "Reporting the coup and the migration as history rather than as the poem's material"
+          ],
       "wassceExamTips": [
         "In Okara's \"Piano and Drums\", the drum represents the rich, intuitive ancestral African culture; the piano symbolizes complex, rigid Western culture."
       ],
@@ -1292,6 +1822,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Examine literary protest against African dictatorship and socio-economic decay"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-lit-14-1",
+            "title": "Grouping six post-colonial poems by their grievance",
+            "problem": "An anthology of 6 post-independence African poems is sorted for revision: 3 lament destroyed traditions, 2 attack misrule and the soldier's state, and 1 searches for an authentic voice. A candidate answers a 20-mark question in 4 movements. Count the groupings and their shares. [20 marks]",
+            "stepByStepSolution": [
+              "Poems in the file: 3 plus 2 plus 1 = 6 poems. [3 marks]",
+              "Share taken by the lament for the destroyed past: 3 divided by 6 times 100 = 50 per cent. [3 marks]",
+              "Share taken by political critique: 2 divided by 6 times 100 = 33.3 per cent, and the remaining poem supplies the positive search for voice. [4 marks]",
+              "Hold the two generations apart: the independence generation wrote expectation and praise, the post-independence generation wrote disillusion, misrule and the departure of trained men and women. [3 marks]",
+              "Name the devices that carry the complaint: irony against the new flag, the corpse or the refugee as central figure, the borrowed European form broken by vernacular rhythm, and direct address to the ruler. [4 marks]",
+              "Marks: 20 divided by 4 = 5 marks to each of the 4 movements of loss, mimicry, misrule and the search for voice. [3 marks]"
+            ],
+            "keyTakeaway": "Post-colonial poetry splits into three employments, and half of a representative file is usually lament rather than anger."
+          },
+          {
+            "id": "ex-lit-14-2",
+            "title": "Lawino and Ocol: one marriage, two poems",
+            "problem": "Okot p'Bitek's Song of Lawino is a long reproach spoken by an Acholi wife against her husband's imitation of European ways, and its companion piece, Song of Ocol, is the husband's answer. A candidate plans a 15-mark answer in 25 minutes using 3 reproaches and 15 words of comment on each. Count the pair and the plan. [15 marks]",
+            "stepByStepSolution": [
+              "The argument is staged as 1 marriage and 2 poems, so 1 plus 1 = 2 pieces of verse hold one debate between the woman's rooted culture and the man's borrowed culture. [3 marks]",
+              "Name 4 practices Lawino defends: the farming of the family fields, the cooking of the village, the old medicine, and the rites that name and bury a person. [3 marks]",
+              "Measure what Ocol has thrown away: he despises the food, the medicine and the dance, so 3 of Lawino's 4 defences are rejected outright by the husband. [2 marks]",
+              "Say how the form carries the argument: Acholi address, repetition, proverb and praise manner pass into English lines, so the vernacular tradition is written into the coloniser's language rather than translated out of it. [3 marks]",
+              "Quotation plan: 3 times 15 = 45 words of comment, which leaves the bulk of the answer for the candidate's own argument. [2 marks]",
+              "Pace: 25 divided by 15 = 1.7 minutes to a mark, and 15 divided by 3 = 5 marks to each of the 3 points on culture, gender and language. [2 marks]"
+            ],
+            "keyTakeaway": "The disillusion is domestic before it is political: one household, two voices, and a borrowed culture measured against a defended one."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-lit-topic-14",
       "topicId": "shs-lit-topic-14",
@@ -1343,6 +1903,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-lit-topic-15",
+    "youtubeUrl": "https://www.youtube.com/watch?v=vZH0gDJrwRc",
+    "youtubeId": "vZH0gDJrwRc",
     "subjectId": "literature",
     "level": "SHS 1",
     "term": 3,
@@ -1382,6 +1944,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Shakespearean plays are regularly set texts in WASSCE Literature Section A, challenging students to analyze Elizabethan language and dramatic craft."
         }
       ],
+"commonMistakes":         [
+            "Calling blank verse rhyming poetry, or saying every Shakespearean line is a couplet",
+            "Describing the soliloquy as a dialogue with another character present on the stage",
+            "Naming Macbeth's flaw as weakness of character generally rather than vaulting ambition",
+            "Treating the witches as decorations and ignoring that they set the plot in motion",
+            "Using chapter numbers or a novel's narrator when the answer requires act and scene",
+            "Confusing the dramatis personae with the characters as they change during the play"
+          ],
       "wassceExamTips": [
         "In WASSCE drama essays, never just retell the story. Identify the dramatic technique (e.g. dramatic irony, soliloquy) and explain how it reveals character motive."
       ],
@@ -1391,6 +1961,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Analyze dramatic foils and tragic flaws in Shakespearean character development"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-lit-15-1",
+            "title": "Blank verse, three sisters and three apparitions in Macbeth",
+            "problem": "A school performance of Macbeth occupies 3 hours on stage across the play's 5 acts. The poetry is blank verse, the drama is opened by 3 witches, and the cave scene raises 3 raised shows for Macbeth. A candidate answers a 20-mark question on the supernatural, ambition and the tragic flaw. Divide the time and the machinery. [20 marks]",
+            "stepByStepSolution": [
+              "Playing time per act: 3 hours is 180 minutes, so 180 divided by 5 = 36 minutes to an act. [3 marks]",
+              "Blank verse is unrhymed iambic pentameter, so 5 times 2 = 10 syllables run in a line that never closes with a rhyme. [4 marks]",
+              "Register shifts matter: verse is given to nobles and prose to commoner speech and letters, so 2 kinds of line mark 2 kinds of rank on the Elizabethan stage. [3 marks]",
+              "The supernatural opens and steers the play: 3 witches greet Macbeth, and the cave raises 3 visions, the armed head, the bloody child and the child crowned with a tree in his hand. [3 marks]",
+              "Soliloquies carry the inner motion, and on a 20-mark answer 3 of them may be worked, so 20 divided by 3 = 6.7 marks are available to each if the candidate keeps quotation and comment together. [4 marks]",
+              "Separate the causes: the tragic flaw is ambition that will not be answered by law, the dramatic foil is Banquo, who hears the same prophecy and refuses the same means. [3 marks]"
+            ],
+            "keyTakeaway": "Shakespeare's tragedy runs on countable machinery: 5 acts, 10-syllable unrhymed lines, 3 sisters and 3 raised shows."
+          },
+          {
+            "id": "ex-lit-15-2",
+            "title": "Two theatres and one confession in Hamlet",
+            "problem": "Hamlet is the longest of Shakespeare's plays and is written in 5 acts. In an uncut performance of 5 hours the stage is Elsinore, and the prince stages a play called The Mousetrap to search the King's face. A candidate answers a 15-mark question on delay, theatre and death in 3 movements. Divide the performance and the argument. [15 marks]",
+            "stepByStepSolution": [
+              "Stage time per act: 5 hours is 300 minutes, so 300 divided by 5 = 60 minutes to an act. [3 marks]",
+              "The play holds 2 theatres, the court and the travelling players' stage, and it is the second that forces the first to speak, since the King's upstaged guilt is the proof Hamlet wanted. [3 marks]",
+              "Count the refusals: the prince holds the praying King in his power and does not strike, and lets the ship to England turn against his bearers, so at least 2 occasions of action are declined before the duel. [2 marks]",
+              "Name the charges laid on him by the ghost: 1 command to avenge a murder and 1 instruction to leave his mother to her own conscience. [3 marks]",
+              "The grave-yard scene puts a known skull in the prince's hand, and Yorick had carried the child, so 2 lifetimes, the jester's and the prince's, are measured in one bone. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of delay, theatre and death, and Fortinbras walking in at the end supplies the political answer to the private play. [2 marks]"
+            ],
+            "keyTakeaway": "The play within the play is the mechanism: 2 theatres, 1 searched face, and a tragedy that ends with a foreign prince burying the Danes."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-lit-topic-15",
       "topicId": "shs-lit-topic-15",
@@ -1442,6 +2042,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-lit-topic-16",
+    "youtubeUrl": "https://www.youtube.com/watch?v=W_gJwy9yjrk",
+    "youtubeId": "W_gJwy9yjrk",
     "subjectId": "literature",
     "level": "SHS 1",
     "term": 3,
@@ -1479,6 +2081,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghanaian pioneer playwright Ama Ata Aidoo advocated fiercely for Ghanaian women's education and career autonomy through both her literary texts and ministerial work."
         }
       ],
+"commonMistakes":         [
+            "Calling a novel sexist because it shows a sexist society, and confusing the representation with the approval",
+            "Reading motherhood only as oppression and missing the authority it can carry in the same text",
+            "Treating polygyny as exotic colour instead of an economic and legal arrangement the text examines",
+            "Naming female agency as a modern import and ignoring the women's power already inside the tradition",
+            "Discussing the heroine's suffering without naming who in the book causes it and who profits",
+            "Applying a European feminist frame to an African text without asking what the local woman is fighting for"
+          ],
       "wassceExamTips": [
         "Distinguish between Western feminism and \"Womanism\" (African feminism), which emphasizes family cohesion, male partnership, and communal solidarity alongside female liberation."
       ],
@@ -1488,6 +2098,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate female agency and economic independence in works by Ama Ata Aidoo and Buchi Emecheta"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-lit-16-1",
+            "title": "School places and voices in a compound: counting patriarchy on the page",
+            "problem": "For a class exercise drawn from Things Fall Apart, a farmer's compound is treated as having 3 wives and 11 children between them, and a school fees fund pays for 4 children in the year, of whom 1 is a girl. The earth goddess Ani holds religious authority in the same community. A candidate answers a 20-mark question on gender and patriarchy. Measure the distribution. [20 marks]",
+            "stepByStepSolution": [
+              "Children to a wife's household on average: 11 divided by 3 = 3.7 children. [3 marks]",
+              "Share of the children sent to school: 4 divided by 11 times 100 = 36.4 per cent. [3 marks]",
+              "Share of the school places taken by daughters: 1 divided by 4 times 100 = 25 per cent, so 4 minus 1 = 3 places go to sons. [4 marks]",
+              "State the representation accurately: women in the novel are largely seen through marriage, child-bearing and exclusion from the male assembly, while Ani and the ancestral religion give women a sacred authority the compound denies them. [4 marks]",
+              "Name the feminist questions in order: who speaks, who is spoken for, who owns the plot, and what the text pays for a woman's silence. [3 marks]",
+              "Marks: 20 divided by 4 = 5 marks to each of the 4 headings of marriage, labour, education and voice. [3 marks]"
+            ],
+            "keyTakeaway": "Patriarchy can be counted on the page: one daughter in four school places says more than an adjective about the society."
+          },
+          {
+            "id": "ex-lit-16-2",
+            "title": "Three terms of fees and two girls in Nervous Conditions",
+            "problem": "Tsitsi Dangare M'gemi's novel opens with a harvest failure that leaves Tambu's father unable or unwilling to pay mission fees, while the educated uncle's household in the Location keeps the children in school; her cousin Nyasha, raised abroad, breaks down in the same school system. For the exercise, take fees of 40 units a term, a harvest worth 120 units, and 2 of the 3 affordable terms spent on the boy. A candidate answers a 15-mark question. Measure the division. [15 marks]",
+            "stepByStepSolution": [
+              "Terms the money would buy: 120 divided by 40 = 3 terms. [3 marks]",
+              "Terms left for the girls: 3 minus 2 = 1 term, and the girl's schooling is won only when the father's refusal meets the uncle's offer. [3 marks]",
+              "Share of the available schooling spent on daughters: 1 divided by 3 times 100 = 33.3 per cent. [2 marks]",
+              "Hold the two cousins apart: Tambu rises into education while Nyasha is destroyed inside it, so 2 girls carry 2 arguments about the same school. [3 marks]",
+              "Read the illness as speech: Nyasha's refusal of food answers the household's refusal of her voice, so the body states what the family forbids the tongue to say. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of education, marriage and the body, with 1 quotation from the novel in each. [2 marks]"
+            ],
+            "keyTakeaway": "One term in three goes to the daughter, and the novel makes that fraction the whole subject of its feminism."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-lit-topic-16",
       "topicId": "shs-lit-topic-16",
@@ -1539,6 +2179,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-lit-topic-17",
+    "youtubeUrl": "https://www.youtube.com/watch?v=TynzI8J-WY0",
+    "youtubeId": "TynzI8J-WY0",
     "subjectId": "literature",
     "level": "SHS 1",
     "term": 3,
@@ -1573,6 +2215,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Wilfred Owen's \"Dulce et Decorum Est\" is a frequent WASSCE Non-African poetry set text, demanding detailed analysis of irony and horrific sensory diction."
         }
       ],
+"commonMistakes":         [
+            "Calling any clever comparison a metaphysical conceit without the yoking of distant fields",
+            "Reading Donne's flea as a nature poem and missing the argumentative structure of the complaint",
+            "Confusing paradox with irony instead of stating the self-contradiction that holds the line true",
+            "Reporting war poetry as sad description rather than a deliberate attack on romantic illusion",
+            "Calling Anthem for Doomed Youth an elegy and ignoring that it keeps the sonnet's 14 lines",
+            "Attributing Owen's poems to Sassoon, or the Latin title phrase to the wrong poem"
+          ],
       "wassceExamTips": [
         "Whenever you see John Donne's famous line \"Death, thou shalt die\", identify it immediately as a PARADOX and PERSONIFICATION."
       ],
@@ -1582,6 +2232,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Interpret sensory imagery, tone, and irony in anti-war poetic texts"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-lit-17-1",
+            "title": "Three lives in a flea and one circle from two compass legs",
+            "problem": "John Donne's The Flea begins by protesting that a flea has sucked the poet and then his mistress, so that three lives are held in one insect, and the poet then argues that killing it would be more than a murder. His A Valediction: Forbidding Mourning compares two parting souls to the legs of a compass. A candidate answers a 20-mark question on the metaphysical conceit and paradox. Count the conceits. [20 marks]",
+            "stepByStepSolution": [
+              "Define the conceit: a far-fetched comparison yoking two unlike fields, here love and an insect, love and a mathematical instrument. [4 marks]",
+              "Lives in the flea: the insect's own life plus the poet's blood plus the mistress's blood, so 1 plus 1 plus 1 = 3 lives in one creature. [3 marks]",
+              "The compass: 1 fixed foot at the centre and 1 foot that leans and circles, so 1 plus 1 = 2 legs draw 1 perfect ring, which is the argument that the two souls stay entire though parted. [3 marks]",
+              "Name the paradox: the speaker charges one small death with several crimes at once, so the flea's killing is made to hold homicide, suicide and sacrilege in a single nail. [3 marks]",
+              "State the method: metaphysical poetry reasons where lyric poetry feels, and the pleasure is in the ingenuity of the proof rather than in the calm of the image. [4 marks]",
+              "Marks: 20 divided by 5 = 4 marks to each of the 5 movements of conceit, argument, wit, theology and closing couplet. [3 marks]"
+            ],
+            "keyTakeaway": "Metaphysical wit is arithmetic of the unlikely: three lives in one flea, two legs drawing one circle of love."
+          },
+          {
+            "id": "ex-lit-17-2",
+            "title": "War poetry in counted forms: Owen's sonnet and Sassoon's quatrains",
+            "problem": "Wilfred Owen's Anthem for Doomed Youth keeps the sonnet shape of an octave and a sestet, while his Dulce et Decorum Est is built in 5 stanzas running 2, 6, 2, 6 and 2 lines. Siegfried Sassoon's Suicide in the Trenches gives 3 quatrains rhyming abab. Owen drafted the sonnet at Craiglockhart in 1917. A candidate answers a 15-mark question on how these poems strip the illusion of war. Count the forms. [15 marks]",
+            "stepByStepSolution": [
+              "Owen's sonnet: 8 plus 6 = 14 lines, the octave asking what rituals the hurried dead will receive and the sestet answering with the sounds and sights of the field. [3 marks]",
+              "Dulce et Decorum Est in lines: 2 plus 6 plus 2 plus 6 plus 2 = 18 lines, and the long stanzas hold the gas attack while the short ones close on the accusation. [3 marks]",
+              "Sassoon's quatrains: 3 times 4 = 12 lines. [2 marks]",
+              "The rhyme load in Sassoon's stanza is 2 sounds in 4 lines, so 4 divided by 2 = 2 lines ring together, and that neatness is what the poem then breaks with its rebuke to the pub. [3 marks]",
+              "Name the three illusions the war poets reject: glory, the sweetness of youth spent willingly, and the home front's right to applaud what it has not seen. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of form, irony and indictment, with 1 line quoted in each. [2 marks]"
+            ],
+            "keyTakeaway": "The war poets keep the old forms and load them with the new horror: a sonnet for the dead of a machine war, a tidy quatrain for a boy the country silenced."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-lit-topic-17",
       "topicId": "shs-lit-topic-17",
@@ -1633,6 +2313,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-01",
+    "youtubeUrl": "https://www.youtube.com/watch?v=9kW4L9v-VbI",
+    "youtubeId": "9kW4L9v-VbI",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 1,
@@ -1667,6 +2349,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Excavations at Begho in the Bono East Region provided archaeological proof of flourishing pre-colonial medieval markets and iron smelting."
         }
       ],
+"commonMistakes":         [
+            "Giving the century as the first two digits, so 1500 is called the 16th century instead of the 15th, or 1900 the 20th instead of the 19th.",
+            "Treating any old story or tradition as a primary source without asking who witnessed the event.",
+            "Writing BC dates forwards: 300 BC is earlier than 100 BC because the count runs backwards toward Christ.",
+            "Confusing BCE and BC as different systems when they cover the same years with different names.",
+            "Quoting one source as proof instead of cross-checking oral tradition against archaeology or a written record."
+          ],
       "wassceExamTips": [
         "In WASSCE History Section A, always discuss both advantages and limitations when asked to evaluate any historical source."
       ],
@@ -1676,6 +2365,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Explain how multi-disciplinary sources reconstruct Ghana's pre-colonial past"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-01-1",
+            "title": "Centuries, Eras and Building a Linear Timeline",
+            "problem": "Five dates are given: 1471 (Portuguese arrival on the Gold Coast), 1482 (Elmina built), 1844 (Bond of 1844), 1957 (independence) and 2007 (Golden Jubilee). Required: state the century of each, measure the span from 1471 to 2007, draw that span on a linear timeline at a scale of 1 cm to 25 years, then classify the Bond text and a textbook chapter about it as primary or secondary sources. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: A century is a block of 100 years and the first century runs from year 1 to year 100, so the century number is the year divided by 100 rounded up. For 1471 that is 1471 divided by 100 = 14.71, which rounds up to the 15th century. [5 marks]",
+              "Step 2: Apply the same test to the rest: 1482 is 14.82 and so is also the 15th century, 1844 is 18.44 so the 19th century, 1957 is 19.57 so the 20th century, and 2007 is 20.07 so the 21st century. [6 marks]",
+              "Step 3: The span of the whole period is 2007 minus 1471 = 536 years. [4 marks]",
+              "Step 4: On a timeline at 1 cm to 25 years the length needed is 536 divided by 25 = 21.4 cm, so 1471 sits at 0 cm, 1844 at 14.9 cm, 1957 at 19.4 cm and 2007 at 21.4 cm. [5 marks]",
+              "Step 5: The gap from the Bond to independence is 1957 minus 1844 = 113 years, and the Jubilee celebrated 2007 minus 1957 = 50 years of statehood. [2 marks]",
+              "Step 6: Source class: the signed text of the Bond of 1844 is a primary source because it was produced at the event, while a modern textbook chapter about it is a secondary source because it interprets the event afterwards. [3 marks]"
+            ],
+            "keyTakeaway": "Convert a year to a century by dividing by 100 and rounding up, then check that the century range actually contains the year."
+          },
+          {
+            "id": "ex-his-01-2",
+            "title": "Dating an Oral Tradition Against a Written Record",
+            "problem": "A clan tradition says its ancestors left their old home about twelve generations ago. Historians take one generation as roughly 30 years, but argue it may be 25 or 35 years. The earliest written record naming that home is dated 1485. Required: convert the generations to years, date the migration, test the result against the written record, show how wide the error is if the generation length changes, and state two weaknesses of oral tradition. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Convert the tradition to time: 12 times 30 = 360 years before the record. [4 marks]",
+              "Step 2: Count back from the fixed date: 1485 minus 360 = 1125, so on the 30-year rule the move is placed in about the year 1125, which is the 12th century. [4 marks]",
+              "Step 3: Test the length of a generation: at 25 years the span is 12 times 25 = 300 years, giving 1485 minus 300 = 1185, and at 35 years it is 12 times 35 = 420 years, giving 1485 minus 420 = 1065. [5 marks]",
+              "Step 4: The spread of the estimate is 1185 minus 1065 = 120 years, which is 120 divided by 360 times 100 = 33.3 per cent of the whole migration span, so the tradition gives a century, not a year. [3 marks]",
+              "Step 5: Two sources beat one: the written record fixes a date the tradition cannot supply, and the tradition supplies the reason for moving, which the record is silent about, so the historian uses both and states which is being relied on. [2 marks]",
+              "Step 6: Two weaknesses: traditions are usually kept by the ruling lineage and flatter it, and each retelling can drop or add a name, so king lists must be checked against archaeology. [2 marks]"
+            ],
+            "keyTakeaway": "Oral tradition can be dated only by attaching it to a fixed written or archaeological point, and the answer must state the error margin."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-01",
       "topicId": "shs-his-topic-01",
@@ -1727,6 +2446,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-02",
+    "youtubeUrl": "https://www.youtube.com/watch?v=K4WCOBk2e_I",
+    "youtubeId": "K4WCOBk2e_I",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 1,
@@ -1758,6 +2479,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "The Hogbetsotso festival celebrated by the Anlo Ewes commemorates their historic escape from the despotic king Agokoli at Notsie."
         }
       ],
+"commonMistakes":         [
+            "Naming one ethnic group as the original inhabitants of the whole country instead of listing the several groups with separate origins.",
+            "Treating language family and ethnic group as the same thing, so every Ewe speaker is called Guanga or every Guan speaker is called Akan.",
+            "Copying a migration story without separating the route, the cause and the settlement point.",
+            "Confusing a chief's palace at a coastal town with the historic capital of an inland state.",
+            "Calling the north of Ghana empty before the Mole-Dagbani arrivals even though the sites show earlier settlement."
+          ],
       "wassceExamTips": [
         "Differentiate clearly between Kwa language groups (Akan, Ewe, Ga-Adangbe) and Gur language groups (Mole-Dagbon, Gurma)."
       ],
@@ -1767,6 +2495,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Analyze the socio-economic interactions between various pre-colonial Ghanaian peoples"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-02-1",
+            "title": "Turning a Class Survey of Ethnic Origin into Percentages and a Pie Chart",
+            "problem": "A class survey of 200 pupils recorded the following places of family origin: Akan 46, Mole-Dagbani 38, Ewe 34, Guan 25, Ga-Dangme 22, Grusi 18 and other 17. Required: find the percentage of the largest group, of the three largest groups, the angle each of these deserves on a pie chart, the percentage of the three smallest groups, and one thing this table cannot prove. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: The Akan share is 46 divided by 200 times 100 = 23 per cent of the class. [4 marks]",
+              "Step 2: The three largest groups are 46 plus 38 plus 34 = 118 pupils, which is 118 divided by 200 times 100 = 59 per cent, so a clear majority but not all of the class. [5 marks]",
+              "Step 3: A pie chart is 360 degrees for the whole class, so one group of 23 per cent takes 23 per cent of 360 = 82.8 degrees, and the three largest together take 59 per cent of 360 = 212.4 degrees. [4 marks]",
+              "Step 4: The three smallest are 25 plus 22 plus 17 = 64 pupils, so 64 divided by 200 times 100 = 32 per cent. [4 marks]",
+              "Step 5: Add a check: 118 plus 64 = 182, and 200 minus 182 = 18, which is exactly the Grusi row, so all seven rows are separate and none was counted twice. [3 marks]",
+              "Step 6: Limitation: 200 pupils of one school in one town is not the population of Ghana, and family origin records one lineage, so pupils of mixed parentage are counted once only, which understates contact between groups. [5 marks]"
+            ],
+            "keyTakeaway": "Percentages and pie-chart angles come from the same division by the total, and every table must add back to the stated total before it is used."
+          },
+          {
+            "id": "ex-his-02-2",
+            "title": "Map Scale, Straight-Line Distance and the Pace of a Migration",
+            "problem": "A physical map of Ghana is drawn at 1 to 6,000,000. On the map the straight line from Cape Coast to Tamale measures 8 cm. Required: convert the scale to kilometres, find the real distance, the hours a bus takes at 40 km an hour, the marching days for migrants walking 20 km a day, the total journey time allowing two rest days after every five marching days, and one caution about map distance. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Reduce the scale: 6,000,000 divided by 100,000 = 60, so 1 cm on the map stands for 60 km on the ground. [4 marks]",
+              "Step 2: Real distance = 8 times 60 = 480 km. [4 marks]",
+              "Step 3: A bus averaging 40 km an hour takes 480 divided by 40 = 12 hours for the same ground. [4 marks]",
+              "Step 4: Migrants walking 20 km a day need 480 divided by 20 = 24 marching days, and a longer move of 600 km at the same pace needs 600 divided by 20 = 30 marching days. [5 marks]",
+              "Step 5: Resting two days after every five marched gives 30 divided by 5 times 2 = 12 rest days, so the 600 km move takes 30 plus 12 = 42 days in all. [5 marks]",
+              "Step 6: Caution: the 480 km is the straight line on the map, while roads, rivers and the need for water and friendly villages made the real walk longer, so distances argue for gradual moves rather than one march. [3 marks]"
+            ],
+            "keyTakeaway": "Convert scale to a per-centimetre kilometre figure first, and never treat straight-line map distance as the distance a migrating people actually walked."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-02",
       "topicId": "shs-his-topic-02",
@@ -1818,6 +2576,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-03",
+    "youtubeUrl": "https://www.youtube.com/watch?v=OEHEC1gd3jQ",
+    "youtubeId": "OEHEC1gd3jQ",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 1,
@@ -1853,6 +2613,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Chieftaincy remains a constitutionally protected institution under the 1992 Fourth Republican Constitution of Ghana."
         }
       ],
+"commonMistakes":         [
+            "Calling every state without a king lawless or acephalous without checking for councils and age grades.",
+            "Confusing the queen mother with the wife of the chief; she is a stool holder drawn from the royal line.",
+            "Naming the land as the property of the chief instead of a trust held by the chief for the stool.",
+            "Describing the military wing as the whole government of a state.",
+            "Listing only centralised states and losing the marks for comparing them with non-centralised ones."
+          ],
       "wassceExamTips": [
         "Always emphasize that traditional Ghanaian chiefs were not absolute dictators; they could be destooled if they violated customary oaths."
       ],
@@ -1862,6 +2629,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Describe the role of the Tindana (Earth Priest) in northern Ghanaian societies"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-03-1",
+            "title": "Measuring Where Power Sits in an Akan State Council",
+            "problem": "In an assumed Akan state the council has the chief holding the stool, seven divisional chiefs, and each divisional chief keeps four notables. The chief and the seven divisional chiefs meet 48 times a year, while the full council meets only 4 times a year. Required: count the full council, the size of the inner body, the inner body as a percentage of the council, how much more often it meets, and explain what those figures say about the real seat of power. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Count the notables: 7 times 4 = 28 divisional notables. [4 marks]",
+              "Step 2: Full council = 1 plus 7 plus 28 = 36 members. [4 marks]",
+              "Step 3: The inner body is the chief and the seven divisional chiefs, so 1 plus 7 = 8 members, and 8 divided by 36 times 100 = 22.2 per cent of the council. [5 marks]",
+              "Step 4: Frequency of meeting: 48 divided by 4 = 12, so the inner body meets twelve times as often as the full council. [5 marks]",
+              "Step 5: Read the figures: a fifth of the members meet monthly, so day-to-day decisions are made by a small body, while the larger council assembles to ratify, hear appeals and display the unity of the state. [4 marks]",
+              "Step 6: Checks on the chief remain real: the kingmakers, the queen mother of the royal gate, the divisional chiefs and the stool's ownership of land can all expose a chief, and a chief who insults the elders or rules badly may be asked to commit suicide or simply destooled. [3 marks]"
+            ],
+            "keyTakeaway": "In a centralised state count who meets often, not who is many: the small frequent council decides, the large rare council legitimises."
+          },
+          {
+            "id": "ex-his-03-2",
+            "title": "Matrilineal Succession: Counting the Eligible Heirs",
+            "problem": "A stool passes in the female line, so a chief is succeeded by a son of his sister, never by his own son. Kwadu the chief has two sons and one daughter; his sister Efua has one son and two daughters; another sister Abena has three sons. Required: list every possible heir, count all the children named, give the eligible share as a percentage, state the chance of any one heir if the choice were random, name two qualifications the elders add, and say how an acephalous society would choose differently. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Heirs come only through the women of the royal house, so the candidates are the sons of Kwadu's sisters: 1 son of Efua plus 3 sons of Abena = 4 candidates. [4 marks]",
+              "Step 2: Children named total 3 plus 3 plus 3 = 9, of whom 4 are eligible, so 4 divided by 9 times 100 = 44.4 per cent of the children can hold the stool. [5 marks]",
+              "Step 3: Kwadu's own two sons are excluded even though they live in the palace, because they belong to their mother's lineage, which shows that descent and residence are different things. [2 marks]",
+              "Step 4: If the elders chose at random among the four, the chance for any one candidate would be 1 divided by 4 times 100 = 25 per cent. [3 marks]",
+              "Step 5: The real shortlist is narrower than four: the candidate must be of sound body and mind, must not carry a stigma such as theft or cowardice, and should come from the senior branch and the royal gate whose house supplies the queen mother. [4 marks]",
+              "Step 6: Contrast: an acephalous society has no stool to inherit, so authority sits in a council of family heads and age grades that decides by consensus, and a quarrel is settled by the earth priest or the whole village rather than by one heir. [2 marks]"
+            ],
+            "keyTakeaway": "Trace matrilineal succession only through the female births, then let the elders narrow the list by branch, character and health."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-03",
       "topicId": "shs-his-topic-03",
@@ -1913,6 +2710,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-04",
+    "youtubeUrl": "https://www.youtube.com/watch?v=kNo59gaKyio",
+    "youtubeId": "kNo59gaKyio",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 1,
@@ -1949,6 +2748,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Salaga in northern Ghana developed as a premier 18th-century terminus where kola nuts from the forest were exchanged for Sahelian goods."
         }
       ],
+"commonMistakes":         [
+            "Calling the Trans-Saharan exchange a modern market with fixed prices instead of a negotiated and often weight-for-weight trade.",
+            "Attributing the introduction of Islam to the colonial period rather than to the Wangara and Berber traders.",
+            "Saying the king personally owned all the gold when the claim is that gold nuggets were reserved to the crown.",
+            "Writing that silent barter was used because traders could not read.",
+            "Naming only commodities and forgetting the taxes and routes that gave the empires their wealth."
+          ],
       "wassceExamTips": [
         "Salt was as valuable as gold in the forest zones because of dietary necessity and inability to preserve meat without salt."
       ],
@@ -1958,6 +2764,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Explain the role of Islam and Arabic literacy in state administration"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-04-1",
+            "title": "Accounting for a Salt Caravan Across the Sahara",
+            "problem": "A caravan leaves Taghaza with 300 camels, each carrying two slabs of salt weighing 25 kg apiece, and marches 1,200 km to Djenné at 25 km a day. Five per cent of the camels die on the road. At the market one kilogram of salt exchanged for one kilogram of gold dust. Required: total load carried out, marching days, load delivered, the weight of gold it buys in grams, and two reasons specialists rather than villagers ran this trade. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Load out: 300 times 2 times 25 = 15,000 kg of salt. [4 marks]",
+              "Step 2: Days on the march: 1,200 divided by 25 = 48 days, which is 48 divided by 7 = 6.9 weeks of walking. [5 marks]",
+              "Step 3: Camel losses: 5 per cent of 300 = 15 animals died, so 300 minus 15 = 285 camels reached Djenné. [5 marks]",
+              "Step 4: Load delivered: 285 times 50 = 14,250 kg, so 15,000 minus 14,250 = 750 kg of salt was lost with the animals. [4 marks]",
+              "Step 5: Value in gold: weight for weight the salt buys 14,250 kg of gold dust, and 14,250 times 1,000 = 14,250,000 grams. [4 marks]",
+              "Step 6: Two reasons for specialists: only Tuareg and Wangara middlemen knew the wells, the sand tracks and the toll chiefs, and the savanna states taxed the flow instead of producing either salt or gold, so a villager could not run the route alone. [3 marks]"
+            ],
+            "keyTakeaway": "Carry the camel loss through every later figure, because the delivered load, not the load that left, is what the market and the state counted."
+          },
+          {
+            "id": "ex-his-04-2",
+            "title": "Tolls and Profit on a Wangara Salt Voyage",
+            "problem": "Salt cost 3 gold dinars a load at Taghaza and sold for 9 dinars a load at Timbuktu. The town toll was 1 dinar on each load entering and 2 dinars on each load leaving. A Wangara trader moves 60 loads in and returns with 60 loads out. Required: buying cost, selling income, total tolls, net profit in dinars and per load, profit as a percentage of the buying cost, and what this says about how the empires grew rich. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Buying cost: 60 times 3 = 180 dinars paid at the salt pit. [4 marks]",
+              "Step 2: Selling income: 60 times 9 = 540 dinars taken at Timbuktu. [4 marks]",
+              "Step 3: Tolls: 60 times 1 plus 60 times 2 = 60 plus 120 = 180 dinars paid to the authorities. [4 marks]",
+              "Step 4: Net profit = 540 minus 180 minus 180 = 180 dinars, which is 180 divided by 60 = 3 dinars on every load. [4 marks]",
+              "Step 5: Return on the money spent on salt = 180 divided by 180 times 100 = 100 per cent. [2 marks]",
+              "Step 6: Interpretation: the tolls equalled the entire profit, so the trader worked for the treasury as much as for himself, which is why the powers of the Western Sudan grew rich by guarding roads and wells rather than by mining gold themselves. [2 marks]"
+            ],
+            "keyTakeaway": "Show duty as part of cost, not as an afterthought: in long-distance trade the toll could swallow the whole merchant margin."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-04",
       "topicId": "shs-his-topic-04",
@@ -2009,6 +2845,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-05",
+    "youtubeUrl": "https://www.youtube.com/watch?v=n_3n5o0Ye4I",
+    "youtubeId": "n_3n5o0Ye4I",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 2,
@@ -2046,6 +2884,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Elmina Castle and Cape Coast Castle are preserved today as UNESCO World Heritage sites."
         }
       ],
+"commonMistakes":         [
+            "Dating the Portuguese arrival to 1482, the year Elmina was built, instead of 1471, the year they reached the coast.",
+            "Calling the coastal forts colonies in the modern sense when they were trading lodges under an African sovereign.",
+            "Confusing the goods exchanged, so iron and brass are described as exports rather than imports.",
+            "Believing European powers ruled the whole country before 1800.",
+            "Naming the trade monopolies of chartered companies as free trade."
+          ],
       "wassceExamTips": [
         "Nana Kwamin Ansah's speech to Don Diego d'Azambuja prophetically warned that permanent European stone settlements would bring war and strife."
       ],
@@ -2055,6 +2900,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate the cultural and economic consequences of early European contact"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-05-1",
+            "title": "Measuring Three Centuries of European Presence on the Coast",
+            "problem": "The Portuguese reached the Gold Coast in 1471 and built the castle at Elmina in 1482. The British occupied the Dutch forts in 1872 and the whole coast became a colony in 1874. Required: the years from first contact to the castle, from the castle to the Dutch transfer, the length of European castle life at Elmina to 1872, the total from 1471 to 1874, the century of each date, and one caution about calling the early forts colonies. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: 1482 minus 1471 = 11 years passed between sighting the coast and raising São Jorge da Mina. [4 marks]",
+              "Step 2: 1872 minus 1482 = 390 years of castle life at Elmina under European flags. [4 marks]",
+              "Step 3: 1874 minus 1471 = 403 years from first contact to formal colony, and 403 divided by 100 = 4.03 centuries. [5 marks]",
+              "Step 4: Centuries by the rounding rule: 1471 and 1482 fall in the 15th century, 1872 and 1874 in the 19th century, so the whole story runs across five centuries, the 15th, 16th, 17th, 18th and 19th. [4 marks]",
+              "Step 5: Of that 403-year span the first two centuries brought trade only at a few anchored points: 1600 minus 1471 = 129 years in which Europeans did not move inland. [4 marks]",
+              "Step 6: Caution: the forts stood on land held by African rulers, were built with their permission, and depended on their protection for water, food and firewood, so describing them as colonies reads later control back into earlier weakness. [4 marks]"
+            ],
+            "keyTakeaway": "Subtract for spans, divide by 100 for centuries, and always state who owned the land a fort stood on."
+          },
+          {
+            "id": "ex-his-05-2",
+            "title": "A Fort Ledger: Gold Out, Stock In",
+            "problem": "A fort ledger for one year records gold dust sent home worth 24,000 florins, and stock bought on the coast worth 9,000 florins, with the crew and guns costing 6,000 florins. That year the fort shipped 400 ounces of gold. Required: total outlay, net gain, gain as a percentage of outlay, the average value of one ounce of gold dust in florins, the quantity of gold needed to cover the whole outlay, and two non-economic effects of the fort trade. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Outlay: 9,000 plus 6,000 = 15,000 florins spent on stock and running costs. [4 marks]",
+              "Step 2: Net gain = 24,000 minus 15,000 = 9,000 florins. [4 marks]",
+              "Step 3: Return on outlay = 9,000 divided by 15,000 times 100 = 60 per cent. [4 marks]",
+              "Step 4: Price of gold dust: 24,000 divided by 400 = 60 florins for one ounce. [4 marks]",
+              "Step 5: Gold needed to break even: 15,000 divided by 60 = 250 ounces, so 400 minus 250 = 150 ounces carried the profit. [2 marks]",
+              "Step 6: Two effects beyond profit: the forts drew African gold into European price rings and pushed coastal artisans toward European brass and cloth, and they planted a Christian and European habit of written record-keeping that later became the documentary basis of colonial claims. [2 marks]"
+            ],
+            "keyTakeaway": "A fort was a business: work out its outlay, its break-even quantity, and only then judge what it did to the society around it."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-05",
       "topicId": "shs-his-topic-05",
@@ -2106,6 +2981,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-06",
+    "youtubeUrl": "https://www.youtube.com/watch?v=NwYz0XkmplU",
+    "youtubeId": "NwYz0XkmplU",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 2,
@@ -2143,6 +3020,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Assin Manso in the Central Region preserves the 'Donkor Nsuo' (Slave River) where captured captives received their last bath."
         }
       ],
+"commonMistakes":         [
+            "Giving one round figure for the numbers embarked and pretending it is exact.",
+            "Dating the abolition of the trade to 1833 instead of 1807, or treating the two acts as one.",
+            "Describing abolition as the work of British philanthropists alone with no African or slave resistance.",
+            "Confusing the exports of the slave trade with the later exports of palm oil and gold.",
+            "Writing that the trade ended slavery in the Gold Coast, when domestic slavery persisted for decades."
+          ],
       "wassceExamTips": [
         "Differentiate between the abolition of the slave trade (1807) and the emancipation/abolition of slavery itself (1833/1874)."
       ],
@@ -2152,6 +3036,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Outline the factors leading to the British abolition of the slave trade in 1807"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-06-1",
+            "title": "Counting the Human Cost of the Middle Passage",
+            "problem": "A reconstructed shipping record shows about 12,500,000 people embarked on slave ships and about 10,700,000 landed in the Americas. The trade ran from roughly 1525 to 1866, and an average ship carried 250 captives. Required: the number who died, the death rate as a percentage, the length of the trade, the average number taken a year, the number of voyages implied, and two effects on Ghanaian society. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Deaths at sea = 12,500,000 minus 10,700,000 = 1,800,000 people. [4 marks]",
+              "Step 2: Death rate = 1,800,000 divided by 12,500,000 times 100 = 14.4 per cent of those who boarded. [5 marks]",
+              "Step 3: Length of the trade = 1866 minus 1525 = 341 years, and 12,500,000 divided by 341 = 36,657 people a year on average. [5 marks]",
+              "Step 4: Voyages implied: 12,500,000 divided by 250 = 50,000 sailings, and 50,000 divided by 341 = 147 ships a year leaving the coast. [4 marks]",
+              "Step 5: Had the Gold Coast supplied 10 per cent of the total, that is 10 per cent of 12,500,000 = 1,250,000 people lost from the forest belt and its hinterland. [4 marks]",
+              "Step 6: Two effects: the trade removed men and women of working age, which lowered farm output and made widows and orphans dependent, and the gun-and-slave exchange militarised the forest states, so expansion by raiding became a way of paying for imported powder. [3 marks]"
+            ],
+            "keyTakeaway": "Carry the embarked figure, not the landed figure, into every later percentage, and state plainly which total each rate is measured against."
+          },
+          {
+            "id": "ex-his-06-2",
+            "title": "Measuring the Length of the Abolition Struggle",
+            "problem": "Dates in the campaign are 1787 for the abolition committee in London, 1789 for the first parliamentary motion, 1807 for the act ending the trade, 1833 for the act ending slavery in the British colonies, and 1838 for the end of apprenticeship. Required: the years from the first motion to each act, the years of apprenticeship actually served, the whole length of the organised campaign, the delay before slavery was abolished in the Gold Coast protected territories in 1874, and two forces that made abolition happen. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: 1807 minus 1789 = 18 years from the first motion to the abolition of the trade. [4 marks]",
+              "Step 2: 1833 minus 1807 = 26 years between outlawing the shipping of captives and outlawing the holding of people. [4 marks]",
+              "Step 3: Apprenticeship began in 1834 and was ended early in 1838, so 1838 minus 1834 = 4 years were served out of the twelve planned. [4 marks]",
+              "Step 4: The organised campaign ran from 1787 to 1838, so 1838 minus 1787 = 51 years, which is 51 divided by 100 = 0.51 of a century. [4 marks]",
+              "Step 5: For the Gold Coast the ordinance came in 1874, so 1874 minus 1833 = 41 years after the British act before slavery was legally ended in the protected territories. [4 marks]",
+              "Step 6: Two forces: constant agitation by committees, churches and women's societies together with slave revolts and maroon communities, which made the Caribbean islands harder to hold, and the falling profit of sugar as industrial Britain turned to wage labour and free trade. [5 marks]"
+            ],
+            "keyTakeaway": "Abolition came in stages, so distinguish the act against the trade from the act against slavery and the end of apprenticeship."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-06",
       "topicId": "shs-his-topic-06",
@@ -2203,6 +3117,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-07",
+    "youtubeUrl": "https://www.youtube.com/watch?v=U-BmoBW8OIo",
+    "youtubeId": "U-BmoBW8OIo",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 2,
@@ -2237,6 +3153,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Nana Yaa Asantewaa's courageous mobilization of Asante warriors remains a global symbol of female military and anti-colonial leadership."
         }
       ],
+"commonMistakes":         [
+            "Reading the Bond of 1844 as a cession of sovereignty instead of an agreement for judicial cooperation.",
+            "Dating the annexation of the coastal states to 1868 rather than 1874.",
+            "Describing Yaa Asantewaa as the queen of Asante rather than the Queen Mother of Ejisu.",
+            "Giving one cause of resistance instead of separating tax, land and jurisdiction grievances.",
+            "Treating all Africans as collaborators or all as resisters."
+          ],
       "wassceExamTips": [
         "The Golden Stool is the sacred embodiment of the soul of the Asante nation (sunsum); Hodgson's demand was viewed as unforgivable sacrilege."
       ],
@@ -2246,6 +3169,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Assess the heroism of Nana Yaa Asantewaa in the 1900 war defending the Golden Stool"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-07-1",
+            "title": "Dating the Conquest and the Resistance",
+            "problem": "Key dates are the Bond of 1844, the Poll Tax Ordinance of 1852, the Sagrenti War and annexation of 1874, and the War of the Golden Stool of 1900, which ended in March 1901. Required: the interval from the Bond to the 1900 war, from the Bond to the 1874 annexation, from annexation to 1900, the length of the 1900 war in months, the whole conquest phase, and three types of resistance with a named case for each. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: From the Bond to the Golden Stool war: 1900 minus 1844 = 56 years. [4 marks]",
+              "Step 2: From the Bond to the annexation of the coastal states: 1874 minus 1844 = 30 years. [4 marks]",
+              "Step 3: From annexation to war with Asante: 1900 minus 1874 = 26 years, during which the British took the Dutch forts in 1872 and the Fante Confederation was broken. [4 marks]",
+              "Step 4: The war began in April 1900 and the British took Kumasi in March 1901, so the fighting covered about 11 months. [4 marks]",
+              "Step 5: The whole conquest phase ran from 1844 to 1901, so 1901 minus 1844 = 57 years, and the poll tax protest came 1852 minus 1844 = 8 years after the Bond. [4 marks]",
+              "Step 6: Three types of resistance: petition and legal protest by the coastal elites, tax refusal and rising against the 1852 poll tax, and armed war, of which the best cases are the 1874 coastal campaign and the 1900 Asante defence of the Golden Stool. [5 marks]"
+            ],
+            "keyTakeaway": "Arrange the dates first and subtract, because the argument about colonial rule depends on which came first."
+          },
+          {
+            "id": "ex-his-07-2",
+            "title": "What the 1852 Poll Tax Was Supposed to Raise",
+            "problem": "An assumed reading of the Poll Tax Ordinance sets 6 shillings a year on every adult male and 4 shillings on every adult female. In one town there were 3,200 adult males and 3,800 adult females, and collectors reached only 60 per cent of them. Required: the tax on each group, the full roll, the amount actually collected, the shortfall as a percentage, and two reasons the ordinance collapsed. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Male roll: 3,200 times 6 = 19,200 shillings. [4 marks]",
+              "Step 2: Female roll: 3,800 times 4 = 15,200 shillings. [4 marks]",
+              "Step 3: Full roll = 19,200 plus 15,200 = 34,400 shillings. [3 marks]",
+              "Step 4: Collected = 60 per cent of 34,400 = 20,640 shillings, so the shortfall was 34,400 minus 20,640 = 13,760 shillings. [4 marks]",
+              "Step 5: Uncollected share = 13,760 divided by 34,400 times 100 = 40 per cent, which is exactly the 100 minus 60 = 40 per cent that never paid, and the ordinance was withdrawn after protest. [3 marks]",
+              "Step 6: Two reasons it failed: the tax was invented without consulting the chiefs, whose cooperation was needed to assess and collect it, and it taxed women and household heads directly, which the coastal people read as the first step toward full annexation. [2 marks]"
+            ],
+            "keyTakeaway": "A colony could not tax without the chiefs, so an ordinance that ignored them was dead before the arithmetic was even tested."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-07",
       "topicId": "shs-his-topic-07",
@@ -2297,6 +3250,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-08",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Fxbd5yNXAUQ",
+    "youtubeId": "Fxbd5yNXAUQ",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 3,
@@ -2332,6 +3287,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "February 28 Christiansborg Crossroads Crossroads shooting is commemorated annually at the Freedom Monument at Osu."
         }
       ],
+"commonMistakes":         [
+            "Calling the UGCC a mass party without noting its limited membership.",
+            "Placing the founding of the CPP before the 1948 riots.",
+            "Confusing the arrest of the Big Six with the founding of the UGCC.",
+            "Naming only politicians as nationalists and leaving out the market women, youth and workers.",
+            "Thinking the slogan Self-Government Now belonged to the UGCC."
+          ],
       "wassceExamTips": [
         "Remember the exact contrast of slogans: UGCC was gradualist ('within the shortest possible time'); CPP was radical and immediate ('NOW')."
       ],
@@ -2341,6 +3303,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Assess the findings of the Watson Commission and Coussey Committee"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-08-1",
+            "title": "The Quick Rise of Mass Parties, 1897 to 1957",
+            "problem": "Dates to work with are 1897 for the earliest coastal protest society, 1947 for the founding of the UGCC, 1948 for the Accra riots, 1949 for the founding of the CPP, and 1951 for the first election under the new constitution. A party reported dues from 18,000 members in 1949 and 72,000 in 1951. Required: four interval calculations, the growth in membership, the multiple of growth, and two differences in method between the two parties. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: 1947 minus 1897 = 50 years between the oldest form of organised protest and the first nationwide party. [4 marks]",
+              "Step 2: The riots of February 1948 came before the CPP's founding in June 1949, so the interval is 1949 minus 1948 = 1 year, that is about 16 months. [4 marks]",
+              "Step 3: 1949 minus 1947 = 2 years from the UGCC to the CPP, and 1951 minus 1949 = 2 years from the CPP's founding to the election it swept. [4 marks]",
+              "Step 4: 1957 minus 1947 = 10 years from the UGCC to independence, so a generation of politics took one decade. [4 marks]",
+              "Step 5: Membership growth = 72,000 minus 18,000 = 54,000 new members, and 72,000 divided by 18,000 = 4, so declared support quadrupled in two years. [4 marks]",
+              "Step 6: Two differences of method: the UGCC sent petitions and delegations to London and spoke for educated men, while the CPP held mass meetings, built branch networks in the towns and countryside, and used the phrase Self-Government Now, which made delay itself the issue. [5 marks]"
+            ],
+            "keyTakeaway": "The nationalist story is short: measure it in years from 1947, and the shift from petition to mass mobilisation explains the speed."
+          },
+          {
+            "id": "ex-his-08-2",
+            "title": "How Far a Nationalist Newspaper Reached",
+            "problem": "A party newspaper printed 4,000 copies in 1949 and 15,000 copies in 1951. Each copy is assumed to be read by 5 people, and the population of the colony is taken as 5,000,000. Required: readership in each year, the increase in readers, the percentage growth, the share of the whole population reached in 1951, and two cautions about the figures. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Readers in 1949 = 4,000 times 5 = 20,000 people. [4 marks]",
+              "Step 2: Readers in 1951 = 15,000 times 5 = 75,000 people. [4 marks]",
+              "Step 3: The increase = 75,000 minus 20,000 = 55,000 readers, so growth = 55,000 divided by 20,000 times 100 = 275 per cent. [5 marks]",
+              "Step 4: Share of the population in 1951 = 75,000 divided by 5,000,000 times 100 = 1.5 per cent. [5 marks]",
+              "Step 5: Read against the towns: if 300,000 people lived in the four main towns, then 75,000 divided by 300,000 times 100 = 25 per cent of urban readers were being reached, which is a very different picture from the 1.5 per cent national figure. [4 marks]",
+              "Step 6: Two cautions: the assumption of 5 readers per copy is an estimate and cannot be proved, and a printer's circulation figure counts copies sent out, not copies actually bought or read. [3 marks]"
+            ],
+            "keyTakeaway": "Report both the national percentage and the urban percentage, because a small national share can still be a large share of the politically active towns."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-08",
       "topicId": "shs-his-topic-08",
@@ -2392,6 +3384,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-09",
+    "youtubeUrl": "https://www.youtube.com/watch?v=U664NWHqBmI",
+    "youtubeId": "U664NWHqBmI",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 3,
@@ -2427,6 +3421,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana was the first sub-Saharan African nation to gain independence from colonial rule, inspiring liberation struggles across the continent."
         }
       ],
+"commonMistakes":         [
+            "Writing the Convention Peoples Party won the 1951 election with all the seats, when the house was partly nominated.",
+            "Confusing the 1954 and 1956 constitutions.",
+            "Thinking the plebiscite of 1956 decided independence for Togoland only.",
+            "Dropping the year 1952 when explaining why Nkrumah could not at once be Prime Minister.",
+            "Confusing independence with the republic."
+          ],
       "wassceExamTips": [
         "Remember: March 6, 1957 was Independence Day (Dominion status under the Queen); July 1, 1960 was Republic Day (severed British monarchy ties)."
       ],
@@ -2436,6 +3437,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Examine the birth of the First Republic on July 1, 1960"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-09-1",
+            "title": "Reading the Election Results that Opened the Road to Independence",
+            "problem": "A table of general elections gives these results for the CPP: 1951, 34 seats out of 38 elected seats; 1954, 71 seats out of 104; 1956, 71 seats out of 100. Required: the percentage of the seats won in each election, the change in seats between 1951 and 1954, the number of seats above an outright majority in 1954, and what the fall in percentage between 1954 and the rise in 1956 shows about the size of the house and the opposition. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: 1951 share = 34 divided by 38 times 100 = 89.5 per cent of the elected seats. [5 marks]",
+              "Step 2: 1954 share = 71 divided by 104 times 100 = 68.3 per cent, and 1956 share = 71 divided by 100 times 100 = 71 per cent. [5 marks]",
+              "Step 3: Seats gained between 1951 and 1954: 71 minus 34 = 37 more seats, so the party's hold on the house grew even while its percentage fell. [4 marks]",
+              "Step 4: An outright majority of 104 seats needs 53, so 71 minus 53 = 18 seats over the line in 1954. [4 marks]",
+              "Step 5: Check the 1956 position: a majority of 100 seats needs 51, so 71 minus 51 = 20 seats clear, and the opposition bloc held 100 minus 71 = 29 seats. [4 marks]",
+              "Step 6: Explanation: the percentage fell in 1954 mainly because the house was made much larger, and the rise in 1956 came from a split opposition fighting a single issue, the future of Trans-Volta Togoland, so a winner takes most of a bigger house when its rivals divide. [3 marks]"
+            ],
+            "keyTakeaway": "Convert seats to percentages before comparing elections, and always say which majority line the house required."
+          },
+          {
+            "id": "ex-his-09-2",
+            "title": "Counting the Constitutional Steps from Riot to Republic",
+            "problem": "The sequence runs: riots in 1948, the Coussey proposals in 1949, the constitution used for the 1951 election, a new constitution in 1954, independence on 6 March 1957, and the republic on 1 July 1960. Nkrumah became prime minister in 1952. Required: the interval from the riots to each of the next three steps, the length of the whole transition, the years Nkrumah served as prime minister before independence, the delay from independence to the republic, and why the 1956 result fixed the date of freedom. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: 1951 minus 1948 = 3 years from the riots to the first election under the new constitution. [4 marks]",
+              "Step 2: 1954 minus 1951 = 3 years between constitutions, and 1957 minus 1954 = 3 years from that constitution to independence. [5 marks]",
+              "Step 3: The whole transition ran 1948 to 1957, so 1957 minus 1948 = 9 years, and 9 divided by 3 = 3, meaning roughly one constitutional stage every three years. [4 marks]",
+              "Step 4: Nkrumah led the government from 1952, so 1957 minus 1952 = 5 years as prime minister before independence, and 1957 minus 1951 = 6 years from the election victory. [5 marks]",
+              "Step 5: The republic came 1960 minus 1957 = 3 years after independence, so the monarchy was kept for just over three years, from March 1957 to July 1960. [3 marks]",
+              "Step 6: The 1956 general election was fought on the question whether the country was ready, and a majority for the CPP was taken as a mandate, so the British set the date of 6 March 1957 after consulting the elected government. [4 marks]"
+            ],
+            "keyTakeaway": "Independence was reached by stages, so date each constitution and count the gaps rather than treating 1957 as a sudden gift."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-09",
       "topicId": "shs-his-topic-09",
@@ -2487,6 +3518,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-10",
+    "youtubeUrl": "https://www.youtube.com/watch?v=sAphpV89wcM",
+    "youtubeId": "sAphpV89wcM",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 3,
@@ -2521,6 +3554,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana's Fourth Republic has achieved over three decades of uninterrupted constitutional democracy and peaceful presidential transitions."
         }
       ],
+"commonMistakes":         [
+            "Confusing the AFRC of 1979 with the PNDC of 1981.",
+            "Placing the coup against Nkrumah in 1964 instead of 1966.",
+            "Calling 1960 the end of the First Republic.",
+            "Naming the leaders of each regime.",
+            "Assuming the Fourth Republic began with the 1992 election rather than the constitution."
+          ],
       "wassceExamTips": [
         "When discussing causes of Ghanaian military coups, analyze economic grievances (inflation, food shortages) alongside political authoritarianism."
       ],
@@ -2530,6 +3570,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Analyze the socio-political factors leading to the drafting and adoption of the 1992 Constitution"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-10-1",
+            "title": "Measuring How Much of the First Thirty-Six Years Was Army Rule",
+            "problem": "Counting whole years, military rule covered 1966 to 1969, 1972 to 1979 and 1981 to 1993. Successful takeovers occurred in 1966, 1972, 1979 and 1981. Required: total years of military rule, that share of 1957 to 1993 as a percentage, the years of constitutional rule, the average interval between takeovers, the gaps themselves, and two reasons coups recurred. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Years of army rule: 1969 minus 1966 = 3, 1979 minus 1972 = 7, and 1993 minus 1981 = 12, so the count is 3 plus 7 plus 12 = 22 years. [4 marks]",
+              "Step 2: The whole span is 1993 minus 1957 = 36 years, so 22 divided by 36 times 100 = 61.1 per cent was passed under a military government. [5 marks]",
+              "Step 3: Constitutional rule therefore covered 36 minus 22 = 14 years, which is 14 divided by 36 times 100 = 38.9 per cent, and 61.1 plus 38.9 = 100, which checks the split. [4 marks]",
+              "Step 4: Four takeovers in 36 years give 36 divided by 4 = 9 years on average between coups. [4 marks]",
+              "Step 5: The gaps themselves were 1972 minus 1966 = 6 years, 1979 minus 1972 = 7 years, and 1981 minus 1979 = 2 years, so (6 plus 7 plus 2) divided by 3 = 5 years as the mean interval, with 2 years as the shortest. [4 marks]",
+              "Step 6: Two reasons for recurrence: the army was the only disciplined national institution left after party politics was discredited, and economic collapse stripped civilian governments of the money to reward supporters, so officers with pay and prospects could intervene. [4 marks]"
+            ],
+            "keyTakeaway": "State the counting rule before the arithmetic, because 21 or 22 years of military rule depends on whether the last year is counted."
+          },
+          {
+            "id": "ex-his-10-2",
+            "title": "Comparing the Lifespan of Ghana's Republics",
+            "problem": "The First Republic began in 1960 and ended in 1966, the Second ran from 1969 to 1972, the Third from 1979 to 1981, and the Fourth dates from the constitution of 1992 and the government sworn in in 1993, counted here to 2025. Required: the length of each of the first three republics, their combined total, how many times longer the Fourth Republic has lasted, the average length of the first three, and two features of the 1992 constitution that help explain the difference. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: First Republic: 1966 minus 1960 = 6 years. [3 marks]",
+              "Step 2: Second Republic: 1972 minus 1969 = 3 years, and Third Republic: 1981 minus 1979 = 2 years. [3 marks]",
+              "Step 3: Combined, the first three ran 6 plus 3 plus 2 = 11 years, so the average length was 11 divided by 3 = 3.7 years. [3 marks]",
+              "Step 4: The Fourth Republic has run 2025 minus 1993 = 32 years, so 32 divided by 11 = 2.9 times as long as the other three together. [4 marks]",
+              "Step 5: Measured against the average of the first three, 32 divided by 3.7 = 8.6, so the living republic is roughly eight times older than a typical earlier one. [4 marks]",
+              "Step 6: Two protective features: a limit of two four-year terms for a president, which removes the temptation to rule forever, and an independent, time-bound electoral commission that must hold elections on schedule, backed by a bill of rights the courts can enforce. [3 marks]"
+            ],
+            "keyTakeaway": "Compare republics by their lifespan in years, then trace the difference to the rules that limit a president and fix the election date."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-10",
       "topicId": "shs-his-topic-10",
@@ -2581,6 +3651,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-11",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3pewpzkZwOY",
+    "youtubeId": "3pewpzkZwOY",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 2,
@@ -2618,6 +3690,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "The Fante Confederation is celebrated by Ghanaian constitutional historians as the earliest written blueprint for an African federal democratic state."
         }
       ],
+"commonMistakes":         [
+            "Calling the Confederation a fully working state when it lasted only about six years.",
+            "Confusing the capital at Mankessim with the seat of the British governor at Cape Coast.",
+            "Thinking the Confederation was created by the British.",
+            "Dating the Anglo-Dutch transfer of forts to the wrong year.",
+            "Naming the Confederation's members without giving the reason each chief joined."
+          ],
       "wassceExamTips": [
         "In WASSCE History: The Fante Confederation was a coalition of BOTH traditional kings and Western-educated elites working in harmony."
       ],
@@ -2627,6 +3706,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Explain why the British colonial authorities suppressed and arrested the Confederation leaders"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-11-1",
+            "title": "The Three Years of the Fante Confederation Constitution",
+            "problem": "The dates are the Bond of 1844, the Anglo-Dutch Convention of 1868, the ratified Confederation constitution of 1871, the British annexation of the protected states in 1874, and independence in 1957. Required: four interval calculations, the length of the Confederation's active life, the gap between its constitution and independence, and two reasons the experiment collapsed. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: 1868 minus 1844 = 24 years between the Bond, which invited British judges, and the Convention that handed the Dutch forts to Britain. [4 marks]",
+              "Step 2: 1871 minus 1868 = 3 years between the Convention and the written constitution agreed at Mankessim. [4 marks]",
+              "Step 3: The Confederation functioned from 1868 to 1874, so 1874 minus 1868 = 6 years of active life in all. [4 marks]",
+              "Step 4: Its constitution was tested for only 1874 minus 1871 = 3 years before Britain annexed the protected states. [3 marks]",
+              "Step 5: Independence came in 1957, so 1957 minus 1871 = 86 years separated the first written African constitution on the coast from self-rule, and 1957 minus 1874 = 83 years from its suppression. [5 marks]",
+              "Step 6: Two reasons for collapse: Britain would not accept a united African power that could control the export trade and refuse British courts and customs, and the member states were divided, since some Fante chiefs preferred British protection against Asante and resented Confederation taxes and discipline, while the Dutch withdrawal from Elmina in 1868 gave the whole affair its first grievance. [5 marks]"
+            ],
+            "keyTakeaway": "The Confederation is a six-year experiment, so judge it by what it attempted, not by the shortness of its life."
+          },
+          {
+            "id": "ex-his-11-2",
+            "title": "Why the Confederation Could Not Pay for Its Own Ambitions",
+            "problem": "In an assumed reading of its proposals, the Confederation levied one pound a year on each of 8,000 houses, but 25 per cent of the levy defaulted. It planned an army of 500 men at 60 pounds a soldier a year and a supreme court costing 400 pounds a year. Required: the expected levy, the money that actually arrived, the cost of the army, the shortfall, the percentage of the army the treasury could keep, the total budget needed, and what this says about the Confederation's failure. [26 marks]",
+            "stepByStepSolution": [
+              "Step 1: Expected levy = 8,000 times 1 = 8,000 pounds a year. [3 marks]",
+              "Step 2: Default: 25 per cent of 8,000 = 2,000 pounds never paid, so 8,000 minus 2,000 = 6,000 pounds reached the treasury. [4 marks]",
+              "Step 3: Army cost = 500 times 60 = 30,000 pounds a year. [4 marks]",
+              "Step 4: Total needed = 30,000 plus 400 = 30,400 pounds, so the deficit was 30,400 minus 6,000 = 24,400 pounds. [5 marks]",
+              "Step 5: Men that could be paid for: 6,000 divided by 60 = 100 soldiers, which is 100 divided by 500 times 100 = 20 per cent of the planned force. [5 marks]",
+              "Step 6: Conclusion: a state that cannot collect taxes cannot keep courts or troops, so the Confederation's modernising programme of a supreme court, schools and roads depended on voluntary obedience which its own member chiefs withheld, and British force then finished what its budget had already undone. [5 marks]"
+            ],
+            "keyTakeaway": "Test a polity by its revenue: the Confederation failed the tax test before it failed the military one."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-11",
       "topicId": "shs-his-topic-11",
@@ -2678,6 +3787,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-12",
+    "youtubeUrl": "https://www.youtube.com/watch?v=bzbEI2UJomQ",
+    "youtubeId": "bzbEI2UJomQ",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 2,
@@ -2712,6 +3823,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "The ancient Larabanga Mosque in the Savannah Region, built in Sudanese mud-brick architectural style, stands as testament to northern Ghana's medieval Islamic heritage."
         }
       ],
+"commonMistakes":         [
+            "Confusing Samori Ture, who fought the French far to the west, with Babatu, whose cavalry raided the central savanna.",
+            "Dating the British protectorate over the Northern Territories to the partition of 1884 rather than to the years around 1901.",
+            "Describing Islam as a foreign religion with no Ghanaian converts of its own.",
+            "Treating the jihad movements only as slave raids and ignoring the schools, courts and writing they brought.",
+            "Forgetting the Wangara traders, who carried the faith into the forest fringes without a sword."
+          ],
       "wassceExamTips": [
         "Distinguish between peaceful Islamic diffusion via Mande/Wangara traders and the 19th-century military campaigns of the Zabarima raiders."
       ],
@@ -2721,6 +3839,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Analyze the enduring cultural and administrative influence of Islam on northern chieftaincy"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-12-1",
+            "title": "Measuring the Age of Islam in the Western Sudan",
+            "problem": "Use these dates: Islam established in the western Sudan by about 1050, the Sokoto jihad beginning in 1804, Samori Ture resisting from 1882 to 1898, and the British declaring the protectorate over the Northern Territories in 1901. Required: the interval from the jihad to the protectorate, the length of Samori's resistance, the years between the arrival of the faith and the jihad, the gap between the fall of Samori and the protectorate, and two ways the jihad changed chieftaincy in the north. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: From the jihad to protectorate: 1901 minus 1804 = 97 years, so reform movements reshaped the north for nearly a century before colonial rule. [4 marks]",
+              "Step 2: Samori's resistance ran from 1882 to 1898, so 1898 minus 1882 = 16 years of organised war against French advance. [4 marks]",
+              "Step 3: The faith was present from about 1050, so 1804 minus 1050 = 754 years passed between its arrival and the nineteenth-century jihad, which shows Islam long predates the reform movements. [5 marks]",
+              "Step 4: The protectorate came 1901 minus 1898 = 3 years after Samori was captured, so British authority arrived in a region already reorganised by cavalry, courts and Qur'anic schools. [4 marks]",
+              "Step 5: Put the century in perspective: 1901 minus 1804 = 97 years is 97 divided by 100 = 0.97 of a century of the jihad era. [4 marks]",
+              "Step 6: Two changes to chieftaincy: in some states a Lamido or emir replaced the old chief, with Islamic law, a horse-based military following and tribute; in others, such as the Dagaba country, the raids pushed communities to hill refuges and the old shrine priesthood kept authority, so the jihad both created and resisted new chiefly lines. [4 marks]"
+            ],
+            "keyTakeaway": "Separate the long peaceful entry of Islam through trade from the short violent phase of the jihads, and date each separately."
+          },
+          {
+            "id": "ex-his-12-2",
+            "title": "Where Muslim Settlements Were: Reading a Table of Trader Returns",
+            "problem": "A question gives returns of resident trading households in six savanna towns: Salaga 380, Yendi 260, Wa 220, Bawku 140, Tamale 100 and Daboya 60, a total of 1,160 households. Required: the percentage for the largest town, the combined share of the two largest, the ratio of the largest to the smallest, the share held by the remaining four towns, a check that the percentages add to 100, and what the pattern says about how Islam entered Ghana. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Salaga's share = 380 divided by 1,160 times 100 = 32.8 per cent of the households. [5 marks]",
+              "Step 2: Yendi's share = 260 divided by 1,160 times 100 = 22.4 per cent, so 380 plus 260 = 640 households in the two greatest towns. [4 marks]",
+              "Step 3: Combined share of the two largest = 640 divided by 1,160 times 100 = 55.2 per cent. [4 marks]",
+              "Step 4: The largest town holds 380 divided by 60 = 6.3 times as many traders as Daboya, so the faith was heavily concentrated. [4 marks]",
+              "Step 5: The other four towns held 1,160 minus 640 = 520 households, which is 520 divided by 1,160 times 100 = 44.8 per cent, and 32.8 plus 22.4 plus 44.8 = 100, so the table is consistent. [5 marks]",
+              "Step 6: Reading: the settlements cluster on the trade routes through the central savanna, so Islam entered Ghana chiefly through market towns and pilgrim-caravan nodes, and that is why the old Muslim quarters of Salaga and Daboya predate the colonial borders drawn around them. [3 marks]"
+            ],
+            "keyTakeaway": "Concentration, not total numbers, is what a settlement table proves, so always report the top two shares."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-12",
       "topicId": "shs-his-topic-12",
@@ -2772,6 +3920,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-13",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Vss44vnVzLc",
+    "youtubeId": "Vss44vnVzLc",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 3,
@@ -2811,6 +3961,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "The Guggisberg Constitution of 1925 empowered paramount chiefs through Provincial Councils, sparking fierce pushback from nationalist lawyer J.E. Casely Hayford."
         }
       ],
+"commonMistakes":         [
+            "Confusing Lugard's policy in Northern Nigeria with the Gold Coast ordinances.",
+            "Dating the Native Administration Ordinance to 1925 instead of 1927.",
+            "Writing that indirect rule used elected chiefs answerable to the people.",
+            "Assuming indirect rule was applied in the forest villages exactly as in the northern territories.",
+            "Claiming the educated African elite welcomed the strengthening of chiefs."
+          ],
       "wassceExamTips": [
         "In WASSCE essays: Contrast British Indirect Rule (preserved culture, cheap, but kept people divided) with French Direct Rule / Assimilation (sought to transform Africans into French citizens)."
       ],
@@ -2820,6 +3977,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate why educated Africans fiercely opposed the Indirect Rule system"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-13-1",
+            "title": "Dating Indirect Rule and Measuring the Officer Shortage",
+            "problem": "The dates are 1900 for Lugard's post in Northern Nigeria, 1922 for his book the Dual Mandate, 1927 for the Gold Coast Native Administration Ordinance, 1936 for the revised ordinance and 1957 for independence. A question also gives a staffing figure of one European officer for every 40,000 people in the north against one for every 6,000 in the coastal colony. Required: four interval calculations, the ratio implied by the staffing figures, and two results of that ratio. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: 1922 minus 1900 = 22 years between Lugard's appointment and the published statement of the policy. [4 marks]",
+              "Step 2: 1927 minus 1922 = 5 years between the book and the ordinance that introduced its method on the Gold Coast. [4 marks]",
+              "Step 3: 1936 minus 1927 = 9 years to the revised ordinance, and 1957 minus 1936 = 21 years from that revision to independence. [4 marks]",
+              "Step 4: The policy governed for 1957 minus 1927 = 30 years on the Gold Coast, which is 30 divided by 100 = 0.3 of a century. [4 marks]",
+              "Step 5: Staffing ratio: 40,000 divided by 6,000 = 6.7, so one northern officer carried about seven times the load of a coastal officer, which made the chief the real administrator. [5 marks]",
+              "Step 6: Two results: chiefs gained judicial, police and tax powers while the educated elite were shut out of the Native Authority, and development money was spent sparingly in the north, so the shortage of officers left a lasting gap in schools, roads and clinics between north and south. [4 marks]"
+            ],
+            "keyTakeaway": "Indirect rule was a cheap-government policy, so explain it through the officer-to-population ratio rather than through Lugard's phrases."
+          },
+          {
+            "id": "ex-his-13-2",
+            "title": "A Native Treasury Budget Worked Out",
+            "problem": "In an assumed division the Native Treasury collected 4,800 pounds a year in chiefs' fees and court fines and received a colonial grant of 2,000 pounds. It spent 45 per cent on salaries, 20 per cent on public works, 15 per cent on courts and saved the rest. One mile of graded laterite road cost 120 pounds. Required: total revenue, each spending head in pounds, total spending, the amount saved and its percentage, the miles of road the savings could build, and one criticism of how such a budget was set. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Revenue = 4,800 plus 2,000 = 6,800 pounds. [3 marks]",
+              "Step 2: Salaries = 45 per cent of 6,800 = 3,060 pounds, public works = 20 per cent of 6,800 = 1,360 pounds, and courts = 15 per cent of 6,800 = 1,020 pounds. [5 marks]",
+              "Step 3: Spending = 3,060 plus 1,360 plus 1,020 = 5,440 pounds. [3 marks]",
+              "Step 4: Saved = 6,800 minus 5,440 = 1,360 pounds, which is 1,360 divided by 6,800 times 100 = 20 per cent of revenue. [4 marks]",
+              "Step 5: Road work: 1,360 divided by 120 = 11 miles of laterite road a year from the savings. [2 marks]",
+              "Step 6: Criticism: the budget was settled between the district officer and the chief, with no elected body to ask for it, so nearly half the money fed the Native Authority's own payroll while the villages waited on 11 miles of road. [3 marks]"
+            ],
+            "keyTakeaway": "Show the payroll percentage first, because that single figure carries the whole criticism of Native Authority finance."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-13",
       "topicId": "shs-his-topic-13",
@@ -2871,6 +4058,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-14",
+    "youtubeUrl": "https://www.youtube.com/watch?v=w9aZ88Pwp9c",
+    "youtubeId": "w9aZ88Pwp9c",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 3,
@@ -2908,6 +4097,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Akropong Presby Training College (established 1848) and Mfantsipim School (1876) remain pioneering monuments of early missionary education."
         }
       ],
+"commonMistakes":         [
+            "Confusing the Basel Mission with the Bremen Mission and giving them the same arrival year.",
+            "Dating the Education Ordinance that granted aid to mission schools to 1852.",
+            "Writing that missions taught reading only and did nothing for agriculture or printing.",
+            "Attributing the introduction of cocoa to a missionary rather than to Tetteh Quarshie.",
+            "Assuming vernacular Bible translation weakened Ghanaian languages instead of fixing their orthographies."
+          ],
       "wassceExamTips": [
         "J.G. Christaller is celebrated for producing the comprehensive Twi Dictionary and translating the Bible into Akuapem Twi."
       ],
@@ -2917,6 +4113,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Assess the negative cultural disruption caused by early missionary teachings"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-14-1",
+            "title": "The Mission Timeline in Years",
+            "problem": "Dates to use: 1482 for the chapel at Elmina with the Portuguese, 1828 for the Basel Mission on the coast, 1835 for the Wesleyan Methodists, 1845 for the Bremen Mission, 1887 for the Education Ordinance granting aid to mission schools, and 1925 for the Diamond Jubilee of the Basel work. Required: five interval calculations and two cultural clashes produced by mission activity. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: 1835 minus 1828 = 7 years between the Basel and Methodist arrivals. [4 marks]",
+              "Step 2: 1887 minus 1828 = 59 years from the first Basel station to the ordinance that paid for mission schooling. [4 marks]",
+              "Step 3: 1845 minus 1828 = 17 years between Basel and Bremen landings, and 1887 minus 1845 = 42 years from Bremen's arrival to the same ordinance. [4 marks]",
+              "Step 4: 1925 minus 1828 = 97 years of Basel work on the coast by its jubilee, which is 97 divided by 100 = 0.97 of a century. [4 marks]",
+              "Step 5: Catholic presence began at Elmina, so 1828 minus 1482 = 346 years separated the first Christian building on the coast from the Protestant missions, and 1887 minus 1482 = 405 years from that chapel to state aid for schools. [5 marks]",
+              "Step 6: Two clashes: mission teaching recast polygyny, libation and the funeral rites as heathen, which split families and created a Christian elite distinguishable by dress, names and burial, while the work of translating the Bible into Akuapem Twi, Ewe and Ga fixed writing systems that schools and later the state adopted. [4 marks]"
+            ],
+            "keyTakeaway": "Anchor mission history on the schooling dates, because that is where the missions changed Ghanaian society most durably."
+          },
+          {
+            "id": "ex-his-14-2",
+            "title": "Whether the Grant Ever Covered the Teachers",
+            "problem": "Returns for 1890 give three mission schools: Akropong 320 pupils, Cape Coast 280 pupils and Elmina 200 pupils. The annual grant was 6 shillings per pupil, each school employed 6 teachers, and a teacher cost 60 shillings a month. Required: total pupils, each school's percentage share, the yearly grant, the yearly wage bill, the shortfall, the percentage of wages the grant covered, and one conclusion about grants-aid. [21 marks]",
+            "stepByStepSolution": [
+              "Step 1: Pupils = 320 plus 280 plus 200 = 800 children. [3 marks]",
+              "Step 2: Shares: 320 divided by 800 times 100 = 40 per cent, 280 divided by 800 times 100 = 35 per cent, and 200 divided by 800 times 100 = 25 per cent. [5 marks]",
+              "Step 3: Grant = 800 times 6 = 4,800 shillings a year. [3 marks]",
+              "Step 4: Wage bill: 3 times 6 = 18 teachers, and 18 times 60 times 12 = 12,960 shillings a year. [4 marks]",
+              "Step 5: Shortfall = 12,960 minus 4,800 = 8,160 shillings, so the grant covered 4,800 divided by 12,960 times 100 = 37 per cent of the wages alone. [4 marks]",
+              "Step 6: Conclusion: grants-aid never met the wage bill, so missions depended on school fees, church collections and pupils working mission farms, while the colony obtained literate clerks and catechists at a fraction of the true cost. [2 marks]"
+            ],
+            "keyTakeaway": "Compare the grant with the wage bill, not with the number of pupils, and the real cost-sharing of mission education becomes obvious."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-14",
       "topicId": "shs-his-topic-14",
@@ -2968,6 +4194,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-15",
+    "youtubeUrl": "https://www.youtube.com/watch?v=JeRV7S-t_1c",
+    "youtubeId": "JeRV7S-t_1c",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 3,
@@ -3003,6 +4231,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Tetteh Quarshie Memorial Farm at Mampong-Akwapim preserves the original cocoa trees that founded Ghana's national cash-crop economy."
         }
       ],
+"commonMistakes":         [
+            "Giving one year for both the introduction of cocoa and its first commercial export.",
+            "Describing the railways as built for passengers rather than to move ore, cocoa and timber to the ports.",
+            "Confusing European-owned mineral concessions with African small-scale pitting.",
+            "Attributing the cocoa boom only to European planters and ignoring the African farmer-accumulator.",
+            "Writing that export earnings went entirely to producers instead of partly to duties and marketing boards."
+          ],
       "wassceExamTips": [
         "In WASSCE: The colonial railway was NOT constructed for social welfare or passenger comfort; it was strategically built to evacuate minerals and cocoa to coastal ports."
       ],
@@ -3012,6 +4247,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate the dangers of monoculture cash-crop dependency on Ghana's long-term economic development"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-15-1",
+            "title": "Tree Counts and Crop Years on a Cocoa Farm",
+            "problem": "A farmer clears 3 hectares and plants cocoa trees at 4 metres apart in rows 4 metres apart. One hectare is 10,000 square metres. Twenty per cent of the plants fail. Cocoa bears some pods from the fourth year and reaches full bearing in the seventh year, and the farm was planted in 1904. Required: space per tree, trees per hectare, trees on the farm, trees surviving, the years of first and full crop, and two consequences of the cocoa boom. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Ground per tree = 4 times 4 = 16 square metres. [4 marks]",
+              "Step 2: Trees per hectare = 10,000 divided by 16 = 625 trees. [4 marks]",
+              "Step 3: On 3 hectares the farmer set out 3 times 625 = 1,875 trees. [4 marks]",
+              "Step 4: Failures = 20 per cent of 1,875 = 375 gaps, so 1,875 minus 375 = 1,500 trees survived to bear. [5 marks]",
+              "Step 5: Crop years: first pods came in 1904 plus 4 = 1908 and full bearing in 1904 plus 7 = 1911, so the planter waited 7 years with no cocoa income and had to grow food crops meanwhile. [5 marks]",
+              "Step 6: Two consequences: cocoa made the Forest Region a region of cash-earning smallholders who paid for education, stools and houses, and it pushed into food-crop land and labour, so the colony began importing staples even while its exports rose. [3 marks]"
+            ],
+            "keyTakeaway": "Cocoa history is a gestation story: the four-to-seven-year gap explains why farmers needed food crops, credit and land law all at once."
+          },
+          {
+            "id": "ex-his-15-2",
+            "title": "Porterage Against the Railway",
+            "problem": "A head porter carries 25 kg and walks 20 km a day, paid 6 pence for a day's carrying. One tonne is 1,000 kg and there are 12 pence in a shilling. The railway moved a tonne 100 km in about one third of a day and charged 20 shillings. Required: loads to move a tonne, days per load, porter-days for a tonne over 100 km, the cost in shillings, how many times dearer porterage was, and two effects of the railway. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Loads for a tonne: 1,000 divided by 25 = 40 porter loads. [4 marks]",
+              "Step 2: Days for one load over 100 km: 100 divided by 20 = 5 days. [4 marks]",
+              "Step 3: Porter-days = 40 times 5 = 200 days to move one tonne 100 km. [4 marks]",
+              "Step 4: Cost = 200 times 6 = 1,200 pence, and 1,200 divided by 12 = 100 shillings. [5 marks]",
+              "Step 5: Compare prices: 100 divided by 20 = 5, so the railway charged one fifth of the porter price, and time fell from 200 porter-days to about 0.33 of a day. [4 marks]",
+              "Step 6: Two effects: the lines fixed export movement through Sekondi and Accra and tied the mine and cocoa districts to European-owned transport, and head-portering collapsed along the rail corridor while it survived on the branches the rails never reached. [4 marks]"
+            ],
+            "keyTakeaway": "Convert porterage into porter-days and shillings per tonne, then the railway becomes a number rather than a story."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-15",
       "topicId": "shs-his-topic-15",
@@ -3063,6 +4328,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-16",
+    "youtubeUrl": "https://www.youtube.com/watch?v=b6DLTuTenvA",
+    "youtubeId": "b6DLTuTenvA",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 3,
@@ -3100,6 +4367,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "The W.E.B. Du Bois Memorial Centre for Pan-African Culture and the George Padmore Research Library in Accra stand as enduring monuments of Pan-Africanism."
         }
       ],
+"commonMistakes":         [
+            "Confusing Pan-Africanism with the Organisation of African Unity.",
+            "Writing the movement as an African affair with no African-American or Caribbean leadership.",
+            "Describing the 1958 Accra conference as a meeting of heads of state.",
+            "Dating Ghana's financial sponsorship of liberation movements to after 1966.",
+            "Naming Du Bois as a founder of the UGCC."
+          ],
       "wassceExamTips": [
         "Manchester 1945 was pivotal because for the first time, African trade unionists, farmers, and students led the congress, demanding complete independence."
       ],
@@ -3109,6 +4383,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Assess the contributions of George Padmore and W.E.B. Du Bois to Ghana's Pan-African heritage"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-16-1",
+            "title": "Timing the Pan-African Movement from London to Addis Ababa",
+            "problem": "The dates are 1900 for the first Pan-African Conference in London, 1945 for the Manchester Congress, 1958 for the All-African Peoples' Conference in Accra, and 1963 for the founding of the OAU at Addis Ababa. Ghana became independent in 1957 and Nkrumah was overthrown in 1966. Required: four interval calculations, the share of the movement's history covered by the Manchester-to-OAU years, the length of state-sponsored Pan-Africanism, and two ways Ghana paid for liberation. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: 1945 minus 1900 = 45 years between the first conference and the Manchester Congress. [4 marks]",
+              "Step 2: 1958 minus 1945 = 13 years from Manchester to Accra, and 1963 minus 1958 = 5 years from Accra to the OAU. [4 marks]",
+              "Step 3: The whole movement ran 1900 to 1963, so 1963 minus 1900 = 63 years, and the decisive stretch 1945 to 1963 was 1963 minus 1945 = 18 years. [4 marks]",
+              "Step 4: Share of the whole: 18 divided by 63 times 100 = 28.6 per cent, so less than a third of Pan-African history produced continental unity. [5 marks]",
+              "Step 5: State sponsorship lasted 1966 minus 1957 = 9 years, and the OAU came 1963 minus 1957 = 6 years after Ghana's own independence, so Ghana was already free for the whole of those six years and hosted the Accra conference just 1958 minus 1957 = 1 year after its own independence. [4 marks]",
+              "Step 6: Two ways Ghana paid: treasury grants and training camps for liberation movements from 1958 onward, and the opening of Ghanaian schools, universities and the civil service to students and exiles from the territories still under Portuguese or minority rule. [4 marks]"
+            ],
+            "keyTakeaway": "Pin Ghana's contribution to the nine years of the First Republic, because the money and the training stopped with the 1966 coup."
+          },
+          {
+            "id": "ex-his-16-2",
+            "title": "The Year of Africa in Numbers",
+            "problem": "Seventeen African states gained independence in 1960, and 32 states were founding members of the OAU in 1963. Ghana was free from 1957. By the present decade the continent counted 55 member states of the Union. Required: the interval from Ghana's independence to 1960, the number already free before 1960, the percentage of founding members created in 1960 alone, an average number of new states a year over 1957 to 1963, the growth in membership to 55, and two limits on unity after 1963. [21 marks]",
+            "stepByStepSolution": [
+              "Step 1: 1960 minus 1957 = 3 years between Ghana's independence and the Year of Africa. [3 marks]",
+              "Step 2: 32 minus 17 = 15 founding members were already independent before 1960. [4 marks]",
+              "Step 3: 17 divided by 32 times 100 = 53.1 per cent of the founding members were created in one year. [4 marks]",
+              "Step 4: Over 1957 to 1963, which is 1963 minus 1957 = 6 years, 32 states were counted, so 32 divided by 6 = 5.3 states a year on that reckoning. [4 marks]",
+              "Step 5: Membership grew from 32 to 55, an increase of 55 minus 32 = 23 seats, which is 23 divided by 32 times 100 = 71.9 per cent more members than at founding. [4 marks]",
+              "Step 6: Two limits: the OAU accepted the colonial borders it inherited, so disputes were settled by keeping every state whole rather than by redrawing maps, and the budget depended on the larger economies, which made collective action slow whenever those states disagreed. [2 marks]"
+            ],
+            "keyTakeaway": "Quantify the speed of decolonisation, then use it to explain why the OAU prized border stability over unity of policy."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-16",
       "topicId": "shs-his-topic-16",
@@ -3160,6 +4464,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-17",
+    "youtubeUrl": "https://www.youtube.com/watch?v=TPXeXnAiLz4",
+    "youtubeId": "TPXeXnAiLz4",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 3,
@@ -3199,6 +4505,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Every year on 28th February, Ghana commemorates the 1948 Christianborg Crossroads shooting with a solemn wreath-laying ceremony at the Freedom Monument in Accra."
         }
       ],
+"commonMistakes":         [
+            "Confusing the Watson Commission with the Coussey Committee that followed it.",
+            "Writing that the rioting stayed in Accra when the towns of the east and Asante followed.",
+            "Naming the ex-servicemen's march as the sole cause and dropping the political and economic grievances.",
+            "Thinking the Big Six were arrested in 1949 rather than March 1948.",
+            "Dating independence to the riots of 1948 instead of 1957."
+          ],
       "wassceExamTips": [
         "Memorize the names of the three martyred veterans: Sergeant Adjetey, Corporal Attipoe, and Private Odartey Lamptey."
       ],
@@ -3208,6 +4521,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate the findings of the Watson Commission and its role in accelerating Ghana's self-government"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-17-1",
+            "title": "From the Crossroads to the Watson Report",
+            "problem": "The ex-servicemen's march was fired upon on 28 February 1948; the leaders of the UGCC were arrested on 2 March 1948; disorder continued to 6 March 1948; the Watson Commission sat in 1948, the Coussey proposals came in 1949, the constitution was used for the 1951 election, and independence followed in 1957. Required: the days between the shooting and the arrests, the days of disorder, the intervals to each later step, the total to independence, and two findings of the Commission. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: 1948 was a leap year with 29 days in February, so from 28 February to 2 March was 3 days, counting 29 February, 1 March and 2 March. [4 marks]",
+              "Step 2: Disorder ran from 28 February to 6 March 1948, that is 7 days elapsed, and Kumasi heard of it within that same week. [4 marks]",
+              "Step 3: The Commission sat in 1948, so 1948 minus 1948 = 0 years, meaning the inquiry began within months of the shooting, and the Coussey proposals came 1949 minus 1948 = 1 year later. [4 marks]",
+              "Step 4: 1951 minus 1948 = 3 years from the riots to the election held under the new constitution. [4 marks]",
+              "Step 5: 1957 minus 1948 = 9 years from the shooting at the Crossroads to independence, and 9 divided by 3 = 3, so a new stage of reform fell roughly every three years. [4 marks]",
+              "Step 6: Two findings: the Commission blamed a system in which the Governor governed by decree with no African minister answerable to the people, and it recommended a constitution giving Africans a majority in the legislature, together with inquiries into cocoa marketing, education and the pay of ex-servicemen. [5 marks]"
+            ],
+            "keyTakeaway": "1948 is the hinge of the whole nationalist story, so count the years forward from February 1948 to every later step."
+          },
+          {
+            "id": "ex-his-17-2",
+            "title": "Costing the Damage in Accra and Asafo",
+            "problem": "A return listed 320 shops affected in Accra and Asafo, of which 180 were looted and 45 of those were also burned. Goods worth 240,000 pounds were destroyed and 20,000 pounds of stock was recovered. Required: the percentage looted, the percentage of looted shops burned, the net value lost, the average loss per looted shop, the percentage of shops not looted, and two causes of the disorder beyond the shooting. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Looted share = 180 divided by 320 times 100 = 56.25 per cent of the shops listed. [4 marks]",
+              "Step 2: Of the looted shops, 45 divided by 180 times 100 = 25 per cent were also burned. [4 marks]",
+              "Step 3: Net loss = 240,000 minus 20,000 = 220,000 pounds of trade goods. [4 marks]",
+              "Step 4: Loss per looted shop = 220,000 divided by 180 = 1,222 pounds on average. [4 marks]",
+              "Step 5: Shops not looted = 320 minus 180 = 140, so 140 divided by 320 times 100 = 43.75 per cent escaped. [2 marks]",
+              "Step 6: Two deeper causes: the colonial ban on political organisation and the arrest of elected leaders turned a protest into a riot, and war-time scarcity had made imported goods scarce and dear, so the Asian-owned trading shops of Maafokyro appeared to locals as the visible face of an unfair price system, while ex-servicemen returned with training and no work or pension. [2 marks]"
+            ],
+            "keyTakeaway": "Report the value lost after deducting recovered stock, and name the merchant shops as targets rather than saying property was destroyed."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-17",
       "topicId": "shs-his-topic-17",
@@ -3259,6 +4602,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-18",
+    "youtubeUrl": "https://www.youtube.com/watch?v=RDmABlNEP0k",
+    "youtubeId": "RDmABlNEP0k",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 3,
@@ -3299,6 +4644,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Dr. Kwame Nkrumah chose the name \"Ghana\" at independence in 1957 to honor the ancient West African empire's legacy of wealth, sovereignty, and statecraft."
         }
       ],
+"commonMistakes":         [
+            "Placing the capital of the old Ghana empire at a site inside modern Ghana.",
+            "Confusing Sundiata of Mali with Sunni Ali of Songhai.",
+            "Dating the fall of Songhai to the death of Mansa Musa.",
+            "Describing Timbuktu only as a market and leaving out its manuscripts and colleges.",
+            "Treating the Almoravid account as the only explanation for Ghana's decline."
+          ],
       "wassceExamTips": [
         "In WASSCE History, always explain the dual role of the Trans-Saharan Trade: it provided wealth through gold and salt taxation, and facilitated Islamization and literacy."
       ],
@@ -3308,6 +4660,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Analyze the factors that led to the collapse of the Songhai Empire at the Battle of Tondibi"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-18-1",
+            "title": "How Long the Western Sudan Empires Lasted",
+            "problem": "Accepted dates: al-Bakri described Ghana in 1067; the traditional account puts the Almoravid blow at 1076; Sundiata won at Kirina in 1235; Mansa Musa made his pilgrimage in 1324; Sunni Ali took power in 1464; Askia Muhammad in 1493; and the Moroccan army defeated Songhai at Tondibi in 1591. Required: five interval calculations and two cautions about using these dates. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: From the rise of Mali to the fall of Songhai: 1591 minus 1235 = 356 years. [4 marks]",
+              "Step 2: Sunni rule ran 1493 minus 1464 = 29 years, and Askia's dynasty lasted 1591 minus 1493 = 98 years, so Songhai's imperial phase was 1591 minus 1464 = 127 years. [5 marks]",
+              "Step 3: Mansa Musa travelled 1324 minus 1235 = 89 years after Mali's founding, and al-Bakri wrote 1324 minus 1067 = 257 years before that pilgrimage. [5 marks]",
+              "Step 4: 1235 minus 1076 = 159 years separated the traditional date of Ghana's collapse from the battle that created Mali. [4 marks]",
+              "Step 5: Whole sweep of the three empires: 1591 minus 1067 = 524 years, which is 524 divided by 100 = 5.24 centuries of imperial history in the Western Sudan. [4 marks]",
+              "Step 6: Two cautions: the early dates come from Arab writers and later oral lists, so they are scholarly estimates rather than records, and no empire ended in a single year, since vassal provinces and trading towns outlived the capitals that were captured. [3 marks]"
+            ],
+            "keyTakeaway": "Name the source of every medieval date and give the empire's span, not a fall year, when the question asks how long it lasted."
+          },
+          {
+            "id": "ex-his-18-2",
+            "title": "Counting the Gold of Mansa Musa's Pilgrimage",
+            "problem": "A chronicle says the pilgrimage of 1324 moved with about 60,000 people, of whom 12,000 slaves each carried a gold bar weighing 4 pounds, and 500 heralds wore gold belts of one pound each. One pound is about 0.45 kg. Report says the gift of gold cut its value in Cairo by about 14 per cent and twelve years passed before prices settled. Required: the weight of gold carried by the slaves in pounds and tonnes, the total gold shown, the days for a 1,500 km desert crossing at 15 km a day, the year prices recovered, and two conclusions. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Gold on the slaves: 12,000 times 4 = 48,000 pounds of gold bars. [4 marks]",
+              "Step 2: In metric weight: 48,000 times 0.45 = 21,600 kg, and 21,600 divided by 1,000 = 21.6 tonnes. [5 marks]",
+              "Step 3: Adding the heralds' belts: 500 times 1 = 500 pounds, so 48,000 plus 500 = 48,500 pounds of gold in the procession. [4 marks]",
+              "Step 4: Desert crossing at 15 km a day: 1,500 divided by 15 = 100 days of marching, and 100 divided by 7 = 14.3 weeks on the road. [4 marks]",
+              "Step 5: Prices settled 1324 plus 12 = 1336, so the shock to the Egyptian gold market lasted over a decade. [4 marks]",
+              "Step 6: Two conclusions: the pilgrimage advertised Mali to the Mediterranean world and drew mapmakers and merchants toward the Niger, and it also proved the danger of a windfall, since a sudden flood of bullion lowered its value and hurt the very trade that supplied it. [4 marks]"
+            ],
+            "keyTakeaway": "Convert chronicle figures into tonnes and days, then use them to argue about reputation and gold prices rather than to repeat a legend."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-18",
       "topicId": "shs-his-topic-18",
@@ -3359,6 +4741,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-his-topic-19",
+    "youtubeUrl": "https://www.youtube.com/watch?v=wuFV0rkAwgA",
+    "youtubeId": "wuFV0rkAwgA",
     "subjectId": "history",
     "level": "SHS 1",
     "term": 3,
@@ -3397,6 +4781,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana is internationally recognized as a beacon of democratic stability in West Africa, having achieved four peaceful alternations of presidential power since 1992."
         }
       ],
+"commonMistakes":         [
+            "Dating the start of the Fourth Republic to the December 1992 election instead of the constitution and the swearing-in of January 1993.",
+            "Writing that Ghana first changed governing party in 2008 rather than 2000.",
+            "Confusing the founding of the NDC with the founding of the NPP.",
+            "Claiming the courts have never decided an election dispute.",
+            "Explaining consolidation without mentioning the electoral commission's ability to hold elections on time."
+          ],
       "wassceExamTips": [
         "In WASSCE Government/History essays on Ghana's democracy, always highlight the role of independent constitutional bodies (EC, CHRAJ) and the military's subordination to civilian control."
       ],
@@ -3406,6 +4797,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Analyze how Supreme Court election petitions have reinforced constitutionalism and rule of law in Ghana"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-his-19-1",
+            "title": "Counting Elections, Terms and Peaceful Transfers",
+            "problem": "Ghanaians voted for president in 1992, 1996, 2000, 2004, 2008, 2012, 2016, 2020 and 2024. The NDC held power 1993 to 2001 and 2009 to 2017 and again from 2025, counted here to 2026; the NPP held it 2001 to 2009 and 2017 to 2025. Required: the number of elections, the check against the four-year rule, years in power for each party, a total that accounts for every year of the republic, the number of party-to-party transfers, and two signs of democratic consolidation. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: The list gives 9 presidential elections, and 2024 minus 1992 = 32 years of voting, so 32 divided by 4 = 8 intervals, which with the founding election makes 8 plus 1 = 9, matching the count. [5 marks]",
+              "Step 2: NDC rule: 2001 minus 1993 = 8 years and 2017 minus 2009 = 8 years, so 8 plus 8 = 16 years, plus 2026 minus 2025 = 1 year of the return, giving 17 years. [5 marks]",
+              "Step 3: NPP rule: 2009 minus 2001 = 8 years and 2025 minus 2017 = 8 years, so 8 plus 8 = 16 years. [4 marks]",
+              "Step 4: Check the total: 17 plus 16 = 33 years, and 2026 minus 1993 = 33 years of the republic, so every governing year is accounted for by one of the two parties. [4 marks]",
+              "Step 5: Power passed between the parties after the elections of 2000, 2008 and 2016, that is 3 transfers, so 33 divided by 3 = 11 years on average between changes of government. [4 marks]",
+              "Step 6: Two signs of consolidation: no soldier has governed since 1993, and defeated candidates use the courts, as in the presidential petitions decided by the Supreme Court, instead of taking the dispute to the streets. [3 marks]"
+            ],
+            "keyTakeaway": "Prove consolidation with three numbers: elections held on time, years per governing party, and the number of peaceful party-to-party transfers."
+          },
+          {
+            "id": "ex-his-19-2",
+            "title": "Working Out a Presidential Result and the Second-Round Rule",
+            "problem": "A question gives these figures for one presidential election: 17,000,000 registered voters, 8,500,000 ballots cast, 8,200,000 of them valid, the winner 4,300,000 votes, the runner-up 3,600,000 votes, and six other candidates sharing the remainder. Required: turnout, the spoilt-ballot rate, the winner's share of valid votes, the majority in votes and as a percentage, the remainder shared by the others, and whether a second round is required. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Turnout = 8,500,000 divided by 17,000,000 times 100 = 50 per cent of registered voters. [4 marks]",
+              "Step 2: Spoilt ballots = 8,500,000 minus 8,200,000 = 300,000, so 300,000 divided by 8,500,000 times 100 = 3.5 per cent of votes cast were invalid. [4 marks]",
+              "Step 3: Winner's share = 4,300,000 divided by 8,200,000 times 100 = 52.4 per cent of valid votes. [4 marks]",
+              "Step 4: Majority over the runner-up = 4,300,000 minus 3,600,000 = 700,000 votes, which is 700,000 divided by 8,200,000 times 100 = 8.5 per cent of the valid votes. [4 marks]",
+              "Step 5: The six others shared 8,200,000 minus 4,300,000 minus 3,600,000 = 300,000 votes, or 300,000 divided by 8,200,000 times 100 = 3.7 per cent. [2 marks]",
+              "Step 6: Since a president needs more than half the valid votes, 52.4 minus 50 = 2.4 per cent was the margin that avoided a run-off, so no second round was required. [2 marks]"
+            ],
+            "keyTakeaway": "Measure every presidential percentage against valid votes, not registered voters, because the run-off rule works on that base."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-his-topic-19",
       "topicId": "shs-his-topic-19",
@@ -3457,6 +4878,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-geo-topic-01",
+    "youtubeUrl": "https://www.youtube.com/watch?v=O3s_w0plnDY",
+    "youtubeId": "O3s_w0plnDY",
     "subjectId": "geography",
     "level": "SHS 1",
     "term": 1,
@@ -3495,6 +4918,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Topographic sheets produced by the Survey and Mapping Division in Accra guide road construction across the Kwahu and Akwapim ridges."
         }
       ],
+"commonMistakes":         [
+            "Treating a representative fraction as if it were a statement scale and writing 1:50,000 as one centimetre to one kilometre instead of half a kilometre.",
+            "Converting length correctly but forgetting that area scales by the square, so one square centimetre at 1:50,000 is 0.25 square kilometres, not 0.5.",
+            "Reading a four-figure grid reference to the nearest kilometre and then calling it a six-figure reference, losing the location mark.",
+            "Using a grid bearing and a magnetic bearing interchangeably without applying the declination shown in the margin of the sheet.",
+            "Stating gradient as a height difference alone, without dividing by the horizontal distance and giving the answer as one in so many or as a percentage."
+          ],
       "wassceExamTips": [
         "In WASSCE Paper 2, Section A is compulsory map work. Practice calculating gradient: Vertical Interval (V.I.) divided by Horizontal Equivalent (H.E.)."
       ],
@@ -3504,6 +4934,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Interpret relief landforms (valleys, spurs, plateaus, escarpments) from contour patterns"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-geo-01-1",
+            "title": "Map Scale: Ground Distance and Area from a Representative Fraction",
+            "problem": "A topographic sheet of Ghana is printed at 1:50,000. On the sheet a road measures 8.4 centimetres, and a rectangular forest reserve measures 4 centimetres by 6 centimetres. Required: express the scale as a statement scale, find the true length of the road, the area of the reserve in square kilometres and hectares, the area the same reserve would occupy on a 1:25,000 sheet, and the ground area of one ten-centimetre grid square. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: One centimetre on the sheet stands for 50,000 centimetres on the ground, and 50,000 centimetres divided by 100,000 = 0.5 kilometres, so the statement scale is one centimetre to half a kilometre. [4 marks: units must be shown]",
+              "Step 2: Road on the ground = 8.4 times 0.5 = 4.2 kilometres, since each centimetre of the map is 0.5 kilometres of the road. [5 marks]",
+              "Step 3: Sides of the reserve = 4 times 0.5 = 2 kilometres and 6 times 0.5 = 3 kilometres, so area = 2 times 3 = 6 square kilometres, which is 6 times 100 = 600 hectares. [7 marks: convert to hectares, do not stop at square kilometres]",
+              "Step 4: Check by the square rule: one square centimetre on the map = 0.5 times 0.5 = 0.25 square kilometres, and the map area of the reserve is 4 times 6 = 24 square centimetres, so 24 times 0.25 = 6 square kilometres, agreeing with Step 3. [5 marks: the reconciliation is a method mark]",
+              "Step 5: Halving the denominator to 1:25,000 doubles every length, so one centimetre becomes 0.25 kilometres and one square centimetre becomes 0.0625 square kilometres; the reserve then covers 6 divided by 0.0625 = 96 square centimetres, that is 24 times 4, because area grows by the square of the length factor. [5 marks]",
+              "Step 6: A ten-centimetre grid square = 10 times 0.5 = 5 kilometres a side, so it covers 5 times 5 = 25 square kilometres of ground. [4 marks]"
+            ],
+            "keyTakeaway": "Scale work is unit work: convert the representative fraction to a statement scale first, square the factor for area, and always reconcile a map-area answer with the length answers."
+          },
+          {
+            "id": "ex-geo-01-2",
+            "title": "Grid References, Distance, Bearing and Gradient",
+            "problem": "On a 1:50,000 sheet a trig point lies at six-figure grid reference 342176 with a spot height of 240 metres, and a bridge lies at 376198 with a spot height of 128 metres. The straight line between them measures 8.1 centimetres on the sheet, and the grid bearing of the bridge from the trig point is 104 degrees. The sheet records a magnetic declination of 3 degrees west. Required: give both four-figure references, compute the ground distance, the bearing to set on a compass, the straight gradient between the two points, and describe the relief the two heights imply. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Four-figure references take the easting and northing to the kilometre, so the trig point is 3417 and the bridge is 3719. [4 marks]",
+              "Step 2: Ground distance = 8.1 times 0.5 = 4.05 kilometres, because one centimetre is 0.5 kilometres at this scale. [6 marks]",
+              "Step 3: Check with the grid squares: eastings move 37.6 minus 34.2 = 3.4 kilometres and northings move 19.8 minus 17.6 = 2.2 kilometres, so the straight line is fixed by those two components and the map measurement in Step 2 is consistent with them. [4 marks: showing the components earns the accuracy mark]",
+              "Step 4: A west declination means the needle sits 3 degrees west of grid north, so the magnetic bearing to set = 104 minus 3 = 101 degrees. [5 marks: state the direction of the adjustment]",
+              "Step 5: Height difference = 240 minus 128 = 112 metres over 4,050 metres, so gradient = 112 divided by 4,050 = 0.0277, that is about 1 in 36, or 112 divided by 4,050 times 100 = 2.8 per cent. [6 marks: one in so many and a percentage are both accepted]",
+              "Step 6: Relief reading: the land falls gently downstream from 240 to 128 metres, so the line crosses dissected plain rather than scarpland; settlement along such a route is linear, following the road and the river crossing rather than the higher ground. [5 marks]"
+            ],
+            "keyTakeaway": "Grid references, bearing and gradient are three separate mark schemes: quote the reference to the right number of figures, adjust the bearing by the declination, and express gradient as height divided by horizontal distance."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-geo-topic-01",
       "topicId": "shs-geo-topic-01",
@@ -3555,6 +5015,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-geo-topic-02",
+    "youtubeUrl": "https://www.youtube.com/watch?v=pa0u1N6LnYA",
+    "youtubeId": "pa0u1N6LnYA",
     "subjectId": "geography",
     "level": "SHS 1",
     "term": 1,
@@ -3593,6 +5055,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana lies along the Greenwich Meridian (0° Longitude passing through Tema), placing the country in the Greenwich Mean Time (GMT) zone."
         }
       ],
+"commonMistakes":         [
+            "Believing the Earth turns through one degree in an hour instead of fifteen degrees in an hour, which throws every time calculation out by a factor of fifteen.",
+            "Subtracting the time for a place east of the zero meridian rather than adding it, so the town is given a clock behind Greenwich.",
+            "Confusing local mean time, which changes with longitude, with a standard time zone, which Ghana keeps whole.",
+            "Treating the international date line as an ordinary time-zone boundary and forgetting that the calendar day changes there.",
+            "Using the Earth's diameter where a radius is required when comparing the thickness of the crust with the whole planet."
+          ],
       "wassceExamTips": [
         "Remember the 15° rule: 15° of longitude = 1 hour time difference. Places east are ahead (+); places west are behind (-)."
       ],
@@ -3602,6 +5071,35 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Calculate international standard time differences using longitudinal degrees"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-geo-02-1",
+            "title": "Longitude, Local Mean Time and Standard Time Zones",
+            "problem": "The Earth turns through 360 degrees in 24 hours. A town A lies at 1 degree west and a town B at 2 degrees east of the zero meridian. An aeroplane leaves Accra at 09:00 Greenwich mean time and flies 5 hours 20 minutes to Nairobi at 36 degrees east. Required: find the minutes of time in one degree, the local mean time at A and B when it is 12:00 noon on the zero meridian, the clock time a sundial would show at 3 degrees west at that noon, the arrival time in Nairobi expressed as local time, and the reason Ghana keeps one time zone although it straddles the zero meridian. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: 360 degrees divided by 24 = 15 degrees an hour, and 60 minutes divided by 15 = 4 minutes for each degree of longitude. [4 marks]",
+              "Step 2: Town A at 1 degree west is behind the meridian, so its local mean time = 12:00 minus 4 minutes = 11:56; town B at 2 degrees east is ahead, so 12:00 plus 8 minutes = 12:08. [6 marks]",
+              "Step 3: At 3 degrees west the sun reaches its highest point 3 times 4 = 12 minutes after the meridian, so a sundial there reads noon at 12:12 by the zone clock. [6 marks]",
+              "Step 4: Nairobi at 36 degrees east runs 36 times 4 = 144 minutes, that is 2 hours 24 minutes, ahead of Greenwich. The flight ends at 09:00 plus 5 hours 20 minutes = 14:20 Greenwich time, which is 14:20 plus 2:24 = 16:44 local time. [7 marks: convert once, at the end]",
+              "Step 5: Ghana lies roughly between 3 degrees west and 1 degree east, a span of only about 16 minutes of solar time, so a single zone (Greenwich mean time) keeps administration, transport timetables and broadcasting simple, even though the sun is not overhead at the same clock hour in Axim and Aflao. [7 marks]"
+            ],
+            "keyTakeaway": "Four minutes per degree, add for east, subtract for west, and convert to zone time once at the end rather than twice."
+          },
+          {
+            "id": "ex-geo-02-2",
+            "title": "Using Depth and Radius Figures to Describe the Earth's Interior",
+            "problem": "Take the mean radius of the Earth as 6,371 kilometres, the crust as 35 kilometres thick, the top of the outer core at 2,900 kilometres depth, the base of the outer core at 5,150 kilometres, and the inner core radius as 1,221 kilometres. Required: express the crust as a share of the radius, find the share of the Earth's volume that the crust occupies, the thickness of the mantle, the share of the volume inside the core-mantle boundary, and explain what seismic waves show about each layer. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Crust as a share of radius = 35 divided by 6,371 times 100 = 0.55 per cent, which is why the Earth is described as a hot body with a skin thinner than an apple's. [5 marks]",
+              "Step 2: Volume grows as the cube of radius, so the crust holds 1 minus (6,336 divided by 6,371) cubed = 1 minus 0.9836 = 0.0164, that is about 1.6 per cent of the Earth's volume. [6 marks: square is for area, cube is for volume]",
+              "Step 3: Mantle thickness = 2,900 minus 35 = 2,865 kilometres, which is 2,865 divided by 6,371 times 100 = 45 per cent of the radius and the thickest single layer. [5 marks]",
+              "Step 4: Everything below the core-mantle boundary lies inside a sphere of radius 6,371 minus 2,900 = 3,471 kilometres, so the core occupies (3,471 divided by 6,371) cubed = 0.162, that is 16.2 per cent of the volume while the crust holds only 1.6 per cent. [6 marks]",
+              "Step 5: Wave evidence: P-waves cross both solid and liquid and slow at the core-mantle boundary, S-waves stop there, so the outer core is liquid; the inner core radius of 1,221 kilometres is fixed by the P-waves that speed up again on passing through it. [5 marks]",
+              "Step 6: Consequences for the surface: the crust rides on the plastic mantle, so convection in that 2,865-kilometre layer drives the plate movements and earthquakes studied in a later topic. [3 marks]"
+            ],
+            "keyTakeaway": "Compare layers by the right power: length, area and volume scale as r, r squared and r cubed, and every interior fact rests on how P and S waves change speed."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-geo-topic-02",
       "topicId": "shs-geo-topic-02",
@@ -3653,6 +5151,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-geo-topic-03",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7Bxw4kkeHJ8",
+    "youtubeId": "7Bxw4kkeHJ8",
     "subjectId": "geography",
     "level": "SHS 1",
     "term": 1,
@@ -3688,6 +5188,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana's Birimian rock system hosts the richest gold reefs mined at Obuasi, Tarkwa, and Ahafo."
         }
       ],
+"commonMistakes":         [
+            "Writing that all igneous rocks are crystalline and therefore all crystalline rocks are igneous, which is untrue of rock salt and limestone.",
+            "Placing fossils in igneous or metamorphic rocks, when fossils are preserved only in the sedimentary sequence.",
+            "Confusing the agents of metamorphism: heat and pressure change the rock, but the minerals present decide what it becomes.",
+            "Naming marble as a sedimentary building stone without stating that it is metamorphosed limestone.",
+            "Using mineral and rock as one word instead of stating that a rock is a mixture of minerals."
+          ],
       "wassceExamTips": [
         "Fossils (preserved ancient organic remains) are ONLY found in sedimentary rocks because heat in igneous and metamorphic rocks destroys fossils."
       ],
@@ -3697,6 +5204,37 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate the economic significance of rocks and minerals in the Ghanaian economy"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-geo-03-1",
+            "title": "The Rock Cycle Written as a Marked Process Answer",
+            "problem": "A granite boulder on hill slope is broken down, and its particles eventually form sandstone which is buried under 2 kilometres of new rock. Take the surface temperature as 25 degrees Celsius, the normal temperature gradient as 25 degrees per kilometre of depth, and the rock density as 2,700 kilograms per cubic metre. Required: trace the boulder through the rock cycle, compute the pressure and temperature it finally suffers, name the metamorphic product and two like it, and give two economic uses of the original rock type in Ghana. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Igneous stage: granite crystallises from slowly cooling magma below the surface, so its grains are coarse; rapid cooling at the surface gives fine or glassy rock. [4 marks: cooling rate controls crystal size]",
+              "Step 2: Sedimentary stage: weathering breaks the boulder, erosion and transport carry the fragments, deposition lays them in a basin, and compaction plus cementation (lithification) bind them into sandstone; bedding and fossils belong to this stage. [4 marks: name all four processes]",
+              "Step 3: Burial load: pressure = density times gravity times depth = 2,700 times 9.81 times 2,000 = 52.97 million pascals, about 53 megapascals. [4 marks: show the formula, not the answer alone]",
+              "Step 4: Burial heat: temperature = 25 plus (2 times 25) = 75 degrees Celsius at 2 kilometres, and both pressure and heat together, not either alone, drive recrystallisation. [4 marks]",
+              "Step 5: Metamorphic stage: sandstone becomes quartzite, shale becomes slate, limestone becomes marble and granite becomes gneiss; foliation marks the strongly compressed products. [5 marks]",
+              "Step 6: Uplift and repeat: erosion cuts away the cover, exposes the metamorphic rock, and starts the cycle again, which is why the cycle has no fixed starting point and no order that must be obeyed. [4 marks]",
+              "Step 7: Economic uses in Ghana: granite is quarried as dimension stone and for aggregate and chippings on roads, while the limestone and dolomite at Buipe feed the cement industry at Yango and Gomoa; Awaso bauxite and Akwatia diamond are other rock-linked minerals. [5 marks: name places and products]"
+            ],
+            "keyTakeaway": "Mark is given for named processes in the right order with a cause attached to each change, and for at least one Ghana example with its location."
+          },
+          {
+            "id": "ex-geo-03-2",
+            "title": "Quarry Economics from a Limestone Deposit",
+            "problem": "A limestone concession holds 480,000 tonnes of workable rock beneath 96,000 cubic metres of overburden. A quarry recovers 92 per cent of the workable rock, and a cement plant takes 3,000 tonnes a month. Rock sells ex-works at GHS 55 a tonne. Required: compute the stripping ratio, the recoverable tonnage, the working life in months and years, the gross value of the deposit, and state four uses of limestone with one control on quarry damage. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Identify the rock: limestone is a chemically or organically formed sedimentary rock made mainly of calcite, and it fizzes in dilute acid, the field test examiners expect you to name. [5 marks]",
+              "Step 2: Stripping ratio = 96,000 divided by 480,000 = 0.2 cubic metres of waste for each tonne of rock won, a low ratio that makes the deposit attractive to mine. [5 marks]",
+              "Step 3: Recoverable rock = 480,000 times 92 per cent = 441,600 tonnes, since 8 per cent is left as losses in blasting and picking. [6 marks: apply recovery before anything else]",
+              "Step 4: Working life = 441,600 divided by 3,000 = 147.2 months, that is 147.2 divided by 12 = 12.3 years. [6 marks]",
+              "Step 5: Gross value = 441,600 times 55 = GHS 24,288,000, which is the revenue at the gate, not profit, because extraction, transport and plant costs are still to come. [4 marks]",
+              "Step 6: Uses and control: cement manufacture, agricultural lime to correct acid soils, flux in iron and steel making, and dimension stone or aggregate; control the damage by restricting blasting hours, sprinkling haul roads against dust, and reinstating the pit by backfilling and replanting once the rock is gone. [4 marks]"
+            ],
+            "keyTakeaway": "Do the recovery and stripping arithmetic first, then value the deposit, and finish every resource answer with one environmental control measure."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-geo-topic-03",
       "topicId": "shs-geo-topic-03",
@@ -3748,6 +5286,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-geo-topic-04",
+    "youtubeUrl": "https://www.youtube.com/watch?v=YxxIdPwCJ2U",
+    "youtubeId": "YxxIdPwCJ2U",
     "subjectId": "geography",
     "level": "SHS 1",
     "term": 1,
@@ -3783,6 +5323,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Periodic rock falls and landslides along the Peduase-Ayi Mensah highway on the Akuapem ridge illustrate mass wasting hazards in Ghana."
         }
       ],
+"commonMistakes":         [
+            "Using weathering and erosion as the same word, when weathering is the in-situ breakdown and erosion carries the material away.",
+            "Explaining chemical weathering with heat alone, although moisture is what carries the reacting solutions into the rock.",
+            "Claiming mass movement needs a steep cliff, when creep operates on slopes too gentle for the eye to detect.",
+            "Describing laterite as soil deposited by a river instead of the residual iron-rich mantle of deep tropical weathering.",
+            "Listing control measures for slope failure without naming the process each measure interrupts."
+          ],
       "wassceExamTips": [
         "Weathering is disintegration in situ; erosion involves detachment AND transportation. Do not confuse the two."
       ],
@@ -3792,6 +5339,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Identify signs and hazards of mass wasting (soil creep, landslides) along Ghanaian slopes"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-geo-04-1",
+            "title": "Comparing Weathering Depths from Three Field Sites",
+            "problem": "Under identical granite, the weathered mantle measures 6.4 metres at a humid coastal site with 2,100 millimetres of rain and 27 degrees mean heat, 2.1 metres at a northern town with 1,050 millimetres and 29 degrees, and 0.6 metres at an arid-margin village with 800 millimetres and 30 degrees. Required: compare the mantles as ratios, express mantle depth per 100 millimetres of rain at each site, say which site has the hottest and which the deepest weathering, explain the apparent contradiction, name the dominant process at each site and two landforms that result. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Define weathering as the breakdown of rock in place, and separate it from mass movement, which is the downhill transfer of that weathered material once gravity takes over. [4 marks]",
+              "Step 2: Ratios: 6.4 divided by 0.6 = 10.7 times thicker than the arid mantle, and 2.1 divided by 0.6 = 3.5 times, so depth falls sharply as rainfall falls. [6 marks]",
+              "Step 3: Mantle per 100 millimetres of rain = 6.4 divided by 21 = 0.30 metres at the coast, 2.1 divided by 10.5 = 0.20 metres in the north, and 0.6 divided by 8 = 0.08 metres at the arid margin, so the wet sites weather more rock from the same millimetre of rain. [7 marks: normalise before comparing]",
+              "Step 4: The hottest site (30 degrees, 800 millimetres) has the thinnest mantle, which shows that heat without moisture is a weak weathering agent; the chemical reactions need water as the medium. [5 marks]",
+              "Step 5: Dominant processes: humid coastal site, hydrolysis, hydration and leaching producing a deep, red, iron-rich lateritic mantle; savanna site, seasonal wetting and drying with oxidation and insolation; arid-margin site, thermal stress with daily heating and cooling, and wind abrasion at the surface. [6 marks]",
+              "Step 6: Landforms from these processes: tors and exfoliation domes where jointed granite has been stripped, block steeps, laterite caps and duricrusts on old erosion surfaces, and talus or scree at the foot of a shattering cliff. [2 marks: name, do not describe at length]"
+            ],
+            "keyTakeaway": "Turn raw field figures into ratios and per-unit rates before arguing, then let the moisture supply, not the heat, carry the explanation."
+          },
+          {
+            "id": "ex-geo-04-2",
+            "title": "Slope Failure on a Road Cut and the Cost of Control",
+            "problem": "A road cut in clay-shale stands at 42 degrees. Soil moisture rises from 18 to 34 per cent in the long rains, and measured creep rises from 6 millimetres a month to 54 millimetres a month. An estate lies 240 metres below the cut. Drainage and regrading cost GHS 480,000, relocation of the estate costs GHS 2,400,000, and the property at risk is valued at GHS 18,000,000. Required: compute the multiplication of movement, the distance moved in a six-month rainy season, the saving from the works as a share of relocation cost and as a share of property value, rank four control measures, and name the failure types expected on such a cut. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Name the movements: soil creep (slow, continuous), slumping (rotational movement along a curved surface leaving a scalloped scarp), landslip or slide (rapid translation along a plane), rockfall, and soil erosion by sheets and rills. [5 marks]",
+              "Step 2: Movement ratio = 54 divided by 6 = 9 times faster once moisture rose by 16 percentage points. [5 marks]",
+              "Step 3: Explanation of mechanism: water adds weight to the mantle, dissolves the cement that binds clay plates, and raises pore pressure along a wet surface, so shear strength falls while the downhill stress stays fixed and the mass moves. [6 marks: strength down, stress unchanged]",
+              "Step 4: Distance in a wet half-year = 54 times 6 = 324 millimetres, that is 0.32 metres of creep, enough to crack a foundation but far short of the 240 metres to the estate. [4 marks]",
+              "Step 5: Controls in the order an examiner rewards: first remove water (cut-off drains, lined surface channels, porous sub-drains), then reduce the driving load by regrading the face below 30 degrees and terracing it, then protect the toe with rip-rap and deep-rooted vegetation, and build a retaining wall only where space forbids regrading. [6 marks: sequence matters]",
+              "Step 6: Economics: the works cost GHS 480,000 against relocation at GHS 2,400,000, a saving of 2,400,000 minus 480,000 = GHS 1,920,000, that is 1,920,000 divided by 2,400,000 times 100 = 80 per cent; the works are also 480,000 divided by 18,000,000 times 100 = 2.67 per cent of the value protected, so they pay for themselves. [4 marks]"
+            ],
+            "keyTakeaway": "Every slope answer must chain water to weight to strength, rank drainage before structures, and price the remedy against both relocation and the value saved."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-geo-topic-04",
       "topicId": "shs-geo-topic-04",
@@ -3843,6 +5420,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-geo-topic-05",
+    "youtubeUrl": "https://www.youtube.com/watch?v=e7mhXHmu9MA",
+    "youtubeId": "e7mhXHmu9MA",
     "subjectId": "geography",
     "level": "SHS 1",
     "term": 2,
@@ -3878,6 +5457,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Akosombo Dam harnessed the gorge of the lower Volta River to create the largest man-made lake by surface area, generating hydro-electricity."
         }
       ],
+"commonMistakes":         [
+            "Reporting discharge as width times velocity, forgetting the depth that makes the cross-sectional area.",
+            "Confusing the vertical drop of a river with its gradient, which is drop divided by distance.",
+            "Placing gorges and waterfalls in the lower course and deltas in the upper course of the same river.",
+            "Describing a flood hydrograph as a rainfall graph, so lag time and peak discharge are never identified.",
+            "Naming a dam's benefits only in power terms and ignoring irrigation, navigation, fishing and flood control."
+          ],
       "wassceExamTips": [
         "In diagram questions, draw the horseshoe cutoff loop clearly when illustrating the formation of an ox-bow lake."
       ],
@@ -3887,6 +5473,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Describe the main drainage basins of Ghana and the economic importance of the Volta Lake"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-geo-05-1",
+            "title": "River Discharge, Flooding and Volume of Flood Water",
+            "problem": "At a gauging section the channel of a tributary of the Volta is 6 metres wide and 1.2 metres deep with mean velocity 0.8 metres a second in December. In August the same section is 8 metres wide, 2.4 metres deep, and the water moves at 2.1 metres a second. The banks stand 30 cubic metres a second above the channel. Required: compute both discharges, the multiple between them, whether the August flow floods, the volume that passes in one week at the August rate, and explain how basin vegetation changes the shape of the hydrograph. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: State the definition and the formula: discharge is the volume of water passing a section each second, and Q = area times velocity, area being width times mean depth. [4 marks]",
+              "Step 2: Dry season: area = 6 times 1.2 = 7.2 square metres, so Q = 7.2 times 0.8 = 5.76 cubic metres a second. [6 marks: one mark is lost if the depth is dropped]",
+              "Step 3: Wet season: area = 8 times 2.4 = 19.2 square metres, so Q = 19.2 times 2.1 = 40.32 cubic metres a second. [6 marks]",
+              "Step 4: Comparison = 40.32 divided by 5.76 = 7 times the dry-season flow; because 40.32 exceeds the bankfull value of 30, the river overtops its banks and floods the floodplain. [5 marks: state the flooding conclusion, not only the numbers]",
+              "Step 5: Weekly volume: a week has 7 times 24 times 60 times 60 = 604,800 seconds, so volume = 40.32 times 604,800 = 24,385,536 cubic metres, about 24.4 million cubic metres of flood water. [5 marks]",
+              "Step 6: Hydrograph reading: forest and grass intercept rain and litter holds water, so throughflow replaces overland flow, the peak is lower, the lag time is longer and the recession is slower; clearing the basin for farming sharpens the peak and deepens the flood. [4 marks]"
+            ],
+            "keyTakeaway": "Discharge is area times velocity: compute both seasons separately, compare them as a multiple, and always state whether the banks are exceeded."
+          },
+          {
+            "id": "ex-geo-05-2",
+            "title": "Basin Water Yield Against a Town's Demand",
+            "problem": "A catchment of 250 square kilometres receives 1,200 millimetres of rain in a year, of which 22 per cent leaves as surface run-off and 12 per cent evaporates from the ground. A town of 68,000 people draws 60 litres a head each day. Required: compute the total rainfall volume, the annual run-off, the town's annual demand in cubic metres, the share of run-off the town uses, and the storage needed to hold six months of run-off if 15 per cent is lost to evaporation from the lake. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Convert the basin to metres: 250 square kilometres = 250,000,000 square metres, and 1,200 millimetres = 1.2 metres of water. [3 marks: conversion is where candidates fall]",
+              "Step 2: Rainfall volume = 250,000,000 times 1.2 = 300,000,000 cubic metres a year. [6 marks]",
+              "Step 3: Surface run-off = 300,000,000 times 22 per cent = 66,000,000 cubic metres a year, while 12 per cent, that is 36,000,000 cubic metres, evaporates and the remainder infiltrates to feed springs and the river in the dry season. [5 marks]",
+              "Step 4: Town demand = 68,000 times 60 = 4,080,000 litres a day = 4,080 cubic metres a day, so the annual draw = 4,080 times 365 = 1,489,200 cubic metres. [6 marks]",
+              "Step 5: Share of run-off used = 1,489,200 divided by 66,000,000 times 100 = 2.3 per cent, so quantity is not the problem; distribution and storage are. [5 marks]",
+              "Step 6: Storage for half a year = 66,000,000 divided by 2 = 33,000,000 cubic metres, and allowing 15 per cent lake evaporation the dam must hold 33,000,000 divided by 0.85 = 38,823,529, about 38.8 million cubic metres. [5 marks: divide by the fraction retained, do not add 15 per cent]"
+            ],
+            "keyTakeaway": "Water-yield questions are unit questions: millimetres to metres, square kilometres to square metres, litres to cubic metres, then divide by the share that is actually kept."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-geo-topic-05",
       "topicId": "shs-geo-topic-05",
@@ -3938,6 +5554,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-geo-topic-06",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ZwKKQAygwnI",
+    "youtubeId": "ZwKKQAygwnI",
     "subjectId": "geography",
     "level": "SHS 1",
     "term": 2,
@@ -3971,6 +5589,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "During December to February, the Harmattan winds shroud Accra and northern Ghana in dusty haze, causing respiratory ailments and flight delays."
         }
       ],
+"commonMistakes":         [
+            "Answering a weather question with climate material, or vice versa, instead of separating the short state of the atmosphere from the long average.",
+            "Adding twelve monthly means and reporting the total as the annual mean temperature.",
+            "Reporting the annual temperature range as the highest monthly temperature.",
+            "Saying temperature rises with height, so the lapse rate is applied in the wrong direction on a hill station.",
+            "Treating relative humidity as the amount of water in the air, when it is a percentage of what that temperature could hold.",
+            "Applying the lapse rate to the height above sea level instead of the height difference between the two stations."
+          ],
       "wassceExamTips": [
         "In WASSCE climate graphs, rainfall is plotted as vertical bars (histograms) while temperature is plotted as a smooth continuous line."
       ],
@@ -3980,6 +5606,37 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Explain the seasonal movement of the ITCZ and its impact on rainfall regimes in Ghana"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-geo-06-1",
+            "title": "Reducing a Twelve-Month Climate Table",
+            "problem": "A town in the Volta Region records monthly mean temperatures of 27, 28, 28.5, 29, 28, 26.5, 25, 25.5, 26, 27, 27.5 and 27 degrees, and monthly rainfall of 15, 30, 75, 110, 155, 210, 250, 230, 190, 180, 60 and 20 millimetres in the same order. Required: compute the annual mean temperature, the annual range, the total annual rainfall, the share of rain falling in the months above 100 millimetres, the number of dry months below 25 millimetres, the bar and curve scales for a climograph at 1 centimetre to 25 millimetres and 1 centimetre to 2 degrees, and classify the station. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Sum of the twelve temperatures = 27 plus 28 plus 28.5 plus 29 plus 28 plus 26.5 plus 25 plus 25.5 plus 26 plus 27 plus 27.5 plus 27 = 325, so annual mean = 325 divided by 12 = 27.08 degrees Celsius. [4 marks: divide by twelve, and give one decimal]",
+              "Step 2: Annual range = the warmest month minus the coolest = 29 minus 25 = 4 degrees, a very small range that marks a station near the sea and near the equator. [4 marks]",
+              "Step 3: Total rainfall = 15 plus 30 plus 75 plus 110 plus 155 plus 210 plus 250 plus 230 plus 190 plus 180 plus 60 plus 20 = 1,525 millimetres a year. [4 marks]",
+              "Step 4: Months above 100 millimetres are April to October, seven months, and their rain = 110 plus 155 plus 210 plus 250 plus 230 plus 190 plus 180 = 1,325 millimetres, that is 1,325 divided by 1,525 times 100 = 86.9 per cent of the year's water in 58.3 per cent of the months. [5 marks]",
+              "Step 5: Dry months below 25 millimetres are January (15) and December (20), so two short dry months remain, and the regime is wet for most of the year with a weakening in December to February. [4 marks]",
+              "Step 6: Climograph scales: July rain of 250 millimetres draws a bar 250 divided by 25 = 10 centimetres high, and the mean temperature of 27.08 degrees is plotted 27.08 divided by 2 = 13.5 centimetres above the base line. [4 marks]",
+              "Step 7: Classification: hot throughout with heavy, double-peaked rain and a brief dry pause fits the equatorial to wet sub-equatorial (Guinean coastal) type, whose natural vegetation is semi-deciduous forest and whose farming supports cocoa, oil palm and food crops in two seasons. [5 marks]"
+            ],
+            "keyTakeaway": "Show the addition, then the division, then the classification drawn from your own figures; a climograph is marked on scale accuracy, not beauty."
+          },
+          {
+            "id": "ex-geo-06-2",
+            "title": "Relative Humidity, Lapse Rate, Dew Point and Cloud Base",
+            "problem": "Air at a town 120 metres above sea level has a temperature of 30 degrees Celsius and holds 21 grams of vapour per kilogram, while saturation at that temperature would need 30 grams. Saturation at 21 grams occurs at 21 degrees. The normal lapse rate is 6.5 degrees per kilometre. A hill station nearby stands at 1,420 metres. Required: compute the relative humidity at the town, the temperature at the hill station, the dew point, the height above the town at which rising air would reach saturation, the altitude of that cloud base, and how far the hill station lies below it. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Relative humidity = actual divided by capacity times 100 = 21 divided by 30 times 100 = 70 per cent. [6 marks]",
+              "Step 2: Height difference = 1,420 minus 120 = 1,300 metres, that is 1.3 kilometres, so cooling = 6.5 times 1.3 = 8.45 degrees, and the hill temperature = 30 minus 8.45 = 21.55 degrees Celsius. [7 marks: subtract for height, never add]",
+              "Step 3: Dew point: 21 grams per kilogram saturates the air at 21 degrees, so 21 degrees is the dew point of this air mass. [4 marks]",
+              "Step 4: Cooling needed to saturate = 30 minus 21 = 9 degrees, and at 6.5 degrees per kilometre the lift required = 9 divided by 6.5 = 1.385 kilometres, that is 1,385 metres above the town. [6 marks]",
+              "Step 5: Cloud base altitude = 120 plus 1,385 = 1,505 metres above sea level, so the hill station at 1,420 metres stands 1,505 minus 1,420 = 85 metres below the level where cloud forms, which is why its higher ridge is in cloud while the town is clear. [3 marks]",
+              "Step 6: Farming and weather reading: the hill is about 8 degrees cooler, carries more dew and cloud, loses less water by evaporation, and therefore grows cool-season vegetables and fruits that fail in the hot lowland, while the town keeps its 70 per cent humidity and heat suitable for root crops and maize. [4 marks]"
+            ],
+            "keyTakeaway": "Humidity is a ratio, the lapse rate always lowers temperature with height, and the dew point is found before the cloud base, never after it."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-geo-topic-06",
       "topicId": "shs-geo-topic-06",
@@ -4031,6 +5688,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-geo-topic-07",
+    "youtubeUrl": "https://www.youtube.com/watch?v=mS0qZUvXYCk",
+    "youtubeId": "mS0qZUvXYCk",
     "subjectId": "geography",
     "level": "SHS 1",
     "term": 2,
@@ -4066,6 +5725,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "The Shea butter tree (Vitellaria paradoxa) in northern Ghana is a vital drought-adapted savanna tree providing economic income for rural women."
         }
       ],
+"commonMistakes":         [
+            "Reversing the ten per cent rule and writing that each level passes on nine tenths of its energy instead of losing nine tenths.",
+            "Naming fungi and bacteria as consumers, when decomposers feed on dead matter at every level of the chain.",
+            "Calling topsoil the same thing as humus, although humus is only the dark decayed fraction of it.",
+            "Computing porosity as bulk density divided by particle density and reporting that quotient as the pore space.",
+            "Explaining laterisation with high temperature alone, when it is heavy rain plus good drainage that leaches the base out of the soil."
+          ],
       "wassceExamTips": [
         "Adaptations: Rainforest trees develop broad leaves and buttress roots for support; savanna trees develop small waxy leaves and deep taproots to conserve water."
       ],
@@ -4075,6 +5741,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate anthropogenic causes of deforestation and strategies for environmental conservation"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-geo-07-1",
+            "title": "Energy Flow Through a Forest Clearing Food Chain",
+            "problem": "Plants in a clearing fix 800,000 kilocalories per hectare in a year. Each feeding level passes on only 10 per cent of the energy it receives. One person needs 800,000 kilocalories a year. Required: name the levels of the chain, compute the energy held by herbivores, first carnivores and top carnivores, the number of people one hectare could feed on plant food alone and on plant food after it has passed through one animal level, the equivalent for a hundred hectares, and explain why the pyramid of energy is never inverted. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Define an ecosystem as a working unit of living things with their non-living surroundings, and name the parts: producers fix energy, consumers feed on others, and decomposers return minerals to the soil. [4 marks]",
+              "Step 2: Herbivores receive 800,000 times 10 per cent = 80,000 kilocalories a hectare a year, and the other 720,000 is lost in respiration, movement and heat. [6 marks]",
+              "Step 3: First carnivores receive 80,000 times 10 per cent = 8,000 kilocalories, and top carnivores 8,000 times 10 per cent = 800 kilocalories a hectare, so the fourth level holds one thousandth of the plant energy. [6 marks]",
+              "Step 4: People fed directly on the plants = 800,000 divided by 800,000 = 1 person a hectare, so 100 hectares support 100 people. [5 marks]",
+              "Step 5: If the harvest is first fed to cattle and people then eat the cattle, only 80,000 divided by 800,000 = 0.1 person a hectare is supported, so 100 hectares carry 10 people, one tenth of the plant-based figure. [5 marks]",
+              "Step 6: Conclusion: energy leaves at every transfer, so a pyramid of energy is always upright and a chain rarely exceeds four levels; this is why Ghanaian diets rest on crops rather than on meat from converted feed, and why deforestation removes the base that supports everything above it. [4 marks]"
+            ],
+            "keyTakeaway": "Multiply by 10 per cent at each arrow, not at each level, and let the arithmetic show why short chains feed more people."
+          },
+          {
+            "id": "ex-geo-07-2",
+            "title": "Soil Porosity, Texture Class and the Cost of Liming",
+            "problem": "A soil sample has bulk density 1.3 grams per cubic centimetre and particle density 2.65 grams per cubic centimetre. Its fractions are sand 24 per cent, silt 34 per cent and clay 42 per cent, its pH is 5.2 and its humus 3.8 per cent. Raising pH by 0.5 of a unit on this soil needs 2.4 tonnes of lime a hectare, the target is pH 6.5, and lime costs GHS 850 a tonne delivered. Required: compute the pore space, classify the texture, state two consequences of that class, compute the lime needed and its cost per hectare, and give three management practices for the soil. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: State the relation: pore space equals one minus the ratio of bulk density to particle density, because bulk density includes the voids while particle density does not. [4 marks]",
+              "Step 2: Ratio = 1.3 divided by 2.65 = 0.49, so porosity = 1 minus 0.49 = 0.51, that is 51 per cent of the soil is pore space (0.5094 to be exact). [6 marks]",
+              "Step 3: Read the texture: clay is 42 per cent, above the 40 per cent line, and sand is 24 per cent, below 45 per cent, so the class is clay, not clay loam. [5 marks: quote the thresholds you used]",
+              "Step 4: Two consequences: clay holds water and nutrients well but drains slowly, so plots waterlog in the rains and bake into hard clods in the dry season, which delays planting and cracks footpaths and road foundations. [4 marks]",
+              "Step 5: Liming arithmetic: the rise needed = 6.5 minus 5.2 = 1.3 units, which is 1.3 divided by 0.5 = 2.6 doses, so lime = 2.6 times 2.4 = 6.24 tonnes a hectare, and cost = 6.24 times 850 = GHS 5,304 a hectare. [7 marks: keep the doses as a fraction, do not round up early]",
+              "Step 6: Management: spread farmyard manure or compost to lift humus above 4 per cent and improve structure, plant cover crops and grass strips to check erosion, drain or ridge the waterlogged ground, rotate crops, and burn residue only where it is licensed, since burning returns the ash but destroys the humus. [4 marks]"
+            ],
+            "keyTakeaway": "Porosity needs the density ratio, texture needs the class thresholds named, and a soil answer must end with management tied to the specific weakness found."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-geo-topic-07",
       "topicId": "shs-geo-topic-07",
@@ -4126,6 +5822,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-geo-topic-08",
+    "youtubeUrl": "https://www.youtube.com/watch?v=HkYEbJfxQyI",
+    "youtubeId": "HkYEbJfxQyI",
     "subjectId": "geography",
     "level": "SHS 1",
     "term": 3,
@@ -4161,6 +5859,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Kayayei (head porters) migrating from northern Ghana to wholesale markets in Accra illustrate economic push factors from dry rural districts."
         }
       ],
+"commonMistakes":         [
+            "Writing crude birth rate as a percentage when it is a rate per thousand of the population.",
+            "Defining the dependency ratio as children divided by workers, leaving the elderly out of the numerator.",
+            "Confusing the birth rate (per thousand of everyone) with the fertility rate (per thousand of women of childbearing age).",
+            "Adding births and deaths to get growth and forgetting net migration entirely.",
+            "Reading a wide-based pyramid as an ageing population instead of a young, rapidly growing one."
+          ],
       "wassceExamTips": [
         "Dependency ratio = (Children 0–14 + Elderly 65+) divided by Working Population (15–64) multiplied by 100."
       ],
@@ -4170,6 +5875,37 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate urban governance challenges resulting from rapid city growth in Accra and Kumasi"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-geo-08-1",
+            "title": "Vital Rates, Net Migration and Doubling Time",
+            "problem": "A district of 480,000 people records 3,120 births and 984 deaths in one year. During the same year 1,860 people arrived from other districts and 2,470 left. Required: compute the crude birth rate, the crude death rate, the natural increase in persons and as a percentage, net migration, the total change and total growth rate, the doubling time at that rate, and one policy conclusion for the district. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Crude birth rate = 3,120 divided by 480,000 times 1,000 = 6.5 per thousand. [4 marks: per thousand, not per cent]",
+              "Step 2: Crude death rate = 984 divided by 480,000 times 1,000 = 2.05 per thousand. [4 marks]",
+              "Step 3: Natural increase = 3,120 minus 984 = 2,136 people, which is 2,136 divided by 480,000 times 100 = 0.45 per cent. [4 marks]",
+              "Step 4: Net migration = 1,860 minus 2,470 = minus 610, so the district loses more people by movement than it gains by births. [4 marks: the minus sign is a mark]",
+              "Step 5: Total change = 2,136 minus 610 = 1,526 people, giving a growth rate of 1,526 divided by 480,000 times 100 = 0.32 per cent. [5 marks]",
+              "Step 6: Doubling time by the rule of 70 = 70 divided by 0.32 = 219 years, whereas on natural increase alone at 0.45 per cent it would be 70 divided by 0.45 = 156 years. [5 marks]",
+              "Step 7: Conclusion: with growth this slow and migration negative, the district is ageing and losing working-age people; services such as schools will empty while the cost of maintaining roads and water for a dispersed, older population stays high, so the remedy is local employment, not more births. [4 marks]"
+            ],
+            "keyTakeaway": "Rates per thousand, natural increase before total increase, and never use the doubling formula without first deciding which growth rate it applies to."
+          },
+          {
+            "id": "ex-geo-08-2",
+            "title": "Density, Age Structure and the Share of Growth from Migration",
+            "problem": "A town of 96 square kilometres holds 184,000 people, of whom 61,200 are under 15, 9,400 are 65 and over, and 113,400 are of working age. Its population rose by 9,200 in a year, of which 6,900 were net migrants, while the surrounding district lost 4,100 people. Required: compute density, the share of people under 15, the dependency ratio, the percentage of the town's growth caused by migration, the ratio of loss in the district to gain in the town, and describe the pyramid and the push-pull factors involved. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Density = 184,000 divided by 96 = 1,917 people a square kilometre, a figure that says nothing about the quality of the land, which is the usual examiner caveat. [5 marks]",
+              "Step 2: Share under 15 = 61,200 divided by 184,000 times 100 = 33.3 per cent, so one child in three of every person in the town. [4 marks]",
+              "Step 3: Dependants = 61,200 plus 9,400 = 70,600, and the ratio = 70,600 divided by 113,400 times 100 = 62.3 dependants for every 100 workers. [5 marks: both ends of the age scale belong in the numerator]",
+              "Step 4: Pyramid shape: a broad base with concave sides and a bulge in the 15 to 29 band where the male migrants sit, which is the classic expansive pattern of a rapidly growing West African town. [5 marks]",
+              "Step 5: Migration share of growth = 6,900 divided by 9,200 times 100 = 75 per cent, so only a quarter of the rise is natural increase, and the sending district loses 4,100 divided by 6,900 times 100 = 59.4 per cent of what the town gains. [5 marks: the second ratio is the one candidates skip]",
+              "Step 6: Push and pull: pushed by exhausted soil, no farm land for heirs, no secondary school or health post, and mechanisation freeing labour; pulled by the market, the lorry station, the school, the mine or factory wage, and relatives already settled; consequences are town land pressure, rents, and a district left with children and elders, answered by rural water, roads, credit and district industries. [6 marks]"
+            ],
+            "keyTakeaway": "Name the formula, keep the numerator complete, and split urban growth into its natural and migratory parts before arguing about causes."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-geo-topic-08",
       "topicId": "shs-geo-topic-08",
@@ -4221,6 +5957,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-geo-topic-09",
+    "youtubeUrl": "https://www.youtube.com/watch?v=SdJ0G2OL1Ss",
+    "youtubeId": "SdJ0G2OL1Ss",
     "subjectId": "geography",
     "level": "SHS 1",
     "term": 3,
@@ -4255,6 +5993,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana Water Company periodically shuts down water treatment plants at Bunso and Sekondi due to extreme turbidity caused by galamsey on the Birim and Pra rivers."
         }
       ],
+"commonMistakes":         [
+            "Applying the farm loss to the income instead of to the harvested weight.",
+            "Dividing by the farmgate price when the question gives price per kilogram and the output in tonnes.",
+            "Confusing ore with mineral and grade with recovery.",
+            "Reporting forest area and forest cover as the same figure, although reserves and cover are measured differently.",
+            "Naming only the chief export crop when the question asks for the contribution of agriculture to the economy."
+          ],
       "wassceExamTips": [
         "In WASSCE geography, link environmental destruction to specific chemical agents: mercury bio-accumulation in fish and cyanide pollution."
       ],
@@ -4264,6 +6009,37 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate the environmental, public health, and economic catastrophes caused by illegal mining (galamsey)"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-geo-09-1",
+            "title": "Cocoa Farmgate Income Before and After an Extension Programme",
+            "problem": "A cocoa farmers association has 480 members on 720 hectares yielding 420 kilograms a hectare. Disease and old trees destroy 18 per cent of the crop before it reaches the buyer, and the farmgate price is GHS 38 a kilogram. With pruning and spraying the yield rises to 650 kilograms a hectare and losses fall to 8 per cent, but the programme costs GHS 640 a hectare. Required: compute the harvest before and after, the saleable weight in each case, the gross income in each case, income per hectare before and after, the net gain after paying for the programme, and state three reasons why yields stay low. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Harvest before = 720 times 420 = 302,400 kilograms of wet and dry bean combined. [4 marks]",
+              "Step 2: Saleable before = 302,400 times 82 per cent = 247,968 kilograms, because 18 per cent is lost, and income = 247,968 times 38 = GHS 9,422,784. [4 marks: apply the loss to the weight, not to the money]",
+              "Step 3: Income per hectare before = 9,422,784 divided by 720 = GHS 13,087.20, and per farmer = 9,422,784 divided by 480 = GHS 19,630.80. [4 marks]",
+              "Step 4: Harvest after = 720 times 650 = 468,000 kilograms; saleable = 468,000 times 92 per cent = 430,560 kilograms; income = 430,560 times 38 = GHS 16,361,280. [5 marks]",
+              "Step 5: Programme cost = 720 times 640 = GHS 460,800, so the net gain = 16,361,280 minus 9,422,784 minus 460,800 = GHS 6,477,696, which is 6,477,696 divided by 720 = GHS 8,996.80 a hectare. [5 marks: deduct the cost last]",
+              "Step 6: Reading: income per hectare rises from 13,087.20 to 22,724.00, and the extra gross income of 16,361,280 minus 9,422,784 = GHS 6,938,496 divided by the programme cost of 460,800 = 15.1 times, so each cedi spent on pruning and spraying brings back about 15 cedis at the gate before costs. [4 marks]",
+              "Step 7: Why yields stay low: trees aged beyond forty years, swollen shoot virus spread by mealybugs, poor pruning and shade management, an ageing farm population with youth leaving the sector, and farmgate price delays that discourage reinvestment; controls are disease-free planting material, spraying and weeding calendars, and timely payment. [4 marks]"
+            ],
+            "keyTakeaway": "Weight first, loss second, price third, cost last, and always carry the per-hectare and per-farmer figures to the end."
+          },
+          {
+            "id": "ex-geo-09-2",
+            "title": "Forest Loss and a Gold Mine's Monthly Output",
+            "problem": "Forest cover falls from 4.10 million hectares to 3.44 million hectares in ten years. Timber removal averages 1.8 million cubic metres a year against a permitted cut of 1.2 million cubic metres. A pit at Tarkwa wins 250,000 tonnes of ore a month grading 1.8 grams of gold a tonne, and the plant recovers 88 per cent. Gold sells at USD 2,300 an ounce and one ounce is 31.1 grams. Required: compute the share of forest gone, the annual rate of loss and the years left at that rate, the unlicensed share of the cut, the gold recovered in grams and ounces, and the monthly revenue; then name three causes of forest loss with one control each. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Forest lost = 4.10 minus 3.44 = 0.66 million hectares, so 0.66 divided by 4.10 times 100 = 16.1 per cent of the cover disappeared in ten years. [5 marks]",
+              "Step 2: Annual loss = 660,000 divided by 10 = 66,000 hectares a year, and at that pace the remaining 3,440,000 divided by 66,000 = 52 years of forest would be left, which is how the rate, not the total, becomes the alarming figure. [6 marks]",
+              "Step 3: Cut against permit = 1.8 million divided by 1.2 million = 1.5 times, so 1,800,000 minus 1,200,000 = 600,000 cubic metres a year is removed without licence. [5 marks]",
+              "Step 4: Causes and controls: cocoa and food farm expansion answered by farm-gate price support and cocoa-based agroforestry; charcoal demand answered by gas and fuel-efficient stoves; small-scale mining answered by licensed pits with a reclamation bond; logging roads answered by stricter permit audits and satellite monitoring of concessions. [4 marks]",
+              "Step 5: Gold in the ore = 250,000 times 1.8 = 450,000 grams, and the plant recovers 450,000 times 88 per cent = 396,000 grams a month. [5 marks: recovery must be applied or the answer is wrong]",
+              "Step 6: Convert to ounces: 396,000 divided by 31.1 = 12,733 ounces, and revenue = 12,733 times 2,300 = USD 29,285,900, about USD 29.3 million a month before royalties, cost of mining and fuel. [5 marks]"
+            ],
+            "keyTakeaway": "Grade times tonnage, then recovery, then the gram-to-ounce conversion: three steps, and losing the middle one is the commonest error on mining questions."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-geo-topic-09",
       "topicId": "shs-geo-topic-09",
@@ -4315,6 +6091,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-geo-topic-10",
+    "youtubeUrl": "https://www.youtube.com/watch?v=63geVxFlbh4",
+    "youtubeId": "63geVxFlbh4",
     "subjectId": "geography",
     "level": "SHS 1",
     "term": 3,
@@ -4351,6 +6129,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Accra hosting the AfCFTA permanent Secretariat cements Ghana's status as the commercial capital of intra-African trade."
         }
       ],
+"commonMistakes":         [
+            "Answering a balance of trade question with balance of payments material, ignoring services and transfers.",
+            "Multiplying the tonne-kilometre rate by distance but forgetting the fixed loading and handling charge.",
+            "Turning the terms of trade index the wrong way round and reporting an improvement as a fall.",
+            "Concluding that a trade deficit proves an economy is failing, without noting capital imports and debt service.",
+            "Naming ECOWAS institutions without stating what any of them actually does to freight or tariffs."
+          ],
       "wassceExamTips": [
         "Remember the primary purpose of colonial railways in Ghana: they were built to evacuate minerals and cocoa to ports, not to serve passenger convenience."
       ],
@@ -4360,6 +6145,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Assess the objectives and challenges facing ECOWAS and the African Continental Free Trade Area (AfCFTA)"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-geo-10-1",
+            "title": "Road Against Rail for a Bulk Cargo",
+            "problem": "Six thousand tonnes of cement must move 620 kilometres from Tema to the north. Road haulage charges GHS 0.38 per tonne-kilometre with GHS 22 a tonne for loading and delivery at both ends. Rail charges GHS 0.19 per tonne-kilometre with a fixed GHS 15 a tonne, but 60 kilometres of the trip must still be done by lorry at GHS 0.38 a tonne-kilometre. Rail is five days slower, and storage during that time costs GHS 18,000 a day. Required: compute the road cost per tonne and in total, the rail cost per tonne and in total, the saving and its percentage, the delay cost and the true saving, and say which mode suits which class of goods. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Road line haul = 620 times 0.38 = GHS 235.60 a tonne, and with the fixed charge the door cost = 235.60 plus 22 = GHS 257.60 a tonne. [6 marks]",
+              "Step 2: Road total = 257.60 times 6,000 = GHS 1,545,600. [4 marks]",
+              "Step 3: Rail haul = 620 times 0.19 = GHS 117.80, plus the fixed 15, plus collection by road of 60 times 0.38 = GHS 22.80, so the rail door cost = 117.80 plus 15 plus 22.80 = GHS 155.60 a tonne. [6 marks: the road link is the mark most candidates drop]",
+              "Step 4: Rail total = 155.60 times 6,000 = GHS 933,600, a saving of 1,545,600 minus 933,600 = GHS 612,000, that is 612,000 divided by 1,545,600 times 100 = 39.6 per cent. [5 marks]",
+              "Step 5: Delay cost = 3 extra days times 18,000 = GHS 54,000, so the true saving = 612,000 minus 54,000 = GHS 558,000, still decisive for cement. [4 marks]",
+              "Step 6: Choice of mode: rail for heavy, bulky, low-value, non-perishable bulk over long distances with good terminal access; road for perishables, high-value goods, scattered destinations and door-to-door speed; water and pipeline for liquids and very heavy bulk; air for urgent, light, valuable items. [5 marks]"
+            ],
+            "keyTakeaway": "Price the whole door-to-door journey, then test it against delay and reliability, because the cheapest per tonne-kilometre is not always the cheapest to the buyer."
+          },
+          {
+            "id": "ex-geo-10-2",
+            "title": "Balance of Trade, Coverage and Terms of Trade",
+            "problem": "In one year visible exports are USD 6,900 million and visible imports USD 9,400 million. Cocoa accounts for 2,210 million and gold for 3,680 million of the exports. The export price index rises from 100 to 106 while the import price index rises from 100 to 111. Required: compute the balance of trade, the deficit as a share of exports, the share of exports covered by the two commodities, the terms of trade index and its change, and evaluate two policies that would improve the position. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Balance of trade = 6,900 minus 9,400 = minus USD 2,500 million, a visible trade deficit. [5 marks: state the sign and the word deficit]",
+              "Step 2: Deficit against exports = 2,500 divided by 6,900 times 100 = 36.2 per cent, while exports pay for 6,900 divided by 9,400 times 100 = 73.4 per cent of imports. [6 marks]",
+              "Step 3: Concentration = 2,210 plus 3,680 = 5,890 million, so 5,890 divided by 6,900 times 100 = 85.4 per cent of export earnings comes from two commodities, and a cocoa disease or a fall in the gold price moves the whole balance. [5 marks]",
+              "Step 4: Terms of trade = 106 divided by 111 times 100 = 95.5, a fall of 4.5 per cent from 100, meaning Ghana must sell more cocoa and gold to buy the same machinery, fuel and medicines. [6 marks: export index over import index, not the reverse]",
+              "Step 5: Distinguish the two balances: the balance of trade counts only visible goods, while the balance of payments adds services, remittances, transfers and capital flows, so a trade deficit can be offset by remittances and tourism receipts. [3 marks]",
+              "Step 6: Policies: grind cocoa locally so that butter, liquor and cosmetics are exported instead of the bean, and support non-traditional exports such as horticulture, processed fish and cashew; both raise export value, but each is limited by power, finance and quality certification, so regional markets opened by ECOWAS protocols matter as an intermediate step. [5 marks]"
+            ],
+            "keyTakeaway": "Fix the direction of every ratio, then explain what the number costs the country, and finish with a policy that carries one limitation."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-geo-topic-10",
       "topicId": "shs-geo-topic-10",
@@ -4411,6 +6226,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-geo-topic-11",
+    "youtubeUrl": "https://www.youtube.com/watch?v=RCHaCdPzQDo",
+    "youtubeId": "RCHaCdPzQDo",
     "subjectId": "geography",
     "level": "SHS 1",
     "term": 2,
@@ -4448,6 +6265,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Greater Accra experiences recurrent earth tremors due to the active Coastal Boundary Fault line running beneath Weija and McCarthy Hill."
         }
       ],
+"commonMistakes":         [
+            "Using the S-wave speed where the P-wave speed belongs, which puts the epicentre hundreds of kilometres away.",
+            "Naming the epicentre as the point where the rock first breaks, when that is the focus or hypocentre.",
+            "Reporting a magnitude figure as though it were an intensity, and forgetting that intensity is what people and buildings suffer.",
+            "Arguing that earthquakes occur only on plate boundaries, although the 1939 shaking in Ghana happened far from any margin.",
+            "Saying S-waves prove the inner core is liquid, when it is the outer core that stops them."
+          ],
       "wassceExamTips": [
         "A sill is CONCORDANT (parallel to existing rock bedding planes), while a dyke is DISCORDANT (cuts vertically across existing rock layers)."
       ],
@@ -4457,6 +6281,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Identify earthquake epicenter versus focus and evaluate earthquake risk along the Weija fault zone in Ghana"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-geo-11-1",
+            "title": "Locating an Epicentre from Wave Arrival Times",
+            "problem": "P-waves travel through the crust at 6.5 kilometres a second and S-waves at 3.6 kilometres a second. At a recording station the S-wave arrives 25 seconds after the P-wave. Required: state the difference between focus and epicentre and the two wave types, set up the equation for the distance, solve it, check the two travel times, explain what the stopping of S-waves at 2,900 kilometres depth proves, and describe how Ghana prepares for shaking despite being off a plate boundary. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Definitions: the focus or hypocentre is the break in the rock where energy is released, the epicentre is the point on the surface above it, P-waves are the fast body waves that pass through solids and liquids, and S-waves are the slower body waves that shake at right angles and cannot cross a liquid. [5 marks]",
+              "Step 2: Set up: if the distance is d kilometres, then d divided by 3.6 minus d divided by 6.5 = 25 seconds, because the slower wave takes longer by that lag. [6 marks: the equation itself earns marks]",
+              "Step 3: Solve: 1 divided by 3.6 = 0.2778 and 1 divided by 6.5 = 0.1538, so d times (0.2778 minus 0.1538) = d times 0.1240 = 25, and d = 25 divided by 0.1240 = 202 kilometres. [7 marks]",
+              "Step 4: Check: 202 divided by 6.5 = 31.1 seconds and 202 divided by 3.6 = 56.1 seconds, and 56.1 minus 31.1 = 25 seconds, which agrees with the observed lag. [4 marks: examiners award the verification mark]",
+              "Step 5: Interior proof: S-waves vanish at the core-mantle boundary, so the outer core is liquid, while P-waves are refracted there and produce a shadow zone between about 105 and 140 degrees; a third wave speeded up again near the centre reveals a solid inner core. [4 marks]",
+              "Step 6: Ghana situation: the country sits on the stable West African Craton, but shaking in June 1939 was felt from the Western Region to Accra and caused damage, and minor tremors have been recorded in the Volta basin, so movement is released along old reactivated faults rather than at a margin; preparation rests on hazard mapping, enforced building codes in Accra and Kumasi, open assembly points, public education, and a national seismic network. [4 marks]"
+            ],
+            "keyTakeaway": "Write the lag as a difference of times, solve once, verify once, and keep liquid-outer-core and solid-inner-core evidence separate."
+          },
+          {
+            "id": "ex-geo-11-2",
+            "title": "Volcano Shapes, Growth Rate and the Price of Hazard",
+            "problem": "A volcanic cone 210 metres high has a base 1,500 metres across. A shield volcano 1,800 metres high is 60 kilometres across. A lava field is 3,000 metres thick and built over 400,000 years. Around a third volcano 128,000 people live within 20 kilometres, where an eruption is expected once in 50 years and would destroy property worth USD 420 million. Zoning and an early-warning scheme cost USD 1.1 million a year. Required: compute each slope as a ratio and an approximate angle, the annual growth of the lava field, the probability of eruption in any year, the expected annual loss, and whether the scheme is worth its cost; then name four volcanic landforms and two benefits of vulcanicity. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Volcanic landforms named: cone or crater, caldera formed by collapse into an emptied chamber, parasitic or flank cone, dyke and sill as intrusive forms, geyser and hot spring, and lava plateau. [5 marks]",
+              "Step 2: Cone slope: radius = 1,500 divided by 2 = 750 metres, so the ratio = 210 divided by 750 = 0.28, an angle of about 15.6 degrees, steep because ash and scoria pile near the vent. [5 marks]",
+              "Step 3: Shield slope: radius = 60,000 divided by 2 = 30,000 metres, ratio = 1,800 divided by 30,000 = 0.06, an angle of about 3.4 degrees, flat because fluid basalt flows far before freezing. [5 marks]",
+              "Step 4: Growth rate = 3,000 divided by 400,000 = 0.0075 metres a year, so the plateau thickens by less than a centimetre annually, which is why volcanic time feels slow to people who live on it. [4 marks]",
+              "Step 5: Risk arithmetic: probability = 1 divided by 50 = 0.02 a year, expected loss = 0.02 times 420,000,000 = USD 8.4 million a year, and the scheme at 1.1 million therefore prevents 8.4 minus 1.1 = USD 7.3 million of loss a year, so it is plainly worth buying. [6 marks]",
+              "Step 6: Benefits: volcanic ash weathers to fertile soils that carry the tea, coffee and food crops of East African highlands; the same rocks host diamonds and other minerals; hot springs and geothermal steam supply power in Iceland and Kenya; and landforms such as mountains and lakes attract tourism, while the study of eruptions sharpens the science of the Earth's interior. [5 marks]"
+            ],
+            "keyTakeaway": "Slope is height over radius not diameter, and a hazard scheme is judged on expected annual loss, which is probability times damage."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-geo-topic-11",
       "topicId": "shs-geo-topic-11",
@@ -4508,6 +6362,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-geo-topic-12",
+    "youtubeUrl": "https://www.youtube.com/watch?v=KIxqDGX45Ao",
+    "youtubeId": "KIxqDGX45Ao",
     "subjectId": "geography",
     "level": "SHS 1",
     "term": 2,
@@ -4548,6 +6404,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "The Keta Sea Defence Wall in the Volta Region was engineered to protect historical coastal settlements from destructive tidal waves and coastal recession."
         }
       ],
+"commonMistakes":         [
+            "Drawing the wave approaching the shore head-on and still showing strong longshore drift, when drift needs a slanted approach.",
+            "Calling a spit a bar, although a bar closes an estuary while a spit stays attached at one end.",
+            "Forgetting that a breakwater starves the downdrift beach it was never meant to protect.",
+            "Dividing distance by an erosion rate and reporting the answer as metres rather than years.",
+            "Confusing deposition with erosion when explaining salt marshes and lagoons behind a barrier bar."
+          ],
       "wassceExamTips": [
         "Remember the erosion progression for headlands: Crack -> Cave -> Arch -> Stack -> Stump. Always draw a neat cross-section diagram in Section B!"
       ],
@@ -4557,6 +6420,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate coastal depositional landforms and assess sea defense measures protecting vulnerable Ghanaian towns"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-geo-12-1",
+            "title": "Cliff Retreat, Harbour Siltation and Whether a Breakwater Pays",
+            "problem": "A sea cliff at a fishing town retreats 1.4 metres a year, and a hotel stands 90 metres back from the edge today. Littoral drift along the shore carries 45,000 cubic metres of sand a year, and 12 per cent of it settles at the harbour entrance. Dredging costs GHS 18 a cubic metre. A breakwater costing GHS 6.2 million would cut siltation by 75 per cent but is expected to last 25 years. Required: compute the annual dredged volume and its cost, the cost over ten years, the siltation left with the breakwater, the annual saving, the payback period, the years before the cliff reaches the hotel, and the processes that move the sand. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Name the marine processes: hydraulic action forces air and water into joints, abrasion grinds with carried load, solution dissolves soluble rock, and transportation moves the debris longshore in the swash and backwash zig-zag. [6 marks]",
+              "Step 2: Sand that silts the harbour = 45,000 times 12 per cent = 5,400 cubic metres a year. [5 marks]",
+              "Step 3: Dredging cost = 5,400 times 18 = GHS 97,200 a year, and over ten years = 97,200 times 10 = GHS 972,000. [5 marks: ten years of dredging is far cheaper than the wall]",
+              "Step 4: With the breakwater the silt left = 5,400 times 25 per cent = 1,350 cubic metres, so annual dredging = 1,350 times 18 = GHS 24,300 and the saving = 97,200 minus 24,300 = GHS 72,900 a year. [5 marks]",
+              "Step 5: Payback = 6,200,000 divided by 72,900 = 85 years, while the structure lives 25 years, so its saving over that life = 72,900 times 25 = GHS 1,822,500, less than the cost of building it; the dredging option is the correct answer. [5 marks: state the rejection, not only the number]",
+              "Step 6: Cliff and hotel: 90 divided by 1.4 = 64.3 years, so the sea would reach the hotel in about 64 years at today's rate; the wiser response is a setback rule measured from the eroding edge, revetment only where homes already stand, and no new licence seaward of the predicted line. [4 marks]"
+            ],
+            "keyTakeaway": "Compare structures by lifetime saving, not by size, and turn an erosion rate into a date by dividing distance by the annual loss."
+          },
+          {
+            "id": "ex-geo-12-2",
+            "title": "Storm Loss from a Tourist Beach and the Case for Groynes",
+            "problem": "A beach is 780 metres long, 35 metres wide at low water, with sand averaging 2.1 metres deep. A storm season removed 8 per cent of that volume. Imported sand costs GHS 46 a cubic metre to place. A groyne field costing GHS 1.15 million is expected to halve the annual loss and to last 30 years. Required: compute the beach volume, the cubic metres lost, the replacement bill, the loss and cost after the groynes, the annual saving, the payback period, and state whether the scheme should be built; then name three depositional landforms on the Ghana coast and the management issue each raises. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Beach volume = 780 times 35 times 2.1 = 57,330 cubic metres of sand. [6 marks: area first, then depth]",
+              "Step 2: Storm loss = 57,330 times 8 per cent = 4,586.4 cubic metres. [5 marks]",
+              "Step 3: Replacement bill = 4,586.4 times 46 = GHS 210,974, rounded to the cedi. [5 marks]",
+              "Step 4: After the groynes the loss = 4,586.4 divided by 2 = 2,293.2 cubic metres, so the bill becomes 2,293.2 times 46 = GHS 105,487 and the annual saving = 210,974 minus 105,487 = GHS 105,487. [6 marks]",
+              "Step 5: Payback = 1,150,000 divided by 105,487 = 10.9 years, well inside the 30-year life, over which the scheme saves 105,487 times 30 = GHS 3,164,610; here, unlike the breakwater in the last example, build it. [4 marks]",
+              "Step 6: Landforms and their management: spits such as the one at Keta migrate and leave former settlements exposed to the sea; barrier bars and lagoons behind them, as at Ada and Sanicole, block drainage and breed salt-water ponds on farmland; sandy beaches drawn on by wave energy host the tourist economy but require groynes and nourishment, and groynes trap drift on one side and starve the beach downdrift, so the whole coast must be managed as one cell. [4 marks]"
+            ],
+            "keyTakeaway": "Compute the volume in cubic metres before touching a percentage, and accept a coastal structure only if its lifetime saving beats its capital cost."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-geo-topic-12",
       "topicId": "shs-geo-topic-12",
@@ -4608,6 +6501,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-geo-topic-13",
+    "youtubeUrl": "https://www.youtube.com/watch?v=d6zbo7fFGxs",
+    "youtubeId": "d6zbo7fFGxs",
     "subjectId": "geography",
     "level": "SHS 1",
     "term": 3,
@@ -4649,6 +6544,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Rapid urban sprawl in the Greater Accra Metropolitan Area has converted prime farmland in Kasoa, Amasaman, and Dawhenya into vast residential suburbs."
         }
       ],
+"commonMistakes":         [
+            "Confusing site, the ground a town stands on, with situation, its relation to routes and markets.",
+            "Using a simple percentage change when the question asks for an annual rate across sixteen or twenty-one years.",
+            "Reporting litres a day and cubic metres a day in the same answer without converting.",
+            "Attributing all urban growth to natural increase, although migration often supplies most of it.",
+            "Naming a percentage urban without giving the absolute numbers, so a rising share hides a falling town."
+          ],
       "wassceExamTips": [
         "Threshold population is the MINIMUM number of customers needed to make a service viable; Range is the MAXIMUM distance customers will travel."
       ],
@@ -4658,6 +6560,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Analyze the socio-economic causes and environmental consequences of rapid urbanization in Ghanaian cities"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-geo-13-1",
+            "title": "Intercensal Growth, Doubling and Central-Place Thresholds",
+            "problem": "A town held 96,000 people in 1984, 154,000 in 2000 and 232,000 in 2021. A market town serves a district in which the nearest village is 9 kilometres away. A secondary school needs 1,200 pupils on roll, and a weekly market needs a threshold of 25,000 people. Required: compute each intercensal rise in persons and as a percentage, the simple annual rate for each period, the direction of change, the doubling time from 2021 at the later rate, the years in which the population would double, and use threshold and range to explain why the town has markets and a school while the village has neither. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: First rise = 154,000 minus 96,000 = 58,000 people, that is 58,000 divided by 96,000 times 100 = 60.4 per cent. [5 marks]",
+              "Step 2: Over 16 years the simple annual rate = 60.4 divided by 16 = 3.8 per cent, although compounding gives about 3.0 per cent, and a candidate should say which method is being used. [6 marks: name the method]",
+              "Step 3: Second rise = 232,000 minus 154,000 = 78,000 people, that is 78,000 divided by 154,000 times 100 = 50.6 per cent over 21 years, a simple annual rate of 50.6 divided by 21 = 2.4 per cent and a compounded rate near 2.0 per cent. [6 marks]",
+              "Step 4: Direction: growth has slowed from about 3 per cent to about 2 per cent a year, as expected when a town has absorbed the easily migrated rural population, when its land is built up, or when boundaries were redrawn at a census. [3 marks]",
+              "Step 5: Doubling time = 70 divided by 2 = 35 years, so at the 2021 rate the town of 232,000 would reach about 464,000 in the middle of the 2050s, which is what a master plan must provide water and land for. [4 marks]",
+              "Step 6: Central place: the town clears the 25,000 threshold for a market many times over and draws traders from surrounding villages, while a village of a few thousand cannot fill a 1,200-pupil school; the range of a secondary school and a weekly market exceeds 9 kilometres, so the village children and buyers travel in, giving the town a hierarchy of functions the village cannot support. [6 marks]"
+            ],
+            "keyTakeaway": "State the growth method, quote both periods separately, note the slowdown, and let threshold and range carry the settlement argument."
+          },
+          {
+            "id": "ex-geo-13-2",
+            "title": "Water Supply, Leakage and the Limits of a Town",
+            "problem": "A town of 232,000 people is planned for 60 litres a head a day. Its treatment works delivers 16,000 cubic metres a day into the pipes, but 28 per cent of that is lost to leaks and unbilled use. A repair programme costing GHS 34 million would cut the loss to 12 per cent. Demand grows 2 per cent a year, each person generates 0.6 kilograms of solid waste a day, and a low standard of 45 litres a head is set for planning. Required: compute demand, delivered water, the deficit, the litres each person actually receives, delivered water after repair, whether one year of growth cancels the gain, the population the repaired system could hold at 45 litres, and the daily waste load. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Demand = 232,000 times 60 = 13,920,000 litres a day, and 13,920,000 divided by 1,000 = 13,920 cubic metres a day. [5 marks]",
+              "Step 2: Delivered = 16,000 times 72 per cent = 11,520 cubic metres a day, so the deficit = 13,920 minus 11,520 = 2,400 cubic metres a day. [6 marks: losses come off the output, not off demand]",
+              "Step 3: Water actually reaching people = 11,520,000 divided by 232,000 = 49.7 litres a head a day, below the 60-litre plan and typical of towns that ration by pressure rather than by valve. [5 marks]",
+              "Step 4: After repair: delivered = 16,000 times 88 per cent = 14,080 cubic metres, which covers the 13,920 needed with 14,080 minus 13,920 = 160 cubic metres to spare. [6 marks]",
+              "Step 5: One year of growth = 13,920 times 2 per cent = 278 cubic metres, more than the 160 spare, so the gain is used up inside a year; the programme buys 14,080 minus 11,520 = 2,560 extra daily cubic metres at 34,000,000 divided by 2,560 = GHS 13,281 each. [4 marks]",
+              "Step 6: Limits and load: at the 45-litre standard the repaired town can carry 14,080,000 divided by 45 = 312,889 people, and the waste it must dispose of = 232,000 times 0.6 = 139,200 kilograms, that is 139 tonnes a day, so a new intake, metering and a proper dump must follow the pipe repairs. [4 marks]"
+            ],
+            "keyTakeaway": "Convert litres to cubic metres, take losses off the supply side, and test every repair against the growth rate before declaring the problem solved."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-geo-topic-13",
       "topicId": "shs-geo-topic-13",
@@ -4709,6 +6641,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-eco-topic-01",
+    "youtubeUrl": "https://www.youtube.com/watch?v=TWR1JUO-C8w",
+    "youtubeId": "TWR1JUO-C8w",
     "subjectId": "economics",
     "level": "SHS 1",
     "term": 1,
@@ -4745,6 +6679,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "A District Assembly in Ghana choosing to build a CHPS clinic instead of constructing a football pitch incurs the football pitch as its opportunity cost."
         }
       ],
+"commonMistakes":         [
+            "Defining economics as the study of money, which ignores scarcity and choice and loses the definition mark.",
+            "Naming opportunity cost as the money spent instead of the next best alternative forgone.",
+            "Drawing a production possibility frontier that shifts outward when only the price of a good changes.",
+            "Calling a point inside the frontier inefficient without saying which resource is idle.",
+            "Confusing a want with a demand; a demand requires both willingness and ability to pay."
+          ],
       "wassceExamTips": [
         "In WASSCE Section B essays, never define opportunity cost as money spent. Always define it as \"the next best alternative forgone\"."
       ],
@@ -4754,6 +6695,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Construct and interpret the Production Possibility Curve (PPC)"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-eco-01-1",
+            "title": "Opportunity Cost on a Bowed-Out Production Possibility Frontier",
+            "problem": "A farmer in Sunyani has a fixed plot and labour and can plant maize or cassava. The maximum combinations are: maize 0 tonnes with cassava 6,000; 200 with 5,600; 400 with 5,000; 600 with 4,200; 800 with 3,100; 1,000 with 1,800. Required: compute the opportunity cost of each additional 200 tonnes of maize, state what shape this gives the frontier and why, and identify a point that shows unemployment of resources. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: First 200 tonnes of maize cost 6,000 minus 5,600 = 400 tonnes of cassava, so the opportunity cost is 400 divided by 200 = 2 tonnes of cassava per tonne of maize. [5 marks: show the division]",
+              "Step 2: Second 200 tonnes cost 5,600 minus 5,000 = 600 cassava, that is 3 tonnes of cassava per tonne of maize. [4 marks]",
+              "Step 3: Third 200 tonnes cost 800 cassava (4 per maize tonne) and the fourth 200 tonnes cost 1,100 cassava (5.5 per maize tonne). [6 marks]",
+              "Step 4: The opportunity cost rises from 2 to 3 to 4 to 5.5 as maize output expands, which proves the law of increasing opportunity cost because land and labour are not equally suited to both crops. [6 marks: the reason earns the marks]",
+              "Step 5: Because cost rises, the frontier is concave to the origin (bowed outward), not a straight line. A straight line would imply resources are perfectly substitutable. [5 marks]",
+              "Step 6: A combination such as 200 tonnes of maize with 5,600 tonnes of cassava drawn below the frontier shows idle land or labour; a combination beyond 1,000 maize with 1,800 cassava, for example 1,200 with 1,800, is currently unattainable. [4 marks]"
+            ],
+            "keyTakeaway": "Opportunity cost is measured in the alternative forgone, not in cedis, and a rising sequence of forgone units is what bows the frontier outward."
+          },
+          {
+            "id": "ex-eco-01-2",
+            "title": "A Budget Line, Scarcity and Choice",
+            "problem": "A student in Cape Coast has GHS 240 a month for printed notes priced at GHS 40 a bundle and data bundles priced at GHS 20 each. Required: draw the budget line by computing its two end points and its slope, show the effect of the price of data rising to GHS 24, and state which of the two goods is now relatively more expensive for the student. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Maximum notes if all income is spent on notes = 240 divided by 40 = 6 bundles, giving the point (6 notes, 0 data). [4 marks]",
+              "Step 2: Maximum data = 240 divided by 20 = 12, giving (0 notes, 12 data). The budget line joins these two points. [4 marks]",
+              "Step 3: Slope = 6 divided by 12 = 0.5, so one data bundle costs half a bundle of notes, that is the opportunity price of data is 0.5 notes. [5 marks: correct interpretation of slope as relative price]",
+              "Step 4: Combinations on the line include 3 notes and 6 data: 3 times 40 plus 6 times 20 = 120 plus 120 = GHS 240, which exactly exhausts income. [4 marks]",
+              "Step 5: When data costs GHS 24, maximum data falls to 240 divided by 24 = 10 while maximum notes stay at 6, so the line pivots inward on the data axis only. [4 marks: a pivot, not a parallel shift]",
+              "Step 6: New slope = 6 divided by 10 = 0.6, so data is now relatively more expensive and the student is poorer in real terms; a point such as 3 notes and 8 data costs 120 plus 192 = GHS 312 and is now unattainable. [4 marks]"
+            ],
+            "keyTakeaway": "A price change on one good pivots the budget line and changes the trade-off; a change in income shifts it parallel. The slope is always the relative price."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-eco-topic-01",
       "topicId": "shs-eco-topic-01",
@@ -4805,6 +6776,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-eco-topic-02",
+    "youtubeUrl": "https://www.youtube.com/watch?v=QwmLgc3jvIo",
+    "youtubeId": "QwmLgc3jvIo",
     "subjectId": "economics",
     "level": "SHS 1",
     "term": 1,
@@ -4838,6 +6811,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana combines private commercial enterprises (MTN, Finatrade) with state-owned corporations and regulators (VRA, ECG, GRA)."
         }
       ],
+"commonMistakes":         [
+            "Saying a socialist economy has no prices at all; it has administered prices set by the state.",
+            "Describing Ghana as purely capitalistic instead of a mixed economy with a large informal sector.",
+            "Ignoring the basic economic questions, what, how and for whom, which is where most marks are allocated.",
+            "Claiming the price mechanism removes the need for any government intervention.",
+            "Confusing consumer sovereignty in a market system with the planning authority in a command system."
+          ],
       "wassceExamTips": [
         "Remember: In a free market, resource allocation is determined by the \"price mechanism\" through the forces of demand and supply."
       ],
@@ -4847,6 +6827,33 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Justify why Ghana operates as a mixed economic system"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-eco-02-1",
+            "title": "Allocating a Fixed Development Budget by Benefit-Cost Ranking",
+            "problem": "A district assembly in the Bono Region has GHS 240,000 for the year and four candidate projects. Project A: cost 120,000 with total benefit 300,000. Project B: cost 80,000 with benefit 152,000. Project C: cost 40,000 with benefit 56,000. Project D: cost 200,000 with benefit 560,000. Required: rank the projects by benefit-cost ratio, find the affordable combination that maximises total benefit, and explain how a market economy and a command economy would each decide. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Ratios: A = 300,000 divided by 120,000 = 2.5; B = 152,000 divided by 80,000 = 1.9; C = 56,000 divided by 40,000 = 1.4; D = 560,000 divided by 200,000 = 2.8. [6 marks: all four ratios]",
+              "Step 2: Ranking is D, A, B, C. Note that C is still worthwhile because its ratio exceeds 1, but it ranks last. [3 marks]",
+              "Step 3: Feasible combinations within 240,000: D plus C costs 240,000 and yields 616,000; A plus B plus C costs 240,000 and yields 508,000; A plus C costs 160,000 and yields 356,000; D alone costs 200,000 and yields 560,000. [6 marks: the enumeration is the working]",
+              "Step 4: Optimal choice = D plus C, benefit 616,000, because it uses the whole budget and returns the highest total benefit; the unused-budget alternative is dominated. [4 marks]",
+              "Step 5: Market mechanism: private investors fund D and A because they promise the highest returns, and C may never be built if its beneficiaries cannot pay. Command mechanism: the planning authority may build C and B first to reach deprived communities, accepting a lower total benefit for equity. [6 marks: contrast what, how and for whom]"
+            ],
+            "keyTakeaway": "Efficiency ranking uses benefit-cost ratios, but the two systems differ on for whom: markets chase the highest ratio, planning chases distribution."
+          },
+          {
+            "id": "ex-eco-02-2",
+            "title": "Identifying the Allocation Mechanism from Its Features",
+            "problem": "Three decisions are observed in Ghana: (i) a chief in the Northern Region allocates farmland among families; (ii) the national government fixes the ex-factory price of sachet water; (iii) a private bakery in Takoradi raises the price of bread after flour costs rise. Required: identify the type of economic system each decision reflects, state who answers the three basic questions in each, and give one weakness of each mechanism. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: (i) is a traditional mechanism: custom, heritage and chiefly authority decide what is grown, how, and who gets the land. Weakness: innovation is discouraged and the landless have no voice. [7 marks: identification plus who answers the questions plus weakness]",
+              "Step 2: (ii) is a command mechanism: a government agency sets price and output targets, so the state answers all three questions. Weakness: shortages and queues appear when the fixed price is set below the market-clearing price. [6 marks]",
+              "Step 3: (iii) is a market mechanism: profit and loss and the price signal decide production, and consumers vote with their purchases, giving consumer sovereignty. Weakness: essentials may go only to those who can pay. [6 marks]",
+              "Step 4: Conclusion: Ghana operates all three at once, so it is a mixed economy; the public sector runs (ii), private firms run (iii), and customary authority still allocates land under (i). [6 marks: naming the mixed economy is required]"
+            ],
+            "keyTakeaway": "Name the mechanism, say who answers what, how and for whom, and give one weakness. All three elements are marked separately, so never stop at the label."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-eco-topic-02",
       "topicId": "shs-eco-topic-02",
@@ -4898,6 +6905,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-eco-topic-03",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ciI-n3PvcEE",
+    "youtubeId": "ciI-n3PvcEE",
     "subjectId": "economics",
     "level": "SHS 1",
     "term": 1,
@@ -4936,6 +6945,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "A sharp rise in the price of imported rice in Ghanaian markets leads consumers to substitute with locally grown Volta rice or cassava/plantain."
         }
       ],
+"commonMistakes":         [
+            "Moving along the demand curve and calling it a change in demand; a price change causes a change in quantity demanded only.",
+            "Drawing a demand curve sloping upward because a favourite good seems more desirable at higher prices.",
+            "Forgetting that a fall in the price of a complement increases demand for the good in question.",
+            "Leaving negative quantities in a market demand schedule when a consumer would buy nothing at a high price.",
+            "Treating expectations as permanent when they shift demand only temporarily."
+          ],
       "wassceExamTips": [
         "Never confuse \"change in quantity demanded\" (movement along one curve due to price) with \"change in demand\" (shift of the entire curve due to other factors)."
       ],
@@ -4945,6 +6961,35 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Analyze substitute, complementary, derived, and composite demand types"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-eco-03-1",
+            "title": "Demand Schedule from a Demand Function and a Shift in Demand",
+            "problem": "For a brand of roasted gaakanto sold in Accra, monthly quantity demanded is Qd = 4,000 minus 200P, where P is the price in cedis. Required: compute quantity demanded at GHS 5, 10 and 15, find the price at which demand vanishes, then show the effect of consumer income rising so that demand increases by 20 per cent at every price, and state whether the rise in income moves the curve or moves along it. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: At P = 5, Qd = 4,000 minus 1,000 = 3,000 units; at P = 10, Qd = 4,000 minus 2,000 = 2,000 units; at P = 15, Qd = 4,000 minus 3,000 = 1,000 units. [6 marks]",
+              "Step 2: The three points show the law of demand working: a GHS 5 price rise cut quantity by 1,000 units, so the slope is 200 units per cedi and negative. [4 marks]",
+              "Step 3: Demand vanishes when 4,000 minus 200P = 0, so P = 4,000 divided by 200 = GHS 20, the reservation or choke price. [5 marks]",
+              "Step 4: Income rise of 20 per cent multiplies both terms: new demand Qd = 1.2 times (4,000 minus 200P) = 4,800 minus 240P. [6 marks: multiply both intercept and slope]",
+              "Step 5: At P = 10 the new quantity is 4,800 minus 2,400 = 2,400 units against 2,000 before, an increase of 400 units at the same price. The choke price stays at GHS 20. [4 marks]",
+              "Step 6: Because a non-price determinant changed, the whole curve shifts right; the movement from 2,000 to 2,400 units at one price is an increase in demand, not an increase in quantity demanded. [5 marks: the distinction is the tested point]"
+            ],
+            "keyTakeaway": "Multiply the entire demand function when demand rises proportionately, and always name the shift an increase in demand while a price movement is a change in quantity demanded."
+          },
+          {
+            "id": "ex-eco-03-2",
+            "title": "Deriving Market Demand by Horizontal Summation",
+            "problem": "Three consumers in Tamale face the same price for millet and demand it as follows: Ama Qd = 100 minus 2P, Kofi Qd = 60 minus P, Abena Qd = 40 minus 0.5P, where P is the price in cedis. Required: build the market demand schedule at P = 20, 40 and 70, and explain the rule applied when a consumer would demand a negative amount. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: At P = 20: Ama 100 minus 40 = 60; Kofi 60 minus 20 = 40; Abena 40 minus 10 = 30; market demand = 130 units. [6 marks]",
+              "Step 2: At P = 40: Ama 20, Kofi 20, Abena 20; market demand = 60 units. Note each individual quantity fell as price rose. [5 marks]",
+              "Step 3: At P = 70: Ama 100 minus 140 = minus 40, Kofi 60 minus 70 = minus 10, Abena 40 minus 35 = 5. [4 marks]",
+              "Step 4: Negative quantities are impossible, so each consumer demand is floored at zero: Ama buys 0, Kofi buys 0, Abena buys 5, so market demand = 5 units. This truncation is where the market curve kinks. [6 marks: the kink earns the marks]",
+              "Step 5: Market demand is the horizontal sum of individual demands at each price, never the vertical sum, because all consumers face the same price and add quantities. [4 marks]"
+            ],
+            "keyTakeaway": "Sum quantities at each price, floor negative individual demands at zero, and describe the resulting kink in the market demand curve."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-eco-topic-03",
       "topicId": "shs-eco-topic-03",
@@ -4996,6 +7041,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-eco-topic-04",
+    "youtubeUrl": "https://www.youtube.com/watch?v=PEMkfgrifDw",
+    "youtubeId": "PEMkfgrifDw",
     "subjectId": "economics",
     "level": "SHS 1",
     "term": 1,
@@ -5033,6 +7080,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "COCOBOD sets a guaranteed minimum producer price for cocoa in Ghana to cushion farmers against volatile world market fluctuations."
         }
       ],
+"commonMistakes":         [
+            "Equating the demand and supply equations and then solving for P incorrectly, leaving the answer in the wrong units.",
+            "Reporting equilibrium price only and forgetting the equilibrium quantity.",
+            "Shifting the supply curve for a change in the price of the good itself.",
+            "Placing a price ceiling above the equilibrium price and then claiming it creates a shortage.",
+            "Forgetting that a specific tax drives a wedge between the price paid and the price received, equal to the tax."
+          ],
       "wassceExamTips": [
         "To find equilibrium algebraically, set Qd = Qs and solve for P, then substitute P back into either equation to find Q."
       ],
@@ -5042,6 +7096,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate the economic consequences of price ceilings and price floors"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-eco-04-1",
+            "title": "Equilibrium and the Incidence of a Specific Tax",
+            "problem": "In the Kumasi market for cooking oil, monthly demand is Qd = 12,000 minus 300P and supply is Qs = 2,000 plus 200P, with P in cedis per litre. The government later imposes a tax of GHS 5 per litre payable by sellers, so supply becomes Qs = 2,000 plus 200 times (P minus 5). Required: find the original equilibrium, the new equilibrium, the tax revenue, and how the tax burden is shared. [35 marks]",
+            "stepByStepSolution": [
+              "Step 1: Set Qd equal to Qs: 12,000 minus 300P = 2,000 plus 200P, so 10,000 = 500P and P = GHS 20. [5 marks: show the rearrangement]",
+              "Step 2: Equilibrium quantity = 12,000 minus 300 times 20 = 6,000 litres; check with supply: 2,000 plus 200 times 20 = 6,000 litres. [5 marks: the check is a method mark]",
+              "Step 3: After the tax, supply = 2,000 plus 200P minus 1,000 = 1,000 plus 200P. Equating: 12,000 minus 300P = 1,000 plus 200P, so 11,000 = 500P and P = GHS 22, the price buyers now pay. [8 marks]",
+              "Step 4: New quantity = 12,000 minus 300 times 22 = 5,400 litres, so output has fallen by 600 litres. [4 marks]",
+              "Step 5: Sellers receive 22 minus the 5 tax = GHS 17, against GHS 20 before. Buyers pay GHS 2 more and sellers keep GHS 3 less. [6 marks: the wedge must equal the tax]",
+              "Step 6: Tax revenue = 5 times 5,400 = GHS 27,000 a month. Burden shares: buyers bear 2 divided by 5 = 40 per cent and sellers bear 3 divided by 5 = 60 per cent, so the burden falls more on sellers because demand is relatively more elastic than supply here. [6 marks]"
+            ],
+            "keyTakeaway": "A specific tax shifts supply upward by the tax, splits the price into paid and received, and falls more heavily on the side of the market that is less elastic."
+          },
+          {
+            "id": "ex-eco-04-2",
+            "title": "A Price Ceiling, a Price Floor and the Surpluses They Create",
+            "problem": "Using the same oil market where demand is Qd = 12,000 minus 300P and supply is Qs = 2,000 plus 200P with equilibrium price GHS 20, the government fixes a maximum price of GHS 15 per litre. Later it guarantees maize producers a minimum price of GHS 25 per litre. Required: compute the shortage at the ceiling, the surplus at the floor, and state two consequences of each policy. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: At the ceiling of 15, quantity demanded = 12,000 minus 4,500 = 7,500 litres while quantity supplied = 2,000 plus 3,000 = 5,000 litres. [5 marks]",
+              "Step 2: Shortage = 7,500 minus 5,000 = 2,500 litres, which is 50 per cent more than the quantity actually available, so only 5,000 litres change hands. [4 marks: stating that transactions fall to the shorter side is important]",
+              "Step 3: Consequences of the ceiling: queues and rationing appear, a black market develops above GHS 15, and quality may be secretly reduced. Investment in new oil-processing capacity falls. [5 marks]",
+              "Step 4: At the floor of 25, quantity supplied = 2,000 plus 5,000 = 7,000 litres while quantity demanded = 12,000 minus 7,500 = 4,500 litres. [4 marks]",
+              "Step 5: Surplus = 7,000 minus 4,500 = 2,500 litres. If the buffer agency buys it at 25, the cost is 2,500 times 25 = GHS 62,500 a month before storage. [5 marks]",
+              "Step 6: Consequences of the floor: government storage costs and waste, over-production of the protected crop, and a distortion of the incentive to diversify. A floor must sit above equilibrium to bind; a ceiling must sit below. [4 marks]"
+            ],
+            "keyTakeaway": "A binding ceiling sits below equilibrium and causes shortage; a binding floor sits above it and causes surplus. Compute both quantities before concluding."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-eco-topic-04",
       "topicId": "shs-eco-topic-04",
@@ -5093,6 +7177,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-eco-topic-05",
+    "youtubeUrl": "https://www.youtube.com/watch?v=PmXsQNDjNhY",
+    "youtubeId": "PmXsQNDjNhY",
     "subjectId": "economics",
     "level": "SHS 1",
     "term": 2,
@@ -5126,6 +7212,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Government imposes heavy excise taxes on cigarettes and alcohol because their demand is price-inelastic, ensuring high tax revenues."
         }
       ],
+"commonMistakes":         [
+            "Reporting elasticity as a positive number without stating that the price and quantity moves were in opposite directions.",
+            "Using the new value as the denominator where the midpoint method is required, and getting a different answer.",
+            "Concluding demand is inelastic because total revenue rose when price fell, which is the opposite test.",
+            "Interpreting a cross elasticity of minus 1.5 as evidence the goods are substitutes.",
+            "Assuming agricultural supply is elastic in the short run when biological lags make it inelastic."
+          ],
       "wassceExamTips": [
         "When calculating PED, ignore the negative sign (use absolute value) when classifying elasticity as elastic, inelastic, or unitary."
       ],
@@ -5135,6 +7228,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Advise businesses and governments on pricing and taxation policies based on elasticity"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-eco-05-1",
+            "title": "Price Elasticity by Two Methods and the Total Revenue Test",
+            "problem": "When the price of a carton of imported tomato paste rose from GHS 20 to GHS 25, weekly quantity demanded fell from 8,000 cartons to 6,000 cartons. Required: compute the price elasticity of demand by the proportionate method and by the midpoint method, verify the answer with the total revenue test, and state the implication for the importer revenue. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Proportionate method: percentage change in quantity = (6,000 minus 8,000) divided by 8,000 times 100 = minus 25 per cent. [4 marks]",
+              "Step 2: Percentage change in price = (25 minus 20) divided by 20 times 100 = 25 per cent, so elasticity = minus 25 divided by 25 = minus 1.00, unitary elasticity. [6 marks: sign and interpretation both marked]",
+              "Step 3: Midpoint method uses averages: average quantity = 7,000 and average price = 22.50, so percentage change in quantity = 2,000 divided by 7,000 times 100 = 28.57 per cent and percentage change in price = 5 divided by 22.50 times 100 = 22.22 per cent. [6 marks]",
+              "Step 4: Midpoint elasticity = minus 28.57 divided by 22.22 = minus 1.29, so demand is elastic on this measure. [4 marks: state that the two measures differ because the base differs]",
+              "Step 5: Total revenue test: before = 20 times 8,000 = GHS 160,000; after = 25 times 6,000 = GHS 150,000, a fall of GHS 10,000. [5 marks]",
+              "Step 6: Because revenue fell when price rose, demand is elastic, which supports the midpoint answer. Implication: the importer should not press on with further price increases because revenue falls by 6.25 per cent. [4 marks]"
+            ],
+            "keyTakeaway": "Quote the method used. The total revenue test settles the argument: price and revenue moving oppositely means elastic, moving together means inelastic."
+          },
+          {
+            "id": "ex-eco-05-2",
+            "title": "Income Elasticity, Cross Elasticity and Supply Elasticity",
+            "problem": "Ghanaian household income rose 20 per cent in a year. Purchases of fresh tilapia fell 8 per cent, purchases of chicken rose 14 per cent and restaurant meals rose 24 per cent. Separately, when the retail price of tea rose 20 per cent, quantity demanded of coffee rose 30 per cent. Within one month a 25 per cent price rise for plantain raised quantity supplied only 5 per cent; after twelve months it raised supply 18 per cent. Required: compute each elasticity, classify every good and each supply response, and advise one policy measure. [35 marks]",
+            "stepByStepSolution": [
+              "Step 1: Income elasticity of tilapia = minus 8 divided by 20 = minus 0.40, a negative value, so tilapia behaves as an inferior good at these income levels. [6 marks: the minus sign is the mark]",
+              "Step 2: Chicken = 14 divided by 20 = 0.70, a positive value below 1, so it is a normal necessity. Restaurant meals = 24 divided by 20 = 1.20, above 1, so a normal luxury with high income elasticity. [6 marks]",
+              "Step 3: Cross elasticity = 30 divided by 20 = 1.50, positive, so tea and coffee are substitutes; a tea price rise shifts demand to coffee. [5 marks]",
+              "Step 4: Price elasticity of supply within a month = 5 divided by 25 = 0.20, inelastic, because plantain takes a full season to grow and cannot be expanded quickly. [5 marks]",
+              "Step 5: After twelve months = 18 divided by 25 = 0.72, still below 1 but more responsive, since farmers can replant and expand area within a crop year. PES rises with the time horizon. [5 marks]",
+              "Step 6: Advice: because tilapia is inferior, rising incomes shrink its domestic market while restaurant demand grows, so a processor should reposition toward higher-value products; and because PES is inelastic, a subsidy raises output only after a full season, so do not expect an immediate price fall. [8 marks: the advice must use the numbers]"
+            ],
+            "keyTakeaway": "Sign matters as much as size: negative income elasticity flags an inferior good, positive cross elasticity flags substitutes, and supply elasticity always rises with time."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-eco-topic-05",
       "topicId": "shs-eco-topic-05",
@@ -5186,6 +7309,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-eco-topic-06",
+    "youtubeUrl": "https://www.youtube.com/watch?v=N22wnDxGkvQ",
+    "youtubeId": "N22wnDxGkvQ",
     "subjectId": "economics",
     "level": "SHS 1",
     "term": 2,
@@ -5225,6 +7350,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "A small sachet water factory in Kumasi adding more workers to a single packaging machine experiences diminishing marginal returns."
         }
       ],
+"commonMistakes":         [
+            "Placing the onset of diminishing returns where marginal product first falls instead of where total product still rises at a decreasing rate.",
+            "Confusing average product with marginal product and saying the peak of total product is where MP is highest.",
+            "Adding a fixed cost when computing marginal cost between two output levels.",
+            "Assuming average cost rises whenever marginal cost is above average cost only in the long run.",
+            "Including interest on the owner own capital as an explicit cost and ignoring the implicit cost entirely."
+          ],
       "wassceExamTips": [
         "Average Total Cost (ATC) and Marginal Cost (MC) curves are U-shaped in the short run. MC always cuts ATC and AVC at their minimum points."
       ],
@@ -5234,6 +7366,37 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Calculate Total, Average, and Marginal costs and plot their characteristic curves"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-eco-06-1",
+            "title": "Total, Average and Marginal Product with the Law of Diminishing Returns",
+            "problem": "A cassava-processing plant has one fixed press and hires labour. Total output per day for each number of workers is: 0 workers 0 kg; 1 worker 30 kg; 2 workers 80 kg; 3 workers 150 kg; 4 workers 230 kg; 5 workers 300 kg; 6 workers 350 kg; 7 workers 380 kg; 8 workers 395 kg. Required: complete the marginal product and average product columns, identify where diminishing returns begin, and state the range of rational production. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Marginal product = change in total product: 30, 50, 70, 80, 70, 50, 30, 15 kg for workers 1 to 8. [6 marks]",
+              "Step 2: Average product = total divided by workers: 30, 40, 50, 57.5, 60, 58.33, 54.29, 49.38 kg. [6 marks]",
+              "Step 3: Marginal product rises to 80 kg at the fourth worker, so returns increase up to worker 4; from worker 5 marginal product falls to 70 kg, so diminishing marginal returns set in with the fifth worker. [6 marks: naming the fifth worker is the answer]",
+              "Step 4: Total product is still rising at worker 5 and only peaks at worker 8, which shows that diminishing returns is not the same as negative returns. [4 marks]",
+              "Step 5: Average product peaks at worker 5 at 60 kg, the point where marginal product equals average product, and beyond it average product falls. [4 marks]",
+              "Step 6: Rational production lies in Stage II, between the fifth worker, where average product is at its maximum, and the eighth worker, where marginal product reaches zero. A firm stops hiring where the value of marginal product equals the wage. [4 marks]"
+            ],
+            "keyTakeaway": "Diminishing returns begin where marginal product starts to fall, not where total product falls, and the efficient zone ends where marginal product equals zero."
+          },
+          {
+            "id": "ex-eco-06-2",
+            "title": "Short-Run Cost Table and the Profit-Maximising Output",
+            "problem": "A soap maker pays GHS 4,000 a month in fixed costs. Total variable cost at outputs of 0, 1,000, 2,000, 3,000, 4,000 and 5,000 bars is GHS 0, 3,000, 5,400, 7,500, 10,200 and 14,100. The market price is GHS 4 a bar. Required: compute total cost, average cost, average variable cost and marginal cost at each output, find the profit-maximising output, and show what the loss would be if the firm shut down. [35 marks]",
+            "stepByStepSolution": [
+              "Step 1: Total cost = fixed plus variable: 4,000; 7,000; 9,400; 11,500; 14,200; 18,100. [5 marks]",
+              "Step 2: Average cost at 1,000 to 5,000 bars = 7.00; 4.70; 3.83; 3.55; 3.62 cedis, and average variable cost = 3.00; 2.70; 2.50; 2.55; 2.82. [7 marks: round to two decimals and show one division]",
+              "Step 3: Marginal cost = change in total cost = 3,000; 2,400; 2,100; 2,700; 3,900 for each extra thousand bars, that is GHS 3.00, 2.40, 2.10, 2.70 and 3.90 per bar. [7 marks: marginal cost per bar is what must be compared with price]",
+              "Step 4: Apply the rule of producing while price at least equals marginal cost per bar. Price is GHS 4.00, and marginal cost per bar is below it at every expansion up to 5,000 bars, the highest at 3.90, so the firm produces the full 5,000 bars. [6 marks]",
+              "Step 5: Verify with the profit column, since revenue is 4 times output: at 3,000 bars profit = 12,000 minus 11,500 = GHS 500; at 4,000 bars profit = 16,000 minus 14,200 = GHS 1,800; at 5,000 bars profit = 20,000 minus 18,100 = GHS 1,900, the largest of the three, which confirms Step 4. [6 marks]",
+              "Step 6: Average cost reaches its minimum of GHS 3.55 at 4,000 bars, where marginal cost of 2.70 is below average cost, and by 5,000 bars marginal cost of 3.90 has risen above it, which is why the AC curve is U-shaped. [4 marks]",
+              "Step 7: Shutdown test: price 4 exceeds average variable cost 2.82 at 5,000 bars, so the firm must operate. Shutting down would forfeit all revenue and still leave the GHS 4,000 fixed cost, a loss of GHS 4,000 instead of a profit of GHS 1,900. [6 marks]"
+            ],
+            "keyTakeaway": "Compare price with marginal cost per unit, not with the marginal cost of a whole batch, and remember that fixed cost survives shutdown, so the shutdown rule is price against average variable cost."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-eco-topic-06",
       "topicId": "shs-eco-topic-06",
@@ -5285,6 +7448,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-eco-topic-07",
+    "youtubeUrl": "https://www.youtube.com/watch?v=u1xIZOieOUw",
+    "youtubeId": "u1xIZOieOUw",
     "subjectId": "economics",
     "level": "SHS 1",
     "term": 2,
@@ -5317,6 +7482,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Electricity Company of Ghana (ECG) operates as a natural monopoly in power distribution, whereas Makola market food sellers resemble monopolistic competition."
         }
       ],
+"commonMistakes":         [
+            "Giving a perfectly competitive firm the power to set price instead of taking it as given.",
+            "Drawing the firm demand curve upward sloping or drawing it vertical for a monopoly.",
+            "Setting price equal to marginal cost for a monopoly instead of using marginal revenue equals marginal cost.",
+            "Forgetting that marginal revenue falls twice as fast as price on a linear demand curve.",
+            "Claiming that a monopolist always makes supernormal profit without checking average cost."
+          ],
       "wassceExamTips": [
         "A competitive firm maximizes profit where MR = MC = P, whereas a monopolist sets output where MR = MC and charges price from the AR curve."
       ],
@@ -5326,6 +7498,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate the social costs and benefits of monopolies with examples"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-eco-07-1",
+            "title": "Loss Minimisation by a Perfectly Competitive Firm in the Short Run",
+            "problem": "A rice mill in a competitive market sells each 50 kg bag at GHS 120. Its total cost, including fixed cost of GHS 150, is: 1 bag 240; 2 bags 310; 3 bags 390; 4 bags 500; 5 bags 650; 6 bags 850. Required: compute marginal cost and marginal revenue for each bag, find the loss-minimising output, compute profit or loss there, and decide whether the firm should keep operating. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Marginal revenue equals the price for a price taker, so MR = GHS 120 at every output, and average revenue is the same horizontal line. [4 marks]",
+              "Step 2: Marginal cost = change in total cost: bag 1 240 minus 150 = 90; bag 2 70; bag 3 80; bag 4 110; bag 5 150; bag 6 200. [7 marks: the fixed cost must be isolated first]",
+              "Step 3: Apply the rule of producing while marginal revenue is at least marginal cost: bags 1 to 4 have MC of 90, 70, 80 and 110, all below 120, while bag 5 costs 150, above 120, so the firm produces 4 bags. [6 marks]",
+              "Step 4: Revenue at 4 bags = 4 times 120 = GHS 480 against total cost 500, giving a loss of GHS 20. Check the neighbours: at 3 bags loss = 360 minus 390 = GHS 30 and at 5 bags loss = 600 minus 650 = GHS 50, so 4 bags is indeed the smallest loss. [6 marks: the check is the method mark]",
+              "Step 5: Average variable cost at 4 bags = (500 minus 150) divided by 4 = GHS 87.50, which is below the price of 120, so each bag also contributes toward fixed cost. Continue producing in the short run. [5 marks]",
+              "Step 6: Long run: if price stays at 120 while average cost is 125, losses persist and firms exit, price rises to the minimum of average cost, and the industry returns to normal profit. [4 marks]"
+            ],
+            "keyTakeaway": "A competitive firm can be loss-making yet should operate while price exceeds average variable cost; the shut-down point is the minimum of average variable cost."
+          },
+          {
+            "id": "ex-eco-07-2",
+            "title": "Monopoly Output, Price and Welfare Loss",
+            "problem": "A sole water bottler faces the demand curve P = 200 minus 2Q for its premium pack, where P is cedis per carton, and its total cost is TC = 500 plus 20Q. Required: derive marginal revenue, find the profit-maximising output and price, compute profit, then find the output and price a competitive market would produce and explain the welfare difference. [35 marks]",
+            "stepByStepSolution": [
+              "Step 1: Total revenue = P times Q = (200 minus 2Q) times Q = 200Q minus 2Q squared. [4 marks]",
+              "Step 2: Marginal revenue = 200 minus 4Q, which has twice the slope of the demand curve. [5 marks: stating the rule earns a mark]",
+              "Step 3: Marginal cost = 20 from the cost function. Set MR = MC: 200 minus 4Q = 20, so 4Q = 180 and Q = 45 cartons. [6 marks]",
+              "Step 4: Price is read from demand, not from MR: P = 200 minus 2 times 45 = GHS 110 per carton. [5 marks: substituting into the wrong equation is the most common error]",
+              "Step 5: Total revenue = 110 times 45 = GHS 4,950; total cost = 500 plus 20 times 45 = GHS 1,400; supernormal profit = GHS 3,550. Average cost = 1,400 divided by 45 = GHS 31.11, well below price, confirming monopoly power. [6 marks]",
+              "Step 6: Competitive outcome at P = MC: 200 minus 2Q = 20 gives Q = 90 and P = GHS 20. The monopoly restricts output by 45 cartons and raises price by GHS 90, creating a deadweight welfare loss, the triangle between demand and marginal cost from 45 to 90 units. [7 marks]"
+            ],
+            "keyTakeaway": "Monopoly price is found on the demand curve at the MR equals MC output, and the welfare cost is the output that is lost, not only the transfer to the monopolist."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-eco-topic-07",
       "topicId": "shs-eco-topic-07",
@@ -5377,6 +7579,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-eco-topic-08",
+    "youtubeUrl": "https://www.youtube.com/watch?v=g7dM7MIyVQM",
+    "youtubeId": "g7dM7MIyVQM",
     "subjectId": "economics",
     "level": "SHS 1",
     "term": 3,
@@ -5414,6 +7618,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana Statistical Service rebases the nation's GDP periodically to reflect structural growth in ICT, mobile money, and petroleum sectors."
         }
       ],
+"commonMistakes":         [
+            "Adding intermediate goods to final goods in the output method, which double counts.",
+            "Counting the sale of an existing house as investment instead of only new construction.",
+            "Mixing market prices with factor cost and so overstating national income by net indirect taxes.",
+            "Dividing GNP by the total population when the question asks for per capita income of the labour force.",
+            "Ignoring the informal sector and then claiming the three methods should agree exactly."
+          ],
       "wassceExamTips": [
         "Transfer payments (e.g. pensions, student bursaries, remittances) are EXCLUDED from national income because no new goods or services are produced in exchange."
       ],
@@ -5423,6 +7634,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Analyze specific structural challenges encountered in measuring national income in Ghana"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-eco-08-1",
+            "title": "Building GDP to GNP by the Income Approach",
+            "problem": "For a year, an economy records, all in millions of cedis: compensation of employees 128,000; operating surplus of firms 96,500; mixed income of own-account workers 61,000; consumption of fixed capital 18,500; net indirect taxes 24,000; net factor income paid abroad 6,000; population 34 million. Required: compute GDP at factor cost, net domestic product at factor cost, net national product at market prices, GNP at market prices, and GNP per capita. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: GDP at factor cost = 128,000 plus 96,500 plus 61,000 = GHS 285,500 million, because the income approach sums the rewards to the four factors of production. [6 marks]",
+              "Step 2: Net domestic product at factor cost = 285,500 minus depreciation 18,500 = GHS 267,000 million. [5 marks]",
+              "Step 3: Convert to market prices by adding net indirect taxes: 267,000 plus 24,000 = GHS 291,000 million at market prices. [5 marks: adding, not subtracting, because taxes raise market prices above factor cost]",
+              "Step 4: Net national product at market prices = 291,000 minus net factor income paid abroad 6,000 = GHS 285,000 million. [5 marks]",
+              "Step 5: GNP at market prices = net national product plus consumption of fixed capital = 285,000 plus 18,500 = GHS 303,500 million. [4 marks: gross equals net plus depreciation]",
+              "Step 6: GNP per capita = 303,500 divided by 34 = GHS 8,926.47 per head a year. Two limitations: the figure hides income inequality, and the large mixed income shows how much escapes formal measurement. [5 marks]"
+            ],
+            "keyTakeaway": "Work in the fixed order gross to net, factor cost to market prices, domestic to national, and label every aggregate with both its price basis and its net or gross status."
+          },
+          {
+            "id": "ex-eco-08-2",
+            "title": "Cross-Checking Three Methods and Converting Nominal to Real GDP",
+            "problem": "In the same year the output method gives GDP at factor cost of GHS 285,500 million, while the expenditure method shows: consumer spending 210,000; gross investment 52,000; government consumption 40,000; exports 15,000; imports 32,000, all in millions of cedis. The income method gives GHS 279,800 million. Nominal GDP for the base year was GHS 150,000 million with a price index of 100, and the current price index is 190. Required: compute GDP by the expenditure method, compare the three estimates and account for the gap, then compute real GDP and the growth rate. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Expenditure method: GDP at market prices = C plus I plus G plus (X minus M) = 210,000 plus 52,000 plus 40,000 plus (15,000 minus 32,000) = GHS 285,000 million. [7 marks: the negative net exports must be shown]",
+              "Step 2: Convert to factor cost: 285,000 minus net indirect taxes 24,000 = GHS 261,000 million, which differs from the output estimate of 285,500, so the discrepancy of GHS 24,500 million must be reported. [6 marks: checking the price basis first]",
+              "Step 3: Reasons for the gaps: the informal sector, subsistence farming and unrecorded trade are under-measured by income surveys; transfer payments are wrongly counted as income; and intermediate goods are double counted in the output method. [6 marks]",
+              "Step 4: Real GDP = nominal divided by the price index times 100 = 285,500 divided by 190 times 100 = GHS 150,263.16 million. [5 marks]",
+              "Step 5: Growth rate against the base-year real figure of 150,000 = (150,263.16 minus 150,000) divided by 150,000 times 100 = 0.18 per cent, so almost all of the apparent 90 per cent rise in money values is price inflation, not more output. [6 marks: the interpretation carries the marks]",
+              "Step 6: With population growth of 2.5 per cent, real income per head fell, which shows why nominal growth alone misleads in development reporting. [4 marks]"
+            ],
+            "keyTakeaway": "Deflate by the price index before claiming growth, and treat a mismatch between the three methods as evidence of measurement problems, not of a wrong answer."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-eco-topic-08",
       "topicId": "shs-eco-topic-08",
@@ -5474,6 +7715,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-eco-topic-09",
+    "youtubeUrl": "https://www.youtube.com/watch?v=WgZ_AX-PmR8",
+    "youtubeId": "WgZ_AX-PmR8",
     "subjectId": "economics",
     "level": "SHS 1",
     "term": 3,
@@ -5514,6 +7757,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "The Bank of Ghana Monetary Policy Committee (MPC) meets bi-monthly to review the Monetary Policy Rate to combat inflation."
         }
       ],
+"commonMistakes":         [
+            "Quoting the money multiplier as 1 divided by the cash ratio while ignoring currency drain by the public.",
+            "Treating the central bank as the banker of the general public.",
+            "Counting cheque creation as new money without deducting the reserves each bank must keep.",
+            "Listing functions of the Bank of Ghana without naming lender of last resort.",
+            "Confusing high-powered money with the broad money supply."
+          ],
       "wassceExamTips": [
         "If the cash reserve ratio is 10%, the credit multiplier is 1 / 0.10 = 10. An initial deposit of GH₵ 1,000 can generate up to GH₵ 10,000 in total bank credit."
       ],
@@ -5523,6 +7773,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Analyze how the Bank of Ghana utilizes monetary policy instruments to stabilize the Cedi and control inflation"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-eco-09-1",
+            "title": "Credit Creation and the Money Multiplier",
+            "problem": "A customer deposits GHS 5,000 cash in a Ghanaian commercial bank. Banks lend out all surplus reserves and the required reserve ratio is 10 per cent. Required: show the first three rounds of deposit creation, compute the total deposits and total credit created with no cash leakage, and then recompute if the public keeps 20 per cent of every loan as currency. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Round 1: deposit 5,000, required reserve 500, loan 4,500. Round 2: that loan is redeposited, reserve 450, loan 4,050. Round 3: deposit 4,050, reserve 405, loan 3,645. [9 marks: each round earns its own mark]",
+              "Step 2: The money multiplier with no leakage = 1 divided by the reserve ratio = 1 divided by 0.10 = 10 times. [4 marks]",
+              "Step 3: Total deposits = 5,000 times 10 = GHS 50,000, so credit created = 50,000 minus the original 5,000 = GHS 45,000. [5 marks: distinguish created deposits from initial deposit]",
+              "Step 4: Check that reserves equal 10 per cent of total deposits: 50,000 times 0.10 = GHS 5,000, exactly the cash first introduced. [3 marks: the reconciliation is a method mark]",
+              "Step 5: With a cash drain of 20 per cent the multiplier = 1 divided by (0.10 plus 0.20) = 1 divided by 0.30 = 3.33 times, so total deposits = 5,000 times 3.33 = GHS 16,666.67 and credit creation falls to GHS 11,666.67. [6 marks]",
+              "Step 6: Conclusion: currency held outside banks weakens the multiplier, which is why a large informal cash economy limits how far Bank of Ghana reserve requirements can control credit. [4 marks]"
+            ],
+            "keyTakeaway": "Deposit creation is finite because leakage and reserves stop each round. Always show the multiplier formula with both the reserve ratio and the cash-drift ratio."
+          },
+          {
+            "id": "ex-eco-09-2",
+            "title": "Central Bank Instruments and Their Effect on Money Supply",
+            "problem": "Monetary base in Ghana is GHS 12,500 million and the required reserve ratio is 10 per cent with no cash drain. The Bank of Ghana raises the reserve ratio to 12.5 per cent and simultaneously raises the discount rate, causing banks to borrow 600 million less from the central bank. Required: compute the money supply before and after the reserve change, compute the effect of the reduced central bank borrowing on the monetary base, and explain the transmission to lending and prices. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Initial money supply = base times multiplier = 12,500 times (1 divided by 0.10) = 12,500 times 10 = GHS 125,000 million. [5 marks]",
+              "Step 2: New multiplier = 1 divided by 0.125 = 8 times, so with the same base money supply = 12,500 times 8 = GHS 100,000 million, a contraction of GHS 25,000 million. [6 marks]",
+              "Step 3: The 600 million less borrowing reduces the monetary base to 12,500 minus 600 = GHS 11,900 million, so money supply = 11,900 times 8 = GHS 95,200 million. [5 marks: apply both changes in sequence]",
+              "Step 4: Total contraction = 125,000 minus 95,200 = GHS 29,800 million, a fall of 23.84 per cent. [4 marks]",
+              "Step 5: Transmission: fewer reserves mean banks ration credit and raise lending rates, investment and consumer borrowing fall, aggregate demand falls, and with a given supply of goods the price level comes under downward pressure. [5 marks]",
+              "Step 6: Limitation: if banks already hold excess reserves, an increase in the required ratio may have little effect, and if cash usage rises the multiplier falls further than intended. [4 marks]"
+            ],
+            "keyTakeaway": "Reserve ratio changes work through the multiplier while discount-rate changes work through the base; show the arithmetic for both before writing the transmission argument."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-eco-topic-09",
       "topicId": "shs-eco-topic-09",
@@ -5574,6 +7854,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-eco-topic-10",
+    "youtubeUrl": "https://www.youtube.com/watch?v=NF_bV5lvnks",
+    "youtubeId": "NF_bV5lvnks",
     "subjectId": "economics",
     "level": "SHS 1",
     "term": 3,
@@ -5613,6 +7895,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana Revenue Authority (GRA) relies on Value Added Tax (VAT) and the E-levy to fund the national annual budget."
         }
       ],
+"commonMistakes":         [
+            "Applying a tax rate to gross income when the schedule exempts a first band.",
+            "Reporting the average rate of tax and calling it the marginal rate.",
+            "Charging value added tax on the sale price without deducting input tax already borne.",
+            "Counting a customs duty as a direct tax because it is paid by traders.",
+            "Quoting a deficit in cedis only, without expressing it as a percentage of GDP."
+          ],
       "wassceExamTips": [
         "Terms of Trade (TOT) = (Index of Export Prices / Index of Import Prices) * 100. Favorable if > 100; deteriorating if < 100."
       ],
@@ -5622,6 +7911,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Analyze the components of the Balance of Payments and remedies for Ghana's trade deficits"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-eco-10-1",
+            "title": "Progressive Tax Schedule, Average and Marginal Rates, and VAT",
+            "problem": "Assume a tax schedule: the first GHS 1,000 of annual income is tax-free; the next GHS 1,500 is taxed at 10 per cent; all income above GHS 2,500 is taxed at 20 per cent. A trader earns GHS 6,000. Separately, a firm sells output worth GHS 200,000 excluding VAT, buys inputs worth GHS 120,000 excluding VAT, and VAT is 15 per cent. Required: compute the trader tax, average and marginal rates, the VAT payable to GRA, and explain why VAT is said to be collected in stages. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Taxable bands: first 1,000 at nil; next 1,500 at 10 per cent = GHS 150; remaining 6,000 minus 2,500 = 3,500 at 20 per cent = GHS 700. [6 marks: band splitting is where marks are lost]",
+              "Step 2: Total tax = 150 plus 700 = GHS 850. [3 marks]",
+              "Step 3: Average rate = 850 divided by 6,000 times 100 = 14.17 per cent, while the marginal rate on the last cedi earned is 20 per cent, and this gap proves progressiveness. [6 marks]",
+              "Step 4: If income rose to 6,100, extra tax = 100 times 20 per cent = GHS 20, so total tax becomes 870 and the average rate 870 divided by 6,100 = 14.26 per cent, rising with income. [5 marks: the demonstration of progressiveness]",
+              "Step 5: VAT: output tax = 15 per cent of 200,000 = GHS 30,000; input tax = 15 per cent of 120,000 = GHS 18,000; net VAT payable = 30,000 minus 18,000 = GHS 12,000. [6 marks]",
+              "Step 6: The firm remits tax only on value added, since 15 per cent of (200,000 minus 120,000) = GHS 12,000, the same answer, which shows collection in stages and avoids cascading. The final consumer bears the full GHS 30,000 charged on the 200,000 sale. [4 marks]"
+            ],
+            "keyTakeaway": "Split income across bands before applying rates, and remember that net VAT equals the rate times value added, which is the test of a correctly staged tax."
+          },
+          {
+            "id": "ex-eco-10-2",
+            "title": "Fiscal Balances, Debt Ratio and Debt Servicing",
+            "problem": "A government records, in millions of cedis: revenue 78,000; total expenditure 96,000, of which interest payments are 12,000; total debt service of interest plus maturing principal 21,000; gross domestic product 430,000; outstanding public debt 344,000. It finances the shortfall with domestic borrowing 12,000 and external borrowing 6,000. Required: compute the fiscal deficit and the deficit as a ratio of GDP, the debt-to-GDP ratio, the primary balance, and debt service as a share of revenue, then state two risks. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Fiscal deficit = expenditure minus revenue = 96,000 minus 78,000 = GHS 18,000 million. [5 marks]",
+              "Step 2: Deficit to GDP = 18,000 divided by 430,000 times 100 = 4.19 per cent, above the commonly used 3 per cent benchmark, so the fiscal stance is expansionary. [6 marks: the benchmark comparison earns marks]",
+              "Step 3: Debt to GDP = 344,000 divided by 430,000 times 100 = 80.00 per cent. [4 marks]",
+              "Step 4: Primary balance = revenue minus expenditure excluding interest = 78,000 minus (96,000 minus 12,000) = 78,000 minus 84,000 = minus GHS 6,000 million, so there is a primary deficit even before interest. [6 marks: excluding interest is the test]",
+              "Step 5: Borrowing of 12,000 plus 6,000 = GHS 18,000 million exactly finances the deficit, so debt next year = 344,000 plus 18,000 = GHS 362,000 million, other things equal, lifting the debt ratio toward 84 per cent if GDP is unchanged. [5 marks]",
+              "Step 6: Debt service to revenue = 21,000 divided by 78,000 times 100 = 26.92 per cent, so over a quarter of revenue is pre-committed; the risks are higher interest costs crowding out private credit, and exchange-rate exposure on the external component. [6 marks]"
+            ],
+            "keyTakeaway": "Report every fiscal figure as a ratio to GDP or revenue, because the absolute cedi number tells the examiner nothing about sustainability."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-eco-topic-10",
       "topicId": "shs-eco-topic-10",
@@ -5673,6 +7992,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-eco-topic-11",
+    "youtubeUrl": "https://www.youtube.com/watch?v=qy0MGuY09Kk",
+    "youtubeId": "qy0MGuY09Kk",
     "subjectId": "economics",
     "level": "SHS 1",
     "term": 2,
@@ -5706,6 +8027,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana Statistical Service 2021 Census reported a total population of 30.8 million with over 35% below age 15, requiring vast investments in Free SHS and health facilities."
         }
       ],
+"commonMistakes":         [
+            "Computing crude rates per hundred people instead of per thousand.",
+            "Naming density as the only measure of population structure and ignoring age dependency.",
+            "Reading a growth rate directly from a census difference without annualising it.",
+            "Assuming a high birth rate automatically means a high rate of natural increase, ignoring mortality.",
+            "Treating population size as development, when per capita income and capability measures matter."
+          ],
       "wassceExamTips": [
         "Remember: Positive checks are natural disasters (disease, famine) that raise death rates; Preventive checks are human actions (celibacy, late marriage) that lower birth rates."
       ],
@@ -5715,6 +8043,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Calculate the dependency ratio and assess economic impacts of a youthful population"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-eco-11-1",
+            "title": "Growth Rates, Crude Rates and Dependency Ratio",
+            "problem": "Census counts give 30.5 million people in 2020 and 33.1 million in 2024. In 2024 there were 890,000 births and 199,000 deaths. Age structure in 2024: 11.9 million aged 0 to 14, 19.6 million aged 15 to 64, and 1.6 million aged 65 and above. Required: compute the annual population growth rate, the crude birth rate, the crude death rate, the rate of natural increase, the youth and total dependency ratios, and interpret the results. [35 marks]",
+            "stepByStepSolution": [
+              "Step 1: Total growth over four years = (33.1 divided by 30.5) minus 1 = 0.08525, that is 8.525 per cent. [5 marks]",
+              "Step 2: Annualised by the geometric method: rate = 1.08525 to the power one quarter, minus 1 = 1.02067 minus 1 = 2.07 per cent a year. The simple average of 8.525 divided by 4 = 2.13 per cent overstates it. [6 marks: the geometric point is tested]",
+              "Step 3: Crude birth rate = 890,000 divided by 33,100,000 times 1,000 = 26.89 births per 1,000 people. [5 marks]",
+              "Step 4: Crude death rate = 199,000 divided by 33,100,000 times 1,000 = 6.01 deaths per 1,000, so natural increase = 26.89 minus 6.01 = 20.88 per 1,000, that is 2.09 per cent, close to the census growth rate, the small difference being net emigration. [6 marks: reconciling the two is a strong answer]",
+              "Step 5: Youth dependency ratio = 11.9 divided by 19.6 times 100 = 60.71 dependants per 100 workers; total dependency ratio = (11.9 plus 1.6) divided by 19.6 times 100 = 68.88. [6 marks]",
+              "Step 6: Interpretation: with nearly 69 dependants per 100 workers and 2.07 per cent growth, savings and investment are strained; but the rising working-age share also offers a demographic dividend if the young are educated and employed. [6 marks]"
+            ],
+            "keyTakeaway": "Annualise census growth geometrically, express crude rates per thousand, and always interpret the dependency ratio for the labour force."
+          },
+          {
+            "id": "ex-eco-11-2",
+            "title": "Doubling Time, Density and Pressure on Resources",
+            "problem": "A district has 480,000 people in 2025 growing at 2.5 per cent a year and covers 3,000 square kilometres, of which 25 per cent is arable. Arable land supports at most 1,600,000 people at current farming methods. Required: use the rule of 70 to find the doubling time, compute population density overall and on farmed land, project the population after 20 years, and state whether carrying capacity is breached within that period. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Doubling time = 70 divided by 2.5 = 28 years, so the population doubles around 2053. [5 marks]",
+              "Step 2: Overall density = 480,000 divided by 3,000 = 160 persons per square kilometre; arable area = 25 per cent of 3,000 = 750 square kilometres, so agricultural density = 480,000 divided by 750 = 640 persons per square kilometre farmed. [6 marks: distinguishing the two densities]",
+              "Step 3: Population after 20 years = 480,000 times 1.025 to the power 20 = 480,000 times 1.63862 = 786,536 people, about 786,500. [6 marks: the compounding factor is the working]",
+              "Step 4: Compare with capacity: 786,536 is below 1,600,000, so carrying capacity is not breached within the twenty years. [3 marks]",
+              "Step 5: Continuing geometrically, 960,000 people by 2053 and about 1,920,000 by 2081, which exceeds the 1,600,000 limit, so pressure appears within three generations unless yields rise. [5 marks]",
+              "Step 6: Policy conclusion: raise land productivity, since Malthus assumed fixed land and constant yields, while the Boserup view holds that population pressure itself stimulates agricultural innovation. [4 marks]"
+            ],
+            "keyTakeaway": "Compound population geometrically, compute doubling time with the rule of 70, and compare the projection with carrying capacity before drawing conclusions."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-eco-topic-11",
       "topicId": "shs-eco-topic-11",
@@ -5766,6 +8124,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-eco-topic-12",
+    "youtubeUrl": "https://www.youtube.com/watch?v=mWwXmH-n5Bo",
+    "youtubeId": "mWwXmH-n5Bo",
     "subjectId": "economics",
     "level": "SHS 1",
     "term": 2,
@@ -5803,6 +8163,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "The National Tripartite Committee annually negotiates the National Daily Minimum Wage in Ghana under the Labour Act, 2003 (Act 651)."
         }
       ],
+"commonMistakes":         [
+            "Hiring labour where total revenue exceeds total cost rather than where marginal revenue product equals wage.",
+            "Forgetting that marginal revenue product equals marginal physical product times marginal revenue, not times price for a non-competitive firm.",
+            "Calling all unemployment in Ghana frictional when structural and seasonal causes dominate.",
+            "Assuming a minimum wage raises the total wage bill without checking elasticity of labour demand.",
+            "Confusing the labour force with the total population."
+          ],
       "wassceExamTips": [
         "If minimum wage is set ABOVE equilibrium wage, it improves earnings for employed workers but may cause formal sector retrenchment and unemployment."
       ],
@@ -5812,6 +8179,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate the causes of wage differentials and the economic effects of the national minimum wage in Ghana"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-eco-12-1",
+            "title": "Employment Decision from Marginal Revenue Product",
+            "problem": "A garment workshop sells each shirt at GHS 20 in a competitive market. Total shirts sewn per day by 1 to 8 workers are 30, 80, 150, 230, 300, 350, 380 and 395. The daily wage is GHS 1,200. Required: compute marginal physical product and marginal revenue product for each worker, determine how many workers to hire, and state the effect of the wage falling to GHS 1,000. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Marginal physical product = 30, 50, 70, 80, 70, 50, 30, 15 shirts for workers 1 to 8. [6 marks: taken straight from the total product column]",
+              "Step 2: Because the workshop is a price taker, marginal revenue product = marginal physical product times 20 = 600, 1,000, 1,400, 1,600, 1,400, 1,000, 600 and 300 cedis. [7 marks]",
+              "Step 3: The firm hires workers up to the point where the extra worker own contribution, marginal revenue product, is at least the wage, so it examines the marginal worker, not the average one. [4 marks: stating the rule earns a mark]",
+              "Step 4: Worker 5 adds marginal revenue product of GHS 1,400 against a wage of 1,200, so the fifth worker is worth hiring. [4 marks]",
+              "Step 5: Worker 6 would add only GHS 1,000 against the same wage of 1,200, a loss of GHS 200, so the firm stops at 5 workers. At 5 workers output is 300 shirts worth 6,000 cedis and the wage bill is 5 times 1,200 = GHS 6,000, which shows labour is just covered before the fixed cost of the workshop. [5 marks]",
+              "Step 6: If the wage falls to GHS 1,000, worker 6 whose marginal revenue product is exactly 1,000 becomes worth hiring, so employment rises to 6 workers, demonstrating the inverse relationship between the wage and the quantity of labour demanded. [4 marks]"
+            ],
+            "keyTakeaway": "Labour demand is derived demand: hire to the point where marginal revenue product equals the wage, and evaluate the marginal worker, not the average."
+          },
+          {
+            "id": "ex-eco-12-2",
+            "title": "A Minimum Wage, Elasticity of Labour Demand and Unemployment",
+            "problem": "In a port loading industry, at a wage of GHS 1,050 a day firms employ 6,000 workers and 6,600 seek work. A union wins a legal minimum of GHS 1,350 a day, after which firms employ 4,600 workers while 7,200 people seek work. Required: compute the percentage change in the wage and in employment, the elasticity of demand for labour, the number of workers made redundant, the resulting unemployment, and the change in the total wage bill. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Wage change = (1,350 minus 1,050) divided by 1,050 times 100 = 28.57 per cent. [4 marks]",
+              "Step 2: Employment change = (4,600 minus 6,000) divided by 6,000 times 100 = minus 23.33 per cent. [4 marks]",
+              "Step 3: Elasticity of labour demand = minus 23.33 divided by 28.57 = minus 0.82, so demand is inelastic in absolute value. [5 marks: sign and classification both marked]",
+              "Step 4: Redundancies = 6,000 minus 4,600 = 1,400 workers lose jobs, and job seekers rise to 7,200, so open unemployment = 7,200 minus 4,600 = 2,600 workers. [6 marks: distinguish redundancy from surplus labour supply]",
+              "Step 5: Total wage bill before = 6,000 times 1,050 = GHS 6,300,000 a day; after = 4,600 times 1,350 = GHS 6,210,000, a fall of GHS 90,000, that is 1.43 per cent. [6 marks]",
+              "Step 6: Because employment fell by more than the wage rose in proportionate terms of the wage bill, the workers who kept jobs gained GHS 300 a day while 2,600 lost all earnings, so the union has raised insiders pay at the cost of outsiders employment. [5 marks]"
+            ],
+            "keyTakeaway": "Compare the total wage bill before and after: when labour demand is inelastic a wage rise usually raises the bill, so a fall signals that employment dropped more than expected."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-eco-topic-12",
       "topicId": "shs-eco-topic-12",
@@ -5863,6 +8260,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-eco-topic-13",
+    "youtubeUrl": "https://www.youtube.com/watch?v=NpNgv8sKvHI",
+    "youtubeId": "NpNgv8sKvHI",
     "subjectId": "economics",
     "level": "SHS 1",
     "term": 3,
@@ -5902,6 +8301,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana experienced elevated inflation rates in 2022–2023 driven by sharp cedi depreciation and global crude oil price shocks."
         }
       ],
+"commonMistakes":         [
+            "Weighting the consumer basket with current-year quantities when a fixed base-year basket is required.",
+            "Reporting the index number as the inflation rate without subtracting 100.",
+            "Explaining inflation only through too much money and ignoring cost push from import prices and wages.",
+            "Assuming all consumers are hurt equally, when debtors gain and creditors lose.",
+            "Advising tight money without noting that higher interest rates also raise the cost of servicing public debt."
+          ],
       "wassceExamTips": [
         "In WASSCE: Debtors GAIN during inflation because the real value of the debt they repay is lower; Creditors LOSE because the money received buys less."
       ],
@@ -5911,6 +8317,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate who gains and who loses during sustained inflationary periods in Ghana"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-eco-13-1",
+            "title": "Consumer Price Index, Inflation Rate and Real Wage",
+            "problem": "A fixed household basket for 2024 base year contains: rice 20 kg at GHS 12; cooking oil 8 litres at GHS 15; trotro fares 50 trips at GHS 4. In 2025 the prices are rice GHS 15, oil GHS 18 and fares GHS 5, with quantities unchanged. A worker earned GHS 2,400 a month in 2024 and GHS 2,760 in 2025. Required: compute the cost of the basket in both years, the 2025 index, the inflation rate, the change in nominal wage, and the change in real purchasing power. [35 marks]",
+            "stepByStepSolution": [
+              "Step 1: Base-year basket cost = 20 times 12 = 240, plus 8 times 15 = 120, plus 50 times 4 = 200, giving GHS 560. [6 marks: each element marked]",
+              "Step 2: Current-year basket cost = 20 times 15 = 300, plus 8 times 18 = 144, plus 50 times 5 = 250, giving GHS 694. [6 marks]",
+              "Step 3: Index = 694 divided by 560 times 100 = 123.93, so the inflation rate = 123.93 minus 100 = 23.93 per cent. [6 marks: the subtraction is required]",
+              "Step 4: Weighted contribution to inflation: rice added 60 of the 134 rise, that is 44.78 per cent; oil added 24, 17.91 per cent; transport added 50, 37.31 per cent, so food is the biggest driver. [6 marks: attribution is what earns full credit]",
+              "Step 5: Nominal wage rose from 2,400 to 2,760, an increase of 15.00 per cent, which is below the 23.93 per cent inflation. [5 marks]",
+              "Step 6: Real wage in 2024 prices = 2,760 divided by 1.2393 = GHS 2,227.09, a fall of GHS 172.91, that is 7.20 per cent, so the worker is poorer in real terms despite the pay rise. [6 marks]"
+            ],
+            "keyTakeaway": "Hold the basket fixed, subtract 100 from the index to get inflation, and deflate the wage by the index before claiming any real gain."
+          },
+          {
+            "id": "ex-eco-13-2",
+            "title": "The Quantity Theory and the Real Interest Rate",
+            "problem": "Money supply is GHS 45,000 million, the average speed of circulation is 3, and real output is 90,000 million units of a composite good. The money supply then grows 20 per cent while output grows 5 per cent and velocity is unchanged. A depositor earns a nominal interest rate of 26 per cent during this period. Required: compute the price level before and after by MV = PT, the implied inflation rate, and the real rate of interest, then state one reason the theory may fail in Ghana. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Before: P = MV divided by T = (45,000 times 3) divided by 90,000 = 135,000 divided by 90,000 = GHS 1.50. [6 marks]",
+              "Step 2: New money supply = 45,000 times 1.20 = GHS 54,000 million and new output = 90,000 times 1.05 = 94,500 million units. [5 marks]",
+              "Step 3: After: P = (54,000 times 3) divided by 94,500 = 162,000 divided by 94,500 = GHS 1.7143. [6 marks]",
+              "Step 4: Implied inflation = (1.7143 minus 1.50) divided by 1.50 times 100 = 14.29 per cent, which is the 20 per cent money growth less the 5 per cent output growth and a rounding effect, matching the rule of thumb. [4 marks]",
+              "Step 5: Real interest rate = (1.26 divided by 1.1429) minus 1 = 1.1025 minus 1 = 10.25 per cent, approximately the arithmetic shortcut 26 minus 14.29 = 11.71 per cent. [5 marks: showing both forms is impressive]",
+              "Step 6: Failure of the theory in Ghana: velocity is unstable because of mobile money and dollar-denominated trade, and excess money may go to assets rather than the consumer basket, so prices of goods may not rise proportionately. [4 marks]"
+            ],
+            "keyTakeaway": "Inflation equals money growth minus real output growth only if velocity is stable, so test the assumption before applying MV = PT."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-eco-topic-13",
       "topicId": "shs-eco-topic-13",
@@ -5962,6 +8398,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-eco-topic-14",
+    "youtubeUrl": "https://www.youtube.com/watch?v=BCkv-v5q6B0",
+    "youtubeId": "BCkv-v5q6B0",
     "subjectId": "economics",
     "level": "SHS 1",
     "term": 3,
@@ -5997,6 +8435,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghanaian graduates undertaking National Service often experience frictional and structural unemployment while trying to enter the formal job market."
         }
       ],
+"commonMistakes":         [
+            "Counting students and retirees as unemployed instead of economically inactive.",
+            "Adding discouraged workers to the unemployed without also adding them to the labour force.",
+            "Naming only one type of unemployment when the question describes seasonal, structural and frictional features together.",
+            "Confusing the unemployment rate with the proportion of the population without work.",
+            "Recommending public works for structural unemployment when retraining is the matching remedy."
+          ],
       "wassceExamTips": [
         "Underemployment occurs when a worker's marginal productivity is zero or when skilled workers take low-productivity survival jobs."
       ],
@@ -6006,6 +8451,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Formulate policy solutions including TVET and entrepreneurship incubation"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-eco-14-1",
+            "title": "Labour Force, Unemployment Rate and Participation Rate",
+            "problem": "In a region the population aged 15 and above is 20.0 million. Of these, 8.6 million are full-time students, retirees or homemakers not seeking work. 1.25 million registered as actively seeking work and 10.15 million are employed. A further 300,000 have stopped looking because they believe no job exists, and 1.4 million are working fewer than 20 hours a week but want more. Required: compute the labour force, the unemployment rate, the participation rate, the revised unemployment rate if discouraged workers were counted, and the broad rate including the underemployed. [35 marks]",
+            "stepByStepSolution": [
+              "Step 1: Labour force = population 15 and above minus not in labour force = 20.0 minus 8.6 = 11.4 million. [6 marks]",
+              "Step 2: Check: employed 10.15 million plus unemployed 1.25 million = 11.40 million, which reconciles the labour force. [4 marks: examiners reward this cross-check]",
+              "Step 3: Unemployment rate = 1.25 divided by 11.4 times 100 = 10.96 per cent. [6 marks: divided by the labour force, never by total population]",
+              "Step 4: Participation rate = 11.4 divided by 20.0 times 100 = 57.00 per cent. [5 marks]",
+              "Step 5: Counting the 300,000 discouraged as job seekers: labour force = 11.4 plus 0.3 = 11.7 million and unemployed = 1.25 plus 0.3 = 1.55 million, so rate = 1.55 divided by 11.7 times 100 = 13.25 per cent. [7 marks: both numerator and denominator must change]",
+              "Step 6: Broad measure with the 1.4 million underemployed: (1.25 plus 1.4) divided by 11.4 times 100 = 23.25 per cent, which shows that headcount unemployment understates the shortage of decent work. [6 marks]"
+            ],
+            "keyTakeaway": "The labour force is the denominator, discouraged workers change both numerator and denominator, and underemployment must be reported separately."
+          },
+          {
+            "id": "ex-eco-14-2",
+            "title": "Classifying Unemployment Types and Estimating Lost Output",
+            "problem": "Survey evidence shows: 320,000 youths aged 18 to 24 seeking their first job after national service; 410,000 former artisanal workers whose skills no longer match newly mechanised mines; 280,000 agricultural workers idle between planting and harvest; and 240,000 who lost jobs because total demand for manufactured goods fell. Natural rate of unemployment is 7 per cent; actual unemployment is 10.96 per cent; real GDP is GHS 300,000 million and output is estimated to fall 2 per cent for every one percentage point of cyclical unemployment. Required: classify each group, compute the cyclical gap, and estimate the value of lost output. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: 320,000 first-time job seekers are frictional unemployment, arising from the time taken to match vacancies to applicants. [5 marks]",
+              "Step 2: 410,000 displaced artisans are structural unemployment, a skills and geography mismatch against the mechanised mines. [4 marks]",
+              "Step 3: 280,000 idle seasonal farm workers are seasonal, a normal and predictable pattern in agriculture, and they are also partly disguised unemployment. [4 marks]",
+              "Step 4: 240,000 shed by weak product demand are cyclical or demand-deficient unemployment. [3 marks]",
+              "Step 5: Cyclical gap = actual 10.96 minus natural 7.00 = 3.96 percentage points. Lost output = 3.96 times 2 = 7.92 per cent of GDP = 0.0792 times 300,000 = GHS 23,760 million a year. [7 marks: the Okun-style calculation with units]",
+              "Step 6: Matching remedies: frictional calls for job centres and vacancy boards, structural for retraining and relocation grants, seasonal for irrigation and off-farm work, and cyclical for expansionary fiscal and monetary policy. Naming the wrong remedy loses the marks. [7 marks]"
+            ],
+            "keyTakeaway": "Classify before prescribing, and quantify cyclical unemployment against the natural rate to price the output sacrifice."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-eco-topic-14",
       "topicId": "shs-eco-topic-14",
@@ -6057,6 +8532,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-eco-topic-15",
+    "youtubeUrl": "https://www.youtube.com/watch?v=jRKEOlv7rvE",
+    "youtubeId": "jRKEOlv7rvE",
     "subjectId": "economics",
     "level": "SHS 1",
     "term": 3,
@@ -6097,6 +8574,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana imposes special tariffs on imported frozen poultry and rice to protect local farmers under the Planting for Food and Jobs initiative."
         }
       ],
+"commonMistakes":         [
+            "Claiming absolute advantage explains the gains from trade when comparative advantage does.",
+            "Setting the terms of trade outside the two opportunity cost ranges, which cannot benefit both parties.",
+            "Reading the current account deficit as a complete failure while ignoring a financial account surplus.",
+            "Treating an import tariff as a benefit to consumers because domestic producers expand.",
+            "Confusing devaluation, depreciation and revaluation in exchange-rate discussions."
+          ],
       "wassceExamTips": [
         "Dumping is selling goods in a foreign market at prices LOWER than domestic cost of production, designed to destroy foreign competitors."
       ],
@@ -6106,6 +8590,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate the infant industry argument in the context of Ghanaian industrialization"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-eco-15-1",
+            "title": "Comparative Advantage, Gains from Trade and Terms of Trade",
+            "problem": "One worker-day in Ghana produces either 3 baskets of cocoa or 1 sack of rice. One worker-day in a neighbouring country produces either 1 basket of cocoa or 1 sack of rice. Each country employs 100 worker-days. Before trade Ghana allocates 50 days to cocoa and 50 to rice, while the partner allocates the same. Required: compute autarky output and opportunity costs for both, show who has comparative advantage in each good, compute output after full specialisation, and test a trade offer of 100 cocoa baskets for 50 rice sacks. [40 marks]",
+            "stepByStepSolution": [
+              "Step 1: Autarky Ghana: 50 days times 3 = 150 cocoa and 50 days times 1 = 50 rice. Partner: 50 cocoa and 50 rice. World total = 200 cocoa and 100 rice. [6 marks]",
+              "Step 2: Opportunity cost of one cocoa basket in Ghana = 1 divided by 3 = 0.33 sack of rice; in the partner country it is 1 sack of rice. [6 marks: costed in the good given up]",
+              "Step 3: Opportunity cost of one rice sack in Ghana = 3 cocoa baskets; in the partner it is 1 cocoa basket. Ghana has comparative advantage in cocoa (0.33 lower than 1) and the partner in rice (1 lower than 3). [8 marks: both halves must be shown]",
+              "Step 4: Absolute advantage check: Ghana is better at cocoa (3 against 1) and equally good at rice (1 against 1), so Ghana has no absolute advantage in rice yet trade still benefits both, which is the whole lesson of Ricardo. [6 marks]",
+              "Step 5: Full specialisation: Ghana produces 300 cocoa and no rice; the partner produces 100 rice and no cocoa. World output becomes 300 cocoa and 100 rice, a gain of 100 cocoa with rice unchanged. [6 marks]",
+              "Step 6: Mutual gain test: at 100 cocoa for 50 rice, Ghana consumes 200 cocoa plus 50 rice, better than its autarky 150 plus 50. The partner consumes 100 cocoa plus 50 rice, better than its autarky 50 plus 50. Both gain because the price lies between the two opportunity costs of 0.33 and 1.00 cocoa per rice. [8 marks]"
+            ],
+            "keyTakeaway": "Trade is driven by comparative, not absolute, advantage, and a mutually beneficial price must fall between the two opportunity cost ratios."
+          },
+          {
+            "id": "ex-eco-15-2",
+            "title": "Balance of Payments and the Effect of a Tariff",
+            "problem": "Ghana records, in millions of cedis: exports of goods 12,000; imports of goods 17,500; net services surplus 2,000; net primary income deficit 1,200; net secondary income including remittances 3,100; a financial account surplus of 2,400. Separately, imported rice sells at GHS 2,000 a tonne and 400,000 tonnes a year are bought; a 20 per cent tariff cuts volumes to 260,000 tonnes. Required: compute the visible trade balance, the current account balance, the balancing error, and the tariff revenue, and state two effects of the tariff on welfare. [35 marks]",
+            "stepByStepSolution": [
+              "Step 1: Visible trade balance = 12,000 minus 17,500 = a deficit of GHS 5,500 million. [5 marks]",
+              "Step 2: Current account = 5,500 deficit plus services 2,000 minus primary income 1,200 plus secondary income 3,100 = minus GHS 1,600 million, computed as 12,000 minus 17,500 plus 2,000 minus 1,200 plus 3,100. [8 marks: show the full addition]",
+              "Step 3: Balance: current account minus 1,600 plus financial account plus 2,400 leaves a surplus of 800, so the net errors and omissions line must be minus GHS 800 million to close the accounts. [6 marks: sign convention is the mark]",
+              "Step 4: The remittances of 3,100 million are doing critical work: without them the current account deficit would have been 4,700 million, so diaspora flows are financing the trade gap. [4 marks: interpretation earns credit]",
+              "Step 5: Tariff: 20 per cent of 2,000 = GHS 400 a tonne; revenue = 400 times 260,000 tonnes = GHS 104,000,000. Imports fall by 140,000 tonnes, cutting the import bill from 800,000,000 at old prices to 520,000,000 plus the tariff paid. [7 marks]",
+              "Step 6: Welfare effects: consumers pay 2,400 instead of 2,000 and reduce consumption, creating a deadweight loss from both over-production by inefficient domestic farms and under-consumption; government revenue and domestic producers gain, so the tariff reduces national welfare unless the infant-industry argument holds. [8 marks]"
+            ],
+            "keyTakeaway": "Report the current account, not just trade in goods, and remember that a tariff raises revenue while still destroying more welfare than it creates."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-eco-topic-15",
       "topicId": "shs-eco-topic-15",
@@ -6157,6 +8671,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-eco-topic-16",
+    "youtubeUrl": "https://www.youtube.com/watch?v=wm48fPhyPC0",
+    "youtubeId": "wm48fPhyPC0",
     "subjectId": "economics",
     "level": "SHS 1",
     "term": 3,
@@ -6193,6 +8709,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana achieved middle-income status based on GDP per capita, but still faces development hurdles in rural healthcare and regional income inequality."
         }
       ],
+"commonMistakes":         [
+            "Using the words growth and development as if they meant the same thing.",
+            "Measuring growth in current prices instead of constant prices of a base year.",
+            "Reporting GDP per capita as though it were distributed equally across the population.",
+            "Naming only income indicators when the Human Development Index also uses health and education.",
+            "Ignoring that a country can grow while its environment and natural capital are being depleted."
+          ],
       "wassceExamTips": [
         "A country can experience economic growth without economic development if growth is driven by an enclave mineral sector with no job creation."
       ],
@@ -6202,6 +8725,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Diagram the Vicious Circle of Poverty and propose structural remedies for Ghana"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-eco-16-1",
+            "title": "Growth Rates, Per Capita Growth and Doubling",
+            "problem": "Real GDP rose from GHS 410,000 million to GHS 438,700 million in one year while population grew 2.1 per cent. Nominal GDP rose from 410,000 to 500,000 million over the same year. Required: compute the growth rate of real output, the growth rate of output per head, the implied inflation rate, the years needed to double output at the real rate using the rule of 70, and state whether the country grew or developed. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Real growth = (438,700 minus 410,000) divided by 410,000 times 100 = 28,700 divided by 410,000 = 7.00 per cent. [6 marks]",
+              "Step 2: Nominal growth = (500,000 minus 410,000) divided by 410,000 times 100 = 90,000 divided by 410,000 = 21.95 per cent, so most of the rise in money values is price increase, not more output. [6 marks]",
+              "Step 3: Implied inflation from the GDP deflator = (1.2195 divided by 1.07) minus 1 = 1.1397 minus 1 = 13.97 per cent, about 14 per cent. [5 marks: the division, not the subtraction, is correct]",
+              "Step 4: Per capita growth precisely = (1.07 divided by 1.021) minus 1 = 4.80 per cent; the shortcut of 7.00 minus 2.10 = 4.90 per cent is close but slightly overstated. [5 marks]",
+              "Step 5: Doubling time for total output = 70 divided by 7 = 10 years, and for income per head = 70 divided by 4.80 = 14.58 years, so living standards take half again as long to double. [4 marks]",
+              "Step 6: Growth is demonstrated because real output rose. Development is not proven without data on literacy, infant mortality, poverty incidence and inequality, so a full answer must demand those indicators. [4 marks]"
+            ],
+            "keyTakeaway": "Deflate before measuring growth, divide by population growth before claiming rising living standards, and reserve the word development for capability gains."
+          },
+          {
+            "id": "ex-eco-16-2",
+            "title": "Constructing and Interpreting the Human Development Index",
+            "problem": "Country A has a life expectancy index of 0.58, an education index of 0.62 and an income index of 0.55. Country B, with almost the same GNI per capita, has indexes 0.74, 0.71 and 0.54. Required: compute the Human Development Index for both countries, compare them with their income indexes alone, and explain what the difference implies for policy. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Country A product of the three indexes = 0.58 times 0.62 = 0.3596, then times 0.55 = 0.19778, and the cube root of 0.19778 = 0.5826, so HDI = 0.58 to two decimals. [8 marks: the geometric mean, not the average]",
+              "Step 2: The arithmetic mean of the same three indexes would be (0.58 plus 0.62 plus 0.55) divided by 3 = 0.5833, almost the same here, but the geometric mean penalises a weak dimension much harder when the spread is wide. [5 marks]",
+              "Step 3: Country B product = 0.74 times 0.71 = 0.5254, then times 0.54 = 0.283716, and the cube root of 0.283716 = 0.6572, so HDI = 0.66. [7 marks: show the two multiplications before the root]",
+              "Step 4: Comparison: with similar incomes, A scores 0.58 and B scores 0.66, so B converts its income into health and schooling far more effectively; the income index alone, 0.55 against 0.54, would have ranked them equal. [5 marks]",
+              "Step 5: Diagnosis: A weakest dimension is income at 0.55, but its health index trails Bs by 0.16 while education trails by 0.09, so A should prioritise clinics, immunisation and clean water to lift the index fastest. [4 marks: identify the binding constraint numerically]",
+              "Step 6: Limitations: the HDI omits inequality, environmental depletion and the informal economy, so a country may score well on average while large regional gaps persist, which is why the inequality-adjusted and gender indexes should also be consulted. [5 marks]"
+            ],
+            "keyTakeaway": "HDI is a geometric mean, so a weak dimension cannot be offset by a strong one, and ranking countries on income alone hides how well income is converted into capabilities."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-eco-topic-16",
       "topicId": "shs-eco-topic-16",
@@ -6253,6 +8806,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-eco-topic-17",
+    "youtubeUrl": "https://www.youtube.com/watch?v=k4T_3vK704Q",
+    "youtubeId": "k4T_3vK704Q",
     "subjectId": "economics",
     "level": "SHS 1",
     "term": 3,
@@ -6288,6 +8843,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana engaged the IMF in 2023 for a $3 billion Extended Credit Facility (ECF) program linked to the Domestic Debt Exchange Programme (DDEP)."
         }
       ],
+"commonMistakes":         [
+            "Accepting a project because undiscounted benefits exceed costs, ignoring the time value of money.",
+            "Naming the World Bank as the lender of last resort for balance of payments problems, which is the IMF function.",
+            "Describing a development plan as binding in Ghana when it is indicative and the private sector is not commanded.",
+            "Counting a foreign loan as free finance without noting interest and repayment schedule.",
+            "Attributing all conditionality to failure and omitting the ownership requirement of aid effectiveness."
+          ],
       "wassceExamTips": [
         "IMF = short/medium term emergency balance-of-payments financing; World Bank = long-term infrastructural and developmental project loans."
       ],
@@ -6297,6 +8859,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Assess the socio-economic impacts of IMF stabilization programs on Ghana"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-eco-17-1",
+            "title": "Financing a Five-Year Plan and Appraising a Project",
+            "problem": "A national development plan costs GHS 120,000 million over five years, financed 60 per cent from domestic revenue, 20 per cent from loans and 20 per cent from grants. Forty per cent of the outlay must be imported, and export earnings available over the period total GHS 30,000 million of usable foreign exchange. A dam under the plan costs GHS 9,000 million now and yields GHS 2,400 million a year for ten years. Required: compute each financing source, the foreign exchange gap, the undiscounted benefit-cost ratio, and the net present value at a 10 per cent discount rate given a ten-year annuity factor of 6.1446. [35 marks]",
+            "stepByStepSolution": [
+              "Step 1: Financing: domestic revenue = 60 per cent of 120,000 = GHS 72,000 million; loans = 24,000 million; grants = 24,000 million, summing to 120,000. [6 marks]",
+              "Step 2: Import content = 40 per cent of 120,000 = GHS 48,000 million of foreign exchange needed. [4 marks]",
+              "Step 3: Foreign exchange gap = 48,000 minus available 30,000 = GHS 18,000 million, which must be met by external borrowing, aid or import substitution, so the plan is not self-financing in convertible terms. [6 marks: naming the constraint is the mark]",
+              "Step 4: Undiscounted dam benefit = 2,400 times 10 = GHS 24,000 million against cost 9,000 million, giving a benefit-cost ratio of 2.67. [5 marks]",
+              "Step 5: Discounted benefit = 2,400 times 6.1446 = GHS 14,747.04 million, so net present value = 14,747.04 minus 9,000 = GHS 5,747.04 million, positive, so the dam is acceptable. [7 marks: the annuity factor is the working]",
+              "Step 6: The ratio falls to 14,747.04 divided by 9,000 = 1.64 once discounting is applied, showing that ignoring the time value of money overstates attractiveness by about one full unit of the ratio. Sensitivity: if benefits slip to 1,500 a year, net present value = 1,500 times 6.1446 minus 9,000 = GHS 216.90 million, so the project is marginal and must be stress-tested. [7 marks]"
+            ],
+            "keyTakeaway": "Test a plan for both cedi finance and foreign exchange, and always discount benefits; a positive undiscounted surplus can collapse under a 10 per cent rate."
+          },
+          {
+            "id": "ex-eco-17-2",
+            "title": "Devaluation, the J-Curve and Conditionality",
+            "problem": "The exchange rate moves from GHS 12 to GHS 15 a dollar. Before the change, Ghana exports USD 2,500 million and imports USD 3,200 million a year. After twelve months, export volume rises 20 per cent while import volume falls 10 per cent because foreign goods have become dearer. Required: compute the trade balance in cedis before and after, state the initial effect, and explain the Marshall-Lerner condition and one IMF policy condition attached to the support. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: Before: exports in cedis = 2,500 times 12 = GHS 30,000 million and imports = 3,200 times 12 = GHS 38,400 million, a trade deficit of GHS 8,400 million. [6 marks]",
+              "Step 2: Immediately after devaluation, volumes are unchanged, so exports = 2,500 times 15 = 37,500 and imports = 3,200 times 15 = 48,000, a deficit of GHS 10,500 million, which is worse by GHS 2,100 million. [7 marks: this is the J-curve phase]",
+              "Step 3: After volumes respond: exports = 2,500 times 1.20 = USD 3,000 million, that is GHS 45,000 million; imports = 3,200 times 0.90 = USD 2,880 million, that is GHS 43,200 million. [6 marks]",
+              "Step 4: New balance = 45,000 minus 43,200 = a surplus of GHS 1,800 million, a swing of GHS 10,200 million from the initial position, so devaluation works only with a lag. [5 marks]",
+              "Step 5: Marshall-Lerner condition: devaluation improves the balance only if the sum of the price elasticities of demand for exports and imports exceeds 1; here volume responses of 20 per cent against a 25 per cent depreciation give elasticities of 0.80 and 0.40, summing to 1.20, which clears the condition. [8 marks: the test is the strongest part of the answer]",
+              "Step 6: A typical condition attached to IMF support is a fiscal deficit ceiling or a removal of fuel subsidies, plus domestic revenue mobilisation targets, because borrowing alone cannot restore competitiveness. [4 marks]"
+            ],
+            "keyTakeaway": "Devaluation first worsens and later improves the trade balance; compute both stages and test the sum of elasticities against the Marshall-Lerner threshold."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-eco-topic-17",
       "topicId": "shs-eco-topic-17",
@@ -6348,6 +8940,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crs-topic-01",
+    "youtubeUrl": "https://www.youtube.com/watch?v=JVitQx76ET4",
+    "youtubeId": "JVitQx76ET4",
     "subjectId": "crs",
     "level": "SHS 1",
     "term": 1,
@@ -6384,6 +8978,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Christian environmental organizations in Ghana promote reforestation and preach against river pollution based on the Genesis mandate of stewardship."
         }
       ],
+"commonMistakes":         [
+            "Reading Genesis 1 and Genesis 2 as one story and then reporting a contradiction the text never claimed",
+            "Saying the creation accounts teach creation out of nothing as their plainest lesson without examining the wording",
+            "Calling dominion a licence to exploit rather than a stewardship of a thing pronounced good",
+            "Confusing the image of God with human qualities such as reason and skipping the relational duty it carries",
+            "Teaching sovereignty as fatalism, so that God's control removes human responsibility",
+            "Numbering the days of the week as 6 and forgetting the seventh day of rest that closes the pattern"
+          ],
       "wassceExamTips": [
         "In WASSCE Section A essays, draw a clear table comparing differences in the order of creation between Genesis 1 (plants first, man last) and Genesis 2 (man first, plants later)."
       ],
@@ -6393,6 +8995,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate human stewardship over natural resources from a Christian ethical standpoint"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-crs-01-1",
+            "title": "The shape of the creation week and the two Genesis accounts",
+            "problem": "Genesis 1 presents six days of forming and filling closed by a seventh day of rest, with light created on the first day and the sun and moon on the fourth. A candidate answering a 20-mark question must state the divine sovereignty taught in the chapter, distinguish the two creation accounts, and show what the order of the week argues. Work out the structure of the week. [20 marks]",
+            "stepByStepSolution": [
+              "Days in the creation week: 6 days of working plus 1 day of rest, so 6 plus 1 = 7 days. [3 marks]",
+              "Light is spoken into being on day 1, while the sun, moon and stars are appointed on day 4, so 4 minus 1 = 3 days run between the light and the lamps that carry it, which is the chapter's argument that God is not dependent on the machinery he makes. [3 marks]",
+              "The week halves evenly: 3 days form the firmament, the sea and the dry land, and 3 days fill them with birds and fishes, beasts and man, so 6 divided by 2 = 3 days in each half. [4 marks]",
+              "Genesis 1 and Genesis 2 are 2 accounts with 2 questions: the first names the order and dignity of the whole creation, the second draws near to the man in the garden, the ground, the rib and the breath. [4 marks]",
+              "Sovereignty follows: God as Creator speaks, as Controller appoints the times and the nations, and as Sustainer keeps what he has made, so the doctrine is threefold and rests on the same text. [3 marks]",
+              "Marks: 20 divided by 4 = 5 marks to each of the 4 points of Creator, Controller, Sustainer, and the two accounts. [3 marks]"
+            ],
+            "keyTakeaway": "The creation week is counted before it is preached: 6 working days, 1 rest, and 3 days between the light and the lamps."
+          },
+          {
+            "id": "ex-crs-01-2",
+            "title": "The refrain that it was good, and the stewardship it teaches",
+            "problem": "In Genesis 1 the refrain that God saw that it was good falls seven times, six of them inside the working days and one closing the whole finished work. A candidate has 20 minutes for a 15-mark question on what the refrain teaches about the value of the material world and human stewardship. Measure the refrain and plan the answer. [15 marks]",
+            "stepByStepSolution": [
+              "Verdicts in the chapter: the refrain that it was good falls 7 times, so 7 pronouncements of approval stand inside one account of making. [3 marks]",
+              "Six fall on the separate days of work and one on the whole finished creation, so 7 minus 1 = 6 verdicts inside the week and 1 verdict over all of it. [3 marks]",
+              "Share of the verdicts passed on the days themselves: 6 divided by 7 times 100 = 85.7 per cent. [2 marks]",
+              "Theology of the refrain: matter is pronounced good before it is pronounced very good, so the material world is not evil, and the human pair set over it are answerable for what they do to a good thing. [3 marks]",
+              "Dominion means stewardship, not ownership: the ground is let out to the husbandman, and the curse and the blessing in the rest of Scripture follow how it is treated. [2 marks]",
+              "Time: 20 divided by 15 = 1.3 minutes to a mark, and 15 divided by 3 = 5 marks to each of creation, fall and stewardship. [2 marks]"
+            ],
+            "keyTakeaway": "Seven verdicts of approval, six on the days and one on the whole: the goodness of the world is the biblical ground of environmental duty."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-crs-topic-01",
       "topicId": "shs-crs-topic-01",
@@ -6444,6 +9076,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crs-topic-02",
+    "youtubeUrl": "https://www.youtube.com/watch?v=xOxhvWCZ3go",
+    "youtubeId": "xOxhvWCZ3go",
     "subjectId": "crs",
     "level": "SHS 1",
     "term": 1,
@@ -6479,6 +9113,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Christian faith in Ghanaian society emphasizes Abrahamic obedience and perseverance as models for moral integrity and entrepreneurship."
         }
       ],
+"commonMistakes":         [
+            "Calling the covenant of circumcision a New Testament institution and losing its place in Genesis 17",
+            "Confusing Isaac with Ishmael in the account of the offering on Mount Moriah",
+            "Reporting Abraham's age at the call as 100 and the birth of Isaac as 75, reversing the two dates",
+            "Treating the ten commandments as ten ceremonial rules rather than the moral sum of the covenant",
+            "Naming the Passover lamb a symbol of suffering only, without the blood applied to the doorposts",
+            "Saying the manna and the quail belonged to the Sinai narrative rather than to the wilderness journey"
+          ],
       "wassceExamTips": [
         "Remember the structural division of the Decalogue: Commandments 1 to 4 govern relationship with God; Commandments 5 to 10 govern human relationships."
       ],
@@ -6488,6 +9130,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Analyze the religious and ethical injunctions of the Ten Commandments (Decalogue)"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-crs-02-1",
+            "title": "Abraham: the call, the son, the covenant and the testing",
+            "problem": "Scripture gives Abraham's age at 75 when he left Haran, at 100 when Isaac was born, and at 175 when he died; Isaac was 40 when Rebekah was given him, and Abraham was 99 and Ishmael 13 when circumcision was given as the covenant sign. A candidate answering a 20-mark question must trace faith and obedience through these dates. Work out the intervals. [20 marks]",
+            "stepByStepSolution": [
+              "Years between the call and the promised son: 100 minus 75 = 25 years of waiting on a promise that seemed past bearing. [4 marks]",
+              "Isaac was 40 at his marriage, so 100 plus 40 = 140 was Abraham's age when Esau and Jacob were born to him. [4 marks]",
+              "Abraham died at 175, so 175 minus 140 = 35 years of his life ran after the twins were born. [3 marks]",
+              "At the giving of circumcision Abraham was 99 and Ishmael 13, so 99 minus 13 = 86 years stood between the father's life and the son's. [3 marks]",
+              "On Mount Moriah the child on the altar ground and the ram in the thicket make 1 plus 1 = 2 lives named where 1 was owed, and the ram died in the child's place, which is the text's own lesson on substitution and on proved faith. [3 marks]",
+              "Marks: 20 divided by 4 = 5 marks to each of call, covenant, testing and obedience, with the verse cited for each. [3 marks]"
+            ],
+            "keyTakeaway": "Abraham's faith has dates on it: 25 years from the call to the son, and the testing falls on the very son the promise gave."
+          },
+          {
+            "id": "ex-crs-02-2",
+            "title": "Moses: three fortieths, ten plagues and ten words",
+            "problem": "The life of Moses is read in three spans of about 40 years and closed at the age of 120. Egypt was struck by 10 plagues, and the covenant at Sinai gave 10 commandments, of which 4 order the duty owed to God and 6 order the duty owed to the neighbour. At Elim the camp found 12 springs of water and 70 palm trees. A candidate answers a 15-mark question on deliverance and law. Measure the figures. [15 marks]",
+            "stepByStepSolution": [
+              "Years in the life of Moses: 40 times 3 = 120, the age Scripture gives at his death. [3 marks]",
+              "Acts in the two movements of rescue and covenant: 10 plagues of Egypt plus 10 words of Sinai, so 10 plus 10 = 20 divine acts stand between the throne of Pharaoh and the tablets on the mount. [3 marks]",
+              "The decalogue divides as 4 duties toward God and 6 toward the neighbour, so 4 plus 6 = 10 words. [2 marks]",
+              "Share of the commandments that order human relations: 6 divided by 10 times 100 = 60 per cent, which is why the law is summed in love to God and love to neighbour. [3 marks]",
+              "Provision in the wilderness: 70 divided by 12 = 5.8 palm trees to each spring at Elim, where the people rested after the bitter water was made sweet. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of Passover, Sinai, and leadership in the wilderness crisis. [2 marks]"
+            ],
+            "keyTakeaway": "Moses is measured in forties and tens: 120 years of life, 10 plagues answered by 10 commandments, and 6 of the 10 words about the neighbour."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-crs-topic-02",
       "topicId": "shs-crs-topic-02",
@@ -6539,6 +9211,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crs-topic-03",
+    "youtubeUrl": "https://www.youtube.com/watch?v=FNqB4Zh1kGw",
+    "youtubeId": "FNqB4Zh1kGw",
     "subjectId": "crs",
     "level": "SHS 1",
     "term": 1,
@@ -6576,6 +9250,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Deborah's courage is frequently cited by Christian civil society groups in Ghana to advocate for women's leadership in governance and judiciary."
         }
       ],
+"commonMistakes":         [
+            "Reporting Gideon's army as 300 from the start and skipping the two reductions that made it so",
+            "Confusing the twelve stones taken from the Jordan with the twelve pillars or twelve altars elsewhere",
+            "Making Deborah a queen or a priest, when the text gives her the work of judge and prophetess",
+            "Saying Jericho fell by the sounding of the trumpets alone, without the circuits and the silence before the shout",
+            "Describing the fleece as the ordinary means of guidance rather than a sign granted to a doubting leader",
+            "Attributing the song of Deborah to Hannah, or the song of Hannah to Miriam"
+          ],
       "wassceExamTips": [
         "In essay questions about Gideon, clearly explain the two tests: the fleece test (for confirmation of call) and the water drinking test (for army reduction)."
       ],
@@ -6585,6 +9267,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Examine how Gideon's campaign demonstrates divine power over military superiority"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-crs-03-1",
+            "title": "Gideon's three hundred: leadership when the odds are counted",
+            "problem": "Gideon's force began at 32,000 men. The fearful were allowed to depart and 22,000 went home, after which the test at the water left 300 men. The routed Midianite host left on the field was counted at 135,000 men who drew the sword. A candidate answers a 20-mark question on leadership and faith in a time of crisis. Work out the reductions and the odds. [20 marks]",
+            "stepByStepSolution": [
+              "Men standing after the first sorting: 32,000 minus 22,000 = 10,000. [4 marks]",
+              "Men dismissed at the water: 10,000 minus 300 = 9,700, so the second test cut deeper than the first. [3 marks]",
+              "Share of the original army kept for the field: 300 divided by 32,000 times 100 = 0.9 per cent. [3 marks]",
+              "Enemies to each Israelite man on the field after the rout: 135,000 divided by 300 = 450. [4 marks]",
+              "The sign of the fleece ran twice in opposite directions, wet on dry and dry on wet, and Gideon asked the second to answer the first, so weakness and caution are both present in the leader whom Scripture still uses. [3 marks]",
+              "Marks: 20 divided by 4 = 5 marks to each of the 4 lessons: God's power, the tested leader, the small band, and the patient sign. [3 marks]"
+            ],
+            "keyTakeaway": "Crisis leadership is arithmetic of the few: 0.9 per cent of the army and 450 enemies to every man, and the victory is still described as the Lord's."
+          },
+          {
+            "id": "ex-crs-03-2",
+            "title": "Jericho's thirteen circuits and Deborah's nine hundred chariots",
+            "problem": "The ark was carried once a day around Jericho for six days and seven times on the seventh day, with seven priests bearing seven horns. Twelve stones were taken from the middle of the Jordan as a memorial. Deborah summoned Barak, who led 10,000 footmen against Sisera's 900 iron chariots. A candidate answers a 15-mark question on courage and obedience in crisis. Count the rites and the odds. [15 marks]",
+            "stepByStepSolution": [
+              "Circuits of the city: 6 days of one circuit each plus 7 circuits on the seventh day, so 6 plus 7 = 13 passes around Jericho. [3 marks]",
+              "On the last morning the horns and the walkers met in the same number: 7 times 7 = 49 blasts and circuits before the walls fell. [3 marks]",
+              "The memorial at Gilgal kept 12 stones from the Jordan bed, 1 for each tribe, so the people were given a countable sign of the crossing. [2 marks]",
+              "Sisera's iron chariots were 900 against 10,000 men, so the chariots came to 900 divided by 10,000 times 100 = 9 per cent of the number of Barak's footmen, and the foot won the day. [3 marks]",
+              "The charge to Joshua, be strong and of a good courage, is repeated three times in the commission, so 1 duty pressed 3 times meets the crisis with a courage that is commanded rather than felt. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of the 3 points of faith, obedience, and the timing of the leaders. [2 marks]"
+            ],
+            "keyTakeaway": "Joshua and Deborah both obey before they are strong: 13 circuits and 9 per cent of the enemy's chariot count are the arithmetic of believing leadership."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-crs-topic-03",
       "topicId": "shs-crs-topic-03",
@@ -6636,6 +9348,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crs-topic-04",
+    "youtubeUrl": "https://www.youtube.com/watch?v=fY-1HwUhKbo",
+    "youtubeId": "fY-1HwUhKbo",
     "subjectId": "crs",
     "level": "SHS 1",
     "term": 1,
@@ -6673,6 +9387,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghanaian political leaders frequently reference Solomon's prayer for discerning wisdom during national prayer days and election seasons."
         }
       ],
+"commonMistakes":         [
+            "Making Saul's sin a single battle defeat instead of an unlawful sacrifice and an incomplete judgment",
+            "Confusing David's 7 years at Hebron with his 33 years at Jerusalem",
+            "Calling the temple a building of David, whose wish was refused him because he had shed blood",
+            "Reporting Solomon's wisdom as knowledge only, without the political and literary works attached to it",
+            "Blaming the division of the kingdom on Rehoboam's speech while excusing the idolatry under Solomon that made it possible",
+            "Saying David was punished by losing his life for the sin with Bathsheba, when the child died and the sword departed not from his house"
+          ],
       "wassceExamTips": [
         "Samuel's indictment of Saul in 1 Samuel 15:22 is a recurring WASSCE quotation: \"Behold, to obey is better than sacrifice, and to listen than the fat of rams.\""
       ],
@@ -6682,6 +9404,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate David's character as \"a man after God's own heart\" despite his moral failures"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-crs-04-1",
+            "title": "The united monarchy in years: David, Solomon and the temple",
+            "problem": "David was 30 when he began to reign and reigned 40 years in all, 7 years in Hebron over Judah and 33 years in Jerusalem over all Israel. Solomon's temple took 7 years to raise, and his annual intake of gold is stated at 666 talents. A candidate answers a 20-mark question on the rise and the failure of the monarchy. Work out the years and the shares. [20 marks]",
+            "stepByStepSolution": [
+              "Age at the close of David's reign: 30 plus 40 = 70 years. [3 marks]",
+              "Years of the reign: 7 in Hebron plus 33 in Jerusalem, so 7 plus 33 = 40 years. [4 marks]",
+              "Share of David's reign spent over the undivided kingdom: 33 divided by 40 times 100 = 82.5 per cent. [3 marks]",
+              "Solomon reigned 40 years, and 7 of them went on the temple, so 40 minus 7 = 33 years remained for the palace, the store cities and the alliances that afterwards undid him. [4 marks]",
+              "The gold of one year: 666 divided by 12 = 55.5 talents a month, which is the measure of the wealth that wisdom was given before. [3 marks]",
+              "Saul's end and David's rise turn on obedience: 1 unlawful sacrifice and 1 spared king stand against 1 man after God's own heart, and the monarchy is judged by that comparison. [3 marks]"
+            ],
+            "keyTakeaway": "The monarchy is dated in forties: 40 years for David, 40 for Solomon, and 7 of Solomon's years spent building the temple."
+          },
+          {
+            "id": "ex-crs-04-2",
+            "title": "Why Israel asked for a king, and how the house of Solomon broke",
+            "problem": "Israel demanded a king in order to be like the surrounding nations. Scripture reads the three reigns of the united monarchy at about 40 years each. David's sin with Bathsheba took a wife and killed a husband, and Solomon is reported to have had 700 wives and 300 concubines, whose foreign hearts turned his own. A candidate answers a 15-mark question on election, failure and apostasy. Count the reigns and the household. [15 marks]",
+            "stepByStepSolution": [
+              "The demand for a king was made for one reason, to be like the nations, so the monarchy begins in a refusal of theocracy rather than in a battle. [3 marks]",
+              "Years of the united monarchy: 40 times 3 = 120 years across Saul, David and Solomon in the reckoning of Acts. [3 marks]",
+              "David's fall is 2 acts in one business, the taking of another man's wife and the killing of her husband by the sword of the Ammonites, so 2 sins are counted where the plan held 1 gain. [2 marks]",
+              "Women in Solomon's household: 700 plus 300 = 1,000. [3 marks]",
+              "Share of the household held in marriage: 700 divided by 1,000 times 100 = 70 per cent, and the alliance policy that produced the number is the same policy that produced the foreign altars. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of election, failure and apostasy, with 1 text cited under each. [2 marks]"
+            ],
+            "keyTakeaway": "The monarchy asks for a king to look like the nations and ends with a thousand women in the palace and other gods at the eastern hill."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-crs-topic-04",
       "topicId": "shs-crs-topic-04",
@@ -6733,6 +9485,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crs-topic-05",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3yiFplravqU",
+    "youtubeId": "3yiFplravqU",
     "subjectId": "crs",
     "level": "SHS 1",
     "term": 2,
@@ -6767,6 +9521,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Martin Luther King Jr. and Ghanaian church leaders frequently quote Amos 5:24 when fighting against public corruption and illegal land grabs."
         }
       ],
+"commonMistakes":         [
+            "Reducing Amos to a preacher against Sabbath-breaking when the charge is the treatment of the poor",
+            "Calling the Day of the Lord a day of victory for Israel, which is exactly the presumption Amos attacks",
+            "Confusing Amaziah the priest of Bethel with Amaziah the king of Judah",
+            "Reading Lo-Ammi as a promise of mercy when its sense is, you are not my people",
+            "Treating Hosea's marriage as a literal allegory invented by the prophet rather than a command he carried out",
+            "Making the sycamore a fig tree and the herdsman a shepherd of sheep without checking the words"
+          ],
       "wassceExamTips": [
         "Contrast the core messages: Amos highlights God's righteousness and moral justice; Hosea highlights God's steadfast love (hesed) and mercy."
       ],
@@ -6776,6 +9538,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Apply the prophetic call for social justice and compassion to contemporary Ghanaian society"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-crs-05-1",
+            "title": "Amos and the arithmetic of social justice",
+            "problem": "Amos introduces each oracle with the phrase, for three transgressions and for four. Eight nations stand in the opening series of judgments, of which 6 are neighbouring peoples and 2 are Israel's own kindred. The prophet answered Amaziah by saying he was neither a prophet's son nor a professional, but a herdman and a gatherer of sycamore fruit, and the people are charged with selling the righteous for silver and the poor for a pair of shoes. A candidate answers a 20-mark question on true religion and justice. Count the oracles and the trades. [20 marks]",
+            "stepByStepSolution": [
+              "Numbers in the prophetic formula: 3 plus 4 = 7, a counting phrase that reaches past the measure of the sin named. [3 marks]",
+              "Nations in the first series: 6 neighbours plus 2 kindred kingdoms, so 6 plus 2 = 8 oracles of judgment. [4 marks]",
+              "Share of the oracles aimed at Judah and Israel: 2 divided by 8 times 100 = 25 per cent, and the list moves from the foreign court to the home assembly. [3 marks]",
+              "The prophet's standing: 2 trades, the herding of cattle and the dressing of sycamore trees, answered 1 royal chapel, so the message came from outside the professional prophesy. [3 marks]",
+              "The charges against empty ritual fall on 3 streams of worship, the feasts, the sacrifices and the songs, and the price named for a righteous person is 2 things, silver and a pair of shoes. [4 marks]",
+              "Marks: 20 divided by 4 = 5 marks to each of the 4 demands of justice, mercy, true worship and the Day of the Lord. [3 marks]"
+            ],
+            "keyTakeaway": "Amos counts out the guilt: three and four transgressions, eight nations, two prices for a poor man, and worship God refuses."
+          },
+          {
+            "id": "ex-crs-05-2",
+            "title": "Hosea: three names, fifteen shekels and fifteen measures",
+            "problem": "Hosea's children were given three names, Jezreel, Lo-Ruhamah and Lo-Ammi. He was afterwards told to love his unfaithful wife again and gave the price of 15 shekels of silver with a homer and a lethech of barley, where a homer is 10 ephahs and a lethech is 5. A candidate answers a 15-mark question on covenant unfaithfulness and redemptive love. Work out the names and the price. [15 marks]",
+            "stepByStepSolution": [
+              "Names that preach: 1 marriage and 3 children's names carry the whole national sermon, so the prophet's household became the text of his ministry. [3 marks]",
+              "Two of the three names begin with the negative Lo, meaning not, so 2 divided by 3 times 100 = 66.7 per cent of the names declare the covenant broken, and 3 minus 2 = 1 name is left to promise gathering. [3 marks]",
+              "Barley in the price: a homer of 10 ephahs plus a lethech of 5 ephahs, so 10 plus 5 = 15 ephahs of barley. [3 marks]",
+              "Price per measure: 15 shekels of silver bought 15 ephahs, so 15 divided by 15 = 1 shekel to each measure, the valuation of an ordinary slave's worth and no more. [2 marks]",
+              "The redemption follows the judgment: I will allure her and speak comfortably to her, so the covenant love is not a denial of the consequence but a movement past it. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of unfaithfulness, judgment and restoring love, with the name or verse shown under each. [2 marks]"
+            ],
+            "keyTakeaway": "Hosea pays the price of a common labourer for a faithless wife, and the marriage itself is the sermon on covenant love."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-crs-topic-05",
       "topicId": "shs-crs-topic-05",
@@ -6827,6 +9619,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crs-topic-06",
+    "youtubeUrl": "https://www.youtube.com/watch?v=e6yO9-kegDI",
+    "youtubeId": "e6yO9-kegDI",
     "subjectId": "crs",
     "level": "SHS 1",
     "term": 2,
@@ -6863,6 +9657,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Jesus using Scripture to triumph over temptation is taught in Ghanaian scripture unions as the model for overcoming youth peer pressure."
         }
       ],
+"commonMistakes":         [
+            "Confusing the annunciation to Mary with the dream of Joseph, which is the other announcement in the birth narrative",
+            "Placing the cleansing of the temple in the infancy narratives",
+            "Numbering the temptations as bread, wine and kingdoms instead of bread, the pinnacle and the kingdoms",
+            "Dating the baptism of Jesus to the beginning of his public ministry as though it were the same event as the temptation",
+            "Calling the twelve apostles the seventy-two, or treating both lists as one sending",
+            "Quoting Matthew's genealogy as the genealogy of Mary when the list is traced through Joseph"
+          ],
       "wassceExamTips": [
         "Know the scriptural defense used by Jesus during temptation: all three answers were drawn directly from the Book of Deuteronomy."
       ],
@@ -6872,6 +9674,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Explain the criteria and cost of discipleship in Christ's earthly ministry"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-crs-06-1",
+            "title": "Matthew's genealogy in three fours",
+            "problem": "Matthew arranges the generations of Jesus in three groups of fourteen, from Abraham to David, from David to the carrying away into Babylon, and from the exile to Christ. A candidate answering a 20-mark question must state what the structure teaches about divine sovereignty in history and then trace the annunciation, birth and childhood. Count the list. [20 marks]",
+            "stepByStepSolution": [
+              "Generations in the whole scheme: 14 times 3 = 42 from Abraham to Christ. [4 marks]",
+              "Generations before the exile: 14 plus 14 = 28, since the first group ends at David and the second at the carrying away. [3 marks]",
+              "Generations between the exile and the birth at Bethlehem: 42 minus 28 = 14. [3 marks]",
+              "Share of the list lying before the exile: 28 divided by 42 times 100 = 66.7 per cent, so the structure holds the monarchy and the ruin in one frame and leads out of the ruin to the child. [3 marks]",
+              "The annunciation moves in three parts, the greeting, the charge not to fear, and the promise that the Holy One to be born should be called the Son of God, so 3 movements answer one bewildered hearer. [4 marks]",
+              "Marks: 20 divided by 4 = 5 marks to each of annunciation, birth, childhood and the baptism by John. [3 marks]"
+            ],
+            "keyTakeaway": "Matthew edits history into three fours of fourteen generations, and the structure itself preaches sovereignty over the exile and the restoration."
+          },
+          {
+            "id": "ex-crs-06-2",
+            "title": "Forty days, three temptations and four fishermen",
+            "problem": "Jesus fasted forty days and forty nights in the wilderness and was then attacked three times, answering each assault with the words, it is written. At the baptism three signs appeared, the opening heaven, the descending Spirit as a dove and the voice from heaven. The call at the sea of Galilee brought four fishermen to the following, two of whom were brothers. A candidate answers a 15-mark question on the beginnings of the ministry. Count the tests and the signs. [15 marks]",
+            "stepByStepSolution": [
+              "Periods of the fast counted day and night: 40 plus 40 = 80, the whole wilderness discipline. [3 marks]",
+              "The assaults were three, bread after the fast, the pinnacle of the temple, and the kingdoms of the world, so 1 weapon, the written word, answered 3 attacks. [3 marks]",
+              "Brothers outside the family pair at the call: 4 minus 2 = 2, since Peter and Andrew were paired, and James and John the other pair, so 2 pairs of fishing men were called. [2 marks]",
+              "Signs at the baptism: 3 attend the 1 ceremony, the heaven opened, the Spirit descending and the voice speaking, so the Son is marked before he works a single miracle. [3 marks]",
+              "The second mission in Luke sent 72, and the first band was 12, so 12 plus 72 = 84 were sent out in the two recorded commissions. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of the 3 points on the obedience tested, the obedience adored, and the obedience followed. [2 marks]"
+            ],
+            "keyTakeaway": "The ministry opens in counted obedience: 80 periods of fasting, 3 answered attacks, 3 signs at the Jordan, and 4 fishermen leaving their nets."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-crs-topic-06",
       "topicId": "shs-crs-topic-06",
@@ -6923,6 +9755,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crs-topic-07",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ndMwCysNeBM",
+    "youtubeId": "ndMwCysNeBM",
     "subjectId": "crs",
     "level": "SHS 1",
     "term": 2,
@@ -6960,6 +9794,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "The Parable of the Good Samaritan inspires Christian charitable missions, hospices, and disaster relief programs across Ghana."
         }
       ],
+"commonMistakes":         [
+            "Calling the parable of the pounds a parable of the talents and mixing the two sums together",
+            "Naming the Good Samaritan a literal man rather than a figure in a parable answering the question about the neighbour",
+            "Placing the feeding of the four thousand in the same event as the feeding of the five thousand",
+            "Reducing miracles to wonders without stating the sign, the thing signified and the kingdom that answers",
+            "Attributing the raising of Lazarus to the healing ministry and losing its place as the sign before the passion",
+            "Saying the parables explain the kingdom by comparison and then interpreting every detail as a separate lesson"
+          ],
       "wassceExamTips": [
         "In questions testing the Good Samaritan, emphasize the historical animosity between Jews and Samaritans to highlight the radical nature of the Samaritan's compassion."
       ],
@@ -6969,6 +9811,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate the moral lessons of the Good Samaritan for ethnic and religious tolerance"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-crs-07-1",
+            "title": "Six stone jars and five loaves: the arithmetic of the signs",
+            "problem": "At Cana there were 6 water jars of stone set for purification, each holding 2 or 3 measures. At the feeding of the five thousand the disciples had 5 loaves and 2 fishes, and 12 baskets of fragments were taken up. A candidate answering a 20-mark question must classify the miracles and show what the numbers teach about the kingdom. Work out the capacity and the provision. [20 marks]",
+            "stepByStepSolution": [
+              "Water held at Cana lay between 6 times 2 = 12 measures and 6 times 3 = 18 measures, since the jars were of the largest household size. [4 marks]",
+              "The span between the least and the greatest supply was 18 minus 12 = 6 measures, so the text leaves the abundance deliberately unstated. [3 marks]",
+              "The loaves and the fishes were 5 plus 2 = 7 pieces of food set before a multitude, and the sign begins in a shortage that can be counted. [3 marks]",
+              "If the fragments were spread across the crowd, 5,000 divided by 12 = 416.7 persons stood behind every basket taken up. [4 marks]",
+              "The miracles are taught in 4 classes, the control of nature, the healing of disease, the deliverance from demonic possession, and the raising of the dead, and 1 sign may display more than one face of the kingdom. [3 marks]",
+              "Marks: 20 divided by 4 = 5 marks to each class, and each class must be proved with 1 named miracle. [3 marks]"
+            ],
+            "keyTakeaway": "The signs keep their accounts: 6 jars of stone, 7 pieces of bread and fish, and 12 baskets over for a crowd of five thousand."
+          },
+          {
+            "id": "ex-crs-07-2",
+            "title": "Two denarii at the inn and three lost things",
+            "problem": "The Good Samaritan poured oil and wine on the wounds, set the injured man on his own animal, and paid the innkeeper 2 denarii, promising to repay any excess at his return; a denarius was the day's wage. Luke 15 gives 3 parables of seeking, the lost sheep out of a hundred, the lost piece of money out of ten, and the lost son. A candidate answers a 15-mark question on neighbourly love and the kingdom. Count the cost and the loss. [15 marks]",
+            "stepByStepSolution": [
+              "The wounds were dressed with 2 things, oil and wine, and the man was carried on 1 beast belonging to his enemy's nation, so the mercy cost the Samaritan both goods and travel. [3 marks]",
+              "A denarius was the day's wage, so 2 denarii kept the man 2 days, and a stay of 3 nights owed 3 minus 2 = 1 day beyond the money handed over. [3 marks]",
+              "The parables of loss are 3, the sheep, the piece of money and the son, so 1 theme of seeking is preached in 3 settings, the field, the house and the road. [3 marks]",
+              "Share of the flock lost: 1 divided by 100 times 100 = 1 per cent, and the shepherd leaves the ninety and nine to follow the one. [2 marks]",
+              "Share of the woman's money lost: 1 divided by 10 times 100 = 10 per cent, and the smaller the company the more the search is written as joy. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of neighbour, seeking and the count of heaven over one repentant sinner. [2 marks]"
+            ],
+            "keyTakeaway": "The parables price mercy in common coin: 2 days' wages for a stranger, and 1 per cent of a flock worth the whole journey."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-crs-topic-07",
       "topicId": "shs-crs-topic-07",
@@ -7020,6 +9892,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crs-topic-08",
+    "youtubeUrl": "https://www.youtube.com/watch?v=tECcvmKOzTk",
+    "youtubeId": "tECcvmKOzTk",
     "subjectId": "crs",
     "level": "SHS 1",
     "term": 3,
@@ -7057,6 +9931,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Easter celebrations across Ghana unite millions of Christians in conventions commemorating the sacrificial death and victory of Christ over death."
         }
       ],
+"commonMistakes":         [
+            "Calling the thirty pieces of silver a fine for blasphemy rather than the price of a slave",
+            "Making the trial wholly Roman and forgetting the night hearing before the high priest",
+            "Counting the denials of Peter as one and losing the threefold structure that answers the three professions",
+            "Placing the crucifixion on the Sabbath instead of the preparation day",
+            "Confusing the resurrection appearances with the ascension forty days later",
+            "Treating the upper room after the crucifixion as the place of the conversion of Paul"
+          ],
       "wassceExamTips": [
         "Distinguish between the religious charge (blasphemy before Caiaphas) and the political charge (subversion and sedition before Pilate)."
       ],
@@ -7066,6 +9948,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Explain the theological significance of the empty tomb and resurrection of Christ"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-crs-08-1",
+            "title": "Thirty pieces of silver, six hearings and three hours of darkness",
+            "problem": "Judas fixed the price of the betrayal at 30 pieces of silver. Peter denied three times before the cock crew. The way of the passion is read as six hearings, three before the Jewish authorities and three before the Roman side. Darkness covered the land from the sixth hour to the ninth, and the words from the cross are traditionally counted as seven. A candidate answers a 20-mark question on the passion. Work out the prices, the hearings and the hours. [20 marks]",
+            "stepByStepSolution": [
+              "The betrayal was priced at 30 pieces of silver, which is the law's valuation of a slain slave, so 1 dead man's price stood on the purchase of the potter's field. [4 marks]",
+              "Peter's pledge cost him 1 boast and 3 denials before the cock crew, so the fall is counted and not merely described. [3 marks]",
+              "Hearings on the prisoner: 3 religious and 3 civil, so 3 plus 3 = 6 sittings filled the night and the morning. [3 marks]",
+              "Hours of darkness: from the sixth hour to the ninth, so 9 minus 6 = 3 hours hung over the land while the cross was standing. [4 marks]",
+              "The sayings from the cross are counted 7, so the 3 hours of darkness are filled by 7 words, and the last is the commending of the spirit into the Father's hands. [3 marks]",
+              "Marks: 20 divided by 4 = 5 marks to each of the entry into Jerusalem, the supper, the agony in the garden and the empty tomb. [3 marks]"
+            ],
+            "keyTakeaway": "The passion is dated to the hour: 30 pieces, 6 hearings, 3 hours of darkness and 7 words, and none of it is left vague."
+          },
+          {
+            "id": "ex-crs-08-2",
+            "title": "The women at the tomb and the second gathering of the disciples",
+            "problem": "The stone was found rolled away early on the first day of the week, and within the sepulchre the women saw 2 angels. Eight days later the disciples were gathered again with Thomas among them, and the risen Lord was reported to have shown himself to above five hundred brethren at once. A candidate answers a 15-mark question on resurrection evidence. Count the witnesses and the days. [15 marks]",
+            "stepByStepSolution": [
+              "The tomb was found empty on the first day of the week before dawn, so 1 day of the Jewish week became the standing mark of the Christian week. [3 marks]",
+              "Inside the sepulchre were seen 2 angels, and the first witness of the risen Lord outside the tomb was the woman who had been healed of seven devils, so 1 former possessor carried the first report. [3 marks]",
+              "The second gathering came after 8 days, so the appearance to Thomas fell on the day that returned the week, and the doubt was answered on the eighth day. [2 marks]",
+              "The company of 500 witnesses is 500 divided by 12 = 41.7 times the number of the apostolic band, which is how 1 report was circulated in a body too large to be invented privately. [3 marks]",
+              "The body lay in the grave while 1 day and 2 nights ran, and the resurrection is confessed on the third day, so the counting of days belongs to the creed and not to legend. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of the empty tomb, the appearances and the commission. [2 marks]"
+            ],
+            "keyTakeaway": "Resurrection faith rests on counted testimony: women first, then 1 doubter on the eighth day, then five hundred at once."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-crs-topic-08",
       "topicId": "shs-crs-topic-08",
@@ -7117,6 +10029,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crs-topic-09",
+    "youtubeUrl": "https://www.youtube.com/watch?v=6XUBGEFcz1w",
+    "youtubeId": "6XUBGEFcz1w",
     "subjectId": "crs",
     "level": "SHS 1",
     "term": 3,
@@ -7151,6 +10065,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Charismatic and Pentecostal denominations in Ghana draw their spiritual identity and missionary evangelism from the Book of Acts."
         }
       ],
+"commonMistakes":         [
+            "Making Pentecost the birthday of the law rather than the outpouring of the Spirit that begins the church's witness",
+            "Confusing the 120 in the upper room with the 3,000 added afterwards on the same day",
+            "Calling the seven deacons priests equal to the apostles and forgetting that their office was the serving of tables",
+            "Placing the conversion of Paul on the road before the stoning of Stephen rather than after it",
+            "Naming the council of Jerusalem a decision on circumcision only, with no bearing on the table fellowship",
+            "Dating the First Epistle of John to the day of Pentecost"
+          ],
       "wassceExamTips": [
         "At the Jerusalem Council, Peter and James played pivotal roles: Peter provided the theological testimony, and James gave the pastoral verdict."
       ],
@@ -7160,6 +10082,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Analyze the historical decisions made at the Jerusalem Council regarding Gentile believers"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-crs-09-1",
+            "title": "From one hundred and twenty to five thousand: the numbers of the early church",
+            "problem": "The waiting company in the upper room was numbered at 120. On the day of Pentecost about 3,000 souls were added, and after the healing at the temple gate the number of the men came to about 5,000. Seven men of good report were chosen to serve the tables beside the twelve apostles. A candidate answers a 20-mark question on the birth and growth of the church. Count the expansion. [20 marks]",
+            "stepByStepSolution": [
+              "Growth on the day of Pentecost: 3,000 divided by 120 = 25 times the waiting company were joined in 1 day. [4 marks]",
+              "Addition between the two recorded counts: 5,000 minus 3,000 = 2,000 men. [3 marks]",
+              "Total expansion from the upper room to the second count: 5,000 divided by 120 = 41.7 times the first number. [3 marks]",
+              "Officers in the widening community: 7 chosen men beside the 12 apostles, so 7 plus 12 = 19 serving offices, and the seven were required to be full of the Spirit and of wisdom. [4 marks]",
+              "Stephen stands as the first martyr of the church, and the young man who consented at his stoning bore the coats of the witnesses, so persecution began with a witness at the garments and ended with a witness at the stones. [3 marks]",
+              "Marks: 20 divided by 4 = 5 marks to each of the Ascension, Pentecost, the common life of believers, and the witness scattered by persecution. [3 marks]"
+            ],
+            "keyTakeaway": "Acts keeps its registers honestly: 120 waiting, 25 times that added at Pentecost, and 7 table servants beside the 12 apostles."
+          },
+          {
+            "id": "ex-crs-09-2",
+            "title": "Four necessary things, three blind days and fourteen days of waiting",
+            "problem": "The council at Jerusalem settled the table-fellowship of Jewish and Gentile believers by a letter that asked for abstention from pollution of things offered to idols, from blood, from things strangled and from fornication. Saul was blind three days at Damascus until the scales fell from his eyes. In the storm the company of 276 souls on board ship went 14 days without meat before Paul stood up and bade them eat. A candidate answers a 15-mark question on the Spirit's guidance in the growing church. Count the decisions and the days. [15 marks]",
+            "stepByStepSolution": [
+              "The council laid no heavier burden than 4 necessary things, so 4 rules stood in the place of the whole law demanded by the Pharisees. [3 marks]",
+              "Saul's blindness ran 3 days before the recovery of sight, so the apostle to the Gentiles entered the church through 1 dark road, 3 blind days and 1 visitor sent to him. [3 marks]",
+              "The ship held 276 souls and the fast lasted 14 days, so 276 divided by 14 = 19.7 persons waited on each day of Paul's assurance. [3 marks]",
+              "Cornelius reported a vision 4 days old given while he fasted, so 4 days of devotion went before 1 angelic message that opened the Gentile mission. [2 marks]",
+              "The church at Antioch sent relief to the Judean brethren by the hands of Barnabas and Saul, and it was there that the disciples were first called Christians. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of the Spirit's guidance, the council's judgment and the fellowship at the table it protected. [2 marks]"
+            ],
+            "keyTakeaway": "The early church decided by counting what was necessary: 4 rules for the table, 3 blind days for the persecutor, 14 days of waiting for the ship."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-crs-topic-09",
       "topicId": "shs-crs-topic-09",
@@ -7211,6 +10163,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crs-topic-10",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ps6YPEB2lbI",
+    "youtubeId": "ps6YPEB2lbI",
     "subjectId": "crs",
     "level": "SHS 1",
     "term": 3,
@@ -7247,6 +10201,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghanaian Christian professionals are urged by their churches to uphold anti-bribery standards in procurement and civil service administration."
         }
       ],
+"commonMistakes":         [
+            "Teaching submission to authority as unlimited obedience and dropping the apostles' answer in Acts 5",
+            "Reducing the fifth commandment to a rule for children and ignoring its civic weight",
+            "Naming the love of money a sin of the rich rather than a root that any salary can water",
+            "Calling civic duties a list of things the Christian may trade away against the ballot",
+            "Confusing honour due to office with approval of the conduct of the officer",
+            "Describing corruption as a national habit rather than as a series of acts with prices attached"
+          ],
       "wassceExamTips": [
         "In questions about civic responsibilities, cite Jesus' famous injunction: \"Render therefore to Caesar the things that are Caesar's, and to God the things that are God's.\""
       ],
@@ -7256,6 +10218,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Formulate practical Christian responses to contemporary social challenges in Ghana"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-crs-10-1",
+            "title": "A contract, a fee and the bags that must vanish",
+            "problem": "For a class discussion on corruption in Ghana, take a contractor who wins a job of 80,000 cedis after paying a facilitation fee of 5,000 cedis, and who recovers the fee by removing bags of cement priced at 40 cedis each from a job that needs 400 bags. A candidate answers a 20-mark question on civic duty, work ethics and the Christian fight against corruption. Trace the money. [20 marks]",
+            "stepByStepSolution": [
+              "Fee as a share of the contract: 5,000 divided by 80,000 times 100 = 6.25 per cent of the job was paid away before it began. [4 marks]",
+              "Bags that must disappear to repay it: 5,000 divided by 40 = 125 bags of cement. [4 marks]",
+              "Share of the 400-bag job stolen: 125 divided by 400 times 100 = 31.25 per cent, so nearly a third of the material never reaches the wall. [3 marks]",
+              "The duties of the citizen in Romans 13 are gathered under 4 heads, tribute, custom, fear and honour, and prayer for those in authority is added to the same chapter. [3 marks]",
+              "Work ethics are biblical and not merely commercial: the false balance is abomination, while a perfect and just weight belongs to the Lord's command, so the tradesman's scale is a moral instrument. [3 marks]",
+              "Marks: 20 divided by 5 = 4 marks to each of civic duty, work ethics, family values, honesty in public office, and the witness against corruption. [3 marks]"
+            ],
+            "keyTakeaway": "Corruption is countable: a 6.25 per cent fee forces 31.25 per cent of the cement away from the building the public paid for."
+          },
+          {
+            "id": "ex-crs-10-2",
+            "title": "One commandment with a promise and one income spent on schooling",
+            "problem": "Honour thy father and mother is the first commandment with a promise, and it stands among the 10 words of the Sinai covenant. In a Ghanaian household of 7 members, 3 are at school, and parents earning 900 cedis a month spend 150 cedis a month on school claims. When the council forbade the apostles to speak, Peter answered that we ought to obey God rather than men. A candidate answers a 15-mark question on family values and the limits of civil obedience. [15 marks]",
+            "stepByStepSolution": [
+              "Family law in the decalogue is 1 commandment of 10, so 1 divided by 10 times 100 = 10 per cent of the moral law is written on the household. [3 marks]",
+              "Share of the household at school: 3 divided by 7 times 100 = 42.9 per cent. [2 marks]",
+              "Share of income spent on schooling: 150 divided by 900 times 100 = 16.7 per cent, so the family's obedience to the commandment with a promise appears on its budget. [3 marks]",
+              "Obedience to authority is bounded: 1 line of the apostles, we ought to obey God rather than men, marks the point where the civil command stops being binding. [3 marks]",
+              "Corruption is resisted by 3 refusals, the bribe offered, the bribe accepted, and the silence that the bribe buys, so the Christian worker counts the third refusal as the hardest. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of the family, the workplace and the nation, and in 20 minutes the candidate holds 20 divided by 15 = 1.3 minutes to a mark. [2 marks]"
+            ],
+            "keyTakeaway": "Christian social duty is shown in the household budget and stopped at the point where a human order forbids a divine one."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-crs-topic-10",
       "topicId": "shs-crs-topic-10",
@@ -7307,6 +10299,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crs-topic-11",
+    "youtubeUrl": "https://www.youtube.com/watch?v=IKc7qpZ0Lf4",
+    "youtubeId": "IKc7qpZ0Lf4",
     "subjectId": "crs",
     "level": "SHS 1",
     "term": 2,
@@ -7342,6 +10336,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghanaian religious leaders call for modern moral and ethical reforms against societal vices, drawing lessons from King Josiah's reforms."
         }
       ],
+"commonMistakes":         [
+            "Making Elijah the prophet who anointed Jehu personally rather than the man who commissioned Elisha to it",
+            "Confusing the prophets of Baal with the prophets of the grove and losing the two companies at Carmel",
+            "Attributing the finding of the book of the law to Hezekiah instead of to Josiah",
+            "Calling the fire on Carmel a destruction of the people when it consumed the sacrifice, the stones and the water",
+            "Reporting that Josiah died in battle at Megiddo fighting against Egypt rather than as a king who kept the passover",
+            "Saying that Jezebel was the king of the northern kingdom, confusing her office and her sex in the narrative"
+          ],
       "wassceExamTips": [
         "Remember: Elijah repaired the ruined altar with TWELVE stones, representing the unified twelve tribes of Israel."
       ],
@@ -7351,6 +10353,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate King Josiah's nationwide campaign to cleanse idolatry and restore covenant fidelity"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-crs-11-1",
+            "title": "Eight hundred and fifty opposed prophets and twelve stones on one altar",
+            "problem": "At Mount Carmel Elijah brought the people together and said, I, even I only, am left a prophet of the Lord, whereas the prophets of Baal were four hundred and fifty and the prophets of the grove were four hundred. Obadiah had hid a hundred prophets of the Lord by fifties in a cave. Elijah repaired the Lord's altar of twelve stones and drenched the sacrifice with water three times. A candidate answers a 20-mark question on the reformer and the contest. Count the companies. [20 marks]",
+            "stepByStepSolution": [
+              "Opposed prophets at Carmel: 450 plus 400 = 850. [4 marks]",
+              "Share of that company who were prophets of Baal proper: 450 divided by 850 times 100 = 52.9 per cent. [3 marks]",
+              "The hidden remnant was kept in bands of fifty, so 100 divided by 50 = 2 groups of prophets escaped the purge. [3 marks]",
+              "The altar was rebuilt of 12 stones according to the number of the tribes of the seed of Jacob, so 12 stones confessed a divided people as still one nation before one God. [4 marks]",
+              "The prophets of Baal cried from morning until the offering of the minchah and there was no voice, no answer and no profit; then Elijah poured water on the altar three times, so a whole morning of silence was answered by 3 drenchings and 1 descent of fire. [3 marks]",
+              "Marks: 20 divided by 4 = 5 marks to each of the challenge, the silence, the fire and the rain that followed. [3 marks]"
+            ],
+            "keyTakeaway": "The contest is numbered with intent: 850 prophets against 1, 12 stones for a broken nation, and 3 pourings before the fire falls."
+          },
+          {
+            "id": "ex-crs-11-2",
+            "title": "Josiah: eight years old to the eighteenth year of his reign",
+            "problem": "Josiah was eight years old when he began to reign. In the eighth year of his reign, while he was yet young, he began to seek the God of David, and in the eighteenth year the book of the law was brought into the house of the Lord read to him. He began to purge Judah and Jerusalem in the second year after his twentieth. A candidate answers a 15-mark question on the reformer of Judah. Work out the years of the reform. [15 marks]",
+            "stepByStepSolution": [
+              "Age when the book was found: 8 years at accession plus 18 years of reign, so 8 plus 18 = 26 years of age. [3 marks]",
+              "Years between the beginning of seeking God and the finding of the book: 18 minus 8 = 10 years of obedience before the written word came to him. [3 marks]",
+              "Reign years before the cleansing began: 20 minus 8 = 12 years, since he was 8 when he became king and 20 when Judah was purged. [2 marks]",
+              "The passover kept in that year had not been so held since the days of the judges, so 1 feast revived carried the whole reform in the public memory. [3 marks]",
+              "The finding moved the king to rend his clothes and keep the covenant, and the reform reached the high places, the images and the altars, so obedience to a discovered book was proved by destroyed things. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of the finding, the repentance and the renewal. [2 marks]"
+            ],
+            "keyTakeaway": "Josiah's reform is dated from a child-king's arithmetic: 8 at accession, 10 years of seeking, and the book found at 26."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-crs-topic-11",
       "topicId": "shs-crs-topic-11",
@@ -7402,6 +10434,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crs-topic-12",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7h9-zPHNVzs",
+    "youtubeId": "7h9-zPHNVzs",
     "subjectId": "crs",
     "level": "SHS 1",
     "term": 2,
@@ -7439,6 +10473,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ezekiel's vision of dry bones is preached in Ghanaian churches as a message of miraculous financial and physical restoration."
         }
       ],
+"commonMistakes":         [
+            "Placing Ezekiel's visions in the post-exilic temple rather than among the captives by the river Chebar",
+            "Confusing the dry bones vision with a teaching on the immortality of the soul apart from Israel's restoration",
+            "Attributing the servant songs to First Isaiah or to Jeremiah",
+            "Reading the two sticks as the two testaments instead of the two divided kingdoms",
+            "Calling the comfort of the exile a denial that the exile was deserved",
+            "Naming Haggai and Zechariah the prophets of the Babylonian exile rather than of the return"
+          ],
       "wassceExamTips": [
         "In WASSCE CRS, the Dry Bones symbolize the HOUSE OF ISRAEL in exile (\"Our bones are dried up, and our hope is lost\")."
       ],
@@ -7448,6 +10490,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate the theological significance of the Suffering Servant songs in Isaiah 53"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-crs-12-1",
+            "title": "Two sticks made one and four creatures in the chariot vision",
+            "problem": "Ezekiel in exile was given the sign of the two sticks, one written for Judah and his fellows and the other for Joseph, the wood of Ephraim, that they might be one in his hand. His calling vision carried four living creatures and four wheels, and the valley of dry bones was filled with an exceeding great army. Second Isaiah opens with the double call, Comfort ye, comfort ye my people. A candidate answers a 20-mark question on exile, hope and restoration. Count the symbols. [20 marks]",
+            "stepByStepSolution": [
+              "The symbol of reunion took 2 sticks, and they were joined to be 1, so 1 plus 1 = 2 kingdoms lay in the prophet's hand as 1 nation. [4 marks]",
+              "The vision of the chariot gave 4 living creatures with 4 wheels, so 4 plus 4 = 8 forms carried the throne that went into exile with the people. [3 marks]",
+              "The dry bones were exceeding many and exceedingly dry, and they stood up as 1 living army out of 2 kinds of death, the scattered and the buried. [3 marks]",
+              "The glory of the Lord departed toward the mountain on the east side of the city, so the exile was not a defeat of God but a withdrawal He measured. [3 marks]",
+              "Second Isaiah opens with the summons to comfort repeated twice, so 1 message in 2 utterances answers the 2 chapters of ruin that lie behind the people. [4 marks]",
+              "Marks: 20 divided by 4 = 5 marks to each of exile, vision, comfort and the return. [3 marks]"
+            ],
+            "keyTakeaway": "Restoration is told in pairs and fours: two sticks into one nation, four creatures bearing a throne, and a double call to comfort."
+          },
+          {
+            "id": "ex-crs-12-2",
+            "title": "The chapters of the consolation and the four servant songs",
+            "problem": "The book read to the exiles runs from chapter 40 to chapter 55, and 4 servant songs stand within that block. The prophet appeals to the host of heaven which is brought out by number and called every one by name, and the idol is described as a tree which one part feeds on the altar and another part is carved into a god. A candidate answers a 15-mark question on the message of Second Isaiah. Measure the block and the songs. [15 marks]",
+            "stepByStepSolution": [
+              "Chapters in the consolation: from 40 to 55 inclusive is 55 minus 40 plus 1 = 16 chapters addressed to the exile. [4 marks]",
+              "Servant songs inside the block: 4 divided by 16 times 100 = 25 per cent of the chapters carry the servant figure. [2 marks]",
+              "The appeal on the stars asks the reader to count a host that is nevertheless called by name, so 1 God knows the number that no astronomer finishes. [2 marks]",
+              "The satire on the idol burns one part of the tree and worships another part of the same piece, so 1 log feeds a kitchen and rules a house in a single chapter. [3 marks]",
+              "The redeemed are promised joy and gladness while sorrow and sighing flee away, so 2 losses give place to 2 gains in the closing picture of the highway. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of judgment, comfort and the servant, and 1 verse is cited under each. [2 marks]"
+            ],
+            "keyTakeaway": "Second Isaiah is sixteen chapters of comfort with four servant songs, and its argument runs from numbered stars to a tree carved into a god."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-crs-topic-12",
       "topicId": "shs-crs-topic-12",
@@ -7499,6 +10571,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crs-topic-13",
+    "youtubeUrl": "https://www.youtube.com/watch?v=T0LWI77yBd8",
+    "youtubeId": "T0LWI77yBd8",
     "subjectId": "crs",
     "level": "SHS 1",
     "term": 3,
@@ -7536,6 +10610,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Paul's teaching on the Fruit of the Spirit is the moral blueprint taught across Christian schools and churches in Ghana for ethical character."
         }
       ],
+"commonMistakes":         [
+            "Teaching justification by faith as a denial of obedience and so setting Paul against James without reading either",
+            "Confusing the fruit of the Spirit with the gifts of the Spirit listed in the first Epistle to the Corinthians",
+            "Counting the fruit as 10 graces by adding hope or as 7 by trimming the list",
+            "Making the law a second way of salvation rather than the guardian that ends when the heir comes of age",
+            "Saying that the works of the flesh are only sins of the body and passing the sins of temper",
+            "Reading Abraham's justification in Galatians as a quotation from Leviticus rather than from Genesis"
+          ],
       "wassceExamTips": [
         "Notice that Paul speaks of the \"Fruit\" (singular) of the Spirit—a unified character cluster, not separate independent fruits."
       ],
@@ -7545,6 +10627,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Contrast the works of the flesh with the nine-fold fruit of the Holy Spirit"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-crs-13-1",
+            "title": "Nine graces against the works of the flesh",
+            "problem": "Galatians names the fruit of the Spirit as love, joy, peace, longsuffering, gentleness, goodness, faith, meekness and temperance, and sets against it the works of the flesh, warning that they who do such things shall not inherit the kingdom of God. Romans lays one trespass against one righteous act, and Galatians insists that Abraham believed God and it was counted unto him for righteousness. A candidate answers a 20-mark question on faith and grace. Count the graces and the reckonings. [20 marks]",
+            "stepByStepSolution": [
+              "Graces in the fruit: 9 are named, so 1 fruit of the Spirit is served out in 9 tastes, and the list closes with the statement that against such there is no law. [4 marks]",
+              "The works of the flesh may be gathered under 3 heads, sins of appetite, sins of temper and sins against the truth, so 3 classes carry the whole catalogue. [3 marks]",
+              "Justification is reckoned before the rite: Abraham believed and it was counted to him for righteousness, so 1 reckoning of faith went before 1 covenant sign of circumcision. [4 marks]",
+              "Romans sets the two head acts over against each other, one offence and one act of righteousness, so 1 plus 1 = 2 deeds decide the condemnation and the acquittal of the two races. [3 marks]",
+              "The contrast of the two ways in the same chapter is a contrast of sources, works done under the law and fruit grown by the Spirit, so the difference is not between effort and laziness but between two roots. [3 marks]",
+              "Marks: 20 divided by 4 = 5 marks to each of faith, grace, law and the fruit, with 1 verse under each heading. [3 marks]"
+            ],
+            "keyTakeaway": "Paul's arithmetic is a counting of sources: 9 graces of the Spirit against 3 classes of fleshly works, and 1 reckoning of faith before 1 sign."
+          },
+          {
+            "id": "ex-crs-13-2",
+            "title": "Eight years under tutors and three pairs dissolved in Christ",
+            "problem": "For the class exercise, take an heir whose minority runs to the age of 12 and whose full age is fixed at 20, held meanwhile under 2 kinds of keeper, tutors and governors. Galatians describes the law as a schoolmaster until Christ, and then declares that in Christ there is neither Jew nor Greek, bond nor free, male nor female. A candidate answers a 15-mark question on law and freedom. Measure the wardship and the pairs. [15 marks]",
+            "stepByStepSolution": [
+              "The law was our schoolmaster to bring us unto Christ, so 1 tutor held the pupil until the heir was ready to be trusted with the house. [3 marks]",
+              "Years of wardship: 20 minus 12 = 8 years passed under tutors and governors, so the minority was a fixed season and not a permanent condition. [3 marks]",
+              "Division of the wardship between the 2 kinds of keeper: 12 divided by 2 = 6 years to each order of guardian in the exercise. [2 marks]",
+              "Pairs dissolved in Christ: Jew and Greek, bond and free, male and female, so 3 pairs of distinction are named and 1 fellowship takes their place. [3 marks]",
+              "Share of the dissolved pairs that run on birth or rank: 2 divided by 3 times 100 = 66.7 per cent, since race and condition are 2 of the 3, and the third is sex. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of faith, freedom and the fruit, and in 20 minutes that is 20 divided by 15 = 1.3 minutes to a mark. [2 marks]"
+            ],
+            "keyTakeaway": "Freedom has a date and a list: 8 years of wardship end, and 3 pairs of human division lose their standing before Christ."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-crs-topic-13",
       "topicId": "shs-crs-topic-13",
@@ -7596,6 +10708,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crs-topic-14",
+    "youtubeUrl": "https://www.youtube.com/watch?v=qOvYAO93lUc",
+    "youtubeId": "qOvYAO93lUc",
     "subjectId": "crs",
     "level": "SHS 1",
     "term": 3,
@@ -7634,6 +10748,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "James 2:1–4 is cited in Ghana to challenge preferential treatment given to rich politicians in church seating over ordinary citizens."
         }
       ],
+"commonMistakes":         [
+            "Setting Paul and James as opponents over justification instead of reading the two answers as addressing different questions",
+            "Confusing Abraham's offering of Isaac with the sacrifice of the passover",
+            "Naming Rahab a prophetess rather than the hostess who sent the spies out by another way",
+            "Calling the tongue one of the four tamed classes of creatures",
+            "Making the anointing with oil a sacrament of healing apart from the prayer of faith",
+            "Dating Elijah's drought to three years exactly and dropping the additional six months"
+          ],
       "wassceExamTips": [
         "Common WASSCE question: Compare Paul and James. Paul addresses how we are saved before God; James addresses how our faith is verified before men."
       ],
@@ -7643,6 +10765,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate James' condemnation of social discrimination against the poor in religious assemblies"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-crs-14-1",
+            "title": "Three restraints, two proofs and three images of the tongue",
+            "problem": "James teaches that every man should be swift to hear, slow to speak and slow to wrath; that faith without works is dead, proving it by Abraham who offered Isaac and by Rahab who sent out the spies with another way; and that the tongue is an unquiet evil, illustrated by the bit in the horse's mouth, the rudder of a ship and the fire kindled by a small spark. Beasts, birds, creeping things and the creatures of the sea are tamed by man, but no man can tame the tongue. A candidate answers a 20-mark question on practical Christian living. Count the charges and the proofs. [20 marks]",
+            "stepByStepSolution": [
+              "Restraints in the charge on hearing and speaking: 3 rules, swift to hear, slow to speak and slow to wrath, so 1 duty of the Christian listener is made of 3 motions. [3 marks]",
+              "Proofs of living faith: Abraham and Rahab, so 2 examples stand behind 1 proposition, and both were justified by works and not by faith only. [4 marks]",
+              "Images of the tongue: the bit, the rudder and the spark, so 3 small things preach 1 danger, that the least member steers the greatest bodies. [4 marks]",
+              "Classes of creatures that men tame: beasts, birds, creeping things and things of the sea, so 4 kinds are mastered while 1 member of the body is not. [3 marks]",
+              "Partiality in the assembly was shown by 2 seats, the good place given to the man with the fine garment and the footstool assigned to the poor man's feet, so 2 seats judged 1 congregation. [3 marks]",
+              "Marks: 20 divided by 4 = 5 marks to each of hearers and doers, the tongue, the mercy that triumphs against judgment, and prayer for the sick. [3 marks]"
+            ],
+            "keyTakeaway": "James argues by counted examples: 2 lives as proof of works, 3 images of the tongue, and 2 seats that indict a whole church."
+          },
+          {
+            "id": "ex-crs-14-2",
+            "title": "Three and a half years of drought from one prayer",
+            "problem": "James bids the sick call for the elders of the church, that they may pray over them and anoint them with oil in the name of the Lord. To show that such prayer belongs to ordinary men he cites Elijah, a man of like passions, who prayed earnestly that it should not rain, and the heaven gave no rain three years and six months before the rain returned. A candidate answers a 15-mark question on prayer, patience and the tongue. Turn the drought into a sum. [15 marks]",
+            "stepByStepSolution": [
+              "The rite for the sick holds 1 summons to the elders, 1 prayer of faith and 1 anointing with oil, so 3 acts make 1 practice of the church. [2 marks]",
+              "Years of drought: 3 years and 6 months are 3 plus 0.5 = 3.5 years, and 1 prayer closed them. [4 marks]",
+              "The same period in months: 3.5 times 12 = 42 months without rain. [3 marks]",
+              "Share of a century of seasons spent in drought: 42 divided by 120 times 100 = 35 per cent of forty years. [2 marks]",
+              "The epistle adds the prophets taken for examples of suffering and patience, and the charge to confess faults and pray for one another, so the tongue that sinned must become the tongue that intercedes. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of patience, prayer and the government of the tongue. [2 marks]"
+            ],
+            "keyTakeaway": "The prayer that stopped the rain belonged to a man of like passions, and 42 months of drought answer the tongue's unruly weather."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-crs-topic-14",
       "topicId": "shs-crs-topic-14",
@@ -7694,6 +10846,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crs-topic-15",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Hm3_kjBAPak",
+    "youtubeId": "Hm3_kjBAPak",
     "subjectId": "crs",
     "level": "SHS 1",
     "term": 3,
@@ -7732,6 +10886,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Pentecostal and Charismatic Christianity is the largest religious segment in Ghana, placing heavy emphasis on the baptism of the Holy Spirit and spiritual gifts."
         }
       ],
+"commonMistakes":         [
+            "Numbering the fruit of the Spirit among the gifts of the Spirit, or the reverse",
+            "Treating tongues as the evidence of the baptism in the Spirit and so reading one gift as the whole chapter",
+            "Confusing Pentecost with the later Samaritan receiving of the Spirit through the apostles' hands",
+            "Counting the unities in Ephesians as seven sacraments",
+            "Describing the wind and the fire at Pentecost as the gift of tongues themselves",
+            "Ordering worship by personal preference and citing no chapter of Paul at all"
+          ],
       "wassceExamTips": [
         "In WASSCE CRS, remember that love (Agape) is UNCONDITIONAL, SELF-SACRIFICING, and ETERNAL—it never ends, while prophecies and tongues will cease."
       ],
@@ -7741,6 +10903,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate why Paul exalts Agape love above all charismatic spiritual gifts in 1 Corinthians 13"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-crs-15-1",
+            "title": "Nine gifts, one sound and the more excellent way",
+            "problem": "At Pentecost the waiting company of 120 heard a sound from heaven as of a rushing mighty wind and saw cloven tongues like as of fire. First Corinthians 12 names nine gifts, the word of wisdom, the word of knowledge, faith, the gifts of healing, miracles, prophecy, discerning of spirits, tongues and the interpretation of tongues, and the chapter that follows sets love above them all. A candidate answers a 20-mark question on the ministry of the Holy Spirit and the gifts in the early church. Count the works of the one Spirit. [20 marks]",
+            "stepByStepSolution": [
+              "Signs at the outpouring: 1 rushing wind and tongues as of fire, so 2 sensory signs, one heard and one seen, opened 1 event. [4 marks]",
+              "Gifts named in the chapter: 9 are listed, and all are divided to every man severally as the Spirit wills, so 1 distribution produced 9 works in the same assembly. [4 marks]",
+              "Share taken by tongues in the list: 1 divided by 9 times 100 = 11.1 per cent of the named gifts, which is why the chapter cannot be built on that gift alone. [3 marks]",
+              "Enduring graces at the close of the next chapter: 3 remain, faith, hope and charity, and 1 of the 3 is called the greatest, so 3 minus 1 = 2 stand below love. [3 marks]",
+              "Order in worship is bounded at two or three speakers, so 3 minus 2 = 1 voice above the minimum was permitted, and the rule ends that all things be done decently and in order. [4 marks]",
+              "Marks: 20 divided by 4 = 5 marks to each of the promise, the outpouring, the gifts and the fruit. [2 marks]"
+            ],
+            "keyTakeaway": "The gifts are nine and love is one: a list of nine works stands under a chapter that ranks one grace above them all."
+          },
+          {
+            "id": "ex-crs-15-2",
+            "title": "Nine gifts pressing on seven unities",
+            "problem": "First Corinthians 12 gives nine gifts for the profit of all, while Ephesians 4 counts the unities of the body as one body, one Spirit, one hope, one Lord, one faith, one baptism and one God. A candidate answering a 15-mark question must hold the diversity of gifts together with the oneness of the faith, and show how worship was ordered in the early church. Compare the two lists. [15 marks]",
+            "stepByStepSolution": [
+              "The nine gifts are said to be given for the profit of all, so 9 works serve 1 purpose, the good of the body rather than the honour of the possessor. [3 marks]",
+              "The unities in Ephesians are 7, one body, one Spirit, one hope, one Lord, one faith, one baptism and one God. [2 marks]",
+              "Gifts to each stated unity: 9 divided by 7 = 1.3, so the working life of the church is more varied than its confession. [3 marks]",
+              "Read as a percentage, 9 divided by 7 times 100 = 128.6 per cent, which shows the diversity exceeding the foundations by 28.6 per cent without breaking them. [2 marks]",
+              "Unity is not uniformity: the same chapter that divides the gifts commands the same mind and judgment, so the church is one in the essentials and varied in the service. [3 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of the Spirit's gift, the body's unity and the order of worship. [2 marks]"
+            ],
+            "keyTakeaway": "Nine working gifts on seven confessing unities: the church is richer in service than in statement, and that is order, not division."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-crs-topic-15",
       "topicId": "shs-crs-topic-15",
@@ -7792,6 +10984,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crs-topic-16",
+    "youtubeUrl": "https://www.youtube.com/watch?v=VWyYoxyTJE8",
+    "youtubeId": "VWyYoxyTJE8",
     "subjectId": "crs",
     "level": "SHS 1",
     "term": 3,
@@ -7832,6 +11026,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghanaian Christian churches conduct mandatory pre-marital counseling based on Ephesians 5 to build resilient Christian households."
         }
       ],
+"commonMistakes":         [
+            "Reading Ephesians 5 as a command to wives only and dropping the charge on the husband's love",
+            "Calling the Genesis text a description of polygyny when it names the twain becoming one flesh",
+            "Confusing the Ordinance marriage with customary marriage and their legal effects in Ghana",
+            "Treating the nurture and admonition of children as a school matter rather than a parental duty",
+            "Grounding the indissolubility of marriage on a national custom instead of on the founding text",
+            "Reducing Christian ethics in the home to rules of dress and entertainment"
+          ],
       "wassceExamTips": [
         "Note carefully: Paul tells husbands to LOVE their wives as Christ loved the Church—which means sacrificial, selfless love, not tyrannical domination."
       ],
@@ -7841,6 +11043,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate Christian ethical responses to marital instability and child neglect in contemporary Ghana"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-crs-16-1",
+            "title": "Three acts of marriage and two commands of mutual duty",
+            "problem": "The foundation text in Genesis gives three acts in the making of marriage, that a man should leave his father and mother, should cleave unto his wife, and that the twain should be one flesh. Ephesians 5 charges husbands to love their wives as their own bodies and wives to reverence their husbands, and parents are told to bring children up in the nurture and admonition of the Lord. In a household of 8 persons at table, 3 are guests. A candidate answers a 20-mark question on Christian marriage and family life. Count the acts and the duties. [20 marks]",
+            "stepByStepSolution": [
+              "Acts in the founding text: leaving, cleaving and becoming one flesh, so 3 movements are counted in the 1 word that makes the marriage. [4 marks]",
+              "The twain are called one flesh, so 2 persons are named in the making and 1 flesh in the result, and the teaching on divorce rests on that number. [3 marks]",
+              "Commands of mutual duty in the epistle: the husband loves and the wife reveres, so 2 charges answer 1 yoke, and neither is given the whole of the obedience. [4 marks]",
+              "Open hospitality in the household: 3 guests at a table of 8 give 3 divided by 8 times 100 = 37.5 per cent of the seats to persons outside the family. [3 marks]",
+              "The duty to parents is 1 commandment with a promise among the 10 words, so 1 divided by 10 times 100 = 10 per cent of the moral law is written on the household. [3 marks]",
+              "Marks: 20 divided by 4 = 5 marks to each of the foundation, mutual duty, the bringing up of children, and the witness of the home. [3 marks]"
+            ],
+            "keyTakeaway": "Marriage is built in three acts, left, cleaved and joined, and the two who were numbered become one that the text then refuses to divide."
+          },
+          {
+            "id": "ex-crs-16-2",
+            "title": "A wedding budget and six months of repayment",
+            "problem": "For a class discussion on Christian marriage in Ghana, take a couple whose ceremony costs 1,200 cedis against an annual income of 6,000 cedis, of which 900 cedis is still owing after the day, and 300 cedis was paid from savings. The debt is settled at 150 cedis a month. Three forms of marriage are recognised in Ghanaian life, the Christian or Ordinance ceremony, customary marriage and the Islamic rite. A candidate answers a 15-mark question on marriage, the household and social responsibility. Work out the budget. [15 marks]",
+            "stepByStepSolution": [
+              "The Ghanaian marriage is contracted in 3 recognised forms, so 3 ways of marrying stand under 1 law of conscience for the Christian citizen. [3 marks]",
+              "Share of a year's income spent on the ceremony: 1,200 divided by 6,000 times 100 = 20 per cent. [3 marks]",
+              "Paid on the day from savings: 1,200 minus 900 = 300 cedis. [2 marks]",
+              "Months to clear the balance: 900 divided by 150 = 6 months of the new household's pay kept for the wedding's debt. [3 marks]",
+              "The apostolic pattern is 1 love given to 1 church carried into 1 marriage, so the yoke is drawn from a love that first gave itself up. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of the vow, the household and the wider duty the family owes the nation. [2 marks]"
+            ],
+            "keyTakeaway": "A marriage that begins with 20 per cent of a year's income on one day and six months of debt teaches the class what counsel before the vow is worth."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-crs-topic-16",
       "topicId": "shs-crs-topic-16",
@@ -7892,6 +11124,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-crs-topic-17",
+    "youtubeUrl": "https://www.youtube.com/watch?v=aFAfGnHUpIk",
+    "youtubeId": "aFAfGnHUpIk",
     "subjectId": "crs",
     "level": "SHS 1",
     "term": 3,
@@ -7930,6 +11164,14 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "The Christian Council of Ghana and the Catholic Bishops' Conference regularly issue pastoral letters holding political leaders accountable to transparency and anti-corruption."
         }
       ],
+"commonMistakes":         [
+            "Teaching that paying taxes is optional for the believer because the kingdom is not of this world",
+            "Quoting the love of money as the curse on money itself and so condemning wages and profit",
+            "Confusing tribute with custom and losing one of the four duties in Romans 13",
+            "Reading the parable of the talents as a lesson in investment without the stewardship of what was entrusted",
+            "Calling stewardship an extra offering rather than the management of the whole of a Christian's income",
+            "Fighting corruption in speech while signing the receipt that the bribe bought"
+          ],
       "wassceExamTips": [
         "In WASSCE CRS, never misquote 1 Timothy 6:10 as \"Money is the root of all evil\". The correct biblical phrase is \"The LOVE of money is a root of all kinds of evils\"."
       ],
@@ -7939,6 +11181,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Apply Christian ethical principles of honesty and stewardship to eradicate bribery and corruption in Ghana"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-crs-17-1",
+            "title": "Four civic duties, one coin and a five per cent rate",
+            "problem": "Romans 13 charges the believer to render tribute, custom, fear and honour to whom they are due, and our Lord's answer on the tribute money asks whose image and superscription the coin bears. A trader whose takings are 4,000 cedis pays 200 cedis in rates. First Timothy warns that they who will be rich fall into temptation and a snare, and that the love of money is the root of all evil, while godliness has the promise of the life that now is and of that which is to come. A candidate answers a 20-mark question on civic responsibility, wealth and stewardship. [20 marks]",
+            "stepByStepSolution": [
+              "Duties rendered to authority in the passage: tribute, custom, fear and honour, so 1 plus 1 plus 1 plus 1 = 4 obligations owed the civil order. [4 marks]",
+              "The coin carried the image and the superscription of Caesar, so 1 piece that bore his own likeness settled 1 question, and the answer rendered to Caesar what was Caesar's and to God what was God's. [3 marks]",
+              "Rate as a share of takings: 200 divided by 4,000 times 100 = 5 per cent, so the paying of taxes is a measured duty and not a loss to be dodged. [4 marks]",
+              "The indictment in Timothy falls on the love of money rather than on the money itself, so 1 disordered affection is charged with a whole harvest of evils. [3 marks]",
+              "Godliness is promised both the present life and that which is to come, so 1 grace covers 2 lifetimes, and contentment with food and covering is set as the great gain. [3 marks]",
+              "Marks: 20 divided by 4 = 5 marks to each of obedience to authority, taxation, stewardship of wealth and the Christian crusade against corruption. [3 marks]"
+            ],
+            "keyTakeaway": "The citizen's account is scriptural and exact: 4 duties rendered, 5 per cent of takings paid, and the love rather than the object condemned."
+          },
+          {
+            "id": "ex-crs-17-2",
+            "title": "A bribe of two and a half per cent and a fourfold restitution",
+            "problem": "For the class case, an officer is offered 500 cedis to steer a tender of 20,000 cedis, and the winning bid is inflated by 1,000 cedis to cover the fee. Zacchaeus, on his conversion, gave half of his goods to the poor and restored fourfold to any man he had defrauded, and for the exercise take his estate at 8,000 cedis. A candidate answers a 15-mark question on stewardship and the crusade against corruption. Follow the money and the repentance. [15 marks]",
+            "stepByStepSolution": [
+              "Fee as a share of the contract: 500 divided by 20,000 times 100 = 2.5 per cent bought the award of the whole tender. [3 marks]",
+              "Price paid by the public for the same work: 1,000 divided by 20,000 times 100 = 5 per cent, so the fee returned itself at double the rate it was given. [3 marks]",
+              "Three losses stand in that single transaction, the public purse, the honest competitor and the officer's own conscience, so 1 fee spoiled 3 things. [3 marks]",
+              "Restitution was counted fourfold, so a taken 100 cedis became 100 times 4 = 400 cedis returned by the repentant man. [2 marks]",
+              "Almsgiving took half the estate, so 8,000 divided by 2 = 4,000 cedis passed to the poor out of the same changed hands. [2 marks]",
+              "Marks: 15 divided by 3 = 5 marks to each of the refusal of the bribe, the restitution made and the open hand that keeps the law of stewardship. [2 marks]"
+            ],
+            "keyTakeaway": "Corruption is arithmetic and repentance is arithmetic too: a 2.5 per cent fee cost the public 5 per cent, while Zacchaeus paid back four times what he took."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-crs-topic-17",
       "topicId": "shs-crs-topic-17",
@@ -7990,6 +11262,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-01",
+    "youtubeUrl": "https://www.youtube.com/watch?v=pnFmczzExaE",
+    "youtubeId": "pnFmczzExaE",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 1,
@@ -8023,6 +11297,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana is a sovereign State composed of multiple ethnic nations (Asante, Ewe, Dagomba, Ga) united under a single constitution."
         }
       ],
+"commonMistakes":         [
+            "Calling any territory with a flag and an anthem a state without testing the four marks.",
+            "Confusing nation with state, so a cultural people is described as a country.",
+            "Treating sovereignty and power as the same thing.",
+            "Leaving out the fourth mark, the capacity to enter into relations with other states.",
+            "Using government and state interchangeably when the government is only the machinery that runs the state."
+          ],
       "wassceExamTips": [
         "In WASSCE Section A, always name the four elements of a State: Population, Territory, Government, and Sovereignty."
       ],
@@ -8032,6 +11313,35 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Distinguish clearly between a State, a Nation, and a Society"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-01-1",
+            "title": "Testing the Four Marks of a State on Given Figures",
+            "problem": "A question gives these facts about Ghana: land area 238,535 square kilometres, population about 33,000,000 people living in 16 regions, a government that makes its own laws, and membership of the United Nations from 1958. Required: population density, average people per region, the number of regions a rule of 2,000,000 people each would need, the four marks matched to the data, the difference between a nation and a state, and the three senses in which government is studied. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Density = 33,000,000 divided by 238,535 = 138.3 people for every square kilometre. [4 marks]",
+              "Step 2: Average regional population = 33,000,000 divided by 16 = 2,062,500 people. [4 marks]",
+              "Step 3: A rule of 2,000,000 people per region would give 33,000,000 divided by 2,000,000 = 16.5, so 17 regions are needed, one more than the country has. [4 marks]",
+              "Step 4: Match the marks: permanent population is the 33,000,000, defined territory is the 238,535 square kilometres with recognised borders, government is the law-making machinery, and capacity for foreign relations is proved by the UN seat held since 1958. [7 marks]",
+              "Step 5: A nation is a people bound by shared history, language or culture, while a state is a legal order over a territory, and one state such as Ghana contains many nations, so the two words are not interchangeable. [4 marks]",
+              "Step 6: Government is studied three ways: as an institution with organs, as a process of making and enforcing binding decisions, and as an academic field that examines power, authority and the state. [2 marks]"
+            ],
+            "keyTakeaway": "Name all four marks of a state and prove each with a fact from the data, because a missing fourth mark costs the whole question."
+          },
+          {
+            "id": "ex-gov-01-2",
+            "title": "Which of Four Territories Qualifies as a State",
+            "problem": "A table gives four territories. A covers 90,000 square kilometres with 4,000,000 people, its own courts and its own foreign policy. B covers 12,000 square kilometres with 900,000 people whose defence and foreign affairs are run by another state. C covers 300 square kilometres with 30,000 people, governs itself internally and is recognised by 40 states. D is claimed by two movements with no settled boundary. Required: density of A and B, how many times larger A is than B, the population share of A among the three counted territories, a statehood judgement on each, and the mark B lacks. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Density of A = 4,000,000 divided by 90,000 = 44.4 people per square kilometre. [4 marks]",
+              "Step 2: Density of B = 900,000 divided by 12,000 = 75 people per square kilometre, so B is the more crowded territory although it is smaller. [4 marks]",
+              "Step 3: A is 90,000 divided by 12,000 = 7.5 times the land area of B. [4 marks]",
+              "Step 4: The three counted territories hold 4,000,000 plus 900,000 plus 30,000 = 4,930,000 people, and 4,000,000 divided by 4,930,000 times 100 = 81.1 per cent of them live in A. [4 marks]",
+              "Step 5: Judgement: A satisfies all four marks and is a state; B fails sovereignty because another state keeps its foreign relations; C is a state in fact although recognition is partial; D fails the defined-territory test. [4 marks]"
+            ],
+            "keyTakeaway": "Sovereignty is the mark that decides the case: a territory that cannot conduct its own foreign relations is not a full state however many people live there."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-01",
       "topicId": "shs-gov-topic-01",
@@ -8083,6 +11393,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-02",
+    "youtubeUrl": "https://www.youtube.com/watch?v=yutaV9BrE0A",
+    "youtubeId": "yutaV9BrE0A",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 1,
@@ -8116,6 +11428,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "A military junta relies on naked military power; a democratically elected Ghanaian government derives legal-rational authority and legitimacy."
         }
       ],
+"commonMistakes":         [
+            "Defining legitimacy as legality, when it is the people's belief that the ruler had the right to rule.",
+            "Confusing authority with force, so any order backed by police is called authority.",
+            "Writing that political culture and political socialisation mean the same thing.",
+            "Listing citizens' rights and forgetting the duties that pay for them.",
+            "Saying political socialisation stops at adulthood."
+          ],
       "wassceExamTips": [
         "Remember: Power + Legitimacy = Authority. Without legitimacy, power degenerates into raw coercion and dictatorship."
       ],
@@ -8125,6 +11444,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate the agents of political socialization and citizen duties in Ghana"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-02-1",
+            "title": "A Market Fee: Power, Authority and Legitimacy Counted",
+            "problem": "A district assembly with 60 members raised a market stall fee from GHS 12 to GHS 15 a month, and 39 members voted for the increase. A market of 800 stalls pays the new rate, and the traders pay while petitioning against it. Required: the rise in cedis and as a percentage, the votes as a percentage of the house, the votes needed for a two-thirds decision and the shortfall, yearly receipts at the new and old rates, and how power, authority and legitimacy appear in the case. [30 marks]",
+            "stepByStepSolution": [
+              "Step 1: The rise = 15 minus 12 = 3 cedis, so 3 divided by 12 times 100 = 25 per cent increase on the old fee. [5 marks]",
+              "Step 2: Support in the assembly = 39 divided by 60 times 100 = 65 per cent of the members. [4 marks]",
+              "Step 3: Two-thirds of the house is 60 times 2 divided by 3 = 40 votes, so 40 minus 39 = 1 vote short of a two-thirds decision. [5 marks]",
+              "Step 4: Receipts at the new rate = 800 times 15 = 12,000 cedis a month, and 12,000 times 12 = 144,000 cedis a year. [5 marks]",
+              "Step 5: At the old rate the market paid 800 times 12 = 9,600 cedis a month, or 9,600 times 12 = 115,200 cedis a year, so the increase adds 144,000 minus 115,200 = 28,800 cedis a year. [4 marks]",
+              "Step 6: In this case power is the assembly's ability to make traders pay, authority is the legal right given by the local government law to fix fees, and legitimacy is the traders' acceptance that the fee was fairly imposed, which the petition shows is weak even though the law was obeyed. [7 marks]"
+            ],
+            "keyTakeaway": "Distinguish the three ideas in every case: force compels, the law authorises, and belief legitimises."
+          },
+          {
+            "id": "ex-gov-02-2",
+            "title": "Measuring the Agents of Political Socialisation",
+            "problem": "In a survey 400 respondents named the main agent that shaped their political views: family 132, school 88, media 60, religious body 44, political party 28, peers 24 and workplace 24. Required: check that the table adds to 400, the percentage for family, school and media, the combined family and school share, the pie-chart angle for the three named agents and for the rest, and one recommendation for civic education. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Check the total: 132 plus 88 plus 44 plus 60 plus 28 plus 24 plus 24 = 400, so no answer was dropped. [3 marks]",
+              "Step 2: Family share = 132 divided by 400 times 100 = 33 per cent, and school share = 88 divided by 400 times 100 = 22 per cent. [5 marks]",
+              "Step 3: Media share = 60 divided by 400 times 100 = 15 per cent. [3 marks]",
+              "Step 4: Family and school together named 132 plus 88 = 220 people, so 220 divided by 400 times 100 = 55 per cent of influence sits in the home and the classroom. [4 marks]",
+              "Step 5: Pie angles: family 33 per cent of 360 = 118.8 degrees, school 22 per cent of 360 = 79.2 degrees, media 15 per cent of 360 = 54 degrees, and the four remaining agents share 360 minus 118.8 minus 79.2 minus 54 = 108 degrees. [6 marks]",
+              "Step 6: Recommendation: since party rallies moved only 28 of 400 respondents, which is 28 divided by 400 times 100 = 7 per cent, civic education should invest in teachers and parent programmes rather than in political adverts. [4 marks]"
+            ],
+            "keyTakeaway": "Report socialisation as shares of the sample, then draw the conclusion about where the state should spend its civic education money."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-02",
       "topicId": "shs-gov-topic-02",
@@ -8176,6 +11525,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-03",
+    "youtubeUrl": "https://www.youtube.com/watch?v=4cNUgIa9bX0",
+    "youtubeId": "4cNUgIa9bX0",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 1,
@@ -8210,6 +11561,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana operates a unitary presidential system under the 1992 Constitution with local assemblies under the Ministry of Local Government."
         }
       ],
+"commonMistakes":         [
+            "Confusing a unitary state with a federal one and giving Ghana as an example of federalism.",
+            "Calling a ceremonial president the head of government.",
+            "Treating a republic and a democracy as the same word.",
+            "Assuming every monarch rules, when most modern monarchs reign without governing.",
+            "Believing a presidential system has no parliament."
+          ],
       "wassceExamTips": [
         "Key contrast: In a presidential system, the president is NOT a member of parliament; in a parliamentary system, the prime minister MUST be an elected member of parliament."
       ],
@@ -8219,6 +11577,35 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Examine the characteristics of a republican state"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-03-1",
+            "title": "Comparing a Unitary Legislature with a Federal One",
+            "problem": "A question gives a unitary state with 16 regions and one legislature of 275 elected members, and a federation in which each of 16 states sends 3 senators to an upper house while the lower house holds 275 seats shared by population. Required: average members per region in the unitary state, the size of the upper house, total lawmakers in each country, the extra federal lawmakers as a percentage, the upper-house share of federal legislators, the weight gap between a small and a big state, and two consequences of the difference. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: In the unitary state 275 divided by 16 = 17.2 members per region on average. [4 marks]",
+              "Step 2: The federal upper house holds 16 times 3 = 48 senators. [4 marks]",
+              "Step 3: Federal lawmakers total 48 plus 275 = 323, which is 323 minus 275 = 48 more than the unitary house, or 48 divided by 275 times 100 = 17.5 per cent more legislators. [5 marks]",
+              "Step 4: The upper house is 48 divided by 323 times 100 = 14.9 per cent of all federal lawmakers. [4 marks]",
+              "Step 5: Weight per person: a state of 300,000 and a state of 6,000,000 each send 3 senators, so 6,000,000 divided by 300,000 = 20 times the population buys the same 3 votes. [4 marks]",
+              "Step 6: Two consequences: the federation guards small states through the senate but slows legislation because a bill must pass two chambers, while the unitary state can legislate quickly in one house and may override regional feeling. [4 marks]"
+            ],
+            "keyTakeaway": "Federalism shows in the second chamber, so prove it by counting senators per state rather than by naming regions."
+          },
+          {
+            "id": "ex-gov-03-2",
+            "title": "How Long Executives Last under the Two Systems",
+            "problem": "In an assumed constitution a president serves a 4-year term for at most two terms, assembly members serve 4 years and may stand again without limit, and a prime minister in the neighbouring parliamentary state stays only while commanding a majority. That state changed prime ministers 3 times over the same 8 years. Required: the maximum years a president may hold office, the end year if elected in 2024 and re-elected in 2028, the number of national elections in the span, the average years per prime minister, and two structural differences the figures reveal. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: The ceiling is 4 plus 4 = 8 years in the presidency. [3 marks]",
+              "Step 2: Elected in 2024 and re-elected in 2028, the second term closes in 2032, so the tenure runs 2032 minus 2024 = 8 years from the first mandate. [4 marks]",
+              "Step 3: In those 8 years the voters choose a president 2 times and an assembly 8 divided by 4 = 2 times, so 2 plus 2 = 4 national elections. [4 marks]",
+              "Step 4: Three changes of prime minister in the same 8 years give 8 divided by 3 = 2.7 years per leader, so the parliamentary executive turns over three times as fast as the fixed president. [4 marks]",
+              "Step 5: Two differences: a president's term cannot be shortened by the legislature, while a prime minister can be removed at any time by a vote of no confidence, and the presidential system combines head of state and head of government in one person whereas the parliamentary system separates them. [5 marks]"
+            ],
+            "keyTakeaway": "Compare systems by the fixed life of the executive, because that single rule explains stability and instability."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-03",
       "topicId": "shs-gov-topic-03",
@@ -8270,6 +11657,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-04",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Wm1Tf4LILPo",
+    "youtubeId": "Wm1Tf4LILPo",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 1,
@@ -8302,6 +11691,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "The Supreme Court of Ghana striking down unconstitutional executive directives demonstrates judicial review and checks and balances."
         }
       ],
+"commonMistakes":         [
+            "Describing the rule of law as rule by law, that is, whatever the government enacts.",
+            "Confusing separation of powers with a total ban on any overlap of personnel.",
+            "Using absolute majority and simple majority as if they meant the same count.",
+            "Claiming Parliament may reverse a court decision on a case already judged.",
+            "Listing fundamental rights without naming the remedy or the court that enforces them."
+          ],
       "wassceExamTips": [
         "Separation of powers and checks and balances go hand in hand: separation divides power; checks and balances prevents any single branch from becoming despotic."
       ],
@@ -8311,6 +11707,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Demonstrate how constitutional Checks and Balances operate in Ghana"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-04-1",
+            "title": "Counting the Votes that Different Majorities Require",
+            "problem": "A constitution like Ghana's requires a two-thirds majority of all members of a 275-seat Parliament to remove a president, an absolute majority of all members to pass an ordinary bill, and a simple majority of members present to carry a motion. A ruling party holds 158 seats. Required: the votes needed for removal, for an ordinary bill on a full house, for a motion when 31 members are absent, how far the party is over or under each line, and two dangers these fixed numbers create. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Removal needs 275 times 2 divided by 3 = 183.3 votes, so 184 members must vote for it, since a part of a person cannot vote. [5 marks]",
+              "Step 2: An absolute majority of the whole house needs 275 divided by 2 = 137.5, so 138 votes carry an ordinary bill. [4 marks]",
+              "Step 3: With 31 absent, those voting are 275 minus 31 = 244, and a simple majority of members present is 244 divided by 2 = 122 plus 1 = 123 votes. [4 marks]",
+              "Step 4: The party with 158 seats clears the ordinary line by 158 minus 138 = 20 votes but falls short of removal by 184 minus 158 = 26 votes. [5 marks]",
+              "Step 5: The rule of reading of these figures is that the counts bind majority and opposition alike, and a bill carried by 123 of 275 members is valid because the rule counts those present, not the whole house. [4 marks]",
+              "Step 6: Two dangers: a party approaching 184 seats can dangle removal to force discipline, and a bare 123 votes can pass a law that most representatives never faced, so an independent court is needed to police procedure. [3 marks]"
+            ],
+            "keyTakeaway": "State the base of every majority, all members or members present, before giving the number."
+          },
+          {
+            "id": "ex-gov-04-2",
+            "title": "An Ombudsman Office Measured by Its Own Records",
+            "problem": "A CHRAJ-style office received 2,600 complaints in a year: 900 on public administration, 650 on human rights, 520 on discrimination, 380 on children's welfare and 150 on other matters. It resolved 1,820 complaints and carried the rest forward. Required: the largest category as a percentage, the two largest together, the resolution and arrears rates, the years needed to clear the backlog at 455 settled a year, a check on the table, and what the office does for the rule of law. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Public administration took 900 divided by 2,600 times 100 = 34.6 per cent of the complaints. [4 marks]",
+              "Step 2: The two heaviest heads were 900 plus 650 = 1,550 cases, so 1,550 divided by 2,600 times 100 = 59.6 per cent. [4 marks]",
+              "Step 3: Resolution rate = 1,820 divided by 2,600 times 100 = 70 per cent, and the arrears were 2,600 minus 1,820 = 780 cases, which is 780 divided by 2,600 times 100 = 30 per cent. [5 marks]",
+              "Step 4: Clearing 780 carried-over cases at 455 settled a year needs 780 divided by 455 = 1.7 years, so the office sits about two years behind. [4 marks]",
+              "Step 5: Check: the other three heads held 2,600 minus 1,550 = 1,050 cases, or 1,050 divided by 2,600 times 100 = 40.4 per cent, and 59.6 plus 40.4 = 100, so the table balances. [4 marks]",
+              "Step 6: For the rule of law the office lets a citizen challenge an official without court fees, which makes equality before the law real, and it stays independent because its commissioner is appointed through Parliament rather than by the ministry being complained against. [4 marks]"
+            ],
+            "keyTakeaway": "Judge a rights institution by its clearance rate and backlog, not by the number of complaints it advertises."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-04",
       "topicId": "shs-gov-topic-04",
@@ -8362,6 +11788,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-05",
+    "youtubeUrl": "https://www.youtube.com/watch?v=LTVkmqkIS_s",
+    "youtubeId": "LTVkmqkIS_s",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 2,
@@ -8398,6 +11826,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana's Parliament exercises oversight by summoning Cabinet Ministers during Question Time to account for national policies."
         }
       ],
+"commonMistakes":         [
+            "Counting the Speaker as an elected member when the Speaker was not returned from a constituency.",
+            "Confusing the cabinet with the whole executive.",
+            "Writing that a bill becomes law at the third reading instead of on assent.",
+            "Naming the press the fourth estate and treating it as an organ of government.",
+            "Assuming the executive sits outside the legislature in a parliamentary system."
+          ],
       "wassceExamTips": [
         "The Legislature does not just pass laws; its control over the national budget (\"power of the purse\") is its most potent check on the executive."
       ],
@@ -8407,6 +11842,35 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Explain the constitutional safeguards that protect judicial independence in Ghana"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-05-1",
+            "title": "Counting the Members of the Three Organs",
+            "problem": "A question gives an assumed republic with 275 elected members of Parliament and a Speaker who is not one of them, a president, a vice-president, 19 ministers and 12 deputy ministers, a Council of State of 12 members, and a quorum of 10 members besides the presiding officer. Required: the total house strength, the number seated at cabinet, the share of the house that also sits in cabinet if 20 ministers are drawn from it, the quorum as a percentage of the house, the votes that carry a Council of State decision, and two legislative checks on the executive. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: House strength = 275 plus 1 = 276 members when the Speaker is not an MP. [4 marks]",
+              "Step 2: Cabinet seats = 1 plus 1 plus 19 plus 12 = 33 persons at the table. [5 marks]",
+              "Step 3: If 20 of them come from the house, then 20 divided by 276 times 100 = 7.2 per cent of the legislature also sits in the executive. [4 marks]",
+              "Step 4: The quorum is 10 plus 1 = 11 members, and 11 divided by 276 times 100 = 4.0 per cent, so a thin meeting can legally transact business. [5 marks]",
+              "Step 5: A Council of State decision needs 12 divided by 2 = 6 plus 1 = 7 of its 12 members voting in favour. [3 marks]",
+              "Step 6: Two checks: Parliament approves ministerial nominees and can withdraw its confidence, and it authorises spending through the Appropriation Act, while the courts may strike down an executive act as unconstitutional. [4 marks]"
+            ],
+            "keyTakeaway": "In a parliamentary system the executive is inside the legislature, so count overlap rather than separation when the question asks for composition."
+          },
+          {
+            "id": "ex-gov-05-2",
+            "title": "Reading a Division and the Stages a Bill Must Pass",
+            "problem": "A bill went through first reading, second reading, committee, report stage and third reading. At the final division 148 members voted for, 96 against and 31 were absent from a house of 275 seats. Required: check that the figures account for every seat, the votes cast, the winning share of those cast, the margin in votes and as a percentage, whether the bill met a two-thirds test of 184 votes, and the committee share the opposition would expect by strength. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: 148 plus 96 plus 31 = 275, which matches the seats, so every member is accounted for. [4 marks]",
+              "Step 2: Votes cast = 148 plus 96 = 244, so support was 148 divided by 244 times 100 = 60.7 per cent of those voting. [4 marks]",
+              "Step 3: The margin was 148 minus 96 = 52 votes, that is 52 divided by 244 times 100 = 21.3 per cent of the votes cast. [4 marks]",
+              "Step 4: The two-thirds line stands at 184 votes, so 184 minus 148 = 36 votes short, meaning the bill passes as ordinary legislation but not as a constitutional amendment requiring the higher threshold. [5 marks]",
+              "Step 5: On committees the opposition expects a share near its strength, and 96 divided by 275 times 100 = 34.9 per cent of the seats. [3 marks]"
+            ],
+            "keyTakeaway": "A division is read against the correct base, and the same vote can be enough for an ordinary bill and not enough for a constitutional one."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-05",
       "topicId": "shs-gov-topic-05",
@@ -8458,6 +11922,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-06",
+    "youtubeUrl": "https://www.youtube.com/watch?v=AmwjiefvCdw",
+    "youtubeId": "AmwjiefvCdw",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 2,
@@ -8496,6 +11962,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "The Trades Union Congress (TUC) in Ghana acts as a powerful pressure group negotiating national minimum wage with the government."
         }
       ],
+"commonMistakes":         [
+            "Calling a pressure group an illegal party.",
+            "Confusing a two-party system with a system that has only two parties registered.",
+            "Reporting a poll as public opinion without stating whose opinion was sampled.",
+            "Saying one-party rule is the same as nationalism.",
+            "Listing party functions without naming the recruitment of leaders."
+          ],
       "wassceExamTips": [
         "Crucial distinction: Political parties seek to CAPTURE power and form the government; pressure groups merely seek to INFLUENCE government decisions."
       ],
@@ -8505,6 +11978,35 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Examine methods used to measure public opinion and factors influencing public debate"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-06-1",
+            "title": "Reading an Opinion Poll as Party Support",
+            "problem": "A poll of 1,500 likely voters recorded support as follows: Party A 645, Party B 510, Party C 195 and 150 undecided. Required: the percentage of each party, the undecided share, a check that the percentages close at 100, the lead in respondents and in percentage points, the number of supporters Party A needs for an absolute majority of the sample, and two cautions about treating a poll as public opinion. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Party A = 645 divided by 1,500 times 100 = 43 per cent of the sample. [4 marks]",
+              "Step 2: Party B = 510 divided by 1,500 times 100 = 34 per cent, and Party C = 195 divided by 1,500 times 100 = 13 per cent. [5 marks]",
+              "Step 3: Undecided = 150 divided by 1,500 times 100 = 10 per cent, and 43 plus 34 plus 13 plus 10 = 100, so the table closes. [4 marks]",
+              "Step 4: A leads B by 645 minus 510 = 135 respondents, which is 43 minus 34 = 9 percentage points. [4 marks]",
+              "Step 5: An absolute majority of the sample needs 1,500 divided by 2 = 750 plus 1 = 751, so Party A must add 751 minus 645 = 106 supporters. [4 marks]",
+              "Step 6: Two cautions: the frame is likely voters rather than all adults, and a change in the wording of the question can move a party by more than the 9 points reported, so a poll measures an answer to a question, not a settled opinion. [4 marks]"
+            ],
+            "keyTakeaway": "Quote poll figures as shares of the sampled frame, and never call a lead of 9 points a mandate."
+          },
+          {
+            "id": "ex-gov-06-2",
+            "title": "A Pressure Group Counts Its Own Strength",
+            "problem": "An association of 8,500 traders opposed a market fee rise. It met the finance minister twice, spent GHS 12,000 on adverts, and collected 6,800 signatures from its members. Required: the signature rate among members, the number and share who did not sign, the advertising cost per signature, why the group cannot form a government however strong the petition, and three differences between a pressure group and a political party. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Signature rate = 6,800 divided by 8,500 times 100 = 80 per cent of members signed. [4 marks]",
+              "Step 2: Non-signatories = 8,500 minus 6,800 = 1,700 members, so 1,700 divided by 8,500 times 100 = 20 per cent stayed away from the petition. [4 marks]",
+              "Step 3: Cost per signature = 12,000 divided by 6,800 = 1.76 cedis of advertising for every signature gathered. [4 marks]",
+              "Step 4: The group fields no candidates, so 6,800 signatures cannot become seats, and taking government would require contesting elections, which a pressure group is not organised to do. [3 marks]",
+              "Step 5: Three differences: a party seeks power and nominates candidates while a group seeks to influence policy, a party speaks on many issues while a group defends one interest, and a party answers the electorate at the polls while a group answers its members at the ministry door. [5 marks]"
+            ],
+            "keyTakeaway": "Measure a pressure group by participation among its own members, and say plainly that influence is not power."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-06",
       "topicId": "shs-gov-topic-06",
@@ -8556,6 +12058,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-07",
+    "youtubeUrl": "https://www.youtube.com/watch?v=0YvWImF3q3Q",
+    "youtubeId": "0YvWImF3q3Q",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 2,
@@ -8590,6 +12094,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana's 2008 and 2000 presidential elections required a second-round runoff because no candidate gained the required 50% + 1 in the first round."
         }
       ],
+"commonMistakes":         [
+            "Confusing the franchise with the ballot paper.",
+            "Calling proportional representation a system that guarantees every party a seat.",
+            "Saying first-past-the-post needs 50 per cent of votes in a constituency.",
+            "Dating the Electoral Commission to independence instead of the 1992 Constitution.",
+            "Reporting turnout against registered voters when the question asks the voting-age base."
+          ],
       "wassceExamTips": [
         "In Ghana: Parliamentary elections use Simple Plurality (First-Past-The-Post); Presidential elections require an Absolute Majority (50% + 1 vote)."
       ],
@@ -8599,6 +12110,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Analyze the constitutional mandate, powers, and independence of the Electoral Commission of Ghana"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-07-1",
+            "title": "Same Votes, Different Seats: Comparing Two Electoral Systems",
+            "problem": "In a country of 100 seats an election gives Party A 45 per cent of the national vote and 60 constituencies, Party B 40 per cent and 38 constituencies, and Party C 15 per cent and 2 constituencies. Required: a check on the seat total, each party's seat share, the surplus or deficit of seats against votes for each party, the seats each party would hold under proportional representation, and two reasons the systems differ. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Seat check: 60 plus 38 plus 2 = 100, so every seat is accounted for. [3 marks]",
+              "Step 2: Seat shares: A holds 60 divided by 100 times 100 = 60 per cent, B holds 38 per cent and C holds 2 per cent. [5 marks]",
+              "Step 3: A wins 60 minus 45 = 15 seats above its vote share, which is 15 divided by 45 times 100 = 33.3 per cent more seats than votes, while B falls 40 minus 38 = 2 seats short, a loss of 2 divided by 40 times 100 = 5 per cent. [5 marks]",
+              "Step 4: C is punished hardest: 15 minus 2 = 13 points of vote produce nothing, and its seats are only 2 divided by 15 times 100 = 13.3 per cent of what its votes deserved. [5 marks]",
+              "Step 5: Under proportional representation the parties would take 45, 40 and 15 seats, and 45 plus 40 plus 15 = 100, which also fills the house exactly. [4 marks]",
+              "Step 6: Two reasons: first-past-the-post turns local pluralities into whole seats and wastes votes in safe areas, while PR counts every vote across the country but weakens the link between a member and a constituency. [3 marks]"
+            ],
+            "keyTakeaway": "Compare vote share with seat share and report the gap, because that gap is the whole argument between the two systems."
+          },
+          {
+            "id": "ex-gov-07-2",
+            "title": "From Voting Age to Valid Votes in One District",
+            "problem": "A district has 240,000 people of voting age, of whom 186,000 were registered. On election day 148,800 ballots were cast and 4,464 were spoilt. Required: the registration rate, the number left off the register and its percentage, turnout on the registered base, turnout on the voting-age base, the valid votes and the spoilt rate, and two ways to raise participation. [22 marks]",
+            "stepByStepSolution": [
+              "Step 1: Registration = 186,000 divided by 240,000 times 100 = 77.5 per cent of those of voting age. [4 marks]",
+              "Step 2: Unregistered = 240,000 minus 186,000 = 54,000 people, so 54,000 divided by 240,000 times 100 = 22.5 per cent never got a card. [4 marks]",
+              "Step 3: Turnout on the registered base = 148,800 divided by 186,000 times 100 = 80 per cent. [4 marks]",
+              "Step 4: Turnout on the voting-age base = 148,800 divided by 240,000 times 100 = 62 per cent, so 80 minus 62 = 18 points of the gap comes from people who never registered. [4 marks]",
+              "Step 5: Valid votes = 148,800 minus 4,464 = 144,336, and the spoilt rate = 4,464 divided by 148,800 times 100 = 3 per cent. [4 marks]",
+              "Step 6: Two remedies: take registration to schools, markets and motor parks with mobile kits, and keep the register open for additions between elections rather than freezing it at the writ. [2 marks]"
+            ],
+            "keyTakeaway": "Name the base of every turnout figure, because the same election can show 80 per cent or 62 per cent participation."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-07",
       "topicId": "shs-gov-topic-07",
@@ -8650,6 +12191,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-08",
+    "youtubeUrl": "https://www.youtube.com/watch?v=XPerQE5OfXA",
+    "youtubeId": "XPerQE5OfXA",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 3,
@@ -8688,6 +12231,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Sir Gordon Guggisberg is remembered not only for his 1925 constitution but for founding Achimota School, Korle Bu Hospital, and Takoradi Harbour."
         }
       ],
+"commonMistakes":         [
+            "Confusing the Clifford and Burns constitutions.",
+            "Writing that the 1946 Burns Constitution introduced the prime minister.",
+            "Giving the Coussey Committee as a constitution made by the British.",
+            "Naming the 1925 constitution undemocratic without noting its elected members.",
+            "Forgetting that every constitution before 1957 reserved emergency powers to the Governor."
+          ],
       "wassceExamTips": [
         "Remember the key constitutional dates: 1925 introduced elective principle; 1946 created first African majority; 1954 gave an all-African cabinet."
       ],
@@ -8697,6 +12247,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Analyze the historical breakthrough of the Burns Constitution of 1946"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-08-1",
+            "title": "Timing the Constitutions and Measuring African Representation",
+            "problem": "The constitutions are Clifford 1916, Guggisberg 1925, Burns 1946, Coussey 1951 and the 1954 constitution, with independence in 1957. Syllabus figures for elected African members are 3 in 1916, 6 in 1925, 18 in 1946, 38 in 1951 and 104 in 1954. Required: three intervals, the total span, the average years per constitution, the multiple of growth in elected membership, the percentage rise between 1946 and 1951, and two conclusions. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: 1925 minus 1916 = 9 years between Clifford and Guggisberg, and 1946 minus 1925 = 21 years to the Burns Constitution. [4 marks]",
+              "Step 2: 1951 minus 1946 = 5 years to the Coussey constitution, 1954 minus 1951 = 3 years to the next, and 1957 minus 1954 = 3 years to independence. [4 marks]",
+              "Step 3: The whole run is 1957 minus 1916 = 41 years, and 41 divided by 5 constitutions = 8.2 years per constitution. [4 marks]",
+              "Step 4: Elected membership multiplied 104 divided by 3 = 34.7 times between 1916 and 1954. [4 marks]",
+              "Step 5: Between 1946 and 1951 the seats rose 38 minus 18 = 20, so the increase was 20 divided by 18 times 100 = 111.1 per cent. [4 marks]",
+              "Step 6: Two conclusions: reform quickened as colonial pressure grew, and the demand was for the elected principle rather than any representation, because nominated members and the Governor's reserve powers remained intact until 1957. [5 marks]"
+            ],
+            "keyTakeaway": "Arrange the constitutions by year, then prove the story with the growth of elected seats rather than with adjectives."
+          },
+          {
+            "id": "ex-gov-08-2",
+            "title": "Scoring Four Constitutions on Three Tests",
+            "problem": "A class grid scores each constitution out of 10 on African participation, ministerial responsibility and width of the franchise: Clifford 2, 0, 2; Guggisberg 4, 0, 3; Burns 7, 3, 6; and the 1954 constitution 9, 8, 8. Required: the total for each constitution, each total as a percentage of the 30 available, the improvement from Burns to 1954, which constitution counts as the apprenticeship one, and one caution about the method. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Clifford scored 2 plus 0 plus 2 = 4 marks out of 30. [3 marks]",
+              "Step 2: The other totals are 4 plus 0 plus 3 = 7 for Guggisberg, 7 plus 3 plus 6 = 16 for Burns, and 9 plus 8 plus 8 = 25 for 1954. [4 marks]",
+              "Step 3: As percentages: 4 divided by 30 times 100 = 13.3 per cent, 7 divided by 30 times 100 = 23.3 per cent, 16 divided by 30 times 100 = 53.3 per cent, and 25 divided by 30 times 100 = 83.3 per cent. [5 marks]",
+              "Step 4: The jump from Burns to 1954 was 25 minus 16 = 9 marks, an improvement of 9 divided by 16 times 100 = 56.3 per cent. [4 marks]",
+              "Step 5: On the grid the 1954 constitution is the apprenticeship one, since it is the first to combine a large elected house with ministers answerable to that house. [2 marks]",
+              "Step 6: Caution: the scores are a classroom device, and a constitution scoring 25 may still leave defence, currency and emergency powers in the Governor's hands. [2 marks]"
+            ],
+            "keyTakeaway": "When a question asks which constitution mattered most, build one argument from comparable points on the same tests."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-08",
       "topicId": "shs-gov-topic-08",
@@ -8748,6 +12328,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-09",
+    "youtubeUrl": "https://www.youtube.com/watch?v=NuaHeV2FixY",
+    "youtubeId": "NuaHeV2FixY",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 3,
@@ -8786,6 +12368,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Citizens petition CHRAJ to investigate public officials for conflict of interest and human rights violations."
         }
       ],
+"commonMistakes":         [
+            "Dating the start of the Fourth Republic to the referendum rather than to the sworn government of January 1993.",
+            "Calling the Directive Principles of State Policy enforceable in court like Chapter 5 rights.",
+            "Confusing the Council of State with the Cabinet.",
+            "Saying CHRAJ is a court.",
+            "Describing the 1992 Constitution as amendable by simple majority like any ordinary law."
+          ],
       "wassceExamTips": [
         "Article 78(1) is a frequent WASSCE question: it mandates that the majority of ministers of state must come from within Members of Parliament."
       ],
@@ -8795,6 +12384,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate the local government decentralization structure (MMDAs) and its challenges"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-09-1",
+            "title": "Working Out the 1992 Referendum Result",
+            "problem": "Figures given for the 1992 referendum are 5,500,000 registered voters, 3,100,000 ballots cast, of which 2,850,000 voted yes and 250,000 voted no. Required: turnout as a percentage of the register, a check that the votes are fully counted, the yes share of valid votes, the yes share of the whole register, the winning margin in votes and as a percentage of valid votes, and three features of the 1992 Constitution. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Turnout = 3,100,000 divided by 5,500,000 times 100 = 56.4 per cent of the register voted. [4 marks]",
+              "Step 2: Check: 2,850,000 plus 250,000 = 3,100,000, which equals the ballots cast, so no spoilt ballot is hidden in these simplified figures. [4 marks]",
+              "Step 3: Yes share of valid votes = 2,850,000 divided by 3,100,000 times 100 = 91.9 per cent. [4 marks]",
+              "Step 4: Yes share of the register = 2,850,000 divided by 5,500,000 times 100 = 51.8 per cent, so just over half the registered voters approved the law. [4 marks]",
+              "Step 5: The margin was 2,850,000 minus 250,000 = 2,600,000 votes, which is 2,600,000 divided by 3,100,000 times 100 = 83.9 per cent of valid votes. [5 marks]",
+              "Step 6: Three features: the supremacy of the Constitution with the Supreme Court as its guardian, a bill of rights in Chapter 5 backed by CHRAJ, and decentralised local government with district assemblies, together with a Council of State to counsel the President. [4 marks]"
+            ],
+            "keyTakeaway": "A constitution approved by 92 per cent of those voting may rest on only 52 per cent of the register, so state the base before praising the mandate."
+          },
+          {
+            "id": "ex-gov-09-2",
+            "title": "Testing an Amendment against the Two Thresholds",
+            "problem": "A bill to amend an entrenched provision must win two-thirds of all 275 members and then pass a referendum at which not less than 40 per cent of registered voters take part and not less than 75 per cent of those voting approve. In the case given, 246 members voted in the division and 190 of them supported the bill; in the referendum 12,000,000 were registered, 5,600,000 voted and 4,300,000 approved. Required: the two-thirds line and whether the bill cleared it, the support share of the members voting, the participation line and the surplus, the approval line and the margin, the approval share of those voting, whether the amendment passes, and why two tests exist. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Two-thirds of the house is 275 times 2 divided by 3 = 183.3, so 184 votes were needed and 190 minus 184 = 6 votes clear. [3 marks]",
+              "Step 2: Of the members voting, support was 190 divided by 246 times 100 = 77.2 per cent. [4 marks]",
+              "Step 3: The participation line is 40 per cent of 12,000,000 = 4,800,000 voters, and 5,600,000 voted, so the surplus was 5,600,000 minus 4,800,000 = 800,000 ballots. [5 marks]",
+              "Step 4: The approval line is 75 per cent of 5,600,000 = 4,200,000, and 4,300,000 approved, so the margin was 4,300,000 minus 4,200,000 = 100,000 votes. [5 marks]",
+              "Step 5: Approval of those voting = 4,300,000 divided by 5,600,000 times 100 = 76.8 per cent, which is 76.8 minus 75 = 1.8 points above the line. [4 marks]",
+              "Step 6: The amendment therefore passes both tests, and the two tests exist so that an organised minority cannot rewrite entrenched provisions on a quiet turnout. [4 marks]"
+            ],
+            "keyTakeaway": "Entrenched provisions are protected twice, by the size of the legislative vote and by the size of the turnout, so check both."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-09",
       "topicId": "shs-gov-topic-09",
@@ -8846,6 +12465,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-10",
+    "youtubeUrl": "https://www.youtube.com/watch?v=haxvuGnmOP8",
+    "youtubeId": "haxvuGnmOP8",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 3,
@@ -8883,6 +12504,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana Armed Forces peacekeepers are deployed globally under UN blue helmets, earning international acclaim for professionalism."
         }
       ],
+"commonMistakes":         [
+            "Confusing the OAU with the AU and giving them the same founding year.",
+            "Describing non-alignment as neutrality in the face of aggression.",
+            "Listing international organisations without naming Ghana's own role.",
+            "Calling ECOWAS a customs union when it is still short of that.",
+            "Dating Ghana's UN membership to 1957 instead of March 1958."
+          ],
       "wassceExamTips": [
         "Remember Kofi Annan, a distinguished Ghanaian diplomat, won the Nobel Peace Prize in 2001 alongside the United Nations."
       ],
@@ -8892,6 +12520,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Assess Ghana's leadership in regional integration through ECOWAS and the African Union"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-10-1",
+            "title": "Membership Arithmetic of the Bodies Ghana Belongs To",
+            "problem": "Given: Ghana joined the United Nations in 1958, the OAU was founded in 1963 with 32 members, the AU now counts 55 members, ECOWAS has 15 member states, the Commonwealth has 56 members of which 21 are African, and the continent holds 54 recognised states. The ECOWAS Treaty was signed in 1975 and the AU replaced the OAU in 2002. Required: ECOWAS as a share of African states, the odd member in the AU count, the African share of the Commonwealth, three date intervals, and two principles of Ghana's foreign policy. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: ECOWAS covers 15 divided by 54 times 100 = 27.8 per cent of the continent's states. [4 marks]",
+              "Step 2: The AU counts 55 members against 54 recognised states, so 55 minus 54 = 1 more member than states, because the Union also admits the Sahrawi Arab Democratic Republic. [4 marks]",
+              "Step 3: Africans are 21 divided by 56 times 100 = 37.5 per cent of the Commonwealth's members. [4 marks]",
+              "Step 4: 1963 minus 1958 = 5 years between Ghana joining the UN and the OAU's founding, and 2026 minus 1958 = 68 years of Ghana at the United Nations. [4 marks]",
+              "Step 5: 1975 minus 1963 = 12 years from the OAU to the ECOWAS Treaty, and 2002 minus 1975 = 27 years from that treaty to the AU, while 2002 minus 1963 = 39 years separated the two African bodies. [5 marks]",
+              "Step 6: Two principles: Ghana settles disputes through collective bodies rather than alone, and it keeps non-alignment, weighing issues on merit instead of joining a power bloc, which is why it has hosted liberation movements and peacekeeping commands at once. [4 marks]"
+            ],
+            "keyTakeaway": "Locate Ghana in each body by year and by share of members, then show that support for collective security is the thread running through them."
+          },
+          {
+            "id": "ex-gov-10-2",
+            "title": "Sharing a Regional Standby Force",
+            "problem": "A table of a regional standby force gives troop contributions: Nigeria 900, Ghana 750, Senegal 400, Mali 300, Togo 150 and other contributors 300. Required: check the total stated as 2,800, Ghana's percentage, the combined share of the two largest contributors, the average per line in the table, how far Nigeria exceeds Ghana, and two benefits Ghana gains by contributing troops. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Total check: 900 plus 750 plus 400 plus 300 plus 150 plus 300 = 2,800 troops, which matches the figure stated. [3 marks]",
+              "Step 2: Ghana supplies 750 divided by 2,800 times 100 = 26.8 per cent of the force. [4 marks]",
+              "Step 3: The two largest together provide 900 plus 750 = 1,650 troops, so 1,650 divided by 2,800 times 100 = 58.9 per cent of the force comes from two states. [4 marks]",
+              "Step 4: Spread over the six lines of the table the average is 2,800 divided by 6 = 466.7 troops per contributor. [4 marks]",
+              "Step 5: Nigeria sends 900 minus 750 = 150 more than Ghana, so its quota is 900 divided by 750 = 1.2 times Ghana's contribution. [2 marks]",
+              "Step 6: Two benefits: a large quota buys Ghana seats in the command and shapes training standards, and keeping instability inside the region protects Ghana's own borders and trade routes better than any protest note could. [3 marks]"
+            ],
+            "keyTakeaway": "Influence in a regional force follows the troop quota, so connect the percentage contributed to the office held."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-10",
       "topicId": "shs-gov-topic-10",
@@ -8943,6 +12601,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-11",
+    "youtubeUrl": "https://www.youtube.com/watch?v=UMAyHO8MGp0",
+    "youtubeId": "UMAyHO8MGp0",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 2,
@@ -8975,6 +12635,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghanaian civil servants working in the Ministries enclave at Accra implement national policies while remaining neutral during presidential transitions."
         }
       ],
+"commonMistakes":         [
+            "Confusing the civil service with the public service as a whole.",
+            "Calling the civil service partisan because ministers change it.",
+            "Naming a ministry a public corporation.",
+            "Describing anonymity as secrecy from Parliament.",
+            "Listing the causes of red tape without giving one remedy."
+          ],
       "wassceExamTips": [
         "Ministerial Responsibility: The Minister is politically answerable to Parliament for errors made by civil servants in the ministry, upholding the principle of anonymity."
       ],
@@ -8984,6 +12651,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate administrative bottlenecks (red tape, corruption) and civil service reforms in Ghana"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-11-1",
+            "title": "Staffing and Pay in One Ministry",
+            "problem": "A ministry employs 2,400 staff: 30 per cent professional officers, 45 per cent clerical, 15 per cent technical and the remainder service staff. Its wage bill is GHS 96,000,000 a year. All staff receive a 12 per cent rise, and 180 retiring officers are replaced at entry pay 20 per cent below the average salary. Required: the headcount of each class, the service staff, the professional to clerical ratio, the new wage bill, the saving made by the replacements and that saving as a percentage of the new bill, and two features of the civil service illustrated. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Headcounts: professional 30 per cent of 2,400 = 720, clerical 45 per cent of 2,400 = 1,080, and technical 15 per cent of 2,400 = 360. [5 marks]",
+              "Step 2: Service staff = 2,400 minus 720 minus 1,080 minus 360 = 240 employees. [3 marks]",
+              "Step 3: Ratio: 1,080 divided by 720 = 1.5 clerical officers for every professional officer. [3 marks]",
+              "Step 4: The rise adds 12 per cent of 96,000,000 = 11,520,000 cedis, so the new bill is 96,000,000 plus 11,520,000 = 107,520,000 cedis. [6 marks]",
+              "Step 5: Average pay was 96,000,000 divided by 2,400 = 40,000 cedis, an entrant costs 40,000 minus 20 per cent = 32,000 cedis, so the 180 replacements save 180 times 8,000 = 1,440,000 cedis, which is 1,440,000 divided by 107,520,000 times 100 = 1.3 per cent of the new bill. [5 marks]",
+              "Step 6: Two features: permanence, since the officers remain when the minister is replaced, and neutrality, since the same staff serve whichever party forms the government, while advice is issued in the ministry's name, which is anonymity. [3 marks]"
+            ],
+            "keyTakeaway": "Follow one figure, the wage bill, through every change, because civil service questions are usually about cost and continuity at once."
+          },
+          {
+            "id": "ex-gov-11-2",
+            "title": "The Accounts of a Loss-Making Water Board",
+            "problem": "A public corporation has annual revenue of GHS 720,000,000 and operating costs of GHS 840,000,000. The government pays the gap as a subvention. The board employs 9,000 staff and serves 3,000,000 customers. Required: the deficit, the deficit as a percentage of revenue, the subvention per customer, revenue per employee, the revenue per employee left after the loss, and three characteristics of a public corporation. [22 marks]",
+            "stepByStepSolution": [
+              "Step 1: Deficit = 840,000,000 minus 720,000,000 = 120,000,000 cedis. [4 marks]",
+              "Step 2: As a share of revenue, 120,000,000 divided by 720,000,000 times 100 = 16.7 per cent. [4 marks]",
+              "Step 3: Subvention per customer = 120,000,000 divided by 3,000,000 = 40 cedis a year for every connection. [3 marks]",
+              "Step 4: Revenue per employee = 720,000,000 divided by 9,000 = 80,000 cedis. [3 marks]",
+              "Step 5: Loss per employee = 120,000,000 divided by 9,000 = 13,333 cedis, so 80,000 minus 13,333 = 66,667 cedis of revenue per worker is what the loss still leaves. [4 marks]",
+              "Step 6: Three characteristics: it is created by a statute rather than registered as a company, it is financed partly from its own sales and partly from state subvention, and it is run by a board whose members are appointed by the President and answerable to Parliament. [4 marks]"
+            ],
+            "keyTakeaway": "Convert a corporation's loss into cedis per customer, and the political argument about tariffs becomes measurable."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-11",
       "topicId": "shs-gov-topic-11",
@@ -9035,6 +12732,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-12",
+    "youtubeUrl": "https://www.youtube.com/watch?v=yg9ag39rls8",
+    "youtubeId": "yg9ag39rls8",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 2,
@@ -9075,6 +12774,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Residents pay building permit fees and property rates directly to their local Municipal Assembly (e.g. Ayawaso West Municipal Assembly in Accra)."
         }
       ],
+"commonMistakes":         [
+            "Confusing the District Chief Executive with the elected assembly chairperson.",
+            "Calling regional assemblies the top tier of Ghana's local government structure.",
+            "Giving the Common Fund percentage without saying what it is a percentage of.",
+            "Describing decentralisation as the same as deconcentration.",
+            "Listing challenges of local government without naming the dependence on central transfers."
+          ],
       "wassceExamTips": [
         "Under Article 252 of the 1992 Constitution, Parliament must allocate NOT LESS THAN 5% of total national revenue annually to the DACF."
       ],
@@ -9084,6 +12790,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate the role of the District Assemblies Common Fund (DACF) and IGF in community development"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-12-1",
+            "title": "Sharing the Common Fund with 260 Assemblies",
+            "problem": "Assume national revenue for the year is GHS 60,000,000,000, that the District Assembly Common Fund takes 5 per cent of it, and that 90 per cent of the Fund goes to the district assemblies, of which there are 260. One assembly has 60 members, and the President may appoint not more than one third of them. That assembly raised GHS 1,000,000 of its own revenue in the year. Required: the Fund, the assemblies' share, the average grant per assembly, the elected and appointed membership, the local revenue as a percentage of the grant, and two problems of the system. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: The Fund = 5 per cent of 60,000,000,000 = 3,000,000,000 cedis. [4 marks]",
+              "Step 2: The assemblies receive 90 per cent of 3,000,000,000 = 2,700,000,000 cedis. [4 marks]",
+              "Step 3: Average grant = 2,700,000,000 divided by 260 = 10,384,615 cedis, so about 10.4 million cedis reaches each assembly. [5 marks]",
+              "Step 4: Appointed members: one third of 60 is 60 times 1 divided by 3 = 20, so at least 60 minus 20 = 40 seats are filled by election. [4 marks]",
+              "Step 5: The appointees are 20 divided by 60 times 100 = 33.3 per cent of the house, and the elected share is 100 minus 33.3 = 66.7 per cent. [4 marks]",
+              "Step 6: Self-raised revenue was 1,000,000 divided by 10,400,000 times 100 = 9.6 per cent of the grant, which shows the two standing problems: assemblies live on central transfers, and because the District Chief Executive is appointed by the President, the executive answers upward rather than to the assembly that is supposed to control it. [4 marks]"
+            ],
+            "keyTakeaway": "Decentralisation is measured by the share of revenue a local body raises itself, and 9.6 per cent says the centre still holds the purse."
+          },
+          {
+            "id": "ex-gov-12-2",
+            "title": "Counting the Sub-District Layer of One Region",
+            "problem": "A region has 26 districts: 1 metropolis, 6 municipalities and 19 ordinary districts. The metropolis is divided into 12 sub-district councils, each municipality into 5, and each ordinary district into 4. Required: sub-districts in the municipalities, in the ordinary districts, the regional total with a check on the district count, the average per district, the metropolis share of sub-districts, and two conditions that make the third tier work. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Municipal sub-districts = 6 times 5 = 30 councils. [3 marks]",
+              "Step 2: Ordinary district sub-districts = 19 times 4 = 76 councils. [3 marks]",
+              "Step 3: The region therefore has 12 plus 30 plus 76 = 118 sub-district councils over 1 plus 6 plus 19 = 26 districts, which matches the district count given. [5 marks]",
+              "Step 4: Average depth = 118 divided by 26 = 4.5 sub-district councils for every district. [3 marks]",
+              "Step 5: The metropolis alone holds 12 divided by 118 times 100 = 10.2 per cent of the sub-district councils in the region. [3 marks]",
+              "Step 6: Two conditions: the third tier must receive its own allocation, because a council with no funds cannot enforce a byelaw, and its members must be elected locally rather than nominated, or the structure adds paperwork instead of participation. [3 marks]"
+            ],
+            "keyTakeaway": "Count the tiers and the money that reaches each one, because a structure without funds is administration, not decentralisation."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-12",
       "topicId": "shs-gov-topic-12",
@@ -9135,6 +12871,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-13",
+    "youtubeUrl": "https://www.youtube.com/watch?v=hDTNmOhhecA",
+    "youtubeId": "hDTNmOhhecA",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 3,
@@ -9174,6 +12912,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Recent military coups in Mali, Burkina Faso, and Niger highlight the fragility of democratic governance across the West African sub-region."
         }
       ],
+"commonMistakes":         [
+            "Listing only political causes of coups and ignoring the army's own corporate interests.",
+            "Confusing a junta with a transitional government.",
+            "Dating every Ghanaian coup to 1966.",
+            "Writing that military rule always ends quickly.",
+            "Naming demerits of military rule without mentioning the suspension of the constitution."
+          ],
       "wassceExamTips": [
         "In WASSCE Government: Highlight that military officers lack training in civil governance and economics, which is why military regimes usually fail to improve economies."
       ],
@@ -9183,6 +12928,35 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate why military juntas frequently fail to resolve long-term economic crises"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-13-1",
+            "title": "Counting Coups across Half a Century",
+            "problem": "A table in a question lists 12 successful coups in one sub-region between 1963 and 2020, and gives the average junta as lasting 4 years before handing over. Required: the length of the span, the average interval between takeovers, coups per decade, the total years of military government on the 4-year average, that total as a percentage of the span, two causes of coups and two characteristics of juntas. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: The span is 2020 minus 1963 = 57 years. [3 marks]",
+              "Step 2: Average interval = 57 divided by 12 = 4.75 years between successful takeovers. [4 marks]",
+              "Step 3: In a decade the sub-region saw 12 divided by 57 times 10 = 2.1 coups. [4 marks]",
+              "Step 4: Years under soldierly government = 12 times 4 = 48 years on the stated average. [4 marks]",
+              "Step 5: That is 48 divided by 57 times 100 = 84.2 per cent of the whole 57-year span, so on these figures army rule was the normal form of government in the period. [5 marks]",
+              "Step 6: Two causes: weak, divided and discredited parties invited officers to intervene, and armies were the best-organised national institutions in poor states. Two characteristics of juntas: rule by decree with the constitution suspended and political activity banned, and government by appointed officers, usually with a promised return to civil rule written into a transition charter. [5 marks]"
+            ],
+            "keyTakeaway": "Prove the instability claim with years of junta rule as a percentage of the span, not with the number of coup attempts."
+          },
+          {
+            "id": "ex-gov-13-2",
+            "title": "What a Truth Commission's Petitions Show",
+            "problem": "A commission received 5,400 petitions about an 11-year military period from 1981 to 1992: 2,160 on detention without trial, 1,350 on property seized, 900 on unlawful killing and the rest under other heads. The population then was 12,000,000. Required: the percentage for each of the three named heads, the fourth head with a check that the four close at 100, petitions per year of the regime, petitions per 1,000 people, and two demerits of military rule the table exposes. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Detention petitions = 2,160 divided by 5,400 times 100 = 40 per cent of all petitions. [4 marks]",
+              "Step 2: Seized property = 1,350 divided by 5,400 times 100 = 25 per cent, and unlawful killing = 900 divided by 5,400 times 100 = 16.7 per cent. [4 marks]",
+              "Step 3: The other heads held 5,400 minus 2,160 minus 1,350 minus 900 = 990 petitions, which is 990 divided by 5,400 times 100 = 18.3 per cent, and 40 plus 25 plus 16.7 plus 18.3 = 100, so the table closes. [4 marks]",
+              "Step 4: Spread over 1992 minus 1981 = 11 years the commissions drew 5,400 divided by 11 = 490.9 petitions a year, and 5,400 divided by 12,000,000 times 1,000 = 0.45 petitions per 1,000 people. [4 marks]",
+              "Step 5: Two demerits exposed: suspending the constitution left citizens no court to sue, since 40 per cent of petitions complain of detention without trial, and rule by decree stopped consultation, so programmes began with an order and ended with the officer who issued it. [4 marks]"
+            ],
+            "keyTakeaway": "Let the complaint categories do the arguing, because the 40 per cent on detention is the evidence for the suspension of habeas corpus."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-13",
       "topicId": "shs-gov-topic-13",
@@ -9234,6 +13008,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-14",
+    "youtubeUrl": "https://www.youtube.com/watch?v=8ehVNLWPnY8",
+    "youtubeId": "8ehVNLWPnY8",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 3,
@@ -9267,6 +13043,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Presidential election petitions in 2012 and 2020 in Ghana were resolved peacefully by the Supreme Court exercising its constitutional mandate."
         }
       ],
+"commonMistakes":         [
+            "Confusing original jurisdiction with appellate jurisdiction.",
+            "Placing the Court of Appeal above the Supreme Court.",
+            "Saying Parliament can review a judgment already given.",
+            "Naming customary and native authorities courts as superior courts.",
+            "Treating judicial review as the same as an appeal on the facts."
+          ],
       "wassceExamTips": [
         "Only the SUPREME COURT has exclusive original jurisdiction to interpret and enforce the provisions of the 1992 Constitution!"
       ],
@@ -9276,6 +13059,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate constitutional safeguards guaranteeing judicial independence and immunity"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-14-1",
+            "title": "Measuring a Court by Its Backlog",
+            "problem": "An appellate court began the year with 1,100 cases in arrears, received 2,400 new appeals and disposed of 1,800 cases while sitting 200 days. Fifteen judges sat in 5 panels. Adding 3 more judges made 6 panels, lifting daily output by a sixth. Required: arrears at the year end, the clearance rate for the year, cases disposed per sitting day, the days needed to clear the closing arrears at the old pace, the new pace and the days it would take, and two guarantees of judicial independence. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Closing arrears = 1,100 plus 2,400 minus 1,800 = 1,700 cases still outstanding. [5 marks]",
+              "Step 2: Work presented was 1,100 plus 2,400 = 3,500 cases, so the clearance rate = 1,800 divided by 3,500 times 100 = 51.4 per cent. [4 marks]",
+              "Step 3: Daily output = 1,800 divided by 200 = 9 cases disposed per sitting day. [4 marks]",
+              "Step 4: At 9 cases a day the 1,700 arrears need 1,700 divided by 9 = 188.9, that is 189 more sitting days. [4 marks]",
+              "Step 5: Six panels against five is 6 divided by 5 = 1.2 times the capacity, so output rises to 9 times 1.2 = 10.8 cases a day and the arrears fall to 1,700 divided by 10.8 = 157.4 days. [4 marks]",
+              "Step 6: Two guarantees: judges hold office until the constitutional retirement age and can be removed only on the ground of inability to behave properly, and the judiciary's expenditure is a charge on the Consolidated Fund, so neither the President nor Parliament can punish a judge by cutting the court's pay. [4 marks]"
+            ],
+            "keyTakeaway": "Independence means the purse and the tenure are outside politics, and workload means arrears divided by daily output."
+          },
+          {
+            "id": "ex-gov-14-2",
+            "title": "Counting the 48 Hours a Detainee Must Wait",
+            "problem": "A suspect was arrested on a Friday at 21:00. The rule quoted in the question requires production before a court within 48 hours of arrest, and the same rule states that neither a Sunday nor a public holiday counts in that computation. A week has 168 hours. Required: the deadline if no day were excluded, the effect of excluding Sunday, the day and hour production falls due, the extra lawful time as a percentage of 48 hours, 48 hours as a percentage of a week, and two remedies for unlawful detention. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Counting every day, 21:00 Friday plus 48 hours gives 21:00 Sunday. [4 marks]",
+              "Step 2: Since Sunday is excluded, the clock gains 48 plus 24 = 72 hours, and 72 hours divided by 24 = 3 days from arrest. [4 marks]",
+              "Step 3: Production is therefore due by 21:00 on Monday. [3 marks]",
+              "Step 4: The excluded day added 24 divided by 48 times 100 = 50 per cent more lawful time than a bare 48 hours would allow. [4 marks]",
+              "Step 5: 48 divided by 168 times 100 = 28.6 per cent of the week is the window the rule sets before a court must see the detainee. [3 marks]",
+              "Step 6: Two remedies: an application for habeas corpus to test whether the detention is lawful, and an action for compensation together with the right to counsel within a reasonable time. [2 marks]"
+            ],
+            "keyTakeaway": "Compute the custody clock day by day, because one excluded rest day can lengthen lawful detention by half again."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-14",
       "topicId": "shs-gov-topic-14",
@@ -9327,6 +13140,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-15",
+    "youtubeUrl": "https://www.youtube.com/watch?v=AhdpcQTCh9A",
+    "youtubeId": "AhdpcQTCh9A",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 3,
@@ -9366,6 +13181,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghanaian citizens travel across borders to Togo, Côte d'Ivoire, and Nigeria without entry visas by presenting an ECOWAS / Ghana Card biometric passport."
         }
       ],
+"commonMistakes":         [
+            "Confusing ECOWAS with the African Union.",
+            "Calling the community a customs union when duties are not yet fully unified.",
+            "Dating the Treaty of Lagos to the free movement protocol.",
+            "Listing achievements of ECOWAS without naming its failure on unconstitutional change of government.",
+            "Giving the number of member states without checking withdrawals."
+          ],
       "wassceExamTips": [
         "Remember: ECOWAS headquarters is located in Abuja, Nigeria; the ECOWAS Bank for Investment and Development (EBID) is in Lomé, Togo."
       ],
@@ -9375,6 +13197,35 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Assess contemporary security threats and military unconstitutional transitions confronting ECOWAS"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-15-1",
+            "title": "Using the Ninety Days of Free Movement",
+            "problem": "The protocol on free movement allows a community citizen to stay 90 days in another member state without a visa. A trader from Tamale makes 6 trips a year to two neighbouring states and stays 12 days each trip. The Treaty of Lagos was signed in 1975, the free movement protocol in 1979 and the Trade Liberalisation Scheme in 1990. ECOWAS has 15 states with 380,000,000 people out of Africa's 1,400,000,000, and regional exports are 34,000,000,000 cedis of total exports of 170,000,000,000 cedis. Required: days used, days left, the allowance consumed, two date intervals, the population share, the intra-regional trade share, and two achievements with one challenge. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Days used = 6 times 12 = 72 days a year on the road, leaving 90 minus 72 = 18 days of the allowance unused. [4 marks]",
+              "Step 2: The trader consumes 72 divided by 90 times 100 = 80 per cent of the permitted stay. [4 marks]",
+              "Step 3: 1979 minus 1975 = 4 years between the Treaty and the free movement protocol, and 1990 minus 1979 = 11 years to the Trade Liberalisation Scheme, which is 1990 minus 1975 = 15 years after the Treaty. [5 marks]",
+              "Step 4: ECOWAS holds 380,000,000 divided by 1,400,000,000 times 100 = 27.1 per cent of Africa's people. [4 marks]",
+              "Step 5: Only 34,000,000,000 divided by 170,000,000,000 times 100 = 20 per cent of exports stay inside the region, so four fifths of what the community sells goes outside it. [4 marks]",
+              "Step 6: Two achievements: the passport and protocol let a trader cross two borders in one market week, and the community's cease-fire and peacekeeping mechanism shortened the worst of the civil wars. The standing challenge is that unconstitutional changes of government and armed groups in the central belt keep closing borders and undoing the free movement the trader depends on. [4 marks]"
+            ],
+            "keyTakeaway": "Judge integration by what a trader actually uses, the 90-day stay and the share of trade that stays regional."
+          },
+          {
+            "id": "ex-gov-15-2",
+            "title": "Funding a Secretariat by a Border Levy",
+            "problem": "An assumed community budget of 26,000,000 dollars a year is to be met by a 0.5 per cent levy on imports from outside the region. Total outside imports are 4,800,000,000 dollars, 15 states are members and 3 of them are 2 years in arrears at 1,200,000 dollars each. Required: the levy yield, the covered percentage and the shortfall, the total arrears, what recovery would produce and how far that exceeds the budget, and one consequence of unpaid assessments. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Levy yield = 0.5 per cent of 4,800,000,000 = 24,000,000 dollars. [4 marks]",
+              "Step 2: The budget is 26,000,000 dollars, so the shortfall is 26,000,000 minus 24,000,000 = 2,000,000 dollars, and the levy covers 24,000,000 divided by 26,000,000 times 100 = 92.3 per cent. [5 marks]",
+              "Step 3: Arrears = 3 states times 2 years times 1,200,000 = 7,200,000 dollars unpaid. [4 marks]",
+              "Step 4: Recovery would give 24,000,000 plus 7,200,000 = 31,200,000 dollars, which is 31,200,000 divided by 26,000,000 = 1.2 times the budget. [4 marks]",
+              "Step 5: Consequence: when members withhold assessments the secretariat cannot recruit or send election and mediation missions on time, which is why the levy is argued for at the border point of entry rather than through any national treasury. [3 marks]"
+            ],
+            "keyTakeaway": "A community that taxes imports at the border buys itself independence from the states that withhold their dues."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-15",
       "topicId": "shs-gov-topic-15",
@@ -9426,6 +13277,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-16",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Q7NVLSUNV4U",
+    "youtubeId": "Q7NVLSUNV4U",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 3,
@@ -9462,6 +13315,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana was the very first nation in Africa to submit itself to the African Peer Review Mechanism (APRM) in 2006, leading continental governance benchmarks."
         }
       ],
+"commonMistakes":         [
+            "Confusing the Constitutive Act of Lomé with the Treaty of Addis Ababa.",
+            "Dating the AU to 1963.",
+            "Calling the Peace and Security Council a court.",
+            "Describing Agenda 2063 as a five-year plan.",
+            "Listing AU organs without naming the one that can sanction a coup."
+          ],
       "wassceExamTips": [
         "Key difference: OAU adhered strictly to \"non-interference\" in internal affairs; the AU Constitutive Act allows \"intervention in grave circumstances\" (war crimes, genocide)."
       ],
@@ -9471,6 +13331,35 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate Ghana's pioneering participation in the African Peer Review Mechanism (APRM)"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-16-1",
+            "title": "From the OAU to the AU in Numbers",
+            "problem": "The OAU was founded in 1963 with 32 members, the Constitutive Act was adopted in 2000 and the AU was launched in 2002, now counting 55 members. Agenda 2063 was adopted in 2015 and runs to 2063 in ten-year blocks, and a decision of a 15-member Peace and Security Council needs a two-thirds majority. Required: the interval between the two organisations, the membership growth in units and as a percentage, the gap between the Act and the launch and between the launch and Agenda 2063, the length and phases of Agenda 2063, the votes needed in the council, and one funding hurdle. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: 2002 minus 1963 = 39 years separated the OAU's founding from the AU's launch. [4 marks]",
+              "Step 2: Membership grew 55 minus 32 = 23 states, an increase of 23 divided by 32 times 100 = 71.9 per cent. [5 marks]",
+              "Step 3: 2002 minus 2000 = 2 years between adopting the Constitutive Act and founding the Union, and 2015 minus 2002 = 13 years between the launch and Agenda 2063. [4 marks]",
+              "Step 4: Agenda 2063 spans 2063 minus 2013 = 50 years, and in ten-year blocks that is 50 divided by 10 = 5 phases. [4 marks]",
+              "Step 5: A two-thirds vote in the council is 15 times 2 divided by 3 = 10 members. [4 marks]",
+              "Step 6: One hurdle: the Union still depends on external partners for much of its programme budget, so decisions on sanctions and peacekeeping are delayed until the money is agreed outside Africa. [4 marks]"
+            ],
+            "keyTakeaway": "The OAU to AU shift is measurable in years, members and mandates, and the mandate changed from defending borders to policing governance."
+          },
+          {
+            "id": "ex-gov-16-2",
+            "title": "Self-Funding the Union with a Quarter of One Per Cent",
+            "problem": "In 2016 the Union decided to raise part of its budget from a 0.2 per cent levy on eligible imports from outside the continent. One state imports 9,000,000,000 dollars a year from outside Africa, 20 states of comparable size pay the levy, and the ordinary budget is 400,000,000 dollars. Required: the levy from one state, the total yield from the 20 states, the percentage of the budget that yield covers, the amount still to be found from other sources, and two political effects of collecting the levy at African ports. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: One state yields 0.2 per cent of 9,000,000,000 = 18,000,000 dollars. [4 marks]",
+              "Step 2: Twenty such states yield 20 times 18,000,000 = 360,000,000 dollars. [4 marks]",
+              "Step 3: Against a 400,000,000 dollar budget that is 360,000,000 divided by 400,000,000 times 100 = 90 per cent funded. [4 marks]",
+              "Step 4: The remainder is 400,000,000 minus 360,000,000 = 40,000,000 dollars, still to come from assessed contributions and partners. [4 marks]",
+              "Step 5: Two effects: money raised on the continent lets the Union fund sanctions and mediation without waiting on a donor's mood, and a member that withholds the levy can still stall a decision, so self-funding has to be matched with rules on arrears. [4 marks]"
+            ],
+            "keyTakeaway": "Autonomy in international organisation is a budget line: 90 per cent home-grown funding changes who can be criticised."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-16",
       "topicId": "shs-gov-topic-16",
@@ -9522,6 +13411,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-17",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5hiVtXQ0w9E",
+    "youtubeId": "5hiVtXQ0w9E",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 3,
@@ -9562,6 +13453,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana's Electoral Commission has successfully administered eight peaceful multi-party presidential and parliamentary elections since the dawn of the Fourth Republic in 1992."
         }
       ],
+"commonMistakes":         [
+            "Writing that the Electoral Commission is appointed by and answerable to the executive.",
+            "Confusing the Chairman with the chief executive officer of the secretariat.",
+            "Naming biometric registration as proof of citizenship.",
+            "Forgetting that Parliament must approve the Commissioners.",
+            "Describing inter-party committees as part of the Commission."
+          ],
       "wassceExamTips": [
         "In WASSCE Government, Article 46 is crucial: The EC cannot be directed by the President, Parliament, or any external agency in its core operations."
       ],
@@ -9571,6 +13469,35 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate the role of biometric voter verification and IPAC in ensuring transparent Ghanaian elections"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-17-1",
+            "title": "Building a Register against a Deadline",
+            "problem": "A commission planned a register of 17,000,000 names using 900 registration teams, each capturing 150 persons a day and working 5 days a week for 20 weeks. Polling stations are to serve about 400 voters each. Required: daily output, output in a week and in the whole period, the number left unregistered and its percentage of the target, the daily rate and team strength needed to hit the target in the same 100 working days, the number of polling stations the register implies, and two integrity measures. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Daily output = 900 times 150 = 135,000 names captured a day. [4 marks]",
+              "Step 2: A week yields 135,000 times 5 = 675,000 names, and the whole period 675,000 times 20 = 13,500,000 names. [5 marks]",
+              "Step 3: The gap is 17,000,000 minus 13,500,000 = 3,500,000 people, which is 3,500,000 divided by 17,000,000 times 100 = 20.6 per cent of the target. [5 marks]",
+              "Step 4: Working days available are 5 times 20 = 100 days, so the daily rate must reach 17,000,000 divided by 100 = 170,000 names, which needs 170,000 divided by 150 = 1,133 teams, that is 1,133 minus 900 = 233 more teams than planned. [5 marks]",
+              "Step 5: One register implies polling stations of about 400 voters each, and 17,000,000 divided by 400 = 42,500 stations must be equipped and supplied on the same day. [3 marks]",
+              "Step 6: Two integrity measures: biometric matching stops one person registering in two districts, and a parallel vote tally published before the declaration lets each party test the commission's own arithmetic. [3 marks]"
+            ],
+            "keyTakeaway": "Test an electoral plan by dividing the target by the working days, and the missing teams appear as a number."
+          },
+          {
+            "id": "ex-gov-17-2",
+            "title": "The Votes That Seat a Commissioner",
+            "problem": "A commission of 5 members decides by a majority of its members. Each member is appointed by the Head of State and must be approved by an absolute majority of a 275-seat assembly, having first passed a vetting committee of 11 members by 7 votes. Two of the five were re-nominated. Required: the majority line inside the commission, the approval line in the assembly and that line as a percentage of the house, the vetting percentage, and two constitutional guarantees that keep the commission independent. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Inside the commission a majority is 5 divided by 2 = 2 plus 1 = 3 votes. [4 marks]",
+              "Step 2: In the assembly the line is 275 divided by 2 = 137.5, so 138 members must approve each nominee. [4 marks]",
+              "Step 3: 138 divided by 275 times 100 = 50.2 per cent of the house is the bare approval majority. [4 marks]",
+              "Step 4: In committee the test is 7 divided by 11 times 100 = 63.6 per cent, a higher bar than the floor, so a nominee must persuade the committee before facing the house. [4 marks]",
+              "Step 5: Two guarantees: the commission is not answerable to any person or authority, and its expenditure is a charge on the Consolidated Fund, so money cannot be withheld to bend its decisions. [4 marks]"
+            ],
+            "keyTakeaway": "Independence is shown in procedure, so cite the approval majority and the charged budget rather than praising the members."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-17",
       "topicId": "shs-gov-topic-17",
@@ -9622,6 +13549,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-18",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5RekDt1xVus",
+    "youtubeId": "5RekDt1xVus",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 3,
@@ -9664,6 +13593,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghana established the State Interests and Governance Authority (SIGA) to oversee and enforce profitability and good governance across all state enterprises."
         }
       ],
+"commonMistakes":         [
+            "Confusing privatisation with commercialisation.",
+            "Calling a public corporation a ministry.",
+            "Selling a state firm without valuing its debts.",
+            "Using divestiture proceeds to pay salaries.",
+            "Listing advantages of privatisation without mentioning monopoly pricing."
+          ],
       "wassceExamTips": [
         "Commercialization means making a state enterprise financially self-sufficient WITHOUT selling it; Privatization means transferring ownership/shares to private investors."
       ],
@@ -9673,6 +13609,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate the arguments for and against privatization of state-owned enterprises in Ghana"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-18-1",
+            "title": "Selling a Minority Stake in a State Utility",
+            "problem": "A state electricity company is valued at GHS 2,000,000,000. The government sells 35 per cent of the shares to private investors and uses GHS 480,000,000 of the proceeds to retire debt. The company had been losing GHS 120,000,000 a year. Required: the value sold, the stake and percentage the state keeps, the money left for investment after retiring debt, how many years of losses the sale proceeds would have covered, the debt as a percentage of the proceeds, and two arguments each way on the sale. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Value sold = 35 per cent of 2,000,000,000 = 700,000,000 cedis. [4 marks]",
+              "Step 2: The state keeps 2,000,000,000 minus 700,000,000 = 1,300,000,000, which is 1,300,000,000 divided by 2,000,000,000 times 100 = 65 per cent of the company. [5 marks]",
+              "Step 3: After the debt payment, 700,000,000 minus 480,000,000 = 220,000,000 cedis remain for new investment. [4 marks]",
+              "Step 4: At 120,000,000 a year of losses, the proceeds would have been eaten in 700,000,000 divided by 120,000,000 = 5.8 years of continued losses. [4 marks]",
+              "Step 5: Debt retired took 480,000,000 divided by 700,000,000 times 100 = 68.6 per cent of what the sale raised. [4 marks]",
+              "Step 6: For the sale: private capital and management end the yearly drain on the treasury, and discipline improves when the firm must earn its keep. Against it: a private monopoly may raise tariffs on the poor, and a hurried sale may hand the utility to buyers with no skill in generation or distribution. [4 marks]"
+            ],
+            "keyTakeaway": "Always compare the sale proceeds with the annual loss, because that ratio says whether the sale was a rescue or simply a cash call."
+          },
+          {
+            "id": "ex-gov-18-2",
+            "title": "Commercialisation: Billing, Collecting and Covering Cost",
+            "problem": "After commercialisation a water company must cover its own costs. It bills 400,000 connections at GHS 30 a month, collects only 70 per cent of what it bills, and faces annual costs of GHS 108,000,000. Required: the monthly billing, the annual billing, the cash actually collected, the shortfall against cost and the percentage of cost met, the value billed but never paid with its percentage of billing, and two conditions for commercialisation to succeed. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Monthly billing = 400,000 times 30 = 12,000,000 cedis. [4 marks]",
+              "Step 2: Annual billing = 12,000,000 times 12 = 144,000,000 cedis. [3 marks]",
+              "Step 3: Collection = 70 per cent of 144,000,000 = 100,800,000 cedis in hand. [4 marks]",
+              "Step 4: The company falls short of cost by 108,000,000 minus 100,800,000 = 7,200,000 cedis, so it met 100,800,000 divided by 108,000,000 times 100 = 93.3 per cent of its costs. [5 marks]",
+              "Step 5: Value billed but unpaid = 144,000,000 minus 100,800,000 = 43,200,000 cedis, and 43,200,000 divided by 144,000,000 times 100 = 30 per cent of billing never reached the tiller. [2 marks]",
+              "Step 6: Two conditions: an independent regulator must publish the tariff formula, and connections must be metered, since a 30 per cent collection gap is a leaky distribution system rather than a price that is too low. [2 marks]"
+            ],
+            "keyTakeaway": "Commercialisation fails on collection, not on tariffs, so prove it with the billed-to-collected gap."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-18",
       "topicId": "shs-gov-topic-18",
@@ -9724,6 +13690,8 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs-gov-topic-19",
+    "youtubeUrl": "https://www.youtube.com/watch?v=wOgTSAHAs9M",
+    "youtubeId": "wOgTSAHAs9M",
     "subjectId": "government",
     "level": "SHS 1",
     "term": 3,
@@ -9766,6 +13734,13 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
           "realWorldExample": "Ghanaian scholars and researchers regularly win Commonwealth Scholarships to attend top universities across the UK, Canada, Australia, and New Zealand."
         }
       ],
+"commonMistakes":         [
+            "Calling the Commonwealth a military alliance or a customs union.",
+            "Confusing CHOGM with the Commonwealth Secretariat.",
+            "Dating Ghana's membership to the republic year rather than 1957.",
+            "Writing that member states are bound by treaty obligations they can be sued for breaking.",
+            "Listing benefits to Ghana without mentioning the mobility and scholarship side."
+          ],
       "wassceExamTips": [
         "Remember: Commonwealth decisions are taken by CONSENSUS, not by formal voting; membership is purely voluntary, and members can withdraw at will."
       ],
@@ -9775,6 +13750,36 @@ export const SHS_GENERAL_ARTS_TOPICS: CurriculumTopic[] = [
         "Evaluate the educational, economic, and technical assistance benefits Ghana derives from Commonwealth membership"
       ]
     },
+"examples":       [
+          {
+            "id": "ex-gov-19-1",
+            "title": "The Size and Age of the Commonwealth",
+            "problem": "The association counts 56 member countries, of which 21 are African, and about 2,500,000,000 people out of a world population taken as 8,000,000,000. Ghana joined in 1957, the Secretariat was established in 1965, and heads of government have met every 2 years since 1971, most recently in 2024. Required: the African share of members, the share of humankind covered, the length of Ghana's membership to 2026, the number of summit meetings on the two-year cycle, the age of the Secretariat, and two benefits to Ghana. [25 marks]",
+            "stepByStepSolution": [
+              "Step 1: Africans are 21 divided by 56 times 100 = 37.5 per cent of the membership. [4 marks]",
+              "Step 2: The association covers 2,500,000,000 divided by 8,000,000,000 times 100 = 31.25 per cent of the world's people. [5 marks]",
+              "Step 3: Ghana's membership runs 2026 minus 1957 = 69 years. [3 marks]",
+              "Step 4: The summit cycle spans 2024 minus 1971 = 53 years, and 53 divided by 2 = 26.5, so about 27 meetings have been held counting the first. [5 marks]",
+              "Step 5: The Secretariat is 2026 minus 1965 = 61 years old, which is 61 minus 53 = 8 years older than the summit cycle counted above. [4 marks]",
+              "Step 6: Two benefits: Ghanaians study and work through schemes and university links inside a shared legal inheritance, and the common language of parliamentary procedure and court reporting lowers the cost of training Ghana's own officials and lawyers. [4 marks]"
+            ],
+            "keyTakeaway": "Describe the Commonwealth by membership, population and meeting cycle, since it has no treaty, no army and no common tariff."
+          },
+          {
+            "id": "ex-gov-19-2",
+            "title": "How Concentrated the Commonwealth Market Is",
+            "problem": "A table gives Ghana's total exports as 90,000,000,000 cedis, of which 31,500,000,000 go to Commonwealth countries, and 22,000,000,000 of that is taken by four destinations. The Harare Declaration was made in 1991. Required: the Commonwealth share of exports, the non-Commonwealth value and share, the average taken by each of the four big buyers, their concentration percentage within Commonwealth trade, two date intervals around 1957 and 1991, and two cautions about a historic bloc. [20 marks]",
+            "stepByStepSolution": [
+              "Step 1: Commonwealth markets take 31,500,000,000 divided by 90,000,000,000 times 100 = 35 per cent of exports. [4 marks]",
+              "Step 2: Other markets take 90,000,000,000 minus 31,500,000,000 = 58,500,000,000 cedis, which is 58,500,000,000 divided by 90,000,000,000 times 100 = 65 per cent. [5 marks]",
+              "Step 3: Each of the four big buyers averages 22,000,000,000 divided by 4 = 5,500,000,000 cedis of Ghana's exports. [2 marks]",
+              "Step 4: Those four hold 22,000,000,000 divided by 31,500,000,000 times 100 = 69.8 per cent of the Commonwealth trade, so the market is concentrated in a few hands. [4 marks]",
+              "Step 5: 2026 minus 1991 = 35 years have passed since the Harare Declaration, and 1991 minus 1957 = 34 years between Ghana's independence and that statement of principles. [3 marks]",
+              "Step 6: Two cautions: leaning on a historic bloc can draw trade policy away from the neighbouring ECOWAS markets that Ghana must build, and the association has no enforcement power, so its declarations are influence rather than obligation. [2 marks]"
+            ],
+            "keyTakeaway": "Test a preferential market by concentration, because four buyers taking 70 per cent of it is exposure, not partnership."
+          }
+        ],
     "quiz": {
       "id": "quiz-shs-gov-topic-19",
       "topicId": "shs-gov-topic-19",

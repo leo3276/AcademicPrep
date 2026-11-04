@@ -94,8 +94,8 @@ export const JHS2_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Learn structural conventions, layout, conversational register, and effective paragraphing for informal and semi-formal letters in the BECE format.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=L9AWrJnhsRI",
-    "youtubeId": "L9AWrJnhsRI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=rpjMrq6Hwno",
+    "youtubeId": "rpjMrq6Hwno",
     "keyNotes": "• Purpose of Informal Letters: Written to close relatives, friends, and peers to share personal news, give advice, congratulate, or apologize.\n• Essential Structural Elements:\n  1. Writer's Address & Date: Located at the top right-hand corner (e.g., 'Achimota Basic School, P.O. Box 12, Accra. 24th September, 2026.'). Punctuation can be block or indented.\n  2. Salutation: Informal, on the left margin (e.g., 'Dear Kwame,', 'Dear Auntie Akua,').\n  3. Opening Paragraph: Warm greetings, inquiring about welfare, acknowledging previous correspondence, and stating the purpose of the letter in a friendly tone.\n  4. Body Paragraphs (2–3 paragraphs): Developing ideas logically with lively, conversational language, personal anecdotes, and contractions (I'm, can't, won't).\n  5. Concluding Paragraph: Warm closing remarks, convey regards to family members, expectation of a reply.\n  6. Subscription (Valediction): On the right-hand side ('Yours sincerely,', 'Yours affectionately,', 'Your best friend,') followed by first name only (e.g., 'Kofi'). No surname!\n• Semi-Formal Letters: Written to older acquaintances or respected family friends; tone is polite yet cordial, avoiding extreme slang.",
     "examples": [
       {
@@ -246,8 +246,8 @@ export const JHS2_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Transform statements, commands, and questions from direct speech to reported speech applying tense backshifting, pronoun changes, and time/place adverb shifts.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=L9AWrJnhsRI",
-    "youtubeId": "L9AWrJnhsRI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=eplQBhE0-Hg",
+    "youtubeId": "eplQBhE0-Hg",
     "keyNotes": "• Direct Speech reproduces the exact spoken words within quotation marks (\"I am revising for the BECE,\" said Kofi).\n• Reported (Indirect) Speech conveys what someone said without exact quoting, removing quotation marks ('Kofi said that he was revising for the BECE').\n• Transformation Rules when the reporting verb is in the past tense (e.g., 'said', 'told'):\n  1. Tense Backshift:\n     - Simple Present -> Simple Past (am/is -> was, write -> wrote).\n     - Present Continuous -> Past Continuous (is singing -> was singing).\n     - Simple Past -> Past Perfect (wrote -> had written).\n     - Present Perfect -> Past Perfect (has finished -> had finished).\n     - Future 'will/can' -> 'would/could'.\n  2. Pronoun & Possessive Shifts:\n     - 'I' becomes 'he/she'; 'we' becomes 'they'; 'my' becomes 'his/her'.\n  3. Time and Place Adverb Shifts:\n     - now -> then; today -> that day; yesterday -> the previous day / the day before; tomorrow -> the next day / following day; here -> there; this -> that.\n• Universal Truths Exception: Scientific facts and general truths do NOT backshift ('The teacher said that the sun rises in the east').",
     "examples": [
       {
@@ -400,8 +400,8 @@ export const JHS2_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Transform sentences accurately between active and passive voices across various tenses, and understand when to use the passive voice in objective and scientific writing.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=L9AWrJnhsRI",
-    "youtubeId": "L9AWrJnhsRI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=4xS2BgkjsFg",
+    "youtubeId": "4xS2BgkjsFg",
     "keyNotes": "• Active Voice: The grammatical subject of the sentence actively performs the action ('The mechanic repaired the bus'). Focus is on the doer (agent).\n• Passive Voice: The grammatical subject receives the action ('The bus was repaired by the mechanic'). Focus is on the action or the receiver.\n• Transformation Steps (Active -> Passive):\n  1. The active direct object becomes the passive subject ('the bus').\n  2. Insert an appropriate form of auxiliary 'to be' matching the active tense (simple past -> 'was/were').\n  3. Change the main verb into its Past Participle form ('repaired').\n  4. The active subject becomes the agent in a prepositional 'by-phrase' ('by the mechanic') or is omitted if obvious or unknown.\n• Tense Transformations Table:\n  - Simple Present: eats -> is/are eaten.\n  - Present Continuous: is eating -> is being eaten.\n  - Simple Past: ate -> was/were eaten.\n  - Past Continuous: was eating -> was being eaten.\n  - Present Perfect: has eaten -> has been eaten.\n  - Simple Future: will eat -> will be eaten.\n  - Modals: can solve -> can be solved.\n• When to Use Passive Voice: In formal reports, laboratory experiments ('The test tube was heated'), and when the actor is unknown or irrelevant ('My wallet was stolen').",
     "examples": [
       {
@@ -556,8 +556,8 @@ export const JHS2_ENGLISH_TOPICS: CurriculumTopic[] = [
     "description": "Master English phonetics: monophthongs (short/long vowels), diphthongs, consonant clusters, and syllable stress placement in nouns vs verbs.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=L9AWrJnhsRI",
-    "youtubeId": "L9AWrJnhsRI",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Vu6UVwkUgzc",
+    "youtubeId": "Vu6UVwkUgzc",
     "keyNotes": "• Speech Sounds in English:\n  - Pure Vowels (Monophthongs): 12 pure vowel sounds divided into short vowels (/ɪ/ sit, /e/ bed, /æ/ cat, /ɒ/ hot, /ʌ/ cup, /ʊ/ put, /ə/ about) and long vowels marked with colons (/iː/ seat, /ɑː/ cart, /ɔː/ port, /uː/ pool, /ɜː/ bird).\n  - Diphthongs (Gliding Vowels): 8 vowels where sound glides from one vowel quality to another within the same syllable (/eɪ/ say, /aɪ/ buy, /ɔɪ/ boy, /aʊ/ now, /əʊ/ go, /ɪə/ hear, /eə/ hair, /ʊə/ poor).\n  - Consonant Sounds: 24 consonant sounds including voiced (vocal cords vibrate: /b/, /d/, /g/, /v/, /z/) and voiceless (no vibration: /p/, /t/, /k/, /f/, /s/).\n  - Consonant Clusters: Sequences of consonants without intervening vowels ('str-' in street, '-sks' in desks, '-lpt' in helped).\n• Syllable Stress Rules:\n  - Stress is the relative emphasis given to a certain syllable in a word (higher pitch, longer duration, louder volume).\n  - Two-syllable noun vs verb stress shift:\n    * Nouns take FIRST syllable stress: PRO-ject, CON-duct, RE-cord, PRE-sent, EX-port.\n    * Verbs take SECOND syllable stress: pro-JECT, con-DUCT, re-CORD, pre-SENT, ex-PORT.\n  - Words ending in '-tion', '-sion', '-ic' are stressed on the PENULTIMATE (second to last) syllable: edu-CA-tion, pro-TEC-tion, de-CI-sion, scien-TIF-ic.",
     "examples": [
       {

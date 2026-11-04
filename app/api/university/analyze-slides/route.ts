@@ -10,7 +10,7 @@ import {
   detectLessonStartPage,
   ExtractedPage 
 } from '@/lib/slideExtractor';
-import { simplifySlideBatchWithAI } from '@/lib/aiExplainerService';
+import { simplifySlideBatchWithAI, extractFlashcardsForSlidesWithAI } from '@/lib/aiExplainerService';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -85,8 +85,7 @@ export async function POST(req: NextRequest) {
       targetGrade
     );
 
-    // 4. Quick Live AI Enrichment on the first key teaching slides
-    // Blazing-fast background pass so initial lesson slides get live AI simplification right from upload!
+    // 4. Live AI Enrichment: Extract 1 high-yield Q&A flashcard per page across all slides + simplify initial slides
     try {
       const lessonStart = groundedPackage.lessonStartPage || 1;
       const slidesToEnrich = groundedPackage.slides
@@ -98,28 +97,42 @@ export async function POST(req: NextRequest) {
           rawText: s.rawSlideText || `${s.title}\n${s.simplifiedPoints.join('\n')}`
         }));
 
-      if (slidesToEnrich.length > 0) {
-        const aiBatch = await simplifySlideBatchWithAI(slidesToEnrich, groundedPackage.deckTitle, geminiApiKey);
-        if (aiBatch && Object.keys(aiBatch).length > 0) {
-          groundedPackage.slides = groundedPackage.slides.map(s => {
-            const enriched = aiBatch[s.pageNumber];
-            if (enriched) {
-              return {
-                ...s,
-                coreRule: enriched.coreRule || s.coreRule,
-                whyItMatters: enriched.whyItMatters || s.whyItMatters,
-                detailedTakeaways: enriched.detailedTakeaways?.length ? enriched.detailedTakeaways : s.detailedTakeaways,
-                simplifiedPoints: enriched.simplifiedPoints?.length ? enriched.simplifiedPoints : s.simplifiedPoints,
-                examTrap: enriched.examTrap || s.examTrap,
-                activeRecallPrompt: enriched.activeRecallPrompt || s.activeRecallPrompt,
-                aiSimplified: true
-              };
-            }
-            return s;
-          });
-          // Refresh 10-to-1 digest with the AI enriched slides
-          groundedPackage.condensedSummaries = generateCondensedSlideSummaries(groundedPackage.slides, 10);
-        }
+      const allPagesForFlashcards = groundedPackage.slides.map(s => ({
+        pageNumber: s.pageNumber,
+        title: s.title,
+        rawText: s.rawSlideText || `${s.title}\n${s.coreRule}\n${s.simplifiedPoints.join('\n')}`
+      }));
+
+      const [aiBatch, aiFlashcards] = await Promise.all([
+        slidesToEnrich.length > 0
+          ? simplifySlideBatchWithAI(slidesToEnrich, groundedPackage.deckTitle, geminiApiKey)
+          : Promise.resolve({} as Record<number, any>),
+        extractFlashcardsForSlidesWithAI(allPagesForFlashcards, groundedPackage.deckTitle, geminiApiKey)
+      ]);
+
+      groundedPackage.slides = groundedPackage.slides.map(s => {
+        const enriched = aiBatch?.[s.pageNumber];
+        const aiCard = aiFlashcards?.[s.pageNumber];
+        return {
+          ...s,
+          coreRule: enriched?.coreRule || s.coreRule,
+          whyItMatters: enriched?.whyItMatters || s.whyItMatters,
+          detailedTakeaways: enriched?.detailedTakeaways?.length ? enriched.detailedTakeaways : s.detailedTakeaways,
+          simplifiedPoints: enriched?.simplifiedPoints?.length ? enriched.simplifiedPoints : s.simplifiedPoints,
+          examTrap: enriched?.examTrap || s.examTrap,
+          activeRecallPrompt: aiCard
+            ? {
+                question: aiCard.question,
+                answer: aiCard.answer,
+                hint: aiCard.hint || s.activeRecallPrompt?.hint || ''
+              }
+            : (enriched?.activeRecallPrompt || s.activeRecallPrompt),
+          aiSimplified: Boolean(enriched || aiCard)
+        };
+      });
+
+      if (aiBatch && Object.keys(aiBatch).length > 0) {
+        groundedPackage.condensedSummaries = generateCondensedSlideSummaries(groundedPackage.slides, 10);
       }
     } catch (enrichErr) {
       console.warn('Initial slide AI enrichment notice (proceeding with grounded package):', enrichErr);

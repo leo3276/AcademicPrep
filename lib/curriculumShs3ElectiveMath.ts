@@ -7,6 +7,8 @@ import { CurriculumTopic } from './types';
 export const SHS3_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   {
     "id": "shs3-em-t1-indices-logs-revision",
+    "youtubeUrl": "https://www.youtube.com/watch?v=-jsrSFHbEA8",
+    "youtubeId": "-jsrSFHbEA8",
     "subjectId": "elective-maths",
     "level": "SHS 3",
     "term": 1,
@@ -209,6 +211,8 @@ export const SHS3_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-em-t1-polynomial-roots",
+    "youtubeUrl": "https://www.youtube.com/watch?v=lf5KzsC68ek",
+    "youtubeId": "lf5KzsC68ek",
     "subjectId": "elective-maths",
     "level": "SHS 3",
     "term": 1,
@@ -413,6 +417,8 @@ export const SHS3_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-em-t1-partial-fractions-hard",
+    "youtubeUrl": "https://www.youtube.com/watch?v=r5ac02LRKKY",
+    "youtubeId": "r5ac02LRKKY",
     "subjectId": "elective-maths",
     "level": "SHS 3",
     "term": 1,
@@ -617,6 +623,8 @@ export const SHS3_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-em-t1-counting-applications",
+    "youtubeUrl": "https://www.youtube.com/watch?v=tnF9f3zCCKI",
+    "youtubeId": "tnF9f3zCCKI",
     "subjectId": "elective-maths",
     "level": "SHS 3",
     "term": 1,
@@ -821,6 +829,8 @@ export const SHS3_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-em-t1-binomial-theorem",
+    "youtubeUrl": "https://www.youtube.com/watch?v=s19dWIHficY",
+    "youtubeId": "s19dWIHficY",
     "subjectId": "elective-maths",
     "level": "SHS 3",
     "term": 1,
@@ -1024,6 +1034,8 @@ export const SHS3_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-em-t2-trig-formulae",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Y-RsbeIyKWc",
+    "youtubeId": "Y-RsbeIyKWc",
     "subjectId": "elective-maths",
     "level": "SHS 3",
     "term": 2,
@@ -1229,6 +1241,8 @@ export const SHS3_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-em-t2-heights-distances",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Sja5rEqmpa4",
+    "youtubeId": "Sja5rEqmpa4",
     "subjectId": "elective-maths",
     "level": "SHS 3",
     "term": 2,
@@ -1434,6 +1448,8 @@ export const SHS3_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-em-t2-vectors-three-d",
+    "youtubeUrl": "https://www.youtube.com/watch?v=omlMeEe3UMw",
+    "youtubeId": "omlMeEe3UMw",
     "subjectId": "elective-maths",
     "level": "SHS 3",
     "term": 2,
@@ -1639,6 +1655,8 @@ export const SHS3_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-em-t2-differentiation-rules",
+    "youtubeUrl": "https://www.youtube.com/watch?v=alUkVWVEP10",
+    "youtubeId": "alUkVWVEP10",
     "subjectId": "elective-maths",
     "level": "SHS 3",
     "term": 2,
@@ -1844,6 +1862,8 @@ export const SHS3_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-em-t2-differentiation-application",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Iu67T-NcXvc",
+    "youtubeId": "Iu67T-NcXvc",
     "subjectId": "elective-maths",
     "level": "SHS 3",
     "term": 2,
@@ -2049,6 +2069,8 @@ export const SHS3_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-em-t3-maxima-minima",
+    "youtubeUrl": "https://www.youtube.com/watch?v=xxHUm6N2Ikg",
+    "youtubeId": "xxHUm6N2Ikg",
     "subjectId": "elective-maths",
     "level": "SHS 3",
     "term": 3,
@@ -2252,6 +2274,8 @@ export const SHS3_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-em-t3-integration",
+    "youtubeUrl": "https://www.youtube.com/watch?v=QLHJl2_aM5Q",
+    "youtubeId": "QLHJl2_aM5Q",
     "subjectId": "elective-maths",
     "level": "SHS 3",
     "term": 3,
@@ -2455,6 +2479,8 @@ export const SHS3_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-em-t3-statistics-probability-revision",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ljz4F2LqgaE",
+    "youtubeId": "ljz4F2LqgaE",
     "subjectId": "elective-maths",
     "level": "SHS 3",
     "term": 3,
@@ -2658,6 +2684,8 @@ export const SHS3_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-em-t3-wassce-strategy",
+    "youtubeUrl": "https://www.youtube.com/watch?v=m7BNEh_DQP4",
+    "youtubeId": "m7BNEh_DQP4",
     "subjectId": "elective-maths",
     "level": "SHS 3",
     "term": 3,

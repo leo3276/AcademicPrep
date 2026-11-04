@@ -13,6 +13,8 @@ export const SHS2_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   // =========================================================================
   {
     id: 'shs2-em-t1-binary-operations',
+    youtubeUrl: 'https://www.youtube.com/watch?v=3HAvK_ZGYyw',
+    youtubeId: '3HAvK_ZGYyw',
     subjectId: 'elective-maths',
     level: 'SHS 2',
     term: 1,
@@ -227,6 +229,8 @@ export const SHS2_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     id: 'shs2-em-t1-polynomial-theorems',
+    youtubeUrl: 'https://www.youtube.com/watch?v=tsA3xIk1QO8',
+    youtubeId: 'tsA3xIk1QO8',
     subjectId: 'elective-maths',
     level: 'SHS 2',
     term: 1,
@@ -441,6 +445,8 @@ export const SHS2_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     id: 'shs2-em-t1-partial-fractions',
+    youtubeUrl: 'https://www.youtube.com/watch?v=TerQNF1sYOs',
+    youtubeId: 'TerQNF1sYOs',
     subjectId: 'elective-maths',
     level: 'SHS 2',
     term: 1,
@@ -654,6 +660,8 @@ export const SHS2_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     id: 'shs2-em-t1-coordinate-geometry',
+    youtubeUrl: 'https://www.youtube.com/watch?v=Cd16zoniOQ0',
+    youtubeId: 'Cd16zoniOQ0',
     subjectId: 'elective-maths',
     level: 'SHS 2',
     term: 1,
@@ -868,6 +876,8 @@ export const SHS2_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     id: 'shs2-em-t1-logic-reasoning',
+    youtubeUrl: 'https://www.youtube.com/watch?v=CSVojzIGmfU',
+    youtubeId: 'CSVojzIGmfU',
     subjectId: 'elective-maths',
     level: 'SHS 2',
     term: 1,
@@ -1089,6 +1099,8 @@ export const SHS2_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   // =========================================================================
   {
     id: 'shs2-em-t2-trigonometric-identities',
+    youtubeUrl: 'https://www.youtube.com/watch?v=NiRxGpOdCno',
+    youtubeId: 'NiRxGpOdCno',
     subjectId: 'elective-maths',
     level: 'SHS 2',
     term: 2,
@@ -1308,6 +1320,8 @@ export const SHS2_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   // =========================================================================
   {
     id: 'shs2-em-t2-sine-cosine-rules',
+    youtubeUrl: 'https://www.youtube.com/watch?v=veoWjIzxr4c',
+    youtubeId: 'veoWjIzxr4c',
     subjectId: 'elective-maths',
     level: 'SHS 2',
     term: 2,
@@ -1530,6 +1544,8 @@ export const SHS2_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   // =========================================================================
   {
     id: 'shs2-em-t2-permutations-combinations',
+    youtubeUrl: 'https://www.youtube.com/watch?v=tTnB86Ua7LA',
+    youtubeId: 'tTnB86Ua7LA',
     subjectId: 'elective-maths',
     level: 'SHS 2',
     term: 2,
@@ -1749,6 +1765,8 @@ export const SHS2_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   // =========================================================================
   {
     id: 'shs2-em-t2-statistics-grouped',
+    youtubeUrl: 'https://www.youtube.com/watch?v=ieodfk7al5k',
+    youtubeId: 'ieodfk7al5k',
     subjectId: 'elective-maths',
     level: 'SHS 2',
     term: 2,
@@ -1972,6 +1990,8 @@ export const SHS2_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   // =========================================================================
   {
     id: 'shs2-em-t2-probability',
+    youtubeUrl: 'https://www.youtube.com/watch?v=Fx28qxa3Mbw',
+    youtubeId: 'Fx28qxa3Mbw',
     subjectId: 'elective-maths',
     level: 'SHS 2',
     term: 2,
@@ -2198,6 +2218,8 @@ export const SHS2_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   // =========================================================================
   {
     id: 'shs2-em-t3-vectors-plane',
+    youtubeUrl: 'https://www.youtube.com/watch?v=bLVOdFYcdqU',
+    youtubeId: 'bLVOdFYcdqU',
     subjectId: 'elective-maths',
     level: 'SHS 2',
     term: 3,
@@ -2418,6 +2440,8 @@ export const SHS2_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   // =========================================================================
   {
     id: 'shs2-em-t3-matrix-transformations',
+    youtubeUrl: 'https://www.youtube.com/watch?v=TZTjWVB1iTc',
+    youtubeId: 'TZTjWVB1iTc',
     subjectId: 'elective-maths',
     level: 'SHS 2',
     term: 3,
@@ -2638,6 +2662,8 @@ export const SHS2_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   // =========================================================================
   {
     id: 'shs2-em-t3-progressions',
+    youtubeUrl: 'https://www.youtube.com/watch?v=DBrHXyhU5j8',
+    youtubeId: 'DBrHXyhU5j8',
     subjectId: 'elective-maths',
     level: 'SHS 2',
     term: 3,
@@ -2859,6 +2885,8 @@ export const SHS2_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   // =========================================================================
   {
     id: 'shs2-em-t3-quadratic-functions',
+    youtubeUrl: 'https://www.youtube.com/watch?v=PjWrGpWFhkU',
+    youtubeId: 'PjWrGpWFhkU',
     subjectId: 'elective-maths',
     level: 'SHS 2',
     term: 3,
@@ -3080,6 +3108,8 @@ export const SHS2_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   // =========================================================================
   {
     id: 'shs2-em-t3-inequalities-optimization',
+    youtubeUrl: 'https://www.youtube.com/watch?v=Bzzqx1F23a8',
+    youtubeId: 'Bzzqx1F23a8',
     subjectId: 'elective-maths',
     level: 'SHS 2',
     term: 3,

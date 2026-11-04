@@ -10,6 +10,8 @@ export const SHS1_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   // =========================================================================
 {
     id: 'shs1-em-t1-number-bases',
+    youtubeUrl: 'https://www.youtube.com/watch?v=QpZIUDBMhg8',
+    youtubeId: 'QpZIUDBMhg8',
     subjectId: 'elective-maths',
     level: 'SHS 1',
     term: 1,
@@ -230,6 +232,8 @@ export const SHS1_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     id: 'shs1-em-t1-indices-logarithms',
+    youtubeUrl: 'https://www.youtube.com/watch?v=zOhs3v5GN1Y',
+    youtubeId: 'zOhs3v5GN1Y',
     subjectId: 'elective-maths',
     level: 'SHS 1',
     term: 1,
@@ -450,6 +454,8 @@ export const SHS1_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     id: 'shs1-em-t1-sets-venn-diagrams',
+    youtubeUrl: 'https://www.youtube.com/watch?v=xZELQc11ACY',
+    youtubeId: 'xZELQc11ACY',
     subjectId: 'elective-maths',
     level: 'SHS 1',
     term: 1,
@@ -669,6 +675,8 @@ export const SHS1_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     id: 'shs1-em-t1-surds',
+    youtubeUrl: 'https://www.youtube.com/watch?v=77mPfwn6Uf4',
+    youtubeId: '77mPfwn6Uf4',
     subjectId: 'elective-maths',
     level: 'SHS 1',
     term: 1,
@@ -893,6 +901,8 @@ export const SHS1_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   // =========================================================================
   {
     id: 'shs1-em-t2-algebraic-manipulation',
+    youtubeUrl: 'https://www.youtube.com/watch?v=_OZTHJfOa1s',
+    youtubeId: '_OZTHJfOa1s',
     subjectId: 'elective-maths',
     level: 'SHS 1',
     term: 2,
@@ -1104,6 +1114,8 @@ export const SHS1_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     id: 'shs1-em-t2-linear-quadratic-equations',
+    youtubeUrl: 'https://www.youtube.com/watch?v=Az-pm7EgyPk',
+    youtubeId: 'Az-pm7EgyPk',
     subjectId: 'elective-maths',
     level: 'SHS 1',
     term: 2,
@@ -1316,6 +1328,8 @@ export const SHS1_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     id: 'shs1-em-t2-simultaneous-equations',
+    youtubeUrl: 'https://www.youtube.com/watch?v=33NBP07AD3U',
+    youtubeId: '33NBP07AD3U',
     subjectId: 'elective-maths',
     level: 'SHS 1',
     term: 2,
@@ -1526,6 +1540,8 @@ export const SHS1_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   },
   {
     id: 'shs1-em-t2-inequalities',
+    youtubeUrl: 'https://www.youtube.com/watch?v=BlhUiV10ZCQ',
+    youtubeId: 'BlhUiV10ZCQ',
     subjectId: 'elective-maths',
     level: 'SHS 1',
     term: 2,
@@ -1741,6 +1757,8 @@ export const SHS1_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   // =========================================================================
   {
     id: 'shs1-em-t3-variation',
+    youtubeUrl: 'https://www.youtube.com/watch?v=aheBIhuwy08',
+    youtubeId: 'aheBIhuwy08',
     subjectId: 'elective-maths',
     level: 'SHS 1',
     term: 3,
@@ -1958,6 +1976,8 @@ export const SHS1_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   // =========================================================================
   {
     id: 'shs1-em-t3-matrices-determinants',
+    youtubeUrl: 'https://www.youtube.com/watch?v=v1fNET2PvaA',
+    youtubeId: 'v1fNET2PvaA',
     subjectId: 'elective-maths',
     level: 'SHS 1',
     term: 3,
@@ -2180,6 +2200,8 @@ export const SHS1_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   // =========================================================================
   {
     id: 'shs1-em-t3-relations-functions',
+    youtubeUrl: 'https://www.youtube.com/watch?v=De-IYUcmsOI',
+    youtubeId: 'De-IYUcmsOI',
     subjectId: 'elective-maths',
     level: 'SHS 1',
     term: 3,
@@ -2400,6 +2422,8 @@ export const SHS1_ELECTIVE_MATH_TOPICS: CurriculumTopic[] = [
   // =========================================================================
   {
     id: 'shs1-em-t3-trigonometry-any-angle',
+    youtubeUrl: 'https://www.youtube.com/watch?v=wh64D-zxWfw',
+    youtubeId: 'wh64D-zxWfw',
     subjectId: 'elective-maths',
     level: 'SHS 1',
     term: 3,

@@ -161,8 +161,8 @@ export const JHS3_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua Akanfo mmɛbusɛm ahorow, emu nyansa, mfaso, ne kwan a wɔfa so bu bɛ de kyerɛkyerɛ asɛm mu ma ɛba fam na ɛhyɛ abrabɔ pa nkuran wɔ BECE sɔhwɛ mu.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=l_a6a0u5GfE",
-    "youtubeId": "l_a6a0u5GfE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=wTf-nNTr1aA",
+    "youtubeId": "wTf-nNTr1aA",
     "keyNotes": "• Dɛn ne Ɛbɛ wɔ Akanfo Amammere mu?\n  - 'Ɛbɛ yɛ asɛm tiawa a ɛkura nyansa, ahotoso ne abrabɔ kwan a nananom faa so kyerɛɛ amansan ade.'\n  - Akanfo ka sɛ : 'Abofra hu ne nsa hohorow a, ɔne mpanyimfo didi' ; 'Obi nkyerɛ abofra Nyame'.\n• Mmɛ Ahorow ne Ne Ntease:\n  - 'Tikro nkɔ agyina' : Nnipa baako ntumi nsi gyinae pa ; ɛhia nkabom ne afotu a obiara bɛka ne deɛ afra.\n  - 'Woforo dua pa a, na yɛpia wo' : Sɛ woyɛ adwuma pa a, nkurɔfo mmoa wo na woanya nkunimdi.\n  - 'Aboa a onni dua, Nyame na ɔpra ne ho' : Onyankopɔn na ɔhwɛ ahiafo ne wɔn a wonni mmoafo.\n  - 'Nsa koro nso emi mma' : Baakofo ntumi nsoa adesoa kɛse ; ɛhia nnoboa ne nkabom.\n  - 'Baanu so a, emmia' : Nkabom ma adwumaden yɛ mmerɛw.\n• Mfaso a Ɛwɔ Ɛbɛ So:\n  - 1. Ɛka asɛm dodoɔ no mua ma ɛyɛ tiawa na ntease ba mu ntɛm.\n  - 2. Ɛkora amammere ne Akan kasa nyansa so ma awo ntoatoaso.\n  - 3. Ɛhyɛ abrabɔ pa, ahobrɛase, nsi ne nkabom nkuran.\n  - 4. Ɛma kasa yɛ fɛ na ɛhyɛ aso dɛ wɔ baguam kasa mu.\n• Chief Examiner BECE Kɔkɔbɔ:\n  - Sɛ wobu bɛ wɔ nsɛmtwerɛ mu a, kyerɛ bɛ no ntease ne kwan a ɛfa asɛm a woreka no ho pefee na woanya nkontaa a ɛkorɔn.",
     "examples": [
       {
@@ -197,8 +197,8 @@ export const JHS3_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua nkrataa twerɛ nhyehyɛe (friendly letter format: faako ne da a wɔtwerɛe, nkyia, asɛm titiriw, akyirekyerɛw ne din), amannɛbɔ ne nkyekyɛm pa a wɔde di nkunim wɔ BECE Twi nsɛmtwerɛ mu.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=l_a6a0u5GfE",
-    "youtubeId": "l_a6a0u5GfE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=TzvS9kKF6ao",
+    "youtubeId": "TzvS9kKF6ao",
     "keyNotes": "• Nkrataatwerɛ Ahorow Mmienu wɔ Twi Mu:\n  - 1. Krataa a Ɛkɔma Adamfo / Abusuafo (Informal / Friendly Letter).\n  - 2. Krataa a Ɛkɔma Dibiadefo / Aban / Adwumawura (Formal / Official Letter).\n• Friendly Letter Nhyehyɛe wɔ BECE Mu:\n  - 1. Akyirewfo Adrɛse ne Da (Top right corner) :\n      Presby J.H.S,\n      P.O. Box 45,\n      Mampong-Akuapem.\n      12 Ayɛwohomumɔ, 2026.\n  - 2. Nkyia a Ɛdi Kan (Left margin) : 'Me dɔfo Kwame,' anaasɛ 'Me nua pa Akosua,'.\n  - 3. Mfiase Asɛm (Introduction) : Amanneɛbɔ ne apɔmuden ho asɛmbisa.\n  - 4. Asɛm Titiriw (Body) : Nkyekyɛm mmienu anaa mmiensa a ɛbubu asɛmpɔ no gu mu fɛfɛɛfɛ.\n  - 5. Awiei Asɛm (Conclusion) : Nkyia ma abusuafo ne ahyɛde sɛ ɔntwerɛ mfa mmuae ntɛm.\n  - 6. Nkraa Awiei Mpaapaemu : 'Wo dɔfo adamfo,' anaasɛ 'Midi wo ho ni,'.\n  - 7. Din : Wo din koro pɛ (Nhwɛso: Yaw).\n• Chief Examiner BECE Kɔkɔbɔ:\n  - Mfa wo din abunu (full name) nntwerɛ krataa a ɛkɔma adamfo akyi! Twerɛ wo din koro pɛ.\n  - Twerɛ asɛm no kɔ akyiri nkyekyɛm nkyekyɛm, mfa nsa nhyɛ baabiara ntoto baabiara koraa.",
     "examples": [
       {
@@ -344,8 +344,8 @@ export const JHS3_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua ahemfo dwumadie wɔ Akanman mu, ahemfie adwumayɛfo (ɔkyeame, sanaahene, tufuhene), akonnwa tumi ne nsenkyerɛnne, mmusuakuo awotwe ne wɔn akyiwade ma BECE sɔhwɛ.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=l_a6a0u5GfE",
-    "youtubeId": "l_a6a0u5GfE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=SFd8XC2-hFs",
+    "youtubeId": "SFd8XC2-hFs",
     "keyNotes": "• Ahemfo Dwumadie wɔ Akanman Mu:\n  - Ɔhene yɛ ɔman no ti, ɔhwɛfo, asomdwoe sodifo, ne nananom nsamanfo ntamgyinafo.\n  - Ɔyɛ ɔmanhene, ɔmantene anaa adikro a ɔhwɛ asase ne agyapade so ma amansan.\n• Ahemfie Adwumayɛfo Titiriw:\n  - 1. Ɔkyeame (The Linguist) : Ɔkasa ma ɔhene ; ɔkura ɔkyeame poma a ɛkura nyansa nsenkyerɛnne. Obiara nkasakasa ɔhene tẽẽ gye sɛ ɛfa ɔkyeame ano.\n  - 2. Ɔhemmea (Queen Mother) : Ɔno na ɔpaw aberanteɛ a ɔfata sɛ ɔtena akonnwa no so ; ɔyɛ ɔhene fotufo titiriw.\n  - 3. Sanaahene : Ɔhwɛfo a ɔhwɛ sika ne ahemfie agyapadeɛ so.\n  - 4. Gyasehene : Ɔhwɛ ahemfie nsiesie ne afisɛm nyinaa so.\n  - 5. Ankobeahene : Ɔhene akyi boafo a ɔntu kwan, ɔtena fie hwɛ ɔman no so berɛ nyinaa.\n• Akanfo Mmusuakuo Awotwe (The 8 Akan Clans) ne Wɔn Akyeneboa (Totems):\n  - 1. Oyokoɔ : Akorɔma (Hawk / Falcon).\n  - 2. Bretuo : Ɔsebɔ (Leopard).\n  - 3. Aduana : Ɔkraman (Dog) anaasɛ Ogya (Fire).\n  - 4. Asakyiri : Ɔkɔdeɛ (Eagle) anaasɛ Ɔpɛtɛ (Vulture).\n  - 5. Asona : Kwaakwaadabi (Crow) anaasɛ Awo (Wild Boar).\n  - 6. Ɛkoɔna : Ɛkoɔ (Buffalo).\n  - 7. Asenee : Apan (Bat).\n  - 8. Agona : Akoo (Parrot).\n• Chief Examiner BECE Kɔkɔbɔ:\n  - Monkae Akanfo mmusuakuo awotwe no ne wɔn akyeneboa pɛpɛɛpɛ, na mommfa akorɔma mma Aduana anaasɛ ɔkraman mma Oyokoɔ!",
     "examples": [
       {

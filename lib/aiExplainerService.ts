@@ -423,3 +423,76 @@ Write a clear, plain-English tutoring explanation that simplifies this concept a
     timeoutMs: 22000
   });
 }
+
+/**
+ * Goes through every slide page and extracts 1 main crisp, exam-ready Question & Answer flashcard per page.
+ */
+export async function extractFlashcardsForSlidesWithAI(
+  slides: Array<{ pageNumber: number; title: string; rawText: string }>,
+  deckTitle: string,
+  apiKey?: string
+): Promise<Record<number, { question: string; answer: string; hint?: string }>> {
+  const results: Record<number, { question: string; answer: string; hint?: string }> = {};
+  if (!slides || slides.length === 0) return results;
+
+  const systemPrompt = `You are an expert university flashcard creator (Anki / Spaced Repetition specialist).
+Your job is to go through every single slide page and create 1 crisp, high-yield Question & Answer flashcard per page.
+Rules:
+1. Make the QUESTION direct, specific, and exam-style (testing the main definition, formula, list of points, or core concept on that page).
+2. Make the ANSWER clear, concise, and easy to memorize (2-4 sentences or short numbered points).
+3. Return ONLY valid JSON.`;
+
+  // Process in chunks of 18 pages in parallel so even 50-page decks finish quickly
+  const chunkSize = 18;
+  const chunks: Array<Array<{ pageNumber: number; title: string; rawText: string }>> = [];
+  for (let i = 0; i < slides.length; i += chunkSize) {
+    chunks.push(slides.slice(i, i + chunkSize));
+  }
+
+  await Promise.all(
+    chunks.map(async (chunk) => {
+      const pagesBlock = chunk
+        .map(s => `[PAGE ${s.pageNumber}: ${s.title}]\n${(s.rawText || s.title).slice(0, 650)}`)
+        .join('\n\n---\n\n');
+
+      const userPrompt = `Course / Deck: "${deckTitle}"
+Create 1 main flashcard (Question & Answer) for EACH of the following ${chunk.length} pages:
+
+${pagesBlock}
+
+Return ONLY valid JSON in this exact format:
+{
+  "cards": [
+    {
+      "pageNumber": 1,
+      "question": "Direct, specific flashcard question for this page",
+      "answer": "Clear, structured answer with the key facts/definitions from this page",
+      "hint": "Short 1-line memory hint"
+    }
+  ]
+}`;
+
+      const raw = await callLLMText(systemPrompt, userPrompt, {
+        apiKey,
+        jsonMode: true,
+        timeoutMs: 14000
+      });
+
+      const parsed = safeParseJSON<{ cards?: any[] }>(raw);
+      if (parsed && Array.isArray(parsed.cards)) {
+        for (const c of parsed.cards) {
+          const pNum = Number(c.pageNumber);
+          if (pNum && typeof c.question === 'string' && typeof c.answer === 'string' && c.question.trim() && c.answer.trim()) {
+            results[pNum] = {
+              question: c.question.trim(),
+              answer: c.answer.trim(),
+              hint: typeof c.hint === 'string' ? c.hint.trim() : ''
+            };
+          }
+        }
+      }
+    })
+  );
+
+  return results;
+}

@@ -116,7 +116,7 @@ export default function HomePage() {
             </p>
 
             {/* Action Buttons - Desktop & Tablet (Hidden on Mobile) */}
-            <div className="hidden sm:flex flex-row items-center justify-center gap-3 pt-2 w-full max-w-none mx-auto">
+            <div className="hidden sm:flex flex-wrap flex-row items-center justify-center gap-3 pt-2 w-full max-w-none mx-auto">
               <Link
                 href="/jhs"
                 id="tour-home-launch"
@@ -131,6 +131,14 @@ export default function HomePage() {
                 className="w-auto px-6 py-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm transition-all shadow-lg shadow-purple-500/30 flex items-center justify-center gap-2 group cursor-pointer"
               >
                 <span>Launch SHS (WASSCE) Portal</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+
+              <Link
+                href="/university"
+                className="w-auto px-6 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm transition-all shadow-lg shadow-slate-950/30 flex items-center justify-center gap-2 group cursor-pointer border border-slate-700/80"
+              >
+                <span>Launch University Portal</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
 
@@ -318,48 +326,51 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Card 3: University AI Slide Copilot (Minimal) */}
-          <div className="rounded-2xl bg-white/70 backdrop-blur-md border border-slate-200/80 p-6 flex flex-col justify-between shadow-xs hover:border-slate-400 transition-all group">
+          {/* Card 3: University AI Slide Copilot (Live) */}
+          <div className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-6 flex flex-col justify-between shadow-xl">
             <div className="space-y-4">
-              <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold">
-                <Brain className="w-5 h-5" />
+              <div className="w-11 h-11 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold">
+                <Brain className="w-6 h-6" />
               </div>
 
               <div>
                 <div className="flex items-center justify-between">
                   <h3 className="text-xl font-bold text-slate-900">University &amp; Tertiary</h3>
-                  <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200 font-semibold">
-                    In Development
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200">
+                    Live Now
                   </span>
                 </div>
-                <p className="text-xs text-slate-500 font-medium mt-0.5">Slide Intelligence &amp; Spaced Study Planner</p>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">Slide Intelligence, Leo Flashcards &amp; Spaced Study Planner</p>
               </div>
 
               <p className="text-xs text-slate-600 leading-relaxed">
-                Upload your lecture slides. Extracts core exam principles, eliminates slide fluff, and structures an active recall study timetable.
+                Access verified university lecture slides or upload your own PDFs. Extracts core exam principles, auto-generates 1-card-per-page SM-2 flashcards, and builds a spaced study planner.
               </p>
 
-              <div className="space-y-1.5 pt-2 border-t border-slate-100 text-slate-600 text-xs">
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
-                  <span>Page-by-page fundamental breakdown</span>
+              <div className="space-y-2 pt-2 border-t border-slate-100 text-slate-700">
+                <div className="flex items-center gap-2 text-xs font-medium">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Page-by-Page Breakdown &amp; 10-to-1 Digest</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
-                  <span>Formula &amp; definition extraction</span>
+                <div className="flex items-center gap-2 text-xs font-medium">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Auto-Extracted SM-2 Flashcards &amp; Decks</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
-                  <span>Spaced repetition &amp; active recall prompts</span>
+                <div className="flex items-center gap-2 text-xs font-medium">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Audio Cram Mode &amp; Spaced Study Planner</span>
                 </div>
               </div>
             </div>
 
             <div className="pt-6">
-              <div className="w-full py-2.5 px-4 rounded-xl bg-slate-100 text-slate-500 font-medium text-xs flex items-center justify-center gap-2 border border-slate-200 select-none">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                <span>Under Development • Coming Soon</span>
-              </div>
+              <Link
+                href="/university"
+                className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm"
+              >
+                <span>Enter University Section</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </div>

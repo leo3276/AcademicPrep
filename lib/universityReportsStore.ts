@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { supabaseAdmin, isSupabaseConfigured } from './supabaseClient';
 
 export interface UniversityContentReport {
   id: string;
@@ -17,27 +18,70 @@ export interface UniversityContentReport {
 }
 
 const REPORTS_FILE = path.join(process.cwd(), 'data', 'university_reports.json');
-
-function ensureDataDir(): void {
-  const dir = path.dirname(REPORTS_FILE);
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
-}
+const REPORTS_MANIFEST = 'university_reports_manifest.json';
+const DOCUMENTS_BUCKET = 'documents';
 
 export async function getStoredContentReports(): Promise<UniversityContentReport[]> {
-  try {
-    ensureDataDir();
-    if (!fs.existsSync(REPORTS_FILE)) {
-      fs.writeFileSync(REPORTS_FILE, JSON.stringify([], null, 2), 'utf8');
-      return [];
+  // 1. Primary on Cloud / Vercel: Supabase Storage
+  if (isSupabaseConfigured) {
+    try {
+      const { data: pubData } = supabaseAdmin.storage
+        .from(DOCUMENTS_BUCKET)
+        .getPublicUrl(REPORTS_MANIFEST);
+
+      if (pubData?.publicUrl) {
+        const res = await fetch(`${pubData.publicUrl}?t=${Date.now()}`, { cache: 'no-store' });
+        if (res.ok) {
+          const parsed = await res.json();
+          if (Array.isArray(parsed)) return parsed;
+        }
+      }
+    } catch (err) {
+      console.warn('[universityReportsStore] Supabase fetch note:', err);
     }
-    const raw = fs.readFileSync(REPORTS_FILE, 'utf8');
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
+  }
+
+  // 2. Local fallback
+  try {
+    if (fs.existsSync(REPORTS_FILE)) {
+      const raw = fs.readFileSync(REPORTS_FILE, 'utf8');
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    }
   } catch (err) {
-    console.warn('[universityReportsStore] Error reading reports:', err);
-    return [];
+    console.warn('[universityReportsStore] Local read note:', err);
+  }
+
+  return [];
+}
+
+async function saveContentReports(reports: UniversityContentReport[]): Promise<void> {
+  const payload = JSON.stringify(reports, null, 2);
+
+  // 1. Safe local write (ignored on read-only Vercel serverless)
+  try {
+    const dir = path.dirname(REPORTS_FILE);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    fs.writeFileSync(REPORTS_FILE, payload, 'utf8');
+  } catch {
+    // Read-only filesystem on Vercel
+  }
+
+  // 2. Supabase Storage persistence
+  if (isSupabaseConfigured) {
+    try {
+      await supabaseAdmin.storage
+        .from(DOCUMENTS_BUCKET)
+        .upload(REPORTS_MANIFEST, Buffer.from(payload), {
+          contentType: 'application/json',
+          upsert: true,
+          cacheControl: '0'
+        });
+    } catch (err) {
+      console.warn('[universityReportsStore] Supabase save note:', err);
+    }
   }
 }
 
@@ -53,8 +97,7 @@ export async function addContentReport(
   };
 
   const updated = [newReport, ...existing];
-  ensureDataDir();
-  fs.writeFileSync(REPORTS_FILE, JSON.stringify(updated, null, 2), 'utf8');
+  await saveContentReports(updated);
   return newReport;
 }
 
@@ -74,7 +117,6 @@ export async function updateContentReportStatus(
     ...(status === 'resolved' ? { resolvedAt: new Date().toISOString() } : {}),
   };
 
-  ensureDataDir();
-  fs.writeFileSync(REPORTS_FILE, JSON.stringify(existing, null, 2), 'utf8');
+  await saveContentReports(existing);
   return existing[index];
 }

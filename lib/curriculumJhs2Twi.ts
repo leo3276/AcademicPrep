@@ -15,8 +15,8 @@ export const JHS2_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua Akanfo nkyia ahodoɔ sɛnea berɛ ne abusua teɛ, amanneɛbɔ ne abusuabɔ nsɛmfua wɔ abusua kɛseɛ no mu.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Fj2sXv0u-0g",
-    "youtubeId": "Fj2sXv0u-0g",
+    "youtubeUrl": "https://www.youtube.com/watch?v=rPOM0JIAYcc",
+    "youtubeId": "rPOM0JIAYcc",
     "keyNotes": "• Akanfo Nkyia Ahodoɔ (Traditional Greetings):\n  - Anɔpa nkyia: \"Mema wo akye\" (Mepa wo kyɛw, me ma wo akye).\n  - Awia nkyia: \"Mema wo aha\" (Mepa wo kyɛw, me ma wo aha).\n  - Anwummere nkyia: \"Mema wo adwo\" (Mepa wo kyɛw, me ma wo adwo).\n• Nnyeasoɔ Ahodoɔ Sɛnea Abusua Teɛ (Responses by Clan/Patrimony):\n  - Ɔbosomfo / Asona / Ɛkoɔna: \"Yaa ahenewa !\" / \"Yaa asona !\"\n  - Biretuo / Agona: \"Yaa amponyin !\" / \"Yaa agona !\"\n  - Oyoko: \"Yaa anana !\"\n  - Nnyeasoɔ a wɔtaa de ma pii: \"Yaa agya\" (panin barima), \"Yaa ɛna\" (panin baa), \"Yaa nua\" (wo mfɛfo).\n• Amanneɛbɔ (Inquiring after news/welfare):\n  - \"Wo ho te sɛn ?\" -> \"Me ho yɛ, aseda nka Nyame.\"\n  - \"Amanneɛ bɔ me ?\" -> \"Amanneɛ bɔne bi nni hɔ, asomdwoeɛ ara na ɛwɔ hɔ.\"\n• Abusuabɔ Nsɛmfua (Kinship Terminology):\n  - Agya / Papa, Ɛna / Maame, Wɔfa (mother's brother - maternal uncle), Sewaa (father's sister - paternal aunt).\n  - Wɔfase (nephew/niece - sister's child), Nana (grandparent / grandchild).",
     "examples": [
       {
@@ -91,8 +91,8 @@ export const JHS2_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua adeyɔ asɛm (verbs), kabea ahodoɔ (tenses: daa kabea, mprempren kabea, daakye kabea, atwam kabea) ne ne kasamufã.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=FZGugFqDr60",
-    "youtubeId": "FZGugFqDr60",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7k3vpdZ7bk8",
+    "youtubeId": "7k3vpdZ7bk8",
     "keyNotes": "• Adeyɔ Asɛm Nkyerɛase (The Verb):\n  - Asɛmfua a ɛkyerɛ adeɛ a obi reyɛ, adeɛ a ato obi, anaa tebea a obi wom (action, state of being).\n  - Nhwɛsoɔ: kɔ, ba, didi, nom, twerɛ, kenkan, da, sɔre.\n• Kabea Ahodoɔ (Tenses and Aspects):\n  1. Daa Kabea (Simple Present): Adeyɔ a ɛkɔ so daa: \"Me kɔ sukuu daa.\" / \"Kofi di fufuo.\"\n  2. Mprempren Kabea (Present Progressive / Continuous): Wɔde ahyɛnsode 're-' ka adeyɔ no ho: \"Me-re-kɔ sukuu\" (I am going to school); \"Ama re-noa aduane.\"\n  3. Daakye Kabea (Future Tense): Wɔde ahyɛnsode 'bɛ-' ka adeyɔ no ho: \"Me-bɛ-kɔ Kumasi ɔkyena\" (I will go to Kumasi tomorrow); \"Yɛ-bɛ-twerɛ sɔhwɛ.\"\n  4. Atwam Kabea (Past Tense):\n     - Adeyɔ a ano teatea no to '-eɛ' anaa '-yɛ': kɔ -> kɔ-e; yɛ -> yɛ-e; ba -> baa-e.\n     - Adeyɔ a anom nnyegyei teatea: \"Kofi kɔɔ sukuu nnora.\"\n  5. Ayɛwie Kabea (Perfect Aspect): Wɔde 'a-' ka ho: \"Me-a-di aduane no\" (I have eaten the food); \"Ɔkyerɛkyerɛfoɔ no a-ba.\"",
     "examples": [
       {
@@ -165,8 +165,8 @@ export const JHS2_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua sɛnea wɔtwerɛ adamfofa ne abusuakrataa (informal letter) wɔ Akanfo amammere ne Twi kasammara pɛpɛɛpɛ mu.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=J_j2tL2_oQ4",
-    "youtubeId": "J_j2tL2_oQ4",
+    "youtubeUrl": "https://www.youtube.com/watch?v=8Pj5LoA738I",
+    "youtubeId": "8Pj5LoA738I",
     "keyNotes": "• Krataa a Wɔtwerɛ Kɔma Adamfo / Abusuafo Nhyehyɛe:\n  1. Otwerɛfoɔ Tebea / Adrɛs (Writer's Address):\n     - Ɛsɛ sɛ ɛba krataa no benkum anaa nifa so soro (right top corner).\n     - Nhwɛsoɔ:\n       Presby J.H.S,\n       P. O. Box 24,\n       Aburi-Akuapem.\n       24 Ɔbɛnem, 2026.\n  2. Nkyia a Ɛfata (Salutation):\n     - \"Me dɔfo Kwabena,\" / \"Me dɔfo Maame Ama,\" / \"M'adamfo pa Kofi,\".\n  3. Mfitiaseɛ (Introduction):\n     - Nkyia ne apɔmuden ho asɛmmisa: \"Mekye wo dɔɔso. Menam krataa yi so kyerɛw kɔma wo sɛ mepɛ sɛ mehunu sɛnea wo ho teɛ. Me nso Onyame adom me ho yɛ papa.\"\n  4. Krataa no Asɛm Titiriw (Body of Letter):\n     - Kyerɛ asɛm pɔtee nti a woretwerɛ krataa no (ebia sukuu mu nsɛm, akwamma mu nsɛm, anaa abusuasɛm).\n  5. Nkabom ne Nnawɔtwe Awieeɛ (Conclusion):\n     - Krafoɔ: \"Kye wo maame ne wo papa ma me. Mehwɛ kwan sɛ wobɛtwerɛ me nso ntɛm.\"\n  6. Otwerɛfoɔ Nkabom Edin (Valediction / Sign-off):\n     - \"Wo dɔfo adamfo,\" / \"Wo ba a ɔdɔ wo,\"\n     - Kwame.",
     "examples": [
       {
@@ -276,8 +276,8 @@ export const JHS2_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua anansesɛm nhyehyɛe, nnwom (mmoguo), Kweku Ananse suban, ne asuadeɛ a mmeranteɛ nya firi anansesɛm mu.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=F0k9L39Tsd4",
-    "youtubeId": "F0k9L39Tsd4",
+    "youtubeUrl": "https://www.youtube.com/watch?v=WavJqvFXrI0",
+    "youtubeId": "WavJqvFXrI0",
     "keyNotes": "• Anansesɛm Nhyehyɛe (Structure of Akan Folktales):\n  - Mfitiaseɛ Ahyɛnsode: Ɔkasafoɔ ka sɛ: \"Yɛnsesɛ nsa o!\" -> Atiefoɔ bua sɛ: \"Nsa nko ara!\"\n  - Mfitiaseɛ asɛm: \"Tete asɛm bi ne sɛ...\" anaa \"Kane tete bi, ɛkɔm kɛseɛ bi sii...\"\n  - Asɛm no mfinimfini: Tebea a ɛsɔre (conflict), nkontompo, anaa akwanside.\n  - Mmoguo (Interlude songs): Nnwom a atiefoɔ to de gye ahome na wɔde kyerɛ anigyeɛ wɔ anansesɛm no mu.\n  - Awieeɛ Afotu: \"M'anansesɛm a metoeɛ yi, sɛ ɛyɛ dɛ o, sɛ ɛnyɛ dɛ o, ebi nkɔ na ebi mmra...\"\n• Kweku Ananse Suban (Character of Kweku Ananse):\n  - Aniferefoɔ (clever / cunning): Ɔwɔ nyansa pii nanso ɔde yɛ nnaadaa.\n  - Pɛsɛmenkominya (selfishness) ne Anibere / Adifudepɛ (greed): Ɔpɛ sɛ ɔno nko ara di adeɛ pa nyinaa.\n  - Ne Nsunsuansoɔ: Ne nnaadaa ne n'anibere ma n'anim gu ase daa; ɛno nti na Ananse te ntentan mu wɔ dan afãafã.\n• Asuadeɛ a Ɛwɔ Anansesɛm mu:\n  - Ɛkyerɛ mmɔfra sɛ nkontompo ne awudiesɛm nni nkɔsoɔ.\n  - Ɛkyerɛ nokoredie, obu ma mpanyimfo, ne mmɔdenbɔ.",
     "examples": [
       {
@@ -312,8 +312,8 @@ export const JHS2_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua Akanfo gyidihyɛ wɔ Otweaduampɔn Onyame, abosom, nananom nsamanfo, nsagu (libation) ne akyiwadeɛ (taboos) ho.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=teu7BCZTgDs",
-    "youtubeId": "teu7BCZTgDs",
+    "youtubeUrl": "https://www.youtube.com/watch?v=goryqihXRpo",
+    "youtubeId": "goryqihXRpo",
     "keyNotes": "• Otweaduampɔn Onyame (The Supreme God):\n  - Akanfo gye di sɛ Onyankopɔn ne Ɔbɔadeɛ Kɛseɛ a ɔbɔɔ soro ne fam ne nnipa nyinaa.\n  - Ne din ahodoɔ: Otweduampɔn (The Dependable One), Borebore (The Architect/Creator), Onyame Kwame (God of Saturday).\n• Abosom (Lesser Deities):\n  - Wɔgye di sɛ Onyankopɔn bɔɔ abosom sɛ n'asomafoɔ ma nnipa.\n  - Abosom no bi te nsuo kɛseɛ (Tano, Pra, Densu), mmepɔ, ne kwaeɛ mu.\n• Nananom Nsamanfo (The Ancestors):\n  - Mpanyimfo a wɔtenaa ase yiye, woo mma, nyaa mfeɛ pii, na wɔwui awu pa no na wɔbɛyɛ nsamanfoɔ wɔ Asamando.\n  - Wɔhwɛ abusua no so, ma awoɔ, siane bɔne, na wɔtua nkontompo so ka.\n• Nsagu / Mpaebɔ (Libation):\n  - Akanfo mpaebɔ a wɔde nsuo anaa nsa gu fam de frɛ: (1) Onyame, (2) Asaase Yaa, (3) Abosom, (4) Nananom Nsamanfo.\n• Akyiwadeɛ (Taboos):\n  - Nnoɔma a wɔabara wɔ kuro mu sɛ obi nnyɛ (sɛ ebia: adware asubɔnten mu Fofie da, awudiesɛm, korɔnobɔ, efie nnidiiɛ bɔne).",
     "examples": [
       {
@@ -348,8 +348,8 @@ export const JHS2_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua Akanfo afahyɛ ahodoɔ (Odwira, Akwasidae, Fetu Afahye, Bakatue, Aboakyer) ne atetesaw (Adowa, Kete, Fontomfrom) ho adesua.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=1bFN7KGTdB0",
-    "youtubeId": "1bFN7KGTdB0",
+    "youtubeUrl": "https://www.youtube.com/watch?v=24VxcwpjoC4",
+    "youtubeId": "24VxcwpjoC4",
     "keyNotes": "• Akanfo Afahyɛ Titiriw:\n  1. Odwira Afahyɛ: Akuapemfoɔ, Akyemfoɔ ne Akwamufoɔ na edi. Ɛyɛ ahotew, ahengua ho horo, ne bayerɛ foforɔ afahyɛ.\n  2. Adae Afahyɛ (Akwasidae ne Awukudae): Asanteman na edi afe koro biara mu nnawɔtwe nsia nsia de hyɛ ahengua ne nananom nsamanfo anuonyam.\n  3. Fetu Afahye: Oguaa (Cape Coast) Fantefoɔ na edi de kae ahotew ne nkɔsoɔ.\n  4. Bakatue: Ɛlmina (Edina) Fantefoɔ na edi de bue Benya asubɔnten ano ma apofofoɔ kɔ nsuo mu.\n  5. Aboakyer: Simpa (Winneba) Effutufoɔ na edi; Tuafo ne Dɛntsefo kɔkyere wansane teaseɛ de ba ahemfie.\n• Mfasoɔ a Ɛwɔ Afahyɛ Di mu:\n  - Ɛde asomdwoeɛ, nkabom ne mpuntuo ba kuro mu.\n  - Wɔde gye sika de si sukuu, ayaresabea, ne nsuo abura.\n  - Ɛkyerɛ mmabun amammere ne atetesɛm.\n• Akanfo Asaw Titiriw (Traditional Dances):\n  - Adowa: Asaw a Akanfoɔ taa sa wɔ ayie, awareɛ, ne afahyɛ mu; nsa ne nan nneyɛe kura nkyerɛase pɔtee.\n  - Kete: Ahemfie asaw a ahemfo ne ahemmaa sa wɔ sankuo ne akyene dɛdɛ akyi.\n  - Fontomfrom: Ahemfo asaw kɛseɛ a akyene akɛseɛ na ɛbɔ ma wɔsa kyerɛ akokoduro.",
     "examples": [
       {

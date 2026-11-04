@@ -7,6 +7,8 @@ import { CurriculumTopic } from './types';
 export const SHS_PHOTOGRAPHY_TOPICS: CurriculumTopic[] = [
   {
     "id": "shs1-ph-t1-camera-types-parts-care",
+    "youtubeUrl": "https://www.youtube.com/watch?v=BsSjEhktkzU",
+    "youtubeId": "BsSjEhktkzU",
     "subjectId": "photography",
     "level": "SHS 1",
     "term": 1,
@@ -213,6 +215,8 @@ export const SHS_PHOTOGRAPHY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-ph-t1-composition-camera-handling",
+    "youtubeUrl": "https://www.youtube.com/watch?v=R0xGzst6PRA",
+    "youtubeId": "R0xGzst6PRA",
     "subjectId": "photography",
     "level": "SHS 1",
     "term": 1,
@@ -417,6 +421,8 @@ export const SHS_PHOTOGRAPHY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-ph-t2-film-formats-loading",
+    "youtubeUrl": "https://www.youtube.com/watch?v=li4SkCs7B_Y",
+    "youtubeId": "li4SkCs7B_Y",
     "subjectId": "photography",
     "level": "SHS 1",
     "term": 2,
@@ -623,6 +629,8 @@ export const SHS_PHOTOGRAPHY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-ph-t2-exposure-aperture-shutter-iso",
+    "youtubeUrl": "https://www.youtube.com/watch?v=n0_EF9Empn4",
+    "youtubeId": "n0_EF9Empn4",
     "subjectId": "photography",
     "level": "SHS 1",
     "term": 2,
@@ -829,6 +837,8 @@ export const SHS_PHOTOGRAPHY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs1-ph-t3-lighting-natural-modifiers",
+    "youtubeUrl": "https://www.youtube.com/watch?v=spWdc9ItHCY",
+    "youtubeId": "spWdc9ItHCY",
     "subjectId": "photography",
     "level": "SHS 1",
     "term": 3,
@@ -1033,6 +1043,8 @@ export const SHS_PHOTOGRAPHY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-ph-t1-lens-focal-length-depth-of-field",
+    "youtubeUrl": "https://www.youtube.com/watch?v=34jkJoN8qOI",
+    "youtubeId": "34jkJoN8qOI",
     "subjectId": "photography",
     "level": "SHS 2",
     "term": 1,
@@ -1237,6 +1249,8 @@ export const SHS_PHOTOGRAPHY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-ph-t1-darkroom-black-white-printing",
+    "youtubeUrl": "https://www.youtube.com/watch?v=O31OZgnCoAw",
+    "youtubeId": "O31OZgnCoAw",
     "subjectId": "photography",
     "level": "SHS 2",
     "term": 1,
@@ -1455,6 +1469,8 @@ export const SHS_PHOTOGRAPHY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-ph-t2-studio-flash-lighting",
+    "youtubeUrl": "https://www.youtube.com/watch?v=gMzoByb5WVw",
+    "youtubeId": "gMzoByb5WVw",
     "subjectId": "photography",
     "level": "SHS 2",
     "term": 2,
@@ -1674,6 +1690,8 @@ export const SHS_PHOTOGRAPHY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-ph-t2-portrait-photography",
+    "youtubeUrl": "https://www.youtube.com/watch?v=QFTBasATRZE",
+    "youtubeId": "QFTBasATRZE",
     "subjectId": "photography",
     "level": "SHS 2",
     "term": 2,
@@ -1873,6 +1891,8 @@ export const SHS_PHOTOGRAPHY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-ph-t3-documentary-event-photography",
+    "youtubeUrl": "https://www.youtube.com/watch?v=a2HRnw3sxOo",
+    "youtubeId": "a2HRnw3sxOo",
     "subjectId": "photography",
     "level": "SHS 2",
     "term": 3,
@@ -2072,6 +2092,8 @@ export const SHS_PHOTOGRAPHY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs2-ph-t3-nature-cultural-photography",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3nS39SlaMcM",
+    "youtubeId": "3nS39SlaMcM",
     "subjectId": "photography",
     "level": "SHS 2",
     "term": 3,
@@ -2271,6 +2293,8 @@ export const SHS_PHOTOGRAPHY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-ph-t1-digital-capture-file-formats",
+    "youtubeUrl": "https://www.youtube.com/watch?v=J3rD6f6kXQk",
+    "youtubeId": "J3rD6f6kXQk",
     "subjectId": "photography",
     "level": "SHS 3",
     "term": 1,
@@ -2482,6 +2506,8 @@ export const SHS_PHOTOGRAPHY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-ph-t2-image-editing-retouching",
+    "youtubeUrl": "https://www.youtube.com/watch?v=r9Z8xY7IUjo",
+    "youtubeId": "r9Z8xY7IUjo",
     "subjectId": "photography",
     "level": "SHS 3",
     "term": 2,
@@ -2686,6 +2712,8 @@ export const SHS_PHOTOGRAPHY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-ph-t2-printing-mounting-presentation",
+    "youtubeUrl": "https://www.youtube.com/watch?v=sq1jLWctN84",
+    "youtubeId": "sq1jLWctN84",
     "subjectId": "photography",
     "level": "SHS 3",
     "term": 2,
@@ -2889,6 +2917,8 @@ export const SHS_PHOTOGRAPHY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-ph-t3-commercial-photography-business",
+    "youtubeUrl": "https://www.youtube.com/watch?v=V5IKDxKSI0M",
+    "youtubeId": "V5IKDxKSI0M",
     "subjectId": "photography",
     "level": "SHS 3",
     "term": 3,
@@ -3092,6 +3122,8 @@ export const SHS_PHOTOGRAPHY_TOPICS: CurriculumTopic[] = [
   },
   {
     "id": "shs3-ph-t3-wassce-photography-portfolio",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5KTUh0LGU-A",
+    "youtubeId": "5KTUh0LGU-A",
     "subjectId": "photography",
     "level": "SHS 3",
     "term": 3,

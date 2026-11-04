@@ -171,8 +171,8 @@ export const SHS2_SCIENCE_TOPICS: CurriculumTopic[] = [
     "description": "Structure of the respiratory tract, mechanics of breathing (ventilation), gas exchange at the alveoli, aerobic vs anaerobic respiration, and effects of smoking.",
     "isFreeTrial": false,
     "isVip": true,
-    "youtubeUrl": "https://www.youtube.com/watch?v=mOKmjYwfDGU",
-    "youtubeId": "mOKmjYwfDGU",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ZB7uA5o0mS4",
+    "youtubeId": "ZB7uA5o0mS4",
     "keyNotes": "• Breathing Mechanics (Inhalation vs Exhalation):\n  - Inhalation: Diaphragm contracts and flattens; external intercostal muscles contract pulling ribs upward and outward; thoracic volume increases; thoracic pressure drops below atmospheric pressure; air rushes into lungs.\n  - Exhalation: Diaphragm relaxes into dome shape; external intercostals relax and ribs move down and in; thoracic volume decreases; pressure rises above atmospheric; air forced out.\n• Alveolar Adaptations for Gas Exchange:\n  - Enormous surface area; single-cell thin squamous epithelium; dense capillary network; moist internal lining.\n• Cellular Respiration:\n  - Aerobic: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + 36-38 ATP (complete breakdown in mitochondria).\n  - Anaerobic in animals: Glucose → 2 Lactic acid + 2 ATP (oxygen debt incurred).\n  - Anaerobic in yeast (fermentation): Glucose → 2 Ethanol + 2 CO₂ + 2 ATP.",
     "detailedNotes": {
       "introduction": "Respiration releases the chemical energy locked in food molecules through aerobic or anaerobic catabolic pathways.",

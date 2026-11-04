@@ -246,8 +246,8 @@ export const JHS1_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua da biara din (Kradin) a yɛde to mmarima ne mmaa, ne abodin a ɛbata ho wɔ Akanfo amammerɛ mu.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=hd0_GZHHMrE",
-    "youtubeId": "hd0_GZHHMrE",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5vFgTxG2KH0",
+    "youtubeId": "5vFgTxG2KH0",
     "keyNotes": "• Kradin Nkyerɛase (The Soul / Day Name):\n  - Kradin yɛ din a Akanfo de to abofra gyina da pɔtee a wɔwoo no wɔ nnawɔtwe no mu.\n  - Akanfo gye di sɛ abofra no kra na ɛkura saa din no firi soro Nyankopɔ hɔ bae.\n• Nnawɔtwe Nna Ason Kradin Horo (Days and Day Names):\n  1. Kwasiada (Sunday):\n     - Ɔbarima: Kwasi (Bodua / Obuor)\n     - Ɔbaa: Akosua (Dampa / Aserewa)\n  2. Dwowda (Monday):\n     - Ɔbarima: Kwadwo (Okoto / Okoto-nko-nkosuo)\n     - Ɔbaa: Adwoa (Badwo / Akoto)\n  3. Benada (Tuesday):\n     - Ɔbarima: Kwabena (Otuo / Ebo)\n     - Ɔbaa: Abenaa (Kosia / Nyaako)\n  4. Wukuada (Wednesday):\n     - Ɔbarima: Kwaku (Da-a-wuo / Bonsam)\n     - Ɔbaa: Akua (Obisi / Da-a-wuo)\n  5. Yawoada (Thursday):\n     - Ɔbarima: Yaw (Preko / Barima)\n     - Ɔbaa: Yaa (Agromma / Bosuo)\n  6. Fida (Friday):\n     - Ɔbarima: Kofi (Okyere / Babone / Ntiful)\n     - Ɔbaa: Afua (Baafi / Nkosoɔ)\n  7. Memeneda (Saturday):\n     - Ɔbarima: Kwame (Atoapoma / Oteanankannuro)\n     - Ɔbaa: Ama (Nyamewa / Adoma).\n• Agyadin (Surname / Father's Name):\n  - Din a agya de to ne ba de hyɛ n'awofo, n'agya anaa ne nuabarima anuonyam (sɛ ebia: Ofori, Addo, Asare, Danso, Frempong, Safo).\n• Abodin (Appellations):\n  - Mmrane anaa nkamfo asɛm a ɛbata din no ho (sɛ ebia: Kwadwo Okoto, Kwame Atoapoma).",
     "examples": [
       {
@@ -320,8 +320,8 @@ export const JHS1_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua awo ho amanne, da a ɛto so awɔtwe a wɔde abofra pue (abadinto), ne nsu ne nsa ho nkyerɛkyerɛ.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Fj2sXv0u-0g",
-    "youtubeId": "Fj2sXv0u-0g",
+    "youtubeUrl": "https://www.youtube.com/watch?v=G4uAQf1ByBQ",
+    "youtubeId": "G4uAQf1ByBQ",
     "keyNotes": "• Awo Ho Amanne wɔ Akuapem Man mu:\n  - Wɔwo abofra a, wɔmfa no mpue adihɔ ntɛm; ɔda dan mu kɔsi da a ɛto so awɔtwe (da a wɔwoo no da no ara).\n  - Wɔgye di sɛ nnafua nson a edi kan no, abofra no yɛ ɔhɔho a obetumi asan akɔ asamando bere biara.\n• Abadinto / Dinto Amanne (The Naming Ceremony):\n  - Wɔyɛ dinto amanne no anɔpa hemahema ansa na owia apue.\n  - Abofra no papa abusuafo na wɔba maame no fie bɛto abofra no din.\n  - Din a wɔto abofra no taa firi agya fam (Agyadin - sɛ ebia agya papa anaa ne maame din).\n• Nsu ne Nsa Ho Amanne (The Truth & Integrity Ritual):\n  - Ɔpanyin a ɔreto din no fa ne nsaatia nifa de nsuo petepete abofra no tɛkrɛma so mprɛnsa ka sɛ:\n    'Wo se nsu a, nsu a!' (When you say water, let it be water).\n  - Afei ɔde nsa (nsã anaa nsa dɔkɔdɔkɔ) ka abofra no tɛkrɛma so mprɛnsa ka sɛ:\n    'Wo se nsa a, nsa a!' (When you say wine, let it be wine).\n  - Mfaso: Ɛkyerɛ abofra no nokwarewodi firi ne mmofraase sɛ ɔnka nokware daa, na ɔnnka nsu nkyerɛ nsa.\n• Akyɛde ne Anigye:\n  - Agya no de akyɛde (ataade, nsu, sika, nku) ma ɔyere no ne abofra no de da no ase wɔ awo no ho.",
     "examples": [
       {
@@ -357,8 +357,8 @@ export const JHS1_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua bragoro amanne ma mmaayewa, ne bo a ɛsom ma ahoteɛ ne anidie wɔ mmeranteberɛ ne mmabaaberɛ mu.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=0R1H3X7o1kM",
-    "youtubeId": "0R1H3X7o1kM",
+    "youtubeUrl": "https://www.youtube.com/watch?v=OSvkomVf1Ac",
+    "youtubeId": "OSvkomVf1Ac",
     "keyNotes": "• Bra Yɛ Nkyerɛase (Puberty Rites for Girls):\n  - Bragoro yɛ amanne a Akanfo yɛ ma abaayewa a wanya ne bra a edi kan (first menstruation) de kyerɛ sɛ wanyin abɛyɛ ɔbaabun a obetumi aware.\n  - Sɛ abaayewa no hu ne bra a, ɔka kyerɛ ne maame, na maame no nso kɔka kyerɛ Ɔhemmaa anaa mpanyimfo.\n• Bragoro Amanne Horo:\n  1. Ahomeka ne Ahopopo: Ɔhemmaa anaa mpanimfo hwɛ sɛ abaayewa no nyinsɛn ansa na wɔayɛ amanne no. Sɛ wanyinsɛn ansa na ɔrebɔ bra a, wɔfrɛ no 'Kyiribra' - ɛyɛ akyiwade kɛse!\n  2. Nsuo gu Dan mu: Wɔde abaayewa no kɔ asuo mu kɔhohoro ne ho, de nwonwone gu ne so de kyerɛ ahotew.\n  3. Kosua a Ɔmene: Wɔma abaayewa no mene kosua mũ a wɔannoa mfonini biara (boiled egg swallowed whole) na ama wawo mma pa.\n  4. Ɛtoɔ a Wɔkeka: Wɔkeka ɛto kɔkɔɔ ne fitaa ma nkurɔfo didi na wɔbɔ sanku to dwom anigye mu.\n  5. Sika ne Ntoma a Wɔhyehyɛ: Wɔfura no kente fɛfɛɛfɛ, de sika kɔkɔɔ, ahene ne asoatam gu ne ho tena bagua mu ma mpanimfo bɛma no akyɛde.\n• Mfaso a Ɛwɔ Bragoro so:\n  - Ɛbɔ mmaayewa ho ban firi mmofraase nyinsɛn ne awarebɔne ho.\n  - Ɛma mmabaa nya obu ma wɔn honam na wɔkora wɔn mmeranteberɛ so fɛfɛɛfɛ.\n  - Ɛkyerɛ mmabaa aduannoa, afiesiesie ne awarebɔ ho nyansa.",
     "examples": [
       {
@@ -394,8 +394,8 @@ export const JHS1_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua Akan aware nhyehyɛe: kokooko (abowmubɔ), tiri nsa, awaregyae ne aware mu asɛyɛde.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Fj2sXv0u-0g",
-    "youtubeId": "Fj2sXv0u-0g",
+    "youtubeUrl": "https://www.youtube.com/watch?v=cGB7Sl_Ljk4",
+    "youtubeId": "cGB7Sl_Ljk4",
     "keyNotes": "• Aware Nkyerɛase wɔ Akanfo mu:\n  - Aware yɛ nkabom kronkron a ɛda barima ne ɔbaa ntam a mmara ne amammerɛ gye tom sɛ wɔntena sɛ okunu ne ɔyere.\n  - Wɔ Akanman mu no, aware nnyɛ nnipa mmienu nko ara ntam asɛm; ɛyɛ MMUSUA MMIE NU ntam nkabom a emu dɔ.\n• Aware Amanne Anammɔn Horo:\n  1. Ahwehwɛde / Nhwehwɛmu (Investigation):\n     - Mmusua mmienu no hwehwɛ wɔn ho wɔn ho mu yiye: sɛ yarebɔne (asram, kwata), korɔnobɔ, abufuo, anaa abosonsom biara nni abusua no mu.\n  2. Kɔkɔɔkɔ / Kasasia (The Knocking Ceremony):\n     - Aberante no awofo kɔ kɔbɔ abaayewa no awofo abow mu de nsa (schnapps mmienu) ne sika kakra kyerɛ wɔn adwene.\n  3. Tiri Nsa ne Tiri Sika (The Bride Price / Dowry):\n     - Da a wɔbɛware pɔtee no, aberante no abusua kura nnoɔma ba:\n       * Tiri nsa (gin / schnapps).\n       * Tiri sika (head money).\n       * Akonta-gye-sekan (brother-in-law fee).\n       * Maame tiri sika ne tam, papa ntoma ne danta.\n       * Ayeforo ntoma, ahene ne nnoɔma a abaayewa no de bɛkɔ awareɛ.\n• Aware mu Asɛyɛde:\n  - Okunu Asɛyɛde: Hwɛ ɔyere ne mma so (adidie, ntoma, fie, asomdwoe), dɔ ne obu.\n  - Ɔyere Asɛyɛde: Aduannoa pa, fie siesie, obu ma okunu ne n'abusuafo, mma ntetee pa.",
     "examples": [
       {
@@ -544,8 +544,8 @@ export const JHS1_TWI_TOPICS: CurriculumTopic[] = [
     "description": "Sua Twi akenkan ne ntease (comprehension), nkɔmmɔbɔ atwerɛ, ne nkrataa atwerɛ (letter writing) wɔ Akuapem Twi mu.",
     "isFreeTrial": true,
     "isVip": false,
-    "youtubeUrl": "https://www.youtube.com/watch?v=Fj2sXv0u-0g",
-    "youtubeId": "Fj2sXv0u-0g",
+    "youtubeUrl": "https://www.youtube.com/watch?v=_qfPleEuYCc",
+    "youtubeId": "_qfPleEuYCc",
     "keyNotes": "• Akenkan ne Ntease (Reading & Comprehension):\n  - Akenkan pa hwehwɛ sɛ wotumi kenkan Twi akyerɛwamba no ntɛmntɛm a wonnsinsim mu.\n  - Hwɛ anom nnyegyei (e, ɛ, o, ɔ) ne hwene nnyegyei so yiye bere a worekenkan no.\n  - Sɛ wowie akenkan no a, bua nsɛmmisa a ɛfa asɛm no ho tẽẽ firi akenkan no mu.\n• Atwerɛ Horo wɔ Akuapem Twi mu (Types of Essays):\n  1. Nsɛnkyerɛnne Atwerɛ (Descriptive Essay): Wotwerɛ de kyerɛ sɛnea biribi, beae anaa nipa bi te (sɛ ebia: 'Me Sukuu Fie', 'Me Maame', 'Me Kurom').\n  2. Asɛm a Esii Ho Atwerɛ (Narrative Essay): Wotwerɛ fa asɛm bi a esii anaa anwummerɛ bi ho (sɛ ebia: 'Da a Mewerɛ Remmfi Da', 'Odwira Afahyɛ a Mekɔe').\n  3. Krataa Atwerɛ (Letter Writing):\n     - Krataa a Yɛtwerɛ Kɔma Ɔyɔnko (Informal Letter): Ɛkura nkyerɛwde: Akyi Address (beae ne da), Nkyea ('Me nua pa Kofi / M'adamfo Kwame'), Ahyɛase, Emu Nsɛm, Nkonkabɔ ne Awiei ('Wo nua nokwafo').\n     - Krataa a Ɛkɔma Panin / Panyin (Formal Letter): Address mmienu na ɛwɔ so, Ahyɛnse a ɛwɔ abodin, ne Nsɛm a emu da hɔ fann.\n• Nkyerɛw Nhyehyɛe Pa:\n  - Fa akyi-pɔ (.), kɔma (,), asɛmbisa (?) si baabi a ɛfata pɛpɛɛpɛ.\n  - Hyɛ akyerɛwase biara ase ne akyerɛw kɛse (capital letter).",
     "examples": [
       {
