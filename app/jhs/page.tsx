@@ -133,7 +133,7 @@ export default function JhsPortalPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Top Banner / Welcome */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4.5 sm:p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
@@ -141,7 +141,7 @@ export default function JhsPortalPage() {
               GES / NaCCA Standard Curriculum
             </span>
           </div>
-          <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
             Junior High School Curriculum Portal
           </h1>
           <p className="text-xs text-slate-600">
@@ -169,7 +169,7 @@ export default function JhsPortalPage() {
               <button
                 key={lvl}
                 onClick={() => handleLevelSelect(lvl)}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs font-bold transition-all ${
                   selectedLevel === lvl
                     ? 'bg-blue-600 text-white shadow-sm'
                     : 'text-slate-600 hover:text-slate-900'
@@ -213,7 +213,7 @@ export default function JhsPortalPage() {
       {/* Progress & Dynamic Exam Trigger Row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Progress Card */}
-        <div id="tour-topic-mastery" className="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-4">
+        <div id="tour-topic-mastery" className="p-4.5 sm:p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-4">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-600">
               {isShsStudent ? 'Curriculum Reference' : `${selectedLevel} Topic Mastery`}
@@ -274,7 +274,7 @@ export default function JhsPortalPage() {
         </div>
 
         {/* BECE Past Questions Card */}
-        <div id="tour-bece-past-questions" className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-blue-400 shadow-sm transition space-y-3 flex flex-col justify-between">
+        <div id="tour-bece-past-questions" className="p-4.5 sm:p-6 rounded-2xl bg-white border border-slate-200 hover:border-blue-400 shadow-sm transition space-y-3 flex flex-col justify-between">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full">
@@ -303,7 +303,7 @@ export default function JhsPortalPage() {
         </div>
 
         {/* Trial Questions Card (Uploaded by Admin) */}
-        <div id="tour-trial-mocks" className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-emerald-400 shadow-sm transition space-y-3 flex flex-col justify-between">
+        <div id="tour-trial-mocks" className="p-4.5 sm:p-6 rounded-2xl bg-white border border-slate-200 hover:border-emerald-400 shadow-sm transition space-y-3 flex flex-col justify-between">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
@@ -372,7 +372,7 @@ export default function JhsPortalPage() {
             return (
               <div
                 key={subject.id}
-                className="group rounded-2xl bg-white border border-slate-200 hover:border-slate-300 p-6 shadow-2xs hover:shadow-xs transition flex flex-col justify-between space-y-4"
+                className="group rounded-2xl bg-white border border-slate-200 hover:border-slate-300 p-4.5 sm:p-6 shadow-2xs hover:shadow-xs transition flex flex-col justify-between space-y-4"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">

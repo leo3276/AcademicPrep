@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import TrafficTracker from '@/components/TrafficTracker';
 import OfflineAccessGuard from '@/components/OfflineAccessGuard';
+import MobileBottomNav from '@/components/MobileBottomNav';
 import PortalAuthGuard from '@/components/PortalAuthGuard';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.acadmicprep.com';
@@ -186,10 +187,11 @@ export default function RootLayout({
           <PortalAuthGuard />
           <TrafficTracker />
           <Navbar />
-          <main className="flex-1 w-full max-w-full overflow-x-hidden">
+          <main className="flex-1 w-full max-w-full overflow-x-hidden pb-16 xl:pb-0">
             {children}
           </main>
           <Footer />
+          <MobileBottomNav />
         </AuthProvider>
       </body>
     </html>

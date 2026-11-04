@@ -115,41 +115,92 @@ export default function HomePage() {
               Full JHS and SHS curriculum notes, instant WAEC-standard quizzes with step-by-step explanations, and 5 comprehensive elective programme strands.
             </p>
 
-            {/* Action Buttons - Desktop & Tablet (Hidden on Mobile) */}
-            <div className="hidden sm:flex flex-wrap flex-row items-center justify-center gap-3 pt-2 w-full max-w-none mx-auto">
-              <Link
-                href="/jhs"
-                id="tour-home-launch"
-                className="w-auto px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 group cursor-pointer"
-              >
-                <span>Launch JHS Portal</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+            {/* Action Buttons - Optimized for All Screens (Mobile App Carousel & Tap Cards) */}
+            <div className="pt-3 w-full max-w-2xl mx-auto px-1 sm:px-0">
+              {/* Mobile Quick Action Buttons Grid (< sm) */}
+              <div className="grid grid-cols-2 gap-2.5 sm:hidden">
+                <Link
+                  href="/jhs"
+                  className="p-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition shadow-md shadow-blue-500/25 flex items-center justify-between"
+                >
+                  <div className="flex items-center gap-2">
+                    <GraduationCap className="w-4 h-4 shrink-0" />
+                    <span>JHS Portal</span>
+                  </div>
+                  <ArrowRight className="w-3.5 h-3.5 shrink-0 opacity-80" />
+                </Link>
 
-              <Link
-                href="/shs"
-                className="w-auto px-6 py-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm transition-all shadow-lg shadow-purple-500/30 flex items-center justify-center gap-2 group cursor-pointer"
-              >
-                <span>Launch SHS (WASSCE) Portal</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+                <Link
+                  href="/shs"
+                  className="p-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition shadow-md shadow-purple-500/25 flex items-center justify-between"
+                >
+                  <div className="flex items-center gap-2">
+                    <BookOpenCheck className="w-4 h-4 shrink-0" />
+                    <span>SHS Portal</span>
+                  </div>
+                  <ArrowRight className="w-3.5 h-3.5 shrink-0 opacity-80" />
+                </Link>
 
-              <Link
-                href="/university"
-                className="w-auto px-6 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm transition-all shadow-lg shadow-slate-950/30 flex items-center justify-center gap-2 group cursor-pointer border border-slate-700/80"
-              >
-                <span>Launch University Portal</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+                <Link
+                  href="/university"
+                  className="p-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition shadow-md shadow-slate-950/25 border border-slate-700/80 flex items-center justify-between"
+                >
+                  <div className="flex items-center gap-2">
+                    <Brain className="w-4 h-4 shrink-0 text-cyan-300" />
+                    <span>University</span>
+                  </div>
+                  <ArrowRight className="w-3.5 h-3.5 shrink-0 opacity-80" />
+                </Link>
 
-              <button
-                type="button"
-                onClick={() => setShowApkModal(true)}
-                className="w-auto px-5 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm transition-all shadow-lg shadow-emerald-600/25 flex items-center justify-center gap-2 cursor-pointer border border-emerald-400/30"
-              >
-                <Smartphone className="w-4 h-4 text-emerald-200" />
-                <span>Android App (APK)</span>
-              </button>
+                <button
+                  type="button"
+                  onClick={() => setShowApkModal(true)}
+                  className="p-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition shadow-md shadow-emerald-600/25 border border-emerald-400/30 flex items-center justify-between"
+                >
+                  <div className="flex items-center gap-2">
+                    <Smartphone className="w-4 h-4 shrink-0 text-emerald-200" />
+                    <span>Android APK</span>
+                  </div>
+                  <ArrowRight className="w-3.5 h-3.5 shrink-0 opacity-80" />
+                </button>
+              </div>
+
+              {/* Desktop & Tablet Flex Buttons (sm+) */}
+              <div className="hidden sm:flex flex-wrap flex-row items-center justify-center gap-3">
+                <Link
+                  href="/jhs"
+                  id="tour-home-launch"
+                  className="w-auto px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 group cursor-pointer"
+                >
+                  <span>Launch JHS Portal</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+
+                <Link
+                  href="/shs"
+                  className="w-auto px-6 py-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm transition-all shadow-lg shadow-purple-500/30 flex items-center justify-center gap-2 group cursor-pointer"
+                >
+                  <span>Launch SHS (WASSCE) Portal</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+
+                <Link
+                  href="/university"
+                  className="w-auto px-6 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm transition-all shadow-lg shadow-slate-950/30 flex items-center justify-center gap-2 group cursor-pointer border border-slate-700/80"
+                >
+                  <span>Launch University Portal</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+
+                <button
+                  type="button"
+                  onClick={() => setShowApkModal(true)}
+                  className="w-auto px-5 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm transition-all shadow-lg shadow-emerald-600/25 flex items-center justify-center gap-2 cursor-pointer border border-emerald-400/30"
+                >
+                  <Smartphone className="w-4 h-4 text-emerald-200" />
+                  <span>Android App (APK)</span>
+                </button>
+              </div>
             </div>
 
             {/* Official WhatsApp Channel Link (Configured & Uploaded by Admin) */}
@@ -232,7 +283,7 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Card 1: JHS (ACTIVE) */}
-          <div id="tour-home-jhs" className="relative rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-6 shadow-xl flex flex-col justify-between overflow-hidden">
+          <div id="tour-home-jhs" className="relative rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-4.5 sm:p-6 shadow-xl flex flex-col justify-between overflow-hidden">
             <div className="absolute top-0 right-0 bg-blue-600 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-1 rounded-bl-xl shadow-xs">
               Active & Live Now
             </div>
@@ -279,7 +330,7 @@ export default function HomePage() {
           </div>
 
           {/* Card 2: SHS Section (Live) */}
-          <div className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-6 flex flex-col justify-between shadow-xl">
+          <div className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-4.5 sm:p-6 flex flex-col justify-between shadow-xl">
             <div className="space-y-4">
               <div className="w-11 h-11 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 flex items-center justify-center font-bold">
                 <BookOpenCheck className="w-6 h-6" />
@@ -327,7 +378,7 @@ export default function HomePage() {
           </div>
 
           {/* Card 3: University AI Slide Copilot (Live) */}
-          <div className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-6 flex flex-col justify-between shadow-xl">
+          <div className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-4.5 sm:p-6 flex flex-col justify-between shadow-xl">
             <div className="space-y-4">
               <div className="w-11 h-11 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold">
                 <Brain className="w-6 h-6" />
@@ -393,7 +444,7 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* BECE Past Questions Archive Card */}
-          <div id="tour-home-bece" className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 text-slate-900 p-6 sm:p-7 shadow-xl flex flex-col justify-between">
+          <div id="tour-home-bece" className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 text-slate-900 p-4.5 sm:p-7 shadow-xl flex flex-col justify-between">
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
                 <FileText className="w-3.5 h-3.5 text-slate-600" />
@@ -436,7 +487,7 @@ export default function HomePage() {
           </div>
 
           {/* BECE Trial & Mock Exam Card */}
-          <div id="tour-home-mocks" className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 text-slate-900 p-6 sm:p-7 shadow-xl flex flex-col justify-between">
+          <div id="tour-home-mocks" className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 text-slate-900 p-4.5 sm:p-7 shadow-xl flex flex-col justify-between">
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
                 <Award className="w-3.5 h-3.5 text-slate-600" />
@@ -482,7 +533,7 @@ export default function HomePage() {
 
       {/* Key Innovation: Dynamic Weekly Exam */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div id="tour-home-weekly" className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-6 sm:p-9 text-slate-900 shadow-xl">
+        <div id="tour-home-weekly" className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-4.5 sm:p-9 text-slate-900 shadow-xl">
           <div className="max-w-2xl space-y-4">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
               <Clock className="w-3.5 h-3.5 text-slate-600" />
@@ -517,7 +568,7 @@ export default function HomePage() {
 
       {/* Android Mobile App (APK) Showcase Section */}
       <section id="mobile-app" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-slate-900/60 backdrop-blur-md rounded-2xl border border-slate-600/50 p-6 sm:p-9 text-white shadow-xl">
+        <div className="bg-slate-900/60 backdrop-blur-md rounded-2xl border border-slate-600/50 p-4.5 sm:p-9 text-white shadow-xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left Content Column */}
             <div className="lg:col-span-7 space-y-5">
@@ -579,7 +630,7 @@ export default function HomePage() {
                 <a
                   href={OFFICIAL_APK_DOWNLOAD_URL}
                   download="AcademicPrep-v1.0.0.apk"
-                  className="px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all shadow-lg shadow-emerald-600/30 flex items-center gap-2 cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Download className="w-4 h-4" />
                   <span>Install APK Directly ({APK_FILE_SIZE})</span>
@@ -588,7 +639,7 @@ export default function HomePage() {
                 <button
                   type="button"
                   onClick={() => setShowApkModal(true)}
-                  className="px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-xs transition-all border border-white/20 flex items-center gap-2 cursor-pointer"
+                  className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-xs transition-all border border-white/20 flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Smartphone className="w-4 h-4 text-emerald-400" />
                   <span>Installation Guide</span>
@@ -665,7 +716,7 @@ export default function HomePage() {
 
       {/* Study Journal & WAEC Strategy Articles */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div id="tour-home-blog" className="bg-white/65 backdrop-blur-md rounded-3xl border border-white/50 p-6 sm:p-10 shadow-xl space-y-8">
+        <div id="tour-home-blog" className="bg-white/65 backdrop-blur-md rounded-3xl border border-white/50 p-4.5 sm:p-10 shadow-xl space-y-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-100 pb-6">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold mb-2">

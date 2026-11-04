@@ -1875,7 +1875,7 @@ export default function UniversityPortalPage() {
               <span>AcademicPrep</span>
             </Link>
             <span className="text-neutral-300">/</span>
-            <span className="font-medium text-neutral-900 truncate max-w-[120px] sm:max-w-none">University Slide Studio</span>
+            <span className="font-medium text-neutral-900 truncate max-w-[110px] sm:max-w-none">University Studio</span>
           </div>
 
           <div className="flex items-center gap-3">
@@ -2020,7 +2020,7 @@ export default function UniversityPortalPage() {
           </div>
 
           {/* Clean Segmented Tab Switcher */}
-          <div className="flex justify-center overflow-x-auto pb-1 no-scrollbar">
+          <div className="flex justify-start md:justify-center overflow-x-auto pb-1.5 px-2 no-scrollbar">
             <div className="inline-flex p-1 rounded-xl bg-neutral-100 border border-neutral-200/80 text-xs font-semibold">
               <button
                 onClick={() => setPortalMode('library')}
@@ -2154,14 +2154,14 @@ export default function UniversityPortalPage() {
                 </div>
 
                 {/* Level & Semester Pills */}
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-neutral-100 text-xs">
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wide mr-1">Level:</span>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-neutral-100 text-xs">
+                  <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
+                    <span className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wide mr-1 shrink-0">Level:</span>
                     {['All', ...UNIVERSITY_LEVELS].map(lvl => (
                       <button
                         key={lvl}
                         onClick={() => setSelectedLevelFilter(lvl)}
-                        className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition ${
+                        className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition shrink-0 ${
                           selectedLevelFilter === lvl
                             ? 'bg-blue-600 text-white'
                             : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
@@ -2172,13 +2172,13 @@ export default function UniversityPortalPage() {
                     ))}
                   </div>
 
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wide mr-1">Semester:</span>
+                  <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
+                    <span className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wide mr-1 shrink-0">Semester:</span>
                     {['All', ...UNIVERSITY_SEMESTERS].map(sem => (
                       <button
                         key={sem}
                         onClick={() => setSelectedSemesterFilter(sem)}
-                        className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition ${
+                        className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition shrink-0 ${
                           selectedSemesterFilter === sem
                             ? 'bg-blue-600 text-white'
                             : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
