@@ -14,17 +14,9 @@ export interface TourStep {
 
 export const HOMEPAGE_TOUR_STEPS: TourStep[] = [
   {
-    id: 'home-launch',
-    targetId: 'tour-home-launch',
-    stepNumber: 1,
-    title: 'Launch JHS Study Portal',
-    text: 'Click here anytime to enter the active Junior High School curriculum portal, where you can study JHS 1, 2, and 3 notes and take chapter quizzes.',
-    tip: 'No payment required to get started with your first 3 topics.',
-  },
-  {
     id: 'home-whatsapp',
     targetId: 'tour-home-whatsapp',
-    stepNumber: 2,
+    stepNumber: 1,
     title: 'Official WhatsApp Channel',
     text: 'Follow our official WhatsApp channel for daily WAEC & BECE questions, examination updates, and study alerts directly from teachers.',
     tip: 'Click "Follow Channel" to join free directly on WhatsApp.',
