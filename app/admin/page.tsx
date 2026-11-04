@@ -101,6 +101,7 @@ import { parseVideoUrl } from '@/lib/mediaUtils';
 import BroadcastModal from '@/components/BroadcastModal';
 import { 
   UniversitySlide, 
+  UniversityVideo, 
   GHANAIAN_UNIVERSITIES, 
   UNIVERSITY_LEVELS, 
   UNIVERSITY_SEMESTERS, 
@@ -168,7 +169,25 @@ export default function AdminDashboardPage() {
   // University Content Reports Store (Step 3)
   const [universityContentReports, setUniversityContentReports] = useState<any[]>([]);
   const [loadingUniReports, setLoadingUniReports] = useState(false);
-  const [uniSubTab, setUniSubTab] = useState<'slides' | 'reports' | 'requests'>('slides');
+  const [uniSubTab, setUniSubTab] = useState<'slides' | 'pending' | 'videos' | 'reports' | 'requests'>('slides');
+  // University Videos Store
+  const [universityVideos, setUniversityVideos] = useState<UniversityVideo[]>([]);
+  const [loadingUniVideos, setLoadingUniVideos] = useState(false);
+  const [uniVideoFilter, setUniVideoFilter] = useState('');
+  const [uniVideoTitle, setUniVideoTitle] = useState('');
+  const [uniVideoCourseCode, setUniVideoCourseCode] = useState('');
+  const [uniVideoCourseTitle, setUniVideoCourseTitle] = useState('');
+  const [uniVideoUniversity, setUniVideoUniversity] = useState(GHANAIAN_UNIVERSITIES[0]);
+  const [uniVideoDepartment, setUniVideoDepartment] = useState(UNIVERSITY_DEPARTMENTS[0]);
+  const [uniVideoLevel, setUniVideoLevel] = useState(UNIVERSITY_LEVELS[0]);
+  const [uniVideoSemester, setUniVideoSemester] = useState(UNIVERSITY_SEMESTERS[0]);
+  const [uniVideoUrl, setUniVideoUrl] = useState('');
+  const [uniVideoDuration, setUniVideoDuration] = useState('');
+  const [uniVideoDescription, setUniVideoDescription] = useState('');
+  const [uniVideoIsFeatured, setUniVideoIsFeatured] = useState(false);
+  const [uniVideoUploading, setUniVideoUploading] = useState(false);
+  const [uniVideoFeedback, setUniVideoFeedback] = useState<{ kind: 'ok' | 'bad'; text: string } | null>(null);
+  const [uniSlideTabFilter, setUniSlideTabFilter] = useState<'all' | 'approved' | 'pending' | 'rejected'>('all');
   const [uniReportFilter, setUniReportFilter] = useState<'all' | 'pending' | 'resolved' | 'dismissed'>('all');
   // University Course Requests Store (Step 5)
   const [universityCourseRequests, setUniversityCourseRequests] = useState<any[]>([]);
@@ -455,7 +474,7 @@ export default function AdminDashboardPage() {
   const loadUniversitySlides = async () => {
     setLoadingUniSlides(true);
     try {
-      const res = await fetch('/api/university/slides', { cache: 'no-store' });
+      const res = await fetch('/api/university/slides?status=all', { cache: 'no-store' });
       const data = await res.json();
       if (data.success && Array.isArray(data.slides)) {
         setUniversitySlides(data.slides);
@@ -464,6 +483,106 @@ export default function AdminDashboardPage() {
       console.warn('Failed to load university slides:', e);
     } finally {
       setLoadingUniSlides(false);
+    }
+  };
+
+  const loadUniversityVideos = async () => {
+    setLoadingUniVideos(true);
+    try {
+      const res = await fetch('/api/university/videos', { cache: 'no-store' });
+      const data = await res.json();
+      if (data.success && Array.isArray(data.videos)) {
+        setUniversityVideos(data.videos);
+      }
+    } catch (e) {
+      console.warn('Failed to load university videos:', e);
+    } finally {
+      setLoadingUniVideos(false);
+    }
+  };
+
+  const handleUpdateSlideStatus = async (id: string, status: 'approved' | 'rejected', slideTitle: string) => {
+    try {
+      const res = await fetch('/api/university/slides', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, status }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setUniversitySlides(prev =>
+          prev.map(s => (s.id === id ? { ...s, status } : s))
+        );
+        alert(status === 'approved' ? `"${slideTitle}" has been approved and is now live!` : `"${slideTitle}" was rejected.`);
+      } else {
+        alert(data.error || 'Failed to update slide status');
+      }
+    } catch {
+      alert('Network error updating slide status');
+    }
+  };
+
+  const handleUploadUniVideo = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!uniVideoTitle.trim() || !uniVideoUrl.trim()) {
+      setUniVideoFeedback({ kind: 'bad', text: 'Video Title and Video URL are required.' });
+      return;
+    }
+    setUniVideoUploading(true);
+    setUniVideoFeedback(null);
+    try {
+      const res = await fetch('/api/university/videos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: uniVideoTitle.trim(),
+          courseCode: uniVideoCourseCode.trim() || undefined,
+          courseTitle: uniVideoCourseTitle.trim() || undefined,
+          university: uniVideoUniversity,
+          department: uniVideoDepartment,
+          level: uniVideoLevel,
+          semester: uniVideoSemester,
+          videoUrl: uniVideoUrl.trim(),
+          duration: uniVideoDuration.trim() || undefined,
+          description: uniVideoDescription.trim() || undefined,
+          isFeatured: uniVideoIsFeatured,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setUniVideoFeedback({ kind: 'ok', text: `Video "${data.video.title}" published successfully!` });
+        setUniVideoTitle('');
+        setUniVideoCourseCode('');
+        setUniVideoCourseTitle('');
+        setUniVideoUrl('');
+        setUniVideoDuration('');
+        setUniVideoDescription('');
+        setUniVideoIsFeatured(false);
+        await loadUniversityVideos();
+      } else {
+        setUniVideoFeedback({ kind: 'bad', text: data.error || 'Failed to publish video.' });
+      }
+    } catch (err: any) {
+      setUniVideoFeedback({ kind: 'bad', text: err.message || 'Error publishing video.' });
+    } finally {
+      setUniVideoUploading(false);
+    }
+  };
+
+  const handleDeleteUniVideo = async (id: string, videoTitle: string) => {
+    if (!confirm(`Are you sure you want to remove "${videoTitle}"?`)) return;
+    try {
+      const res = await fetch(`/api/university/videos?id=${encodeURIComponent(id)}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setUniversityVideos(prev => prev.filter(v => v.id !== id));
+      } else {
+        alert(data.error || 'Could not delete video.');
+      }
+    } catch {
+      alert('Failed to delete video.');
     }
   };
 
@@ -5303,11 +5422,11 @@ export default function AdminDashboardPage() {
             </div>
 
             {/* Sub-Tab Bar */}
-            <div className="flex items-center gap-2 border-b border-slate-200 pb-3">
+            <div className="flex items-center gap-2 border-b border-slate-200 pb-3 overflow-x-auto">
               <button
                 type="button"
                 onClick={() => setUniSubTab('slides')}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-2 ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-2 shrink-0 ${
                   uniSubTab === 'slides'
                     ? 'bg-blue-600 text-white shadow-xs'
                     : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
@@ -5318,7 +5437,52 @@ export default function AdminDashboardPage() {
                 <span className={`px-1.5 py-0.2 rounded-full font-mono text-[10px] ${
                   uniSubTab === 'slides' ? 'bg-blue-700 text-white' : 'bg-slate-100 text-slate-600'
                 }`}>
-                  {universitySlides.length}
+                  {universitySlides.filter(s => (s.status || 'approved') === 'approved').length}
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setUniSubTab('pending')}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-2 shrink-0 ${
+                  uniSubTab === 'pending'
+                    ? 'bg-amber-600 text-white shadow-xs'
+                    : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+                }`}
+              >
+                <Clock className="w-3.5 h-3.5" />
+                <span>Waiting for Approval</span>
+                {universitySlides.filter(s => s.status === 'pending').length > 0 ? (
+                  <span className="px-1.5 py-0.2 rounded-full font-mono text-[10px] bg-amber-500 text-white font-bold animate-pulse">
+                    {universitySlides.filter(s => s.status === 'pending').length}
+                  </span>
+                ) : (
+                  <span className={`px-1.5 py-0.2 rounded-full font-mono text-[10px] ${
+                    uniSubTab === 'pending' ? 'bg-amber-700 text-white' : 'bg-slate-100 text-slate-600'
+                  }`}>
+                    0
+                  </span>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setUniSubTab('videos');
+                  loadUniversityVideos();
+                }}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-2 shrink-0 ${
+                  uniSubTab === 'videos'
+                    ? 'bg-blue-600 text-white shadow-xs'
+                    : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+                }`}
+              >
+                <VideoIcon className="w-3.5 h-3.5" />
+                <span>Video Lectures &amp; Briefings</span>
+                <span className={`px-1.5 py-0.2 rounded-full font-mono text-[10px] ${
+                  uniSubTab === 'videos' ? 'bg-blue-700 text-white' : 'bg-slate-100 text-slate-600'
+                }`}>
+                  {universityVideos.length}
                 </span>
               </button>
 
@@ -5685,16 +5849,18 @@ export default function AdminDashboardPage() {
                 </div>
               ) : (() => {
                 const q = uniSlideFilter.trim().toLowerCase();
-                const filtered = universitySlides.filter(s => {
-                  if (!q) return true;
-                  return (
-                    s.courseCode.toLowerCase().includes(q) ||
-                    s.title.toLowerCase().includes(q) ||
-                    s.university.toLowerCase().includes(q) ||
-                    (s.department && s.department.toLowerCase().includes(q)) ||
-                    (s.level && s.level.toLowerCase().includes(q))
-                  );
-                });
+                const filtered = universitySlides
+                  .filter(s => (s.status || 'approved') === 'approved')
+                  .filter(s => {
+                    if (!q) return true;
+                    return (
+                      s.courseCode.toLowerCase().includes(q) ||
+                      s.title.toLowerCase().includes(q) ||
+                      s.university.toLowerCase().includes(q) ||
+                      (s.department && s.department.toLowerCase().includes(q)) ||
+                      (s.level && s.level.toLowerCase().includes(q))
+                    );
+                  });
 
                 if (filtered.length === 0) {
                   return (
@@ -5793,6 +5959,440 @@ export default function AdminDashboardPage() {
               })()}
             </div>
               </>
+            )}
+
+            {/* SUB-TAB: PENDING COLLABORATOR SLIDES WAITING FOR APPROVAL */}
+            {uniSubTab === 'pending' && (
+              <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-5">
+                <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center font-bold">
+                      <Clock className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-slate-900">Collaborator Slides Awaiting Approval</h3>
+                      <p className="text-[11px] text-slate-500">
+                        Lecture slides submitted through the collaborator link. Accept requests to make them live on the university portal, or reject.
+                      </p>
+                    </div>
+                  </div>
+
+                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-100 text-amber-800">
+                    {universitySlides.filter(s => s.status === 'pending').length} Pending Submission{universitySlides.filter(s => s.status === 'pending').length === 1 ? '' : 's'}
+                  </span>
+                </div>
+
+                {(() => {
+                  const pendingSlides = universitySlides.filter(s => s.status === 'pending');
+                  if (pendingSlides.length === 0) {
+                    return (
+                      <div className="py-14 text-center border border-dashed border-slate-200 rounded-xl p-8 space-y-2">
+                        <CheckCircle2 className="w-8 h-8 text-emerald-500 mx-auto" />
+                        <p className="text-xs font-semibold text-slate-800">No slides waiting for approval</p>
+                        <p className="text-[11px] text-slate-500 max-w-sm mx-auto">
+                          When faculty, teaching assistants, or course reps submit slides via the collaborator link, they will appear here for your review.
+                        </p>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div className="overflow-x-auto border border-slate-200 rounded-xl">
+                      <table className="w-full text-left border-collapse text-xs">
+                        <thead>
+                          <tr className="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold uppercase text-[10px] tracking-wider">
+                            <th className="py-3 px-4">Course</th>
+                            <th className="py-3 px-4">Slide Title &amp; Notes</th>
+                            <th className="py-3 px-4">University &amp; Faculty</th>
+                            <th className="py-3 px-4">Submitted By</th>
+                            <th className="py-3 px-4">Date</th>
+                            <th className="py-3 px-4 text-right">Moderation Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100">
+                          {pendingSlides.map(slide => (
+                            <tr key={slide.id} className="hover:bg-amber-50/40 transition">
+                              <td className="py-3 px-4 whitespace-nowrap">
+                                <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 inline-block">
+                                  {slide.courseCode}
+                                </span>
+                              </td>
+                              <td className="py-3 px-4 min-w-[200px]">
+                                <p className="font-semibold text-slate-900 leading-snug">{slide.title}</p>
+                                {slide.description && (
+                                  <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">{slide.description}</p>
+                                )}
+                              </td>
+                              <td className="py-3 px-4 whitespace-nowrap text-[11px] text-slate-600">
+                                <div className="font-medium text-slate-800">{slide.university}</div>
+                                <div className="text-slate-400">{slide.department || 'General'} • {slide.level}</div>
+                              </td>
+                              <td className="py-3 px-4 whitespace-nowrap text-[11px]">
+                                <span className="font-medium text-slate-900">{slide.uploadedBy || 'Collaborator'}</span>
+                              </td>
+                              <td className="py-3 px-4 whitespace-nowrap text-[11px] text-slate-500 font-mono">
+                                {new Date(slide.uploadedAt).toLocaleDateString()}
+                              </td>
+                              <td className="py-3 px-4 whitespace-nowrap text-right">
+                                <div className="flex items-center justify-end gap-2">
+                                  {slide.fileUrl && (
+                                    <a
+                                      href={slide.fileUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="px-2.5 py-1 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-700 text-xs font-semibold flex items-center gap-1 transition"
+                                      title="Inspect PDF before approving"
+                                    >
+                                      <ExternalLink className="w-3.5 h-3.5" />
+                                      <span>Preview</span>
+                                    </a>
+                                  )}
+                                  <button
+                                    onClick={() => handleUpdateSlideStatus(slide.id, 'approved', slide.title)}
+                                    className="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center gap-1.5 transition shadow-xs cursor-pointer"
+                                    title="Accept and publish to live website"
+                                  >
+                                    <Check className="w-3.5 h-3.5" />
+                                    <span>Accept &amp; Publish</span>
+                                  </button>
+                                  <button
+                                    onClick={() => handleUpdateSlideStatus(slide.id, 'rejected', slide.title)}
+                                    className="px-2.5 py-1 rounded-lg border border-rose-200 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-semibold flex items-center gap-1 transition cursor-pointer"
+                                    title="Reject slide"
+                                  >
+                                    <X className="w-3.5 h-3.5" />
+                                    <span>Reject</span>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  );
+                })()}
+              </div>
+            )}
+
+            {/* SUB-TAB: UNIVERSITY VIDEO LECTURES & BRIEFINGS */}
+            {uniSubTab === 'videos' && (
+              <div className="space-y-6">
+                {/* Upload / Link Video Form */}
+                <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+                  <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                        <VideoIcon className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-bold text-slate-900">Upload / Embed University Video Lecture</h3>
+                        <p className="text-[11px] text-slate-500">
+                          Add YouTube links, Vimeo lectures, or direct video streams for university students.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {uniVideoFeedback && (
+                    <div className={`p-3 rounded-lg text-xs flex items-center gap-2.5 border ${
+                      uniVideoFeedback.kind === 'ok'
+                        ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                        : 'bg-rose-50 text-rose-800 border-rose-200'
+                    }`}>
+                      {uniVideoFeedback.kind === 'ok' ? (
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                      ) : (
+                        <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                      )}
+                      <span>{uniVideoFeedback.text}</span>
+                    </div>
+                  )}
+
+                  <form onSubmit={handleUploadUniVideo} className="space-y-4 text-xs">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <div>
+                        <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block mb-1">
+                          Course Code (Optional)
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. DCIT 101 or POLI 203"
+                          value={uniVideoCourseCode}
+                          onChange={e => setUniVideoCourseCode(e.target.value.toUpperCase())}
+                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs font-mono uppercase text-slate-900 focus:outline-none focus:border-blue-500"
+                        />
+                      </div>
+                      <div className="sm:col-span-2">
+                        <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block mb-1">
+                          Lecture / Video Title <span className="text-rose-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Introduction to Data Structures & Pointer Arithmetic"
+                          value={uniVideoTitle}
+                          onChange={e => setUniVideoTitle(e.target.value)}
+                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-blue-500"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block mb-1">
+                          Video URL (YouTube, Vimeo, MP4) <span className="text-rose-500">*</span>
+                        </label>
+                        <input
+                          type="url"
+                          placeholder="https://www.youtube.com/watch?v=... or .mp4 link"
+                          value={uniVideoUrl}
+                          onChange={e => setUniVideoUrl(e.target.value)}
+                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs font-mono text-slate-900 focus:outline-none focus:border-blue-500"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block mb-1">
+                          Video Duration (Optional)
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. 45 mins or 1h 15m"
+                          value={uniVideoDuration}
+                          onChange={e => setUniVideoDuration(e.target.value)}
+                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-blue-500"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+                      <div>
+                        <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block mb-1">
+                          University / Institution
+                        </label>
+                        <select
+                          value={uniVideoUniversity}
+                          onChange={e => setUniVideoUniversity(e.target.value)}
+                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-blue-500"
+                        >
+                          {GHANAIAN_UNIVERSITIES.map(u => (
+                            <option key={u} value={u}>{u}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block mb-1">
+                          Department / Faculty
+                        </label>
+                        <select
+                          value={uniVideoDepartment}
+                          onChange={e => setUniVideoDepartment(e.target.value)}
+                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-blue-500"
+                        >
+                          {UNIVERSITY_DEPARTMENTS.map(d => (
+                            <option key={d} value={d}>{d}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block mb-1">
+                          Level
+                        </label>
+                        <select
+                          value={uniVideoLevel}
+                          onChange={e => setUniVideoLevel(e.target.value)}
+                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-blue-500"
+                        >
+                          {UNIVERSITY_LEVELS.map(l => (
+                            <option key={l} value={l}>{l}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block mb-1">
+                          Semester
+                        </label>
+                        <select
+                          value={uniVideoSemester}
+                          onChange={e => setUniVideoSemester(e.target.value)}
+                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-blue-500"
+                        >
+                          {UNIVERSITY_SEMESTERS.map(s => (
+                            <option key={s} value={s}>{s}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block mb-1">
+                        Lecture Summary &amp; Recommended Chapters
+                      </label>
+                      <textarea
+                        rows={2}
+                        placeholder="Overview of the video lecture, key exam highlights, and timestamps..."
+                        value={uniVideoDescription}
+                        onChange={e => setUniVideoDescription(e.target.value)}
+                        className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-blue-500 resize-none"
+                      />
+                    </div>
+
+                    <div className="flex items-center justify-between pt-1">
+                      <label className="inline-flex items-center gap-2 cursor-pointer text-slate-700">
+                        <input
+                          type="checkbox"
+                          checked={uniVideoIsFeatured}
+                          onChange={e => setUniVideoIsFeatured(e.target.checked)}
+                          className="w-4 h-4 rounded text-blue-600 border-slate-300 focus:ring-blue-500"
+                        />
+                        <span className="font-medium">Pin as Featured Lecture Video</span>
+                      </label>
+
+                      <button
+                        type="submit"
+                        disabled={uniVideoUploading || !uniVideoTitle.trim() || !uniVideoUrl.trim()}
+                        className="px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-xs font-semibold shadow-xs flex items-center gap-2 transition"
+                      >
+                        {uniVideoUploading ? (
+                          <>
+                            <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                            <span>Publishing Video...</span>
+                          </>
+                        ) : (
+                          <>
+                            <VideoIcon className="w-3.5 h-3.5" />
+                            <span>Publish Video Lecture</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
+                {/* Video Catalog Table */}
+                <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+                  <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100">
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                        <VideoIcon className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-bold text-slate-900">University Video Lectures Catalog</h3>
+                        <p className="text-[11px] text-slate-500">All published video lectures visible to tertiary students.</p>
+                      </div>
+                    </div>
+
+                    <div className="relative">
+                      <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                      <input
+                        type="text"
+                        placeholder="Filter videos..."
+                        value={uniVideoFilter}
+                        onChange={e => setUniVideoFilter(e.target.value)}
+                        className="pl-8 pr-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 w-48 sm:w-64 focus:outline-none focus:border-blue-500"
+                      />
+                    </div>
+                  </div>
+
+                  {loadingUniVideos ? (
+                    <div className="py-12 text-center text-xs text-slate-400">
+                      <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                      <span>Loading university videos...</span>
+                    </div>
+                  ) : (() => {
+                    const q = uniVideoFilter.trim().toLowerCase();
+                    const filtered = universityVideos.filter(v => {
+                      if (!q) return true;
+                      return (
+                        v.title.toLowerCase().includes(q) ||
+                        (v.courseCode && v.courseCode.toLowerCase().includes(q)) ||
+                        (v.university && v.university.toLowerCase().includes(q)) ||
+                        (v.department && v.department.toLowerCase().includes(q))
+                      );
+                    });
+
+                    if (filtered.length === 0) {
+                      return (
+                        <div className="py-12 text-center border border-dashed border-slate-200 rounded-xl p-8 space-y-2">
+                          <VideoIcon className="w-8 h-8 text-slate-300 mx-auto" />
+                          <p className="text-xs font-semibold text-slate-800">No university video lectures published yet</p>
+                          <p className="text-[11px] text-slate-500 max-w-sm mx-auto">
+                            Use the form above to add YouTube lecture recordings, crash courses, or faculty briefing videos.
+                          </p>
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <div className="overflow-x-auto border border-slate-200 rounded-xl">
+                        <table className="w-full text-left border-collapse text-xs">
+                          <thead>
+                            <tr className="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold uppercase text-[10px] tracking-wider">
+                              <th className="py-3 px-4">Course</th>
+                              <th className="py-3 px-4">Video Title &amp; Details</th>
+                              <th className="py-3 px-4">University &amp; Faculty</th>
+                              <th className="py-3 px-4">Duration</th>
+                              <th className="py-3 px-4 text-right">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-slate-100">
+                            {filtered.map(v => (
+                              <tr key={v.id} className="hover:bg-slate-50/70 transition">
+                                <td className="py-3 px-4 whitespace-nowrap">
+                                  {v.courseCode ? (
+                                    <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 inline-block">
+                                      {v.courseCode}
+                                    </span>
+                                  ) : (
+                                    <span className="text-[11px] text-slate-400 italic">General</span>
+                                  )}
+                                </td>
+                                <td className="py-3 px-4 min-w-[200px]">
+                                  <p className="font-semibold text-slate-900 leading-snug">{v.title}</p>
+                                  {v.description && (
+                                    <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">{v.description}</p>
+                                  )}
+                                </td>
+                                <td className="py-3 px-4 whitespace-nowrap text-[11px] text-slate-600">
+                                  <div className="font-medium text-slate-800">{v.university || 'General'}</div>
+                                  <div className="text-slate-400">{v.department || 'General'} • {v.level || ''}</div>
+                                </td>
+                                <td className="py-3 px-4 whitespace-nowrap font-mono text-[11px] text-slate-500">
+                                  {v.duration || 'Video'}
+                                </td>
+                                <td className="py-3 px-4 whitespace-nowrap text-right">
+                                  <div className="flex items-center justify-end gap-1.5">
+                                    <a
+                                      href={v.videoUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-600 transition"
+                                      title="Open Video URL"
+                                    >
+                                      <ExternalLink className="w-3.5 h-3.5" />
+                                    </a>
+                                    <button
+                                      onClick={() => handleDeleteUniVideo(v.id, v.title)}
+                                      className="p-1.5 rounded-lg border border-slate-200 hover:bg-rose-50 hover:border-rose-200 text-slate-400 hover:text-rose-600 transition cursor-pointer"
+                                      title="Delete video"
+                                    >
+                                      <Trash2 className="w-3.5 h-3.5" />
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    );
+                  })()}
+                </div>
+              </div>
             )}
 
             {uniSubTab === 'reports' && (

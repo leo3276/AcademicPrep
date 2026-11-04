@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
@@ -7,14 +7,17 @@ import {
   FileText, 
   Check, 
   AlertCircle, 
-  Trash2, 
+  BookOpen, 
+  ArrowLeft, 
   ExternalLink, 
-  ArrowLeft,
-  Key,
-  Search,
-  BookOpen,
-  Building,
-  GraduationCap
+  Trash2, 
+  Search, 
+  Key, 
+  Lock,
+  GraduationCap,
+  Clock,
+  CheckCircle2,
+  XCircle
 } from 'lucide-react';
 import { 
   UniversitySlide, 
@@ -26,7 +29,6 @@ import {
 
 export default function CollaboratorUploadPage() {
   const [token, setToken] = useState<string>('');
-  const [tokenInput, setTokenInput] = useState<string>('');
   const [isValidToken, setIsValidToken] = useState<boolean | null>(null);
   const [validating, setValidating] = useState<boolean>(true);
 
@@ -67,20 +69,21 @@ export default function CollaboratorUploadPage() {
     }
   }, []);
 
-  const validateToken = async (testToken: string) => {
+  const validateToken = async (candidateToken: string) => {
     setValidating(true);
     try {
-      const res = await fetch(`/api/university/collaborator?token=${encodeURIComponent(testToken)}`);
+      const res = await fetch(`/api/university/collaborator?token=${encodeURIComponent(candidateToken)}`);
       const data = await res.json();
-      if (data.success && data.valid) {
+      if (res.ok && data.success && data.valid) {
         setIsValidToken(true);
-        setToken(testToken);
-        localStorage.setItem('academicprep_collab_token', testToken);
-        loadSlides();
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('academicprep_collab_token', candidateToken);
+        }
+        await loadSlides(candidateToken);
       } else {
         setIsValidToken(false);
       }
-    } catch (e) {
+    } catch {
       setIsValidToken(false);
     } finally {
       setValidating(false);
@@ -89,14 +92,20 @@ export default function CollaboratorUploadPage() {
 
   const handleManualTokenSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!tokenInput.trim()) return;
-    validateToken(tokenInput.trim());
+    if (!token.trim()) return;
+    validateToken(token.trim());
   };
 
-  const loadSlides = async () => {
+  const loadSlides = async (activeToken?: string) => {
     setLoadingSlides(true);
     try {
-      const res = await fetch('/api/university/slides', { cache: 'no-store' });
+      const tok = activeToken || token;
+      // Fetch with status=all so collaborator sees pending & approved slides
+      const res = await fetch(`/api/university/slides?status=all&token=${encodeURIComponent(tok)}`, {
+        headers: {
+          'x-collaborator-token': tok,
+        },
+      });
       const data = await res.json();
       if (data.success && Array.isArray(data.slides)) {
         setSlides(data.slides);
@@ -167,7 +176,10 @@ export default function CollaboratorUploadPage() {
       const data = await res.json();
 
       if (res.ok && data.success) {
-        setFeedback({ kind: 'ok', message: `Slide "${data.slide.title}" uploaded successfully!` });
+        setFeedback({ 
+          kind: 'ok', 
+          message: data.message || `Slide "${data.slide?.title || title}" uploaded! It is waiting for admin approval before going live.` 
+        });
         // Reset form
         setTitle('');
         setCourseCode('');
@@ -218,59 +230,69 @@ export default function CollaboratorUploadPage() {
            (s.department && s.department.toLowerCase().includes(q));
   });
 
-  // 1. TOKEN GATE (When no valid token is provided)
-  if (!validating && !isValidToken) {
+  // 1. TOKEN VALIDATION IN PROGRESS
+  if (validating) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 font-sans text-slate-800">
-        <div className="w-full max-w-md bg-white border border-slate-200 rounded-xl p-8 shadow-sm space-y-6">
-          <div className="space-y-2 text-center">
-            <div className="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center mx-auto text-slate-600">
-              <Key className="w-5 h-5" />
-            </div>
-            <h1 className="text-lg font-bold text-slate-900 tracking-tight">Collaborator Access Required</h1>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              This upload portal is restricted to authorized university collaborators, teaching assistants, and faculty contributors.
-            </p>
-          </div>
-
-          <form onSubmit={handleManualTokenSubmit} className="space-y-4">
-            <div>
-              <label className="block text-[11px] font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                Collaborator Token / Secret Key
-              </label>
-              <input
-                type="text"
-                value={tokenInput}
-                onChange={(e) => setTokenInput(e.target.value)}
-                placeholder="Paste token or collaborator link key..."
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:outline-none focus:border-slate-800 font-mono"
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition"
-            >
-              Verify Collaborator Access
-            </button>
-          </form>
-
-          <div className="pt-4 border-t border-slate-100 text-center text-xs text-slate-400">
-            Need an access link? Ask the AcademicPrep Platform Administrator.
-          </div>
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white border border-slate-200 rounded-2xl p-8 text-center space-y-4 shadow-sm">
+          <div className="w-10 h-10 border-2 border-slate-900 border-t-transparent rounded-full animate-spin mx-auto" />
+          <h1 className="text-base font-bold text-slate-900">Validating Collaborator Pass</h1>
+          <p className="text-xs text-slate-500">Checking your unique collaborator authorization token with AcademicPrep...</p>
         </div>
       </div>
     );
   }
 
-  // 2. LOADING STATE
-  if (validating) {
+  // 2. INVALID OR MISSING TOKEN SCREEN
+  if (!isValidToken) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center font-sans text-slate-400">
-        <div className="text-xs flex items-center gap-2">
-          <div className="w-4 h-4 border-2 border-slate-800 border-t-transparent rounded-full animate-spin" />
-          <span>Verifying collaborator authorization...</span>
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white border border-slate-200 rounded-2xl p-8 space-y-6 shadow-sm">
+          <div className="text-center space-y-2">
+            <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 border border-amber-200 flex items-center justify-center mx-auto font-bold">
+              <Lock className="w-6 h-6" />
+            </div>
+            <h1 className="text-xl font-bold text-slate-900">Collaborator Invitation Required</h1>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              This upload portal is reserved for authorized faculty members, teaching assistants, and university course representatives. Please use the personalized invitation link provided by the administrator or enter your invitation token below.
+            </p>
+          </div>
+
+          <form onSubmit={handleManualTokenSubmit} className="space-y-4">
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
+                Collaborator Token
+              </label>
+              <div className="relative">
+                <Key className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                <input
+                  type="text"
+                  value={token}
+                  onChange={(e) => setToken(e.target.value)}
+                  placeholder="Paste PREP-FACULTY-XXXX"
+                  className="w-full pl-9 pr-3 py-2 text-xs font-mono border border-slate-200 rounded-lg focus:outline-none focus:border-slate-800"
+                  required
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-2.5 px-4 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition"
+            >
+              Verify Collaborator Access
+            </button>
+          </form>
+
+          <div className="text-center pt-2 border-t border-slate-100">
+            <Link
+              href="/university"
+              className="text-xs text-slate-500 hover:text-slate-900 transition flex items-center justify-center gap-1.5"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Return to Public University Portal</span>
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -278,22 +300,22 @@ export default function CollaboratorUploadPage() {
 
   // 3. COLLABORATOR WORKSPACE
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-20">
+    <div className="min-h-screen bg-slate-50 text-slate-900 pb-20 font-sans">
       
-      {/* MINIMAL TOP BAR */}
+      {/* HEADER */}
       <header className="border-b border-slate-200 bg-white sticky top-0 z-30">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between text-xs">
           <div className="flex items-center gap-3">
             <Link 
               href="/university"
-              className="text-slate-500 hover:text-slate-900 transition flex items-center gap-1.5 font-medium"
+              className="text-slate-500 hover:text-slate-900 transition flex items-center gap-1.5"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Student Portal</span>
             </Link>
             <span className="text-slate-300">/</span>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-slate-900 truncate max-w-[130px] sm:max-w-none">Faculty & Collaborator Portal</span>
+              <span className="font-bold text-slate-900 truncate max-w-[130px] sm:max-w-none">Faculty &amp; Collaborator Portal</span>
               <span className="hidden sm:inline-block text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
                 Verified Contributor
               </span>
@@ -318,9 +340,12 @@ export default function CollaboratorUploadPage() {
         
         {/* PAGE HEADER */}
         <div className="space-y-1">
-          <h1 className="text-xl font-bold tracking-tight text-slate-900">Upload University Course Slides</h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-bold tracking-tight text-slate-900">Upload University Course Slides</h1>
+            <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-blue-100 text-blue-800">Admin Approval Workflow</span>
+          </div>
           <p className="text-xs text-slate-500">
-            Publish official lecture slides, handouts, and reading decks for Ghanaian university students.
+            Push official lecture slides and handouts. Uploaded slides are sent directly to the administrator for review and approval before appearing live on the student portal.
           </p>
         </div>
 
@@ -339,68 +364,94 @@ export default function CollaboratorUploadPage() {
         {/* TWO-COLUMN LAYOUT: UPLOAD FORM ON LEFT, RECENT SLIDES ON RIGHT */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* UPLOAD FORM (5 COLS) */}
-          <div className="lg:col-span-5 bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+          {/* LEFT COLUMN: UPLOAD FORM (5 COLS) */}
+          <div className="lg:col-span-5 bg-white border border-slate-200 rounded-xl p-5 sm:p-6 shadow-sm space-y-4">
             <div className="border-b border-slate-100 pb-3">
-              <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wide">Slide Metadata & PDF</h2>
-              <p className="text-[11px] text-slate-500">All fields are indexed for students in the university portal.</p>
+              <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wide">Course Slide Metadata</h2>
+              <p className="text-[11px] text-slate-500">All fields help students locate this deck instantly by course code.</p>
             </div>
 
-            <form onSubmit={handleUploadSubmit} className="space-y-3.5 text-xs">
+            <form onSubmit={handleUploadSubmit} className="space-y-4 text-xs">
               
-              {/* Course Code & Contributor Name */}
+              {/* FILE PICKER */}
+              <div>
+                <label className="block font-semibold text-slate-700 mb-1">
+                  Lecture Slide File (PDF) <span className="text-rose-500">*</span>
+                </label>
+                <div className="border border-dashed border-slate-300 hover:border-slate-400 rounded-lg p-4 text-center cursor-pointer transition bg-slate-50/50">
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".pdf,application/pdf"
+                    onChange={handleFileChange}
+                    className="hidden"
+                    id="collab-file-input"
+                  />
+                  <label htmlFor="collab-file-input" className="cursor-pointer block space-y-1">
+                    <Upload className="w-5 h-5 text-slate-400 mx-auto" />
+                    <p className="font-semibold text-slate-700 text-xs">
+                      {selectedFile ? selectedFile.name : 'Click to select PDF slide deck'}
+                    </p>
+                    <p className="text-[10px] text-slate-400">
+                      {selectedFile ? `${(selectedFile.size / (1024 * 1024)).toFixed(2)} MB • Ready to upload` : 'PDF presentations up to 50MB'}
+                    </p>
+                  </label>
+                </div>
+              </div>
+
+              {/* COURSE CODE & TITLE */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-700 uppercase mb-1">
-                    Course Code *
+                  <label className="block font-semibold text-slate-700 mb-1">
+                    Course Code <span className="text-rose-500">*</span>
                   </label>
                   <input
                     type="text"
                     value={courseCode}
-                    onChange={(e) => setCourseCode(e.target.value)}
+                    onChange={(e) => setCourseCode(e.target.value.toUpperCase())}
                     placeholder="e.g. DCIT 101"
-                    className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:border-slate-800 uppercase font-mono font-semibold"
+                    className="w-full px-2.5 py-2 font-mono uppercase text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-700 uppercase mb-1">
-                    Your Name / Role
+                  <label className="block font-semibold text-slate-700 mb-1">
+                    Slide Title <span className="text-rose-500">*</span>
                   </label>
                   <input
                     type="text"
-                    value={uploadedBy}
-                    onChange={(e) => setUploadedBy(e.target.value)}
-                    placeholder="e.g. Dr. Mensah / TA Kofi"
-                    className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:border-slate-800"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="e.g. Intro to Hardware"
+                    className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800"
+                    required
                   />
                 </div>
               </div>
 
-              {/* Slide Title */}
+              {/* COURSE NAME */}
               <div>
-                <label className="block text-[11px] font-semibold text-slate-700 uppercase mb-1">
-                  Slide Deck Title *
+                <label className="block font-semibold text-slate-700 mb-1">
+                  Full Course Name (Optional)
                 </label>
                 <input
                   type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="e.g. Lecture 3: Logic Gates & Boolean Algebra"
-                  className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:border-slate-800"
-                  required
+                  value={courseTitle}
+                  onChange={(e) => setCourseTitle(e.target.value)}
+                  placeholder="e.g. Introduction to Computer Science"
+                  className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800"
                 />
               </div>
 
-              {/* University Selector */}
+              {/* UNIVERSITY */}
               <div>
-                <label className="block text-[11px] font-semibold text-slate-700 uppercase mb-1">
-                  University / Institution *
+                <label className="block font-semibold text-slate-700 mb-1">
+                  University / Institution
                 </label>
                 <select
                   value={university}
                   onChange={(e) => setUniversity(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-md bg-white focus:outline-none focus:border-slate-800 font-medium"
+                  className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800 bg-white"
                 >
                   {GHANAIAN_UNIVERSITIES.map(u => (
                     <option key={u} value={u}>{u}</option>
@@ -408,15 +459,15 @@ export default function CollaboratorUploadPage() {
                 </select>
               </div>
 
-              {/* Department */}
+              {/* DEPARTMENT / FACULTY */}
               <div>
-                <label className="block text-[11px] font-semibold text-slate-700 uppercase mb-1">
+                <label className="block font-semibold text-slate-700 mb-1">
                   Department / Faculty
                 </label>
                 <select
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-md bg-white focus:outline-none focus:border-slate-800"
+                  className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800 bg-white"
                 >
                   {UNIVERSITY_DEPARTMENTS.map(d => (
                     <option key={d} value={d}>{d}</option>
@@ -424,16 +475,16 @@ export default function CollaboratorUploadPage() {
                 </select>
               </div>
 
-              {/* Level & Semester */}
+              {/* LEVEL & SEMESTER */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-700 uppercase mb-1">
-                    Level
+                  <label className="block font-semibold text-slate-700 mb-1">
+                    Academic Level
                   </label>
                   <select
                     value={level}
                     onChange={(e) => setLevel(e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-300 rounded-md bg-white focus:outline-none focus:border-slate-800 font-medium"
+                    className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800 bg-white"
                   >
                     {UNIVERSITY_LEVELS.map(l => (
                       <option key={l} value={l}>{l}</option>
@@ -441,13 +492,13 @@ export default function CollaboratorUploadPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-700 uppercase mb-1">
+                  <label className="block font-semibold text-slate-700 mb-1">
                     Semester
                   </label>
                   <select
                     value={semester}
                     onChange={(e) => setSemester(e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-300 rounded-md bg-white focus:outline-none focus:border-slate-800 font-medium"
+                    className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800 bg-white"
                   >
                     {UNIVERSITY_SEMESTERS.map(s => (
                       <option key={s} value={s}>{s}</option>
@@ -456,71 +507,55 @@ export default function CollaboratorUploadPage() {
                 </div>
               </div>
 
-              {/* Description */}
+              {/* CONTRIBUTOR NAME */}
               <div>
-                <label className="block text-[11px] font-semibold text-slate-700 uppercase mb-1">
-                  Brief Overview / Topics Covered
+                <label className="block font-semibold text-slate-700 mb-1">
+                  Your Name or Title (Optional)
                 </label>
-                <textarea
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Key concepts, units covered, or exam relevance..."
-                  rows={2}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:border-slate-800 resize-none"
+                <input
+                  type="text"
+                  value={uploadedBy}
+                  onChange={(e) => setUploadedBy(e.target.value)}
+                  placeholder="e.g. Dr. Mensah (Lecturer) or Course Rep"
+                  className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800"
                 />
               </div>
 
-              {/* PDF FILE PICKER */}
+              {/* DESCRIPTION / LECTURE NOTES */}
               <div>
-                <label className="block text-[11px] font-semibold text-slate-700 uppercase mb-1">
-                  PDF Lecture Slides File *
+                <label className="block font-semibold text-slate-700 mb-1">
+                  Brief Description or Week Focus (Optional)
                 </label>
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="application/pdf"
-                  onChange={handleFileChange}
-                  className="hidden"
+                <textarea
+                  rows={2}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="e.g. Week 4 lecture covering CPU architecture, memory registers, and I/O bus cycles."
+                  className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800 resize-none"
                 />
-                <div
-                  onClick={() => fileInputRef.current?.click()}
-                  className="cursor-pointer border border-dashed border-slate-300 hover:border-slate-500 rounded-lg p-4 text-center bg-slate-50/50 hover:bg-slate-50 transition flex flex-col items-center justify-center gap-2"
-                >
-                  <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-600">
-                    <Upload className="w-4 h-4" />
-                  </div>
-                  {selectedFile ? (
-                    <div>
-                      <span className="font-semibold text-slate-900 block truncate max-w-[240px]">{selectedFile.name}</span>
-                      <span className="text-[10px] text-slate-500">{(selectedFile.size / (1024 * 1024)).toFixed(2)} MB • Ready to upload</span>
-                    </div>
-                  ) : (
-                    <div>
-                      <span className="font-medium text-slate-700 block">Click to select PDF slide deck</span>
-                      <span className="text-[10px] text-slate-400">PDF documents up to 50MB</span>
-                    </div>
-                  )}
-                </div>
               </div>
 
               {/* SUBMIT BUTTON */}
               <button
                 type="submit"
                 disabled={uploading}
-                className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition disabled:opacity-50 flex items-center justify-center gap-2"
+                className="w-full py-2.5 px-4 rounded-lg bg-slate-900 hover:bg-slate-800 disabled:bg-slate-400 text-white font-semibold text-xs transition flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
                 {uploading ? (
                   <>
                     <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    <span>Uploading & Syncing Slides...</span>
+                    <span>Uploading &amp; Submitting for Approval...</span>
                   </>
                 ) : (
                   <>
-                    <Upload className="w-3.5 h-3.5" />
-                    <span>Publish Slides to Student Portal</span>
+                    <Upload className="w-4 h-4" />
+                    <span>Submit Slides for Admin Approval</span>
                   </>
                 )}
               </button>
+              <p className="text-[11px] text-slate-400 text-center">
+                Slides will appear with a <span className="text-amber-600 font-semibold">Waiting for Approval</span> badge until verified by the platform admin.
+              </p>
             </form>
           </div>
 
@@ -528,8 +563,8 @@ export default function CollaboratorUploadPage() {
           <div className="lg:col-span-7 bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
               <div>
-                <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wide">Published Slides Directory</h2>
-                <p className="text-[11px] text-slate-500">{slides.length} slide decks currently published across Ghanaian universities.</p>
+                <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wide">University Slide Submissions</h2>
+                <p className="text-[11px] text-slate-500">{slides.length} slide decks in database (Live and Pending Review).</p>
               </div>
 
               {/* SEARCH INPUT */}
@@ -548,7 +583,7 @@ export default function CollaboratorUploadPage() {
             {loadingSlides ? (
               <div className="py-12 text-center text-xs text-slate-400">
                 <div className="w-4 h-4 border-2 border-slate-800 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-                <span>Loading published slide decks...</span>
+                <span>Loading slide directory...</span>
               </div>
             ) : filteredSlides.length === 0 ? (
               <div className="py-12 text-center text-xs text-slate-400">
@@ -556,51 +591,78 @@ export default function CollaboratorUploadPage() {
               </div>
             ) : (
               <div className="divide-y divide-slate-100">
-                {filteredSlides.map((s) => (
-                  <div key={s.id} className="py-3 flex items-start justify-between gap-3 text-xs">
-                    <div className="space-y-1 flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-mono font-bold text-[11px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-900">
-                          {s.courseCode}
-                        </span>
-                        <span className="text-[10px] text-slate-500 font-medium">
-                          {s.university}
-                        </span>
-                        <span className="text-[10px] text-slate-400">
-                          • {s.level}
-                        </span>
-                      </div>
-                      <h3 className="font-semibold text-slate-900 truncate">{s.title}</h3>
-                      {s.description && (
-                        <p className="text-[11px] text-slate-500 line-clamp-1">{s.description}</p>
-                      )}
-                      <div className="text-[10px] text-slate-400 flex items-center gap-3 pt-0.5">
-                        <span>By {s.uploadedBy || 'Admin'}</span>
-                        <span>• {new Date(s.uploadedAt).toLocaleDateString()}</span>
-                        {s.fileSizeBytes ? <span>• {(s.fileSizeBytes / (1024 * 1024)).toFixed(1)} MB</span> : null}
-                      </div>
-                    </div>
+                {filteredSlides.map((s) => {
+                  const isApproved = (s.status || 'approved') === 'approved';
+                  const isPending = s.status === 'pending';
+                  const isRejected = s.status === 'rejected';
 
-                    {/* ACTIONS */}
-                    <div className="flex items-center gap-1.5 shrink-0 pt-1">
-                      <Link
-                        href={`/university?loadSlideId=${encodeURIComponent(s.id)}`}
-                        target="_blank"
-                        className="p-1.5 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded transition"
-                        title="Study in Student Studio"
-                      >
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </Link>
-                      <button
-                        onClick={() => handleDeleteSlide(s.id, s.title)}
-                        className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition"
-                        title="Delete Slide"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
+                  return (
+                    <div key={s.id} className="py-3 flex items-start justify-between gap-3 text-xs">
+                      <div className="space-y-1 flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="font-mono font-bold text-[11px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-900">
+                            {s.courseCode}
+                          </span>
+                          <span className="text-[10px] text-slate-500 font-medium">
+                            {s.university}
+                          </span>
+                          <span className="text-[10px] text-slate-400">
+                            • {s.level}
+                          </span>
+                          {/* Approval status pill */}
+                          {isPending && (
+                            <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+                              <Clock className="w-3 h-3 text-amber-600" />
+                              Waiting for Admin Approval
+                            </span>
+                          )}
+                          {isApproved && (
+                            <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                              <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                              Live on Website
+                            </span>
+                          )}
+                          {isRejected && (
+                            <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200">
+                              <XCircle className="w-3 h-3 text-rose-600" />
+                              Rejected by Admin
+                            </span>
+                          )}
+                        </div>
+                        <h3 className="font-semibold text-slate-900 truncate">{s.title}</h3>
+                        {s.description && (
+                          <p className="text-[11px] text-slate-500 line-clamp-1">{s.description}</p>
+                        )}
+                        <div className="text-[10px] text-slate-400 flex items-center gap-3 pt-0.5">
+                          <span>By {s.uploadedBy || 'Admin'}</span>
+                          <span>• {new Date(s.uploadedAt).toLocaleDateString()}</span>
+                          {s.fileSizeBytes ? <span>• {(s.fileSizeBytes / (1024 * 1024)).toFixed(1)} MB</span> : null}
+                        </div>
+                      </div>
+
+                      {/* ACTIONS */}
+                      <div className="flex items-center gap-1.5 shrink-0 pt-1">
+                        {isApproved && (
+                          <Link
+                            href={`/university?loadSlideId=${encodeURIComponent(s.id)}`}
+                            target="_blank"
+                            className="p-1.5 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded transition"
+                            title="Study in Student Studio"
+                          >
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </Link>
+                        )}
+                        <button
+                          onClick={() => handleDeleteSlide(s.id, s.title)}
+                          className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition"
+                          title="Delete Slide"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
@@ -609,4 +671,3 @@ export default function CollaboratorUploadPage() {
     </div>
   );
 }
-

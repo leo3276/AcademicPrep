@@ -5,6 +5,7 @@ import { requireAdmin } from '@/lib/adminAuth';
 import { 
   getStoredUniversitySlides, 
   addUniversitySlide, 
+  updateUniversitySlideStatus,
   deleteUniversitySlide, 
   validateCollaboratorToken 
 } from '@/lib/universitySlideStore';
@@ -42,7 +43,7 @@ function isAuthorizedUploader(req: NextRequest): { authorized: boolean; role: 'a
 
 /**
  * GET /api/university/slides
- * Public catalog for students & study studio
+ * Public catalog for students & study studio (or Admin/Collaborator management)
  */
 export async function GET(req: NextRequest) {
   try {
@@ -53,8 +54,21 @@ export async function GET(req: NextRequest) {
     const semester = url.searchParams.get('semester')?.trim();
     const courseCode = url.searchParams.get('courseCode')?.trim()?.toLowerCase();
     const q = url.searchParams.get('q')?.trim()?.toLowerCase();
+    const statusParam = url.searchParams.get('status')?.trim(); // 'all', 'pending', 'approved', 'rejected'
+
+    // Determine authorization
+    const auth = isAuthorizedUploader(req);
 
     let filtered = slides;
+
+    // Filter by approval status:
+    // If statusParam is specified (e.g. by admin or collaborator), filter accordingly
+    // Otherwise, for regular students/public, only show approved slides
+    if (statusParam && statusParam !== 'all') {
+      filtered = filtered.filter(s => (s.status || 'approved') === statusParam);
+    } else if (!statusParam && !auth.authorized) {
+      filtered = filtered.filter(s => (s.status || 'approved') === 'approved');
+    }
 
     if (university && university !== 'All' && !university.startsWith('All')) {
       filtered = filtered.filter(s => s.university.toLowerCase().includes(university.toLowerCase()));
@@ -92,6 +106,8 @@ export async function GET(req: NextRequest) {
 /**
  * POST /api/university/slides
  * Upload a university slide (Admin or Authorized Collaborator)
+ * If uploaded by collaborator, status defaults to 'pending' waiting for admin approval.
+ * If uploaded by admin, status is automatically 'approved'.
  */
 export async function POST(req: NextRequest) {
   const auth = isAuthorizedUploader(req);
@@ -103,6 +119,8 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    const isCollaborator = auth.role === 'collaborator';
+    const initialStatus = isCollaborator ? 'pending' : 'approved';
     const contentType = req.headers.get('content-type') || '';
 
     // Case 1: JSON payload with pre-uploaded URL
@@ -125,9 +143,14 @@ export async function POST(req: NextRequest) {
         fileUrl: body.fileUrl,
         fileSizeBytes: body.fileSizeBytes || 0,
         uploadedBy: body.uploadedBy || auth.name,
+        status: isCollaborator ? 'pending' : (body.status || 'approved'),
       });
 
-      return NextResponse.json({ success: true, slide: created }, { status: 201 });
+      return NextResponse.json({ 
+        success: true, 
+        slide: created,
+        message: isCollaborator ? 'Slide submitted successfully! It is now waiting for administrator approval before appearing live.' : 'Slide published live.'
+      }, { status: 201 });
     }
 
     // Case 2: Multipart form-data with direct binary file upload
@@ -162,7 +185,6 @@ export async function POST(req: NextRequest) {
       try {
         const uploadedResult = await uploadToR2(uniqueFileName, buffer, 'application/pdf');
         if (uploadedResult) {
-          // uploadToR2 already includes R2_PUBLIC_URL
           fileUrl = uploadedResult.startsWith('http') ? uploadedResult : `${R2_PUBLIC_URL}/${uploadedResult}`;
         }
       } catch (r2Err) {
@@ -231,12 +253,57 @@ export async function POST(req: NextRequest) {
       fileUrl,
       fileSizeBytes: file.size,
       uploadedBy: customUploader || auth.name,
+      status: initialStatus,
     });
 
-    return NextResponse.json({ success: true, slide: created }, { status: 201 });
+    return NextResponse.json({ 
+      success: true, 
+      slide: created,
+      message: isCollaborator 
+        ? 'Slide submitted successfully! It is now waiting for administrator approval before going live.' 
+        : 'Slide published live successfully.'
+    }, { status: 201 });
   } catch (err: any) {
     console.error('Error uploading university slide:', err);
     return NextResponse.json({ success: false, error: err.message || 'Upload processing failed' }, { status: 500 });
+  }
+}
+
+/**
+ * PATCH /api/university/slides
+ * Admin only: Approve or reject a pending collaborator slide
+ */
+export async function PATCH(req: NextRequest) {
+  if (!requireAdmin(req)) {
+    return NextResponse.json({ success: false, error: 'Administrator authorization required.' }, { status: 401 });
+  }
+
+  try {
+    const body = await req.json();
+    const { id, status, rejectionReason } = body;
+
+    if (!id || !['approved', 'rejected', 'pending'].includes(status)) {
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Invalid request. Slide ID and valid status ("approved" | "rejected" | "pending") are required.' 
+      }, { status: 400 });
+    }
+
+    const updated = await updateUniversitySlideStatus(id, status, rejectionReason);
+    if (!updated) {
+      return NextResponse.json({ success: false, error: 'Slide not found.' }, { status: 404 });
+    }
+
+    return NextResponse.json({ 
+      success: true, 
+      slide: updated, 
+      message: status === 'approved' 
+        ? `Slide "${updated.title}" has been approved and is now live on the student portal.` 
+        : `Slide status updated to ${status}.` 
+    });
+  } catch (err: any) {
+    console.error('Error updating slide approval status:', err);
+    return NextResponse.json({ success: false, error: err.message || 'Failed to update slide status' }, { status: 500 });
   }
 }
 

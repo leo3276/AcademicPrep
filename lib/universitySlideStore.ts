@@ -1,19 +1,19 @@
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
+import { UniversitySlide, UniversityVideo } from './universitySlideTypes';
 import { supabaseAdmin } from './supabaseClient';
 import { uploadToR2, isR2Configured, R2_PUBLIC_URL } from './r2Client';
 
-export * from './universitySlideTypes';
-import { UniversitySlide } from './universitySlideTypes';
-
 const DATA_FILE = path.join(process.cwd(), 'data', 'university_slides.json');
+const VIDEO_DATA_FILE = path.join(process.cwd(), 'data', 'university_videos.json');
 const COLLAB_CONFIG_FILE = path.join(process.cwd(), 'data', 'collaborator_config.json');
 const MANIFEST_FILE_NAME = 'university_slides_manifest.json';
+const VIDEO_MANIFEST_FILE_NAME = 'university_videos_manifest.json';
 const DOCUMENTS_BUCKET = 'documents';
 
-// Default Collaborator Token if not yet configured
-const DEFAULT_COLLABORATOR_TOKEN = 'ap_collab_ug_knust_2026';
+// Default Collaborator Token fallback
+const DEFAULT_COLLABORATOR_TOKEN = 'PREP-FACULTY-2026';
 
 /**
  * Get or initialize collaborator token
@@ -31,11 +31,13 @@ export function getCollaboratorToken(): string {
     console.warn('[universitySlideStore] Error reading collaborator config:', err);
   }
 
-  // Initialize with default token if not present
   try {
     const dir = path.dirname(COLLAB_CONFIG_FILE);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(COLLAB_CONFIG_FILE, JSON.stringify({ token: DEFAULT_COLLABORATOR_TOKEN, updatedAt: new Date().toISOString() }, null, 2));
+    fs.writeFileSync(COLLAB_CONFIG_FILE, JSON.stringify({
+      token: DEFAULT_COLLABORATOR_TOKEN,
+      updatedAt: new Date().toISOString()
+    }, null, 2), 'utf8');
   } catch {}
 
   return DEFAULT_COLLABORATOR_TOKEN;
@@ -45,13 +47,16 @@ export function getCollaboratorToken(): string {
  * Regenerate a new random collaborator token
  */
 export function regenerateCollaboratorToken(): string {
-  const newToken = 'ap_collab_' + crypto.randomBytes(12).toString('hex');
+  const newToken = 'PREP-' + crypto.randomBytes(4).toString('hex').toUpperCase();
   try {
     const dir = path.dirname(COLLAB_CONFIG_FILE);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(COLLAB_CONFIG_FILE, JSON.stringify({ token: newToken, updatedAt: new Date().toISOString() }, null, 2));
+    fs.writeFileSync(COLLAB_CONFIG_FILE, JSON.stringify({
+      token: newToken,
+      updatedAt: new Date().toISOString()
+    }, null, 2), 'utf8');
   } catch (err) {
-    console.error('[universitySlideStore] Failed to write collaborator token:', err);
+    console.error('[universitySlideStore] Failed to save regenerated token:', err);
   }
   return newToken;
 }
@@ -86,9 +91,11 @@ function sanitizeSlideList(list: UniversitySlide[]): UniversitySlide[] {
   let modified = false;
   const cleaned = list.map(s => {
     const freshUrl = sanitizeSlideUrl(s.fileUrl);
-    if (freshUrl !== s.fileUrl) {
+    // Legacy slides without status default to 'approved'
+    const status = s.status || 'approved';
+    if (freshUrl !== s.fileUrl || !s.status) {
       modified = true;
-      return { ...s, fileUrl: freshUrl };
+      return { ...s, fileUrl: freshUrl, status };
     }
     return s;
   });
@@ -163,13 +170,13 @@ export async function getStoredUniversitySlides(): Promise<UniversitySlide[]> {
 export async function saveStoredUniversitySlides(slides: UniversitySlide[]): Promise<void> {
   const payload = JSON.stringify(slides, null, 2);
 
-  // 1. Write local file
+  // 1. Write local file (ignore in read-only environments)
   try {
     const dir = path.dirname(DATA_FILE);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(DATA_FILE, payload, 'utf8');
   } catch (err) {
-    console.error('[universitySlideStore] Failed to write local slides file:', err);
+    // Ignored on read-only environments
   }
 
   // 2. Cloudflare R2
@@ -196,7 +203,7 @@ export async function saveStoredUniversitySlides(slides: UniversitySlide[]): Pro
 }
 
 /**
- * Add a new university slide
+ * Add a new university slide (defaults to 'approved' for admin, 'pending' for collaborators)
  */
 export async function addUniversitySlide(slide: Omit<UniversitySlide, 'id' | 'uploadedAt'> & { id?: string; uploadedAt?: string }): Promise<UniversitySlide> {
   const slides = await getStoredUniversitySlides();
@@ -215,11 +222,31 @@ export async function addUniversitySlide(slide: Omit<UniversitySlide, 'id' | 'up
     fileSizeBytes: slide.fileSizeBytes || 0,
     uploadedBy: slide.uploadedBy || 'Admin',
     uploadedAt: slide.uploadedAt || new Date().toISOString(),
+    status: slide.status || 'approved',
+    rejectionReason: slide.rejectionReason,
   };
 
   const updated = [newSlide, ...slides.filter(s => s.id !== newSlide.id)];
   await saveStoredUniversitySlides(updated);
   return newSlide;
+}
+
+/**
+ * Update an existing slide's approval status or details
+ */
+export async function updateUniversitySlideStatus(id: string, status: 'approved' | 'rejected' | 'pending', rejectionReason?: string): Promise<UniversitySlide | null> {
+  const slides = await getStoredUniversitySlides();
+  const idx = slides.findIndex(s => s.id === id);
+  if (idx === -1) return null;
+
+  slides[idx] = {
+    ...slides[idx],
+    status,
+    rejectionReason: rejectionReason !== undefined ? rejectionReason : slides[idx].rejectionReason,
+  };
+
+  await saveStoredUniversitySlides(slides);
+  return slides[idx];
 }
 
 /**
@@ -244,5 +271,134 @@ export async function deleteUniversitySlide(id: string): Promise<boolean> {
     }
   }
 
+  return true;
+}
+
+/* =====================================================================
+ * UNIVERSITY VIDEOS & MEDIA STORE
+ * ===================================================================== */
+
+/**
+ * Fetch all university videos with Cloud storage + local file fallback
+ */
+export async function getStoredUniversityVideos(): Promise<UniversityVideo[]> {
+  // 1. Primary: Cloudflare R2
+  if (isR2Configured) {
+    try {
+      const res = await fetch(`${R2_PUBLIC_URL}/${VIDEO_MANIFEST_FILE_NAME}?t=${Date.now()}`, { cache: 'no-store' });
+      if (res.ok) {
+        const parsed = await res.json();
+        if (Array.isArray(parsed)) return parsed;
+      }
+    } catch (err) {
+      console.warn('[universityVideoStore] R2 fetch note:', err);
+    }
+  }
+
+  // 2. Secondary: Supabase Storage
+  try {
+    const { data: pubData } = supabaseAdmin.storage
+      .from(DOCUMENTS_BUCKET)
+      .getPublicUrl(VIDEO_MANIFEST_FILE_NAME);
+
+    if (pubData?.publicUrl) {
+      const res = await fetch(`${pubData.publicUrl}?t=${Date.now()}`, { cache: 'no-store' });
+      if (res.ok) {
+        const parsed = await res.json();
+        if (Array.isArray(parsed)) return parsed;
+      }
+    }
+  } catch (err) {
+    console.warn('[universityVideoStore] Supabase CDN fetch note:', err);
+  }
+
+  // 3. Fallback: local data/university_videos.json
+  try {
+    if (fs.existsSync(VIDEO_DATA_FILE)) {
+      const raw = fs.readFileSync(VIDEO_DATA_FILE, 'utf8');
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) return parsed;
+    }
+  } catch (err) {
+    console.warn('[universityVideoStore] Local JSON read note:', err);
+  }
+
+  return [];
+}
+
+/**
+ * Persist university videos to both local JSON and cloud manifests
+ */
+export async function saveStoredUniversityVideos(videos: UniversityVideo[]): Promise<void> {
+  const payload = JSON.stringify(videos, null, 2);
+
+  // 1. Write local file
+  try {
+    const dir = path.dirname(VIDEO_DATA_FILE);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(VIDEO_DATA_FILE, payload, 'utf8');
+  } catch (err) {
+    // Ignored in read-only environment
+  }
+
+  // 2. Cloudflare R2
+  if (isR2Configured) {
+    try {
+      await uploadToR2(VIDEO_MANIFEST_FILE_NAME, Buffer.from(payload), 'application/json', '0');
+    } catch (err) {
+      console.error('[universityVideoStore] Failed to upload video manifest to R2:', err);
+    }
+  }
+
+  // 3. Supabase Storage backup
+  try {
+    await supabaseAdmin.storage
+      .from(DOCUMENTS_BUCKET)
+      .upload(VIDEO_MANIFEST_FILE_NAME, Buffer.from(payload), {
+        contentType: 'application/json',
+        upsert: true,
+        cacheControl: '0'
+      });
+  } catch (err) {
+    console.warn('[universityVideoStore] Supabase video manifest upload note:', err);
+  }
+}
+
+/**
+ * Add a new university video lecture / briefing
+ */
+export async function addUniversityVideo(video: Omit<UniversityVideo, 'id' | 'createdAt'> & { id?: string; createdAt?: string }): Promise<UniversityVideo> {
+  const videos = await getStoredUniversityVideos();
+  const newVideo: UniversityVideo = {
+    id: video.id || `uni_vid_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+    title: video.title.trim(),
+    courseCode: video.courseCode ? video.courseCode.toUpperCase().trim() : undefined,
+    courseTitle: video.courseTitle?.trim(),
+    university: video.university || 'All Universities / General Tertiary',
+    department: video.department || 'General Education',
+    level: video.level || 'Level 100',
+    semester: video.semester || 'First Semester',
+    videoUrl: video.videoUrl.trim(),
+    thumbnailUrl: video.thumbnailUrl?.trim(),
+    description: video.description?.trim(),
+    duration: video.duration?.trim(),
+    uploadedBy: video.uploadedBy || 'Admin',
+    createdAt: video.createdAt || new Date().toISOString(),
+    isFeatured: Boolean(video.isFeatured),
+  };
+
+  const updated = [newVideo, ...videos.filter(v => v.id !== newVideo.id)];
+  await saveStoredUniversityVideos(updated);
+  return newVideo;
+}
+
+/**
+ * Delete a university video by ID
+ */
+export async function deleteUniversityVideo(id: string): Promise<boolean> {
+  const videos = await getStoredUniversityVideos();
+  const filtered = videos.filter(v => v.id !== id);
+  if (filtered.length === videos.length) return false;
+  await saveStoredUniversityVideos(filtered);
   return true;
 }

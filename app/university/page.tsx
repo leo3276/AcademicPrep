@@ -50,8 +50,10 @@ import {
   MessageCircle,
   Copy,
   Share2,
-  ImageIcon
+  ImageIcon,
+  Video as VideoIcon
 } from 'lucide-react';
+import { parseVideoUrl } from '@/lib/mediaUtils';
 import {
   generateSlideWhatsAppText,
   generateDeckWhatsAppText,
@@ -79,6 +81,7 @@ import {
 import { extractStructuredSlideFromItems } from '@/lib/slideTextCleaner';
 import { 
   UniversitySlide, 
+  UniversityVideo, 
   GHANAIAN_UNIVERSITIES, 
   UNIVERSITY_LEVELS, 
   UNIVERSITY_SEMESTERS 
@@ -215,7 +218,11 @@ export default function UniversityPortalPage() {
     createdAt: string;
   }
 
-  const [portalMode, setPortalMode] = useState<'library' | 'my_courses' | 'planner' | 'custom_upload'>('library');
+  const [portalMode, setPortalMode] = useState<'library' | 'my_courses' | 'videos' | 'planner' | 'custom_upload'>('library');
+  const [universityVideos, setUniversityVideos] = useState<UniversityVideo[]>([]);
+  const [loadingVideos, setLoadingVideos] = useState<boolean>(false);
+  const [videoSearchQuery, setVideoSearchQuery] = useState<string>('');
+  const [activeVideoModal, setActiveVideoModal] = useState<UniversityVideo | null>(null);
   const [deadlines, setDeadlines] = useState<UniversityDeadline[]>(() => {
     if (typeof window !== 'undefined') {
       try {
@@ -849,7 +856,24 @@ export default function UniversityPortalPage() {
         setLoadingAdminSlides(false);
       }
     };
+
+    const fetchVideos = async () => {
+      setLoadingVideos(true);
+      try {
+        const res = await fetch('/api/university/videos', { cache: 'no-store' });
+        const data = await res.json();
+        if (data.success && Array.isArray(data.videos)) {
+          setUniversityVideos(data.videos);
+        }
+      } catch (err) {
+        console.warn('Failed to fetch university videos:', err);
+      } finally {
+        setLoadingVideos(false);
+      }
+    };
+
     fetchSlides();
+    fetchVideos();
   }, []);
 
   const handleLoadAdminSlide = async (slide: UniversitySlide, autoStartAudio = false) => {
@@ -2029,6 +2053,25 @@ export default function UniversityPortalPage() {
                     : 'bg-neutral-100 text-neutral-600 border-neutral-200'
                 }`}>
                   {enrolledSlideIds.length}
+                </span>
+              </button>
+
+              <button
+                onClick={() => setPortalMode('videos')}
+                className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg transition shrink-0 ${
+                  portalMode === 'videos'
+                    ? 'bg-white text-neutral-900 shadow-xs font-bold'
+                    : 'text-neutral-500 hover:text-neutral-900'
+                }`}
+              >
+                <VideoIcon className="w-3.5 h-3.5 text-blue-600" />
+                <span>Video Briefings &amp; Lectures</span>
+                <span className={`font-mono text-[10px] px-1.5 py-0.2 rounded-full border ${
+                  universityVideos.length > 0
+                    ? 'bg-blue-50 text-blue-700 border-blue-200 font-bold'
+                    : 'bg-neutral-100 text-neutral-600 border-neutral-200'
+                }`}>
+                  {universityVideos.length}
                 </span>
               </button>
 
