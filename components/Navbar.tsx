@@ -56,7 +56,7 @@ export default function Navbar() {
             {/* Logo */}
             <div className="flex items-center gap-4 shrink-0">
               <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-                <div className="w-9 h-9 rounded-xl bg-neutral-900 flex items-center justify-center text-white shadow-xs shrink-0">
+                <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-xs shrink-0">
                   <GraduationCap className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col">
@@ -189,7 +189,7 @@ export default function Navbar() {
               ) : student ? (
                 <div className="flex items-center gap-2 pl-2 pr-1.5 py-1 rounded-xl bg-slate-50 border border-slate-200 shrink-0">
                   <Link href={profileHref} className="flex items-center gap-2 text-left leading-tight shrink-0 group">
-                    <div className="w-7 h-7 rounded-lg bg-neutral-900 text-white font-bold text-xs flex items-center justify-center shrink-0">
+                    <div className="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
                       {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
                     </div>
                     <div className="flex flex-col text-left leading-tight shrink-0">
@@ -212,7 +212,7 @@ export default function Navbar() {
               ) : (
                 <Link
                   href={loginHref}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl bg-neutral-900 text-white hover:bg-neutral-500 transition shadow-xs whitespace-nowrap"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl bg-blue-600 text-white hover:bg-blue-500 transition shadow-xs whitespace-nowrap"
                 >
                   <User className="w-3.5 h-3.5" />
                   <span>Sign In</span>
@@ -225,22 +225,21 @@ export default function Navbar() {
               {mounted && !student && (
                 <Link
                   href={loginHref}
-                  className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-neutral-900 text-white hover:bg-neutral-500 transition shadow-xs"
+                  className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-blue-600 text-white hover:bg-blue-500 transition shadow-xs"
                 >
                   Sign In
                 </Link>
               )}
 
               {mounted && student && (
-                <button
-                  type="button"
-                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="w-8 h-8 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center shrink-0 cursor-pointer shadow-xs active:scale-95 transition"
+                <Link
+                  href={profileHref}
+                  className="w-8 h-8 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-xs active:scale-95 transition"
                   title={student.fullName}
-                  aria-label="Student Account Menu"
+                  aria-label="Student Profile"
                 >
                   {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
-                </button>
+                </Link>
               )}
 
               <button
@@ -352,15 +351,15 @@ export default function Navbar() {
               {!mounted ? (
                 <div className="w-full h-9 rounded-lg bg-slate-100 animate-pulse" />
               ) : student ? (
-                <div className="space-y-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-9 h-9 rounded-xl bg-neutral-900 text-white font-bold text-sm flex items-center justify-center shadow-xs">
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
                         {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
                       </div>
                       <div>
-                        <p className="font-bold text-slate-900 text-xs truncate max-w-[150px]">{student.fullName}</p>
-                        <p className="text-[11px] text-slate-500 font-mono">
+                        <p className="font-semibold text-slate-900 leading-tight truncate max-w-[150px]">{student.fullName}</p>
+                        <p className="text-[10px] text-slate-500 font-mono">
                           {student.currentLevel === 'UNIVERSITY' ? 'Tertiary' : student.currentLevel} · {student.phoneNumber}
                         </p>
                       </div>
@@ -375,28 +374,13 @@ export default function Navbar() {
                       Sign Out
                     </button>
                   </div>
-                  <div className="grid grid-cols-2 gap-2 pt-1">
-                    <Link
-                      href="/account"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="py-2 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs flex items-center justify-center transition shadow-xs text-center"
-                    >
-                      My Profile &amp; Pass
-                    </Link>
-                    <Link
-                      href={
-                        student.currentLevel === 'UNIVERSITY'
-                          ? '/university'
-                          : student.currentLevel?.startsWith('SHS')
-                          ? '/shs/profile?tab=timetable'
-                          : '/jhs/profile?tab=timetable'
-                      }
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="py-2 px-3 rounded-xl bg-white hover:bg-slate-100 text-slate-800 border border-slate-200 font-semibold text-xs flex items-center justify-center transition shadow-2xs text-center"
-                    >
-                      Study Timetable
-                    </Link>
-                  </div>
+                  <Link
+                    href={profileHref}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full py-2 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs flex items-center justify-center transition text-center"
+                  >
+                    View Student Profile
+                  </Link>
                 </div>
               ) : (
                 <Link
