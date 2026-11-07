@@ -33,6 +33,7 @@ import { OFFICIAL_APK_DOWNLOAD_URL, APK_FILE_SIZE } from '@/lib/apkConfig';
 import Books3DBackground from '@/components/Books3DBackground';
 import WhatsAppChannelBanner from '@/components/WhatsAppChannelBanner';
 import ScheduledExamBanner from '@/components/ScheduledExamBanner';
+import HomeTimetableFeature from '@/components/HomeTimetableFeature';
 
 export default function HomePage() {
   const { student } = useAuth();
@@ -292,14 +293,14 @@ export default function HomePage() {
           {/* Card 3: University AI Slide Copilot (Live) */}
           <div className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-4.5 sm:p-6 flex flex-col justify-between shadow-xl">
             <div className="space-y-4">
-              <div className="w-11 h-11 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold">
+              <div className="w-11 h-11 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold shadow-xs">
                 <Brain className="w-6 h-6" />
               </div>
 
               <div>
                 <div className="flex items-center justify-between">
                   <h3 className="text-xl font-bold text-slate-900">University &amp; Tertiary</h3>
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200">
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-100 text-blue-800 border border-blue-200">
                     Live Now
                   </span>
                 </div>
@@ -329,7 +330,7 @@ export default function HomePage() {
             <div className="pt-6">
               <Link
                 href="/university"
-                className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm shadow-blue-500/20"
               >
                 <span>Enter University Section</span>
                 <ArrowRight className="w-4 h-4" />
@@ -339,11 +340,14 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Timetable & Exam Revision Pacer Feature Container */}
+      <HomeTimetableFeature />
+
       {/* High-Intent SEO & Study Resources Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-xs font-bold mb-3 backdrop-blur-sm shadow-xs">
-            <GraduationCap className="w-3.5 h-3.5 text-emerald-300" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-white border border-white/20 text-xs font-semibold mb-3 backdrop-blur-sm shadow-xs">
+            <GraduationCap className="w-3.5 h-3.5 text-white" />
             <span>Ghana’s Premier BECE Hub</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight drop-shadow-sm">
@@ -542,7 +546,7 @@ export default function HomePage() {
                 <a
                   href={OFFICIAL_APK_DOWNLOAD_URL}
                   download="AcademicPrep-v1.0.0.apk"
-                  className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-all shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Download className="w-4 h-4" />
                   <span>Install APK Directly ({APK_FILE_SIZE})</span>
@@ -615,7 +619,7 @@ export default function HomePage() {
                 <a
                   href={OFFICIAL_APK_DOWNLOAD_URL}
                   download="AcademicPrep-v1.0.0.apk"
-                  className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs cursor-pointer text-center"
+                  className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs cursor-pointer text-center"
                 >
                   <Download className="w-4 h-4" />
                   <span>Install APK Directly ({APK_FILE_SIZE})</span>

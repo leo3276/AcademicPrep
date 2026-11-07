@@ -151,7 +151,7 @@ export default function BlogPostDetailPage() {
           <div className="flex items-center gap-2">
             <button
               onClick={handleShareWhatsApp}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer"
               title="Share directly on WhatsApp"
             >
               <MessageCircle className="w-3.5 h-3.5" />
@@ -218,7 +218,7 @@ export default function BlogPostDetailPage() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleShareWhatsApp}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-xs transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-xs transition-all cursor-pointer"
                 >
                   <MessageCircle className="w-4 h-4" />
                   <span>Share on WhatsApp</span>

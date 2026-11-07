@@ -61,7 +61,7 @@ export default function TopicShareButtons({
           type="button"
           onClick={handleWhatsApp}
           title="Share topic to WhatsApp"
-          className="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 transition-colors cursor-pointer"
+          className="p-1.5 rounded-lg bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 shadow-2xs transition-colors cursor-pointer"
         >
           <MessageCircle className="w-3.5 h-3.5" />
         </button>
@@ -71,11 +71,11 @@ export default function TopicShareButtons({
           title={copied ? 'Link Copied!' : 'Copy Topic Link'}
           className={`p-1.5 rounded-lg border transition-colors cursor-pointer ${
             copied
-              ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
+              ? 'bg-blue-50 text-blue-700 border-blue-200'
               : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border-slate-200'
           }`}
         >
-          {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+          {copied ? <Check className="w-3.5 h-3.5 text-blue-600" /> : <Copy className="w-3.5 h-3.5" />}
         </button>
       </div>
     );
@@ -85,13 +85,13 @@ export default function TopicShareButtons({
     return (
       <div className={`flex flex-wrap items-center gap-2 p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 ${className}`}>
         <div className="flex items-center gap-2 text-xs font-bold text-slate-700 mr-auto">
-          <Share2 className="w-4 h-4 text-emerald-600" />
+          <Share2 className="w-4 h-4 text-blue-600" />
           <span>Share Lesson with Students:</span>
         </div>
         <button
           type="button"
           onClick={handleWhatsApp}
-          className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
+          className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
         >
           <MessageCircle className="w-3.5 h-3.5" />
           <span>Share on WhatsApp</span>
@@ -101,11 +101,11 @@ export default function TopicShareButtons({
           onClick={handleCopy}
           className={`px-3 py-1.5 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer ${
             copied
-              ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
+              ? 'bg-blue-50 text-blue-700 border-blue-200'
               : 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200 shadow-2xs'
           }`}
         >
-          {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+          {copied ? <Check className="w-3.5 h-3.5 text-blue-600" /> : <Copy className="w-3.5 h-3.5" />}
           <span>{copied ? 'Link Copied!' : 'Copy Link'}</span>
         </button>
       </div>
@@ -118,10 +118,10 @@ export default function TopicShareButtons({
       <button
         type="button"
         onClick={handleWhatsApp}
-        className="px-2.5 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 font-bold text-[11px] flex items-center gap-1 transition-colors cursor-pointer"
+        className="px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 shadow-2xs font-bold text-[11px] flex items-center gap-1 transition-colors cursor-pointer"
         title="Share to WhatsApp study group"
       >
-        <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
+        <MessageCircle className="w-3.5 h-3.5 text-blue-600" />
         <span className="hidden sm:inline">WhatsApp</span>
       </button>
       <button
@@ -129,12 +129,12 @@ export default function TopicShareButtons({
         onClick={handleCopy}
         className={`px-2.5 py-1.5 rounded-lg border font-bold text-[11px] flex items-center gap-1 transition-colors cursor-pointer ${
           copied
-            ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
+            ? 'bg-blue-50 text-blue-700 border-blue-200'
             : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
         }`}
         title="Copy direct topic link"
       >
-        {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+        {copied ? <Check className="w-3.5 h-3.5 text-blue-600" /> : <Copy className="w-3.5 h-3.5" />}
         <span>{copied ? 'Copied' : 'Link'}</span>
       </button>
     </div>

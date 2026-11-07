@@ -30,8 +30,7 @@ export default function MobileBottomNav() {
   const isChat = pathname.startsWith('/chat');
   const isProfile = pathname.includes('/profile') || pathname.startsWith('/account');
 
-  const profileHref = student?.currentLevel === 'UNIVERSITY'
-    ? '/university'
+  const profileHref = student?.currentLevel === 'UNIVERSITY' ? '/account'
     : student?.currentLevel?.startsWith('SHS')
     ? '/shs/profile'
     : student

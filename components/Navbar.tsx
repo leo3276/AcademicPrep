@@ -33,7 +33,7 @@ export default function Navbar() {
   const isShsPage = pathname.startsWith('/shs');
 
   const profileHref = isUniversityStudent 
-    ? '/university' 
+    ? '/account' 
     : isShsStudent 
     ? '/shs/profile' 
     : '/jhs/profile';
@@ -232,13 +232,15 @@ export default function Navbar() {
               )}
 
               {mounted && student && (
-                <Link
-                  href={profileHref}
-                  className="w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0"
+                <button
+                  type="button"
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="w-8 h-8 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center shrink-0 cursor-pointer shadow-xs active:scale-95 transition"
                   title={student.fullName}
+                  aria-label="Student Account Menu"
                 >
                   {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
-                </Link>
+                </button>
               )}
 
               <button
@@ -350,31 +352,51 @@ export default function Navbar() {
               {!mounted ? (
                 <div className="w-full h-9 rounded-lg bg-slate-100 animate-pulse" />
               ) : student ? (
-                <div className="space-y-2">
+                <div className="space-y-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
                   <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-semibold text-slate-900">{student.fullName}</p>
-                      <p className="text-[11px] text-slate-500 font-mono">
-                        {student.currentLevel === 'UNIVERSITY' ? 'Tertiary' : student.currentLevel} · {student.phoneNumber}
-                      </p>
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-xl bg-blue-600 text-white font-bold text-sm flex items-center justify-center shadow-xs">
+                        {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
+                      </div>
+                      <div>
+                        <p className="font-bold text-slate-900 text-xs truncate max-w-[150px]">{student.fullName}</p>
+                        <p className="text-[11px] text-slate-500 font-mono">
+                          {student.currentLevel === 'UNIVERSITY' ? 'Tertiary' : student.currentLevel} · {student.phoneNumber}
+                        </p>
+                      </div>
                     </div>
                     <button
                       onClick={async () => {
                         setMobileMenuOpen(false);
                         await logoutStudent();
                       }}
-                      className="text-xs font-medium text-red-600 hover:text-red-700 px-2.5 py-1 rounded-md hover:bg-red-50 transition"
+                      className="text-xs font-semibold text-red-600 hover:text-red-700 px-2.5 py-1 rounded-md hover:bg-red-50 transition"
                     >
                       Sign Out
                     </button>
                   </div>
-                  <Link
-                    href={profileHref}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="w-full py-2 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs flex items-center justify-center transition"
-                  >
-                    Go to Portal Dashboard
-                  </Link>
+                  <div className="grid grid-cols-2 gap-2 pt-1">
+                    <Link
+                      href="/account"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs flex items-center justify-center transition shadow-xs text-center"
+                    >
+                      My Profile &amp; Pass
+                    </Link>
+                    <Link
+                      href={
+                        student.currentLevel === 'UNIVERSITY'
+                          ? '/university'
+                          : student.currentLevel?.startsWith('SHS')
+                          ? '/shs/profile?tab=timetable'
+                          : '/jhs/profile?tab=timetable'
+                      }
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="py-2 px-3 rounded-xl bg-white hover:bg-slate-100 text-slate-800 border border-slate-200 font-semibold text-xs flex items-center justify-center transition shadow-2xs text-center"
+                    >
+                      Study Timetable
+                    </Link>
+                  </div>
                 </div>
               ) : (
                 <Link
