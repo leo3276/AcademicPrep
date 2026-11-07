@@ -186,7 +186,7 @@ export default function TrialQuestionsPage() {
               <span className="hidden sm:inline">Refresh</span>
             </button>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-800 border border-slate-200">
-              <span className="w-2 h-2 rounded-full bg-blue-600" />
+              <span className="w-2 h-2 rounded-full bg-neutral-400" />
               {documents.length} Mock {documents.length === 1 ? 'Exam' : 'Exams'}
             </span>
           </div>
@@ -212,7 +212,7 @@ export default function TrialQuestionsPage() {
         </div>
 
         {mounted && isTrialActive && !student?.hasFullAccess && (
-          <div className="p-3.5 rounded-2xl bg-blue-50 border border-blue-200/80 text-xs text-blue-900 flex items-center justify-between shadow-2xs">
+          <div className="p-3.5 rounded-2xl bg-blue-50 border border-neutral-200/80 text-xs text-blue-900 flex items-center justify-between shadow-2xs">
             <span className="flex items-center gap-2 font-semibold">
               <span className="text-base">🎁</span>
               <span>30-Day Free Trial: All Diagnostic Mock Papers unlocked for viewing & download! ({trialDaysRemaining}d remaining)</span>
@@ -371,7 +371,7 @@ export default function TrialQuestionsPage() {
             {hasActiveFilters ? (
               <button
                 onClick={resetFilters}
-                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition shadow-sm shadow-blue-500/20"
+                className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-medium text-xs transition shadow-sm"
               >
                 Clear all filters
               </button>
@@ -394,7 +394,7 @@ export default function TrialQuestionsPage() {
                   {/* Card Header: Icon & Level Tag */}
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 font-bold text-[11px] tracking-wider shadow-xs">
+                      <div className="w-10 h-10 rounded-xl bg-neutral-900 text-white flex items-center justify-center shrink-0 font-bold text-[11px] tracking-wider shadow-xs">
                         PDF
                       </div>
                       <div>
@@ -414,7 +414,7 @@ export default function TrialQuestionsPage() {
 
                   {/* Title */}
                   <div>
-                    <h3 className="text-sm font-bold text-slate-900 leading-snug group-hover:text-blue-600 transition">
+                    <h3 className="text-sm font-bold text-slate-900 leading-snug group-hover:text-neutral-900 transition">
                       {doc.title}
                     </h3>
                     <p className="text-[11px] font-mono text-slate-400 mt-1 truncate" title={doc.fileName}>
@@ -462,7 +462,7 @@ export default function TrialQuestionsPage() {
                       className={`py-2 px-3 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer ${
                         !hasFullAccess
                           ? 'bg-amber-600 hover:bg-amber-700 text-white'
-                          : 'bg-blue-600 hover:bg-blue-500 text-white shadow-sm shadow-blue-500/20'
+                          : 'bg-neutral-900 hover:bg-neutral-800 text-white shadow-sm'
                       }`}
                     >
                       {!hasFullAccess ? (

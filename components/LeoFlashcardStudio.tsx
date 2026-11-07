@@ -517,7 +517,7 @@ export default function LeoFlashcardStudio({
                     Card {safeIndex + 1} of {studyQueue.length}
                   </span>
                   {typeof currentCard.pageNumber === 'number' && (
-                    <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
+                    <span className="px-2 py-0.5 rounded bg-white text-neutral-700 border border-neutral-200">
                       Page {String(currentCard.pageNumber).padStart(2, '0')}
                     </span>
                   )}
@@ -649,7 +649,7 @@ export default function LeoFlashcardStudio({
                       <button
                         type="button"
                         onClick={() => handleGrade(2)}
-                        className="p-3 rounded-xl border border-blue-200 bg-blue-50/50 hover:bg-blue-100/70 text-blue-900 transition flex flex-col items-center gap-0.5"
+                        className="p-3 rounded-xl border border-blue-200 bg-blue-50/50 hover:bg-neutral-100/70 text-blue-900 transition flex flex-col items-center gap-0.5"
                       >
                         <span className="text-xs font-semibold">3 · Good</span>
                         <span className="text-[10px] font-mono text-blue-700">{nextIntervals.good}</span>

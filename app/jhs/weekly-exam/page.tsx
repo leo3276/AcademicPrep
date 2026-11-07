@@ -1064,7 +1064,7 @@ export default function WeeklyExamPage() {
             </Link>
             <Link
               href="/jhs/science"
-              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-sm"
             >
               Revise Atomic Structure Notes
             </Link>
@@ -1107,7 +1107,7 @@ export default function WeeklyExamPage() {
                   onClick={() => handleLevelChange(lvl)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                     currentLevel === lvl
-                      ? 'bg-blue-600 text-white shadow-xs'
+                      ? 'bg-neutral-900 text-white shadow-xs'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
@@ -1125,7 +1125,7 @@ export default function WeeklyExamPage() {
           {/* Hero Banner */}
           <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden">
             <div className="max-w-3xl space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-[11px] font-bold uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-neutral-200 text-neutral-800 text-[11px] font-bold uppercase tracking-wider">
                 <Target className="w-3.5 h-3.5 text-blue-600" />
                 <span>Curriculum Adaptive Assessment</span>
               </div>
@@ -1139,9 +1139,9 @@ export default function WeeklyExamPage() {
 
             {/* Free Trial / VIP Lock Notice */}
             {mounted && isTrialActive && !student?.hasFullAccess ? (
-              <div className="mt-4 p-4 rounded-2xl bg-blue-50 border border-blue-200 text-blue-950 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+              <div className="mt-4 p-4 rounded-2xl bg-white border border-neutral-200 text-neutral-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-neutral-100 text-neutral-700 flex items-center justify-center shrink-0">
                     <span className="text-lg">🎁</span>
                   </div>
                   <div className="space-y-0.5">
@@ -1197,7 +1197,7 @@ export default function WeeklyExamPage() {
                       const past = PAST_WEEKLY_EXAMS.find(e => e.level === currentLevel) || PAST_WEEKLY_EXAMS[0];
                       if (past) handlePracticePastExam(past);
                     }}
-                    className="py-3 px-5 rounded-xl text-xs font-bold transition shadow-sm shadow-blue-600/20 flex items-center justify-center gap-2 shrink-0 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white"
+                    className="py-3 px-5 rounded-xl text-xs font-bold transition shadow-sm flex items-center justify-center gap-2 shrink-0 cursor-pointer bg-neutral-900 hover:bg-neutral-800 text-white"
                   >
                     <BookOpen className="w-3.5 h-3.5" />
                     <span>Practice Past Exam ({currentLevel === 'JHS 3' ? 'Oct 18 Atomic Paper' : 'Past Paper'})</span>
@@ -1445,8 +1445,8 @@ export default function WeeklyExamPage() {
             <div className="flex items-center gap-2.5">
               <span className={`px-2.5 py-1 rounded-md text-xs font-bold ${
                 isScheduledMode
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-blue-50 text-blue-700 border border-blue-200'
+                  ? 'bg-neutral-900 text-white'
+                  : 'bg-white text-neutral-700 border border-neutral-200'
               }`}>
                 {isScheduledMode ? 'SCHEDULED EXAM • PAPER 1: OBJECTIVES' : 'PAPER 1: SECTION A (OBJECTIVES)'}
               </span>
@@ -1459,7 +1459,7 @@ export default function WeeklyExamPage() {
               )}
 
               {isAdminPreviewMode && (
-                <span className="hidden lg:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-purple-50 text-purple-800 border border-purple-200">
+                <span className="hidden lg:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-white text-neutral-800 border border-neutral-200">
                   ⚡ ADMIN PREVIEW ACTIVE
                 </span>
               )}
@@ -1477,7 +1477,7 @@ export default function WeeklyExamPage() {
 
               <button
                 onClick={handleProceedToPaper2}
-                className="py-1.5 px-3 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg transition shadow-sm shadow-blue-500/20 flex items-center gap-1.5 cursor-pointer"
+                className="py-1.5 px-3 bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold rounded-lg transition shadow-sm flex items-center gap-1.5 cursor-pointer"
               >
                 <span>{isScheduledMode ? 'Submit & Start Paper 2 (1 Hr)' : 'Go to Paper 2 (Theory)'}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -1491,7 +1491,7 @@ export default function WeeklyExamPage() {
           {/* Progress Bar */}
           <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
             <div
-              className="bg-blue-600 h-full rounded-full transition-all duration-300"
+              className="bg-neutral-900 h-full rounded-full transition-all duration-300"
               style={{ width: `${Math.round((answeredCount / totalP1) * 100)}%` }}
             />
           </div>
@@ -1537,7 +1537,7 @@ export default function WeeklyExamPage() {
                     onClick={() => handleSelectPaper1Option(currentQ.id, opt)}
                     className={`w-full text-left p-4 rounded-xl border text-xs sm:text-sm font-medium transition flex items-center gap-3 cursor-pointer ${
                       isSelected
-                        ? 'border-blue-600 bg-blue-600 text-white shadow-xs'
+                        ? 'border-neutral-900 bg-neutral-900 text-white shadow-xs'
                         : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-800'
                     }`}
                   >
@@ -1577,14 +1577,14 @@ export default function WeeklyExamPage() {
               {paper1CurrentIdx < totalP1 - 1 ? (
                 <button
                   onClick={() => setPaper1CurrentIdx(prev => Math.min(totalP1 - 1, prev + 1))}
-                  className="py-2 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm shadow-blue-500/20"
+                  className="py-2 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-sm"
                 >
                   Next Question
                 </button>
               ) : (
                 <button
                   onClick={handleProceedToPaper2}
-                  className="py-2 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition shadow-xs flex items-center gap-1.5"
+                  className="py-2 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-xs flex items-center gap-1.5"
                 >
                   <span>Proceed to Paper 2</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -1610,7 +1610,7 @@ export default function WeeklyExamPage() {
                     onClick={() => setPaper1CurrentIdx(idx)}
                     className={`w-8 h-8 rounded-lg text-xs font-bold font-mono transition flex items-center justify-center ${
                       isCur
-                        ? 'ring-2 ring-blue-600 bg-blue-600 text-white'
+                        ? 'ring-2 ring-blue-600 bg-neutral-900 text-white'
                         : isAns
                         ? 'bg-slate-200 text-slate-800'
                         : 'border border-slate-200 text-slate-500 hover:bg-slate-100'
@@ -1661,7 +1661,7 @@ export default function WeeklyExamPage() {
               )}
 
               {isAdminPreviewMode && (
-                <span className="hidden lg:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-purple-50 text-purple-800 border border-purple-200">
+                <span className="hidden lg:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-white text-neutral-800 border border-neutral-200">
                   ⚡ ADMIN PREVIEW ACTIVE
                 </span>
               )}
@@ -1675,7 +1675,7 @@ export default function WeeklyExamPage() {
 
               <button
                 onClick={handleProceedToGrading}
-                className="py-1.5 px-4 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg transition shadow-sm shadow-blue-500/20 flex items-center gap-1.5 cursor-pointer"
+                className="py-1.5 px-4 bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold rounded-lg transition shadow-sm flex items-center gap-1.5 cursor-pointer"
               >
                 <span>Submit & View Marking Guide</span>
                 <Check className="w-3.5 h-3.5" />
@@ -1700,7 +1700,7 @@ export default function WeeklyExamPage() {
               {/* Question Header */}
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div className="flex items-center gap-2">
-                  <span className="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold font-mono text-xs flex items-center justify-center shadow-xs">
+                  <span className="w-7 h-7 rounded-lg bg-neutral-900 text-white font-bold font-mono text-xs flex items-center justify-center shadow-xs">
                     {q.questionNumber}
                   </span>
                   <div>
@@ -1762,7 +1762,7 @@ export default function WeeklyExamPage() {
             </span>
             <button
               onClick={handleProceedToGrading}
-              className="py-2.5 px-6 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm shadow-blue-500/20 cursor-pointer flex items-center gap-2"
+              className="py-2.5 px-6 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-sm cursor-pointer flex items-center gap-2"
             >
               <span>Submit & Review Marking Rubrics</span>
               <ArrowRight className="w-4 h-4" />
@@ -1792,7 +1792,7 @@ export default function WeeklyExamPage() {
 
             <button
               onClick={handleFinalizeSubmission}
-              className="py-2 px-5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm shadow-blue-500/20 flex items-center gap-1.5 cursor-pointer"
+              className="py-2 px-5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-sm flex items-center gap-1.5 cursor-pointer"
             >
               <span>Calculate Final Stanine Grade</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -1875,7 +1875,7 @@ export default function WeeklyExamPage() {
                               }}
                               className={`w-8 h-8 rounded-lg font-bold font-mono text-xs transition cursor-pointer ${
                                 currentAwarded === pt
-                                  ? 'bg-blue-600 text-white shadow-xs'
+                                  ? 'bg-neutral-900 text-white shadow-xs'
                                   : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
                               }`}
                             >
@@ -1894,7 +1894,7 @@ export default function WeeklyExamPage() {
           <div className="flex justify-end pt-4">
             <button
               onClick={handleFinalizeSubmission}
-              className="py-3 px-8 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm shadow-blue-500/20 flex items-center gap-2 cursor-pointer"
+              className="py-3 px-8 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-sm flex items-center gap-2 cursor-pointer"
             >
               <span>Calculate Final Stanine Grade & View Report</span>
               <ArrowRight className="w-4 h-4" />
@@ -1916,7 +1916,7 @@ export default function WeeklyExamPage() {
           <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs space-y-8 text-center">
             {/* Top Grade Badge */}
             <div className="space-y-3">
-              <div className="w-16 h-16 rounded-2xl bg-blue-600 text-white flex items-center justify-center mx-auto shadow-md shadow-blue-500/30">
+              <div className="w-16 h-16 rounded-2xl bg-neutral-900 text-white flex items-center justify-center mx-auto shadow-md">
                 <Trophy className="w-8 h-8 text-amber-300" />
               </div>
 
@@ -1989,7 +1989,7 @@ export default function WeeklyExamPage() {
                   setExamState('dashboard');
                   reloadData(currentLevel);
                 }}
-                className="w-full sm:w-auto py-2.5 px-6 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm shadow-blue-500/20"
+                className="w-full sm:w-auto py-2.5 px-6 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-sm"
               >
                 Back to Weekly Exam Hub
               </button>

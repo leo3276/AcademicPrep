@@ -149,7 +149,7 @@ export default function DetailedTopicLessonPage() {
                 <button
                   type="submit"
                   disabled={pinLoading || !pinInput.trim()}
-                  className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:bg-slate-300 text-white font-semibold text-xs transition shadow-sm shadow-blue-500/20 flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:bg-slate-300 text-white font-semibold text-xs transition shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer"
                 >
                   {pinLoading ? 'Verifying...' : 'Unlock Lesson Now'}
                 </button>
@@ -217,7 +217,7 @@ export default function DetailedTopicLessonPage() {
       {/* 2. Topic Hero Header */}
       <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm space-y-4">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-blue-100 text-blue-800 font-mono uppercase">
+          <span className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-neutral-100 text-neutral-800 font-mono uppercase">
             {subject.code}
           </span>
           <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">
@@ -298,7 +298,7 @@ export default function DetailedTopicLessonPage() {
 
           <Link
             href={`/jhs/quiz/${topic.id}`}
-            className="ml-auto px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm shadow-blue-500/20 transition-all"
+            className="ml-auto px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all"
           >
             <HelpCircle className="w-4 h-4" />
             <span>Take Diagnostic Quiz</span>
@@ -369,7 +369,7 @@ export default function DetailedTopicLessonPage() {
             {/* Topic Introduction & Objectives */}
             <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-6">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
+                <div className="w-9 h-9 rounded-xl bg-neutral-100 text-neutral-700 flex items-center justify-center font-bold">
                   <BookOpen className="w-5 h-5" />
                 </div>
                 <div>
@@ -381,7 +381,7 @@ export default function DetailedTopicLessonPage() {
               </div>
 
               {/* Introduction Paragraph */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-blue-50/50 border border-blue-100 text-xs sm:text-sm text-slate-800 leading-relaxed font-sans">
+              <div className="p-4 sm:p-5 rounded-2xl bg-blue-50/50 border border-neutral-200 text-xs sm:text-sm text-slate-800 leading-relaxed font-sans">
                 <p className="font-semibold text-blue-950 mb-1">Topic Introduction & Real-World Context:</p>
                 <p>{notes.introduction || notes.realWorldContext}</p>
               </div>
@@ -452,7 +452,7 @@ export default function DetailedTopicLessonPage() {
                         {sec.title}
                       </h3>
                       {isVipLocked && idx === 0 && (
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-700">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-neutral-100 text-neutral-700">
                           Free Preview Section
                         </span>
                       )}
@@ -469,7 +469,7 @@ export default function DetailedTopicLessonPage() {
                             key={bpIdx}
                             className="flex items-start gap-2 text-xs text-slate-800 bg-slate-50 p-2.5 rounded-xl border border-slate-200/60"
                           >
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0 mt-1.5" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0 mt-1.5" />
                             <span className="font-mono text-[11px] sm:text-xs leading-relaxed">{bp}</span>
                           </div>
                         ))}
@@ -477,7 +477,7 @@ export default function DetailedTopicLessonPage() {
                     )}
 
                     {sec.keyTakeaway && (
-                      <div className="p-3 rounded-xl bg-blue-50/70 border border-blue-200/70 text-xs text-blue-950 flex items-start gap-2">
+                      <div className="p-3 rounded-xl bg-blue-50/70 border border-neutral-200/70 text-xs text-blue-950 flex items-start gap-2">
                         <Lightbulb className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
                         <div>
                           <span className="font-bold">Key Takeaway: </span>
@@ -529,7 +529,7 @@ export default function DetailedTopicLessonPage() {
                     <button
                       type="submit"
                       disabled={pinLoading || !pinInput.trim()}
-                      className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:bg-slate-300 text-white font-bold text-xs transition-colors shadow-sm shadow-blue-500/20 flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer"
+                      className="px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:bg-slate-300 text-white font-bold text-xs transition-colors shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer"
                     >
                       {pinLoading ? (
                         <span>Verifying...</span>
@@ -642,7 +642,7 @@ export default function DetailedTopicLessonPage() {
       {topic.examples && topic.examples.length > 0 && (
         <section id="worked-examples" className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-6">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
+            <div className="w-9 h-9 rounded-xl bg-neutral-100 text-neutral-700 flex items-center justify-center font-bold">
               <Lightbulb className="w-5 h-5 text-amber-500" />
             </div>
             <div>
@@ -697,7 +697,7 @@ export default function DetailedTopicLessonPage() {
                       Example {exIdx + 1}: {ex.title}
                     </span>
                     {isVipLocked && exIdx === 0 && (
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-700">
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-neutral-100 text-neutral-700">
                         Free Trial Preview
                       </span>
                     )}
@@ -710,7 +710,7 @@ export default function DetailedTopicLessonPage() {
                     {ex.problem}
                   </div>
 
-                  <div className="space-y-2 text-xs sm:text-sm text-slate-800 pl-3 border-l-2 border-indigo-500">
+                  <div className="space-y-2 text-xs sm:text-sm text-slate-800 pl-3 border-l-2 border-neutral-400">
                     <span className="text-indigo-900 uppercase text-[10px] font-bold tracking-wider block mb-1">
                       Step-by-Step Solution:
                     </span>
@@ -754,7 +754,7 @@ export default function DetailedTopicLessonPage() {
           {isVipLocked ? (
             <button
               onClick={() => setPinModalOpen(true)}
-              className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition shadow-sm shadow-blue-500/20 flex items-center gap-2 cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition shadow-sm flex items-center gap-2 cursor-pointer"
             >
               <Crown className="w-4 h-4 text-slate-300" />
               <span>Unlock VIP Pass &amp; Start Quiz</span>
@@ -762,7 +762,7 @@ export default function DetailedTopicLessonPage() {
           ) : (
             <Link
               href={`/jhs/quiz/${topic.id}`}
-              className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition shadow-sm shadow-blue-500/20 flex items-center gap-2 cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition shadow-sm flex items-center gap-2 cursor-pointer"
             >
               <HelpCircle className="w-4 h-4 text-slate-300" />
               <span>{isCompleted ? 'Retake Diagnostic Quiz' : 'Start Diagnostic Quiz'}</span>
@@ -785,7 +785,7 @@ export default function DetailedTopicLessonPage() {
         {prevTopic ? (
           <Link
             href={`/jhs/${subject.id}/${prevTopic.id}?level=${encodeURIComponent(prevTopic.level)}`}
-            className="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-blue-600 transition-colors p-3 rounded-xl hover:bg-slate-100 max-w-[45%]"
+            className="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-neutral-900 transition-colors p-3 rounded-xl hover:bg-slate-100 max-w-[45%]"
           >
             <ArrowLeft className="w-4 h-4 shrink-0" />
             <div className="text-left truncate">
@@ -800,7 +800,7 @@ export default function DetailedTopicLessonPage() {
         {nextTopic ? (
           <Link
             href={`/jhs/${subject.id}/${nextTopic.id}?level=${encodeURIComponent(nextTopic.level)}`}
-            className="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-blue-600 transition-colors p-3 rounded-xl hover:bg-slate-100 max-w-[45%] text-right ml-auto"
+            className="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-neutral-900 transition-colors p-3 rounded-xl hover:bg-slate-100 max-w-[45%] text-right ml-auto"
           >
             <div className="text-right truncate">
               <span className="text-[10px] text-slate-500 block uppercase font-medium">Next Topic</span>
@@ -870,7 +870,7 @@ export default function DetailedTopicLessonPage() {
               <button
                 type="submit"
                 disabled={pinLoading || !pinInput.trim()}
-                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:bg-slate-300 text-white font-bold text-xs transition-colors shadow-sm shadow-blue-500/20 flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-full py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:bg-slate-300 text-white font-bold text-xs transition-colors shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 {pinLoading ? (
                   <span>Verifying PIN...</span>

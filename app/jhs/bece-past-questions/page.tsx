@@ -217,7 +217,7 @@ export default function BecePastQuestionsPage() {
         </div>
 
         {mounted && isTrialActive && !student?.hasFullAccess && (
-          <div className="p-3.5 rounded-2xl bg-blue-50 border border-blue-200/80 text-xs text-blue-900 flex items-center justify-between shadow-2xs">
+          <div className="p-3.5 rounded-2xl bg-blue-50 border border-neutral-200/80 text-xs text-blue-900 flex items-center justify-between shadow-2xs">
             <span className="flex items-center gap-2 font-semibold">
               <span className="text-base">🎁</span>
               <span>30-Day Free Trial: All WAEC BECE Past Papers & Marking Schemes unlocked for viewing & download! ({trialDaysRemaining}d remaining)</span>
@@ -378,7 +378,7 @@ export default function BecePastQuestionsPage() {
             {hasActiveFilters ? (
               <button
                 onClick={resetFilters}
-                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition shadow-sm shadow-blue-500/20"
+                className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-medium text-xs transition shadow-sm"
               >
                 Clear all filters
               </button>
@@ -401,7 +401,7 @@ export default function BecePastQuestionsPage() {
                   {/* Card Header: Icon & Year Tag */}
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 font-bold text-[11px] tracking-wider shadow-xs">
+                      <div className="w-10 h-10 rounded-xl bg-neutral-900 text-white flex items-center justify-center shrink-0 font-bold text-[11px] tracking-wider shadow-xs">
                         PDF
                       </div>
                       <div>
@@ -421,7 +421,7 @@ export default function BecePastQuestionsPage() {
 
                   {/* Title */}
                   <div>
-                    <h3 className="text-sm font-bold text-slate-900 leading-snug group-hover:text-blue-600 transition">
+                    <h3 className="text-sm font-bold text-slate-900 leading-snug group-hover:text-neutral-900 transition">
                       {doc.title}
                     </h3>
                     <p className="text-[11px] font-mono text-slate-400 mt-1 truncate" title={doc.fileName}>
@@ -469,7 +469,7 @@ export default function BecePastQuestionsPage() {
                       className={`py-2 px-3 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer ${
                         !hasFullAccess
                           ? 'bg-amber-600 hover:bg-amber-700 text-white'
-                          : 'bg-blue-600 hover:bg-blue-500 text-white shadow-sm shadow-blue-500/20'
+                          : 'bg-neutral-900 hover:bg-neutral-800 text-white shadow-sm'
                       }`}
                     >
                       {!hasFullAccess ? (

@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div className="space-y-3">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-xs">
+              <div className="w-8 h-8 rounded-lg bg-neutral-900 flex items-center justify-center text-white shadow-xs">
                 <GraduationCap className="w-5 h-5" />
               </div>
               <span className="font-bold text-base text-white">AcademicPrep</span>
@@ -40,7 +40,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/shs" className="text-slate-300 hover:text-white transition-colors flex items-center gap-1.5 font-medium">
-                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-neutral-500"></span>
                   SHS 1, 2 & 3 (WASSCE Live)
                 </Link>
               </li>
@@ -52,7 +52,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/university" className="text-slate-300 hover:text-white transition-colors flex items-center gap-1.5 font-medium">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-neutral-500"></span>
                   University &amp; Tertiary (Live)
                 </Link>
               </li>

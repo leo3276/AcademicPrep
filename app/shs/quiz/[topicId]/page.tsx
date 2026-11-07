@@ -217,7 +217,7 @@ export default function ShsTopicQuizPage() {
                 setModalTab('momo');
                 setShowPaymentModal(true);
               }}
-              className="w-full p-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-colors flex flex-col items-center justify-center gap-1 shadow-sm shadow-blue-500/20 cursor-pointer"
+              className="w-full p-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition-colors flex flex-col items-center justify-center gap-1 shadow-sm cursor-pointer"
             >
               <span>Pay Online via MoMo</span>
               <span className="text-[10px] text-white/80 font-normal">GH₵ 25 / Month</span>
@@ -229,7 +229,7 @@ export default function ShsTopicQuizPage() {
                 setModalTab('pin');
                 setShowPaymentModal(true);
               }}
-              className="w-full p-4 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-all flex flex-col items-center justify-center gap-1 shadow-sm shadow-blue-500/20 cursor-pointer"
+              className="w-full p-4 rounded-2xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition-all flex flex-col items-center justify-center gap-1 shadow-sm cursor-pointer"
             >
               <span>Redeem Voucher PIN</span>
               <span className="text-[10px] text-white/80 font-normal">Instant Access</span>
@@ -306,7 +306,7 @@ export default function ShsTopicQuizPage() {
     } else if (pct >= 60) {
       return {
         label: 'B3 / C4 - Good / Credit',
-        badgeColor: 'bg-blue-100 text-blue-800 border-blue-300',
+        badgeColor: 'bg-neutral-100 text-neutral-800 border-neutral-300',
         summary: 'Credit level pass. Review the detailed explanations below to tighten key concepts.',
       };
     } else if (pct >= 50) {
@@ -362,7 +362,7 @@ export default function ShsTopicQuizPage() {
               {topic.level} • {totalQuestions} Questions
             </span>
             <span className="text-xs text-slate-500">Pass Mark: {quiz.passScorePercentage}%</span>
-            <span className="text-xs font-medium text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full border border-purple-200">
+            <span className="text-xs font-medium text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full border border-neutral-200">
               WAEC / WASSCE Standard
             </span>
           </div>
@@ -502,7 +502,7 @@ export default function ShsTopicQuizPage() {
 
                     {/* Explanation */}
                     {q.explanation && (
-                      <div className="p-3 rounded-xl bg-blue-50/60 border border-blue-200 text-xs text-blue-950 space-y-1">
+                      <div className="p-3 rounded-xl bg-blue-50/60 border border-neutral-200 text-xs text-blue-950 space-y-1">
                         <span className="font-bold block text-blue-900">WAEC Detailed Solution:</span>
                         <p className="leading-relaxed">{q.explanation}</p>
                       </div>
@@ -525,7 +525,7 @@ export default function ShsTopicQuizPage() {
 
               <Link
                 href={`/shs/${topic.subjectId}/${topic.id}?level=${encodeURIComponent(topic.level)}`}
-                className="w-full sm:w-auto py-2.5 px-4 rounded-xl border border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 font-bold text-xs transition-colors flex items-center justify-center gap-1.5"
+                className="w-full sm:w-auto py-2.5 px-4 rounded-xl border border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50 font-bold text-xs transition-colors flex items-center justify-center gap-1.5"
               >
                 <BookOpen className="w-3.5 h-3.5" />
                 Review Full Notes
@@ -542,7 +542,7 @@ export default function ShsTopicQuizPage() {
               ) : (
                 <Link
                   href="/shs"
-                  className="w-full sm:w-auto py-2.5 px-4 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1.5 ml-auto shadow-sm"
+                  className="w-full sm:w-auto py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1.5 ml-auto shadow-sm"
                 >
                   <span>Return to SHS Portal</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -565,7 +565,7 @@ export default function ShsTopicQuizPage() {
               </div>
               <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                 <div
-                  className="bg-blue-600 h-full rounded-full transition-all duration-300"
+                  className="bg-neutral-900 h-full rounded-full transition-all duration-300"
                   style={{ width: `${((currentIdx + 1) / totalQuestions) * 100}%` }}
                 />
               </div>
@@ -584,9 +584,9 @@ export default function ShsTopicQuizPage() {
                     onClick={() => setCurrentIdx(idx)}
                     className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${
                       isCurrent
-                        ? 'bg-blue-600 text-white shadow-xs'
+                        ? 'bg-neutral-900 text-white shadow-xs'
                         : isAnswered
-                        ? 'bg-blue-100 text-blue-800'
+                        ? 'bg-neutral-100 text-neutral-800'
                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                     }`}
                   >
@@ -599,7 +599,7 @@ export default function ShsTopicQuizPage() {
             {/* Active Question Box */}
             <div className="p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-extrabold uppercase tracking-wider text-blue-700 bg-blue-100/70 px-2 py-0.5 rounded-md">
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-neutral-700 bg-neutral-100/70 px-2 py-0.5 rounded-md">
                   Question {currentIdx + 1}
                 </span>
                 {currentQ.subConcept && (
@@ -626,13 +626,13 @@ export default function ShsTopicQuizPage() {
                     onClick={() => handleSelectOption(optKey)}
                     className={`w-full p-4 rounded-xl border text-left text-xs font-medium transition-all flex items-center gap-3 ${
                       isSelected
-                        ? 'border-blue-600 bg-blue-50/70 text-blue-950 ring-2 ring-blue-500/20 shadow-sm'
+                        ? 'border-neutral-900 bg-white text-neutral-950 ring-2 ring-neutral-900/10 shadow-sm'
                         : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-800'
                     }`}
                   >
                     <span
                       className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 ${
-                        isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600'
+                        isSelected ? 'bg-neutral-900 text-white' : 'bg-slate-100 text-slate-600'
                       }`}
                     >
                       {optKey}
@@ -659,7 +659,7 @@ export default function ShsTopicQuizPage() {
                   <button
                     type="button"
                     onClick={() => setCurrentIdx((i) => Math.min(totalQuestions - 1, i + 1))}
-                    className="py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-sm shadow-blue-500/20 transition-all flex items-center gap-1.5"
+                    className="py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold shadow-sm transition-all flex items-center gap-1.5"
                   >
                     <span>Next Question</span>
                     <ArrowRight className="w-3.5 h-3.5" />

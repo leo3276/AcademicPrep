@@ -32,7 +32,7 @@ export default function TermsPage() {
             <span>Back to AcademicPrep Home</span>
           </Link>
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-blue-50 text-blue-800 border border-blue-200">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-blue-50 text-blue-800 border border-neutral-200">
               <FileText className="w-3.5 h-3.5 text-blue-600" />
               <span>Terms of Service</span>
             </span>
@@ -43,7 +43,7 @@ export default function TermsPage() {
       {/* Header Banner (Clean Minimalist) */}
       <section className="bg-white border-b border-slate-200 text-slate-900 py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto space-y-4 text-center sm:text-left">
-          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold">
+          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-white text-neutral-700 border border-neutral-200 text-xs font-semibold">
             <Scale className="w-3.5 h-3.5 text-blue-600" />
             <span>Student &amp; User License Agreement</span>
           </div>

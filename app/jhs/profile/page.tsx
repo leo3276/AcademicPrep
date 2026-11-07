@@ -225,7 +225,7 @@ export default function StudentProfilePage() {
         </p>
         <Link
           href="/login?redirect=/jhs/profile"
-          className="inline-flex items-center gap-2 py-3 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition shadow-md shadow-blue-500/20"
+          className="inline-flex items-center gap-2 py-3 px-6 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition shadow-md"
         >
           <span>Create Account / Sign In</span>
           <ArrowRight className="w-4 h-4" />
@@ -257,7 +257,7 @@ export default function StudentProfilePage() {
                     {student.currentLevel}
                   </span>
                   {isTrialActive ? (
-                    <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-blue-50 text-blue-800 border border-blue-200/80">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-blue-50 text-blue-800 border border-neutral-200/80">
                       Free Trial ({trialDaysRemaining}d remaining)
                     </span>
                   ) : hasFullAccess ? (
@@ -368,7 +368,7 @@ export default function StudentProfilePage() {
               <button
                 type="button"
                 onClick={() => setActiveTab('calculator')}
-                className="py-2 px-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-semibold transition shrink-0 flex items-center gap-1.5 cursor-pointer self-start sm:self-auto shadow-sm shadow-blue-500/20"
+                className="py-2 px-3.5 bg-neutral-900 hover:bg-neutral-800 text-white rounded-xl text-xs font-semibold transition shrink-0 flex items-center gap-1.5 cursor-pointer self-start sm:self-auto shadow-sm"
               >
                 <span>Open BECE Calculator</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -468,7 +468,7 @@ export default function StudentProfilePage() {
                         </div>
                         <Link
                           href={`/jhs/quiz/${w.id}`}
-                          className="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold"
+                          className="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-[11px] font-bold"
                         >
                           Retake
                         </Link>
@@ -559,7 +559,7 @@ export default function StudentProfilePage() {
                   placeholder="Search candidates by name or class level (e.g. Kwame, JHS 3)..."
                   value={leaderboardSearch}
                   onChange={(e) => setLeaderboardSearch(e.target.value)}
-                  className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-neutral-500"
                 />
               </div>
             )}
@@ -618,7 +618,7 @@ export default function StudentProfilePage() {
                               <div className="flex items-center gap-2">
                                 <span className="font-semibold text-slate-900">{st.name}</span>
                                 {isCurrent && (
-                                  <span className="text-[10px] font-black uppercase px-1.5 py-0.2 rounded bg-blue-600 text-white tracking-wider">
+                                  <span className="text-[10px] font-black uppercase px-1.5 py-0.2 rounded bg-neutral-900 text-white tracking-wider">
                                     YOU
                                   </span>
                                 )}
@@ -800,12 +800,12 @@ export default function StudentProfilePage() {
                   placeholder="Enter Access PIN (e.g. PREP-XXXX-XXXX)"
                   value={pinInput}
                   onChange={(e) => setPinInput(e.target.value.toUpperCase())}
-                  className="flex-1 px-4 py-2.5 text-xs border border-slate-300 rounded-xl bg-slate-50 font-mono uppercase focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="flex-1 px-4 py-2.5 text-xs border border-slate-300 rounded-xl bg-slate-50 font-mono uppercase focus:outline-none focus:ring-2 focus:ring-neutral-500"
                 />
                 <button
                   type="submit"
                   disabled={pinLoading || !pinInput.trim()}
-                  className="py-2.5 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold text-xs transition cursor-pointer"
+                  className="py-2.5 px-6 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:bg-slate-300 text-white font-bold text-xs transition cursor-pointer"
                 >
                   {pinLoading ? 'Verifying PIN...' : 'Activate Access'}
                 </button>

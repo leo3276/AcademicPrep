@@ -242,7 +242,7 @@ export default function TopicQuizPage() {
                 setModalTab('momo');
                 setShowPaymentModal(true);
               }}
-              className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition shadow-sm shadow-blue-500/20 flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-sm transition shadow-sm flex items-center justify-center gap-2 cursor-pointer"
             >
               <Crown className="w-4 h-4 text-slate-300" />
               <span>Buy VIP Pass via Mobile Money (GHS 25 / month)</span>
@@ -276,7 +276,7 @@ export default function TopicQuizPage() {
                 <button
                   type="submit"
                   disabled={pinLoading || !pinInput.trim()}
-                  className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:bg-slate-300 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 whitespace-nowrap shadow-sm shadow-blue-500/20"
+                  className="px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:bg-slate-300 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 whitespace-nowrap shadow-sm"
                 >
                   {pinLoading ? (
                     <span>Verifying...</span>
@@ -373,7 +373,7 @@ export default function TopicQuizPage() {
     } else if (pct >= 70) {
       return {
         label: 'Grade 2 (Credit)',
-        badgeColor: 'bg-blue-100 text-blue-800 border-blue-300',
+        badgeColor: 'bg-neutral-100 text-neutral-800 border-neutral-300',
         summary: 'Solid performance! Review the few missed sub-concepts below to turn this into a Grade 1 Distinction.',
       };
     } else if (pct >= 60) {
@@ -547,7 +547,7 @@ export default function TopicQuizPage() {
               <div className="p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-sm shadow-blue-500/20">
+                    <div className="w-8 h-8 rounded-xl bg-neutral-900 text-white flex items-center justify-center shadow-sm">
                       <Target className="w-4 h-4" />
                     </div>
                     <div>
@@ -555,7 +555,7 @@ export default function TopicQuizPage() {
                       <p className="text-[11px] text-slate-500">Targeted sub-concepts to revise based on your test answers</p>
                     </div>
                   </div>
-                  <span className="text-[11px] font-bold text-indigo-700 bg-indigo-100/80 border border-indigo-200 px-2.5 py-1 rounded-full shrink-0">
+                  <span className="text-[11px] font-bold text-indigo-700 bg-indigo-100/80 border border-neutral-200 px-2.5 py-1 rounded-full shrink-0">
                     {weakSubConcepts.length} {weakSubConcepts.length === 1 ? 'Area' : 'Areas'} to Polish
                   </span>
                 </div>
@@ -564,7 +564,7 @@ export default function TopicQuizPage() {
                   {weakSubConcepts.map((item, idx) => (
                     <div
                       key={idx}
-                      className="p-3.5 sm:p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs space-y-2 hover:border-indigo-200 transition-colors"
+                      className="p-3.5 sm:p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs space-y-2 hover:border-neutral-200 transition-colors"
                     >
                       <div className="flex items-center justify-between gap-2">
                         <span className="text-xs font-bold text-slate-900 flex items-center gap-2">
@@ -597,7 +597,7 @@ export default function TopicQuizPage() {
                   </span>
                   <Link
                     href={`/jhs/${topic.subjectId}/${topic.id}`}
-                    className="w-full sm:w-auto px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm shadow-indigo-500/20 whitespace-nowrap transition-all"
+                    className="w-full sm:w-auto px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm whitespace-nowrap transition-all"
                   >
                     <BookOpen className="w-3.5 h-3.5" />
                     Study {topic.title} Notes
@@ -691,7 +691,7 @@ export default function TopicQuizPage() {
                         </div>
 
                         {q.subConcept && (
-                          <span className="inline-block text-[10px] font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-md">
+                          <span className="inline-block text-[10px] font-bold text-indigo-700 bg-indigo-50 border border-neutral-200 px-2 py-0.5 rounded-md">
                             Sub-Concept: {q.subConcept}
                           </span>
                         )}
@@ -770,7 +770,7 @@ export default function TopicQuizPage() {
 
               <Link
                 href={`/jhs/${topic.subjectId}/${topic.id}?level=${encodeURIComponent(topic.level)}`}
-                className="w-full sm:w-auto py-2.5 px-4 rounded-xl border border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 font-bold text-xs transition-colors flex items-center justify-center gap-1.5"
+                className="w-full sm:w-auto py-2.5 px-4 rounded-xl border border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50 font-bold text-xs transition-colors flex items-center justify-center gap-1.5"
               >
                 <BookOpen className="w-3.5 h-3.5" />
                 Review Full Notes
@@ -811,7 +811,7 @@ export default function TopicQuizPage() {
               </div>
               <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                 <div
-                  className="bg-blue-600 h-full rounded-full transition-all duration-300"
+                  className="bg-neutral-900 h-full rounded-full transition-all duration-300"
                   style={{ width: `${((currentIdx + 1) / totalQuestions) * 100}%` }}
                 />
               </div>
@@ -830,9 +830,9 @@ export default function TopicQuizPage() {
                     onClick={() => setCurrentIdx(idx)}
                     className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${
                       isCurrent
-                        ? 'bg-blue-600 text-white ring-2 ring-blue-500/30'
+                        ? 'bg-neutral-900 text-white ring-2 ring-blue-500/30'
                         : isAnswered
-                        ? 'bg-blue-50 text-blue-800 border border-blue-200'
+                        ? 'bg-blue-50 text-blue-800 border border-neutral-200'
                         : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
                     }`}
                   >
@@ -845,7 +845,7 @@ export default function TopicQuizPage() {
             {/* Question Card */}
             <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
               {currentQ.subConcept && (
-                <span className="inline-block text-[10px] font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-md">
+                <span className="inline-block text-[10px] font-bold text-indigo-700 bg-indigo-50 border border-neutral-200 px-2 py-0.5 rounded-md">
                   {currentQ.subConcept}
                 </span>
               )}
@@ -867,13 +867,13 @@ export default function TopicQuizPage() {
                     onClick={() => handleSelectOption(optKey)}
                     className={`w-full p-4 rounded-xl border text-left text-xs font-medium transition-all flex items-center gap-3 ${
                       isSelected
-                        ? 'border-blue-600 bg-blue-50/70 text-blue-950 ring-2 ring-blue-500/20 shadow-sm'
+                        ? 'border-neutral-900 bg-white text-neutral-950 ring-2 ring-neutral-900/10 shadow-sm'
                         : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-800'
                     }`}
                   >
                     <span
                       className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 ${
-                        isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600'
+                        isSelected ? 'bg-neutral-900 text-white' : 'bg-slate-100 text-slate-600'
                       }`}
                     >
                       {optKey}
@@ -900,7 +900,7 @@ export default function TopicQuizPage() {
                   <button
                     type="button"
                     onClick={() => setCurrentIdx((i) => Math.min(totalQuestions - 1, i + 1))}
-                    className="py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-sm shadow-blue-500/20 transition-all flex items-center gap-1.5"
+                    className="py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold shadow-sm transition-all flex items-center gap-1.5"
                   >
                     <span>Next Question</span>
                     <ArrowRight className="w-3.5 h-3.5" />

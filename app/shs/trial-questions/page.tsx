@@ -328,7 +328,7 @@ export default function ShsTrialQuestionsPage() {
             {hasActiveFilters && (
               <button
                 onClick={resetFilters}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-semibold transition shadow-sm shadow-blue-500/20"
+                className="px-4 py-2 bg-neutral-900 hover:bg-neutral-800 text-white rounded-xl text-xs font-semibold transition shadow-sm"
               >
                 Clear All Filters
               </button>
@@ -394,7 +394,7 @@ export default function ShsTrialQuestionsPage() {
                       type="button"
                       onClick={(e) => handleDownloadPdf(e, doc)}
                       disabled={openingDocId === doc.id}
-                      className="flex-1 py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition shadow-sm shadow-blue-500/20 cursor-pointer"
+                      className="flex-1 py-2 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition shadow-sm cursor-pointer"
                     >
                       {!hasFullAccess ? <Lock className="w-3.5 h-3.5 text-amber-400" /> : <Download className="w-3.5 h-3.5" />}
                       <span>Download</span>

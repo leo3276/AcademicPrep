@@ -190,7 +190,7 @@ export default function LessonCommentsSection({
               placeholder="Your Name (e.g. Ama Mensah)"
               value={guestName}
               onChange={(e) => setGuestName(e.target.value)}
-              className="w-full sm:max-w-xs px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full sm:max-w-xs px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-500"
             />
             <span className="text-[11px] text-slate-400 hidden sm:inline">• Log in to show your VIP badge</span>
           </div>
@@ -203,7 +203,7 @@ export default function LessonCommentsSection({
             onChange={(e) => setContent(e.target.value)}
             placeholder="What key concept did you learn from this lesson? Got an exam memory trick or question? Share it with other students..."
             maxLength={500}
-            className="w-full px-4 py-3 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800 placeholder:text-slate-400 resize-none"
+            className="w-full px-4 py-3 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-neutral-500 text-slate-800 placeholder:text-slate-400 resize-none"
           />
         </div>
 
@@ -215,7 +215,7 @@ export default function LessonCommentsSection({
           <button
             type="submit"
             disabled={isSubmitting || !content.trim()}
-            className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm shadow-blue-500/20 transition-all cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:bg-slate-300 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all cursor-pointer"
           >
             <Send className="w-3.5 h-3.5" />
             <span>{isSubmitting ? 'Posting...' : 'Post Study Note'}</span>
@@ -274,7 +274,7 @@ export default function LessonCommentsSection({
                       </span>
 
                       {comment.isTeacherReply && (
-                        <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 border border-blue-200 flex items-center gap-1">
+                        <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-800 border border-neutral-200 flex items-center gap-1">
                           <ShieldCheck className="w-3 h-3 text-blue-600" />
                           <span>{comment.teacherTitle || 'Instructor'}</span>
                         </span>

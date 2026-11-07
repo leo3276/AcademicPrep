@@ -153,7 +153,7 @@ export default function SubjectDetailPage() {
               onClick={() => handleLevelChange(lvl)}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
                 currentLevel === lvl
-                  ? 'bg-blue-600 text-white shadow-xs'
+                  ? 'bg-neutral-900 text-white shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -178,7 +178,7 @@ export default function SubjectDetailPage() {
           </div>
           <button
             onClick={() => setPinModalOpen(true)}
-            className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto shadow-sm shadow-blue-500/20"
+            className="px-3.5 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white font-medium text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto shadow-sm"
           >
             Redeem Access PIN
           </button>
@@ -217,7 +217,7 @@ export default function SubjectDetailPage() {
                       ? 'border-emerald-200 ring-1 ring-emerald-100'
                       : isLocked
                       ? 'border-amber-200/60 bg-amber-50/20'
-                      : 'border-slate-200 hover:border-blue-300'
+                      : 'border-slate-200 hover:border-neutral-300'
                   }`}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -250,12 +250,12 @@ export default function SubjectDetailPage() {
 
                       <Link
                         href={`/jhs/${subjectId}/${topic.id}?level=${encodeURIComponent(currentLevel)}`}
-                        className="group inline-flex items-center gap-1.5 hover:text-blue-600 transition-colors"
+                        className="group inline-flex items-center gap-1.5 hover:text-neutral-900 transition-colors"
                       >
-                        <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                        <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-neutral-900 transition-colors">
                           {topic.title}
                         </h3>
-                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all" />
+                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-neutral-900 group-hover:translate-x-0.5 transition-all" />
                       </Link>
                       <p className="text-xs text-slate-600 leading-relaxed">{topic.description}</p>
 
@@ -293,7 +293,7 @@ export default function SubjectDetailPage() {
 
                       <Link
                         href={`/jhs/${subjectId}/${topic.id}?level=${encodeURIComponent(currentLevel)}`}
-                        className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-sm shadow-blue-500/20 flex items-center gap-1.5"
+                        className="px-4 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
                       >
                         <BookOpen className="w-3.5 h-3.5" />
                         <span>Study Lesson</span>
@@ -389,7 +389,7 @@ export default function SubjectDetailPage() {
               <button
                 type="submit"
                 disabled={pinLoading || !pinInput.trim()}
-                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:bg-slate-300 text-white font-bold text-xs transition-colors shadow-sm shadow-blue-500/20 flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-full py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:bg-slate-300 text-white font-bold text-xs transition-colors shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 {pinLoading ? (
                   <span>Verifying PIN...</span>

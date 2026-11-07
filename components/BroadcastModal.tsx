@@ -393,7 +393,7 @@ export default function BroadcastModal({ isOpen, onClose, post }: BroadcastModal
                 }}
                 className={`py-2 px-3 rounded-lg border text-center transition font-semibold text-xs ${
                   targetLevel === 'SHS'
-                    ? 'bg-purple-600 border-purple-600 text-white shadow-xs'
+                    ? 'bg-neutral-900 border-neutral-900 text-white shadow-xs'
                     : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'
                 }`}
               >
@@ -407,7 +407,7 @@ export default function BroadcastModal({ isOpen, onClose, post }: BroadcastModal
                 }}
                 className={`py-2 px-3 rounded-lg border text-center transition font-semibold text-xs ${
                   targetLevel === 'ALL'
-                    ? 'bg-blue-600 border-blue-600 text-white shadow-xs'
+                    ? 'bg-neutral-900 border-neutral-900 text-white shadow-xs'
                     : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'
                 }`}
               >
@@ -625,7 +625,7 @@ export default function BroadcastModal({ isOpen, onClose, post }: BroadcastModal
                   type="button"
                   onClick={handleExportVcfContacts}
                   disabled={filteredStudents.length === 0}
-                  className="py-2 px-3.5 rounded-lg bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white text-xs font-bold transition shadow-2xs flex items-center justify-center gap-1.5 shrink-0"
+                  className="py-2 px-3.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 disabled:opacity-50 text-white text-xs font-bold transition shadow-2xs flex items-center justify-center gap-1.5 shrink-0"
                 >
                   {vcfDownloaded ? (
                     <>
@@ -685,7 +685,7 @@ export default function BroadcastModal({ isOpen, onClose, post }: BroadcastModal
                 <button
                   type="button"
                   onClick={handleCopyWhatsAppText}
-                  className="py-2 px-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-sm shadow-blue-500/20"
+                  className="py-2 px-3 bg-neutral-900 hover:bg-neutral-800 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-sm"
                 >
                   <Copy className="w-3.5 h-3.5" />
                   <span>{copiedLink ? 'Text Copied!' : 'Copy Formatted Text'}</span>
@@ -810,7 +810,7 @@ export default function BroadcastModal({ isOpen, onClose, post }: BroadcastModal
                   type="button"
                   onClick={handleSendBulkSms}
                   disabled={isSendingSms || recipientCount === 0 || !smsMessage.trim()}
-                  className="flex-1 py-2.5 px-4 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition shadow-xs flex items-center justify-center gap-2 cursor-pointer"
+                  className="flex-1 py-2.5 px-4 bg-neutral-900 hover:bg-neutral-800 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition shadow-xs flex items-center justify-center gap-2 cursor-pointer"
                 >
                   {isSendingSms ? (
                     <>

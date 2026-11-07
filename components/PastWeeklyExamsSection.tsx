@@ -88,7 +88,7 @@ export default function PastWeeklyExamsSection({
             return (
               <div
                 key={exam.id}
-                className="p-5 rounded-2xl border border-slate-200 bg-slate-50/40 hover:border-blue-300 hover:bg-white transition-all space-y-4 shadow-2xs"
+                className="p-5 rounded-2xl border border-slate-200 bg-slate-50/40 hover:border-neutral-300 hover:bg-white transition-all space-y-4 shadow-2xs"
               >
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                   {/* Left: Metadata */}
@@ -97,7 +97,7 @@ export default function PastWeeklyExamsSection({
                       <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-200 text-slate-700">
                         {exam.termWeekLabel}
                       </span>
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-50 text-blue-800 border border-blue-200/80">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-50 text-blue-800 border border-neutral-200/80">
                         {exam.subjectName}
                       </span>
                       <span className="text-[11px] text-slate-400 font-medium">
@@ -171,7 +171,7 @@ export default function PastWeeklyExamsSection({
                   <button
                     type="button"
                     onClick={() => onPracticeExam(exam)}
-                    className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 transition shadow-sm shadow-blue-600/20 cursor-pointer"
+                    className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center gap-1.5 transition shadow-sm cursor-pointer"
                   >
                     <Play className="w-3.5 h-3.5 fill-current" />
                     <span>{isCompleted ? 'Retake / Practice Again' : 'Practice Past Paper'}</span>

@@ -342,7 +342,7 @@ export default function CollaboratorUploadPage() {
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <h1 className="text-xl font-bold tracking-tight text-slate-900">Upload University Course Slides</h1>
-            <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-blue-100 text-blue-800">Admin Approval Workflow</span>
+            <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-neutral-100 text-neutral-800">Admin Approval Workflow</span>
           </div>
           <p className="text-xs text-slate-500">
             Push official lecture slides and handouts. Uploaded slides are sent directly to the administrator for review and approval before appearing live on the student portal.

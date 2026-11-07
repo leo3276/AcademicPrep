@@ -114,7 +114,7 @@ export default function ShsDetailedTopicLessonPage() {
             ) : (
               <Link
                 href={`/shs/quiz/${topic.id}`}
-                className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold transition-all shadow-md shadow-purple-500/20 flex items-center gap-1.5"
+                className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition-all shadow-md flex items-center gap-1.5"
               >
                 <HelpCircle className="w-3.5 h-3.5" />
                 <span>Take Practice Quiz ({topic.quiz.questions.length} Qs)</span>
@@ -128,13 +128,13 @@ export default function ShsDetailedTopicLessonPage() {
       {/* Lesson Header Banner */}
       <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-4">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800 uppercase font-mono">
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-neutral-100 text-neutral-800 uppercase font-mono">
             {subject.code} • {topic.level}
           </span>
           <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-700">
             Term {topic.term}
           </span>
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-100 text-purple-800">
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-neutral-100 text-neutral-800">
             WAEC / WASSCE Syllabus
           </span>
           {topic.isFreeTrial || isTrialActive ? (
@@ -184,7 +184,7 @@ export default function ShsDetailedTopicLessonPage() {
             onClick={() => setActiveSectionTab('notes')}
             className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
               activeSectionTab === 'notes'
-                ? 'bg-blue-600 text-white shadow-xs'
+                ? 'bg-neutral-900 text-white shadow-xs'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
@@ -198,7 +198,7 @@ export default function ShsDetailedTopicLessonPage() {
               onClick={() => setActiveSectionTab('examples')}
               className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
                 activeSectionTab === 'examples'
-                  ? 'bg-blue-600 text-white shadow-xs'
+                  ? 'bg-neutral-900 text-white shadow-xs'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
@@ -251,7 +251,7 @@ export default function ShsDetailedTopicLessonPage() {
               {detailedNotes.sections.map((section, idx) => (
                 <div key={idx} className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-4">
                   <div className="flex items-center gap-2.5">
-                    <span className="w-7 h-7 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs shrink-0">
+                    <span className="w-7 h-7 rounded-xl bg-neutral-100 text-neutral-700 flex items-center justify-center font-bold text-xs shrink-0">
                       {idx + 1}
                     </span>
                     <h3 className="text-lg font-bold text-slate-900 tracking-tight">
@@ -267,7 +267,7 @@ export default function ShsDetailedTopicLessonPage() {
                     <ul className="space-y-2 pt-2 border-t border-slate-100 text-xs text-slate-700">
                       {section.bulletPoints.map((pt, pIdx) => (
                         <li key={pIdx} className="flex items-start gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0 mt-1.5"></span>
+                          <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0 mt-1.5"></span>
                           <span className="leading-relaxed">{pt}</span>
                         </li>
                       ))}
@@ -282,7 +282,7 @@ export default function ShsDetailedTopicLessonPage() {
                   )}
 
                   {section.keyTakeaway && (
-                    <div className="p-3.5 rounded-xl bg-blue-50/60 border border-blue-200 text-xs text-blue-950 space-y-1">
+                    <div className="p-3.5 rounded-xl bg-blue-50/60 border border-neutral-200 text-xs text-blue-950 space-y-1">
                       <span className="font-bold block text-blue-800">Core Takeaway:</span>
                       <p className="leading-relaxed">{section.keyTakeaway}</p>
                     </div>
@@ -390,7 +390,7 @@ export default function ShsDetailedTopicLessonPage() {
                 </div>
 
                 {example.keyTakeaway && (
-                  <div className="p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-xs text-blue-950 font-medium">
+                  <div className="p-3.5 rounded-xl bg-blue-50 border border-neutral-200 text-xs text-blue-950 font-medium">
                     <span className="font-bold text-blue-900 block mb-0.5">Takeaway:</span>
                     {example.keyTakeaway}
                   </div>
@@ -428,7 +428,7 @@ export default function ShsDetailedTopicLessonPage() {
                   setModalTab('momo');
                   setShowPaymentModal(true);
                 }}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition shadow-sm shadow-blue-500/20 flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition shadow-sm flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Lock className="w-4 h-4" />
                 <span>Unlock VIP Quiz</span>
@@ -436,7 +436,7 @@ export default function ShsDetailedTopicLessonPage() {
             ) : (
               <Link
                 href={`/shs/quiz/${topic.id}`}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition shadow-sm shadow-blue-500/20 flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition shadow-sm flex items-center justify-center gap-2 cursor-pointer"
               >
                 <HelpCircle className="w-4 h-4" />
                 <span>Start Quiz Now</span>
@@ -473,7 +473,7 @@ export default function ShsDetailedTopicLessonPage() {
         {nextTopic ? (
           <Link
             href={`/shs/${subjectId}/${nextTopic.id}?level=${encodeURIComponent(nextTopic.level)}`}
-            className="flex items-center gap-1.5 text-blue-600 hover:text-blue-700 p-2 rounded-xl hover:bg-blue-50 transition-colors ml-auto"
+            className="flex items-center gap-1.5 text-blue-600 hover:text-blue-700 p-2 rounded-xl hover:bg-neutral-50 transition-colors ml-auto"
           >
             <span className="hidden sm:inline">Next:</span>
             <span className="truncate max-w-[180px]">{nextTopic.title}</span>

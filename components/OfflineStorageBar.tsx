@@ -45,7 +45,7 @@ export default function OfflineStorageBar() {
         <div>
           <div className="flex items-center gap-2">
             <span className="font-bold text-slate-800">Smart Data-Saver & Offline Caching</span>
-            <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-600 text-white shadow-2xs">
+            <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-neutral-900 text-white shadow-2xs">
               Active
             </span>
           </div>

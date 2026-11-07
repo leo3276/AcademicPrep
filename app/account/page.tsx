@@ -97,7 +97,7 @@ export default function AccountPage() {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
         <div className="text-center space-y-3">
-          <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
+          <div className="w-8 h-8 border-2 border-neutral-600 border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="text-xs font-medium text-slate-500">Loading student profile...</p>
         </div>
       </div>
@@ -108,7 +108,7 @@ export default function AccountPage() {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
         <div className="max-w-md w-full bg-white border border-slate-200 rounded-3xl p-8 shadow-xs text-center space-y-5">
-          <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center mx-auto">
+          <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-neutral-200 text-blue-600 flex items-center justify-center mx-auto">
             <User className="w-6 h-6" />
           </div>
           <div className="space-y-1">
@@ -120,7 +120,7 @@ export default function AccountPage() {
           <div className="pt-2 flex flex-col gap-2">
             <Link
               href="/login?redirect=/account"
-              className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition shadow-sm shadow-blue-500/20 text-center"
+              className="w-full py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition shadow-sm text-center"
             >
               Sign In to AcademicPrep
             </Link>
@@ -157,7 +157,7 @@ export default function AccountPage() {
             <div className="flex items-center gap-2">
               <Link
                 href={portalHref}
-                className="px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 font-semibold text-xs transition flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 hover:bg-neutral-100 font-semibold text-xs transition flex items-center gap-1.5"
               >
                 <span>Go to {portalLabel}</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -184,7 +184,7 @@ export default function AccountPage() {
           {/* Profile Header Card */}
           <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="flex items-start sm:items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-blue-600 text-white font-bold text-xl flex items-center justify-center shrink-0 shadow-sm shadow-blue-500/20">
+              <div className="w-14 h-14 rounded-2xl bg-neutral-900 text-white font-bold text-xl flex items-center justify-center shrink-0 shadow-sm">
                 {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
               </div>
               <div className="space-y-1">
@@ -205,12 +205,12 @@ export default function AccountPage() {
             {/* Pass Status Pill */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 shrink-0">
               {hasFullAccess ? (
-                <div className="px-3.5 py-2 rounded-xl bg-blue-50 border border-blue-200 text-blue-800 text-xs font-semibold flex items-center gap-2">
+                <div className="px-3.5 py-2 rounded-xl bg-white border border-neutral-200 text-neutral-800 text-xs font-semibold flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-blue-600" />
                   <span>VIP All-Access Active</span>
                 </div>
               ) : isTrialActive ? (
-                <div className="px-3.5 py-2 rounded-xl bg-blue-50 border border-blue-200 text-blue-800 text-xs font-semibold flex items-center gap-2">
+                <div className="px-3.5 py-2 rounded-xl bg-white border border-neutral-200 text-neutral-800 text-xs font-semibold flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-blue-600" />
                   <span>30-Day Free Trial ({trialDaysRemaining}d remaining)</span>
                 </div>
@@ -227,7 +227,7 @@ export default function AccountPage() {
                   setModalTab('pin');
                   setPinModalOpen(true);
                 }}
-                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition shadow-xs cursor-pointer active:scale-95"
+                className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition shadow-xs cursor-pointer active:scale-95"
               >
                 <KeyRound className="w-3.5 h-3.5" />
                 <span>{hasFullAccess ? 'Extend Pass' : 'Enter Pass PIN'}</span>
@@ -241,7 +241,7 @@ export default function AccountPage() {
               onClick={() => setActiveTab('overview')}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer ${
                 activeTab === 'overview'
-                  ? 'bg-blue-600 text-white shadow-xs'
+                  ? 'bg-neutral-900 text-white shadow-xs'
                   : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
               }`}
             >
@@ -251,7 +251,7 @@ export default function AccountPage() {
               onClick={() => setActiveTab('timetable')}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer ${
                 activeTab === 'timetable'
-                  ? 'bg-blue-600 text-white shadow-xs'
+                  ? 'bg-neutral-900 text-white shadow-xs'
                   : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
               }`}
             >
@@ -281,7 +281,7 @@ export default function AccountPage() {
                 </div>
 
                 {levelSuccess && (
-                  <div className="p-3 rounded-xl bg-blue-50 border border-blue-200 text-blue-800 text-xs font-semibold flex items-center gap-2">
+                  <div className="p-3 rounded-xl bg-white border border-neutral-200 text-neutral-800 text-xs font-semibold flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-blue-600" />
                     <span>{levelSuccess}</span>
                   </div>
@@ -305,7 +305,7 @@ export default function AccountPage() {
                         disabled={updatingLevel}
                         className={`p-3 rounded-2xl border text-center transition cursor-pointer flex flex-col items-center justify-center gap-1 ${
                           isCurrent
-                            ? 'bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-500/20 font-bold'
+                            ? 'bg-neutral-900 text-white border-neutral-900 shadow-sm font-bold'
                             : 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200 font-semibold'
                         }`}
                       >
@@ -377,7 +377,7 @@ export default function AccountPage() {
                   </div>
                   <Link
                     href="/university"
-                    className="w-full py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition shadow-xs text-center"
+                    className="w-full py-2 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition shadow-xs text-center"
                   >
                     <span>Enter University Studio</span>
                     <ChevronRight className="w-3.5 h-3.5" />

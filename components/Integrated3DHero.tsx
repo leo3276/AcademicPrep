@@ -487,7 +487,7 @@ export default function Integrated3DHero({ latestPost, onOpenApkModal }: Integra
                 href="/jhs"
                 id="tour-home-launch"
                 data-hot="true"
-                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition shadow-sm shadow-blue-500/20 flex items-center justify-center gap-2 group cursor-pointer"
+                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-sm transition shadow-sm flex items-center justify-center gap-2 group cursor-pointer"
               >
                 <span>Launch JHS Portal</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -655,7 +655,7 @@ export default function Integrated3DHero({ latestPost, onOpenApkModal }: Integra
                   <div>
                     <div className="flex items-center justify-between gap-2 mb-2">
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white text-neutral-700 border border-neutral-200">
                           {currentQ.subject}
                         </span>
                         <span className="text-[10px] font-mono text-slate-400 hidden sm:inline">
@@ -765,7 +765,7 @@ export default function Integrated3DHero({ latestPost, onOpenApkModal }: Integra
                     <Link
                       href={selectedLevel === 'JHS' ? '/jhs' : '/shs'}
                       data-hot="true"
-                      className="font-bold text-slate-900 hover:text-blue-600 flex items-center gap-1 transition-colors"
+                      className="font-bold text-slate-900 hover:text-neutral-900 flex items-center gap-1 transition-colors"
                     >
                       <span>Full Syllabus</span>
                       <ChevronRight className="w-3.5 h-3.5" />

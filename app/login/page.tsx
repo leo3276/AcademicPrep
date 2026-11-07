@@ -84,8 +84,8 @@ function LoginFormContent() {
                 isUniversityStudent
                   ? 'bg-slate-900 text-white'
                   : isShsStudent
-                  ? 'bg-purple-100 text-purple-700'
-                  : 'bg-blue-100 text-blue-700'
+                  ? 'bg-neutral-100 text-neutral-700'
+                  : 'bg-neutral-100 text-neutral-700'
               }`}>
                 {isUniversityStudent ? 'Tertiary / University' : student.currentLevel}
               </span>
@@ -106,8 +106,8 @@ function LoginFormContent() {
                 isUniversityStudent
                   ? 'bg-slate-900 hover:bg-slate-800'
                   : isShsStudent
-                  ? 'bg-purple-600 hover:bg-purple-700 shadow-purple-500/20'
-                  : 'bg-blue-600 hover:bg-blue-700 shadow-blue-500/20'
+                  ? 'bg-neutral-900 hover:bg-neutral-800'
+                  : 'bg-neutral-900 hover:bg-neutral-800'
               } text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-sm`}
             >
               <User className="w-4 h-4" />
@@ -311,7 +311,7 @@ function LoginFormContent() {
                   placeholder="e.g. 0241234567"
                   value={signInPhone}
                   onChange={(e) => setSignInPhone(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-neutral-500"
                   required
                 />
               </div>
@@ -329,7 +329,7 @@ function LoginFormContent() {
                   placeholder="Enter your password or PIN"
                   value={signInPassword}
                   onChange={(e) => setSignInPassword(e.target.value)}
-                  className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-neutral-500"
                   required
                 />
                 <button
@@ -364,7 +364,7 @@ function LoginFormContent() {
             <button
               type="submit"
               disabled={signInLoading}
-              className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-md shadow-blue-500/20 disabled:bg-slate-300 cursor-pointer"
+              className="w-full py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-md disabled:bg-slate-300 cursor-pointer"
             >
               {signInLoading ? (
                 <span>Signing in...</span>
@@ -411,7 +411,7 @@ function LoginFormContent() {
                   placeholder="e.g. Kwame Mensah"
                   value={regFullName}
                   onChange={(e) => setRegFullName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-neutral-500"
                   required
                 />
               </div>
@@ -429,7 +429,7 @@ function LoginFormContent() {
                   placeholder="e.g. 0241234567"
                   value={regPhone}
                   onChange={(e) => setRegPhone(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-neutral-500"
                   required
                 />
               </div>
@@ -444,7 +444,7 @@ function LoginFormContent() {
               <select
                 value={regLevel}
                 onChange={(e) => setRegLevel(e.target.value as EducationLevel)}
-                className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-neutral-500"
               >
                 <optgroup label="Tertiary / University">
                   <option value="UNIVERSITY">Tertiary / University (Level 100 – 400 / Slide Studio)</option>
@@ -474,7 +474,7 @@ function LoginFormContent() {
                   placeholder="Choose a password or 4-digit PIN"
                   value={regPassword}
                   onChange={(e) => setRegPassword(e.target.value)}
-                  className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-neutral-500"
                   required
                 />
                 <button
@@ -531,7 +531,7 @@ function LoginFormContent() {
               id="guide-step-submit"
               type="submit"
               disabled={regLoading}
-              className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-md shadow-blue-500/20 disabled:bg-slate-300 cursor-pointer"
+              className="w-full py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-md disabled:bg-slate-300 cursor-pointer"
             >
               {regLoading ? (
                 <span>Creating account...</span>

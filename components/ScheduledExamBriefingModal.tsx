@@ -159,7 +159,7 @@ export default function ScheduledExamBriefingModal({
                     value={candidateName}
                     onChange={(e) => setCandidateName(e.target.value)}
                     placeholder="e.g. Kwame Mensah"
-                    className="w-full px-2.5 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:outline-hidden focus:ring-1 focus:ring-blue-500"
+                    className="w-full px-2.5 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:outline-hidden focus:ring-1 focus:ring-neutral-500"
                   />
                 </div>
                 <div>
@@ -169,7 +169,7 @@ export default function ScheduledExamBriefingModal({
                     value={candidatePhone}
                     onChange={(e) => setCandidatePhone(e.target.value)}
                     placeholder="e.g. 0244123456"
-                    className="w-full px-2.5 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:outline-hidden focus:ring-1 focus:ring-blue-500"
+                    className="w-full px-2.5 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:outline-hidden focus:ring-1 focus:ring-neutral-500"
                   />
                 </div>
               </div>
@@ -182,7 +182,7 @@ export default function ScheduledExamBriefingModal({
               type="checkbox"
               checked={agreed}
               onChange={(e) => setAgreed(e.target.checked)}
-              className="mt-0.5 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300 shrink-0 cursor-pointer"
+              className="mt-0.5 w-4 h-4 rounded text-blue-600 focus:ring-neutral-500 border-slate-300 shrink-0 cursor-pointer"
             />
             <span className="text-[11px] text-slate-800 leading-normal font-medium">
               I understand that leaving this page will lock me out for 5 minutes as a penalty, while my exam timer continues running in the background.
@@ -230,7 +230,7 @@ export default function ScheduledExamBriefingModal({
                 agreed
                   ? isAdmin
                     ? 'bg-amber-600 hover:bg-amber-500 text-white shadow-sm shadow-amber-600/20 cursor-pointer'
-                    : 'bg-blue-600 hover:bg-blue-500 text-white shadow-sm shadow-blue-600/20 cursor-pointer'
+                    : 'bg-neutral-900 hover:bg-neutral-800 text-white shadow-sm cursor-pointer'
                   : 'bg-slate-200 text-slate-400 cursor-not-allowed'
               }`}
             >
