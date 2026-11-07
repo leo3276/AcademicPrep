@@ -95,7 +95,7 @@ export default function ScheduledExamBanner({ variant = 'full', className = '' }
           <Link
             href="/jhs/weekly-exam?mode=scheduled"
             className={`px-3 py-1 rounded-lg text-xs font-semibold transition flex items-center gap-1 ${
-              isLive ? 'bg-emerald-600 hover:bg-emerald-500 text-white' : 'bg-slate-900 hover:bg-slate-800 text-white'
+              isLive ? 'bg-emerald-600 hover:bg-emerald-500 text-white' : 'bg-blue-600 hover:bg-blue-700 text-white'
             }`}
           >
             <span>{isLive ? 'Enter' : isEnded ? 'Results' : 'View'}</span>
@@ -220,7 +220,7 @@ export default function ScheduledExamBanner({ variant = 'full', className = '' }
             {isCompleted ? (
               <Link
                 href="/jhs/weekly-exam?mode=scheduled"
-                className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs"
+                className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs"
               >
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                 <span>View Results ({pastAttempt.compositePercentage}%)</span>
@@ -242,7 +242,7 @@ export default function ScheduledExamBanner({ variant = 'full', className = '' }
             ) : (
               <Link
                 href="/jhs/weekly-exam?mode=scheduled"
-                className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs"
+                className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs"
               >
                 <Lock className="w-3.5 h-3.5 text-slate-400" />
                 <span>Opens 7:30 PM (View Rules)</span>

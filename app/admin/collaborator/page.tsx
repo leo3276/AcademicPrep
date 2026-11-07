@@ -235,7 +235,7 @@ export default function CollaboratorUploadPage() {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
         <div className="max-w-md w-full bg-white border border-slate-200 rounded-2xl p-8 text-center space-y-4 shadow-sm">
-          <div className="w-10 h-10 border-2 border-slate-900 border-t-transparent rounded-full animate-spin mx-auto" />
+          <div className="w-10 h-10 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
           <h1 className="text-base font-bold text-slate-900">Validating Collaborator Pass</h1>
           <p className="text-xs text-slate-500">Checking your unique collaborator authorization token with AcademicPrep...</p>
         </div>
@@ -270,7 +270,7 @@ export default function CollaboratorUploadPage() {
                   value={token}
                   onChange={(e) => setToken(e.target.value)}
                   placeholder="Paste PREP-FACULTY-XXXX"
-                  className="w-full pl-9 pr-3 py-2 text-xs font-mono border border-slate-200 rounded-lg focus:outline-none focus:border-slate-800"
+                  className="w-full pl-9 pr-3 py-2 text-xs font-mono border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500"
                   required
                 />
               </div>
@@ -278,7 +278,7 @@ export default function CollaboratorUploadPage() {
 
             <button
               type="submit"
-              className="w-full py-2.5 px-4 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition"
+              className="w-full py-2.5 px-4 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition"
             >
               Verify Collaborator Access
             </button>
@@ -410,7 +410,7 @@ export default function CollaboratorUploadPage() {
                     value={courseCode}
                     onChange={(e) => setCourseCode(e.target.value.toUpperCase())}
                     placeholder="e.g. DCIT 101"
-                    className="w-full px-2.5 py-2 font-mono uppercase text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800"
+                    className="w-full px-2.5 py-2 font-mono uppercase text-xs border border-slate-200 rounded-md focus:outline-none focus:border-blue-500"
                     required
                   />
                 </div>
@@ -423,7 +423,7 @@ export default function CollaboratorUploadPage() {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="e.g. Intro to Hardware"
-                    className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800"
+                    className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-blue-500"
                     required
                   />
                 </div>
@@ -439,7 +439,7 @@ export default function CollaboratorUploadPage() {
                   value={courseTitle}
                   onChange={(e) => setCourseTitle(e.target.value)}
                   placeholder="e.g. Introduction to Computer Science"
-                  className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800"
+                  className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-blue-500"
                 />
               </div>
 
@@ -451,7 +451,7 @@ export default function CollaboratorUploadPage() {
                 <select
                   value={university}
                   onChange={(e) => setUniversity(e.target.value)}
-                  className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800 bg-white"
+                  className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-blue-500 bg-white"
                 >
                   {GHANAIAN_UNIVERSITIES.map(u => (
                     <option key={u} value={u}>{u}</option>
@@ -467,7 +467,7 @@ export default function CollaboratorUploadPage() {
                 <select
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
-                  className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800 bg-white"
+                  className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-blue-500 bg-white"
                 >
                   {UNIVERSITY_DEPARTMENTS.map(d => (
                     <option key={d} value={d}>{d}</option>
@@ -484,7 +484,7 @@ export default function CollaboratorUploadPage() {
                   <select
                     value={level}
                     onChange={(e) => setLevel(e.target.value)}
-                    className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800 bg-white"
+                    className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-blue-500 bg-white"
                   >
                     {UNIVERSITY_LEVELS.map(l => (
                       <option key={l} value={l}>{l}</option>
@@ -498,7 +498,7 @@ export default function CollaboratorUploadPage() {
                   <select
                     value={semester}
                     onChange={(e) => setSemester(e.target.value)}
-                    className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800 bg-white"
+                    className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-blue-500 bg-white"
                   >
                     {UNIVERSITY_SEMESTERS.map(s => (
                       <option key={s} value={s}>{s}</option>
@@ -517,7 +517,7 @@ export default function CollaboratorUploadPage() {
                   value={uploadedBy}
                   onChange={(e) => setUploadedBy(e.target.value)}
                   placeholder="e.g. Dr. Mensah (Lecturer) or Course Rep"
-                  className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800"
+                  className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-blue-500"
                 />
               </div>
 
@@ -531,7 +531,7 @@ export default function CollaboratorUploadPage() {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="e.g. Week 4 lecture covering CPU architecture, memory registers, and I/O bus cycles."
-                  className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800 resize-none"
+                  className="w-full px-2.5 py-2 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-blue-500 resize-none"
                 />
               </div>
 
@@ -539,7 +539,7 @@ export default function CollaboratorUploadPage() {
               <button
                 type="submit"
                 disabled={uploading}
-                className="w-full py-2.5 px-4 rounded-lg bg-slate-900 hover:bg-slate-800 disabled:bg-slate-400 text-white font-semibold text-xs transition flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                className="w-full py-2.5 px-4 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-semibold text-xs transition flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
                 {uploading ? (
                   <>
@@ -575,14 +575,14 @@ export default function CollaboratorUploadPage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Filter by code or title..."
-                  className="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-slate-800"
+                  className="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-200 rounded-md focus:outline-none focus:border-blue-500"
                 />
               </div>
             </div>
 
             {loadingSlides ? (
               <div className="py-12 text-center text-xs text-slate-400">
-                <div className="w-4 h-4 border-2 border-slate-800 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
                 <span>Loading slide directory...</span>
               </div>
             ) : filteredSlides.length === 0 ? (

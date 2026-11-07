@@ -75,7 +75,7 @@ export default function MockShareButtons({
         <button
           type="button"
           onClick={handleWhatsApp}
-          className="px-3.5 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
+          className="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
           title="Broadcast mock papers to WhatsApp study group"
         >
           <MessageCircle className="w-4 h-4" />

@@ -171,7 +171,7 @@ export default function PastWeeklyExamsSection({
                   <button
                     type="button"
                     onClick={() => onPracticeExam(exam)}
-                    className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center gap-1.5 transition shadow-sm cursor-pointer"
+                    className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center gap-1.5 transition shadow-sm cursor-pointer"
                   >
                     <Play className="w-3.5 h-3.5 fill-current" />
                     <span>{isCompleted ? 'Retake / Practice Again' : 'Practice Past Paper'}</span>

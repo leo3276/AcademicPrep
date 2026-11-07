@@ -357,7 +357,7 @@ export default function StudentCommunityChatPage() {
 
               <Link
                 href="/jhs"
-                className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-sm"
+                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-sm"
               >
                 <BookOpen className="w-3.5 h-3.5" />
                 <span>Curriculum</span>
@@ -383,7 +383,7 @@ export default function StudentCommunityChatPage() {
                     onClick={() => setActiveRoom(room.id)}
                     className={`w-full text-left p-3 rounded-xl transition-all flex items-start gap-2.5 cursor-pointer ${
                       activeRoom === room.id
-                        ? 'bg-slate-900 text-white font-bold shadow-2xs'
+                        ? 'bg-blue-600 text-white font-bold shadow-2xs'
                         : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                     }`}
                   >
@@ -505,7 +505,7 @@ export default function StudentCommunityChatPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting || !content.trim()}
-                  className="px-5 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:bg-slate-300 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all cursor-pointer"
+                  className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all cursor-pointer"
                 >
                   <Send className="w-3.5 h-3.5" />
                   <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
@@ -652,8 +652,8 @@ export default function StudentCommunityChatPage() {
                             onClick={() => toggleThread(msg.id)}
                             className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-semibold transition cursor-pointer ${
                               isExpanded || replyCount > 0
-                                ? 'bg-slate-900 text-white shadow-2xs'
-                                : 'text-slate-600 hover:text-neutral-900 hover:bg-slate-100'
+                                ? 'bg-blue-600 text-white shadow-2xs'
+                                : 'text-slate-600 hover:text-blue-600 hover:bg-slate-100'
                             }`}
                           >
                             <MessageCircle className="w-3.5 h-3.5" />
@@ -747,7 +747,7 @@ export default function StudentCommunityChatPage() {
 
                             {/* Inline Reply Composer */}
                             <div className="pt-1.5">
-                              <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-xl p-1.5 focus-within:ring-2 focus-within:ring-neutral-300 focus-within:border-neutral-900 transition shadow-2xs">
+                              <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-xl p-1.5 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500 transition shadow-2xs">
                                 <input
                                   type="text"
                                   value={replyInputs[msg.id] || ''}
@@ -773,7 +773,7 @@ export default function StudentCommunityChatPage() {
                                   type="button"
                                   onClick={() => handleSendReply(msg.id)}
                                   disabled={submittingReplyId === msg.id || !(replyInputs[msg.id] || '').trim()}
-                                  className="px-3 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 disabled:bg-slate-200 text-white font-bold text-xs flex items-center gap-1 transition cursor-pointer shrink-0"
+                                  className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-slate-200 text-white font-bold text-xs flex items-center gap-1 transition cursor-pointer shrink-0"
                                 >
                                   {submittingReplyId === msg.id ? (
                                     <Loader2 className="w-3.5 h-3.5 animate-spin" />

@@ -215,7 +215,7 @@ export default function LessonCommentsSection({
           <button
             type="submit"
             disabled={isSubmitting || !content.trim()}
-            className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:bg-slate-300 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all cursor-pointer"
           >
             <Send className="w-3.5 h-3.5" />
             <span>{isSubmitting ? 'Posting...' : 'Post Study Note'}</span>

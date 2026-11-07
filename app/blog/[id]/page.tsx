@@ -101,7 +101,7 @@ export default function BlogPostDetailPage() {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center py-20">
         <div className="text-center space-y-3">
-          <div className="w-8 h-8 border-3 border-neutral-600 border-t-transparent rounded-full animate-spin mx-auto" />
+          <div className="w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="text-xs text-slate-500">Loading guide...</p>
         </div>
       </div>
@@ -119,7 +119,7 @@ export default function BlogPostDetailPage() {
           </p>
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-neutral-900 text-white font-semibold text-xs hover:bg-neutral-500 transition shadow-sm"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 text-white font-semibold text-xs hover:bg-neutral-500 transition shadow-sm"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to All Articles</span>
@@ -151,7 +151,7 @@ export default function BlogPostDetailPage() {
           <div className="flex items-center gap-2">
             <button
               onClick={handleShareWhatsApp}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer"
               title="Share directly on WhatsApp"
             >
               <MessageCircle className="w-3.5 h-3.5" />
@@ -206,7 +206,7 @@ export default function BlogPostDetailPage() {
             {/* Author Byline & Quick Share */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-neutral-900 text-white flex items-center justify-center font-bold text-sm shadow-xs">
+                <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-xs">
                   {post.author.charAt(0)}
                 </div>
                 <div>
@@ -218,7 +218,7 @@ export default function BlogPostDetailPage() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleShareWhatsApp}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold shadow-xs transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-xs transition-all cursor-pointer"
                 >
                   <MessageCircle className="w-4 h-4" />
                   <span>Share on WhatsApp</span>
@@ -320,7 +320,7 @@ export default function BlogPostDetailPage() {
               <div className="flex flex-wrap gap-3 pt-2">
                 <Link
                   href="/jhs"
-                  className="px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition"
+                  className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition"
                 >
                   Explore JHS Curriculum
                 </Link>
@@ -357,7 +357,7 @@ export default function BlogPostDetailPage() {
                     <span className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-semibold border ${getCategoryBadgeClass(rPost.category)}`}>
                       {rPost.category}
                     </span>
-                    <h4 className="text-sm font-bold text-slate-900 group-hover:text-neutral-900 transition-colors line-clamp-2">
+                    <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-2">
                       {rPost.title}
                     </h4>
                     <p className="text-xs text-slate-500 line-clamp-2">

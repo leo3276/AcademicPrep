@@ -263,7 +263,7 @@ export default function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`text-center py-2 rounded-lg font-semibold border transition ${
                   pathname.startsWith('/jhs')
-                    ? 'bg-neutral-900 text-white border-neutral-900'
+                    ? 'bg-blue-600 text-white border-blue-600'
                     : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
                 }`}
               >
@@ -274,7 +274,7 @@ export default function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`text-center py-2 rounded-lg font-semibold border transition ${
                   pathname.startsWith('/shs')
-                    ? 'bg-neutral-900 text-white border-neutral-900'
+                    ? 'bg-blue-600 text-white border-blue-600'
                     : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
                 }`}
               >
@@ -285,7 +285,7 @@ export default function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`text-center py-2 rounded-lg font-semibold border transition ${
                   pathname.startsWith('/university')
-                    ? 'bg-neutral-900 text-white border-neutral-900'
+                    ? 'bg-blue-600 text-white border-blue-600'
                     : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
                 }`}
               >
@@ -386,7 +386,7 @@ export default function Navbar() {
                 <Link
                   href={loginHref}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full block text-center py-2.5 rounded-xl bg-neutral-900 text-white font-semibold text-xs hover:bg-neutral-500 transition shadow-xs"
+                  className="w-full block text-center py-2.5 rounded-xl bg-blue-600 text-white font-semibold text-xs hover:bg-neutral-500 transition shadow-xs"
                 >
                   Create Account / Sign In
                 </Link>

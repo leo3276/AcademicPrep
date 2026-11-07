@@ -180,7 +180,7 @@ export default function ShsPortalPage() {
           <div className="flex items-center gap-2 shrink-0">
             <Link
               href={`/login?mode=register&redirect=/shs&level=${encodeURIComponent(selectedLevel)}`}
-              className="px-3.5 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition shadow-sm"
+              className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition shadow-sm"
             >
               Create Account
             </Link>
@@ -211,7 +211,7 @@ export default function ShsPortalPage() {
           <button
             type="button"
             onClick={() => setShowPaymentModal(true)}
-            className="px-3.5 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-medium text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto shadow-sm"
+            className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto shadow-sm"
           >
             Unlock VIP (GH₵ 25)
           </button>
@@ -235,7 +235,7 @@ export default function ShsPortalPage() {
             <span className="text-lg font-black text-blue-600">{progressPercent}%</span>
             <div className="w-24 bg-slate-100 rounded-full h-2 mt-1.5 overflow-hidden">
               <div
-                className="bg-neutral-900 h-full rounded-full transition-all duration-500"
+                className="bg-blue-600 h-full rounded-full transition-all duration-500"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
@@ -251,7 +251,7 @@ export default function ShsPortalPage() {
               placeholder="Search topics by title, keyword, or concept across SHS Core & Electives..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-10 py-3.5 rounded-2xl bg-white border border-slate-200 text-slate-900 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:border-neutral-900 shadow-sm"
+              className="w-full pl-11 pr-10 py-3.5 rounded-2xl bg-white border border-slate-200 text-slate-900 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:border-blue-500 shadow-sm"
             />
             {searchQuery && (
               <button
@@ -287,12 +287,12 @@ export default function ShsPortalPage() {
                           </span>
                           <span className="text-[10px] text-slate-400">{t.level}</span>
                         </div>
-                        <h4 className="font-bold text-slate-800 truncate group-hover:text-neutral-900">
+                        <h4 className="font-bold text-slate-800 truncate group-hover:text-blue-600">
                           {t.title}
                         </h4>
                         <p className="text-[11px] text-slate-500 truncate">{t.description}</p>
                       </div>
-                      <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-neutral-900 shrink-0" />
+                      <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 shrink-0" />
                     </Link>
                   );
                 })
@@ -327,7 +327,7 @@ export default function ShsPortalPage() {
           </div>
           <Link
             href="/shs/wassce-past-questions"
-            className="w-full py-2.5 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs"
+            className="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs"
           >
             <BookOpen className="w-3.5 h-3.5" />
             <span>Open WASSCE Past Questions</span>
@@ -356,7 +356,7 @@ export default function ShsPortalPage() {
           </div>
           <Link
             href="/shs/trial-questions"
-            className="w-full py-2.5 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-sm"
+            className="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-sm"
           >
             <FileCheck className="w-3.5 h-3.5" />
             <span>Open SHS Trial Mocks</span>
@@ -385,7 +385,7 @@ export default function ShsPortalPage() {
           </div>
           <Link
             href="/shs/profile?tab=timetable"
-            className="w-full py-2.5 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs"
+            className="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs"
           >
             <Calendar className="w-3.5 h-3.5" />
             <span>Open Study Timetable</span>
@@ -439,7 +439,7 @@ export default function ShsPortalPage() {
                     </span>
                   </div>
 
-                  <h3 className="font-bold text-slate-900 text-base group-hover:text-neutral-900 transition-colors">
+                  <h3 className="font-bold text-slate-900 text-base group-hover:text-blue-600 transition-colors">
                     {subject.name}
                   </h3>
                   <div className="flex items-center gap-3 text-xs text-slate-500 mt-1.5">
@@ -493,7 +493,7 @@ export default function ShsPortalPage() {
                 onClick={() => setSelectedElectiveGroup(group.id)}
                 className={`flex items-center gap-2.5 px-4 py-3 rounded-2xl border text-xs font-bold transition-all shrink-0 cursor-pointer ${
                   isSelected
-                    ? 'border-neutral-900 bg-white text-neutral-900 ring-2 ring-neutral-900/10 shadow-sm'
+                    ? 'border-blue-600 bg-blue-50/70 text-blue-900 ring-2 ring-blue-500/20 shadow-sm'
                     : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300'
                 }`}
               >

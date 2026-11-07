@@ -126,7 +126,7 @@ export default function NewBlogNotificationToast({ initialPosts }: NewBlogNotifi
           <Link
             href={`/blog/${latestPost.id}`}
             onClick={handleRead}
-            className="block font-bold text-sm sm:text-base text-slate-900 hover:text-neutral-900 transition leading-snug line-clamp-2"
+            className="block font-bold text-sm sm:text-base text-slate-900 hover:text-blue-600 transition leading-snug line-clamp-2"
           >
             {latestPost.title}
           </Link>
@@ -149,7 +149,7 @@ export default function NewBlogNotificationToast({ initialPosts }: NewBlogNotifi
           <Link
             href={`/blog/${latestPost.id}`}
             onClick={handleRead}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition shadow-sm group/btn"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition shadow-sm group/btn"
           >
             <span>Read Post</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />

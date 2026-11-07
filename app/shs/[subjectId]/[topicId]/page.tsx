@@ -114,7 +114,7 @@ export default function ShsDetailedTopicLessonPage() {
             ) : (
               <Link
                 href={`/shs/quiz/${topic.id}`}
-                className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition-all shadow-md flex items-center gap-1.5"
+                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-md flex items-center gap-1.5"
               >
                 <HelpCircle className="w-3.5 h-3.5" />
                 <span>Take Practice Quiz ({topic.quiz.questions.length} Qs)</span>
@@ -184,7 +184,7 @@ export default function ShsDetailedTopicLessonPage() {
             onClick={() => setActiveSectionTab('notes')}
             className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
               activeSectionTab === 'notes'
-                ? 'bg-neutral-900 text-white shadow-xs'
+                ? 'bg-blue-600 text-white shadow-xs'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
@@ -198,7 +198,7 @@ export default function ShsDetailedTopicLessonPage() {
               onClick={() => setActiveSectionTab('examples')}
               className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
                 activeSectionTab === 'examples'
-                  ? 'bg-neutral-900 text-white shadow-xs'
+                  ? 'bg-blue-600 text-white shadow-xs'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
@@ -428,7 +428,7 @@ export default function ShsDetailedTopicLessonPage() {
                   setModalTab('momo');
                   setShowPaymentModal(true);
                 }}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition shadow-sm flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Lock className="w-4 h-4" />
                 <span>Unlock VIP Quiz</span>
@@ -436,7 +436,7 @@ export default function ShsDetailedTopicLessonPage() {
             ) : (
               <Link
                 href={`/shs/quiz/${topic.id}`}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition shadow-sm flex items-center justify-center gap-2 cursor-pointer"
               >
                 <HelpCircle className="w-4 h-4" />
                 <span>Start Quiz Now</span>

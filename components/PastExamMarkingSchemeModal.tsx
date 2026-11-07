@@ -80,7 +80,7 @@ export default function PastExamMarkingSchemeModal({
               onClick={() => setActiveTab('paper1')}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 ${
                 activeTab === 'paper1'
-                  ? 'bg-neutral-900 text-white shadow-xs'
+                  ? 'bg-blue-600 text-white shadow-xs'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70 hover:text-slate-900'
               }`}
             >
@@ -93,7 +93,7 @@ export default function PastExamMarkingSchemeModal({
               onClick={() => setActiveTab('paper2')}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 ${
                 activeTab === 'paper2'
-                  ? 'bg-neutral-900 text-white shadow-xs'
+                  ? 'bg-blue-600 text-white shadow-xs'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70 hover:text-slate-900'
               }`}
             >
@@ -363,7 +363,7 @@ export default function PastExamMarkingSchemeModal({
                 onClose();
                 onPractice();
               }}
-              className="px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center gap-1.5 transition shadow-sm cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center gap-1.5 transition shadow-sm cursor-pointer"
             >
               <Play className="w-3.5 h-3.5 fill-current" />
               <span>Practice This Past Paper Now</span>

@@ -266,7 +266,7 @@ export default function OnboardingGuide({
                   key={i}
                   className={`h-1 rounded-full transition-all ${
                     i === currentStepIdx
-                      ? 'w-4 bg-neutral-900'
+                      ? 'w-4 bg-blue-600'
                       : i < currentStepIdx
                       ? 'w-1.5 bg-slate-300'
                       : 'w-1.5 bg-slate-200'
@@ -289,7 +289,7 @@ export default function OnboardingGuide({
               <button
                 type="button"
                 onClick={handleNext}
-                className="px-3 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold transition flex items-center gap-1 cursor-pointer shadow-xs"
+                className="px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition flex items-center gap-1 cursor-pointer shadow-xs"
               >
                 <span>{currentStepIdx === GUIDE_STEPS.length - 1 ? 'Done' : 'Next'}</span>
                 {currentStepIdx === GUIDE_STEPS.length - 1 ? (

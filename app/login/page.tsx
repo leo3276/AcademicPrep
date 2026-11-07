@@ -82,7 +82,7 @@ function LoginFormContent() {
             <div className="flex items-center gap-1.5 font-bold text-slate-900">
               <span className={`px-2 py-0.5 rounded-md text-[11px] ${
                 isUniversityStudent
-                  ? 'bg-slate-900 text-white'
+                  ? 'bg-blue-600 text-white'
                   : isShsStudent
                   ? 'bg-neutral-100 text-neutral-700'
                   : 'bg-neutral-100 text-neutral-700'
@@ -104,10 +104,10 @@ function LoginFormContent() {
               href={profileUrl}
               className={`w-full py-2.5 rounded-xl ${
                 isUniversityStudent
-                  ? 'bg-slate-900 hover:bg-slate-800'
+                  ? 'bg-blue-600 hover:bg-blue-700'
                   : isShsStudent
-                  ? 'bg-neutral-900 hover:bg-neutral-800'
-                  : 'bg-neutral-900 hover:bg-neutral-800'
+                  ? 'bg-blue-600 hover:bg-blue-700'
+                  : 'bg-blue-600 hover:bg-blue-700'
               } text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-sm`}
             >
               <User className="w-4 h-4" />
@@ -364,7 +364,7 @@ function LoginFormContent() {
             <button
               type="submit"
               disabled={signInLoading}
-              className="w-full py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-md disabled:bg-slate-300 cursor-pointer"
+              className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-md disabled:bg-slate-300 cursor-pointer"
             >
               {signInLoading ? (
                 <span>Signing in...</span>
@@ -531,7 +531,7 @@ function LoginFormContent() {
               id="guide-step-submit"
               type="submit"
               disabled={regLoading}
-              className="w-full py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-md disabled:bg-slate-300 cursor-pointer"
+              className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-md disabled:bg-slate-300 cursor-pointer"
             >
               {regLoading ? (
                 <span>Creating account...</span>

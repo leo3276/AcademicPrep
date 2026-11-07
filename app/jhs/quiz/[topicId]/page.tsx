@@ -242,7 +242,7 @@ export default function TopicQuizPage() {
                 setModalTab('momo');
                 setShowPaymentModal(true);
               }}
-              className="w-full py-3 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-sm transition shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition shadow-sm flex items-center justify-center gap-2 cursor-pointer"
             >
               <Crown className="w-4 h-4 text-slate-300" />
               <span>Buy VIP Pass via Mobile Money (GHS 25 / month)</span>
@@ -276,7 +276,7 @@ export default function TopicQuizPage() {
                 <button
                   type="submit"
                   disabled={pinLoading || !pinInput.trim()}
-                  className="px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:bg-slate-300 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 whitespace-nowrap shadow-sm"
+                  className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 whitespace-nowrap shadow-sm"
                 >
                   {pinLoading ? (
                     <span>Verifying...</span>
@@ -547,7 +547,7 @@ export default function TopicQuizPage() {
               <div className="p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-xl bg-neutral-900 text-white flex items-center justify-center shadow-sm">
+                    <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-sm">
                       <Target className="w-4 h-4" />
                     </div>
                     <div>
@@ -597,7 +597,7 @@ export default function TopicQuizPage() {
                   </span>
                   <Link
                     href={`/jhs/${topic.subjectId}/${topic.id}`}
-                    className="w-full sm:w-auto px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm whitespace-nowrap transition-all"
+                    className="w-full sm:w-auto px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm whitespace-nowrap transition-all"
                   >
                     <BookOpen className="w-3.5 h-3.5" />
                     Study {topic.title} Notes
@@ -811,7 +811,7 @@ export default function TopicQuizPage() {
               </div>
               <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                 <div
-                  className="bg-neutral-900 h-full rounded-full transition-all duration-300"
+                  className="bg-blue-600 h-full rounded-full transition-all duration-300"
                   style={{ width: `${((currentIdx + 1) / totalQuestions) * 100}%` }}
                 />
               </div>
@@ -830,7 +830,7 @@ export default function TopicQuizPage() {
                     onClick={() => setCurrentIdx(idx)}
                     className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${
                       isCurrent
-                        ? 'bg-neutral-900 text-white ring-2 ring-blue-500/30'
+                        ? 'bg-blue-600 text-white ring-2 ring-blue-500/30'
                         : isAnswered
                         ? 'bg-blue-50 text-blue-800 border border-neutral-200'
                         : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
@@ -867,13 +867,13 @@ export default function TopicQuizPage() {
                     onClick={() => handleSelectOption(optKey)}
                     className={`w-full p-4 rounded-xl border text-left text-xs font-medium transition-all flex items-center gap-3 ${
                       isSelected
-                        ? 'border-neutral-900 bg-white text-neutral-950 ring-2 ring-neutral-900/10 shadow-sm'
+                        ? 'border-blue-600 bg-blue-50/70 text-blue-950 ring-2 ring-blue-500/20 shadow-sm'
                         : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-800'
                     }`}
                   >
                     <span
                       className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 ${
-                        isSelected ? 'bg-neutral-900 text-white' : 'bg-slate-100 text-slate-600'
+                        isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600'
                       }`}
                     >
                       {optKey}
@@ -900,7 +900,7 @@ export default function TopicQuizPage() {
                   <button
                     type="button"
                     onClick={() => setCurrentIdx((i) => Math.min(totalQuestions - 1, i + 1))}
-                    className="py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold shadow-sm transition-all flex items-center gap-1.5"
+                    className="py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-sm transition-all flex items-center gap-1.5"
                   >
                     <span>Next Question</span>
                     <ArrowRight className="w-3.5 h-3.5" />

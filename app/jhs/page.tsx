@@ -156,7 +156,7 @@ export default function JhsPortalPage() {
           <button
             type="button"
             onClick={() => setShowTour(true)}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 transition-colors shadow-2xs cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-2xs cursor-pointer"
             title="Start interactive platform tour"
           >
             <Compass className="w-3.5 h-3.5 text-slate-300" />
@@ -171,7 +171,7 @@ export default function JhsPortalPage() {
                 onClick={() => handleLevelSelect(lvl)}
                 className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs font-bold transition-all ${
                   selectedLevel === lvl
-                    ? 'bg-neutral-900 text-white shadow-sm'
+                    ? 'bg-blue-600 text-white shadow-sm'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -200,7 +200,7 @@ export default function JhsPortalPage() {
           </div>
           <Link
             href="/shs"
-            className="px-3.5 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition whitespace-nowrap self-start sm:self-auto shrink-0 shadow-sm"
+            className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition whitespace-nowrap self-start sm:self-auto shrink-0 shadow-sm"
           >
             Return to SHS Portal &rarr;
           </Link>
@@ -242,7 +242,7 @@ export default function JhsPortalPage() {
             <div className="space-y-1.5">
               <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
                 <div
-                  className="bg-neutral-900 h-full rounded-full transition-all duration-500"
+                  className="bg-blue-600 h-full rounded-full transition-all duration-500"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
@@ -294,7 +294,7 @@ export default function JhsPortalPage() {
           </div>
           <Link
             href="/jhs/bece-past-questions"
-            className="w-full py-2.5 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs"
+            className="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs"
           >
             <BookOpen className="w-3.5 h-3.5" />
             <span>Open BECE Past Questions</span>
@@ -323,7 +323,7 @@ export default function JhsPortalPage() {
           </div>
           <Link
             href="/jhs/trial-questions"
-            className="w-full py-2.5 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-sm"
+            className="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-sm"
           >
             <FileCheck className="w-3.5 h-3.5" />
             <span>Open Trial Questions</span>
@@ -347,7 +347,7 @@ export default function JhsPortalPage() {
 
         <Link
           href="/jhs/weekly-exam"
-          className="w-full sm:w-auto px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs shrink-0 transition shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap"
+          className="w-full sm:w-auto px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shrink-0 transition shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap"
         >
           <span>Weekly Exams & Past Papers</span>
           <ArrowRight className="w-3.5 h-3.5" />
@@ -385,7 +385,7 @@ export default function JhsPortalPage() {
                   </div>
 
                   <div>
-                    <h3 className="text-base font-bold text-slate-900 group-hover:text-neutral-900 transition-colors">
+                    <h3 className="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
                       {subject.name}
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5">
@@ -414,7 +414,7 @@ export default function JhsPortalPage() {
                 <div className="pt-2">
                   <Link
                     href={`/jhs/${subject.id}?level=${encodeURIComponent(selectedLevel)}`}
-                    className="w-full py-2.5 px-3 rounded-xl bg-slate-50 hover:bg-slate-900 text-slate-700 hover:text-white font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-200 hover:border-slate-900 transition-colors"
+                    className="w-full py-2.5 px-3 rounded-xl bg-slate-50 hover:bg-blue-600 text-slate-700 hover:text-white font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-200 hover:border-blue-600 transition-colors"
                   >
                     <span>View {selectedLevel} Topics</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -471,7 +471,7 @@ export default function JhsPortalPage() {
                         className="w-full h-full object-cover opacity-50"
                       />
                       <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                        <div className="w-9 h-9 rounded-full bg-neutral-900 text-white flex items-center justify-center shadow-lg">
+                        <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg">
                           <Play className="w-3.5 h-3.5 fill-white text-white ml-0.5" />
                         </div>
                       </div>
@@ -495,7 +495,7 @@ export default function JhsPortalPage() {
                     </span>
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-slate-900 group-hover:text-neutral-900 transition-colors line-clamp-2 leading-snug">
+                    <h3 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-2 leading-snug">
                       {post.title}
                     </h3>
                     <p className="text-xs text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">

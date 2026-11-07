@@ -97,7 +97,7 @@ export default function TourPromptToast({ onStartTour }: TourPromptToastProps) {
           <button
             type="button"
             onClick={handleStart}
-            className="px-3.5 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-sm cursor-pointer"
+            className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-sm cursor-pointer"
           >
             <Compass className="w-3.5 h-3.5 text-white" />
             <span>Take Tour</span>

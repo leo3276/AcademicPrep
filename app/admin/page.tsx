@@ -1209,7 +1209,7 @@ export default function AdminDashboardPage() {
   if (!mounted) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center text-slate-500">
-        <div className="animate-spin rounded-full h-8 w-8 border-2 border-slate-300 border-t-slate-800"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-2 border-slate-300 border-t-blue-600"></div>
       </div>
     );
   }
@@ -1300,7 +1300,7 @@ export default function AdminDashboardPage() {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md text-center mb-6">
-          <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center mx-auto mb-3 shadow-xs">
+          <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center mx-auto mb-3 shadow-xs">
             <Lock className="w-4 h-4" />
           </div>
           <h1 className="text-xl font-semibold text-slate-900 tracking-tight">
@@ -1315,8 +1315,8 @@ export default function AdminDashboardPage() {
           <div className="bg-white py-7 px-6 sm:px-8 rounded-2xl border border-slate-200/80 shadow-xs space-y-5">
             {/* Minimalist step progress bar */}
             <div className="flex items-center gap-1.5 justify-center pb-1">
-              <span className="w-10 h-1 rounded-full bg-slate-900 transition-colors" />
-              <span className={`w-10 h-1 rounded-full transition-colors ${authStep === 'secondary' ? 'bg-slate-900' : 'bg-slate-200'}`} />
+              <span className="w-10 h-1 rounded-full bg-blue-600 transition-colors" />
+              <span className={`w-10 h-1 rounded-full transition-colors ${authStep === 'secondary' ? 'bg-blue-600' : 'bg-slate-200'}`} />
             </div>
 
             {/* STAGE 1: Primary Password */}
@@ -1335,7 +1335,7 @@ export default function AdminDashboardPage() {
                         setAuthError(null);
                       }}
                       placeholder="Enter primary password"
-                      className="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900 transition pr-10"
+                      className="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition pr-10"
                       autoFocus
                     />
                     <button
@@ -1356,7 +1356,7 @@ export default function AdminDashboardPage() {
 
                 <button
                   type="submit"
-                  className="w-full py-2.5 px-4 bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold rounded-lg transition shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <span>Continue</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -1380,7 +1380,7 @@ export default function AdminDashboardPage() {
                         setAuthError(null);
                       }}
                       placeholder="Enter secondary password"
-                      className="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900 transition pr-10"
+                      className="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition pr-10"
                       autoFocus
                     />
                     <button
@@ -1414,7 +1414,7 @@ export default function AdminDashboardPage() {
                   <button
                     type="submit"
                     disabled={isSigningIn}
-                    className="w-2/3 py-2.5 px-4 bg-neutral-900 hover:bg-neutral-800 disabled:opacity-60 text-white text-xs font-semibold rounded-lg transition shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                    className="w-2/3 py-2.5 px-4 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white text-xs font-semibold rounded-lg transition shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
                   >
                     <span>{isSigningIn ? 'Verifying…' : 'Sign In'}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -1616,7 +1616,7 @@ export default function AdminDashboardPage() {
       <header className="bg-white border-b border-slate-200 sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-sm shadow-sm">
+            <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">
               AP
             </div>
             <div>
@@ -1688,7 +1688,7 @@ export default function AdminDashboardPage() {
               onClick={() => setActiveTab('traffic')}
               className={`py-3 border-b-2 transition flex items-center gap-2 ${
                 activeTab === 'traffic'
-                  ? 'border-slate-900 text-slate-900 font-semibold'
+                  ? 'border-blue-600 text-blue-900 font-semibold'
                   : 'border-transparent text-slate-500 hover:text-slate-800'
               }`}
             >
@@ -1700,7 +1700,7 @@ export default function AdminDashboardPage() {
               onClick={() => setActiveTab('paid_access')}
               className={`py-3 border-b-2 transition flex items-center gap-2 ${
                 activeTab === 'paid_access'
-                  ? 'border-slate-900 text-slate-900 font-semibold'
+                  ? 'border-blue-600 text-blue-900 font-semibold'
                   : 'border-transparent text-slate-500 hover:text-slate-800'
               }`}
             >
@@ -1736,7 +1736,7 @@ export default function AdminDashboardPage() {
               onClick={() => setActiveTab('completions')}
               className={`py-3 border-b-2 transition flex items-center gap-2 ${
                 activeTab === 'completions'
-                  ? 'border-slate-900 text-slate-900 font-semibold'
+                  ? 'border-blue-600 text-blue-900 font-semibold'
                   : 'border-transparent text-slate-500 hover:text-slate-800'
               }`}
             >
@@ -1751,7 +1751,7 @@ export default function AdminDashboardPage() {
               onClick={() => setActiveTab('trial_mocks')}
               className={`py-3 border-b-2 transition flex items-center gap-2 ${
                 activeTab === 'trial_mocks'
-                  ? 'border-slate-900 text-slate-900 font-semibold'
+                  ? 'border-blue-600 text-blue-900 font-semibold'
                   : 'border-transparent text-slate-500 hover:text-slate-800'
               }`}
             >
@@ -1766,7 +1766,7 @@ export default function AdminDashboardPage() {
               onClick={() => setActiveTab('pins')}
               className={`py-3 border-b-2 transition flex items-center gap-2 ${
                 activeTab === 'pins'
-                  ? 'border-slate-900 text-slate-900 font-semibold'
+                  ? 'border-blue-600 text-blue-900 font-semibold'
                   : 'border-transparent text-slate-500 hover:text-slate-800'
               }`}
             >
@@ -1778,7 +1778,7 @@ export default function AdminDashboardPage() {
               onClick={() => setActiveTab('blog')}
               className={`py-3 border-b-2 transition flex items-center gap-2 ${
                 activeTab === 'blog'
-                  ? 'border-slate-900 text-slate-900 font-semibold'
+                  ? 'border-blue-600 text-blue-900 font-semibold'
                   : 'border-transparent text-slate-500 hover:text-slate-800'
               }`}
             >
@@ -1793,7 +1793,7 @@ export default function AdminDashboardPage() {
               onClick={() => setActiveTab('comments')}
               className={`py-3 border-b-2 transition flex items-center gap-2 ${
                 activeTab === 'comments'
-                  ? 'border-slate-900 text-slate-900 font-semibold'
+                  ? 'border-blue-600 text-blue-900 font-semibold'
                   : 'border-transparent text-slate-500 hover:text-slate-800'
               }`}
             >
@@ -1808,7 +1808,7 @@ export default function AdminDashboardPage() {
               onClick={() => setActiveTab('whatsapp')}
               className={`py-3 border-b-2 transition flex items-center gap-2 ${
                 activeTab === 'whatsapp'
-                  ? 'border-slate-900 text-slate-900 font-semibold'
+                  ? 'border-blue-600 text-blue-900 font-semibold'
                   : 'border-transparent text-slate-500 hover:text-slate-800'
               }`}
             >
@@ -1829,7 +1829,7 @@ export default function AdminDashboardPage() {
               onClick={() => setActiveTab('weekly_exams')}
               className={`py-3 border-b-2 transition flex items-center gap-2 ${
                 activeTab === 'weekly_exams'
-                  ? 'border-neutral-900 text-neutral-900 font-bold'
+                  ? 'border-blue-600 text-blue-900'
                   : 'border-transparent text-slate-500 hover:text-slate-800'
               }`}
             >
@@ -1844,7 +1844,7 @@ export default function AdminDashboardPage() {
               onClick={() => setActiveTab('university_slides')}
               className={`py-3 border-b-2 transition flex items-center gap-2 ${
                 activeTab === 'university_slides'
-                  ? 'border-neutral-900 text-neutral-900 font-bold'
+                  ? 'border-blue-600 text-blue-900'
                   : 'border-transparent text-slate-500 hover:text-slate-800'
               }`}
             >
@@ -1922,7 +1922,7 @@ export default function AdminDashboardPage() {
                   <p className="text-xs text-slate-500">Daily unique platform visits compared to submitted topic quizzes.</p>
                 </div>
                 <div className="flex items-center gap-4 text-xs font-medium text-slate-600">
-                  <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded bg-slate-900"></span> Visitors</span>
+                  <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded bg-blue-600"></span> Visitors</span>
                   <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded bg-neutral-400"></span> Quiz Submissions</span>
                 </div>
               </div>
@@ -1940,7 +1940,7 @@ export default function AdminDashboardPage() {
                       <div className="w-full max-w-[28px] flex items-end gap-1 h-full">
                         {/* Visitors Bar */}
                         <div 
-                          className="flex-1 bg-slate-900 rounded-t transition-all group-hover:bg-slate-700"
+                          className="flex-1 bg-blue-600 rounded-t transition-all group-hover:bg-blue-500"
                           style={{ height: `${Math.max(day.visitors > 0 ? 10 : 0, (day.visitors / maxTrendVisitors) * 100)}%` }}
                           title={`Visitors: ${day.visitors}`}
                         ></div>
@@ -1972,7 +1972,7 @@ export default function AdminDashboardPage() {
                       <span className="font-semibold text-slate-900 font-mono">{trafficData.deviceShare.mobile}%</span>
                     </div>
                     <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                      <div className="h-full bg-slate-900 rounded-full" style={{ width: `${trafficData.deviceShare.mobile}%` }}></div>
+                      <div className="h-full bg-blue-600 rounded-full" style={{ width: `${trafficData.deviceShare.mobile}%` }}></div>
                     </div>
                   </div>
 
@@ -2015,7 +2015,7 @@ export default function AdminDashboardPage() {
                       </div>
                       <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
                         <div 
-                          className="h-full bg-slate-800 rounded-full" 
+                          className="h-full bg-blue-400 rounded-full" 
                           style={{ width: `${item.percentage * 2}%` }}
                         ></div>
                       </div>
@@ -2074,7 +2074,7 @@ export default function AdminDashboardPage() {
                     setAccessError(null);
                     setShowGrantModal(true);
                   }}
-                  className="px-3.5 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-medium transition flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium transition flex items-center gap-1.5 shadow-sm"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Grant Paid Pass</span>
@@ -2136,7 +2136,7 @@ export default function AdminDashboardPage() {
                   value={studentSearch}
                   onChange={(e) => setStudentSearch(e.target.value)}
                   placeholder="Search student name or phone number..."
-                  className="w-full bg-slate-50/50 border border-slate-200 rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:bg-white"
+                  className="w-full bg-slate-50/50 border border-slate-200 rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:bg-white"
                 />
               </div>
 
@@ -2147,7 +2147,7 @@ export default function AdminDashboardPage() {
                     onClick={() => setStudentAccessFilter(filter)}
                     className={`px-2.5 py-1 rounded-md text-xs font-medium transition ${
                       studentAccessFilter === filter
-                        ? 'bg-neutral-900 text-white'
+                        ? 'bg-blue-600 text-white'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                     }`}
                   >
@@ -2222,7 +2222,7 @@ export default function AdminDashboardPage() {
                                   setSelectedStudentForAccess(st);
                                   setShowGrantModal(true);
                                 }}
-                                className="px-2.5 py-1 rounded bg-neutral-900 hover:bg-neutral-800 text-white text-[11px] font-medium transition"
+                                className="px-2.5 py-1 rounded bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-medium transition"
                               >
                                 Grant Pass
                               </button>
@@ -2267,7 +2267,7 @@ export default function AdminDashboardPage() {
                         value={customPhoneInput}
                         onChange={(e) => setCustomPhoneInput(e.target.value)}
                         placeholder="e.g. 0241234567"
-                        className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                        className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
                       />
                       <p className="text-[10px] text-slate-400">
                         The student must already have a registered account on this number.
@@ -2285,7 +2285,7 @@ export default function AdminDashboardPage() {
                           onClick={() => setGrantDurationDays(days)}
                           className={`py-2 rounded-lg text-xs font-medium border transition ${
                             grantDurationDays === days
-                              ? 'bg-neutral-900 text-white border-neutral-900'
+                              ? 'bg-blue-600 text-white border-blue-600'
                               : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
                           }`}
                         >
@@ -2310,7 +2310,7 @@ export default function AdminDashboardPage() {
                     </button>
                     <button
                       onClick={() => handleGrantAccess(selectedStudentForAccess)}
-                      className="px-4 py-1.5 bg-neutral-900 hover:bg-neutral-800 text-white rounded-lg text-xs font-medium shadow-sm transition"
+                      className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium shadow-sm transition"
                     >
                       Confirm Full Pass
                     </button>
@@ -2483,7 +2483,7 @@ export default function AdminDashboardPage() {
                   value={momoSearch}
                   onChange={(e) => setMomoSearch(e.target.value)}
                   placeholder="Search by student phone, name, or TxID..."
-                  className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                  className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
               </div>
 
@@ -2495,7 +2495,7 @@ export default function AdminDashboardPage() {
                     onClick={() => setMomoClaimsFilter(status)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition whitespace-nowrap cursor-pointer ${
                       momoClaimsFilter === status
-                        ? 'bg-neutral-900 text-white'
+                        ? 'bg-blue-600 text-white'
                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                     }`}
                   >
@@ -2775,7 +2775,7 @@ export default function AdminDashboardPage() {
                       </div>
                       <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                         <div 
-                          className="h-full bg-slate-900 rounded-full transition-all" 
+                          className="h-full bg-blue-600 rounded-full transition-all" 
                           style={{ width: `${Math.max(completedInSubject > 0 ? 6 : 0, completionPercentage)}%` }}
                         ></div>
                       </div>
@@ -3018,7 +3018,7 @@ export default function AdminDashboardPage() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setShowPdfUploadForm(!showPdfUploadForm)}
-                  className="px-3.5 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-sm"
                 >
                   {showPdfUploadForm ? <XCircle className="w-3.5 h-3.5" /> : <Upload className="w-3.5 h-3.5" />}
                   <span>{showPdfUploadForm ? 'Close Uploader' : 'Upload Local PDF'}</span>
@@ -3113,7 +3113,7 @@ export default function AdminDashboardPage() {
                           ? 'e.g. BECE 2024 Integrated Science Paper 1 & 2 with Solutions'
                           : 'e.g. JHS 3 National Mock Examination - Social Studies'
                       }
-                      className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                      className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
                       required
                     />
                   </div>
@@ -3278,7 +3278,7 @@ export default function AdminDashboardPage() {
                   <button
                     type="submit"
                     disabled={isUploadingPdf || !pdfFile}
-                    className="px-5 py-2 bg-neutral-900 hover:bg-neutral-800 disabled:opacity-50 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center gap-1.5"
+                    className="px-5 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center gap-1.5"
                   >
                     <Upload className="w-3.5 h-3.5" />
                     <span>{isUploadingPdf ? 'Uploading Document...' : 'Upload & Publish PDF'}</span>
@@ -3295,7 +3295,7 @@ export default function AdminDashboardPage() {
                     onClick={() => setPdfFilterCategory('ALL')}
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
                       pdfFilterCategory === 'ALL'
-                        ? 'bg-neutral-900 text-white'
+                        ? 'bg-blue-600 text-white'
                         : 'bg-slate-100 text-slate-600 hover:text-slate-900'
                     }`}
                   >
@@ -3305,7 +3305,7 @@ export default function AdminDashboardPage() {
                     onClick={() => setPdfFilterCategory('bece_past_question')}
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
                       pdfFilterCategory === 'bece_past_question'
-                        ? 'bg-neutral-900 text-white font-bold'
+                        ? 'bg-blue-600 text-white font-bold'
                         : 'bg-slate-100 text-slate-600 hover:text-slate-900'
                     }`}
                   >
@@ -3315,7 +3315,7 @@ export default function AdminDashboardPage() {
                     onClick={() => setPdfFilterCategory('wassce_past_question')}
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
                       pdfFilterCategory === 'wassce_past_question'
-                        ? 'bg-neutral-900 text-white font-bold'
+                        ? 'bg-blue-600 text-white font-bold'
                         : 'bg-slate-100 text-slate-600 hover:text-slate-900'
                     }`}
                   >
@@ -3449,7 +3449,7 @@ export default function AdminDashboardPage() {
                                 <a
                                   href={doc.fileUrl}
                                   download={doc.fileName}
-                                  className="px-2.5 py-1 rounded bg-neutral-900 hover:bg-neutral-800 text-white text-[11px] font-medium transition flex items-center gap-1"
+                                  className="px-2.5 py-1 rounded bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-medium transition flex items-center gap-1"
                                 >
                                   <span>Download</span>
                                   <Download className="w-3 h-3" />
@@ -3525,7 +3525,7 @@ export default function AdminDashboardPage() {
                   <select
                     value={pinCount}
                     onChange={(e) => setPinCount(Number(e.target.value))}
-                    className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                    className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   >
                     <option value={10}>10 Vouchers</option>
                     <option value={20}>20 Vouchers</option>
@@ -3542,7 +3542,7 @@ export default function AdminDashboardPage() {
                     onChange={(e) => setPinPrice(Number(e.target.value))}
                     min="5"
                     step="5"
-                    className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                    className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   />
                 </div>
 
@@ -3551,7 +3551,7 @@ export default function AdminDashboardPage() {
                   <select
                     value={pinValidity}
                     onChange={(e) => setPinValidity(Number(e.target.value))}
-                    className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                    className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   >
                     <option value={30}>30 Days Full Pass</option>
                     <option value={60}>60 Days Full Pass</option>
@@ -3562,7 +3562,7 @@ export default function AdminDashboardPage() {
                 <button
                   type="submit"
                   disabled={isGeneratingPins}
-                  className="w-full py-2 px-3 bg-neutral-900 hover:bg-neutral-800 disabled:opacity-60 text-white font-medium rounded-lg text-xs shadow-sm transition flex items-center justify-center gap-1.5"
+                  className="w-full py-2 px-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-medium rounded-lg text-xs shadow-sm transition flex items-center justify-center gap-1.5"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>{isGeneratingPins ? 'Minting…' : 'Generate Batch'}</span>
@@ -3729,7 +3729,7 @@ export default function AdminDashboardPage() {
                 className={`px-4 py-2 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow-sm ${
                   showBlogComposer
                     ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300'
-                    : 'bg-neutral-900 hover:bg-neutral-800 text-white'
+                    : 'bg-blue-600 hover:bg-blue-700 text-white'
                 }`}
               >
                 {showBlogComposer ? (
@@ -3767,7 +3767,7 @@ export default function AdminDashboardPage() {
                         value={blogTitle}
                         onChange={(e) => setBlogTitle(e.target.value)}
                         placeholder="e.g. How to Score Raw 1s in Core Mathematics & Integrated Science"
-                        className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                        className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
                         required
                       />
                     </div>
@@ -3779,7 +3779,7 @@ export default function AdminDashboardPage() {
                       <select
                         value={blogCategory}
                         onChange={(e) => setBlogCategory(e.target.value as BlogCategory)}
-                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
                       >
                         {BLOG_CATEGORIES.map((cat) => (
                           <option key={cat} value={cat}>
@@ -3800,7 +3800,7 @@ export default function AdminDashboardPage() {
                         value={blogAuthor}
                         onChange={(e) => setBlogAuthor(e.target.value)}
                         placeholder="e.g. AcademicPrep Editorial or Teacher Name"
-                        className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                        className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
                       />
                     </div>
 
@@ -3814,7 +3814,7 @@ export default function AdminDashboardPage() {
                         max="60"
                         value={blogReadTime}
                         onChange={(e) => setBlogReadTime(Number(e.target.value))}
-                        className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                        className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
                       />
                     </div>
                   </div>
@@ -3828,7 +3828,7 @@ export default function AdminDashboardPage() {
                       value={blogExcerpt}
                       onChange={(e) => setBlogExcerpt(e.target.value)}
                       placeholder="Brief overview highlighting the main takeaway for students..."
-                      className="w-full bg-white border border-slate-300 rounded-lg p-3 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                      className="w-full bg-white border border-slate-300 rounded-lg p-3 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
                       required
                     />
                   </div>
@@ -3842,7 +3842,7 @@ export default function AdminDashboardPage() {
                       value={blogContent}
                       onChange={(e) => setBlogContent(e.target.value)}
                       placeholder="Write your detailed guide here. Use • for bullet points and numbers (1., 2.) for step-by-step advice..."
-                      className="w-full bg-white border border-slate-300 rounded-lg p-3 text-xs font-sans text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900 leading-relaxed"
+                      className="w-full bg-white border border-slate-300 rounded-lg p-3 text-xs font-sans text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-500 leading-relaxed"
                       required
                     />
                   </div>
@@ -3865,7 +3865,7 @@ export default function AdminDashboardPage() {
                           }}
                           className={`px-2.5 py-1 rounded text-[11px] font-semibold transition ${
                             blogMediaType === 'none'
-                              ? 'bg-neutral-900 text-white'
+                              ? 'bg-blue-600 text-white'
                               : 'text-slate-600 hover:text-slate-900'
                           }`}
                         >
@@ -3878,7 +3878,7 @@ export default function AdminDashboardPage() {
                           }}
                           className={`px-2.5 py-1 rounded text-[11px] font-semibold flex items-center gap-1 transition ${
                             blogMediaType === 'image'
-                              ? 'bg-neutral-900 text-white'
+                              ? 'bg-blue-600 text-white'
                               : 'text-slate-600 hover:text-slate-900'
                           }`}
                         >
@@ -3892,7 +3892,7 @@ export default function AdminDashboardPage() {
                           }}
                           className={`px-2.5 py-1 rounded text-[11px] font-semibold flex items-center gap-1 transition ${
                             blogMediaType === 'video'
-                              ? 'bg-neutral-900 text-white'
+                              ? 'bg-blue-600 text-white'
                               : 'text-slate-600 hover:text-slate-900'
                           }`}
                         >
@@ -3953,7 +3953,7 @@ export default function AdminDashboardPage() {
                                     ? 'https://example.com/photo.jpg or Unsplash URL'
                                     : 'https://www.youtube.com/watch?v=... or direct .mp4'
                                 }
-                                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
                               />
                               {blogMediaUrl && (
                                 <button
@@ -3983,7 +3983,7 @@ export default function AdminDashboardPage() {
                             value={blogMediaCaption}
                             onChange={(e) => setBlogMediaCaption(e.target.value)}
                             placeholder="e.g. WAEC Chief Examiner illustration for Question 4(b)..."
-                            className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                            className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
                           />
                         </div>
 
@@ -4079,7 +4079,7 @@ export default function AdminDashboardPage() {
                         id="blogBroadcastOnPublish"
                         checked={blogBroadcastOnPublish}
                         onChange={(e) => setBlogBroadcastOnPublish(e.target.checked)}
-                        className="rounded border-neutral-300 text-neutral-900 focus:ring-neutral-500 w-4 h-4 cursor-pointer"
+                        className="rounded border-neutral-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer"
                       />
                       <label htmlFor="blogBroadcastOnPublish" className="text-xs text-neutral-900 font-bold cursor-pointer flex items-center gap-1.5">
                         <Radio className="w-3.5 h-3.5 text-neutral-600" />
@@ -4099,7 +4099,7 @@ export default function AdminDashboardPage() {
                     <button
                       type="submit"
                       disabled={isSavingBlog}
-                      className="px-5 py-2 bg-neutral-900 hover:bg-neutral-800 disabled:opacity-50 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center gap-1.5"
+                      className="px-5 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center gap-1.5"
                     >
                       {isSavingBlog ? (
                         <span>Saving...</span>
@@ -4124,7 +4124,7 @@ export default function AdminDashboardPage() {
                   value={blogSearch}
                   onChange={(e) => setBlogSearch(e.target.value)}
                   placeholder="Search articles by title or author..."
-                  className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                  className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
               </div>
 
@@ -4233,7 +4233,7 @@ export default function AdminDashboardPage() {
                                     <Link
                                       href={`/blog/${post.id}`}
                                       target="_blank"
-                                      className="font-semibold text-slate-900 hover:text-neutral-900 transition inline-flex items-center gap-1 group truncate text-xs"
+                                      className="font-semibold text-slate-900 hover:text-blue-600 transition inline-flex items-center gap-1 group truncate text-xs"
                                     >
                                       <span className="truncate">{post.title}</span>
                                       <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-neutral-700 shrink-0" />
@@ -4318,7 +4318,7 @@ export default function AdminDashboardPage() {
                                 <button
                                   type="button"
                                   onClick={() => handleStartEditPost(post)}
-                                  className="p-1.5 rounded-lg border border-slate-200 hover:border-neutral-300 hover:bg-neutral-50 text-slate-500 hover:text-neutral-900 transition cursor-pointer"
+                                  className="p-1.5 rounded-lg border border-slate-200 hover:border-neutral-300 hover:bg-neutral-50 text-slate-500 hover:text-blue-600 transition cursor-pointer"
                                   title="Edit Article"
                                 >
                                   <Edit className="w-3.5 h-3.5" />
@@ -4563,7 +4563,7 @@ export default function AdminDashboardPage() {
                     id="waEnabledToggle"
                     checked={waConfig.enabled}
                     onChange={(e) => setWaConfig(prev => ({ ...prev, enabled: e.target.checked }))}
-                    className="w-4 h-4 rounded border-slate-300 text-slate-900 focus:ring-slate-900"
+                    className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                   />
                   <label htmlFor="waEnabledToggle" className="text-xs font-medium text-slate-800 cursor-pointer select-none">
                     Show WhatsApp channel banner on student homepage
@@ -4580,7 +4580,7 @@ export default function AdminDashboardPage() {
                       value={waConfig.url}
                       onChange={(e) => setWaConfig(prev => ({ ...prev, url: e.target.value }))}
                       placeholder="https://whatsapp.com/channel/..."
-                      className="flex-1 text-xs font-mono border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+                      className="flex-1 text-xs font-mono border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
                       required
                     />
                     {waConfig.url && (
@@ -4604,7 +4604,7 @@ export default function AdminDashboardPage() {
                     value={waConfig.title}
                     onChange={(e) => setWaConfig(prev => ({ ...prev, title: e.target.value }))}
                     placeholder="AcademicPrep Official WhatsApp Channel"
-                    className="w-full text-xs border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+                    className="w-full text-xs border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
                     required
                   />
                 </div>
@@ -4618,7 +4618,7 @@ export default function AdminDashboardPage() {
                     value={waConfig.description}
                     onChange={(e) => setWaConfig(prev => ({ ...prev, description: e.target.value }))}
                     placeholder="Join our official student community for daily WAEC & BECE questions..."
-                    className="w-full text-xs border border-slate-300 rounded-lg p-3 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900 resize-none"
+                    className="w-full text-xs border border-slate-300 rounded-lg p-3 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-blue-500 resize-none"
                     required
                   />
                 </div>
@@ -4633,7 +4633,7 @@ export default function AdminDashboardPage() {
                       value={waConfig.buttonText}
                       onChange={(e) => setWaConfig(prev => ({ ...prev, buttonText: e.target.value }))}
                       placeholder="Follow Channel"
-                      className="w-full text-xs border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+                      className="w-full text-xs border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                   <div className="space-y-1">
@@ -4645,7 +4645,7 @@ export default function AdminDashboardPage() {
                       value={waConfig.badgeText}
                       onChange={(e) => setWaConfig(prev => ({ ...prev, badgeText: e.target.value }))}
                       placeholder="Official WhatsApp Channel"
-                      className="w-full text-xs border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+                      className="w-full text-xs border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                 </div>
@@ -4654,7 +4654,7 @@ export default function AdminDashboardPage() {
                   <button
                     type="submit"
                     disabled={savingWa}
-                    className="px-4 py-2 bg-neutral-900 hover:bg-neutral-800 disabled:opacity-60 text-white text-xs font-semibold rounded-lg transition shadow-xs"
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white text-xs font-semibold rounded-lg transition shadow-xs"
                   >
                     {savingWa ? 'Saving…' : 'Save Changes'}
                   </button>
@@ -4693,7 +4693,7 @@ export default function AdminDashboardPage() {
               {examBroadcastFeedback && (
                 <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 sm:p-3.5 text-xs flex items-center justify-between gap-3 shadow-2xs">
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="w-6 h-6 rounded-lg bg-neutral-900 text-white flex items-center justify-center shrink-0 font-bold">
+                    <div className="w-6 h-6 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 font-bold">
                       {examBroadcastFeedback.kind === 'ok' ? (
                         <CheckCircle2 className="w-3.5 h-3.5" />
                       ) : (
@@ -4810,7 +4810,7 @@ export default function AdminDashboardPage() {
                 <Link
                   href="/jhs/weekly-exam?mode=scheduled&admin=true"
                   target="_blank"
-                  className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-sm flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition shadow-sm flex items-center gap-1.5 cursor-pointer"
                 >
                   <KeyRound className="w-3.5 h-3.5" />
                   <span>Enter Examination Hall (Admin Preview Mode)</span>
@@ -4947,7 +4947,7 @@ export default function AdminDashboardPage() {
                   {reminder5MinFeedback && (
                     <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 sm:p-3.5 text-xs flex items-center justify-between gap-3 shadow-2xs">
                       <div className="flex items-center gap-2.5 min-w-0">
-                        <div className="w-6 h-6 rounded-lg bg-neutral-900 text-white flex items-center justify-center shrink-0 font-bold">
+                        <div className="w-6 h-6 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 font-bold">
                           {reminder5MinFeedback.kind === 'ok' ? (
                             <CheckCircle2 className="w-3.5 h-3.5" />
                           ) : (
@@ -5049,7 +5049,7 @@ export default function AdminDashboardPage() {
                     <button
                       type="button"
                       onClick={() => handleShareWeeklyExam('whatsapp')}
-                      className="py-2 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs cursor-pointer"
+                      className="py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs cursor-pointer"
                     >
                       <MessageCircle className="w-3.5 h-3.5" />
                       <span>WhatsApp</span>
@@ -5058,7 +5058,7 @@ export default function AdminDashboardPage() {
                     <button
                       type="button"
                       onClick={() => handleShareWeeklyExam('facebook')}
-                      className="py-2 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs cursor-pointer"
+                      className="py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs cursor-pointer"
                     >
                       <span>Facebook</span>
                     </button>
@@ -5066,7 +5066,7 @@ export default function AdminDashboardPage() {
                     <button
                       type="button"
                       onClick={() => handleShareWeeklyExam('twitter')}
-                      className="py-2 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs cursor-pointer"
+                      className="py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs cursor-pointer"
                     >
                       <span>X (Twitter)</span>
                     </button>
@@ -5074,7 +5074,7 @@ export default function AdminDashboardPage() {
                     <button
                       type="button"
                       onClick={() => handleShareWeeklyExam('telegram')}
-                      className="py-2 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs cursor-pointer"
+                      className="py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs cursor-pointer"
                     >
                       <span>Telegram</span>
                     </button>
@@ -5130,7 +5130,7 @@ export default function AdminDashboardPage() {
                         setWeeklyExamPage(1);
                       }}
                       placeholder="Search candidate or phone…"
-                      className="pl-8 pr-3 py-1.5 text-xs border border-slate-300 rounded-lg w-44 focus:outline-hidden focus:ring-1 focus:ring-slate-900"
+                      className="pl-8 pr-3 py-1.5 text-xs border border-slate-300 rounded-lg w-44 focus:outline-hidden focus:ring-1 focus:ring-blue-500"
                     />
                   </div>
 
@@ -5428,14 +5428,14 @@ export default function AdminDashboardPage() {
                 onClick={() => setUniSubTab('slides')}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-2 shrink-0 ${
                   uniSubTab === 'slides'
-                    ? 'bg-neutral-900 text-white shadow-xs'
+                    ? 'bg-blue-600 text-white shadow-xs'
                     : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
                 }`}
               >
                 <BookOpen className="w-3.5 h-3.5" />
                 <span>Published Slides</span>
                 <span className={`px-1.5 py-0.2 rounded-full font-mono text-[10px] ${
-                  uniSubTab === 'slides' ? 'bg-neutral-700 text-white' : 'bg-slate-100 text-slate-600'
+                  uniSubTab === 'slides' ? 'bg-blue-700 text-white' : 'bg-slate-100 text-slate-600'
                 }`}>
                   {universitySlides.filter(s => (s.status || 'approved') === 'approved').length}
                 </span>
@@ -5473,14 +5473,14 @@ export default function AdminDashboardPage() {
                 }}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-2 shrink-0 ${
                   uniSubTab === 'videos'
-                    ? 'bg-neutral-900 text-white shadow-xs'
+                    ? 'bg-blue-600 text-white shadow-xs'
                     : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
                 }`}
               >
                 <VideoIcon className="w-3.5 h-3.5" />
                 <span>Video Lectures &amp; Briefings</span>
                 <span className={`px-1.5 py-0.2 rounded-full font-mono text-[10px] ${
-                  uniSubTab === 'videos' ? 'bg-neutral-700 text-white' : 'bg-slate-100 text-slate-600'
+                  uniSubTab === 'videos' ? 'bg-blue-700 text-white' : 'bg-slate-100 text-slate-600'
                 }`}>
                   {universityVideos.length}
                 </span>
@@ -5494,7 +5494,7 @@ export default function AdminDashboardPage() {
                 }}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-2 ${
                   uniSubTab === 'reports'
-                    ? 'bg-neutral-900 text-white shadow-xs'
+                    ? 'bg-blue-600 text-white shadow-xs'
                     : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
                 }`}
               >
@@ -5506,7 +5506,7 @@ export default function AdminDashboardPage() {
                   </span>
                 ) : (
                   <span className={`px-1.5 py-0.2 rounded-full font-mono text-[10px] ${
-                    uniSubTab === 'reports' ? 'bg-neutral-700 text-white' : 'bg-slate-100 text-slate-600'
+                    uniSubTab === 'reports' ? 'bg-blue-700 text-white' : 'bg-slate-100 text-slate-600'
                   }`}>
                     {universityContentReports.length}
                   </span>
@@ -5521,19 +5521,19 @@ export default function AdminDashboardPage() {
                 }}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-2 ${
                   uniSubTab === 'requests'
-                    ? 'bg-neutral-900 text-white shadow-xs'
+                    ? 'bg-blue-600 text-white shadow-xs'
                     : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
                 }`}
               >
                 <FileText className="w-3.5 h-3.5" />
                 <span>Course Requests</span>
                 {universityCourseRequests.filter(r => r.status === 'pending').length > 0 ? (
-                  <span className="px-1.5 py-0.2 rounded-full font-mono text-[10px] bg-neutral-900 text-white font-bold">
+                  <span className="px-1.5 py-0.2 rounded-full font-mono text-[10px] bg-blue-600 text-white font-bold">
                     {universityCourseRequests.filter(r => r.status === 'pending').length}
                   </span>
                 ) : (
                   <span className={`px-1.5 py-0.2 rounded-full font-mono text-[10px] ${
-                    uniSubTab === 'requests' ? 'bg-neutral-700 text-white' : 'bg-slate-100 text-slate-600'
+                    uniSubTab === 'requests' ? 'bg-blue-700 text-white' : 'bg-slate-100 text-slate-600'
                   }`}>
                     {universityCourseRequests.length}
                   </span>
@@ -5547,7 +5547,7 @@ export default function AdminDashboardPage() {
             <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-4 sm:p-5 shadow-2xs space-y-3">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-start gap-2.5 min-w-0">
-                  <div className="w-6 h-6 rounded-lg bg-neutral-900 text-white flex items-center justify-center shrink-0 font-bold mt-0.5">
+                  <div className="w-6 h-6 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 font-bold mt-0.5">
                     <KeyRound className="w-3.5 h-3.5" />
                   </div>
                   <div className="min-w-0">
@@ -5594,7 +5594,7 @@ export default function AdminDashboardPage() {
                 <button
                   onClick={handleCopyCollabLink}
                   disabled={!collaboratorLink}
-                  className="px-3.5 py-2 sm:py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-xs transition shrink-0 w-full sm:w-auto"
+                  className="px-3.5 py-2 sm:py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-xs transition shrink-0 w-full sm:w-auto"
                 >
                   {collabLinkCopied ? (
                     <>
@@ -5628,7 +5628,7 @@ export default function AdminDashboardPage() {
               {uniUploadFeedback && (
                 <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 sm:p-3.5 text-xs flex items-center justify-between gap-3 shadow-2xs">
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="w-6 h-6 rounded-lg bg-neutral-900 text-white flex items-center justify-center shrink-0 font-bold">
+                    <div className="w-6 h-6 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 font-bold">
                       {uniUploadFeedback.kind === 'ok' ? (
                         <CheckCircle2 className="w-3.5 h-3.5" />
                       ) : (
@@ -5660,7 +5660,7 @@ export default function AdminDashboardPage() {
                       value={uniUploadCode}
                       onChange={e => setUniUploadCode(e.target.value)}
                       required
-                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 font-mono placeholder:font-sans focus:outline-none focus:border-neutral-900"
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 font-mono placeholder:font-sans focus:outline-none focus:border-blue-500"
                     />
                   </div>
 
@@ -5674,7 +5674,7 @@ export default function AdminDashboardPage() {
                       value={uniUploadTitle}
                       onChange={e => setUniUploadTitle(e.target.value)}
                       required
-                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-neutral-900"
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-blue-500"
                     />
                   </div>
 
@@ -5687,7 +5687,7 @@ export default function AdminDashboardPage() {
                       placeholder="e.g. Introduction to Computer Science"
                       value={uniUploadCourseTitle}
                       onChange={e => setUniUploadCourseTitle(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-neutral-900"
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-blue-500"
                     />
                   </div>
                 </div>
@@ -5700,7 +5700,7 @@ export default function AdminDashboardPage() {
                     <select
                       value={uniUploadUniversity}
                       onChange={e => setUniUploadUniversity(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-neutral-900"
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-blue-500"
                     >
                       {GHANAIAN_UNIVERSITIES.map(u => (
                         <option key={u} value={u}>{u}</option>
@@ -5715,7 +5715,7 @@ export default function AdminDashboardPage() {
                     <select
                       value={uniUploadDepartment}
                       onChange={e => setUniUploadDepartment(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-neutral-900"
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-blue-500"
                     >
                       {UNIVERSITY_DEPARTMENTS.map(d => (
                         <option key={d} value={d}>{d}</option>
@@ -5730,7 +5730,7 @@ export default function AdminDashboardPage() {
                     <select
                       value={uniUploadLevel}
                       onChange={e => setUniUploadLevel(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-neutral-900"
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-blue-500"
                     >
                       {UNIVERSITY_LEVELS.map(l => (
                         <option key={l} value={l}>{l}</option>
@@ -5745,7 +5745,7 @@ export default function AdminDashboardPage() {
                     <select
                       value={uniUploadSemester}
                       onChange={e => setUniUploadSemester(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-neutral-900"
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-blue-500"
                     >
                       {UNIVERSITY_SEMESTERS.map(s => (
                         <option key={s} value={s}>{s}</option>
@@ -5763,7 +5763,7 @@ export default function AdminDashboardPage() {
                     placeholder="Brief description of lecture topics, chapters, or syllabus references..."
                     value={uniUploadDescription}
                     onChange={e => setUniUploadDescription(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-neutral-900 resize-none"
+                    className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-blue-500 resize-none"
                   />
                 </div>
 
@@ -5787,7 +5787,7 @@ export default function AdminDashboardPage() {
                   <button
                     type="submit"
                     disabled={uniUploading || !uniUploadFile || !uniUploadCode.trim() || !uniUploadTitle.trim()}
-                    className="px-5 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 disabled:opacity-50 text-white text-xs font-semibold shadow-xs flex items-center gap-2 transition"
+                    className="px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-xs font-semibold shadow-xs flex items-center gap-2 transition"
                   >
                     {uniUploading ? (
                       <>
@@ -5828,7 +5828,7 @@ export default function AdminDashboardPage() {
                       placeholder="Filter by course, title, or uni..."
                       value={uniSlideFilter}
                       onChange={e => setUniSlideFilter(e.target.value)}
-                      className="pl-8 pr-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 w-48 sm:w-64 focus:outline-none focus:border-neutral-900"
+                      className="pl-8 pr-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 w-48 sm:w-64 focus:outline-none focus:border-blue-500"
                     />
                   </div>
                   {uniSlideFilter && (
@@ -5844,7 +5844,7 @@ export default function AdminDashboardPage() {
 
               {loadingUniSlides ? (
                 <div className="py-16 text-center text-xs text-slate-400 space-y-2">
-                  <div className="w-5 h-5 border-2 border-neutral-600 border-t-transparent rounded-full animate-spin mx-auto" />
+                  <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
                   <p>Loading slides...</p>
                 </div>
               ) : (() => {
@@ -5936,7 +5936,7 @@ export default function AdminDashboardPage() {
                                 <Link
                                   href={`/university?loadSlideId=${encodeURIComponent(slide.id)}`}
                                   target="_blank"
-                                  className="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold text-[11px] transition shadow-2xs"
+                                  className="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-[11px] transition shadow-2xs"
                                   title="Open in Study Studio"
                                 >
                                   Study Studio
@@ -6120,7 +6120,7 @@ export default function AdminDashboardPage() {
                           placeholder="e.g. DCIT 101 or POLI 203"
                           value={uniVideoCourseCode}
                           onChange={e => setUniVideoCourseCode(e.target.value.toUpperCase())}
-                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs font-mono uppercase text-slate-900 focus:outline-none focus:border-neutral-900"
+                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs font-mono uppercase text-slate-900 focus:outline-none focus:border-blue-500"
                         />
                       </div>
                       <div className="sm:col-span-2">
@@ -6132,7 +6132,7 @@ export default function AdminDashboardPage() {
                           placeholder="e.g. Introduction to Data Structures & Pointer Arithmetic"
                           value={uniVideoTitle}
                           onChange={e => setUniVideoTitle(e.target.value)}
-                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-neutral-900"
+                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-blue-500"
                           required
                         />
                       </div>
@@ -6148,7 +6148,7 @@ export default function AdminDashboardPage() {
                           placeholder="https://www.youtube.com/watch?v=... or .mp4 link"
                           value={uniVideoUrl}
                           onChange={e => setUniVideoUrl(e.target.value)}
-                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs font-mono text-slate-900 focus:outline-none focus:border-neutral-900"
+                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs font-mono text-slate-900 focus:outline-none focus:border-blue-500"
                           required
                         />
                       </div>
@@ -6161,7 +6161,7 @@ export default function AdminDashboardPage() {
                           placeholder="e.g. 45 mins or 1h 15m"
                           value={uniVideoDuration}
                           onChange={e => setUniVideoDuration(e.target.value)}
-                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-neutral-900"
+                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-blue-500"
                         />
                       </div>
                     </div>
@@ -6174,7 +6174,7 @@ export default function AdminDashboardPage() {
                         <select
                           value={uniVideoUniversity}
                           onChange={e => setUniVideoUniversity(e.target.value)}
-                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-neutral-900"
+                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-blue-500"
                         >
                           {GHANAIAN_UNIVERSITIES.map(u => (
                             <option key={u} value={u}>{u}</option>
@@ -6189,7 +6189,7 @@ export default function AdminDashboardPage() {
                         <select
                           value={uniVideoDepartment}
                           onChange={e => setUniVideoDepartment(e.target.value)}
-                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-neutral-900"
+                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-blue-500"
                         >
                           {UNIVERSITY_DEPARTMENTS.map(d => (
                             <option key={d} value={d}>{d}</option>
@@ -6204,7 +6204,7 @@ export default function AdminDashboardPage() {
                         <select
                           value={uniVideoLevel}
                           onChange={e => setUniVideoLevel(e.target.value)}
-                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-neutral-900"
+                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-blue-500"
                         >
                           {UNIVERSITY_LEVELS.map(l => (
                             <option key={l} value={l}>{l}</option>
@@ -6219,7 +6219,7 @@ export default function AdminDashboardPage() {
                         <select
                           value={uniVideoSemester}
                           onChange={e => setUniVideoSemester(e.target.value)}
-                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-neutral-900"
+                          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 bg-white focus:outline-none focus:border-blue-500"
                         >
                           {UNIVERSITY_SEMESTERS.map(s => (
                             <option key={s} value={s}>{s}</option>
@@ -6237,7 +6237,7 @@ export default function AdminDashboardPage() {
                         placeholder="Overview of the video lecture, key exam highlights, and timestamps..."
                         value={uniVideoDescription}
                         onChange={e => setUniVideoDescription(e.target.value)}
-                        className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-neutral-900 resize-none"
+                        className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-blue-500 resize-none"
                       />
                     </div>
 
@@ -6255,7 +6255,7 @@ export default function AdminDashboardPage() {
                       <button
                         type="submit"
                         disabled={uniVideoUploading || !uniVideoTitle.trim() || !uniVideoUrl.trim()}
-                        className="px-5 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 disabled:opacity-50 text-white text-xs font-semibold shadow-xs flex items-center gap-2 transition"
+                        className="px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-xs font-semibold shadow-xs flex items-center gap-2 transition"
                       >
                         {uniVideoUploading ? (
                           <>
@@ -6293,14 +6293,14 @@ export default function AdminDashboardPage() {
                         placeholder="Filter videos..."
                         value={uniVideoFilter}
                         onChange={e => setUniVideoFilter(e.target.value)}
-                        className="pl-8 pr-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 w-48 sm:w-64 focus:outline-none focus:border-neutral-900"
+                        className="pl-8 pr-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 w-48 sm:w-64 focus:outline-none focus:border-blue-500"
                       />
                     </div>
                   </div>
 
                   {loadingUniVideos ? (
                     <div className="py-12 text-center text-xs text-slate-400">
-                      <div className="w-4 h-4 border-2 border-neutral-600 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                      <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
                       <span>Loading university videos...</span>
                     </div>
                   ) : (() => {
@@ -6464,7 +6464,7 @@ export default function AdminDashboardPage() {
 
                 {loadingUniReports ? (
                   <div className="py-16 text-center text-xs text-slate-400 space-y-2">
-                    <div className="w-5 h-5 border-2 border-neutral-600 border-t-transparent rounded-full animate-spin mx-auto" />
+                    <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
                     <p>Loading issue reports...</p>
                   </div>
                 ) : (() => {
@@ -6520,7 +6520,7 @@ export default function AdminDashboardPage() {
 
                               <td className="px-4 py-3 min-w-[160px]">
                                 <div className="space-y-0.5">
-                                  <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-neutral-900 text-white">
+                                  <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-600 text-white">
                                     {rep.courseCode}
                                   </span>
                                   <p className="font-semibold text-slate-900 truncate max-w-xs">{rep.courseTitle}</p>
@@ -6657,7 +6657,7 @@ export default function AdminDashboardPage() {
 
                 {loadingUniRequests ? (
                   <div className="py-16 text-center text-xs text-slate-400 space-y-2">
-                    <div className="w-5 h-5 border-2 border-neutral-600 border-t-transparent rounded-full animate-spin mx-auto" />
+                    <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
                     <p>Loading course requests...</p>
                   </div>
                 ) : (() => {
@@ -6713,7 +6713,7 @@ export default function AdminDashboardPage() {
 
                               <td className="px-4 py-3 min-w-[160px]">
                                 <div className="space-y-0.5">
-                                  <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-neutral-900 text-white">
+                                  <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-600 text-white">
                                     {req.courseCode}
                                   </span>
                                   <p className="font-semibold text-slate-900 truncate max-w-xs">{req.courseTitle}</p>
@@ -6824,7 +6824,7 @@ export default function AdminDashboardPage() {
                     value={currentPrimaryPin}
                     onChange={(e) => setCurrentPrimaryPin(e.target.value)}
                     autoComplete="current-password"
-                    className="w-full text-xs font-mono border border-slate-300 rounded-xl px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+                    className="w-full text-xs font-mono border border-slate-300 rounded-xl px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
                     required
                   />
                 </div>
@@ -6838,7 +6838,7 @@ export default function AdminDashboardPage() {
                     value={currentSecondaryPin}
                     onChange={(e) => setCurrentSecondaryPin(e.target.value)}
                     autoComplete="current-password"
-                    className="w-full text-xs font-mono border border-slate-300 rounded-xl px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+                    className="w-full text-xs font-mono border border-slate-300 rounded-xl px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
                     required
                   />
                 </div>
@@ -6853,7 +6853,7 @@ export default function AdminDashboardPage() {
                   value={editPrimaryPin}
                   onChange={(e) => setEditPrimaryPin(e.target.value)}
                   autoComplete="new-password"
-                  className="w-full text-xs font-mono border border-slate-300 rounded-xl px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+                  className="w-full text-xs font-mono border border-slate-300 rounded-xl px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
                   required
                 />
                 <span className="text-[10px] text-slate-400 block">Minimum 8 characters</span>
@@ -6868,7 +6868,7 @@ export default function AdminDashboardPage() {
                   value={editSecondaryPin}
                   onChange={(e) => setEditSecondaryPin(e.target.value)}
                   autoComplete="new-password"
-                  className="w-full text-xs font-mono border border-slate-300 rounded-xl px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+                  className="w-full text-xs font-mono border border-slate-300 rounded-xl px-3 py-2 text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
                   required
                 />
                 <span className="text-[10px] text-slate-400 block">Minimum 8 characters</span>
@@ -6894,7 +6894,7 @@ export default function AdminDashboardPage() {
                 <button
                   type="submit"
                   disabled={isSavingKeys}
-                  className="px-4 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:opacity-60 text-white text-xs font-bold transition shadow-xs"
+                  className="px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white text-xs font-bold transition shadow-xs"
                 >
                   {isSavingKeys ? 'Saving…' : 'Save Changes'}
                 </button>

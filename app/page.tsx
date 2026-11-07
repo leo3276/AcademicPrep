@@ -170,7 +170,7 @@ export default function HomePage() {
           <div className="flex items-center gap-2 shrink-0 self-end md:self-center">
             <Link
               href="/login"
-              className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
+              className="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
             >
               <span>Start Free Trial</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -197,7 +197,7 @@ export default function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Card 1: JHS (ACTIVE) */}
           <div id="tour-home-jhs" className="relative rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-4.5 sm:p-6 shadow-xl flex flex-col justify-between overflow-hidden">
-            <div className="absolute top-0 right-0 bg-neutral-900 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-1 rounded-bl-xl shadow-xs">
+            <div className="absolute top-0 right-0 bg-blue-600 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-1 rounded-bl-xl shadow-xs">
               Active & Live Now
             </div>
 
@@ -234,7 +234,7 @@ export default function HomePage() {
             <div className="pt-6">
               <Link
                 href="/jhs"
-                className="w-full py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm"
               >
                 <span>Enter JHS Section</span>
                 <ArrowRight className="w-4 h-4" />
@@ -282,7 +282,7 @@ export default function HomePage() {
             <div className="pt-6">
               <Link
                 href="/shs"
-                className="w-full py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm"
               >
                 <span>Enter SHS Section</span>
                 <ArrowRight className="w-4 h-4" />
@@ -293,7 +293,7 @@ export default function HomePage() {
           {/* Card 3: University AI Slide Copilot (Live) */}
           <div className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-4.5 sm:p-6 flex flex-col justify-between shadow-xl">
             <div className="space-y-4">
-              <div className="w-11 h-11 rounded-xl bg-neutral-900 text-white flex items-center justify-center font-bold shadow-xs">
+              <div className="w-11 h-11 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold shadow-xs">
                 <Brain className="w-6 h-6" />
               </div>
 
@@ -330,7 +330,7 @@ export default function HomePage() {
             <div className="pt-6">
               <Link
                 href="/university"
-                className="w-full py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm"
               >
                 <span>Enter University Section</span>
                 <ArrowRight className="w-4 h-4" />
@@ -394,7 +394,7 @@ export default function HomePage() {
             <div className="pt-6">
               <Link
                 href="/jhs/bece-past-questions"
-                className="w-full py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm"
               >
                 <span>Browse BECE Past Questions (1990 - 2025)</span>
                 <ArrowRight className="w-4 h-4" />
@@ -437,7 +437,7 @@ export default function HomePage() {
             <div className="pt-6">
               <Link
                 href="/jhs/trial-questions"
-                className="w-full py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm"
               >
                 <span>Practice BECE Trial &amp; Mock Papers</span>
                 <ArrowRight className="w-4 h-4" />
@@ -467,7 +467,7 @@ export default function HomePage() {
             <div className="pt-2 flex flex-wrap gap-3">
               <Link
                 href="/jhs/weekly-exam"
-                className="px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition shadow-sm"
+                className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition shadow-sm"
               >
                 Try Dynamic Weekly Exam
               </Link>
@@ -546,7 +546,7 @@ export default function HomePage() {
                 <a
                   href={OFFICIAL_APK_DOWNLOAD_URL}
                   download="AcademicPrep-v1.0.0.apk"
-                  className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Download className="w-4 h-4" />
                   <span>Install APK Directly ({APK_FILE_SIZE})</span>
@@ -619,7 +619,7 @@ export default function HomePage() {
                 <a
                   href={OFFICIAL_APK_DOWNLOAD_URL}
                   download="AcademicPrep-v1.0.0.apk"
-                  className="w-full py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs cursor-pointer text-center"
+                  className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs cursor-pointer text-center"
                 >
                   <Download className="w-4 h-4" />
                   <span>Install APK Directly ({APK_FILE_SIZE})</span>
@@ -649,7 +649,7 @@ export default function HomePage() {
 
             <Link
               href="/blog"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition self-start sm:self-auto group shadow-sm"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition self-start sm:self-auto group shadow-sm"
             >
               <span>View All Articles</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -662,7 +662,7 @@ export default function HomePage() {
               onClick={() => setBlogCategory('ALL')}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap ${
                 blogCategory === 'ALL'
-                  ? 'bg-neutral-900 text-white shadow-xs'
+                  ? 'bg-blue-600 text-white shadow-xs'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
@@ -674,7 +674,7 @@ export default function HomePage() {
                 onClick={() => setBlogCategory(cat)}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap ${
                   blogCategory === cat
-                    ? 'bg-neutral-900 text-white shadow-xs'
+                    ? 'bg-blue-600 text-white shadow-xs'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
@@ -746,7 +746,7 @@ export default function HomePage() {
                           </div>
 
                           <Link href={`/blog/${post.id}`}>
-                            <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-neutral-900 transition leading-snug line-clamp-2">
+                            <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-blue-600 transition leading-snug line-clamp-2">
                               {post.title}
                             </h3>
                           </Link>
@@ -764,7 +764,7 @@ export default function HomePage() {
 
                         <Link
                           href={`/blog/${post.id}`}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition shadow-2xs"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition shadow-2xs"
                         >
                           <span>Read Guide</span>
                           <ArrowRight className="w-3.5 h-3.5" />

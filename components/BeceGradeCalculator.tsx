@@ -544,7 +544,7 @@ export default function BeceGradeCalculator({ topicProgress = {}, studentName = 
                   placeholder="Search by school name, region (e.g. Kumasi, Cape Coast)..."
                   value={schoolSearchQuery}
                   onChange={(e) => setSchoolSearchQuery(e.target.value)}
-                  className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                  className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
               </div>
 
@@ -556,7 +556,7 @@ export default function BeceGradeCalculator({ topicProgress = {}, studentName = 
                     onClick={() => setSchoolTypeFilter(t)}
                     className={`px-2.5 py-1 rounded-lg text-xs font-medium whitespace-nowrap transition cursor-pointer border ${
                       schoolTypeFilter === t
-                        ? 'bg-slate-900 text-white border-slate-900'
+                        ? 'bg-blue-600 text-white border-blue-600'
                         : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
                     }`}
                   >

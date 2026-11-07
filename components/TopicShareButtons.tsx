@@ -91,7 +91,7 @@ export default function TopicShareButtons({
         <button
           type="button"
           onClick={handleWhatsApp}
-          className="px-3.5 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
+          className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
         >
           <MessageCircle className="w-3.5 h-3.5" />
           <span>Share on WhatsApp</span>

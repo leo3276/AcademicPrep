@@ -225,7 +225,7 @@ export default function StudentProfilePage() {
         </p>
         <Link
           href="/login?redirect=/jhs/profile"
-          className="inline-flex items-center gap-2 py-3 px-6 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition shadow-md"
+          className="inline-flex items-center gap-2 py-3 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition shadow-md"
         >
           <span>Create Account / Sign In</span>
           <ArrowRight className="w-4 h-4" />
@@ -245,7 +245,7 @@ export default function StudentProfilePage() {
         <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-xs">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3.5">
-              <div className="w-11 h-11 rounded-xl bg-slate-900 text-white font-bold text-sm flex items-center justify-center shrink-0">
+              <div className="w-11 h-11 rounded-xl bg-blue-600 text-white font-bold text-sm flex items-center justify-center shrink-0">
                 {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
               </div>
               <div className="space-y-0.5">
@@ -308,7 +308,7 @@ export default function StudentProfilePage() {
                   onClick={() => setActiveTab(tab.id as any)}
                   className={`pb-3 text-xs sm:text-sm font-semibold whitespace-nowrap transition cursor-pointer border-b-2 -mb-px ${
                     isTabActive
-                      ? 'border-slate-900 text-slate-900'
+                      ? 'border-blue-600 text-blue-900'
                       : 'border-transparent text-slate-400 hover:text-slate-700'
                   }`}
                 >
@@ -368,7 +368,7 @@ export default function StudentProfilePage() {
               <button
                 type="button"
                 onClick={() => setActiveTab('calculator')}
-                className="py-2 px-3.5 bg-neutral-900 hover:bg-neutral-800 text-white rounded-xl text-xs font-semibold transition shrink-0 flex items-center gap-1.5 cursor-pointer self-start sm:self-auto shadow-sm"
+                className="py-2 px-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold transition shrink-0 flex items-center gap-1.5 cursor-pointer self-start sm:self-auto shadow-sm"
               >
                 <span>Open BECE Calculator</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -468,7 +468,7 @@ export default function StudentProfilePage() {
                         </div>
                         <Link
                           href={`/jhs/quiz/${w.id}`}
-                          className="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-[11px] font-bold"
+                          className="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold"
                         >
                           Retake
                         </Link>
@@ -538,7 +538,7 @@ export default function StudentProfilePage() {
                   <button
                     type="button"
                     onClick={handleScrollToMyRank}
-                    className="px-2.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition cursor-pointer shadow-2xs"
+                    className="px-2.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition cursor-pointer shadow-2xs"
                     title="Scroll table to your ranking"
                   >
                     Jump to My Rank (#{leaderboard[userRankIndex].rank})
@@ -618,7 +618,7 @@ export default function StudentProfilePage() {
                               <div className="flex items-center gap-2">
                                 <span className="font-semibold text-slate-900">{st.name}</span>
                                 {isCurrent && (
-                                  <span className="text-[10px] font-black uppercase px-1.5 py-0.2 rounded bg-neutral-900 text-white tracking-wider">
+                                  <span className="text-[10px] font-black uppercase px-1.5 py-0.2 rounded bg-blue-600 text-white tracking-wider">
                                     YOU
                                   </span>
                                 )}
@@ -805,7 +805,7 @@ export default function StudentProfilePage() {
                 <button
                   type="submit"
                   disabled={pinLoading || !pinInput.trim()}
-                  className="py-2.5 px-6 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:bg-slate-300 text-white font-bold text-xs transition cursor-pointer"
+                  className="py-2.5 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold text-xs transition cursor-pointer"
                 >
                   {pinLoading ? 'Verifying PIN...' : 'Activate Access'}
                 </button>

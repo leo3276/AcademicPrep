@@ -148,7 +148,7 @@ export default function BlogIndexPage() {
               onClick={() => setSelectedCategory('ALL')}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all whitespace-nowrap ${
                 selectedCategory === 'ALL'
-                  ? 'bg-neutral-900 text-white shadow-xs'
+                  ? 'bg-blue-600 text-white shadow-xs'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
@@ -160,7 +160,7 @@ export default function BlogIndexPage() {
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all whitespace-nowrap ${
                   selectedCategory === cat
-                    ? 'bg-neutral-900 text-white shadow-xs'
+                    ? 'bg-blue-600 text-white shadow-xs'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
@@ -173,7 +173,7 @@ export default function BlogIndexPage() {
         {/* Content Section */}
         {loading ? (
           <div className="py-20 text-center space-y-3">
-            <div className="w-8 h-8 border-3 border-neutral-600 border-t-transparent rounded-full animate-spin mx-auto" />
+            <div className="w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
             <p className="text-xs text-slate-500">Loading educational articles...</p>
           </div>
         ) : filteredPosts.length === 0 ? (
@@ -188,7 +188,7 @@ export default function BlogIndexPage() {
                 setSelectedCategory('ALL');
                 setSearchQuery('');
               }}
-              className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold transition shadow-sm"
+              className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition shadow-sm"
             >
               Reset Filters
             </button>
@@ -227,7 +227,7 @@ export default function BlogIndexPage() {
                               className="w-full h-full object-cover opacity-50"
                             />
                             <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                              <div className="w-12 h-12 rounded-full bg-neutral-900 text-white flex items-center justify-center shadow-lg group-hover/media:scale-110 transition-transform">
+                              <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg group-hover/media:scale-110 transition-transform">
                                 <Play className="w-5 h-5 fill-white text-white ml-0.5" />
                               </div>
                             </div>
@@ -263,7 +263,7 @@ export default function BlogIndexPage() {
                       </div>
 
                       <Link href={`/blog/${featuredPost.id}`}>
-                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 hover:text-neutral-900 transition-colors leading-tight">
+                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 hover:text-blue-600 transition-colors leading-tight">
                           {featuredPost.title}
                         </h2>
                       </Link>
@@ -286,7 +286,7 @@ export default function BlogIndexPage() {
 
                       <Link
                         href={`/blog/${featuredPost.id}`}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition-colors shadow-sm self-start sm:self-auto group/btn"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-sm self-start sm:self-auto group/btn"
                       >
                         <span>Read Full Guide</span>
                         <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
@@ -325,7 +325,7 @@ export default function BlogIndexPage() {
                             className="w-full h-full object-cover opacity-50"
                           />
                           <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                            <div className="w-10 h-10 rounded-full bg-neutral-900 text-white flex items-center justify-center shadow-lg group-hover/img:scale-110 transition-transform">
+                            <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg group-hover/img:scale-110 transition-transform">
                               <Play className="w-4 h-4 fill-white text-white ml-0.5" />
                             </div>
                           </div>
@@ -350,7 +350,7 @@ export default function BlogIndexPage() {
                       </div>
 
                       <Link href={`/blog/${post.id}`}>
-                        <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-neutral-900 transition-colors line-clamp-2 leading-snug">
+                        <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-2 leading-snug">
                           {post.title}
                         </h3>
                       </Link>
@@ -418,7 +418,7 @@ export default function BlogIndexPage() {
                 href="https://chat.whatsapp.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition shadow-sm"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition shadow-sm"
               >
                 <MessageCircle className="w-4 h-4 text-slate-300" />
                 <span>Join Study Group (Free)</span>

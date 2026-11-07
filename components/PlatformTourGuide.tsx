@@ -462,9 +462,9 @@ export default function PlatformTourGuide({
                   onClick={() => setCurrentStepIdx(i)}
                   className={`h-1.5 rounded-full transition-all cursor-pointer ${
                     i === currentStepIdx
-                      ? 'w-5 bg-neutral-900'
+                      ? 'w-5 bg-blue-600'
                       : i < currentStepIdx
-                      ? 'w-2 bg-neutral-300'
+                      ? 'w-2 bg-blue-200'
                       : 'w-2 bg-slate-200'
                   }`}
                   title={`Go to step ${i + 1}`}
@@ -490,7 +490,7 @@ export default function PlatformTourGuide({
                 <a
                   href={nextTourUrl}
                   onClick={onClose}
-                  className="px-3.5 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer shadow-sm"
+                  className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer shadow-sm"
                 >
                   <span>{nextTourLabel}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -499,7 +499,7 @@ export default function PlatformTourGuide({
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="px-3.5 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer shadow-sm"
+                  className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer shadow-sm"
                 >
                   <span>{isLastStep ? 'Complete Tour' : 'Next'}</span>
                   {isLastStep ? (

@@ -143,13 +143,13 @@ export default function DetailedTopicLessonPage() {
                   placeholder="e.g. PREP-XXXX-XXXX"
                   value={pinInput}
                   onChange={(e) => setPinInput(e.target.value.toUpperCase())}
-                  className="flex-1 px-4 py-2 rounded-xl border border-slate-200 font-mono text-center tracking-widest text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-slate-900 uppercase text-sm"
+                  className="flex-1 px-4 py-2 rounded-xl border border-slate-200 font-mono text-center tracking-widest text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 uppercase text-sm"
                   autoFocus
                 />
                 <button
                   type="submit"
                   disabled={pinLoading || !pinInput.trim()}
-                  className="px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:bg-slate-300 text-white font-semibold text-xs transition shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-semibold text-xs transition shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer"
                 >
                   {pinLoading ? 'Verifying...' : 'Unlock Lesson Now'}
                 </button>
@@ -298,7 +298,7 @@ export default function DetailedTopicLessonPage() {
 
           <Link
             href={`/jhs/quiz/${topic.id}`}
-            className="ml-auto px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all"
+            className="ml-auto px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all"
           >
             <HelpCircle className="w-4 h-4" />
             <span>Take Diagnostic Quiz</span>
@@ -524,12 +524,12 @@ export default function DetailedTopicLessonPage() {
                       placeholder="e.g. PREP-XXXX-XXXX"
                       value={pinInput}
                       onChange={(e) => setPinInput(e.target.value.toUpperCase())}
-                      className="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 font-mono text-center tracking-widest text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-slate-900 uppercase text-sm shadow-xs"
+                      className="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 font-mono text-center tracking-widest text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 uppercase text-sm shadow-xs"
                     />
                     <button
                       type="submit"
                       disabled={pinLoading || !pinInput.trim()}
-                      className="px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:bg-slate-300 text-white font-bold text-xs transition-colors shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer"
+                      className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold text-xs transition-colors shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer"
                     >
                       {pinLoading ? (
                         <span>Verifying...</span>
@@ -754,7 +754,7 @@ export default function DetailedTopicLessonPage() {
           {isVipLocked ? (
             <button
               onClick={() => setPinModalOpen(true)}
-              className="px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition shadow-sm flex items-center gap-2 cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition shadow-sm flex items-center gap-2 cursor-pointer"
             >
               <Crown className="w-4 h-4 text-slate-300" />
               <span>Unlock VIP Pass &amp; Start Quiz</span>
@@ -762,7 +762,7 @@ export default function DetailedTopicLessonPage() {
           ) : (
             <Link
               href={`/jhs/quiz/${topic.id}`}
-              className="px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition shadow-sm flex items-center gap-2 cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition shadow-sm flex items-center gap-2 cursor-pointer"
             >
               <HelpCircle className="w-4 h-4 text-slate-300" />
               <span>{isCompleted ? 'Retake Diagnostic Quiz' : 'Start Diagnostic Quiz'}</span>
@@ -785,7 +785,7 @@ export default function DetailedTopicLessonPage() {
         {prevTopic ? (
           <Link
             href={`/jhs/${subject.id}/${prevTopic.id}?level=${encodeURIComponent(prevTopic.level)}`}
-            className="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-neutral-900 transition-colors p-3 rounded-xl hover:bg-slate-100 max-w-[45%]"
+            className="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-blue-600 transition-colors p-3 rounded-xl hover:bg-slate-100 max-w-[45%]"
           >
             <ArrowLeft className="w-4 h-4 shrink-0" />
             <div className="text-left truncate">
@@ -800,7 +800,7 @@ export default function DetailedTopicLessonPage() {
         {nextTopic ? (
           <Link
             href={`/jhs/${subject.id}/${nextTopic.id}?level=${encodeURIComponent(nextTopic.level)}`}
-            className="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-neutral-900 transition-colors p-3 rounded-xl hover:bg-slate-100 max-w-[45%] text-right ml-auto"
+            className="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-blue-600 transition-colors p-3 rounded-xl hover:bg-slate-100 max-w-[45%] text-right ml-auto"
           >
             <div className="text-right truncate">
               <span className="text-[10px] text-slate-500 block uppercase font-medium">Next Topic</span>
@@ -847,7 +847,7 @@ export default function DetailedTopicLessonPage() {
                   placeholder="e.g. PREP-XXXX-XXXX"
                   value={pinInput}
                   onChange={(e) => setPinInput(e.target.value.toUpperCase())}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 font-mono text-center tracking-widest text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-slate-900 uppercase text-sm shadow-xs"
+                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 font-mono text-center tracking-widest text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 uppercase text-sm shadow-xs"
                   autoFocus
                 />
                 <div className="flex items-center justify-between text-[11px] text-slate-500 mt-1.5">
@@ -870,7 +870,7 @@ export default function DetailedTopicLessonPage() {
               <button
                 type="submit"
                 disabled={pinLoading || !pinInput.trim()}
-                className="w-full py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:bg-slate-300 text-white font-bold text-xs transition-colors shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold text-xs transition-colors shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 {pinLoading ? (
                   <span>Verifying PIN...</span>

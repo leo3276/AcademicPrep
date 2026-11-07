@@ -31,7 +31,7 @@ export default function ApkDownloadModal({ isOpen, onClose }: ApkDownloadModalPr
 
         {/* Header */}
         <div className="flex items-start gap-3.5 pr-6">
-          <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-slate-200 bg-neutral-900">
+          <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-slate-200 bg-blue-600">
             <img 
               src="/android-icon.png" 
               alt="AcademicPrep App Icon" 
@@ -90,7 +90,7 @@ export default function ApkDownloadModal({ isOpen, onClose }: ApkDownloadModalPr
           <a
             href={OFFICIAL_APK_DOWNLOAD_URL}
             download="AcademicPrep-v1.0.0.apk"
-            className="w-full py-3.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition-colors cursor-pointer text-center"
+            className="w-full py-3.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition-colors cursor-pointer text-center"
           >
             <Download className="w-4 h-4" />
             <span>Install APK Now ({APK_FILE_SIZE})</span>

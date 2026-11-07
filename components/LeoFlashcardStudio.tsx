@@ -336,7 +336,7 @@ export default function LeoFlashcardStudio({
     <div className="max-w-3xl mx-auto space-y-5 pt-2">
       {/* Toast Notification */}
       {toastMsg && (
-        <div className="fixed bottom-5 right-5 z-50 bg-neutral-900 text-white text-xs font-medium px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2 animate-in fade-in">
+        <div className="fixed bottom-5 right-5 z-50 bg-blue-600 text-white text-xs font-medium px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2 animate-in fade-in">
           <Check className="w-3.5 h-3.5 text-emerald-400" />
           <span>{toastMsg}</span>
         </div>
@@ -347,7 +347,7 @@ export default function LeoFlashcardStudio({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           {/* Deck Selector */}
           <div className="flex items-center gap-2.5 min-w-0 flex-1">
-            <div className="w-8 h-8 rounded-lg bg-neutral-900 text-white flex items-center justify-center shrink-0">
+            <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0">
               <Layers className="w-4 h-4" />
             </div>
             <div className="min-w-0 flex-1">
@@ -388,7 +388,7 @@ export default function LeoFlashcardStudio({
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${
                   subView === 'drill'
                     ? 'bg-white text-neutral-900 shadow-xs'
-                    : 'text-neutral-600 hover:text-neutral-900'
+                    : 'text-neutral-600 hover:text-blue-600'
                 }`}
               >
                 Study Cards
@@ -398,7 +398,7 @@ export default function LeoFlashcardStudio({
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${
                   subView === 'manage'
                     ? 'bg-white text-neutral-900 shadow-xs'
-                    : 'text-neutral-600 hover:text-neutral-900'
+                    : 'text-neutral-600 hover:text-blue-600'
                 }`}
               >
                 Deck & Cards ({stats.total})
@@ -429,7 +429,7 @@ export default function LeoFlashcardStudio({
                 setSubView('manage');
                 triggerToast(`Created deck "${deck.name}"`);
               }}
-              className="px-3.5 py-1.5 rounded-lg bg-neutral-900 text-white text-xs font-medium hover:bg-neutral-800 transition"
+              className="px-3.5 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-medium hover:bg-blue-700 transition"
             >
               Create
             </button>
@@ -479,7 +479,7 @@ export default function LeoFlashcardStudio({
                 }}
                 className={`px-2.5 py-1 rounded-md transition ${
                   queueMode === 'sequential'
-                    ? 'bg-neutral-900 text-white'
+                    ? 'bg-blue-600 text-white'
                     : 'text-neutral-500 hover:bg-neutral-100'
                 }`}
               >
@@ -492,7 +492,7 @@ export default function LeoFlashcardStudio({
                 }}
                 className={`px-2.5 py-1 rounded-md transition ${
                   queueMode === 'sm2'
-                    ? 'bg-neutral-900 text-white'
+                    ? 'bg-blue-600 text-white'
                     : 'text-neutral-500 hover:bg-neutral-100'
                 }`}
               >
@@ -612,7 +612,7 @@ export default function LeoFlashcardStudio({
                       <button
                         type="button"
                         onClick={() => speakLeoText(currentCard.back)}
-                        className="text-[11px] font-mono text-neutral-500 hover:text-neutral-900 inline-flex items-center gap-1"
+                        className="text-[11px] font-mono text-neutral-500 hover:text-blue-600 inline-flex items-center gap-1"
                       >
                         <Volume2 className="w-3 h-3" /> Read Answer
                       </button>
@@ -671,7 +671,7 @@ export default function LeoFlashcardStudio({
                   <button
                     type="button"
                     onClick={() => setIsFlipped(true)}
-                    className="w-full sm:w-auto min-w-[220px] px-8 py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold tracking-wide transition shadow-xs"
+                    className="w-full sm:w-auto min-w-[220px] px-8 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold tracking-wide transition shadow-xs"
                   >
                     Show Answer (Space)
                   </button>
@@ -684,7 +684,7 @@ export default function LeoFlashcardStudio({
                   type="button"
                   disabled={safeIndex <= 0}
                   onClick={() => setCurrentIndex(prev => Math.max(0, prev - 1))}
-                  className="hover:text-neutral-900 disabled:opacity-30 transition inline-flex items-center gap-1 font-medium"
+                  className="hover:text-blue-600 disabled:opacity-30 transition inline-flex items-center gap-1 font-medium"
                 >
                   <ChevronLeft className="w-4 h-4" /> Previous
                 </button>
@@ -697,7 +697,7 @@ export default function LeoFlashcardStudio({
                   type="button"
                   disabled={safeIndex >= studyQueue.length - 1}
                   onClick={() => setCurrentIndex(prev => Math.min(studyQueue.length - 1, prev + 1))}
-                  className="hover:text-neutral-900 disabled:opacity-30 transition inline-flex items-center gap-1 font-medium"
+                  className="hover:text-blue-600 disabled:opacity-30 transition inline-flex items-center gap-1 font-medium"
                 >
                   Next <ChevronRight className="w-4 h-4" />
                 </button>
@@ -722,7 +722,7 @@ export default function LeoFlashcardStudio({
                   setQueueMode('sequential');
                   setCurrentIndex(0);
                 }}
-                className="px-4 py-2 rounded-lg bg-neutral-900 text-white text-xs font-medium hover:bg-neutral-800 transition"
+                className="px-4 py-2 rounded-lg bg-blue-600 text-white text-xs font-medium hover:bg-blue-700 transition"
               >
                 Review All {stats.total} Page Cards
               </button>
@@ -824,7 +824,7 @@ export default function LeoFlashcardStudio({
                 <button
                   type="button"
                   onClick={handleBulkImport}
-                  className="px-4 py-2 rounded-lg bg-neutral-900 text-white text-xs font-medium hover:bg-neutral-800 transition"
+                  className="px-4 py-2 rounded-lg bg-blue-600 text-white text-xs font-medium hover:bg-blue-700 transition"
                 >
                   Import Lines
                 </button>
@@ -868,7 +868,7 @@ export default function LeoFlashcardStudio({
               </label>
               <button
                 type="submit"
-                className="px-4 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-medium inline-flex items-center justify-center gap-1.5 transition"
+                className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium inline-flex items-center justify-center gap-1.5 transition"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Add Card</span>
@@ -908,7 +908,7 @@ export default function LeoFlashcardStudio({
                         <button
                           type="button"
                           onClick={() => handleSaveEdit(c.id)}
-                          className="px-3 py-1 rounded-md bg-neutral-900 text-white text-xs font-medium"
+                          className="px-3 py-1 rounded-md bg-blue-600 text-white text-xs font-medium"
                         >
                           Save
                         </button>

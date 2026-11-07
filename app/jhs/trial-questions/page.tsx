@@ -234,7 +234,7 @@ export default function TrialQuestionsPage() {
                 placeholder="Search trial mock papers by title, subject, or filename..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 text-xs border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-slate-900 focus:border-slate-900 transition bg-slate-50/50"
+                className="w-full pl-10 pr-4 py-2 text-xs border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-slate-50/50"
               />
             </div>
 
@@ -244,7 +244,7 @@ export default function TrialQuestionsPage() {
               <select
                 value={selectedLevel}
                 onChange={(e) => setSelectedLevel(e.target.value)}
-                className="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50/50 focus:outline-hidden focus:ring-2 focus:ring-slate-900 text-slate-700 font-medium"
+                className="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50/50 focus:outline-hidden focus:ring-2 focus:ring-blue-500 text-slate-700 font-medium"
               >
                 <option value="ALL">All Levels (JHS 1 - 3)</option>
                 <option value="JHS 1">JHS 1</option>
@@ -256,7 +256,7 @@ export default function TrialQuestionsPage() {
               <select
                 value={selectedSubject}
                 onChange={(e) => setSelectedSubject(e.target.value)}
-                className="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50/50 focus:outline-hidden focus:ring-2 focus:ring-slate-900 text-slate-700 font-medium"
+                className="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50/50 focus:outline-hidden focus:ring-2 focus:ring-blue-500 text-slate-700 font-medium"
               >
                 <option value="ALL">All Subjects</option>
                 {CURRICULUM_SUBJECTS.map((sub) => (
@@ -270,7 +270,7 @@ export default function TrialQuestionsPage() {
               <select
                 value={selectedPaperType}
                 onChange={(e) => setSelectedPaperType(e.target.value)}
-                className="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50/50 focus:outline-hidden focus:ring-2 focus:ring-slate-900 text-slate-700 font-medium"
+                className="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50/50 focus:outline-hidden focus:ring-2 focus:ring-blue-500 text-slate-700 font-medium"
               >
                 <option value="ALL">All Paper Types</option>
                 <option value="Paper 1">Paper 1 (Objectives)</option>
@@ -371,7 +371,7 @@ export default function TrialQuestionsPage() {
             {hasActiveFilters ? (
               <button
                 onClick={resetFilters}
-                className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-medium text-xs transition shadow-sm"
+                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs transition shadow-sm"
               >
                 Clear all filters
               </button>
@@ -394,7 +394,7 @@ export default function TrialQuestionsPage() {
                   {/* Card Header: Icon & Level Tag */}
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-neutral-900 text-white flex items-center justify-center shrink-0 font-bold text-[11px] tracking-wider shadow-xs">
+                      <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 font-bold text-[11px] tracking-wider shadow-xs">
                         PDF
                       </div>
                       <div>
@@ -414,7 +414,7 @@ export default function TrialQuestionsPage() {
 
                   {/* Title */}
                   <div>
-                    <h3 className="text-sm font-bold text-slate-900 leading-snug group-hover:text-neutral-900 transition">
+                    <h3 className="text-sm font-bold text-slate-900 leading-snug group-hover:text-blue-600 transition">
                       {doc.title}
                     </h3>
                     <p className="text-[11px] font-mono text-slate-400 mt-1 truncate" title={doc.fileName}>
@@ -448,7 +448,7 @@ export default function TrialQuestionsPage() {
                       {!hasFullAccess ? (
                         <Lock className="w-3.5 h-3.5 text-amber-600" />
                       ) : openingDocId === doc.id ? (
-                        <div className="w-3.5 h-3.5 border-2 border-slate-600/30 border-t-slate-800 rounded-full animate-spin" />
+                        <div className="w-3.5 h-3.5 border-2 border-slate-600/30 border-t-blue-600 rounded-full animate-spin" />
                       ) : (
                         <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
                       )}
@@ -462,7 +462,7 @@ export default function TrialQuestionsPage() {
                       className={`py-2 px-3 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer ${
                         !hasFullAccess
                           ? 'bg-amber-600 hover:bg-amber-700 text-white'
-                          : 'bg-neutral-900 hover:bg-neutral-800 text-white shadow-sm'
+                          : 'bg-blue-600 hover:bg-blue-700 text-white shadow-sm'
                       }`}
                     >
                       {!hasFullAccess ? (

@@ -242,7 +242,7 @@ export default function ShsTrialQuestionsPage() {
                 placeholder="Search SHS mocks by title, subject, grade level, or file name..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 text-xs border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-slate-900 focus:border-slate-900 transition bg-slate-50/50"
+                className="w-full pl-10 pr-4 py-2 text-xs border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-slate-50/50"
               />
             </div>
 
@@ -252,7 +252,7 @@ export default function ShsTrialQuestionsPage() {
               <select
                 value={selectedLevel}
                 onChange={(e) => setSelectedLevel(e.target.value)}
-                className="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50/50 focus:outline-hidden focus:ring-2 focus:ring-slate-900 text-slate-700 font-medium"
+                className="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50/50 focus:outline-hidden focus:ring-2 focus:ring-blue-500 text-slate-700 font-medium"
               >
                 <option value="ALL">All Grade Levels</option>
                 <option value="SHS 1">SHS 1 (Year 1)</option>
@@ -264,7 +264,7 @@ export default function ShsTrialQuestionsPage() {
               <select
                 value={selectedSubject}
                 onChange={(e) => setSelectedSubject(e.target.value)}
-                className="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50/50 focus:outline-hidden focus:ring-2 focus:ring-slate-900 text-slate-700 font-medium"
+                className="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50/50 focus:outline-hidden focus:ring-2 focus:ring-blue-500 text-slate-700 font-medium"
               >
                 <option value="ALL">All Subjects</option>
                 <optgroup label="Core Subjects">
@@ -287,7 +287,7 @@ export default function ShsTrialQuestionsPage() {
               <select
                 value={selectedPaperType}
                 onChange={(e) => setSelectedPaperType(e.target.value)}
-                className="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50/50 focus:outline-hidden focus:ring-2 focus:ring-slate-900 text-slate-700 font-medium"
+                className="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50/50 focus:outline-hidden focus:ring-2 focus:ring-blue-500 text-slate-700 font-medium"
               >
                 <option value="ALL">All Paper Types</option>
                 <option value="Combined Paper">Combined Paper (A &amp; B)</option>
@@ -328,7 +328,7 @@ export default function ShsTrialQuestionsPage() {
             {hasActiveFilters && (
               <button
                 onClick={resetFilters}
-                className="px-4 py-2 bg-neutral-900 hover:bg-neutral-800 text-white rounded-xl text-xs font-semibold transition shadow-sm"
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold transition shadow-sm"
               >
                 Clear All Filters
               </button>
@@ -383,7 +383,7 @@ export default function ShsTrialQuestionsPage() {
                       {!hasFullAccess ? (
                         <Lock className="w-3.5 h-3.5 text-amber-500" />
                       ) : openingDocId === doc.id ? (
-                        <div className="w-3.5 h-3.5 border-2 border-slate-600/30 border-t-slate-800 rounded-full animate-spin" />
+                        <div className="w-3.5 h-3.5 border-2 border-slate-600/30 border-t-blue-600 rounded-full animate-spin" />
                       ) : (
                         <ExternalLink className="w-3.5 h-3.5" />
                       )}
@@ -394,7 +394,7 @@ export default function ShsTrialQuestionsPage() {
                       type="button"
                       onClick={(e) => handleDownloadPdf(e, doc)}
                       disabled={openingDocId === doc.id}
-                      className="flex-1 py-2 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition shadow-sm cursor-pointer"
+                      className="flex-1 py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition shadow-sm cursor-pointer"
                     >
                       {!hasFullAccess ? <Lock className="w-3.5 h-3.5 text-amber-400" /> : <Download className="w-3.5 h-3.5" />}
                       <span>Download</span>

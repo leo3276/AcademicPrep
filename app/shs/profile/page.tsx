@@ -263,7 +263,7 @@ function ShsProfileContent() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
             <Link
               href="/login?mode=register&redirect=/shs/profile"
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition shadow-xs"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition shadow-xs"
             >
               Create Free SHS Account
             </Link>
@@ -317,7 +317,7 @@ function ShsProfileContent() {
       <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-slate-900 text-white font-bold text-sm flex items-center justify-center shrink-0">
+            <div className="w-11 h-11 rounded-xl bg-blue-600 text-white font-bold text-sm flex items-center justify-center shrink-0">
               {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
             </div>
             <div className="space-y-0.5">
@@ -376,7 +376,7 @@ function ShsProfileContent() {
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`pb-3 text-xs sm:text-sm font-semibold whitespace-nowrap transition cursor-pointer border-b-2 -mb-px ${
                   isTabActive
-                    ? 'border-slate-900 text-slate-900'
+                    ? 'border-blue-600 text-blue-900'
                     : 'border-transparent text-slate-400 hover:text-slate-700'
                 }`}
               >
@@ -538,7 +538,7 @@ function ShsProfileContent() {
                       </div>
                       <Link
                         href={`/shs/quiz/${w.id}`}
-                        className="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-[11px] font-bold"
+                        className="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold"
                       >
                         Retake
                       </Link>
@@ -597,7 +597,7 @@ function ShsProfileContent() {
                 <button
                   type="button"
                   onClick={handleScrollToMyRank}
-                  className="py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition flex items-center gap-1 cursor-pointer shadow-2xs"
+                  className="py-1.5 px-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1 cursor-pointer shadow-2xs"
                 >
                   <Trophy className="w-3.5 h-3.5" />
                   <span>My Rank: #{userRankIndex + 1}</span>
@@ -646,7 +646,7 @@ function ShsProfileContent() {
                         <div className="flex items-center gap-1.5">
                           <span>{entry.name}</span>
                           {isCurrent && (
-                            <span className="text-[9px] px-1.5 py-0.2 rounded bg-neutral-900 text-white font-bold">You</span>
+                            <span className="text-[9px] px-1.5 py-0.2 rounded bg-blue-600 text-white font-bold">You</span>
                           )}
                         </div>
                       </td>
@@ -691,7 +691,7 @@ function ShsProfileContent() {
                 <button
                   type="button"
                   onClick={() => setShowBuyModal(true)}
-                  className="py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer self-start sm:self-auto shrink-0 shadow-xs"
+                  className="py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer self-start sm:self-auto shrink-0 shadow-xs"
                 >
                   <Crown className="w-3.5 h-3.5" />
                   <span>Buy VIP Pass (GH₵ 25)</span>
@@ -722,7 +722,7 @@ function ShsProfileContent() {
                 <button
                   type="submit"
                   disabled={pinLoading || !pinInput.trim()}
-                  className="py-2 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:opacity-50 text-white font-bold text-xs transition cursor-pointer shrink-0 shadow-sm"
+                  className="py-2 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-bold text-xs transition cursor-pointer shrink-0 shadow-sm"
                 >
                   {pinLoading ? 'Activating...' : 'Activate PIN'}
                 </button>

@@ -230,7 +230,7 @@ export default function ScheduledExamBriefingModal({
                 agreed
                   ? isAdmin
                     ? 'bg-amber-600 hover:bg-amber-500 text-white shadow-sm shadow-amber-600/20 cursor-pointer'
-                    : 'bg-neutral-900 hover:bg-neutral-800 text-white shadow-sm cursor-pointer'
+                    : 'bg-blue-600 hover:bg-blue-700 text-white shadow-sm cursor-pointer'
                   : 'bg-slate-200 text-slate-400 cursor-not-allowed'
               }`}
             >
