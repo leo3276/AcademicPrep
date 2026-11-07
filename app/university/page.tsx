@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/authContext';
+import { openPdfDocumentCached } from '@/lib/pdfCache';
 import { 
   Upload, 
   FileText, 
@@ -2333,16 +2334,21 @@ export default function UniversityPortalPage() {
                             <span>Study Studio ➔</span>
                           </button>
 
-                          <a
-                            href={slide.fileUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                          <button
+                            type="button"
+                            onClick={() => {
+                              openPdfDocumentCached({
+                                id: slide.id,
+                                fileUrl: slide.fileUrl,
+                                fileName: `${slide.courseCode || 'Slide'}_${slide.title.replace(/\s+/g, '_')}.pdf`,
+                              });
+                            }}
                             className="col-span-4 py-2 px-2 rounded-lg border border-neutral-200 hover:bg-neutral-50 text-neutral-700 text-xs font-medium flex items-center justify-center gap-1.5 transition cursor-pointer"
-                            title="View Original Slide PDF"
+                            title="View Watermarked Slide PDF"
                           >
                             <FileText className="w-3.5 h-3.5 text-neutral-500" />
                             <span>View PDF</span>
-                          </a>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -2464,16 +2470,21 @@ export default function UniversityPortalPage() {
                             <span>Study Studio ➔</span>
                           </button>
 
-                          <a
-                            href={slide.fileUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                          <button
+                            type="button"
+                            onClick={() => {
+                              openPdfDocumentCached({
+                                id: slide.id,
+                                fileUrl: slide.fileUrl,
+                                fileName: `${slide.courseCode || 'Slide'}_${slide.title.replace(/\s+/g, '_')}.pdf`,
+                              });
+                            }}
                             className="col-span-4 py-2 px-2 rounded-lg border border-neutral-200 hover:bg-neutral-50 text-neutral-700 text-xs font-medium flex items-center justify-center gap-1.5 transition cursor-pointer"
-                            title="View Original Slide PDF"
+                            title="View Watermarked Slide PDF"
                           >
                             <FileText className="w-3.5 h-3.5 text-neutral-500" />
                             <span>View PDF</span>
-                          </a>
+                          </button>
                         </div>
                         </div>
                       </div>

@@ -2,9 +2,13 @@
 // Smart Client & Edge PDF Cache Hub for AcademicPrep
 // Eliminates repetitive Supabase Storage downloads & egress by caching past
 // papers in the browser's CacheStorage and through Vercel's global CDN.
+// Automatically stamps every viewed & downloaded PDF with AcademicPrep.com
+// logo, branding, and protection watermarks.
 // ============================================================================
 
-const CACHE_NAME = 'academicprep_pdf_cache_v1';
+import { applyAcademicPrepWatermark, downloadWatermarkedPdf } from './pdfWatermark';
+
+const CACHE_NAME = 'academicprep_pdf_cache_v2'; // Bumped to v2 for watermarking
 const CACHE_GLOBAL_VERSION_KEY = 'academicprep_pdf_cache_global_version';
 
 /**
@@ -22,7 +26,7 @@ export function getCdnPdfUrl(originalUrl: string): string {
  */
 function getCacheKey(id: string, uploadedAt?: string): string {
   const version = uploadedAt ? new Date(uploadedAt).getTime() : '1';
-  return `/offline-cache/pdf/${id}?v=${version}`;
+  return `/offline-cache/pdf/${id}?v=${version}&wm=v2`;
 }
 
 /**
@@ -48,7 +52,7 @@ export async function isPdfCachedLocally(id: string, uploadedAt?: string): Promi
 }
 
 /**
- * Fetches and caches a PDF, returning a local object URL (blob:...)
+ * Fetches, watermarks, and caches a PDF, returning a local object URL (blob:...)
  */
 export async function getCachedPdfBlobUrl(
   doc: { fileUrl: string; id: string; uploadedAt?: string; fileName?: string },
@@ -58,6 +62,22 @@ export async function getCachedPdfBlobUrl(
   const cacheKey = getCacheKey(doc.id, doc.uploadedAt);
 
   if (!hasCacheSupport()) {
+    // If CacheStorage not available, attempt client-side watermarked blob
+    try {
+      const fetchTarget = proxyUrl || doc.fileUrl;
+      const res = await fetch(fetchTarget);
+      if (res.ok) {
+        const ab = await res.arrayBuffer();
+        const watermarked = await applyAcademicPrepWatermark(ab, {
+          fileName: doc.fileName,
+          documentTitle: doc.fileName?.replace(/_/g, ' ').replace(/\.pdf$/i, ''),
+        });
+        const blob = new Blob([watermarked as unknown as BlobPart], { type: 'application/pdf' });
+        return URL.createObjectURL(blob);
+      }
+    } catch (e) {
+      console.warn('[PdfCache] Direct fetch fallback:', e);
+    }
     return proxyUrl || doc.fileUrl;
   }
 
@@ -83,16 +103,38 @@ export async function getCachedPdfBlobUrl(
       throw new Error(`Failed to fetch PDF (HTTP ${response.status})`);
     }
 
-    // Clone response before saving to cache
-    const responseClone = response.clone();
+    const rawBuffer = await response.arrayBuffer();
+
+    // ─────────────────────────────────────────────────────────────
+    // Apply Official AcademicPrep.com Watermark & Logo
+    // ─────────────────────────────────────────────────────────────
+    let finalBuffer: Uint8Array | ArrayBuffer = rawBuffer;
     try {
-      await cache.put(cacheKey, responseClone);
+      finalBuffer = await applyAcademicPrepWatermark(rawBuffer, {
+        fileName: doc.fileName,
+        documentTitle: doc.fileName?.replace(/_/g, ' ').replace(/\.pdf$/i, ''),
+        categoryLabel: 'Official Examination Paper',
+      });
+    } catch (wmErr) {
+      console.warn('[PdfCache] Watermarking warning, saving raw PDF:', wmErr);
+    }
+
+    const blob = new Blob([finalBuffer as unknown as BlobPart], { type: 'application/pdf' });
+
+    // Store watermarked PDF in CacheStorage
+    try {
+      const watermarkedResponse = new Response(blob, {
+        headers: {
+          'Content-Type': 'application/pdf',
+          'Content-Length': String(blob.size),
+        },
+      });
+      await cache.put(cacheKey, watermarkedResponse);
     } catch {
       // Storage quota or private browsing fallback
     }
 
     if (onProgressState) onProgressState('ready');
-    const blob = await response.blob();
     return URL.createObjectURL(blob);
   } catch (err) {
     console.warn('[PdfCache] Cache fallback to direct URL:', err);
@@ -101,7 +143,7 @@ export async function getCachedPdfBlobUrl(
 }
 
 /**
- * High-performance action: View PDF in new tab using local cache
+ * High-performance action: View PDF in new tab with AcademicPrep watermark
  */
 export async function openPdfDocumentCached(
   doc: { fileUrl: string; id: string; uploadedAt?: string; fileName?: string },
@@ -127,7 +169,7 @@ export async function openPdfDocumentCached(
 }
 
 /**
- * High-performance action: Download PDF using local cache
+ * High-performance action: Download PDF with AcademicPrep watermark
  */
 export async function downloadPdfDocumentCached(
   doc: { fileUrl: string; id: string; uploadedAt?: string; fileName: string },
@@ -137,26 +179,70 @@ export async function downloadPdfDocumentCached(
     const blobUrl = await getCachedPdfBlobUrl(doc, onProgressState);
     const a = document.createElement('a');
     a.href = blobUrl;
-    a.download = doc.fileName || 'examination-paper.pdf';
+    a.download = doc.fileName || 'academicprep_document.pdf';
     document.body.appendChild(a);
     a.click();
     setTimeout(() => {
       document.body.removeChild(a);
-      // Revoke blob URL if it was created
       if (blobUrl.startsWith('blob:')) {
         URL.revokeObjectURL(blobUrl);
       }
     }, 2000);
   } catch (err) {
-    // Fallback: direct download
-    const a = document.createElement('a');
-    a.href = doc.fileUrl;
-    a.download = doc.fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    // Fallback: fetch & watermark
+    try {
+      const res = await fetch(doc.fileUrl);
+      const ab = await res.arrayBuffer();
+      await downloadWatermarkedPdf(ab, doc.fileName || 'academicprep_document.pdf', {
+        documentTitle: doc.fileName,
+      });
+    } catch {
+      const a = document.createElement('a');
+      a.href = doc.fileUrl;
+      a.download = doc.fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
   }
 }
+
+/**
+ * Pre-caches an array of PDF papers silently in the background
+ */
+export async function prefetchPdfDocuments(
+  docs: Array<{ fileUrl: string; id: string; uploadedAt?: string; fileName?: string }>
+): Promise<number> {
+  if (!hasCacheSupport()) return 0;
+  let cachedCount = 0;
+
+  for (const doc of docs) {
+    try {
+      const isCached = await isPdfCachedLocally(doc.id, doc.uploadedAt);
+      if (!isCached) {
+        await getCachedPdfBlobUrl(doc);
+        cachedCount++;
+      }
+    } catch {
+      // Non-blocking prefetch failure
+    }
+  }
+
+  return cachedCount;
+}
+
+/**
+ * Clears expired or corrupted PDF cache
+ */
+export async function clearLocalPdfCache(): Promise<boolean> {
+  if (!hasCacheSupport()) return false;
+  try {
+    return await caches.delete(CACHE_NAME);
+  } catch {
+    return false;
+  }
+}
+
 
 /**
  * Summary of all offline papers saved on the student's device
