@@ -1902,7 +1902,7 @@ export default function UniversityPortalPage() {
                 
                 <Link
                   href="/login?redirect=/university"
-                  className="text-blue-600 hover:text-blue-700 font-medium text-xs px-2.5 py-1 rounded-md bg-blue-50 hover:bg-blue-100 border border-blue-200 transition"
+                  className="text-white hover:bg-neutral-800 font-medium text-xs px-2.5 py-1 rounded-md bg-neutral-900 transition shadow-2xs"
                 >
                   Sign In
                 </Link>
@@ -2145,7 +2145,7 @@ export default function UniversityPortalPage() {
                   <button
                     type="button"
                     onClick={() => setShowCourseRequestModal(true)}
-                    className="px-3.5 py-2 rounded-lg bg-blue-50 border border-blue-200 hover:bg-blue-100 text-blue-700 text-xs font-semibold flex items-center justify-center gap-1.5 transition shrink-0 cursor-pointer"
+                    className="px-3.5 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition shrink-0 cursor-pointer shadow-2xs"
                     title="Request slides for a course not yet in the catalog"
                   >
                     <Plus className="w-3.5 h-3.5" />
@@ -2286,13 +2286,13 @@ export default function UniversityPortalPage() {
                               }}
                               className={`p-1.5 rounded-lg border transition ${
                                 enrolledSlideIds.includes(slide.id)
-                                  ? 'bg-blue-50 border-blue-200 text-blue-600 hover:bg-blue-100'
-                                  : 'bg-white border-neutral-200 text-neutral-400 hover:text-blue-600 hover:border-blue-200'
+                                  ? 'bg-neutral-900 border-neutral-900 text-white hover:bg-neutral-800 shadow-2xs'
+                                  : 'bg-white border-neutral-200 text-neutral-400 hover:text-neutral-900 hover:border-neutral-400'
                               }`}
                               title={enrolledSlideIds.includes(slide.id) ? 'Remove from My Courses' : 'Save to My Courses'}
                               aria-label={enrolledSlideIds.includes(slide.id) ? 'Remove from My Courses' : 'Save to My Courses'}
                             >
-                              <Bookmark className={`w-3.5 h-3.5 ${enrolledSlideIds.includes(slide.id) ? 'fill-blue-600 text-blue-600' : ''}`} />
+                              <Bookmark className={`w-3.5 h-3.5 ${enrolledSlideIds.includes(slide.id) ? 'fill-white text-white' : ''}`} />
                             </button>
                           </div>
                         </div>
@@ -2362,7 +2362,7 @@ export default function UniversityPortalPage() {
                   <div>
                     <div className="flex items-center gap-2">
                       <div className="w-7 h-7 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 font-bold">
-                        <Bookmark className="w-3.5 h-3.5 fill-blue-600 text-blue-600" />
+                        <Bookmark className="w-3.5 h-3.5 fill-white text-white" />
                       </div>
                       <h2 className="text-sm sm:text-base font-bold text-neutral-900">
                         My Enrolled Semester Courses
@@ -2423,7 +2423,7 @@ export default function UniversityPortalPage() {
                                   e.stopPropagation();
                                   toggleEnrollCourse(slide.id);
                                 }}
-                                className="p-1.5 rounded-lg border bg-blue-50 border-blue-200 text-blue-600 hover:bg-blue-100 transition"
+                                className="p-1.5 rounded-lg border bg-neutral-900 border-neutral-900 text-white hover:bg-neutral-800 transition shadow-2xs"
                                 title="Remove from My Courses"
                               >
                                 <Bookmark className="w-3.5 h-3.5 fill-blue-600 text-blue-600" />
@@ -2525,14 +2525,14 @@ export default function UniversityPortalPage() {
                       onClick={handleToggleDailyReminders}
                       className={`px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition border cursor-pointer ${
                         dailyRemindersEnabled
-                          ? 'bg-blue-50 border-blue-300 text-blue-700 hover:bg-blue-100 shadow-2xs'
+                          ? 'bg-neutral-900 border-neutral-900 text-white hover:bg-neutral-800 shadow-2xs'
                           : 'bg-white border-neutral-200 text-neutral-600 hover:bg-neutral-50'
                       }`}
                       title={dailyRemindersEnabled ? 'Daily reminders are active' : 'Turn on daily morning reminder notifications'}
                     >
                       {dailyRemindersEnabled ? (
                         <>
-                          <BellRing className="w-3.5 h-3.5 text-blue-600" />
+                          <BellRing className="w-3.5 h-3.5 text-white" />
                           <span>Reminders: ON</span>
                         </>
                       ) : (
@@ -2703,7 +2703,7 @@ export default function UniversityPortalPage() {
                             {matchingSlide && (
                               <button
                                 onClick={() => handleLoadAdminSlide(matchingSlide)}
-                                className="px-2.5 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold flex items-center gap-1 transition"
+                                className="px-2.5 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold flex items-center gap-1 transition shadow-2xs"
                                 title="Open Slide Deck in Studio"
                               >
                                 <BookOpen className="w-3 h-3" />
@@ -3033,11 +3033,11 @@ export default function UniversityPortalPage() {
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition border flex items-center gap-1.5 cursor-pointer shadow-xs ${
                   isAudioPlaying
                     ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                    : 'bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-200'
+                    : 'bg-neutral-900 hover:bg-neutral-800 text-white border-neutral-900 shadow-2xs'
                 }`}
                 title="Listen to conversational plain-English audio cram"
               >
-                <Headphones className={`w-3.5 h-3.5 ${isAudioPlaying ? 'animate-pulse text-white' : 'text-blue-600'}`} />
+                <Headphones className={`w-3.5 h-3.5 ${isAudioPlaying ? 'animate-pulse text-white' : 'text-neutral-300'}`} />
                 <span>{isAudioPlaying ? 'Playing Audio Cram...' : 'Listen to Audio Cram'}</span>
               </button>
               <button
@@ -4189,7 +4189,7 @@ export default function UniversityPortalPage() {
                   <button
                     onClick={handleDownloadSummaryCardImage}
                     disabled={downloadingCardImage}
-                    className="px-3 py-1.5 rounded-lg border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold transition flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg border border-neutral-900 bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-2xs cursor-pointer"
                     title="Download 1-Page Summary Card as PNG image for WhatsApp status"
                   >
                     <Download className={`w-3.5 h-3.5 ${downloadingCardImage ? 'animate-bounce' : ''}`} />

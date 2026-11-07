@@ -597,7 +597,7 @@ function ShsProfileContent() {
                 <button
                   type="button"
                   onClick={handleScrollToMyRank}
-                  className="py-1.5 px-3 rounded-lg bg-blue-50 border border-blue-200 text-blue-700 hover:bg-blue-100 text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                  className="py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition flex items-center gap-1 cursor-pointer shadow-2xs"
                 >
                   <Trophy className="w-3.5 h-3.5" />
                   <span>My Rank: #{userRankIndex + 1}</span>

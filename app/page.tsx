@@ -169,7 +169,7 @@ export default function HomePage() {
           <div className="flex items-center gap-2 shrink-0 self-end md:self-center">
             <Link
               href="/login"
-              className="px-3.5 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-900 text-xs font-bold transition flex items-center gap-1.5 border border-blue-200 shadow-2xs"
+              className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
             >
               <span>Start Free Trial</span>
               <ArrowRight className="w-3.5 h-3.5" />

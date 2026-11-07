@@ -538,7 +538,7 @@ export default function StudentProfilePage() {
                   <button
                     type="button"
                     onClick={handleScrollToMyRank}
-                    className="px-2.5 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold border border-blue-200 transition cursor-pointer"
+                    className="px-2.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition cursor-pointer shadow-2xs"
                     title="Scroll table to your ranking"
                   >
                     Jump to My Rank (#{leaderboard[userRankIndex].rank})

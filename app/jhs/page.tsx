@@ -156,10 +156,10 @@ export default function JhsPortalPage() {
           <button
             type="button"
             onClick={() => setShowTour(true)}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 transition-colors shadow-2xs"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 transition-colors shadow-2xs cursor-pointer"
             title="Start interactive platform tour"
           >
-            <Compass className="w-3.5 h-3.5 text-blue-600" />
+            <Compass className="w-3.5 h-3.5 text-slate-300" />
             <span>Platform Tour</span>
           </button>
 
@@ -414,7 +414,7 @@ export default function JhsPortalPage() {
                 <div className="pt-2">
                   <Link
                     href={`/jhs/${subject.id}?level=${encodeURIComponent(selectedLevel)}`}
-                    className="w-full py-2.5 px-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-200 transition-colors"
+                    className="w-full py-2.5 px-3 rounded-xl bg-slate-50 hover:bg-slate-900 text-slate-700 hover:text-white font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-200 hover:border-slate-900 transition-colors"
                   >
                     <span>View {selectedLevel} Topics</span>
                     <ArrowRight className="w-3.5 h-3.5" />

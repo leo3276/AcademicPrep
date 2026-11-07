@@ -383,7 +383,7 @@ export default function StudentCommunityChatPage() {
                     onClick={() => setActiveRoom(room.id)}
                     className={`w-full text-left p-3 rounded-xl transition-all flex items-start gap-2.5 cursor-pointer ${
                       activeRoom === room.id
-                        ? 'bg-blue-50 text-blue-900 border border-blue-200 font-bold shadow-2xs'
+                        ? 'bg-slate-900 text-white font-bold shadow-2xs'
                         : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                     }`}
                   >
@@ -652,7 +652,7 @@ export default function StudentCommunityChatPage() {
                             onClick={() => toggleThread(msg.id)}
                             className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-semibold transition cursor-pointer ${
                               isExpanded || replyCount > 0
-                                ? 'bg-blue-50 text-blue-700 border border-blue-200/60 hover:bg-blue-100/70'
+                                ? 'bg-slate-900 text-white shadow-2xs'
                                 : 'text-slate-600 hover:text-blue-600 hover:bg-slate-100'
                             }`}
                           >
