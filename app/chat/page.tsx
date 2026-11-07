@@ -357,7 +357,7 @@ export default function StudentCommunityChatPage() {
 
               <Link
                 href="/jhs"
-                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-sm shadow-blue-500/20"
+                className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-sm"
               >
                 <BookOpen className="w-3.5 h-3.5" />
                 <span>Curriculum</span>
@@ -464,16 +464,16 @@ export default function StudentCommunityChatPage() {
 
               {/* Replying Quote Banner */}
               {replyingQuote && (
-                <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-blue-50/90 border border-blue-200/80 text-xs text-blue-900">
+                <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-neutral-100/90 border border-neutral-200/80 text-xs text-neutral-900">
                   <div className="flex items-center gap-2 truncate pr-2">
-                    <CornerDownRight className="w-4 h-4 text-blue-600 shrink-0" />
+                    <CornerDownRight className="w-4 h-4 text-neutral-800 shrink-0" />
                     <span className="font-bold truncate">Replying to @{replyingQuote.studentName}:</span>
                     <span className="text-slate-600 italic truncate">&ldquo;{replyingQuote.snippet}&rdquo;</span>
                   </div>
                   <button
                     type="button"
                     onClick={() => setReplyingQuote(null)}
-                    className="p-1 hover:bg-blue-100 rounded-lg text-slate-500 hover:text-slate-800 transition cursor-pointer shrink-0"
+                    className="p-1 hover:bg-neutral-100 rounded-lg text-slate-500 hover:text-slate-800 transition cursor-pointer shrink-0"
                     title="Remove quoted reference"
                   >
                     <X className="w-3.5 h-3.5" />
@@ -505,7 +505,7 @@ export default function StudentCommunityChatPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting || !content.trim()}
-                  className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm shadow-blue-500/20 transition-all cursor-pointer"
+                  className="px-5 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:bg-slate-300 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all cursor-pointer"
                 >
                   <Send className="w-3.5 h-3.5" />
                   <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
@@ -561,8 +561,8 @@ export default function StudentCommunityChatPage() {
                     >
                       {/* Quoted Message Reference (if this top-level comment was a reply quote) */}
                       {msg.replyToName && (
-                        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100/90 border-l-2 border-blue-500 text-[11px] text-slate-700 mb-2.5">
-                          <CornerDownRight className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100/90 border-l-2 border-neutral-900 text-[11px] text-slate-700 mb-2.5">
+                          <CornerDownRight className="w-3.5 h-3.5 text-neutral-800 shrink-0" />
                           <span className="font-semibold text-slate-900">Replying to @{msg.replyToName}:</span>
                           <span className="text-slate-600 italic truncate">&ldquo;{msg.replyToSnippet}&rdquo;</span>
                         </div>
@@ -576,8 +576,8 @@ export default function StudentCommunityChatPage() {
                             </span>
 
                             {msg.isTeacherReply && (
-                              <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 border border-blue-200 flex items-center gap-1">
-                                <ShieldCheck className="w-3 h-3 text-blue-600" />
+                              <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-800 border border-neutral-200 flex items-center gap-1">
+                                <ShieldCheck className="w-3 h-3 text-neutral-800" />
                                 <span>{msg.teacherTitle || 'Instructor'}</span>
                               </span>
                             )}
@@ -653,7 +653,7 @@ export default function StudentCommunityChatPage() {
                             className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-semibold transition cursor-pointer ${
                               isExpanded || replyCount > 0
                                 ? 'bg-slate-900 text-white shadow-2xs'
-                                : 'text-slate-600 hover:text-blue-600 hover:bg-slate-100'
+                                : 'text-slate-600 hover:text-neutral-800 hover:bg-slate-100'
                             }`}
                           >
                             <MessageCircle className="w-3.5 h-3.5" />
@@ -675,7 +675,7 @@ export default function StudentCommunityChatPage() {
                       {isExpanded && (
                         <div className="mt-3 pt-3 border-t border-slate-100/80 space-y-3">
                           {/* Connector container */}
-                          <div className="border-l-2 border-blue-200 pl-3 sm:pl-4 space-y-2.5">
+                          <div className="border-l-2 border-neutral-200 pl-3 sm:pl-4 space-y-2.5">
                             {/* Render existing replies */}
                             {msg.replies && msg.replies.length > 0 ? (
                               msg.replies.map((reply) => {
@@ -693,8 +693,8 @@ export default function StudentCommunityChatPage() {
                                         </span>
 
                                         {reply.isTeacherReply && (
-                                          <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-800 border border-blue-200 flex items-center gap-0.5">
-                                            <ShieldCheck className="w-2.5 h-2.5 text-blue-600" />
+                                          <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded-full bg-neutral-100 text-neutral-800 border border-neutral-200 flex items-center gap-0.5">
+                                            <ShieldCheck className="w-2.5 h-2.5 text-neutral-800" />
                                             <span>Instructor</span>
                                           </span>
                                         )}
@@ -747,7 +747,7 @@ export default function StudentCommunityChatPage() {
 
                             {/* Inline Reply Composer */}
                             <div className="pt-1.5">
-                              <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-xl p-1.5 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500 transition shadow-2xs">
+                              <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-xl p-1.5 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-neutral-900 transition shadow-2xs">
                                 <input
                                   type="text"
                                   value={replyInputs[msg.id] || ''}
@@ -773,7 +773,7 @@ export default function StudentCommunityChatPage() {
                                   type="button"
                                   onClick={() => handleSendReply(msg.id)}
                                   disabled={submittingReplyId === msg.id || !(replyInputs[msg.id] || '').trim()}
-                                  className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-slate-200 text-white font-bold text-xs flex items-center gap-1 transition cursor-pointer shrink-0"
+                                  className="px-3 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 disabled:bg-slate-200 text-white font-bold text-xs flex items-center gap-1 transition cursor-pointer shrink-0"
                                 >
                                   {submittingReplyId === msg.id ? (
                                     <Loader2 className="w-3.5 h-3.5 animate-spin" />

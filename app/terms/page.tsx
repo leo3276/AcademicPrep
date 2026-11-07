@@ -32,8 +32,8 @@ export default function TermsPage() {
             <span>Back to AcademicPrep Home</span>
           </Link>
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-blue-50 text-blue-800 border border-blue-200">
-              <FileText className="w-3.5 h-3.5 text-blue-600" />
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-neutral-100 text-neutral-800 border border-neutral-200">
+              <FileText className="w-3.5 h-3.5 text-neutral-800" />
               <span>Terms of Service</span>
             </span>
           </div>
@@ -43,8 +43,8 @@ export default function TermsPage() {
       {/* Header Banner (Clean Minimalist) */}
       <section className="bg-white border-b border-slate-200 text-slate-900 py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto space-y-4 text-center sm:text-left">
-          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold">
-            <Scale className="w-3.5 h-3.5 text-blue-600" />
+          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-neutral-100 text-neutral-900 border border-neutral-200 text-xs font-semibold">
+            <Scale className="w-3.5 h-3.5 text-neutral-800" />
             <span>Student &amp; User License Agreement</span>
           </div>
           <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
@@ -67,7 +67,7 @@ export default function TermsPage() {
         {/* 1. Acceptance of Terms */}
         <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold">
+            <div className="w-10 h-10 rounded-xl bg-neutral-100 text-neutral-900 flex items-center justify-center font-bold">
               <CheckCircle2 className="w-5 h-5" />
             </div>
             <div>
@@ -80,7 +80,7 @@ export default function TermsPage() {
               By accessing, browsing, registering on, or downloading materials from <strong>AcademicPrep</strong>, 
               you acknowledge that you have read, understood, and agreed to be legally bound by these Terms of Use, 
               as well as our dedicated{' '}
-              <Link href="/copyright" className="text-blue-600 font-bold hover:underline">
+              <Link href="/copyright" className="text-neutral-700 font-bold hover:underline">
                 Copyright &amp; Anti-Piracy Policy
               </Link>.
             </p>
@@ -134,7 +134,7 @@ export default function TermsPage() {
         {/* 3. Access PINs, Payments & Accounts */}
         <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center font-bold">
+            <div className="w-10 h-10 rounded-xl bg-neutral-100 text-neutral-800 flex items-center justify-center font-bold">
               <KeyRound className="w-5 h-5" />
             </div>
             <div>
@@ -174,7 +174,7 @@ export default function TermsPage() {
             <p>
               For exhaustive details regarding compilation rights, piracy prosecution, and our enforcement process, 
               please visit our{' '}
-              <Link href="/copyright" className="text-blue-600 font-bold hover:underline">
+              <Link href="/copyright" className="text-neutral-700 font-bold hover:underline">
                 Intellectual Property &amp; Copyright Policy
               </Link>.
             </p>
@@ -216,7 +216,7 @@ export default function TermsPage() {
             href="https://whatsapp.com/channel/0029VagMXcm4yltRps7S2b2x"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition shadow-sm shrink-0"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition shadow-sm shrink-0"
           >
             <ExternalLink className="w-4 h-4" />
             <span>AcademicPrep Support</span>

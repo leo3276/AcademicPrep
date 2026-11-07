@@ -517,7 +517,7 @@ export default function LeoFlashcardStudio({
                     Card {safeIndex + 1} of {studyQueue.length}
                   </span>
                   {typeof currentCard.pageNumber === 'number' && (
-                    <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
+                    <span className="px-2 py-0.5 rounded bg-neutral-100 text-neutral-900 border border-neutral-200">
                       Page {String(currentCard.pageNumber).padStart(2, '0')}
                     </span>
                   )}
@@ -631,7 +631,7 @@ export default function LeoFlashcardStudio({
                       <button
                         type="button"
                         onClick={() => handleGrade(0)}
-                        className="p-3 rounded-xl border border-rose-200 bg-rose-50/50 hover:bg-rose-100/70 text-rose-900 transition flex flex-col items-center gap-0.5"
+                        className="p-3 rounded-xl border border-neutral-200 bg-white hover:bg-neutral-100 text-rose-900 transition flex flex-col items-center gap-0.5"
                       >
                         <span className="text-xs font-semibold">1 · Again</span>
                         <span className="text-[10px] font-mono text-rose-600">{nextIntervals.again}</span>
@@ -640,7 +640,7 @@ export default function LeoFlashcardStudio({
                       <button
                         type="button"
                         onClick={() => handleGrade(1)}
-                        className="p-3 rounded-xl border border-amber-200 bg-amber-50/50 hover:bg-amber-100/70 text-amber-900 transition flex flex-col items-center gap-0.5"
+                        className="p-3 rounded-xl border border-neutral-200 bg-white hover:bg-neutral-100 text-neutral-900 transition flex flex-col items-center gap-0.5"
                       >
                         <span className="text-xs font-semibold">2 · Hard</span>
                         <span className="text-[10px] font-mono text-amber-700">{nextIntervals.hard}</span>
@@ -649,16 +649,16 @@ export default function LeoFlashcardStudio({
                       <button
                         type="button"
                         onClick={() => handleGrade(2)}
-                        className="p-3 rounded-xl border border-blue-200 bg-blue-50/50 hover:bg-blue-100/70 text-blue-900 transition flex flex-col items-center gap-0.5"
+                        className="p-3 rounded-xl border border-neutral-200 bg-white hover:bg-neutral-100 text-neutral-900 transition flex flex-col items-center gap-0.5"
                       >
                         <span className="text-xs font-semibold">3 · Good</span>
-                        <span className="text-[10px] font-mono text-blue-700">{nextIntervals.good}</span>
+                        <span className="text-[10px] font-mono text-neutral-900">{nextIntervals.good}</span>
                       </button>
 
                       <button
                         type="button"
                         onClick={() => handleGrade(3)}
-                        className="p-3 rounded-xl border border-emerald-200 bg-emerald-50/50 hover:bg-emerald-100/70 text-emerald-900 transition flex flex-col items-center gap-0.5"
+                        className="p-3 rounded-xl border border-neutral-200 bg-white hover:bg-neutral-100 text-neutral-900 transition flex flex-col items-center gap-0.5"
                       >
                         <span className="text-xs font-semibold">4 · Easy</span>
                         <span className="text-[10px] font-mono text-emerald-700">{nextIntervals.easy}</span>
@@ -966,7 +966,7 @@ export default function LeoFlashcardStudio({
                           type="button"
                           onClick={() => handleDeleteCard(c.id)}
                           title="Delete card"
-                          className="p-1.5 rounded-lg text-neutral-400 hover:text-rose-600 hover:bg-rose-50"
+                          className="p-1.5 rounded-lg text-neutral-400 hover:text-red-600 hover:bg-neutral-50"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>

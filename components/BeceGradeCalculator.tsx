@@ -159,8 +159,8 @@ export function scoreToWaecGrade(score: number): { grade: number; label: string;
   const rounded = Math.round(score);
   if (rounded >= 80) return { grade: 1, label: 'Grade 1', remark: 'Highest / Excellent', badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-300' };
   if (rounded >= 70) return { grade: 2, label: 'Grade 2', remark: 'Very Good', badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200' };
-  if (rounded >= 65) return { grade: 3, label: 'Grade 3', remark: 'Good', badgeColor: 'bg-blue-50 text-blue-700 border-blue-200' };
-  if (rounded >= 60) return { grade: 4, label: 'Grade 4', remark: 'Credit', badgeColor: 'bg-cyan-50 text-cyan-700 border-cyan-200' };
+  if (rounded >= 65) return { grade: 3, label: 'Grade 3', remark: 'Good', badgeColor: 'bg-neutral-100 text-neutral-900 border-neutral-200' };
+  if (rounded >= 60) return { grade: 4, label: 'Grade 4', remark: 'Credit', badgeColor: 'bg-neutral-100 text-neutral-800 border-neutral-200' };
   if (rounded >= 55) return { grade: 5, label: 'Grade 5', remark: 'Credit', badgeColor: 'bg-amber-50 text-amber-700 border-amber-200' };
   if (rounded >= 50) return { grade: 6, label: 'Grade 6', remark: 'Pass', badgeColor: 'bg-amber-100 text-amber-800 border-amber-300' };
   if (rounded >= 45) return { grade: 7, label: 'Grade 7', remark: 'Pass', badgeColor: 'bg-orange-50 text-orange-700 border-orange-200' };
@@ -325,8 +325,8 @@ export default function BeceGradeCalculator({ topicProgress = {}, studentName = 
     } else if (aggregateTotal <= 15) {
       placementCategory = 'Category A & B';
       placementTitle = 'Strong Competitive Candidate';
-      placementColor = 'border-blue-200 bg-blue-50 text-blue-800';
-      aggregateTextColor = 'text-blue-600';
+      placementColor = 'border-neutral-200 bg-neutral-100 text-neutral-800';
+      aggregateTextColor = 'text-neutral-800';
       placementAdvice = 'Highly competitive aggregate. Guaranteed strong qualification for high-tier Category B boarding schools and competitive Category A selections.';
     } else if (aggregateTotal <= 24) {
       placementCategory = 'Category B & C';
@@ -671,7 +671,7 @@ export default function BeceGradeCalculator({ topicProgress = {}, studentName = 
                       <span className="text-slate-400 text-[10px]">Score:</span>
                       <span className={`font-bold font-mono ${
                         subj.grade <= 2 ? 'text-emerald-600' :
-                        subj.grade <= 4 ? 'text-blue-600' :
+                        subj.grade <= 4 ? 'text-neutral-800' :
                         subj.grade <= 6 ? 'text-amber-600' :
                         subj.grade <= 8 ? 'text-orange-600' : 'text-rose-600'
                       }`}>
@@ -757,8 +757,8 @@ export default function BeceGradeCalculator({ topicProgress = {}, studentName = 
               <tbody className="divide-y divide-slate-100 font-mono">
                 <tr><td className="py-1.5 px-3 font-bold text-emerald-700">Grade 1</td><td className="py-1.5 px-3">80% – 100%</td><td className="py-1.5 px-3 font-sans">Excellent</td><td className="py-1.5 px-3 font-sans text-emerald-600 font-bold">Highest</td></tr>
                 <tr><td className="py-1.5 px-3 font-bold text-emerald-600">Grade 2</td><td className="py-1.5 px-3">70% – 79%</td><td className="py-1.5 px-3 font-sans">Very Good</td><td className="py-1.5 px-3 font-sans text-emerald-600 font-bold">High</td></tr>
-                <tr><td className="py-1.5 px-3 font-bold text-blue-600">Grade 3</td><td className="py-1.5 px-3">65% – 69%</td><td className="py-1.5 px-3 font-sans">Good</td><td className="py-1.5 px-3 font-sans text-blue-600 font-bold">Above Average</td></tr>
-                <tr><td className="py-1.5 px-3 font-bold text-cyan-600">Grade 4</td><td className="py-1.5 px-3">60% – 64%</td><td className="py-1.5 px-3 font-sans">Credit</td><td className="py-1.5 px-3 font-sans text-slate-700">Average</td></tr>
+                <tr><td className="py-1.5 px-3 font-bold text-neutral-800">Grade 3</td><td className="py-1.5 px-3">65% – 69%</td><td className="py-1.5 px-3 font-sans">Good</td><td className="py-1.5 px-3 font-sans text-neutral-800 font-bold">Above Average</td></tr>
+                <tr><td className="py-1.5 px-3 font-bold text-neutral-800">Grade 4</td><td className="py-1.5 px-3">60% – 64%</td><td className="py-1.5 px-3 font-sans">Credit</td><td className="py-1.5 px-3 font-sans text-slate-700">Average</td></tr>
                 <tr><td className="py-1.5 px-3 font-bold text-amber-600">Grade 5</td><td className="py-1.5 px-3">55% – 59%</td><td className="py-1.5 px-3 font-sans">Credit</td><td className="py-1.5 px-3 font-sans text-slate-700">Average</td></tr>
                 <tr><td className="py-1.5 px-3 font-bold text-amber-700">Grade 6</td><td className="py-1.5 px-3">50% – 54%</td><td className="py-1.5 px-3 font-sans">Pass</td><td className="py-1.5 px-3 font-sans text-slate-700">Pass Mark</td></tr>
                 <tr><td className="py-1.5 px-3 font-bold text-orange-600">Grade 7</td><td className="py-1.5 px-3">45% – 49%</td><td className="py-1.5 px-3 font-sans">Pass</td><td className="py-1.5 px-3 font-sans text-orange-700">Low Pass</td></tr>

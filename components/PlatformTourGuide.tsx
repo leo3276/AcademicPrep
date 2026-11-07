@@ -409,7 +409,7 @@ export default function PlatformTourGuide({
           {/* Header Row: Step Badge + Title + Close Button */}
           <div className="flex items-center justify-between gap-3 mb-2.5">
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200/80 uppercase tracking-wide">
+              <span className="text-[11px] font-bold text-neutral-900 bg-neutral-100 px-2.5 py-0.5 rounded-full border border-neutral-200/80 uppercase tracking-wide">
                 Step {step.stepNumber} of {steps.length}
               </span>
               <span className="flex items-center gap-1 text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
@@ -431,7 +431,7 @@ export default function PlatformTourGuide({
 
           {/* Function Title */}
           <h3 className="text-base font-extrabold text-slate-900 tracking-tight flex items-center gap-1.5 mb-1.5">
-            <Compass className="w-4 h-4 text-blue-600 shrink-0" />
+            <Compass className="w-4 h-4 text-neutral-800 shrink-0" />
             <span>{step.title}</span>
           </h3>
 
@@ -442,8 +442,8 @@ export default function PlatformTourGuide({
 
           {/* Pro-Tip Box */}
           {step.tip && (
-            <div className="mt-3 p-2.5 rounded-xl bg-blue-50/80 border border-blue-100 text-[11px] text-blue-900 flex items-start gap-2">
-              <Lightbulb className="w-3.5 h-3.5 text-blue-600 shrink-0 mt-0.5" />
+            <div className="mt-3 p-2.5 rounded-xl bg-neutral-100/80 border border-blue-100 text-[11px] text-neutral-900 flex items-start gap-2">
+              <Lightbulb className="w-3.5 h-3.5 text-neutral-800 shrink-0 mt-0.5" />
               <span className="leading-snug">
                 <strong className="font-semibold text-blue-950">Pro-Tip: </strong>
                 {step.tip}
@@ -462,7 +462,7 @@ export default function PlatformTourGuide({
                   onClick={() => setCurrentStepIdx(i)}
                   className={`h-1.5 rounded-full transition-all cursor-pointer ${
                     i === currentStepIdx
-                      ? 'w-5 bg-blue-600'
+                      ? 'w-5 bg-neutral-900'
                       : i < currentStepIdx
                       ? 'w-2 bg-blue-200'
                       : 'w-2 bg-slate-200'
@@ -490,7 +490,7 @@ export default function PlatformTourGuide({
                 <a
                   href={nextTourUrl}
                   onClick={onClose}
-                  className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer shadow-sm shadow-blue-500/20"
+                  className="px-3.5 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer shadow-sm"
                 >
                   <span>{nextTourLabel}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -499,7 +499,7 @@ export default function PlatformTourGuide({
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer shadow-sm shadow-blue-500/20"
+                  className="px-3.5 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer shadow-sm"
                 >
                   <span>{isLastStep ? 'Complete Tour' : 'Next'}</span>
                   {isLastStep ? (

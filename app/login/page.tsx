@@ -84,8 +84,8 @@ function LoginFormContent() {
                 isUniversityStudent
                   ? 'bg-slate-900 text-white'
                   : isShsStudent
-                  ? 'bg-purple-100 text-purple-700'
-                  : 'bg-blue-100 text-blue-700'
+                  ? 'bg-neutral-100 text-neutral-800'
+                  : 'bg-neutral-100 text-neutral-900'
               }`}>
                 {isUniversityStudent ? 'Tertiary / University' : student.currentLevel}
               </span>
@@ -106,8 +106,8 @@ function LoginFormContent() {
                 isUniversityStudent
                   ? 'bg-slate-900 hover:bg-slate-800'
                   : isShsStudent
-                  ? 'bg-purple-600 hover:bg-purple-700 shadow-purple-500/20'
-                  : 'bg-blue-600 hover:bg-blue-700 shadow-blue-500/20'
+                  ? 'bg-neutral-900 hover:bg-neutral-900'
+                  : 'bg-neutral-900 hover:bg-neutral-800'
               } text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-sm`}
             >
               <User className="w-4 h-4" />
@@ -143,7 +143,7 @@ function LoginFormContent() {
                   setActiveTab('register');
                 }
               }}
-              className="w-full py-2.5 rounded-xl border border-red-200 bg-red-50/50 hover:bg-red-50 text-red-600 font-bold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer mt-1"
+              className="w-full py-2.5 rounded-xl border border-neutral-200 bg-white hover:bg-neutral-50 text-red-600 font-bold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer mt-1"
             >
               <LogOut className="w-4 h-4 text-red-500" />
               <span>Sign Out / Switch Account</span>
@@ -272,7 +272,7 @@ function LoginFormContent() {
             }}
             className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'signin'
-                ? 'bg-white text-blue-700 shadow-xs'
+                ? 'bg-white text-neutral-900 shadow-xs'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -286,7 +286,7 @@ function LoginFormContent() {
             }}
             className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'register'
-                ? 'bg-white text-blue-700 shadow-xs'
+                ? 'bg-white text-neutral-900 shadow-xs'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -353,7 +353,7 @@ function LoginFormContent() {
                       setActiveTab('register');
                       setSignInError(null);
                     }}
-                    className="text-blue-600 underline font-bold cursor-pointer"
+                    className="text-neutral-700 underline font-bold cursor-pointer"
                   >
                     Click here to register with {signInPhone}
                   </button>
@@ -364,7 +364,7 @@ function LoginFormContent() {
             <button
               type="submit"
               disabled={signInLoading}
-              className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-md shadow-blue-500/20 disabled:bg-slate-300 cursor-pointer"
+              className="w-full py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-md disabled:bg-slate-300 cursor-pointer"
             >
               {signInLoading ? (
                 <span>Signing in...</span>
@@ -385,7 +385,7 @@ function LoginFormContent() {
                     setActiveTab('register');
                     setSignInError(null);
                   }}
-                  className="text-blue-600 font-bold hover:underline cursor-pointer"
+                  className="text-neutral-700 font-bold hover:underline cursor-pointer"
                 >
                   Create one now
                 </button>
@@ -519,7 +519,7 @@ function LoginFormContent() {
                       setActiveTab('signin');
                       setRegError(null);
                     }}
-                    className="text-blue-600 underline font-bold cursor-pointer"
+                    className="text-neutral-700 underline font-bold cursor-pointer"
                   >
                     Click here to Sign In instead
                   </button>
@@ -531,7 +531,7 @@ function LoginFormContent() {
               id="guide-step-submit"
               type="submit"
               disabled={regLoading}
-              className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-md shadow-blue-500/20 disabled:bg-slate-300 cursor-pointer"
+              className="w-full py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-md disabled:bg-slate-300 cursor-pointer"
             >
               {regLoading ? (
                 <span>Creating account...</span>
@@ -552,7 +552,7 @@ function LoginFormContent() {
                     setActiveTab('signin');
                     setRegError(null);
                   }}
-                  className="text-blue-600 font-bold hover:underline cursor-pointer"
+                  className="text-neutral-700 font-bold hover:underline cursor-pointer"
                 >
                   Sign In here
                 </button>
@@ -564,7 +564,7 @@ function LoginFormContent() {
         {/* Free vs Paid Tier Information Box */}
         <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-left space-y-2">
           <p className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
+            <ShieldCheck className="w-3.5 h-3.5 text-neutral-800" />
             <span>How AcademicPrep Accounts Work</span>
           </p>
           <div className="text-[11px] text-slate-600 space-y-1">

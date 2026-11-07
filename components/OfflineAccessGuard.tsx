@@ -130,7 +130,7 @@ export default function OfflineAccessGuard() {
                   }
                 }
               }}
-              className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm shadow-blue-500/20"
+              className="w-full py-3 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               <span>Retry Internet Connection</span>
@@ -140,7 +140,7 @@ export default function OfflineAccessGuard() {
               <button
                 type="button"
                 onClick={() => setShowPaymentModal(true)}
-                className="w-full py-3 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
+                className="w-full py-3 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
               >
                 <Crown className="w-4 h-4 text-white" />
                 <span>Unlock VIP Offline Pass</span>

@@ -61,7 +61,7 @@ export default function TopicShareButtons({
           type="button"
           onClick={handleWhatsApp}
           title="Share topic to WhatsApp"
-          className="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 transition-colors cursor-pointer"
+          className="p-1.5 rounded-lg bg-white hover:bg-neutral-100 text-neutral-800 border border-neutral-200 transition-colors cursor-pointer"
         >
           <MessageCircle className="w-3.5 h-3.5" />
         </button>
@@ -91,7 +91,7 @@ export default function TopicShareButtons({
         <button
           type="button"
           onClick={handleWhatsApp}
-          className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
+          className="px-3.5 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
         >
           <MessageCircle className="w-3.5 h-3.5" />
           <span>Share on WhatsApp</span>
@@ -118,7 +118,7 @@ export default function TopicShareButtons({
       <button
         type="button"
         onClick={handleWhatsApp}
-        className="px-2.5 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 font-bold text-[11px] flex items-center gap-1 transition-colors cursor-pointer"
+        className="px-2.5 py-1.5 rounded-lg bg-white hover:bg-neutral-100 text-neutral-800 border border-neutral-200 font-bold text-[11px] flex items-center gap-1 transition-colors cursor-pointer"
         title="Share to WhatsApp study group"
       >
         <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />

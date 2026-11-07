@@ -161,7 +161,7 @@ export default function LessonCommentsSection({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+            <div className="w-8 h-8 rounded-xl bg-neutral-100 text-neutral-800 flex items-center justify-center font-bold">
               <MessageSquare className="w-4 h-4" />
             </div>
             <h3 className="text-base sm:text-lg font-bold text-slate-900">
@@ -215,7 +215,7 @@ export default function LessonCommentsSection({
           <button
             type="submit"
             disabled={isSubmitting || !content.trim()}
-            className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm shadow-blue-500/20 transition-all cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:bg-slate-300 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all cursor-pointer"
           >
             <Send className="w-3.5 h-3.5" />
             <span>{isSubmitting ? 'Posting...' : 'Post Study Note'}</span>
@@ -274,8 +274,8 @@ export default function LessonCommentsSection({
                       </span>
 
                       {comment.isTeacherReply && (
-                        <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 border border-blue-200 flex items-center gap-1">
-                          <ShieldCheck className="w-3 h-3 text-blue-600" />
+                        <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-800 border border-neutral-200 flex items-center gap-1">
+                          <ShieldCheck className="w-3 h-3 text-neutral-800" />
                           <span>{comment.teacherTitle || 'Instructor'}</span>
                         </span>
                       )}

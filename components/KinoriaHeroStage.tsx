@@ -421,11 +421,11 @@ export default function KinoriaHeroStage() {
 
         {/* Ambient Volumetric Lighting Glows */}
         <div 
-          className="absolute -top-32 left-1/4 w-96 h-96 rounded-full bg-blue-600/15 blur-[120px] pointer-events-none" 
+          className="absolute -top-32 left-1/4 w-96 h-96 rounded-full bg-neutral-900/15 blur-[120px] pointer-events-none" 
           aria-hidden="true" 
         />
         <div 
-          className="absolute -bottom-32 right-1/4 w-96 h-96 rounded-full bg-indigo-500/10 blur-[120px] pointer-events-none" 
+          className="absolute -bottom-32 right-1/4 w-96 h-96 rounded-full bg-white/10 blur-[120px] pointer-events-none" 
           aria-hidden="true" 
         />
 
@@ -513,7 +513,7 @@ export default function KinoriaHeroStage() {
                 <span className="text-sm font-black tracking-tight text-white font-sans">
                   AcademicPrep 3D Lab
                 </span>
-                <span className="text-[9px] font-mono uppercase tracking-widest px-2 py-0.5 rounded bg-blue-900/60 text-blue-300 border border-blue-700/60 font-semibold">
+                <span className="text-[9px] font-mono uppercase tracking-widest px-2 py-0.5 rounded bg-blue-900/60 text-slate-200 border border-blue-700/60 font-semibold">
                   KINORIA 3D STAGE
                 </span>
               </div>
@@ -543,7 +543,7 @@ export default function KinoriaHeroStage() {
               ) : (
                 <>
                   <Volume2 className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="hidden sm:inline text-[10px] text-emerald-300">AUDIO CLICK ON</span>
+                  <span className="hidden sm:inline text-[10px] text-slate-200">AUDIO CLICK ON</span>
                 </>
               )}
             </button>
@@ -620,7 +620,7 @@ export default function KinoriaHeroStage() {
                     data-hot="true"
                     className={`px-3 py-1.5 rounded-lg text-xs font-bold font-mono transition-all flex items-center gap-1.5 cursor-pointer ${
                       selectedLevel === 'SHS'
-                        ? 'bg-blue-500 text-white shadow-md font-black scale-102'
+                        ? 'bg-neutral-800 text-white shadow-md font-black scale-102'
                         : 'text-slate-400 hover:text-white'
                     }`}
                   >
@@ -684,7 +684,7 @@ export default function KinoriaHeroStage() {
                       data-hot="true"
                       className={`w-6 h-6 rounded-md font-mono text-[10px] font-bold transition-all cursor-pointer flex items-center justify-center ${
                         activeStrandIdx === i
-                          ? 'bg-blue-600 text-white font-black shadow-xs'
+                          ? 'bg-neutral-900 text-white font-black shadow-xs'
                           : 'bg-slate-900 text-slate-500 hover:text-slate-300 border border-slate-800'
                       }`}
                     >
@@ -731,7 +731,7 @@ export default function KinoriaHeroStage() {
                 <div className="relative z-10">
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-3 pb-3 border-b border-slate-900">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-blue-950 text-blue-300 border border-blue-800">
+                      <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-blue-950 text-slate-200 border border-blue-800">
                         {currentQ.examCode}
                       </span>
                       <span className="text-xs font-semibold text-slate-400">
@@ -769,7 +769,7 @@ export default function KinoriaHeroStage() {
                         padStyles = 'bg-slate-950/50 border-slate-900 text-slate-600 opacity-50';
                       }
                     } else if (isSelected) {
-                      padStyles = 'bg-blue-600 border-blue-400 text-white font-bold';
+                      padStyles = 'bg-neutral-900 border-blue-400 text-white font-bold';
                     }
 
                     return (
@@ -853,7 +853,7 @@ export default function KinoriaHeroStage() {
                     <Link
                       href={selectedLevel === 'JHS' ? '/jhs' : '/shs'}
                       data-hot="true"
-                      className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-mono text-[11px] font-bold transition flex items-center gap-1"
+                      className="px-3 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white font-mono text-[11px] font-bold transition flex items-center gap-1"
                     >
                       <span>LAUNCH PORTAL</span>
                       <ArrowRight className="w-3 h-3" />
@@ -870,7 +870,7 @@ export default function KinoriaHeroStage() {
                 {/* Cartridge 1: Live Exam Simulator Widget */}
                 <div className="p-4 sm:p-5 rounded-2xl bg-slate-950 border border-slate-800 shadow-md space-y-3 relative overflow-hidden group">
                   <div className="flex items-center justify-between">
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-950/80 border border-amber-800/80 text-amber-300 text-[10px] font-mono font-bold uppercase tracking-wider">
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-950/80 border border-amber-800/80 text-slate-200 text-[10px] font-mono font-bold uppercase tracking-wider">
                       <Zap className="w-3 h-3 text-amber-400" />
                       <span>TIMED CBT SIMULATOR</span>
                     </div>
@@ -889,7 +889,7 @@ export default function KinoriaHeroStage() {
                   <Link
                     href={selectedLevel === 'JHS' ? '/jhs/weekly-exam' : '/shs/weekly-exam'}
                     data-hot="true"
-                    className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 border border-blue-500 text-white font-mono text-xs font-bold transition flex items-center justify-center gap-2 group shadow-sm shadow-blue-500/20"
+                    className="w-full py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-900 text-white font-mono text-xs font-bold transition flex items-center justify-center gap-2 group shadow-sm"
                   >
                     <span>ENTER EXAM ROOM</span>
                     <ArrowRight className="w-3.5 h-3.5 text-blue-400 group-hover:translate-x-1 transition-transform" />
@@ -919,7 +919,7 @@ export default function KinoriaHeroStage() {
                         data-hot="true"
                         className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
                           activeStrandIdx === sIdx
-                            ? 'bg-blue-600 text-white border-blue-400 shadow-md font-bold'
+                            ? 'bg-neutral-900 text-white border-blue-400 shadow-md font-bold'
                             : 'bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700'
                         }`}
                       >
@@ -942,7 +942,7 @@ export default function KinoriaHeroStage() {
                   className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 transition flex items-center justify-between text-xs group"
                 >
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-blue-950 text-blue-300 border border-blue-800 flex items-center justify-center font-bold shrink-0">
+                    <div className="w-8 h-8 rounded-lg bg-blue-950 text-slate-200 border border-blue-800 flex items-center justify-center font-bold shrink-0">
                       📅
                     </div>
                     <div>
