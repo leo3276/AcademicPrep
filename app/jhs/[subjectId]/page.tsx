@@ -230,8 +230,8 @@ export default function SubjectDetailPage() {
                           Term {topic.term}
                         </span>
                         {topic.isFreeTrial || isTrialActive ? (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200/80 flex items-center gap-1">
-                            <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-white text-slate-800 border border-slate-200 shadow-2xs flex items-center gap-1">
+                            <CheckCircle2 className="w-3 h-3 text-blue-600" />
                             {isTrialActive ? 'Free Trial' : 'Free Topic'}
                           </span>
                         ) : (
@@ -241,7 +241,7 @@ export default function SubjectDetailPage() {
                           </span>
                         )}
                         {isCompleted && (
-                          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                          <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-800 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
                             <CheckCircle2 className="w-3 h-3" />
                             Passed ({progress.bestScorePercentage}%)
                           </span>

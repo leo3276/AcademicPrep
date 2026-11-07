@@ -39,13 +39,13 @@ export default function OfflineStorageBar() {
   return (
     <div className="rounded-2xl bg-white/70 backdrop-blur-md border border-slate-200/80 p-3.5 sm:p-4 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
       <div className="flex items-center gap-2.5">
-        <div className="w-8 h-8 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center shrink-0">
-          <Zap className="w-4 h-4 fill-emerald-500/20 text-emerald-600" />
+        <div className="w-8 h-8 rounded-xl bg-slate-100 border border-slate-200 text-blue-600 flex items-center justify-center shrink-0">
+          <Zap className="w-4 h-4 fill-blue-600/20 text-blue-600" />
         </div>
         <div>
           <div className="flex items-center gap-2">
             <span className="font-bold text-slate-800">Smart Data-Saver & Offline Caching</span>
-            <span className="text-[10px] font-semibold uppercase px-2 py-0.2 rounded-full bg-emerald-100 text-emerald-800">
+            <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-600 text-white shadow-2xs">
               Active
             </span>
           </div>
@@ -57,7 +57,7 @@ export default function OfflineStorageBar() {
 
       <div className="flex items-center gap-3 shrink-0 self-end sm:self-center">
         {message ? (
-          <span className="text-[11px] text-emerald-700 font-semibold flex items-center gap-1">
+          <span className="text-[11px] text-blue-700 font-semibold flex items-center gap-1">
             <CheckCircle2 className="w-3.5 h-3.5" />
             <span>{message}</span>
           </span>

@@ -188,7 +188,7 @@ export default function BecePastQuestionsPage() {
               <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
               <span className="hidden sm:inline">Refresh</span>
             </button>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-800 border border-slate-200">
               <BookOpen className="w-3.5 h-3.5" />
               {documents.length} BECE {documents.length === 1 ? 'Paper' : 'Papers'}
             </span>
@@ -201,7 +201,7 @@ export default function BecePastQuestionsPage() {
         {/* Hero Section */}
         <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-[11px] font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-800 text-[11px] font-bold uppercase tracking-wider">
               <GraduationCap className="w-3.5 h-3.5 text-blue-600" />
               <span>WAEC Official Archives (2008 – 2026)</span>
             </div>
@@ -401,11 +401,11 @@ export default function BecePastQuestionsPage() {
                   {/* Card Header: Icon & Year Tag */}
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0 text-blue-700 font-bold text-[11px] tracking-wider shadow-xs">
+                      <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 font-bold text-[11px] tracking-wider shadow-xs">
                         PDF
                       </div>
                       <div>
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-blue-800 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-100">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
                           {doc.year ? `BECE ${doc.year}` : 'BECE'}
                         </span>
                         <div className="text-[11px] text-slate-500 font-medium mt-0.5">

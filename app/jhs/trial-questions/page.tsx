@@ -185,8 +185,8 @@ export default function TrialQuestionsPage() {
               <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
               <span className="hidden sm:inline">Refresh</span>
             </button>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-800 border border-slate-200">
+              <span className="w-2 h-2 rounded-full bg-blue-600" />
               {documents.length} Mock {documents.length === 1 ? 'Exam' : 'Exams'}
             </span>
           </div>
@@ -198,8 +198,8 @@ export default function TrialQuestionsPage() {
         {/* Hero Section */}
         <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-bold uppercase tracking-wider">
-              <FileCheck className="w-3.5 h-3.5 text-emerald-600" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-800 text-[11px] font-bold uppercase tracking-wider">
+              <FileCheck className="w-3.5 h-3.5 text-blue-600" />
               <span>Diagnostic Mock Assessments</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
@@ -297,7 +297,7 @@ export default function TrialQuestionsPage() {
               <strong className="text-slate-900">{documents.length}</strong> mock examination {documents.length === 1 ? 'document' : 'documents'}
             </span>
             {hasActiveFilters && (
-              <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded text-[11px] font-medium">
+              <span className="text-slate-700 bg-slate-100 px-2 py-0.5 rounded text-[11px] font-medium border border-slate-200">
                 Filtered view active
               </span>
             )}
@@ -394,11 +394,11 @@ export default function TrialQuestionsPage() {
                   {/* Card Header: Icon & Level Tag */}
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-rose-50 border border-rose-100 flex items-center justify-center shrink-0 text-rose-600 font-bold text-[11px] tracking-wider shadow-xs">
+                      <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 font-bold text-[11px] tracking-wider shadow-xs">
                         PDF
                       </div>
                       <div>
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
                           {doc.level || 'JHS'}
                         </span>
                         <div className="text-[11px] text-slate-500 font-medium mt-0.5">
