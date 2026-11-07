@@ -94,12 +94,12 @@ export default function HomePage() {
               <div className="flex flex-wrap items-center justify-center gap-2 max-w-full">
                 <Link
                   href={`/blog/${latestPost.id}`}
-                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-neutral-800/20 hover:bg-neutral-800/30 border border-neutral-200 hover:border-neutral-200 text-amber-200 text-xs font-medium backdrop-blur-sm transition-all group max-w-full shadow-sm"
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 hover:border-amber-300 text-amber-200 text-xs font-medium backdrop-blur-sm transition-all group max-w-full shadow-sm"
                 >
                   <span className="flex h-2 w-2 rounded-full bg-amber-400 animate-ping shrink-0" />
                   <span className="px-1.5 py-0.5 rounded bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 text-[10px] font-black uppercase tracking-wider">NEW BLOG</span>
                   <span className="truncate max-w-[200px] sm:max-w-xs md:max-w-sm text-white font-medium">{latestPost.title}</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-slate-200 group-hover:translate-x-0.5 transition-transform shrink-0" />
+                  <ArrowRight className="w-3.5 h-3.5 text-amber-300 group-hover:translate-x-0.5 transition-transform shrink-0" />
                 </Link>
               </div>
             )}
@@ -148,12 +148,12 @@ export default function HomePage() {
 
       {/* Public Announcement: 30-Day Free Trial Notice */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2">
-        <div className="rounded-2xl bg-white/65 backdrop-blur-md border border-neutral-200/70 p-4 sm:p-5 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="rounded-2xl bg-white/65 backdrop-blur-md border border-blue-200/70 p-4 sm:p-5 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
             
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-800 bg-neutral-100 px-2 py-0.5 rounded">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-800 bg-blue-100 px-2 py-0.5 rounded">
                   Special Promotion
                 </span>
                 <h3 className="text-sm font-bold text-slate-900">
@@ -181,8 +181,8 @@ export default function HomePage() {
       {/* Sections Architecture (JHS, SHS, University) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-slate-200 border border-white/15 text-xs font-bold mb-3 backdrop-blur-sm shadow-xs">
-            <BookOpen className="w-3.5 h-3.5 text-slate-200" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 text-xs font-bold mb-3 backdrop-blur-sm shadow-xs">
+            <BookOpen className="w-3.5 h-3.5 text-cyan-300" />
             <span>Curriculum Pathways</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight drop-shadow-sm">
@@ -196,7 +196,7 @@ export default function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Card 1: JHS (ACTIVE) */}
           <div id="tour-home-jhs" className="relative rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-4.5 sm:p-6 shadow-xl flex flex-col justify-between overflow-hidden">
-            <div className="absolute top-0 right-0 bg-neutral-900 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-1 rounded-bl-xl shadow-xs">
+            <div className="absolute top-0 right-0 bg-blue-600 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-1 rounded-bl-xl shadow-xs">
               Active & Live Now
             </div>
 
@@ -233,7 +233,7 @@ export default function HomePage() {
             <div className="pt-6">
               <Link
                 href="/jhs"
-                className="w-full py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm shadow-blue-500/20"
               >
                 <span>Enter JHS Section</span>
                 <ArrowRight className="w-4 h-4" />
@@ -251,7 +251,7 @@ export default function HomePage() {
               <div>
                 <div className="flex items-center justify-between">
                   <h3 className="text-xl font-bold text-slate-900">Senior High School (SHS)</h3>
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-neutral-100 text-neutral-800 border border-neutral-200">
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-purple-100 text-purple-800 border border-purple-200">
                     Live Now
                   </span>
                 </div>
@@ -281,7 +281,7 @@ export default function HomePage() {
             <div className="pt-6">
               <Link
                 href="/shs"
-                className="w-full py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm shadow-blue-500/20"
               >
                 <span>Enter SHS Section</span>
                 <ArrowRight className="w-4 h-4" />
@@ -342,8 +342,8 @@ export default function HomePage() {
       {/* High-Intent SEO & Study Resources Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-slate-200 border border-white/15 text-xs font-bold mb-3 backdrop-blur-sm shadow-xs">
-            <GraduationCap className="w-3.5 h-3.5 text-slate-200" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-xs font-bold mb-3 backdrop-blur-sm shadow-xs">
+            <GraduationCap className="w-3.5 h-3.5 text-emerald-300" />
             <span>Ghana’s Premier BECE Hub</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight drop-shadow-sm">
@@ -390,7 +390,7 @@ export default function HomePage() {
             <div className="pt-6">
               <Link
                 href="/jhs/bece-past-questions"
-                className="w-full py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm shadow-blue-500/20"
               >
                 <span>Browse BECE Past Questions (1990 - 2025)</span>
                 <ArrowRight className="w-4 h-4" />
@@ -433,7 +433,7 @@ export default function HomePage() {
             <div className="pt-6">
               <Link
                 href="/jhs/trial-questions"
-                className="w-full py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-sm shadow-blue-500/20"
               >
                 <span>Practice BECE Trial &amp; Mock Papers</span>
                 <ArrowRight className="w-4 h-4" />
@@ -463,7 +463,7 @@ export default function HomePage() {
             <div className="pt-2 flex flex-wrap gap-3">
               <Link
                 href="/jhs/weekly-exam"
-                className="px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition shadow-sm"
+                className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition shadow-sm shadow-blue-500/20"
               >
                 Try Dynamic Weekly Exam
               </Link>
@@ -542,7 +542,7 @@ export default function HomePage() {
                 <a
                   href={OFFICIAL_APK_DOWNLOAD_URL}
                   download="AcademicPrep-v1.0.0.apk"
-                  className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition-all shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Download className="w-4 h-4" />
                   <span>Install APK Directly ({APK_FILE_SIZE})</span>
@@ -573,7 +573,7 @@ export default function HomePage() {
             <div className="lg:col-span-5 flex justify-center">
               <div className="w-full max-w-sm rounded-2xl bg-slate-800/60 backdrop-blur-sm border border-slate-600/60 p-5 shadow-md space-y-4">
                 <div className="flex items-center gap-3.5 pb-4 border-b border-slate-700/60">
-                  <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-slate-700 bg-neutral-900">
+                  <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-slate-700 bg-blue-600">
                     <img 
                       src="/android-icon.png" 
                       alt="AcademicPrep App Icon" 
@@ -585,7 +585,7 @@ export default function HomePage() {
                     <h3 className="text-base font-bold text-white">AcademicPrep</h3>
                     <p className="text-xs text-slate-400">Offline Learning Companion</p>
                     <div className="flex items-center gap-2 mt-1">
-                      <span className="text-[10px] bg-white/10 text-slate-200 font-bold px-1.5 py-0.5 rounded">
+                      <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-1.5 py-0.5 rounded">
                         Android 6.0+
                       </span>
                       <span className="text-[10px] text-slate-400 font-mono">APK ~24 MB</span>
@@ -608,14 +608,14 @@ export default function HomePage() {
                   </div>
                   <div className="flex items-center justify-between py-1 text-[11px]">
                     <span className="text-slate-400">Safety Verification</span>
-                    <span className="font-semibold text-slate-200">Official Signed Build</span>
+                    <span className="font-semibold text-blue-300">Official Signed Build</span>
                   </div>
                 </div>
 
                 <a
                   href={OFFICIAL_APK_DOWNLOAD_URL}
                   download="AcademicPrep-v1.0.0.apk"
-                  className="w-full py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs cursor-pointer text-center"
+                  className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs cursor-pointer text-center"
                 >
                   <Download className="w-4 h-4" />
                   <span>Install APK Directly ({APK_FILE_SIZE})</span>
@@ -631,8 +631,8 @@ export default function HomePage() {
         <div id="tour-home-blog" className="bg-white/65 backdrop-blur-md rounded-3xl border border-white/50 p-4.5 sm:p-10 shadow-xl space-y-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-100 pb-6">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-900 text-xs font-semibold mb-2">
-                <BookOpen className="w-3.5 h-3.5 text-neutral-800" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold mb-2">
+                <BookOpen className="w-3.5 h-3.5 text-blue-600" />
                 <span>Study Journal & WAEC Updates</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
@@ -645,7 +645,7 @@ export default function HomePage() {
 
             <Link
               href="/blog"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition self-start sm:self-auto group shadow-sm"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition self-start sm:self-auto group shadow-sm shadow-blue-500/20"
             >
               <span>View All Articles</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -658,7 +658,7 @@ export default function HomePage() {
               onClick={() => setBlogCategory('ALL')}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap ${
                 blogCategory === 'ALL'
-                  ? 'bg-neutral-900 text-white shadow-xs'
+                  ? 'bg-blue-600 text-white shadow-xs'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
@@ -670,7 +670,7 @@ export default function HomePage() {
                 onClick={() => setBlogCategory(cat)}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition whitespace-nowrap ${
                   blogCategory === cat
-                    ? 'bg-neutral-900 text-white shadow-xs'
+                    ? 'bg-blue-600 text-white shadow-xs'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
@@ -742,7 +742,7 @@ export default function HomePage() {
                           </div>
 
                           <Link href={`/blog/${post.id}`}>
-                            <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-neutral-800 transition leading-snug line-clamp-2">
+                            <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-blue-600 transition leading-snug line-clamp-2">
                               {post.title}
                             </h3>
                           </Link>
@@ -760,7 +760,7 @@ export default function HomePage() {
 
                         <Link
                           href={`/blog/${post.id}`}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition shadow-2xs"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition shadow-2xs"
                         >
                           <span>Read Guide</span>
                           <ArrowRight className="w-3.5 h-3.5" />
@@ -777,7 +777,7 @@ export default function HomePage() {
                   </p>
                   <Link
                     href="/blog"
-                    className="inline-flex items-center gap-1.5 font-bold text-neutral-700 hover:text-neutral-900 hover:underline shrink-0"
+                    className="inline-flex items-center gap-1.5 font-bold text-blue-600 hover:text-blue-700 hover:underline shrink-0"
                   >
                     <span>View All Articles ({blogPosts.length})</span>
                     <ArrowRight className="w-3.5 h-3.5" />

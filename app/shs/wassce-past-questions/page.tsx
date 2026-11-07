@@ -197,7 +197,7 @@ export default function WasscePastQuestionsPage() {
               <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
               <span className="hidden sm:inline">Refresh</span>
             </button>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-neutral-100 text-neutral-800 border border-neutral-200">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-purple-50 text-purple-700 border border-purple-200">
               <BookOpen className="w-3.5 h-3.5" />
               {documents.length} WASSCE {documents.length === 1 ? 'Paper' : 'Papers'}
             </span>
@@ -210,8 +210,8 @@ export default function WasscePastQuestionsPage() {
         {/* Hero Section */}
         <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-800 text-[11px] font-bold uppercase tracking-wider">
-              <GraduationCap className="w-3.5 h-3.5 text-neutral-800" />
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-purple-50 border border-purple-200 text-purple-800 text-[11px] font-bold uppercase tracking-wider">
+              <GraduationCap className="w-3.5 h-3.5 text-purple-600" />
               <span>WAEC WASSCE Official Archives (2008 – 2026)</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
@@ -224,7 +224,7 @@ export default function WasscePastQuestionsPage() {
         </div>
 
         {mounted && isTrialActive && !student?.hasFullAccess && (
-          <div className="p-3.5 rounded-2xl bg-neutral-100 border border-neutral-200/80 text-xs text-neutral-900 flex items-center justify-between shadow-2xs">
+          <div className="p-3.5 rounded-2xl bg-purple-50 border border-purple-200/80 text-xs text-purple-900 flex items-center justify-between shadow-2xs">
             <span className="flex items-center gap-2 font-semibold">
               <span className="text-base">🎁</span>
               <span>30-Day Free Trial: All WAEC WASSCE Past Papers &amp; Marking Schemes unlocked for viewing &amp; download! ({trialDaysRemaining}d remaining)</span>
@@ -305,7 +305,7 @@ export default function WasscePastQuestionsPage() {
               {hasActiveFilters && (
                 <button
                   onClick={resetFilters}
-                  className="text-xs text-rose-600 hover:text-red-700 font-medium px-2 py-1.5 transition"
+                  className="text-xs text-rose-600 hover:text-rose-700 font-medium px-2 py-1.5 transition"
                 >
                   Reset
                 </button>
@@ -334,7 +334,7 @@ export default function WasscePastQuestionsPage() {
             {hasActiveFilters && (
               <button
                 onClick={resetFilters}
-                className="px-4 py-2 bg-neutral-900 hover:bg-neutral-800 text-white rounded-xl text-xs font-semibold transition shadow-sm"
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-semibold transition shadow-sm shadow-blue-500/20"
               >
                 Clear All Filters
               </button>
@@ -346,12 +346,12 @@ export default function WasscePastQuestionsPage() {
               <div
                 key={doc.id}
                 id={`doc-${doc.id}`}
-                className="bg-white border border-slate-200 hover:border-neutral-200 rounded-2xl p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-4 group"
+                className="bg-white border border-slate-200 hover:border-purple-300 rounded-2xl p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-4 group"
               >
                 <div className="space-y-3">
                   {/* Top Badges */}
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-800 border border-neutral-200">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200">
                       WASSCE {doc.year || 'Exam'}
                     </span>
                     <span className="text-[11px] font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
@@ -361,7 +361,7 @@ export default function WasscePastQuestionsPage() {
 
                   {/* Document Title */}
                   <div>
-                    <h3 className="text-sm font-bold text-slate-900 group-hover:text-neutral-800 transition leading-snug">
+                    <h3 className="text-sm font-bold text-slate-900 group-hover:text-purple-700 transition leading-snug">
                       {doc.title}
                     </h3>
                     <p className="text-[11px] text-slate-500 font-medium mt-1">
@@ -400,7 +400,7 @@ export default function WasscePastQuestionsPage() {
                       type="button"
                       onClick={(e) => handleDownloadPdf(e, doc)}
                       disabled={openingDocId === doc.id}
-                      className="flex-1 py-2 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition shadow-sm cursor-pointer"
+                      className="flex-1 py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition shadow-sm shadow-blue-500/20 cursor-pointer"
                     >
                       {!hasFullAccess ? <Lock className="w-3.5 h-3.5 text-amber-400" /> : <Download className="w-3.5 h-3.5" />}
                       <span>Download</span>

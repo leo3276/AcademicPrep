@@ -50,11 +50,11 @@ export default function MobileBottomNav() {
           href="/"
           className={`flex flex-col items-center justify-center py-1 px-1 rounded-xl transition-all ${
             isHome
-              ? 'text-neutral-800 font-bold'
+              ? 'text-blue-600 font-bold'
               : 'text-slate-500 hover:text-slate-900 font-medium'
           }`}
         >
-          <div className={`p-1 rounded-lg transition-colors ${isHome ? 'bg-neutral-100 text-neutral-800' : ''}`}>
+          <div className={`p-1 rounded-lg transition-colors ${isHome ? 'bg-blue-50 text-blue-600' : ''}`}>
             <Home className="w-5 h-5" />
           </div>
           <span className="text-[10px] tracking-tight mt-0.5 leading-none">Home</span>
@@ -65,11 +65,11 @@ export default function MobileBottomNav() {
           href="/jhs"
           className={`flex flex-col items-center justify-center py-1 px-1 rounded-xl transition-all ${
             isJhs
-              ? 'text-neutral-800 font-bold'
+              ? 'text-blue-600 font-bold'
               : 'text-slate-500 hover:text-slate-900 font-medium'
           }`}
         >
-          <div className={`p-1 rounded-lg transition-colors ${isJhs ? 'bg-neutral-100 text-neutral-800' : ''}`}>
+          <div className={`p-1 rounded-lg transition-colors ${isJhs ? 'bg-blue-50 text-blue-600' : ''}`}>
             <GraduationCap className="w-5 h-5" />
           </div>
           <span className="text-[10px] tracking-tight mt-0.5 leading-none">JHS</span>
@@ -80,11 +80,11 @@ export default function MobileBottomNav() {
           href="/shs"
           className={`flex flex-col items-center justify-center py-1 px-1 rounded-xl transition-all ${
             isShs
-              ? 'text-neutral-800 font-bold'
+              ? 'text-purple-600 font-bold'
               : 'text-slate-500 hover:text-slate-900 font-medium'
           }`}
         >
-          <div className={`p-1 rounded-lg transition-colors ${isShs ? 'bg-neutral-100 text-neutral-800' : ''}`}>
+          <div className={`p-1 rounded-lg transition-colors ${isShs ? 'bg-purple-50 text-purple-600' : ''}`}>
             <BookOpenCheck className="w-5 h-5" />
           </div>
           <span className="text-[10px] tracking-tight mt-0.5 leading-none">SHS</span>
@@ -110,11 +110,11 @@ export default function MobileBottomNav() {
           href={profileHref}
           className={`flex flex-col items-center justify-center py-1 px-1 rounded-xl transition-all ${
             isProfile
-              ? 'text-neutral-800 font-bold'
+              ? 'text-blue-600 font-bold'
               : 'text-slate-500 hover:text-slate-900 font-medium'
           }`}
         >
-          <div className={`p-1 rounded-lg transition-colors ${isProfile ? 'bg-neutral-100 text-neutral-800' : ''}`}>
+          <div className={`p-1 rounded-lg transition-colors ${isProfile ? 'bg-blue-50 text-blue-600' : ''}`}>
             <User className="w-5 h-5" />
           </div>
           <span className="text-[10px] tracking-tight mt-0.5 leading-none truncate max-w-[56px]">

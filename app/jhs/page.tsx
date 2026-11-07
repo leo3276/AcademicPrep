@@ -171,7 +171,7 @@ export default function JhsPortalPage() {
                 onClick={() => handleLevelSelect(lvl)}
                 className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs font-bold transition-all ${
                   selectedLevel === lvl
-                    ? 'bg-neutral-900 text-white shadow-sm'
+                    ? 'bg-blue-600 text-white shadow-sm'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -200,7 +200,7 @@ export default function JhsPortalPage() {
           </div>
           <Link
             href="/shs"
-            className="px-3.5 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition whitespace-nowrap self-start sm:self-auto shrink-0 shadow-sm"
+            className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition whitespace-nowrap self-start sm:self-auto shrink-0 shadow-sm shadow-blue-500/20"
           >
             Return to SHS Portal &rarr;
           </Link>
@@ -242,7 +242,7 @@ export default function JhsPortalPage() {
             <div className="space-y-1.5">
               <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
                 <div
-                  className="bg-neutral-900 h-full rounded-full transition-all duration-500"
+                  className="bg-blue-600 h-full rounded-full transition-all duration-500"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
@@ -265,7 +265,7 @@ export default function JhsPortalPage() {
               <button
                 type="button"
                 onClick={() => setShowPaymentModal(true)}
-                className="font-bold underline text-neutral-800 hover:text-amber-950 shrink-0 cursor-pointer"
+                className="font-bold underline text-amber-800 hover:text-amber-950 shrink-0 cursor-pointer"
               >
                 Unlock VIP
               </button>
@@ -277,7 +277,7 @@ export default function JhsPortalPage() {
         <div id="tour-bece-past-questions" className="p-4.5 sm:p-6 rounded-2xl bg-white border border-slate-200 hover:border-blue-400 shadow-sm transition space-y-3 flex flex-col justify-between">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-900 bg-neutral-100 px-2 py-0.5 rounded-full">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full">
                 WAEC Official
               </span>
               <span className="text-[11px] font-mono text-slate-500 font-semibold">
@@ -285,7 +285,7 @@ export default function JhsPortalPage() {
               </span>
             </div>
             <h3 className="text-base font-bold text-slate-900 flex items-center gap-1.5">
-              <BookOpen className="w-4 h-4 text-neutral-800" />
+              <BookOpen className="w-4 h-4 text-blue-600" />
               BECE Past Questions (2008 – 2026)
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed">
@@ -294,7 +294,7 @@ export default function JhsPortalPage() {
           </div>
           <Link
             href="/jhs/bece-past-questions"
-            className="w-full py-2.5 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs"
+            className="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-xs"
           >
             <BookOpen className="w-3.5 h-3.5" />
             <span>Open BECE Past Questions</span>
@@ -323,7 +323,7 @@ export default function JhsPortalPage() {
           </div>
           <Link
             href="/jhs/trial-questions"
-            className="w-full py-2.5 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-sm"
+            className="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-sm shadow-blue-500/20"
           >
             <FileCheck className="w-3.5 h-3.5" />
             <span>Open Trial Questions</span>
@@ -347,7 +347,7 @@ export default function JhsPortalPage() {
 
         <Link
           href="/jhs/weekly-exam"
-          className="w-full sm:w-auto px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs shrink-0 transition shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap"
+          className="w-full sm:w-auto px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs shrink-0 transition shadow-sm shadow-blue-500/20 flex items-center justify-center gap-1.5 whitespace-nowrap"
         >
           <span>Weekly Exams & Past Papers</span>
           <ArrowRight className="w-3.5 h-3.5" />
@@ -385,7 +385,7 @@ export default function JhsPortalPage() {
                   </div>
 
                   <div>
-                    <h3 className="text-base font-bold text-slate-900 group-hover:text-neutral-800 transition-colors">
+                    <h3 className="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
                       {subject.name}
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5">
@@ -431,7 +431,7 @@ export default function JhsPortalPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
             <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-neutral-800" />
+              <BookOpen className="w-5 h-5 text-indigo-600" />
               WAEC Examiner Guides & Study Journal
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
@@ -440,7 +440,7 @@ export default function JhsPortalPage() {
           </div>
           <Link
             href="/blog"
-            className="text-xs font-bold text-neutral-700 hover:text-neutral-900 flex items-center gap-1 hover:underline self-start sm:self-auto"
+            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 hover:underline self-start sm:self-auto"
           >
             <span>View all articles</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -452,7 +452,7 @@ export default function JhsPortalPage() {
             <Link
               key={post.id}
               href={`/blog/${post.id}`}
-              className="group rounded-2xl bg-white border border-slate-200 hover:border-neutral-200 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+              className="group rounded-2xl bg-white border border-slate-200 hover:border-blue-400 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
             >
               {post.mediaType && post.mediaUrl && (
                 <div className="relative aspect-video w-full overflow-hidden bg-slate-100 border-b border-slate-100 group/img">
@@ -471,7 +471,7 @@ export default function JhsPortalPage() {
                         className="w-full h-full object-cover opacity-50"
                       />
                       <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                        <div className="w-9 h-9 rounded-full bg-neutral-900 text-white flex items-center justify-center shadow-lg">
+                        <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg">
                           <Play className="w-3.5 h-3.5 fill-white text-white ml-0.5" />
                         </div>
                       </div>
@@ -486,7 +486,7 @@ export default function JhsPortalPage() {
               <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-900 border border-blue-100 uppercase tracking-wider">
+                    <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100 uppercase tracking-wider">
                       {post.category}
                     </span>
                     <span className="text-[11px] text-slate-400 flex items-center gap-1 font-medium">
@@ -495,7 +495,7 @@ export default function JhsPortalPage() {
                     </span>
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-slate-900 group-hover:text-neutral-800 transition-colors line-clamp-2 leading-snug">
+                    <h3 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-2 leading-snug">
                       {post.title}
                     </h3>
                     <p className="text-xs text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">
@@ -504,7 +504,7 @@ export default function JhsPortalPage() {
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-neutral-800 group-hover:translate-x-0.5 transition-transform">
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-blue-600 group-hover:translate-x-0.5 transition-transform">
                   <span>Read Examiner Guide</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </div>

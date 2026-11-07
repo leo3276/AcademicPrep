@@ -342,7 +342,7 @@ export default function CollaboratorUploadPage() {
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <h1 className="text-xl font-bold tracking-tight text-slate-900">Upload University Course Slides</h1>
-            <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-neutral-100 text-neutral-800">Admin Approval Workflow</span>
+            <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-blue-100 text-blue-800">Admin Approval Workflow</span>
           </div>
           <p className="text-xs text-slate-500">
             Push official lecture slides and handouts. Uploaded slides are sent directly to the administrator for review and approval before appearing live on the student portal.
@@ -654,7 +654,7 @@ export default function CollaboratorUploadPage() {
                         )}
                         <button
                           onClick={() => handleDeleteSlide(s.id, s.title)}
-                          className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-neutral-50 rounded transition"
+                          className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition"
                           title="Delete Slide"
                         >
                           <Trash2 className="w-3.5 h-3.5" />

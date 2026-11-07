@@ -51,7 +51,7 @@ export default function PastWeeklyExamsSection({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-neutral-100 text-neutral-900 flex items-center justify-center font-bold">
+            <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold">
               <FileText className="w-4 h-4" />
             </div>
             <div>
@@ -88,7 +88,7 @@ export default function PastWeeklyExamsSection({
             return (
               <div
                 key={exam.id}
-                className="p-5 rounded-2xl border border-slate-200 bg-slate-50/40 hover:border-neutral-200 hover:bg-white transition-all space-y-4 shadow-2xs"
+                className="p-5 rounded-2xl border border-slate-200 bg-slate-50/40 hover:border-blue-300 hover:bg-white transition-all space-y-4 shadow-2xs"
               >
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                   {/* Left: Metadata */}
@@ -97,7 +97,7 @@ export default function PastWeeklyExamsSection({
                       <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-200 text-slate-700">
                         {exam.termWeekLabel}
                       </span>
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-neutral-100 text-neutral-800 border border-neutral-200/80">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-50 text-blue-800 border border-blue-200/80">
                         {exam.subjectName}
                       </span>
                       <span className="text-[11px] text-slate-400 font-medium">
@@ -160,7 +160,7 @@ export default function PastWeeklyExamsSection({
                       <button
                         type="button"
                         onClick={() => setSelectedExamForScheme(exam)}
-                        className="px-3.5 py-2 rounded-xl border border-neutral-200 bg-white hover:bg-neutral-100 text-neutral-800 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer"
+                        className="px-3.5 py-2 rounded-xl border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer"
                       >
                         <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                         <span>Review My Submission</span>
@@ -171,7 +171,7 @@ export default function PastWeeklyExamsSection({
                   <button
                     type="button"
                     onClick={() => onPracticeExam(exam)}
-                    className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs flex items-center gap-1.5 transition shadow-sm cursor-pointer"
+                    className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 transition shadow-sm shadow-blue-600/20 cursor-pointer"
                   >
                     <Play className="w-3.5 h-3.5 fill-current" />
                     <span>{isCompleted ? 'Retake / Practice Again' : 'Practice Past Paper'}</span>

@@ -77,9 +77,9 @@ const CURRICULUM_QUESTIONS: Record<'JHS' | 'SHS', InteractiveQuestion> = {
 };
 
 const ACCREDITED_BOOKS = [
-  { id: 'b1', title: 'Core Mathematics', level: 'JHS & SHS', code: 'NaCCA-MTH', color: 'bg-neutral-900', icon: '📐' },
+  { id: 'b1', title: 'Core Mathematics', level: 'JHS & SHS', code: 'NaCCA-MTH', color: 'bg-blue-600', icon: '📐' },
   { id: 'b2', title: 'Integrated Science', level: 'JHS & SHS', code: 'NaCCA-SCI', color: 'bg-emerald-600', icon: '🔬' },
-  { id: 'b3', title: 'English Language', level: 'JHS & SHS', code: 'NaCCA-ENG', color: 'bg-neutral-900', icon: '📖' },
+  { id: 'b3', title: 'English Language', level: 'JHS & SHS', code: 'NaCCA-ENG', color: 'bg-indigo-600', icon: '📖' },
   { id: 'b4', title: 'Social Studies', level: 'JHS & SHS', code: 'NaCCA-SOC', color: 'bg-amber-600', icon: '🌍' },
 ];
 
@@ -375,8 +375,8 @@ export default function Integrated3DHero({ latestPost, onOpenApkModal }: Integra
       />
 
       {/* Ambient Lighting Depth Glows */}
-      <div className="absolute top-0 right-1/4 w-96 h-96 rounded-full bg-neutral-100/50 blur-[100px] pointer-events-none -z-10" />
-      <div className="absolute bottom-0 left-1/4 w-96 h-96 rounded-full bg-neutral-100/40 blur-[100px] pointer-events-none -z-10" />
+      <div className="absolute top-0 right-1/4 w-96 h-96 rounded-full bg-blue-100/50 blur-[100px] pointer-events-none -z-10" />
+      <div className="absolute bottom-0 left-1/4 w-96 h-96 rounded-full bg-indigo-100/40 blur-[100px] pointer-events-none -z-10" />
 
       {/* ── KINORIA SPRING-DAMPED RETICLE CURSOR ── */}
       <div 
@@ -434,8 +434,8 @@ export default function Integrated3DHero({ latestPost, onOpenApkModal }: Integra
                 </>
               ) : (
                 <>
-                  <Volume2 className="w-3 h-3 text-neutral-800" />
-                  <span className="text-[9px] text-neutral-800 font-bold">HAPTIC AUDIO</span>
+                  <Volume2 className="w-3 h-3 text-blue-600" />
+                  <span className="text-[9px] text-blue-600 font-bold">HAPTIC AUDIO</span>
                 </>
               )}
             </button>
@@ -472,7 +472,7 @@ export default function Integrated3DHero({ latestPost, onOpenApkModal }: Integra
             {/* Main Headline */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5.5xl font-black tracking-tight leading-[1.12] text-slate-900">
               Master Your Curriculum, <br />
-              <span className="text-neutral-800">
+              <span className="text-blue-600">
                 Topic by Topic, Week by Week.
               </span>
             </h1>
@@ -487,7 +487,7 @@ export default function Integrated3DHero({ latestPost, onOpenApkModal }: Integra
                 href="/jhs"
                 id="tour-home-launch"
                 data-hot="true"
-                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-sm transition shadow-sm flex items-center justify-center gap-2 group cursor-pointer"
+                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition shadow-sm shadow-blue-500/20 flex items-center justify-center gap-2 group cursor-pointer"
               >
                 <span>Launch JHS Portal</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -634,14 +634,14 @@ export default function Integrated3DHero({ latestPost, onOpenApkModal }: Integra
                           : 'text-slate-500 hover:text-slate-800'
                       }`}
                     >
-                      <Bookmark className={`w-3.5 h-3.5 ${selectedLevel === 'SHS' ? 'text-neutral-800 fill-blue-600' : 'text-slate-400'}`} />
+                      <Bookmark className={`w-3.5 h-3.5 ${selectedLevel === 'SHS' ? 'text-blue-600 fill-blue-600' : 'text-slate-400'}`} />
                       <span>WASSCE (SHS)</span>
                     </button>
                   </div>
 
                   {/* CBT Running Clock */}
                   <div className="flex items-center gap-1.5 font-mono text-xs text-slate-700 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200 font-bold">
-                    <Clock className="w-3.5 h-3.5 text-neutral-800 animate-spin" style={{ animationDuration: '8s' }} />
+                    <Clock className="w-3.5 h-3.5 text-blue-600 animate-spin" style={{ animationDuration: '8s' }} />
                     <span>{formatTimer(examSeconds)}</span>
                   </div>
                 </div>
@@ -655,7 +655,7 @@ export default function Integrated3DHero({ latestPost, onOpenApkModal }: Integra
                   <div>
                     <div className="flex items-center justify-between gap-2 mb-2">
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-neutral-100 text-neutral-900 border border-neutral-200">
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
                           {currentQ.subject}
                         </span>
                         <span className="text-[10px] font-mono text-slate-400 hidden sm:inline">
@@ -759,13 +759,13 @@ export default function Integrated3DHero({ latestPost, onOpenApkModal }: Integra
                   {/* Book Bottom Controls */}
                   <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
                     <span className="flex items-center gap-1">
-                      <FileCheck2 className="w-3.5 h-3.5 text-neutral-800" />
+                      <FileCheck2 className="w-3.5 h-3.5 text-blue-600" />
                       <span>Over 12,400+ verified exam questions</span>
                     </span>
                     <Link
                       href={selectedLevel === 'JHS' ? '/jhs' : '/shs'}
                       data-hot="true"
-                      className="font-bold text-slate-900 hover:text-neutral-800 flex items-center gap-1 transition-colors"
+                      className="font-bold text-slate-900 hover:text-blue-600 flex items-center gap-1 transition-colors"
                     >
                       <span>Full Syllabus</span>
                       <ChevronRight className="w-3.5 h-3.5" />
@@ -791,7 +791,7 @@ export default function Integrated3DHero({ latestPost, onOpenApkModal }: Integra
                 className="absolute -bottom-3 -left-3 px-3 py-1.5 rounded-xl bg-white border border-slate-200 shadow-md flex items-center gap-1.5 text-xs font-bold text-slate-800 pointer-events-none hidden sm:flex"
                 style={{ transform: 'translateZ(50px)' }}
               >
-                <BookOpen className="w-3.5 h-3.5 text-neutral-800" />
+                <BookOpen className="w-3.5 h-3.5 text-blue-600" />
                 <span>NaCCA Notes</span>
               </div>
 

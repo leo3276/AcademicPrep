@@ -78,7 +78,7 @@ export default function CopyrightPage() {
         {/* 1. Legal Ownership Statement */}
         <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-neutral-100 text-neutral-900 flex items-center justify-center font-bold">
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold">
               <FileCheck2 className="w-5 h-5" />
             </div>
             <div>
@@ -254,7 +254,7 @@ export default function CopyrightPage() {
               </div>
 
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
-                <span className="font-bold text-slate-900 block text-xs uppercase tracking-wider text-neutral-800">Step 3: Civil Litigation</span>
+                <span className="font-bold text-slate-900 block text-xs uppercase tracking-wider text-blue-600">Step 3: Civil Litigation</span>
                 <p className="text-xs text-slate-600">
                   Institution of legal proceedings under Section 43 of the Copyright Act, 2005 (Act 690) for statutory damages, recovery of illicit earnings, and reimbursement of all legal expenses.
                 </p>
@@ -266,7 +266,7 @@ export default function CopyrightPage() {
         {/* 5. Reporting Infringement / Contact */}
         <div className="bg-slate-900 rounded-2xl p-6 sm:p-8 text-white space-y-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white/10 text-emerald-400 flex items-center justify-center font-bold">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
@@ -283,7 +283,7 @@ export default function CopyrightPage() {
               href="https://whatsapp.com/channel/0029VagMXcm4yltRps7S2b2x"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition shadow-sm"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition shadow-sm"
             >
               <ExternalLink className="w-4 h-4" />
               <span>Contact Compliance Desk on WhatsApp</span>

@@ -56,7 +56,7 @@ export default function Navbar() {
             {/* Logo */}
             <div className="flex items-center gap-4 shrink-0">
               <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-                <div className="w-9 h-9 rounded-xl bg-neutral-900 flex items-center justify-center text-white shadow-xs shrink-0">
+                <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-xs shrink-0">
                   <GraduationCap className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col">
@@ -189,7 +189,7 @@ export default function Navbar() {
               ) : student ? (
                 <div className="flex items-center gap-2 pl-2 pr-1.5 py-1 rounded-xl bg-slate-50 border border-slate-200 shrink-0">
                   <Link href={profileHref} className="flex items-center gap-2 text-left leading-tight shrink-0 group">
-                    <div className="w-7 h-7 rounded-lg bg-neutral-900 text-white font-bold text-xs flex items-center justify-center shrink-0">
+                    <div className="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
                       {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
                     </div>
                     <div className="flex flex-col text-left leading-tight shrink-0">
@@ -204,7 +204,7 @@ export default function Navbar() {
                   <button
                     onClick={logoutStudent}
                     title="Sign Out"
-                    className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-neutral-50 transition shrink-0 ml-0.5"
+                    className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition shrink-0 ml-0.5"
                   >
                     <LogOut className="w-3.5 h-3.5" />
                   </button>
@@ -234,7 +234,7 @@ export default function Navbar() {
               {mounted && student && (
                 <Link
                   href={profileHref}
-                  className="w-8 h-8 rounded-lg bg-neutral-900 text-white font-bold text-xs flex items-center justify-center shrink-0"
+                  className="w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0"
                   title={student.fullName}
                 >
                   {student.fullName ? student.fullName.charAt(0).toUpperCase() : 'S'}
@@ -363,7 +363,7 @@ export default function Navbar() {
                         setMobileMenuOpen(false);
                         await logoutStudent();
                       }}
-                      className="text-xs font-medium text-red-600 hover:text-red-700 px-2.5 py-1 rounded-md hover:bg-neutral-50 transition"
+                      className="text-xs font-medium text-red-600 hover:text-red-700 px-2.5 py-1 rounded-md hover:bg-red-50 transition"
                     >
                       Sign Out
                     </button>

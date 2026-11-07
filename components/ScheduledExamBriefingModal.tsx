@@ -73,11 +73,11 @@ export default function ScheduledExamBriefingModal({
         <div className="p-6 space-y-5 overflow-y-auto text-xs leading-relaxed text-slate-700">
           
           {/* Exam Summary */}
-          <div className="p-3.5 rounded-xl bg-neutral-100/70 border border-blue-100 text-blue-950 space-y-1">
-            <p className="font-bold text-sm text-neutral-900">
+          <div className="p-3.5 rounded-xl bg-blue-50/70 border border-blue-100 text-blue-950 space-y-1">
+            <p className="font-bold text-sm text-blue-900">
               {OFFICIAL_SCHEDULED_EXAM.title}
             </p>
-            <p className="text-[11px] text-neutral-900">
+            <p className="text-[11px] text-blue-700">
               Level: {OFFICIAL_SCHEDULED_EXAM.level} • Subject: {OFFICIAL_SCHEDULED_EXAM.subjectName} • Total Marks: {OFFICIAL_SCHEDULED_EXAM.totalMarks}
             </p>
             <p className="text-[11px] text-slate-600 font-medium pt-1 border-t border-blue-100/80">
@@ -94,7 +94,7 @@ export default function ScheduledExamBriefingModal({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="p-3.5 rounded-xl border border-slate-200 bg-white space-y-1">
                 <div className="flex items-center gap-1.5 font-bold text-slate-900">
-                  <Clock className="w-3.5 h-3.5 text-neutral-800" />
+                  <Clock className="w-3.5 h-3.5 text-blue-600" />
                   <span>Paper 1: Objectives</span>
                 </div>
                 <p className="text-slate-600 text-[11px]">
@@ -107,7 +107,7 @@ export default function ScheduledExamBriefingModal({
 
               <div className="p-3.5 rounded-xl border border-slate-200 bg-white space-y-1">
                 <div className="flex items-center gap-1.5 font-bold text-slate-900">
-                  <FileText className="w-3.5 h-3.5 text-neutral-800" />
+                  <FileText className="w-3.5 h-3.5 text-indigo-600" />
                   <span>Paper 2: Comprehension & Summary</span>
                 </div>
                 <p className="text-slate-600 text-[11px]">
@@ -182,7 +182,7 @@ export default function ScheduledExamBriefingModal({
               type="checkbox"
               checked={agreed}
               onChange={(e) => setAgreed(e.target.checked)}
-              className="mt-0.5 w-4 h-4 rounded text-neutral-800 focus:ring-blue-500 border-slate-300 shrink-0 cursor-pointer"
+              className="mt-0.5 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300 shrink-0 cursor-pointer"
             />
             <span className="text-[11px] text-slate-800 leading-normal font-medium">
               I understand that leaving this page will lock me out for 5 minutes as a penalty, while my exam timer continues running in the background.
@@ -229,8 +229,8 @@ export default function ScheduledExamBriefingModal({
               className={`px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition ${
                 agreed
                   ? isAdmin
-                    ? 'bg-amber-600 hover:bg-amber-500 text-white shadow-sm cursor-pointer'
-                    : 'bg-neutral-900 hover:bg-neutral-800 text-white shadow-sm cursor-pointer'
+                    ? 'bg-amber-600 hover:bg-amber-500 text-white shadow-sm shadow-amber-600/20 cursor-pointer'
+                    : 'bg-blue-600 hover:bg-blue-500 text-white shadow-sm shadow-blue-600/20 cursor-pointer'
                   : 'bg-slate-200 text-slate-400 cursor-not-allowed'
               }`}
             >

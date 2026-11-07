@@ -63,7 +63,7 @@ export default function PrivacyPage() {
         {/* Section 1: Information We Collect */}
         <section className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-2xs space-y-4">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-neutral-100 text-neutral-900 border border-neutral-200">
+            <div className="p-2.5 rounded-xl bg-blue-50 text-blue-700 border border-blue-200">
               <Eye className="w-5 h-5" />
             </div>
             <div>
@@ -113,7 +113,7 @@ export default function PrivacyPage() {
         {/* Section 3: Data Security & Storage */}
         <section className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-2xs space-y-4">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-neutral-100 text-neutral-800 border border-neutral-200">
+            <div className="p-2.5 rounded-xl bg-purple-50 text-purple-700 border border-purple-200">
               <Lock className="w-5 h-5" />
             </div>
             <div>

@@ -199,7 +199,7 @@ export default function OnboardingGuide({
             width: highlightRect.width,
             height: highlightRect.height,
           }}
-          className="z-40 pointer-events-none rounded-2xl ring-2 ring-blue-600 ring-offset-2 ring-offset-white shadow-md transition-all duration-200"
+          className="z-40 pointer-events-none rounded-2xl ring-2 ring-blue-600 ring-offset-2 ring-offset-white shadow-md shadow-blue-500/10 transition-all duration-200"
         />
       )}
 
@@ -227,7 +227,7 @@ export default function OnboardingGuide({
           {/* Header Row: Step Badge + Small 'X' Close Button */}
           <div className="flex items-center justify-between gap-2 mb-2">
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-semibold text-neutral-800 bg-neutral-100 px-2 py-0.5 rounded-md border border-blue-100">
+              <span className="text-[11px] font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-100">
                 Step {step.stepNumber} of {GUIDE_STEPS.length}
               </span>
               <h4 className="text-xs font-bold text-slate-900">
@@ -266,7 +266,7 @@ export default function OnboardingGuide({
                   key={i}
                   className={`h-1 rounded-full transition-all ${
                     i === currentStepIdx
-                      ? 'w-4 bg-neutral-900'
+                      ? 'w-4 bg-blue-600'
                       : i < currentStepIdx
                       ? 'w-1.5 bg-slate-300'
                       : 'w-1.5 bg-slate-200'
@@ -289,7 +289,7 @@ export default function OnboardingGuide({
               <button
                 type="button"
                 onClick={handleNext}
-                className="px-3 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold transition flex items-center gap-1 cursor-pointer shadow-xs"
+                className="px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition flex items-center gap-1 cursor-pointer shadow-xs"
               >
                 <span>{currentStepIdx === GUIDE_STEPS.length - 1 ? 'Done' : 'Next'}</span>
                 {currentStepIdx === GUIDE_STEPS.length - 1 ? (

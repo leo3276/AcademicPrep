@@ -857,13 +857,13 @@ export default function WeeklyExamPage() {
         <div className="max-w-2xl w-full bg-slate-950 border-2 border-amber-500/70 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-6 text-center animate-in zoom-in-95 duration-200">
           
           {/* Violation Icon */}
-          <div className="w-20 h-20 rounded-3xl bg-white/10 border border-amber-500/40 text-amber-400 flex items-center justify-center mx-auto shadow-lg shadow-amber-900/40">
+          <div className="w-20 h-20 rounded-3xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center mx-auto shadow-lg shadow-amber-900/40">
             <ShieldAlert className="w-10 h-10 animate-pulse" />
           </div>
 
           {/* Heading */}
           <div className="space-y-2">
-            <span className="px-3.5 py-1 rounded-full text-[11px] font-black uppercase tracking-widest bg-white/10 text-slate-200 border border-amber-500/40 inline-flex items-center gap-1.5">
+            <span className="px-3.5 py-1 rounded-full text-[11px] font-black uppercase tracking-widest bg-amber-500/20 text-amber-300 border border-amber-500/40 inline-flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
               PROCTORING PENALTY LOCKOUT ACTIVE
             </span>
@@ -884,16 +884,16 @@ export default function WeeklyExamPage() {
                 : 'bg-amber-950/40 border-amber-500/60'
             }`}>
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-200 flex items-center gap-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1">
                   <Clock className="w-3.5 h-3.5 text-amber-400" />
                   Penalty Wait Time
                 </span>
                 {isCooldownFinished ? (
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white/10 text-slate-200">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/30 text-emerald-300">
                     COMPLETE
                   </span>
                 ) : (
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white/10 text-slate-200 animate-pulse">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/30 text-amber-300 animate-pulse">
                     SERVING PENALTY
                   </span>
                 )}
@@ -902,7 +902,7 @@ export default function WeeklyExamPage() {
                 {isCooldownFinished ? (
                   <span className="text-emerald-400">00:00</span>
                 ) : (
-                  <span className="text-slate-200">{formatTimer(penaltyLockoutRemaining)}</span>
+                  <span className="text-amber-300">{formatTimer(penaltyLockoutRemaining)}</span>
                 )}
               </div>
               <p className="text-[11px] text-slate-400 mt-1">
@@ -919,7 +919,7 @@ export default function WeeklyExamPage() {
                   <Clock className="w-3.5 h-3.5 text-blue-400" />
                   {activeScheduledPaper === 'paper1' ? 'Paper 1 (Objs) Clock' : 'Paper 2 (Theory) Clock'}
                 </span>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white/10 text-slate-200">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-300">
                   RUNNING IN BACKGROUND
                 </span>
               </div>
@@ -928,7 +928,7 @@ export default function WeeklyExamPage() {
                   {formatTimer(timeLeftSeconds)}
                 </span>
               </div>
-              <p className="text-[11px] text-slate-200/90 mt-1 font-medium">
+              <p className="text-[11px] text-rose-300/90 mt-1 font-medium">
                 ⚠️ Exam clock does NOT pause. Time spent locked out is lost from your exam.
               </p>
             </div>
@@ -936,7 +936,7 @@ export default function WeeklyExamPage() {
 
           {/* Explanation Alert */}
           <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 text-xs text-slate-300 text-left space-y-2">
-            <div className="flex items-center gap-2 font-bold text-slate-200">
+            <div className="flex items-center gap-2 font-bold text-amber-300">
               <AlertTriangle className="w-4 h-4 shrink-0 text-amber-400" />
               <span>Proctoring Rule & Answer Preservation</span>
             </div>
@@ -944,7 +944,7 @@ export default function WeeklyExamPage() {
               Your answers have been safely preserved in your browser. Leaving the exam window triggers a mandatory 5-minute penalty lockout before you can continue. Once the penalty countdown expires, the button below will unlock and return you directly to your paper.
             </p>
             {activeScheduledPaper === 'paper1' && timeLeftSeconds <= 0 && (
-              <p className="text-[11px] font-semibold text-slate-200 bg-amber-950/60 p-2 rounded-lg border border-amber-800/60">
+              <p className="text-[11px] font-semibold text-amber-300 bg-amber-950/60 p-2 rounded-lg border border-amber-800/60">
                 Notice: Paper 1 ({OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes} minutes) elapsed while waiting in lockout and has been auto-submitted. You will resume straight into Paper 2.
               </p>
             )}
@@ -956,7 +956,7 @@ export default function WeeklyExamPage() {
               <button
                 type="button"
                 onClick={handleResumeAfterPenalty}
-                className="w-full py-4 px-6 rounded-2xl bg-neutral-900 hover:bg-neutral-800 text-white font-extrabold text-sm sm:text-base transition shadow-lg shadow-emerald-900/40 flex items-center justify-center gap-2 cursor-pointer ring-2 ring-emerald-400/50"
+                className="w-full py-4 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-sm sm:text-base transition shadow-lg shadow-emerald-900/40 flex items-center justify-center gap-2 cursor-pointer ring-2 ring-emerald-400/50"
               >
                 <Unlock className="w-5 h-5" />
                 <span>Resume Examination Now</span>
@@ -997,12 +997,12 @@ export default function WeeklyExamPage() {
     return (
       <div className="min-h-screen bg-slate-900 py-12 px-4 sm:px-6 lg:px-8 text-white flex items-center justify-center">
         <div className="max-w-2xl w-full bg-slate-950 border-2 border-rose-500/80 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-6 text-center animate-in zoom-in-95 duration-200">
-          <div className="w-20 h-20 rounded-3xl bg-white/10 border border-rose-500/40 text-rose-400 flex items-center justify-center mx-auto shadow-lg shadow-rose-900/40">
+          <div className="w-20 h-20 rounded-3xl bg-rose-500/20 border border-rose-500/40 text-rose-400 flex items-center justify-center mx-auto shadow-lg shadow-rose-900/40">
             <ShieldAlert className="w-10 h-10" />
           </div>
 
           <div className="space-y-2">
-            <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest bg-white/10 text-slate-200 border border-rose-500/40">
+            <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest bg-rose-500/20 text-rose-300 border border-rose-500/40">
               PROCTORING VIOLATION • SESSION TERMINATED
             </span>
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white mt-2">
@@ -1014,7 +1014,7 @@ export default function WeeklyExamPage() {
           </div>
 
           <div className="p-4 rounded-2xl bg-rose-950/40 border border-rose-900/60 text-xs text-rose-200 text-left space-y-2">
-            <div className="flex items-center gap-2 font-bold text-slate-200">
+            <div className="flex items-center gap-2 font-bold text-rose-300">
               <AlertTriangle className="w-4 h-4 shrink-0" />
               <span>Strict Proctoring Rule Enforced</span>
             </div>
@@ -1051,7 +1051,7 @@ export default function WeeklyExamPage() {
             <button
               type="button"
               onClick={handleResetScheduledExamForTesting}
-              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-sm cursor-pointer flex items-center justify-center gap-1.5"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold transition shadow-sm cursor-pointer flex items-center justify-center gap-1.5"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Reset & Retake Exam for Testing</span>
@@ -1064,7 +1064,7 @@ export default function WeeklyExamPage() {
             </Link>
             <Link
               href="/jhs/science"
-              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-sm"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm"
             >
               Revise Atomic Structure Notes
             </Link>
@@ -1107,7 +1107,7 @@ export default function WeeklyExamPage() {
                   onClick={() => handleLevelChange(lvl)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                     currentLevel === lvl
-                      ? 'bg-neutral-900 text-white shadow-xs'
+                      ? 'bg-blue-600 text-white shadow-xs'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
@@ -1125,8 +1125,8 @@ export default function WeeklyExamPage() {
           {/* Hero Banner */}
           <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs relative overflow-hidden">
             <div className="max-w-3xl space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-800 text-[11px] font-bold uppercase tracking-wider">
-                <Target className="w-3.5 h-3.5 text-neutral-800" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-[11px] font-bold uppercase tracking-wider">
+                <Target className="w-3.5 h-3.5 text-blue-600" />
                 <span>Curriculum Adaptive Assessment</span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
@@ -1139,16 +1139,16 @@ export default function WeeklyExamPage() {
 
             {/* Free Trial / VIP Lock Notice */}
             {mounted && isTrialActive && !student?.hasFullAccess ? (
-              <div className="mt-4 p-4 rounded-2xl bg-neutral-100 border border-neutral-200 text-blue-950 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+              <div className="mt-4 p-4 rounded-2xl bg-blue-50 border border-blue-200 text-blue-950 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-neutral-100 text-neutral-900 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center shrink-0">
                     <span className="text-lg">🎁</span>
                   </div>
                   <div className="space-y-0.5">
                     <p className="text-xs font-bold text-blue-950">
                       30-Day Free Trial: Full CBT Adaptive Weekly Exam Unlocked!
                     </p>
-                    <p className="text-[11px] text-neutral-800">
+                    <p className="text-[11px] text-blue-800">
                       You have full access to timed objectives and theory marking rubrics ({trialDaysRemaining} days remaining of free trial).
                     </p>
                   </div>
@@ -1171,7 +1171,7 @@ export default function WeeklyExamPage() {
                 </div>
                 <button
                   onClick={() => setIsPinModalOpen(true)}
-                  className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs shrink-0 transition shadow-xs flex items-center justify-center gap-1.5"
+                  className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shrink-0 transition shadow-xs flex items-center justify-center gap-1.5"
                 >
                   <KeyRound className="w-3.5 h-3.5" />
                   <span>Enter PIN to Unlock</span>
@@ -1197,7 +1197,7 @@ export default function WeeklyExamPage() {
                       const past = PAST_WEEKLY_EXAMS.find(e => e.level === currentLevel) || PAST_WEEKLY_EXAMS[0];
                       if (past) handlePracticePastExam(past);
                     }}
-                    className="py-3 px-5 rounded-xl text-xs font-bold transition shadow-sm flex items-center justify-center gap-2 shrink-0 cursor-pointer bg-neutral-900 hover:bg-neutral-800 text-white"
+                    className="py-3 px-5 rounded-xl text-xs font-bold transition shadow-sm shadow-blue-600/20 flex items-center justify-center gap-2 shrink-0 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white"
                   >
                     <BookOpen className="w-3.5 h-3.5" />
                     <span>Practice Past Exam ({currentLevel === 'JHS 3' ? 'Oct 18 Atomic Paper' : 'Past Paper'})</span>
@@ -1207,7 +1207,7 @@ export default function WeeklyExamPage() {
                   <button
                     type="button"
                     onClick={handleStartScheduledExam}
-                    className="py-3 px-5 rounded-xl text-xs font-bold transition shadow-sm shadow-emerald-600/20 flex items-center justify-center gap-2 shrink-0 cursor-pointer bg-neutral-900 hover:bg-neutral-800 text-white"
+                    className="py-3 px-5 rounded-xl text-xs font-bold transition shadow-sm shadow-emerald-600/20 flex items-center justify-center gap-2 shrink-0 cursor-pointer bg-emerald-600 hover:bg-emerald-500 text-white"
                   >
                     <Play className="w-3.5 h-3.5 fill-current" />
                     <span>Enter 6:00 PM Atomic Exam</span>
@@ -1219,7 +1219,7 @@ export default function WeeklyExamPage() {
                   <button
                     type="button"
                     onClick={handleResetScheduledExamForTesting}
-                    className="py-3 px-4 rounded-xl text-xs font-bold transition border border-neutral-200 bg-white hover:bg-neutral-100 text-neutral-900 flex items-center justify-center gap-1.5 shrink-0 cursor-pointer"
+                    className="py-3 px-4 rounded-xl text-xs font-bold transition border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-900 flex items-center justify-center gap-1.5 shrink-0 cursor-pointer"
                     title="Clear previous attempt to test the exam again"
                   >
                     <RotateCcw className="w-3.5 h-3.5 text-amber-700" />
@@ -1244,7 +1244,7 @@ export default function WeeklyExamPage() {
               <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-2">
                 <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
                   <span>Topics Mastered</span>
-                  <BookOpen className="w-4 h-4 text-neutral-800" />
+                  <BookOpen className="w-4 h-4 text-blue-600" />
                 </div>
                 <div className="text-2xl font-bold text-slate-900 font-mono">
                   {summary.completedTopicsCount}
@@ -1288,7 +1288,7 @@ export default function WeeklyExamPage() {
               <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-2">
                 <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
                   <span>Weekly Readiness</span>
-                  <ShieldCheck className="w-4 h-4 text-neutral-800" />
+                  <ShieldCheck className="w-4 h-4 text-blue-600" />
                 </div>
                 <div className="text-sm font-bold text-emerald-700 flex items-center gap-1.5 pt-1">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -1445,8 +1445,8 @@ export default function WeeklyExamPage() {
             <div className="flex items-center gap-2.5">
               <span className={`px-2.5 py-1 rounded-md text-xs font-bold ${
                 isScheduledMode
-                  ? 'bg-neutral-900 text-white'
-                  : 'bg-neutral-100 text-neutral-900 border border-neutral-200'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-blue-50 text-blue-700 border border-blue-200'
               }`}>
                 {isScheduledMode ? 'SCHEDULED EXAM • PAPER 1: OBJECTIVES' : 'PAPER 1: SECTION A (OBJECTIVES)'}
               </span>
@@ -1459,7 +1459,7 @@ export default function WeeklyExamPage() {
               )}
 
               {isAdminPreviewMode && (
-                <span className="hidden lg:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-neutral-100 text-neutral-800 border border-neutral-200">
+                <span className="hidden lg:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-purple-50 text-purple-800 border border-purple-200">
                   ⚡ ADMIN PREVIEW ACTIVE
                 </span>
               )}
@@ -1477,7 +1477,7 @@ export default function WeeklyExamPage() {
 
               <button
                 onClick={handleProceedToPaper2}
-                className="py-1.5 px-3 bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold rounded-lg transition shadow-sm flex items-center gap-1.5 cursor-pointer"
+                className="py-1.5 px-3 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg transition shadow-sm shadow-blue-500/20 flex items-center gap-1.5 cursor-pointer"
               >
                 <span>{isScheduledMode ? 'Submit & Start Paper 2 (1 Hr)' : 'Go to Paper 2 (Theory)'}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -1491,7 +1491,7 @@ export default function WeeklyExamPage() {
           {/* Progress Bar */}
           <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
             <div
-              className="bg-neutral-900 h-full rounded-full transition-all duration-300"
+              className="bg-blue-600 h-full rounded-full transition-all duration-300"
               style={{ width: `${Math.round((answeredCount / totalP1) * 100)}%` }}
             />
           </div>
@@ -1537,7 +1537,7 @@ export default function WeeklyExamPage() {
                     onClick={() => handleSelectPaper1Option(currentQ.id, opt)}
                     className={`w-full text-left p-4 rounded-xl border text-xs sm:text-sm font-medium transition flex items-center gap-3 cursor-pointer ${
                       isSelected
-                        ? 'border-neutral-900 bg-neutral-900 text-white shadow-xs'
+                        ? 'border-blue-600 bg-blue-600 text-white shadow-xs'
                         : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-800'
                     }`}
                   >
@@ -1577,14 +1577,14 @@ export default function WeeklyExamPage() {
               {paper1CurrentIdx < totalP1 - 1 ? (
                 <button
                   onClick={() => setPaper1CurrentIdx(prev => Math.min(totalP1 - 1, prev + 1))}
-                  className="py-2 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-sm"
+                  className="py-2 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm shadow-blue-500/20"
                 >
                   Next Question
                 </button>
               ) : (
                 <button
                   onClick={handleProceedToPaper2}
-                  className="py-2 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-xs flex items-center gap-1.5"
+                  className="py-2 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition shadow-xs flex items-center gap-1.5"
                 >
                   <span>Proceed to Paper 2</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -1610,7 +1610,7 @@ export default function WeeklyExamPage() {
                     onClick={() => setPaper1CurrentIdx(idx)}
                     className={`w-8 h-8 rounded-lg text-xs font-bold font-mono transition flex items-center justify-center ${
                       isCur
-                        ? 'ring-2 ring-blue-600 bg-neutral-900 text-white'
+                        ? 'ring-2 ring-blue-600 bg-blue-600 text-white'
                         : isAns
                         ? 'bg-slate-200 text-slate-800'
                         : 'border border-slate-200 text-slate-500 hover:bg-slate-100'
@@ -1661,7 +1661,7 @@ export default function WeeklyExamPage() {
               )}
 
               {isAdminPreviewMode && (
-                <span className="hidden lg:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-neutral-100 text-neutral-800 border border-neutral-200">
+                <span className="hidden lg:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-purple-50 text-purple-800 border border-purple-200">
                   ⚡ ADMIN PREVIEW ACTIVE
                 </span>
               )}
@@ -1675,7 +1675,7 @@ export default function WeeklyExamPage() {
 
               <button
                 onClick={handleProceedToGrading}
-                className="py-1.5 px-4 bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold rounded-lg transition shadow-sm flex items-center gap-1.5 cursor-pointer"
+                className="py-1.5 px-4 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg transition shadow-sm shadow-blue-500/20 flex items-center gap-1.5 cursor-pointer"
               >
                 <span>Submit & View Marking Guide</span>
                 <Check className="w-3.5 h-3.5" />
@@ -1700,7 +1700,7 @@ export default function WeeklyExamPage() {
               {/* Question Header */}
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div className="flex items-center gap-2">
-                  <span className="w-7 h-7 rounded-lg bg-neutral-900 text-white font-bold font-mono text-xs flex items-center justify-center shadow-xs">
+                  <span className="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold font-mono text-xs flex items-center justify-center shadow-xs">
                     {q.questionNumber}
                   </span>
                   <div>
@@ -1732,7 +1732,7 @@ export default function WeeklyExamPage() {
                     <div key={sub.part} className="space-y-3">
                       <div className="flex items-start justify-between gap-4">
                         <p className="text-xs sm:text-sm font-semibold text-slate-900 leading-relaxed">
-                          <span className="font-mono text-neutral-800 font-bold mr-1.5">{sub.part}</span>
+                          <span className="font-mono text-blue-600 font-bold mr-1.5">{sub.part}</span>
                           {sub.prompt}
                         </p>
                         <span className="text-[11px] font-mono text-slate-500 font-semibold shrink-0">
@@ -1762,7 +1762,7 @@ export default function WeeklyExamPage() {
             </span>
             <button
               onClick={handleProceedToGrading}
-              className="py-2.5 px-6 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-sm cursor-pointer flex items-center gap-2"
+              className="py-2.5 px-6 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm shadow-blue-500/20 cursor-pointer flex items-center gap-2"
             >
               <span>Submit & Review Marking Rubrics</span>
               <ArrowRight className="w-4 h-4" />
@@ -1792,7 +1792,7 @@ export default function WeeklyExamPage() {
 
             <button
               onClick={handleFinalizeSubmission}
-              className="py-2 px-5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-sm flex items-center gap-1.5 cursor-pointer"
+              className="py-2 px-5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm shadow-blue-500/20 flex items-center gap-1.5 cursor-pointer"
             >
               <span>Calculate Final Stanine Grade</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -1875,7 +1875,7 @@ export default function WeeklyExamPage() {
                               }}
                               className={`w-8 h-8 rounded-lg font-bold font-mono text-xs transition cursor-pointer ${
                                 currentAwarded === pt
-                                  ? 'bg-neutral-900 text-white shadow-xs'
+                                  ? 'bg-blue-600 text-white shadow-xs'
                                   : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
                               }`}
                             >
@@ -1894,7 +1894,7 @@ export default function WeeklyExamPage() {
           <div className="flex justify-end pt-4">
             <button
               onClick={handleFinalizeSubmission}
-              className="py-3 px-8 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-sm flex items-center gap-2 cursor-pointer"
+              className="py-3 px-8 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm shadow-blue-500/20 flex items-center gap-2 cursor-pointer"
             >
               <span>Calculate Final Stanine Grade & View Report</span>
               <ArrowRight className="w-4 h-4" />
@@ -1916,8 +1916,8 @@ export default function WeeklyExamPage() {
           <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs space-y-8 text-center">
             {/* Top Grade Badge */}
             <div className="space-y-3">
-              <div className="w-16 h-16 rounded-2xl bg-neutral-900 text-white flex items-center justify-center mx-auto shadow-md">
-                <Trophy className="w-8 h-8 text-slate-200" />
+              <div className="w-16 h-16 rounded-2xl bg-blue-600 text-white flex items-center justify-center mx-auto shadow-md shadow-blue-500/30">
+                <Trophy className="w-8 h-8 text-amber-300" />
               </div>
 
               <div>
@@ -1989,7 +1989,7 @@ export default function WeeklyExamPage() {
                   setExamState('dashboard');
                   reloadData(currentLevel);
                 }}
-                className="w-full sm:w-auto py-2.5 px-6 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-sm"
+                className="w-full sm:w-auto py-2.5 px-6 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition shadow-sm shadow-blue-500/20"
               >
                 Back to Weekly Exam Hub
               </button>

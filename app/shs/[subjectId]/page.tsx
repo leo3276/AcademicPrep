@@ -80,7 +80,7 @@ export default function ShsSubjectDetailPage() {
       <div className="max-w-4xl mx-auto py-16 px-4 text-center">
         <h2 className="text-xl font-bold text-slate-800">Subject Not Found</h2>
         <p className="text-xs text-slate-500 mt-2">The requested SHS curriculum subject does not exist.</p>
-        <Link href={`/shs?level=${encodeURIComponent(currentLevel)}`} className="mt-4 inline-block text-xs font-bold text-neutral-700">
+        <Link href={`/shs?level=${encodeURIComponent(currentLevel)}`} className="mt-4 inline-block text-xs font-bold text-blue-600">
           ← Back to SHS Portal
         </Link>
       </div>
@@ -142,7 +142,7 @@ export default function ShsSubjectDetailPage() {
                   onClick={() => handleLevelChange(lvl)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                     currentLevel === lvl
-                      ? 'bg-neutral-900 text-white shadow-xs'
+                      ? 'bg-blue-600 text-white shadow-xs'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
@@ -177,7 +177,7 @@ export default function ShsSubjectDetailPage() {
           <span className="font-bold text-slate-900">{progressPercent}%</span>
           <div className="w-24 bg-slate-100 rounded-full h-2 overflow-hidden">
             <div
-              className="bg-neutral-900 h-full rounded-full transition-all duration-300"
+              className="bg-blue-600 h-full rounded-full transition-all duration-300"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
@@ -200,7 +200,7 @@ export default function ShsSubjectDetailPage() {
           <button
             type="button"
             onClick={() => setShowPaymentModal(true)}
-            className="px-3.5 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-medium text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto shadow-sm"
+            className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto shadow-sm shadow-blue-500/20"
           >
             Unlock VIP (GH₵ 25)
           </button>
@@ -238,7 +238,7 @@ export default function ShsSubjectDetailPage() {
                       ? 'border-emerald-200 ring-1 ring-emerald-100'
                       : isLocked
                       ? 'border-amber-200/60 bg-amber-50/20'
-                      : 'border-slate-200 hover:border-neutral-200'
+                      : 'border-slate-200 hover:border-blue-300'
                   }`}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -251,18 +251,18 @@ export default function ShsSubjectDetailPage() {
                           Term {topic.term}
                         </span>
                         {topic.isFreeTrial || isTrialActive ? (
-                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-800 border border-slate-200 flex items-center gap-1">
-                            <CheckCircle2 className="w-3 h-3 text-slate-600" />
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200/80 flex items-center gap-1">
+                            <CheckCircle2 className="w-3 h-3 text-emerald-600" />
                             {isTrialActive ? 'Free Trial' : 'Free Topic'}
                           </span>
                         ) : (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-neutral-900 text-white flex items-center gap-1">
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800 flex items-center gap-1">
                             <Crown className="w-3 h-3 text-amber-600" />
                             VIP Access
                           </span>
                         )}
                         {isCompleted && (
-                          <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-800 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
+                          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                             <CheckCircle2 className="w-3 h-3" />
                             Passed ({progress.bestScorePercentage}%)
                           </span>
@@ -271,19 +271,19 @@ export default function ShsSubjectDetailPage() {
 
                       <Link
                         href={`/shs/${subjectId}/${topic.id}?level=${encodeURIComponent(topic.level || currentLevel)}`}
-                        className="group inline-flex items-center gap-1.5 hover:text-neutral-800 transition-colors"
+                        className="group inline-flex items-center gap-1.5 hover:text-blue-600 transition-colors"
                       >
-                        <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-neutral-800 transition-colors">
+                        <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
                           {topic.title}
                         </h3>
-                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-neutral-800 group-hover:translate-x-0.5 transition-all" />
+                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all" />
                       </Link>
                       <p className="text-xs text-slate-600 leading-relaxed">{topic.description}</p>
 
                       {/* Content Feature Badges */}
                       <div className="flex items-center gap-2 pt-1 flex-wrap">
                         <span className="text-[10px] font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-lg flex items-center gap-1">
-                          <BookOpen className="w-3 h-3 text-neutral-800" />
+                          <BookOpen className="w-3 h-3 text-blue-600" />
                           Detailed Study Notes
                         </span>
                         {topic.examples && topic.examples.length > 0 && (
@@ -293,8 +293,8 @@ export default function ShsSubjectDetailPage() {
                           </span>
                         )}
                         {topic.quiz?.questions && topic.quiz.questions.length > 0 && (
-                          <span className="text-[10px] font-semibold text-neutral-800 bg-neutral-100 px-2.5 py-1 rounded-lg flex items-center gap-1 border border-purple-100">
-                            <HelpCircle className="w-3 h-3 text-neutral-800" />
+                          <span className="text-[10px] font-semibold text-purple-700 bg-purple-50 px-2.5 py-1 rounded-lg flex items-center gap-1 border border-purple-100">
+                            <HelpCircle className="w-3 h-3 text-purple-600" />
                             {topic.quiz.questions.length} Quiz Questions
                           </span>
                         )}
@@ -314,7 +314,7 @@ export default function ShsSubjectDetailPage() {
 
                       <Link
                         href={`/shs/${subjectId}/${topic.id}?level=${encodeURIComponent(topic.level || currentLevel)}`}
-                        className="px-4 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+                        className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-sm shadow-blue-500/20 flex items-center gap-1.5"
                       >
                         <BookOpen className="w-3.5 h-3.5" />
                         <span>Study Lesson</span>
@@ -329,7 +329,7 @@ export default function ShsSubjectDetailPage() {
                             setModalTab('momo');
                             setShowPaymentModal(true);
                           }}
-                          className="px-4 py-2.5 rounded-xl bg-white border border-neutral-200 text-neutral-900 text-xs font-bold hover:bg-neutral-100 transition-all flex items-center gap-1.5"
+                          className="px-4 py-2.5 rounded-xl bg-amber-50 border border-amber-300 text-amber-900 text-xs font-bold hover:bg-amber-100 transition-all flex items-center gap-1.5"
                         >
                           <Lock className="w-3.5 h-3.5 text-amber-600" />
                           <span>Unlock Quiz</span>
@@ -337,9 +337,9 @@ export default function ShsSubjectDetailPage() {
                       ) : (
                         <Link
                           href={`/shs/quiz/${topic.id}`}
-                          className="px-4 py-2.5 rounded-xl border border-slate-200 hover:border-neutral-200 hover:bg-neutral-50 text-slate-800 hover:text-neutral-900 text-xs font-bold transition-all flex items-center gap-1.5"
+                          className="px-4 py-2.5 rounded-xl border border-slate-200 hover:border-purple-300 hover:bg-purple-50 text-slate-800 hover:text-purple-900 text-xs font-bold transition-all flex items-center gap-1.5"
                         >
-                          <HelpCircle className="w-3.5 h-3.5 text-neutral-800" />
+                          <HelpCircle className="w-3.5 h-3.5 text-purple-600" />
                           <span>Take Quiz</span>
                         </Link>
                       )}

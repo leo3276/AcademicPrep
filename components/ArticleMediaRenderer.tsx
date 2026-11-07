@@ -95,7 +95,7 @@ export default function ArticleMediaRenderer({
         </div>
         {mediaCaption && mediaCaption.trim() && (
           <figcaption className="text-xs text-slate-500 italic text-center px-3 font-normal leading-relaxed flex items-center justify-center gap-1.5">
-            <VideoIcon className="w-3.5 h-3.5 text-neutral-800 shrink-0" />
+            <VideoIcon className="w-3.5 h-3.5 text-blue-500 shrink-0" />
             <span>{mediaCaption.trim()}</span>
           </figcaption>
         )}

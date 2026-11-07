@@ -79,7 +79,7 @@ export default function ScheduledExamBanner({ variant = 'full', className = '' }
       <div className={`p-3 rounded-xl bg-white border border-slate-200/90 text-slate-800 flex items-center justify-between gap-3 text-xs shadow-xs ${className}`}>
         <div className="flex items-center gap-2.5 truncate">
           <span className={`w-2 h-2 rounded-full shrink-0 ${
-            isLive ? 'bg-emerald-500' : is5MinWarning ? 'bg-amber-500 animate-pulse' : isEnded ? 'bg-slate-300' : 'bg-neutral-800'
+            isLive ? 'bg-emerald-500' : is5MinWarning ? 'bg-amber-500 animate-pulse' : isEnded ? 'bg-slate-300' : 'bg-blue-500'
           }`} />
           <span className="font-semibold text-slate-900 truncate">
             {is5MinWarning ? 'Starts in 5m:' : isLive ? 'Live Exam (Until 12 AM):' : isEnded ? 'Exam Closed:' : '7:30 PM Exam:'} {OFFICIAL_SCHEDULED_EXAM.level} {OFFICIAL_SCHEDULED_EXAM.subjectName} ({OFFICIAL_SCHEDULED_EXAM.topicTitle})
@@ -136,10 +136,10 @@ export default function ScheduledExamBanner({ variant = 'full', className = '' }
                 ? 'bg-amber-50 text-amber-800 border border-amber-200'
                 : isEnded
                 ? 'bg-slate-100 text-slate-500 border border-slate-200'
-                : 'bg-neutral-100 text-neutral-800 border border-neutral-200'
+                : 'bg-blue-50 text-blue-800 border border-blue-200'
             }`}>
               <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${
-                isLive ? 'bg-emerald-500' : is5MinWarning ? 'bg-amber-500 animate-pulse' : isEnded ? 'bg-slate-400' : 'bg-neutral-800'
+                isLive ? 'bg-emerald-500' : is5MinWarning ? 'bg-amber-500 animate-pulse' : isEnded ? 'bg-slate-400' : 'bg-blue-500'
               }`} />
               {isLive ? 'Live Exam Open (Available till 12:00 AM)' : is5MinWarning ? 'Starts in 5 Minutes Sharp' : isEnded ? 'Exam Closed at 12:00 AM' : 'Official Scheduled Examination'}
             </span>
@@ -228,7 +228,7 @@ export default function ScheduledExamBanner({ variant = 'full', className = '' }
             ) : isLive ? (
               <Link
                 href="/jhs/weekly-exam?mode=scheduled"
-                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs"
               >
                 <Play className="w-3.5 h-3.5 fill-current" />
                 <span>Enter Examination Hall</span>

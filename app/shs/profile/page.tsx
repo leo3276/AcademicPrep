@@ -248,7 +248,7 @@ function ShsProfileContent() {
     return (
       <div className="max-w-xl mx-auto my-14 px-4 space-y-6 text-center">
         <div className="p-8 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-4">
-          <div className="w-14 h-14 rounded-2xl bg-neutral-100 text-neutral-800 mx-auto flex items-center justify-center">
+          <div className="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 mx-auto flex items-center justify-center">
             <GraduationCap className="w-7 h-7" />
           </div>
           <div className="space-y-1">
@@ -263,7 +263,7 @@ function ShsProfileContent() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
             <Link
               href="/login?mode=register&redirect=/shs/profile"
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition shadow-xs"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition shadow-xs"
             >
               Create Free SHS Account
             </Link>
@@ -280,7 +280,7 @@ function ShsProfileContent() {
             <button
               type="button"
               onClick={() => setActiveTab('timetable')}
-              className="text-xs font-semibold text-neutral-700 hover:underline cursor-pointer inline-flex items-center gap-1"
+              className="text-xs font-semibold text-blue-600 hover:underline cursor-pointer inline-flex items-center gap-1"
             >
               <span>Continue to Timetable Planner as Guest</span>
               <ArrowRight className="w-3 h-3" />
@@ -329,7 +329,7 @@ function ShsProfileContent() {
                   {student.currentLevel}
                 </span>
                 {isTrialActive ? (
-                  <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-neutral-100 text-neutral-800 border border-neutral-200/80">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-blue-50 text-blue-800 border border-blue-200/80">
                     Free Trial ({trialDaysRemaining}d remaining)
                   </span>
                 ) : student.hasFullAccess ? (
@@ -418,7 +418,7 @@ function ShsProfileContent() {
               <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
                 Average Mastery
               </span>
-              <div className="text-xl sm:text-2xl font-black text-neutral-800 font-mono">
+              <div className="text-xl sm:text-2xl font-black text-blue-600 font-mono">
                 {averageQuizScore}%
               </div>
               <p className="text-[10px] text-slate-400">Across SHS quizzes</p>
@@ -436,7 +436,7 @@ function ShsProfileContent() {
               <button
                 type="button"
                 onClick={() => setActiveTab('timetable')}
-                className="text-[11px] font-bold text-neutral-700 hover:text-neutral-900 flex items-center gap-1 cursor-pointer pt-1"
+                className="text-[11px] font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 cursor-pointer pt-1"
               >
                 <span>Open Timetable</span>
                 <ChevronRight className="w-3 h-3" />
@@ -521,7 +521,7 @@ function ShsProfileContent() {
                       <p className="text-xs text-slate-700 line-clamp-2">{m.questionText}</p>
                       <Link
                         href={`/shs/quiz/${m.topicId}`}
-                        className="text-[11px] font-bold text-neutral-700 hover:underline inline-flex items-center gap-1 pt-1"
+                        className="text-[11px] font-bold text-blue-600 hover:underline inline-flex items-center gap-1 pt-1"
                       >
                         <span>Retake Topic Quiz</span>
                         <ArrowRight className="w-3 h-3" />
@@ -538,7 +538,7 @@ function ShsProfileContent() {
                       </div>
                       <Link
                         href={`/shs/quiz/${w.id}`}
-                        className="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-[11px] font-bold"
+                        className="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold"
                       >
                         Retake
                       </Link>
@@ -637,7 +637,7 @@ function ShsProfileContent() {
                     <tr
                       key={`${entry.rank}-${entry.phoneMasked}-${index}`}
                       ref={isCurrent ? currentUserRowRef : null}
-                      className={`transition ${isCurrent ? 'bg-neutral-100/80 font-bold' : 'hover:bg-slate-50/50'}`}
+                      className={`transition ${isCurrent ? 'bg-blue-50/80 font-bold' : 'hover:bg-slate-50/50'}`}
                     >
                       <td className="py-2.5 px-3 font-mono">
                         {index === 0 ? '🥇 1' : index === 1 ? '🥈 2' : index === 2 ? '🥉 3' : `#${index + 1}`}
@@ -646,7 +646,7 @@ function ShsProfileContent() {
                         <div className="flex items-center gap-1.5">
                           <span>{entry.name}</span>
                           {isCurrent && (
-                            <span className="text-[9px] px-1.5 py-0.2 rounded bg-neutral-900 text-white font-bold">You</span>
+                            <span className="text-[9px] px-1.5 py-0.2 rounded bg-blue-600 text-white font-bold">You</span>
                           )}
                         </div>
                       </td>
@@ -691,7 +691,7 @@ function ShsProfileContent() {
                 <button
                   type="button"
                   onClick={() => setShowBuyModal(true)}
-                  className="py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer self-start sm:self-auto shrink-0 shadow-xs"
+                  className="py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer self-start sm:self-auto shrink-0 shadow-xs"
                 >
                   <Crown className="w-3.5 h-3.5" />
                   <span>Buy VIP Pass (GH₵ 25)</span>
@@ -722,7 +722,7 @@ function ShsProfileContent() {
                 <button
                   type="submit"
                   disabled={pinLoading || !pinInput.trim()}
-                  className="py-2 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:opacity-50 text-white font-bold text-xs transition cursor-pointer shrink-0 shadow-sm"
+                  className="py-2 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-bold text-xs transition cursor-pointer shrink-0 shadow-sm shadow-blue-500/20"
                 >
                   {pinLoading ? 'Activating...' : 'Activate PIN'}
                 </button>

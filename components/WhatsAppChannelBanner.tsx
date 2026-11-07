@@ -64,7 +64,7 @@ export default function WhatsAppChannelBanner({
       <div id="tour-home-whatsapp" className="w-full">
         <div className="bg-slate-900/60 backdrop-blur-md rounded-xl p-3 sm:p-3.5 border border-slate-600/60 text-left text-xs text-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 shadow-md">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-8 h-8 rounded-lg bg-white/10 border border-emerald-500/40 text-emerald-400 flex items-center justify-center shrink-0">
+            <div className="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center shrink-0">
               <MessageCircle className="w-4 h-4" />
             </div>
             <div className="min-w-0">
@@ -94,7 +94,7 @@ export default function WhatsAppChannelBanner({
               href={targetUrl}
               target={config.url ? '_blank' : undefined}
               rel="noopener noreferrer"
-              className="px-3.5 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-[11px] sm:text-xs transition flex items-center gap-1.5 shadow-xs shrink-0 cursor-pointer"
+              className="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-[11px] sm:text-xs transition flex items-center gap-1.5 shadow-xs shrink-0 cursor-pointer"
             >
               <span>{config.buttonText || 'Follow Channel'}</span>
               <ExternalLink className="w-3 h-3" />
@@ -147,7 +147,7 @@ export default function WhatsAppChannelBanner({
             href={targetUrl}
             target={config.url ? '_blank' : undefined}
             rel="noopener noreferrer"
-            className="px-3.5 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-2xs cursor-pointer"
+            className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-2xs cursor-pointer"
           >
             <span>{config.buttonText || 'Follow Channel'}</span>
             <ExternalLink className="w-3 h-3" />

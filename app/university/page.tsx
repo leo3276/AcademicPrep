@@ -308,7 +308,7 @@ export default function UniversityPortalPage() {
     } else if (diffDays === 1) {
       return { label: 'Due Tomorrow', color: 'bg-amber-50 text-amber-700 border-amber-200 font-medium' };
     } else {
-      return { label: `In ${diffDays} days`, color: 'bg-neutral-100 text-neutral-900 border-neutral-200' };
+      return { label: `In ${diffDays} days`, color: 'bg-blue-50 text-blue-700 border-blue-200' };
     }
   };
   const [enrolledSlideIds, setEnrolledSlideIds] = useState<string[]>([]);
@@ -2031,7 +2031,7 @@ export default function UniversityPortalPage() {
                     : 'text-neutral-500 hover:text-neutral-900'
                 }`}
               >
-                <BookOpen className="w-3.5 h-3.5 text-neutral-800" />
+                <BookOpen className="w-3.5 h-3.5 text-blue-600" />
                 <span>All Courses</span>
                 <span className="font-mono text-[10px] px-1.5 py-0.2 rounded-full bg-neutral-100 text-neutral-700 border border-neutral-200">
                   {adminSlides.length}
@@ -2046,11 +2046,11 @@ export default function UniversityPortalPage() {
                     : 'text-neutral-500 hover:text-neutral-900'
                 }`}
               >
-                <Bookmark className={`w-3.5 h-3.5 ${enrolledSlideIds.length > 0 ? 'fill-blue-600 text-neutral-800' : 'text-slate-400'}`} />
+                <Bookmark className={`w-3.5 h-3.5 ${enrolledSlideIds.length > 0 ? 'fill-blue-600 text-blue-600' : 'text-slate-400'}`} />
                 <span>My Courses</span>
                 <span className={`font-mono text-[10px] px-1.5 py-0.2 rounded-full border ${
                   enrolledSlideIds.length > 0
-                    ? 'bg-neutral-100 text-neutral-900 border-neutral-200 font-bold'
+                    ? 'bg-blue-50 text-blue-700 border-blue-200 font-bold'
                     : 'bg-neutral-100 text-neutral-600 border-neutral-200'
                 }`}>
                   {enrolledSlideIds.length}
@@ -2065,11 +2065,11 @@ export default function UniversityPortalPage() {
                     : 'text-neutral-500 hover:text-neutral-900'
                 }`}
               >
-                <VideoIcon className="w-3.5 h-3.5 text-neutral-800" />
+                <VideoIcon className="w-3.5 h-3.5 text-blue-600" />
                 <span>Video Briefings &amp; Lectures</span>
                 <span className={`font-mono text-[10px] px-1.5 py-0.2 rounded-full border ${
                   universityVideos.length > 0
-                    ? 'bg-neutral-100 text-neutral-900 border-neutral-200 font-bold'
+                    ? 'bg-blue-50 text-blue-700 border-blue-200 font-bold'
                     : 'bg-neutral-100 text-neutral-600 border-neutral-200'
                 }`}>
                   {universityVideos.length}
@@ -2084,11 +2084,11 @@ export default function UniversityPortalPage() {
                     : 'text-neutral-500 hover:text-neutral-900'
                 }`}
               >
-                <Calendar className="w-3.5 h-3.5 text-neutral-800" />
+                <Calendar className="w-3.5 h-3.5 text-blue-600" />
                 <span>Deadlines &amp; Exams</span>
                 <span className={`font-mono text-[10px] px-1.5 py-0.2 rounded-full border ${
                   deadlines.filter(d => !d.isCompleted).length > 0
-                    ? 'bg-neutral-100 text-neutral-900 border-neutral-200 font-bold'
+                    ? 'bg-blue-50 text-blue-700 border-blue-200 font-bold'
                     : 'bg-neutral-100 text-neutral-600 border-neutral-200'
                 }`}>
                   {deadlines.filter(d => !d.isCompleted).length}
@@ -2103,7 +2103,7 @@ export default function UniversityPortalPage() {
                     : 'text-neutral-500 hover:text-neutral-900'
                 }`}
               >
-                <Upload className="w-3.5 h-3.5 text-neutral-800" />
+                <Upload className="w-3.5 h-3.5 text-blue-600" />
                 <span>AI Study Buddy</span>
               </button>
             </div>
@@ -2164,7 +2164,7 @@ export default function UniversityPortalPage() {
                         onClick={() => setSelectedLevelFilter(lvl)}
                         className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition shrink-0 ${
                           selectedLevelFilter === lvl
-                            ? 'bg-neutral-900 text-white'
+                            ? 'bg-blue-600 text-white'
                             : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
                         }`}
                       >
@@ -2181,7 +2181,7 @@ export default function UniversityPortalPage() {
                         onClick={() => setSelectedSemesterFilter(sem)}
                         className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition shrink-0 ${
                           selectedSemesterFilter === sem
-                            ? 'bg-neutral-900 text-white'
+                            ? 'bg-blue-600 text-white'
                             : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
                         }`}
                       >
@@ -2195,19 +2195,19 @@ export default function UniversityPortalPage() {
               {/* SLIDES GRID */}
               {loadingAdminSlides ? (
                 <div className="py-20 text-center text-xs text-neutral-400 space-y-2">
-                  <div className="w-5 h-5 border-2 border-neutral-900 border-t-transparent rounded-full animate-spin mx-auto" />
+                  <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
                   <p>Loading university slides repository...</p>
                 </div>
               ) : adminSlides.length === 0 ? (
                 <div className="py-16 text-center border border-dashed border-neutral-200 rounded-xl bg-white p-8 space-y-3 max-w-lg mx-auto">
-                  <BookOpen className="w-10 h-10 text-neutral-800 mx-auto" />
+                  <BookOpen className="w-10 h-10 text-blue-500 mx-auto" />
                   <h3 className="text-base font-semibold text-neutral-900">No University Course Slides Published Yet</h3>
                   <p className="text-xs text-neutral-500 leading-relaxed">
                     Course slide decks uploaded by administrators and verified faculty collaborators will appear here for all students. In the meantime, you can analyze your own course slides in the Study Studio.
                   </p>
                   <button
                     onClick={() => setPortalMode('custom_upload')}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold shadow-sm transition"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm transition"
                   >
                     <Upload className="w-3.5 h-3.5" />
                     <span>Upload & Study Personal Slides</span>
@@ -2226,7 +2226,7 @@ export default function UniversityPortalPage() {
                         setReqCourseCode(slideCatalogSearch.toUpperCase().trim());
                         setShowCourseRequestModal(true);
                       }}
-                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold shadow-xs transition cursor-pointer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition cursor-pointer"
                     >
                       <Plus className="w-3.5 h-3.5" />
                       <span>Request "{slideCatalogSearch || 'Your Course'}" Slides</span>
@@ -2239,7 +2239,7 @@ export default function UniversityPortalPage() {
                       setSelectedLevelFilter('All');
                       setSelectedSemesterFilter('All');
                     }}
-                    className="mt-2 text-xs font-semibold text-neutral-700 hover:text-neutral-900 underline underline-offset-4"
+                    className="mt-2 text-xs font-semibold text-blue-600 hover:text-blue-700 underline underline-offset-4"
                   >
                     Reset all filters
                   </button>
@@ -2254,7 +2254,7 @@ export default function UniversityPortalPage() {
                       <div className="space-y-2.5">
                         {/* Badges Row */}
                         <div className="flex items-center justify-between gap-2">
-                          <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-neutral-900 text-white">
+                          <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-blue-600 text-white">
                             {slide.courseCode}
                           </span>
                           <div className="flex items-center gap-1.5 shrink-0">
@@ -2272,7 +2272,7 @@ export default function UniversityPortalPage() {
                                   university: slide.university,
                                 });
                               }}
-                              className="p-1.5 rounded-lg border border-neutral-200 text-neutral-400 hover:text-amber-600 hover:border-neutral-200 transition cursor-pointer"
+                              className="p-1.5 rounded-lg border border-neutral-200 text-neutral-400 hover:text-amber-600 hover:border-amber-200 transition cursor-pointer"
                               title="Report Outdated Notes or Error"
                               aria-label="Report Outdated Notes or Error"
                             >
@@ -2328,7 +2328,7 @@ export default function UniversityPortalPage() {
                           <button
                             onClick={() => handleLoadAdminSlide(slide)}
                             disabled={loading}
-                            className="col-span-8 py-2 px-3 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition disabled:opacity-60 cursor-pointer shadow-xs"
+                            className="col-span-8 py-2 px-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition disabled:opacity-60 cursor-pointer shadow-xs"
                           >
                             <BookOpen className="w-3.5 h-3.5" />
                             <span>Study Studio ➔</span>
@@ -2367,13 +2367,13 @@ export default function UniversityPortalPage() {
                 <div className="bg-white border border-neutral-200 rounded-xl p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                   <div>
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-neutral-100 border border-neutral-200 flex items-center justify-center text-neutral-800 font-bold">
+                      <div className="w-7 h-7 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 font-bold">
                         <Bookmark className="w-3.5 h-3.5 fill-white text-white" />
                       </div>
                       <h2 className="text-sm sm:text-base font-bold text-neutral-900">
                         My Enrolled Semester Courses
                       </h2>
-                      <span className="font-mono text-xs font-bold px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-900 border border-neutral-200">
+                      <span className="font-mono text-xs font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
                         {enrolledSlides.length} Course{enrolledSlides.length === 1 ? '' : 's'}
                       </span>
                     </div>
@@ -2392,7 +2392,7 @@ export default function UniversityPortalPage() {
 
                 {enrolledSlides.length === 0 ? (
                   <div className="py-16 text-center border border-dashed border-neutral-200 rounded-xl bg-white p-8 space-y-3 max-w-lg mx-auto">
-                    <div className="w-12 h-12 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-800 flex items-center justify-center mx-auto">
+                    <div className="w-12 h-12 rounded-full bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center mx-auto">
                       <Bookmark className="w-6 h-6" />
                     </div>
                     <h3 className="text-base font-bold text-neutral-900">No Courses Saved Yet</h3>
@@ -2401,7 +2401,7 @@ export default function UniversityPortalPage() {
                     </p>
                     <button
                       onClick={() => setPortalMode('library')}
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold shadow-xs transition"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition"
                     >
                       <BookOpen className="w-3.5 h-3.5" />
                       <span>Browse Course Catalog</span>
@@ -2416,7 +2416,7 @@ export default function UniversityPortalPage() {
                       >
                         <div className="space-y-2.5">
                           <div className="flex items-center justify-between gap-2">
-                            <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-neutral-900 text-white">
+                            <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-blue-600 text-white">
                               {slide.courseCode}
                             </span>
                             <div className="flex items-center gap-1.5 shrink-0">
@@ -2432,7 +2432,7 @@ export default function UniversityPortalPage() {
                                 className="p-1.5 rounded-lg border bg-neutral-900 border-neutral-900 text-white hover:bg-neutral-800 transition shadow-2xs"
                                 title="Remove from My Courses"
                               >
-                                <Bookmark className="w-3.5 h-3.5 fill-blue-600 text-neutral-800" />
+                                <Bookmark className="w-3.5 h-3.5 fill-blue-600 text-blue-600" />
                               </button>
                             </div>
                           </div>
@@ -2464,7 +2464,7 @@ export default function UniversityPortalPage() {
                           <button
                             onClick={() => handleLoadAdminSlide(slide)}
                             disabled={loading}
-                            className="col-span-8 py-2 px-3 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition disabled:opacity-60 cursor-pointer shadow-xs"
+                            className="col-span-8 py-2 px-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition disabled:opacity-60 cursor-pointer shadow-xs"
                           >
                             <BookOpen className="w-3.5 h-3.5" />
                             <span>Study Studio ➔</span>
@@ -2515,13 +2515,13 @@ export default function UniversityPortalPage() {
                 <div className="bg-white border border-neutral-200 rounded-xl p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-neutral-100 border border-neutral-200 flex items-center justify-center text-neutral-800 font-bold">
+                      <div className="w-7 h-7 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 font-bold">
                         <Calendar className="w-4 h-4" />
                       </div>
                       <h2 className="text-base font-bold text-neutral-900">
                         Semester Deadlines &amp; Exam Planner
                       </h2>
-                      <span className="font-mono text-xs font-bold px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-900 border border-neutral-200">
+                      <span className="font-mono text-xs font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
                         {pendingDeadlines.length} Active
                       </span>
                     </div>
@@ -2556,7 +2556,7 @@ export default function UniversityPortalPage() {
 
                     <button
                       onClick={() => setShowAddDeadlineModal(true)}
-                      className="px-4 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold shadow-xs flex items-center gap-1.5 transition shrink-0 cursor-pointer"
+                      className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs flex items-center gap-1.5 transition shrink-0 cursor-pointer"
                     >
                       <Plus className="w-3.5 h-3.5" />
                       <span>Add Deadline / Exam</span>
@@ -2571,7 +2571,7 @@ export default function UniversityPortalPage() {
                       onClick={() => setDeadlineFilter('upcoming')}
                       className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${
                         deadlineFilter === 'upcoming'
-                          ? 'bg-neutral-900 text-white shadow-xs font-bold'
+                          ? 'bg-blue-600 text-white shadow-xs font-bold'
                           : 'bg-white border border-neutral-200 text-neutral-600 hover:bg-neutral-50'
                       }`}
                     >
@@ -2581,7 +2581,7 @@ export default function UniversityPortalPage() {
                       onClick={() => setDeadlineFilter('completed')}
                       className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${
                         deadlineFilter === 'completed'
-                          ? 'bg-neutral-900 text-white shadow-xs font-bold'
+                          ? 'bg-blue-600 text-white shadow-xs font-bold'
                           : 'bg-white border border-neutral-200 text-neutral-600 hover:bg-neutral-50'
                       }`}
                     >
@@ -2591,7 +2591,7 @@ export default function UniversityPortalPage() {
                       onClick={() => setDeadlineFilter('all')}
                       className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${
                         deadlineFilter === 'all'
-                          ? 'bg-neutral-900 text-white shadow-xs font-bold'
+                          ? 'bg-blue-600 text-white shadow-xs font-bold'
                           : 'bg-white border border-neutral-200 text-neutral-600 hover:bg-neutral-50'
                       }`}
                     >
@@ -2609,7 +2609,7 @@ export default function UniversityPortalPage() {
                 {/* Deadlines List */}
                 {displayedDeadlines.length === 0 ? (
                   <div className="py-16 text-center border border-dashed border-neutral-200 rounded-xl bg-white p-8 space-y-3 max-w-lg mx-auto">
-                    <div className="w-12 h-12 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-800 flex items-center justify-center mx-auto">
+                    <div className="w-12 h-12 rounded-full bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center mx-auto">
                       <Calendar className="w-6 h-6" />
                     </div>
                     <h3 className="text-base font-bold text-neutral-900">
@@ -2625,7 +2625,7 @@ export default function UniversityPortalPage() {
                     {deadlineFilter !== 'completed' && (
                       <button
                         onClick={() => setShowAddDeadlineModal(true)}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold shadow-xs transition"
+                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition"
                       >
                         <Plus className="w-3.5 h-3.5" />
                         <span>Add Your First Deadline</span>
@@ -2654,8 +2654,8 @@ export default function UniversityPortalPage() {
                               onClick={() => handleToggleDeadline(item.id)}
                               className={`mt-0.5 w-5 h-5 rounded-md border flex items-center justify-center transition shrink-0 ${
                                 item.isCompleted
-                                  ? 'bg-neutral-900 border-neutral-900 text-white'
-                                  : 'border-neutral-300 hover:border-neutral-900 bg-white text-transparent'
+                                  ? 'bg-blue-600 border-blue-600 text-white'
+                                  : 'border-neutral-300 hover:border-blue-500 bg-white text-transparent'
                               }`}
                               title={item.isCompleted ? 'Mark as Pending' : 'Mark as Done'}
                             >
@@ -2664,7 +2664,7 @@ export default function UniversityPortalPage() {
 
                             <div className="space-y-1 min-w-0 flex-1">
                               <div className="flex items-center gap-2 flex-wrap">
-                                <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-neutral-900 text-white">
+                                <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-blue-600 text-white">
                                   {item.courseCode}
                                 </span>
                                 <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-neutral-100 text-neutral-700 border border-neutral-200">
@@ -2725,7 +2725,7 @@ export default function UniversityPortalPage() {
                             <button
                               type="button"
                               onClick={() => handleDeleteDeadline(item.id)}
-                              className="p-1.5 rounded-lg border border-neutral-200 hover:border-neutral-200 hover:bg-neutral-50 text-neutral-400 hover:text-red-600 transition"
+                              className="p-1.5 rounded-lg border border-neutral-200 hover:border-rose-200 hover:bg-rose-50 text-neutral-400 hover:text-rose-600 transition"
                               title="Delete deadline"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
@@ -2743,7 +2743,7 @@ export default function UniversityPortalPage() {
                     <div className="bg-white border border-neutral-200 rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-xl space-y-4">
                       <div className="flex items-center justify-between pb-3 border-b border-neutral-100">
                         <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 rounded-lg bg-neutral-100 text-neutral-800 flex items-center justify-center font-bold">
+                          <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
                             <Plus className="w-4 h-4" />
                           </div>
                           <div>
@@ -2770,7 +2770,7 @@ export default function UniversityPortalPage() {
                             placeholder="e.g. DCIT 101 Mid-Semester Exam"
                             value={newDeadlineTitle}
                             onChange={e => setNewDeadlineTitle(e.target.value)}
-                            className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-900 focus:outline-none focus:border-neutral-900 font-sans"
+                            className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-900 focus:outline-none focus:border-blue-600 font-sans"
                           />
                         </div>
 
@@ -2784,7 +2784,7 @@ export default function UniversityPortalPage() {
                               placeholder="e.g. DCIT 101"
                               value={newDeadlineCourse}
                               onChange={e => setNewDeadlineCourse(e.target.value)}
-                              className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-900 font-mono focus:outline-none focus:border-neutral-900"
+                              className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-900 font-mono focus:outline-none focus:border-blue-600"
                             />
                           </div>
 
@@ -2795,7 +2795,7 @@ export default function UniversityPortalPage() {
                             <select
                               value={newDeadlineType}
                               onChange={e => setNewDeadlineType(e.target.value as any)}
-                              className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-800 bg-white focus:outline-none focus:border-neutral-900"
+                              className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-800 bg-white focus:outline-none focus:border-blue-600"
                             >
                               <option value="midsem">Mid-Semester Exam</option>
                               <option value="exam">Final Exam</option>
@@ -2816,7 +2816,7 @@ export default function UniversityPortalPage() {
                               required
                               value={newDeadlineDate}
                               onChange={e => setNewDeadlineDate(e.target.value)}
-                              className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-900 focus:outline-none focus:border-neutral-900 font-mono"
+                              className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-900 focus:outline-none focus:border-blue-600 font-mono"
                             />
                           </div>
 
@@ -2827,7 +2827,7 @@ export default function UniversityPortalPage() {
                             <select
                               value={newDeadlinePriority}
                               onChange={e => setNewDeadlinePriority(e.target.value as any)}
-                              className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-800 bg-white focus:outline-none focus:border-neutral-900"
+                              className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-800 bg-white focus:outline-none focus:border-blue-600"
                             >
                               <option value="high">High Priority</option>
                               <option value="medium">Medium Priority</option>
@@ -2845,7 +2845,7 @@ export default function UniversityPortalPage() {
                             placeholder="e.g. Covers lectures 1 to 5, bring scientific calculator..."
                             value={newDeadlineNotes}
                             onChange={e => setNewDeadlineNotes(e.target.value)}
-                            className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-900 focus:outline-none focus:border-neutral-900 resize-none font-sans"
+                            className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-900 focus:outline-none focus:border-blue-600 resize-none font-sans"
                           />
                         </div>
 
@@ -2859,7 +2859,7 @@ export default function UniversityPortalPage() {
                           </button>
                           <button
                             type="submit"
-                            className="px-4 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold shadow-xs transition"
+                            className="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition"
                           >
                             Save Deadline
                           </button>
@@ -2983,7 +2983,7 @@ export default function UniversityPortalPage() {
                 <button
                   disabled={!selectedFile || loading}
                   onClick={handleProcessUpload}
-                  className="w-full sm:w-auto px-8 py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 disabled:opacity-30 disabled:pointer-events-none text-white text-xs font-semibold transition tracking-tight shadow-sm"
+                  className="w-full sm:w-auto px-8 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-30 disabled:pointer-events-none text-white text-xs font-semibold transition tracking-tight shadow-sm"
                 >
                   {loading ? 'Analyzing Slides...' : 'Analyze Lecture Slides'}
                 </button>
@@ -3043,7 +3043,7 @@ export default function UniversityPortalPage() {
                 onClick={() => speakSlideByIndex(selectedSlideIndex)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition border flex items-center gap-1.5 cursor-pointer shadow-xs ${
                   isAudioPlaying
-                    ? 'bg-neutral-900 text-white border-neutral-900 shadow-sm'
+                    ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
                     : 'bg-neutral-900 hover:bg-neutral-800 text-white border-neutral-900 shadow-2xs'
                 }`}
                 title="Listen to conversational plain-English audio cram"
@@ -3098,7 +3098,7 @@ export default function UniversityPortalPage() {
               onClick={() => setActiveTab('slides')}
               className={`pb-3 border-b-2 transition shrink-0 ${
                 activeTab === 'slides' 
-                  ? 'border-neutral-900 text-neutral-800 font-semibold' 
+                  ? 'border-blue-600 text-blue-600 font-semibold' 
                   : 'border-transparent text-neutral-500 hover:text-neutral-900'
               }`}
             >
@@ -3108,7 +3108,7 @@ export default function UniversityPortalPage() {
               onClick={() => setActiveTab('flashcards')}
               className={`pb-3 border-b-2 transition shrink-0 flex items-center gap-1.5 ${
                 activeTab === 'flashcards' 
-                  ? 'border-neutral-900 text-neutral-800 font-semibold' 
+                  ? 'border-blue-600 text-blue-600 font-semibold' 
                   : 'border-transparent text-neutral-500 hover:text-neutral-900'
               }`}
             >
@@ -3119,7 +3119,7 @@ export default function UniversityPortalPage() {
               onClick={() => setActiveTab('quiz')}
               className={`pb-3 border-b-2 transition shrink-0 flex items-center gap-1.5 ${
                 activeTab === 'quiz' 
-                  ? 'border-neutral-900 text-neutral-800 font-semibold' 
+                  ? 'border-blue-600 text-blue-600 font-semibold' 
                   : 'border-transparent text-neutral-500 hover:text-neutral-900'
               }`}
             >
@@ -3130,7 +3130,7 @@ export default function UniversityPortalPage() {
               onClick={() => setActiveTab('digest')}
               className={`pb-3 border-b-2 transition shrink-0 ${
                 activeTab === 'digest' 
-                  ? 'border-neutral-900 text-neutral-800 font-semibold' 
+                  ? 'border-blue-600 text-blue-600 font-semibold' 
                   : 'border-transparent text-neutral-500 hover:text-neutral-900'
               }`}
             >
@@ -3140,7 +3140,7 @@ export default function UniversityPortalPage() {
               onClick={() => setActiveTab('plan')}
               className={`pb-3 border-b-2 transition shrink-0 ${
                 activeTab === 'plan' 
-                  ? 'border-neutral-900 text-neutral-800 font-semibold' 
+                  ? 'border-blue-600 text-blue-600 font-semibold' 
                   : 'border-transparent text-neutral-500 hover:text-neutral-900'
               }`}
             >
@@ -3150,7 +3150,7 @@ export default function UniversityPortalPage() {
               onClick={() => setActiveTab('cram')}
               className={`pb-3 border-b-2 transition shrink-0 ${
                 activeTab === 'cram' 
-                  ? 'border-neutral-900 text-neutral-800 font-semibold' 
+                  ? 'border-blue-600 text-blue-600 font-semibold' 
                   : 'border-transparent text-neutral-500 hover:text-neutral-900'
               }`}
             >
@@ -3182,7 +3182,7 @@ export default function UniversityPortalPage() {
                     onClick={() => setFilterHighYieldOnly(!filterHighYieldOnly)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-medium transition border ${
                       filterHighYieldOnly
-                        ? 'bg-neutral-900 text-white border-neutral-900'
+                        ? 'bg-blue-600 text-white border-blue-600'
                         : 'bg-white text-neutral-600 border-neutral-200 hover:bg-neutral-50'
                     }`}
                   >
@@ -3216,7 +3216,7 @@ export default function UniversityPortalPage() {
                       </span>
 
                       {currentSlide?.isLessonStart && (
-                        <span className="ml-1 text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-900 text-white font-semibold uppercase tracking-wider">
+                        <span className="ml-1 text-[10px] font-mono px-2 py-0.5 rounded bg-blue-600 text-white font-semibold uppercase tracking-wider">
                           Lesson Starts
                         </span>
                       )}
@@ -3334,7 +3334,7 @@ export default function UniversityPortalPage() {
                             onClick={() => setSelectedSlideIndex(idx)}
                             className={`shrink-0 h-8 px-2.5 rounded-lg font-mono text-[11px] font-medium transition flex items-center gap-1 border ${
                               isCurrent
-                                ? 'bg-neutral-900 text-white border-neutral-900 shadow-xs font-semibold'
+                                ? 'bg-blue-600 text-white border-blue-600 shadow-xs font-semibold'
                                 : isStart
                                 ? 'bg-neutral-50 text-neutral-900 border-neutral-900 font-semibold ring-1 ring-neutral-900/15'
                                 : isMastered
@@ -3381,8 +3381,8 @@ export default function UniversityPortalPage() {
                             {currentSlide.aiSimplified && (
                               <>
                                 <span>•</span>
-                                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-900 font-medium inline-flex items-center gap-1 border border-blue-100">
-                                  <BookOpen className="w-2.5 h-2.5 text-neutral-900" />
+                                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-medium inline-flex items-center gap-1 border border-blue-100">
+                                  <BookOpen className="w-2.5 h-2.5 text-blue-700" />
                                   <span>Simplified</span>
                                 </span>
                               </>
@@ -3393,7 +3393,7 @@ export default function UniversityPortalPage() {
                             onClick={() => toggleMastered(currentSlide.pageNumber)}
                             className={`px-2.5 py-1 rounded-lg text-xs font-medium transition border flex items-center gap-1.5 shrink-0 ${
                               masteredSlides[currentSlide.pageNumber]
-                                ? 'bg-neutral-900 text-white border-neutral-900 shadow-2xs font-semibold'
+                                ? 'bg-blue-600 text-white border-blue-600 shadow-2xs font-semibold'
                                 : 'bg-white text-neutral-600 border-neutral-200 hover:bg-neutral-50'
                             }`}
                           >
@@ -3436,12 +3436,12 @@ export default function UniversityPortalPage() {
                             onClick={() => speakSlideByIndex(selectedSlideIndex)}
                             className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition border flex items-center gap-1.5 cursor-pointer shrink-0 whitespace-nowrap ${
                               isAudioPlaying && audioSlideIndex === selectedSlideIndex
-                                ? 'bg-neutral-900 text-white border-neutral-900 font-semibold shadow-xs'
+                                ? 'bg-blue-600 text-white border-blue-600 font-semibold shadow-xs'
                                 : 'bg-white text-neutral-700 border-neutral-200 hover:bg-neutral-50 shadow-2xs'
                             }`}
                             title="Listen to plain-English voice summary for this slide"
                           >
-                            <Headphones className={`w-3.5 h-3.5 shrink-0 ${isAudioPlaying && audioSlideIndex === selectedSlideIndex ? 'animate-pulse text-white' : 'text-neutral-800'}`} />
+                            <Headphones className={`w-3.5 h-3.5 shrink-0 ${isAudioPlaying && audioSlideIndex === selectedSlideIndex ? 'animate-pulse text-white' : 'text-blue-600'}`} />
                             <span className="whitespace-nowrap">{isAudioPlaying && audioSlideIndex === selectedSlideIndex ? 'Playing' : 'Audio Cram'}</span>
                           </button>
 
@@ -3509,7 +3509,7 @@ export default function UniversityPortalPage() {
                               const startIdx = activePackage.slides.findIndex(s => s.pageNumber === activePackage.lessonStartPage);
                               if (startIdx !== -1) setSelectedSlideIndex(startIdx);
                             }}
-                            className="px-3 py-1.5 rounded-lg bg-neutral-900 text-white font-medium hover:bg-neutral-800 transition shrink-0 flex items-center gap-1.5 self-start sm:self-auto text-xs"
+                            className="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition shrink-0 flex items-center gap-1.5 self-start sm:self-auto text-xs"
                           >
                             <span>Go to Slide {activePackage.lessonStartPage}</span>
                             <ChevronRight className="w-3.5 h-3.5" />
@@ -3552,7 +3552,7 @@ export default function UniversityPortalPage() {
                             {currentSlide.detailedTakeaways.map((item, i) => (
                               <div key={i} className="p-3.5 rounded-xl border border-neutral-200/80 bg-neutral-50/40 space-y-1.5 text-xs">
                                 <div className="font-semibold text-neutral-900 text-xs flex items-center gap-2">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-neutral-900 shrink-0" />
+                                  <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0" />
                                   <span>{item.label}</span>
                                 </div>
                                 <p className="text-neutral-700 leading-relaxed text-xs pl-3.5">
@@ -3566,7 +3566,7 @@ export default function UniversityPortalPage() {
                         <ul className="space-y-2">
                           {currentSlide.simplifiedPoints.map((point, i) => (
                             <li key={i} className="flex items-start gap-2.5 text-xs text-neutral-700 leading-relaxed">
-                              <span className="w-1.5 h-1.5 rounded-full bg-neutral-900 mt-1.5 shrink-0" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 mt-1.5 shrink-0" />
                               <span>{point}</span>
                             </li>
                           ))}
@@ -3671,7 +3671,7 @@ export default function UniversityPortalPage() {
                         ) : (
                           <button
                             onClick={() => setRevealedAnswers(prev => ({ ...prev, [currentSlide.pageNumber]: true }))}
-                            className="px-3.5 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-medium transition"
+                            className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium transition"
                           >
                             Show Answer
                           </button>
@@ -3737,7 +3737,7 @@ export default function UniversityPortalPage() {
                                 <div
                                   className={`rounded-xl p-3 text-xs leading-relaxed max-w-[92%] ${
                                     msg.role === 'user'
-                                      ? 'bg-neutral-900 text-white font-medium'
+                                      ? 'bg-blue-600 text-white font-medium'
                                       : 'bg-neutral-50 border border-neutral-200/80 text-neutral-800 space-y-1.5'
                                   }`}
                                 >
@@ -3784,7 +3784,7 @@ export default function UniversityPortalPage() {
                           <button
                             type="submit"
                             disabled={!tutorInput.trim() || isTutorLoading}
-                            className="px-3.5 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 disabled:opacity-40 text-white text-xs font-medium transition flex items-center gap-1.5 shrink-0"
+                            className="px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-40 text-white text-xs font-medium transition flex items-center gap-1.5 shrink-0"
                           >
                             <span>Send</span>
                             <Send className="w-3 h-3" />
@@ -4034,7 +4034,7 @@ export default function UniversityPortalPage() {
                         <ul className="space-y-1.5">
                           {group.examPoints.map((pt, pIdx) => (
                             <li key={pIdx} className="flex items-start gap-2 text-neutral-700 leading-relaxed">
-                              <span className="w-1.5 h-1.5 rounded-full bg-neutral-900 mt-1.5 shrink-0" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 mt-1.5 shrink-0" />
                               <span>{pt}</span>
                             </li>
                           ))}
@@ -4067,7 +4067,7 @@ export default function UniversityPortalPage() {
                       ) : (
                         <button
                           onClick={() => setRevealedDigestAnswers(prev => ({ ...prev, [group.groupIndex]: true }))}
-                          className="px-3.5 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-medium transition"
+                          className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium transition"
                         >
                           Check Model Answer
                         </button>
@@ -4106,7 +4106,7 @@ export default function UniversityPortalPage() {
                               <button
                                 onClick={() => toggleSession(sessionId)}
                                 className={`w-4 h-4 rounded border flex items-center justify-center transition mt-0.5 shrink-0 ${
-                                  isDone ? 'bg-neutral-900 border-neutral-900 text-white' : 'border-neutral-300'
+                                  isDone ? 'bg-blue-600 border-blue-600 text-white' : 'border-neutral-300'
                                 }`}
                               >
                                 {isDone && <Check className="w-3 h-3" />}
@@ -4181,7 +4181,7 @@ export default function UniversityPortalPage() {
                 <div className="flex flex-wrap items-center gap-2">
                   <button
                     onClick={handleShareDeckWhatsApp}
-                    className="px-3 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-xs cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-xs cursor-pointer"
                     title="Send full revision sheet to WhatsApp class group"
                   >
                     <MessageCircle className="w-3.5 h-3.5 text-white" />
@@ -4411,7 +4411,7 @@ export default function UniversityPortalPage() {
                                 </span>
                               )
                             ) : (
-                              <span className="text-[10px] px-2 py-0.5 rounded bg-neutral-100 text-neutral-900 font-semibold uppercase tracking-wider">
+                              <span className="text-[10px] px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-semibold uppercase tracking-wider">
                                 Answered
                               </span>
                             )}
@@ -4450,7 +4450,7 @@ export default function UniversityPortalPage() {
                         let pillStyle = 'bg-white text-neutral-500 border-neutral-200 hover:bg-neutral-50';
 
                         if (isCurrent) {
-                          pillStyle = 'bg-neutral-900 text-white border-neutral-900 shadow-xs font-semibold';
+                          pillStyle = 'bg-blue-600 text-white border-blue-600 shadow-xs font-semibold';
                         } else if (quizSubmitted) {
                           if (correct) {
                             pillStyle = 'bg-neutral-900 text-white border-neutral-900 font-medium';
@@ -4495,8 +4495,8 @@ export default function UniversityPortalPage() {
                         let badgeStyle = 'bg-neutral-100 text-neutral-700 border border-neutral-200';
 
                         if (!quizSubmitted && isSelected) {
-                          btnStyle = 'bg-neutral-100/60 border-neutral-900 text-neutral-900 font-medium ring-1 ring-blue-600/20';
-                          badgeStyle = 'bg-neutral-900 text-white border-neutral-900';
+                          btnStyle = 'bg-blue-50/60 border-blue-600 text-neutral-900 font-medium ring-1 ring-blue-600/20';
+                          badgeStyle = 'bg-blue-600 text-white border-blue-600';
                         } else if (quizSubmitted) {
                           if (isRightOption) {
                             btnStyle = 'bg-neutral-50 border-neutral-900 text-neutral-900 font-semibold';
@@ -4583,7 +4583,7 @@ export default function UniversityPortalPage() {
                         {safeQuizIndex < visibleQuizQuestions.length - 1 ? (
                           <button
                             onClick={() => setCurrentQuizIndex(prev => Math.min(visibleQuizQuestions.length - 1, prev + 1))}
-                            className="px-5 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-xs cursor-pointer"
+                            className="px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-xs cursor-pointer"
                           >
                             <span>Next</span>
                             <ChevronRight className="w-4 h-4" />
@@ -4592,7 +4592,7 @@ export default function UniversityPortalPage() {
                           <button
                             onClick={() => setQuizSubmitted(true)}
                             disabled={answeredCount === 0}
-                            className="px-5 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 disabled:opacity-40 text-white text-xs font-semibold transition shadow-xs cursor-pointer"
+                            className="px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-40 text-white text-xs font-semibold transition shadow-xs cursor-pointer"
                           >
                             Submit & Finish
                           </button>
@@ -4670,7 +4670,7 @@ export default function UniversityPortalPage() {
           {/* Play/Pause Button */}
           <button
             onClick={togglePlayPauseAudio}
-            className="w-8 h-8 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white flex items-center justify-center shrink-0 transition cursor-pointer"
+            className="w-8 h-8 rounded-lg bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shrink-0 transition cursor-pointer"
             title={isAudioPaused ? 'Resume' : 'Pause'}
           >
             {isAudioPaused ? <Play className="w-3.5 h-3.5 fill-current ml-0.5" /> : <Pause className="w-3.5 h-3.5 fill-current" />}
@@ -4694,7 +4694,7 @@ export default function UniversityPortalPage() {
               <span className="text-xs text-slate-200 font-medium truncate">
                 {activePackage.slides[audioSlideIndex]?.title || 'Audio Cram'}
               </span>
-              <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700 shrink-0 hidden sm:inline-block">
+              <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-800 text-blue-300 border border-slate-700 shrink-0 hidden sm:inline-block">
                 Voice: Sol
               </span>
             </div>
@@ -4769,7 +4769,7 @@ export default function UniversityPortalPage() {
               </button>
               <button
                 onClick={() => saveApiKey(customApiKey)}
-                className="px-4 py-1.5 rounded-lg bg-neutral-900 text-white font-medium hover:bg-neutral-800 transition"
+                className="px-4 py-1.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
               >
                 Save
               </button>
@@ -4798,7 +4798,7 @@ export default function UniversityPortalPage() {
           <div className="bg-white border border-neutral-200 rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-neutral-100">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-neutral-100 text-neutral-800 border border-neutral-200 flex items-center justify-center font-bold">
+                <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 border border-blue-200 flex items-center justify-center font-bold">
                   <Plus className="w-4 h-4" />
                 </div>
                 <div>
@@ -4835,7 +4835,7 @@ export default function UniversityPortalPage() {
                   <select
                     value={reqUniversity}
                     onChange={e => setReqUniversity(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-neutral-900 focus:outline-none focus:border-neutral-900"
+                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-neutral-900 focus:outline-none focus:border-blue-500"
                   >
                     {GHANAIAN_UNIVERSITIES.map(u => (
                       <option key={u} value={u}>{u}</option>
@@ -4854,7 +4854,7 @@ export default function UniversityPortalPage() {
                       placeholder="e.g. DCIT 205"
                       value={reqCourseCode}
                       onChange={e => setReqCourseCode(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 font-mono uppercase focus:outline-none focus:border-neutral-900"
+                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 font-mono uppercase focus:outline-none focus:border-blue-500"
                     />
                   </div>
                   <div>
@@ -4866,7 +4866,7 @@ export default function UniversityPortalPage() {
                       placeholder="e.g. Web Apps"
                       value={reqCourseTitle}
                       onChange={e => setReqCourseTitle(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 focus:outline-none focus:border-neutral-900"
+                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 focus:outline-none focus:border-blue-500"
                     />
                   </div>
                 </div>
@@ -4877,7 +4877,7 @@ export default function UniversityPortalPage() {
                     <select
                       value={reqLevel}
                       onChange={e => setReqLevel(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-neutral-900 focus:outline-none focus:border-neutral-900"
+                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-neutral-900 focus:outline-none focus:border-blue-500"
                     >
                       {UNIVERSITY_LEVELS.map(lvl => (
                         <option key={lvl} value={lvl}>{lvl}</option>
@@ -4889,7 +4889,7 @@ export default function UniversityPortalPage() {
                     <select
                       value={reqSemester}
                       onChange={e => setReqSemester(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-neutral-900 focus:outline-none focus:border-neutral-900"
+                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-neutral-900 focus:outline-none focus:border-blue-500"
                     >
                       {UNIVERSITY_SEMESTERS.map(sem => (
                         <option key={sem} value={sem}>{sem}</option>
@@ -4907,7 +4907,7 @@ export default function UniversityPortalPage() {
                     placeholder="e.g. Dr. Mensah or Prof. Boateng"
                     value={reqLecturerName}
                     onChange={e => setReqLecturerName(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 focus:outline-none focus:border-neutral-900"
+                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 focus:outline-none focus:border-blue-500"
                   />
                 </div>
 
@@ -4920,7 +4920,7 @@ export default function UniversityPortalPage() {
                     placeholder="e.g. 0244123456 or student@ug.edu.gh"
                     value={reqStudentContact}
                     onChange={e => setReqStudentContact(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 focus:outline-none focus:border-neutral-900"
+                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 focus:outline-none focus:border-blue-500"
                   />
                 </div>
 
@@ -4935,7 +4935,7 @@ export default function UniversityPortalPage() {
                   <button
                     type="submit"
                     disabled={reqSubmitting || !reqCourseCode.trim()}
-                    className="px-4 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 disabled:opacity-50 text-white font-semibold shadow-xs flex items-center gap-1.5 transition cursor-pointer"
+                    className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold shadow-xs flex items-center gap-1.5 transition cursor-pointer"
                   >
                     {reqSubmitting ? (
                       <>
@@ -4994,7 +4994,7 @@ export default function UniversityPortalPage() {
             ) : (
               <form onSubmit={handleSubmitReport} className="space-y-3.5 text-xs">
                 <div className="bg-neutral-50 border border-neutral-200 rounded-lg p-2.5 space-y-0.5">
-                  <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-neutral-900 text-white">
+                  <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-600 text-white">
                     {reportTarget.courseCode}
                   </span>
                   <p className="font-semibold text-neutral-900 text-xs truncate">
@@ -5014,7 +5014,7 @@ export default function UniversityPortalPage() {
                   <select
                     value={reportIssueType}
                     onChange={(e: any) => setReportIssueType(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-neutral-900 focus:outline-none focus:border-neutral-900"
+                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-neutral-900 focus:outline-none focus:border-blue-500"
                   >
                     <option value="outdated">Outdated Notes / Changed Syllabus</option>
                     <option value="typo_inaccuracy">Typo or Inaccurate Formula/Concept</option>
@@ -5035,7 +5035,7 @@ export default function UniversityPortalPage() {
                     placeholder="Specify which page or concept needs correction..."
                     value={reportDescription}
                     onChange={e => setReportDescription(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 focus:outline-none focus:border-neutral-900 resize-none"
+                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 focus:outline-none focus:border-blue-500 resize-none"
                   />
                 </div>
 
@@ -5048,7 +5048,7 @@ export default function UniversityPortalPage() {
                     placeholder="e.g. 0244123456 or student@ug.edu.gh"
                     value={reportContactEmail}
                     onChange={e => setReportContactEmail(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 focus:outline-none focus:border-neutral-900"
+                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 text-neutral-900 focus:outline-none focus:border-blue-500"
                   />
                 </div>
 
@@ -5063,7 +5063,7 @@ export default function UniversityPortalPage() {
                   <button
                     type="submit"
                     disabled={reportSubmitting || !reportDescription.trim()}
-                    className="px-4 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 disabled:opacity-50 text-white font-semibold shadow-xs flex items-center gap-1.5 transition cursor-pointer"
+                    className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold shadow-xs flex items-center gap-1.5 transition cursor-pointer"
                   >
                     {reportSubmitting ? (
                       <>

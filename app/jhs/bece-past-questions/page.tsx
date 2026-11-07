@@ -188,7 +188,7 @@ export default function BecePastQuestionsPage() {
               <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
               <span className="hidden sm:inline">Refresh</span>
             </button>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-neutral-100 text-neutral-900 border border-neutral-200">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">
               <BookOpen className="w-3.5 h-3.5" />
               {documents.length} BECE {documents.length === 1 ? 'Paper' : 'Papers'}
             </span>
@@ -201,8 +201,8 @@ export default function BecePastQuestionsPage() {
         {/* Hero Section */}
         <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-800 text-[11px] font-bold uppercase tracking-wider">
-              <GraduationCap className="w-3.5 h-3.5 text-neutral-800" />
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-[11px] font-bold uppercase tracking-wider">
+              <GraduationCap className="w-3.5 h-3.5 text-blue-600" />
               <span>WAEC Official Archives (2008 – 2026)</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
@@ -217,7 +217,7 @@ export default function BecePastQuestionsPage() {
         </div>
 
         {mounted && isTrialActive && !student?.hasFullAccess && (
-          <div className="p-3.5 rounded-2xl bg-neutral-100 border border-neutral-200/80 text-xs text-neutral-900 flex items-center justify-between shadow-2xs">
+          <div className="p-3.5 rounded-2xl bg-blue-50 border border-blue-200/80 text-xs text-blue-900 flex items-center justify-between shadow-2xs">
             <span className="flex items-center gap-2 font-semibold">
               <span className="text-base">🎁</span>
               <span>30-Day Free Trial: All WAEC BECE Past Papers & Marking Schemes unlocked for viewing & download! ({trialDaysRemaining}d remaining)</span>
@@ -289,7 +289,7 @@ export default function BecePastQuestionsPage() {
               {hasActiveFilters && (
                 <button
                   onClick={resetFilters}
-                  className="text-xs text-rose-600 hover:text-red-800 font-medium px-2 py-1.5 transition underline"
+                  className="text-xs text-rose-600 hover:text-rose-800 font-medium px-2 py-1.5 transition underline"
                 >
                   Clear filters
                 </button>
@@ -304,7 +304,7 @@ export default function BecePastQuestionsPage() {
               <strong className="text-slate-900">{documents.length}</strong> BECE examination {documents.length === 1 ? 'document' : 'documents'}
             </span>
             {hasActiveFilters && (
-              <span className="text-neutral-900 bg-neutral-100 px-2 py-0.5 rounded text-[11px] font-medium">
+              <span className="text-blue-700 bg-blue-50 px-2 py-0.5 rounded text-[11px] font-medium">
                 Filtered view active
               </span>
             )}
@@ -332,7 +332,7 @@ export default function BecePastQuestionsPage() {
                 setSelectedDocForPin(null);
                 setIsPinModalOpen(true);
               }}
-              className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs shrink-0 transition shadow-xs flex items-center justify-center gap-1.5"
+              className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shrink-0 transition shadow-xs flex items-center justify-center gap-1.5"
             >
               <KeyRound className="w-3.5 h-3.5" />
               <span>Unlock Archive (Enter PIN)</span>
@@ -378,7 +378,7 @@ export default function BecePastQuestionsPage() {
             {hasActiveFilters ? (
               <button
                 onClick={resetFilters}
-                className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-medium text-xs transition shadow-sm"
+                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition shadow-sm shadow-blue-500/20"
               >
                 Clear all filters
               </button>
@@ -401,11 +401,11 @@ export default function BecePastQuestionsPage() {
                   {/* Card Header: Icon & Year Tag */}
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center shrink-0 text-white font-bold text-[11px] tracking-wider shadow-xs">
+                      <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0 text-blue-700 font-bold text-[11px] tracking-wider shadow-xs">
                         PDF
                       </div>
                       <div>
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-blue-800 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-100">
                           {doc.year ? `BECE ${doc.year}` : 'BECE'}
                         </span>
                         <div className="text-[11px] text-slate-500 font-medium mt-0.5">
@@ -421,7 +421,7 @@ export default function BecePastQuestionsPage() {
 
                   {/* Title */}
                   <div>
-                    <h3 className="text-sm font-bold text-slate-900 leading-snug group-hover:text-neutral-800 transition">
+                    <h3 className="text-sm font-bold text-slate-900 leading-snug group-hover:text-blue-600 transition">
                       {doc.title}
                     </h3>
                     <p className="text-[11px] font-mono text-slate-400 mt-1 truncate" title={doc.fileName}>
@@ -469,7 +469,7 @@ export default function BecePastQuestionsPage() {
                       className={`py-2 px-3 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer ${
                         !hasFullAccess
                           ? 'bg-amber-600 hover:bg-amber-700 text-white'
-                          : 'bg-neutral-900 hover:bg-neutral-800 text-white shadow-sm'
+                          : 'bg-blue-600 hover:bg-blue-500 text-white shadow-sm shadow-blue-500/20'
                       }`}
                     >
                       {!hasFullAccess ? (

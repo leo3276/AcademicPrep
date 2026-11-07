@@ -247,7 +247,7 @@ export default function StudentTimetablePlanner({
             <button
               type="button"
               onClick={() => setIsSurveyOpen(true)}
-              className="py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer self-start sm:self-auto shrink-0 shadow-sm"
+              className="py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer self-start sm:self-auto shrink-0 shadow-sm shadow-blue-500/20"
             >
               <span>Prepare Timetable</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -317,7 +317,7 @@ export default function StudentTimetablePlanner({
               <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
                 <Link
                   href={timetable.level.startsWith('SHS') ? `/shs/${nextSession.session.subjectId}` : `/jhs/${nextSession.session.subjectId}`}
-                  className="py-1.5 px-3 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white font-medium text-xs transition flex items-center gap-1 shadow-sm"
+                  className="py-1.5 px-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition flex items-center gap-1 shadow-sm shadow-blue-500/20"
                 >
                   <span>Start Practice</span>
                   <ArrowRight className="w-3 h-3" />
@@ -349,7 +349,7 @@ export default function StudentTimetablePlanner({
                   type="button"
                   onClick={handleDownloadPdf}
                   disabled={isGeneratingPdf}
-                  className="py-1.5 px-3 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white font-medium text-xs transition flex items-center gap-1.5 cursor-pointer disabled:bg-slate-300 shadow-sm"
+                  className="py-1.5 px-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition flex items-center gap-1.5 cursor-pointer disabled:bg-slate-300 shadow-sm shadow-blue-500/20"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>{isGeneratingPdf ? 'Generating...' : 'Download PDF'}</span>
@@ -441,7 +441,7 @@ export default function StudentTimetablePlanner({
 
               <div className="w-full sm:w-48 bg-slate-100 rounded-full h-1.5 overflow-hidden">
                 <div
-                  className="bg-neutral-900 h-1.5 rounded-full transition-all duration-200"
+                  className="bg-blue-600 h-1.5 rounded-full transition-all duration-200"
                   style={{ width: `${completionPercentage}%` }}
                 />
               </div>
@@ -478,7 +478,7 @@ export default function StudentTimetablePlanner({
               onClick={() => setSelectedDayTab('ALL')}
               className={`py-1.5 px-3 rounded-lg text-xs font-semibold whitespace-nowrap transition cursor-pointer border ${
                 selectedDayTab === 'ALL'
-                  ? 'bg-neutral-900 text-white border-neutral-900 shadow-sm'
+                  ? 'bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-500/20'
                   : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
               }`}
             >
@@ -499,7 +499,7 @@ export default function StudentTimetablePlanner({
                   onClick={() => setSelectedDayTab(day)}
                   className={`py-1.5 px-3 rounded-lg text-xs font-semibold whitespace-nowrap transition flex items-center gap-1.5 cursor-pointer border ${
                     isSelected
-                      ? 'bg-neutral-900 text-white border-neutral-900 shadow-sm'
+                      ? 'bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-500/20'
                       : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
                   }`}
                 >
@@ -553,7 +553,7 @@ export default function StudentTimetablePlanner({
                             onClick={() => handleToggleSessionComplete(sess.id)}
                             className={`py-0.5 px-2 rounded text-[10px] font-semibold transition cursor-pointer flex items-center gap-1 ${
                               isCompleted
-                                ? 'bg-neutral-900 text-white'
+                                ? 'bg-blue-600 text-white'
                                 : 'border border-slate-200 text-slate-500 hover:text-slate-800'
                             }`}
                           >
