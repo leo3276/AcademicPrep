@@ -26,10 +26,8 @@ import {
   GraduationCap,
   Lock,
   KeyRound,
-  Share2
 } from 'lucide-react';
 import AccessPinModal from '@/components/AccessPinModal';
-import MockShareButtons from '@/components/MockShareButtons';
 import OfflineStorageBar from '@/components/OfflineStorageBar';
 import { openPdfDocumentCached, downloadPdfDocumentCached } from '@/lib/pdfCache';
 
@@ -215,17 +213,7 @@ export default function BecePastQuestionsPage() {
             </p>
           </div>
 
-          <div className="shrink-0 flex flex-col items-start md:items-end gap-2 border-t md:border-t-0 md:border-l border-slate-100 pt-4 md:pt-0 md:pl-6">
-            <div className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-              <Share2 className="w-3.5 h-3.5 text-blue-600" />
-              <span>Broadcast BECE Papers:</span>
-            </div>
-            <MockShareButtons
-              basePath="/jhs/bece-past-questions"
-              level="BECE (WAEC Past Papers)"
-              variant="header"
-            />
-          </div>
+
         </div>
 
         {mounted && isTrialActive && !student?.hasFullAccess && (
@@ -493,16 +481,7 @@ export default function BecePastQuestionsPage() {
                     </button>
                   </div>
 
-                  {/* 1-Tap WhatsApp Share & Link Copy for this BECE Paper */}
-                  <MockShareButtons
-                    docTitle={doc.title}
-                    subjectName={doc.subjectName}
-                    level={doc.year ? `BECE ${doc.year}` : 'BECE'}
-                    paperType={doc.paperType}
-                    docId={doc.id}
-                    basePath="/jhs/bece-past-questions"
-                    variant="card"
-                  />
+
                 </div>
               </div>
             ))}

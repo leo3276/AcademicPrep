@@ -26,10 +26,8 @@ import {
   Info,
   Lock,
   KeyRound,
-  Share2
 } from 'lucide-react';
 import AccessPinModal from '@/components/AccessPinModal';
-import MockShareButtons from '@/components/MockShareButtons';
 import OfflineStorageBar from '@/components/OfflineStorageBar';
 import { openPdfDocumentCached, downloadPdfDocumentCached } from '@/lib/pdfCache';
 
@@ -210,18 +208,6 @@ export default function TrialQuestionsPage() {
             <p className="text-slate-600 text-sm leading-relaxed">
               Official school diagnostic mock exams, end-of-term assessment booklets, and marking guides uploaded directly by your administrator. View files in your browser or download them for offline practice.
             </p>
-          </div>
-
-          <div className="shrink-0 flex flex-col items-start md:items-end gap-2 border-t md:border-t-0 md:border-l border-slate-100 pt-4 md:pt-0 md:pl-6">
-            <div className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-              <Share2 className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Broadcast Mocks:</span>
-            </div>
-            <MockShareButtons
-              basePath="/jhs/trial-questions"
-              level="JHS (BECE Candidates)"
-              variant="header"
-            />
           </div>
         </div>
 
@@ -488,16 +474,7 @@ export default function TrialQuestionsPage() {
                     </button>
                   </div>
 
-                  {/* 1-Tap WhatsApp Share & Link Copy for this Mock Paper */}
-                  <MockShareButtons
-                    docTitle={doc.title}
-                    subjectName={doc.subjectName}
-                    level={doc.level || 'JHS'}
-                    paperType={doc.paperType}
-                    docId={doc.id}
-                    basePath="/jhs/trial-questions"
-                    variant="card"
-                  />
+
                 </div>
               </div>
             ))}

@@ -25,10 +25,8 @@ import {
   Info,
   Lock,
   KeyRound,
-  Share2
 } from 'lucide-react';
 import AccessPinModal from '@/components/AccessPinModal';
-import MockShareButtons from '@/components/MockShareButtons';
 import OfflineStorageBar from '@/components/OfflineStorageBar';
 import { openPdfDocumentCached, downloadPdfDocumentCached } from '@/lib/pdfCache';
 
@@ -219,18 +217,6 @@ export default function ShsTrialQuestionsPage() {
               Curated SHS 1, SHS 2, and SHS 3 trial examination papers, national inter-school mocks, and termly revision papers uploaded by school faculty to prepare candidates for WASSCE excellence.
             </p>
           </div>
-
-          <div className="shrink-0 flex flex-col items-start md:items-end gap-2 border-t md:border-t-0 md:border-l border-slate-100 pt-4 md:pt-0 md:pl-6">
-            <div className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-              <Share2 className="w-3.5 h-3.5 text-amber-600" />
-              <span>Broadcast SHS Mocks:</span>
-            </div>
-            <MockShareButtons
-              basePath="/shs/trial-questions"
-              level="SHS (WASSCE Candidates)"
-              variant="header"
-            />
-          </div>
         </div>
 
         {mounted && isTrialActive && !student?.hasFullAccess && (
@@ -415,16 +401,7 @@ export default function ShsTrialQuestionsPage() {
                     </button>
                   </div>
 
-                  {/* 1-Tap WhatsApp Share & Link Copy for this SHS Mock Paper */}
-                  <MockShareButtons
-                    docTitle={doc.title}
-                    subjectName={doc.subjectName}
-                    level={doc.level || 'SHS'}
-                    paperType={doc.paperType}
-                    docId={doc.id}
-                    basePath="/shs/trial-questions"
-                    variant="card"
-                  />
+
                 </div>
               </div>
             ))}

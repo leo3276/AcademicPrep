@@ -26,10 +26,8 @@ import {
   GraduationCap,
   Lock,
   KeyRound,
-  Share2
 } from 'lucide-react';
 import AccessPinModal from '@/components/AccessPinModal';
-import MockShareButtons from '@/components/MockShareButtons';
 import OfflineStorageBar from '@/components/OfflineStorageBar';
 import { openPdfDocumentCached, downloadPdfDocumentCached } from '@/lib/pdfCache';
 
@@ -223,18 +221,6 @@ export default function WasscePastQuestionsPage() {
               Authentic West African Senior School Certificate Examination (WASSCE) question booklets, objective tests, written theory papers, and verified marking schemes uploaded by school administration.
             </p>
           </div>
-
-          <div className="shrink-0 flex flex-col items-start md:items-end gap-2 border-t md:border-t-0 md:border-l border-slate-100 pt-4 md:pt-0 md:pl-6">
-            <div className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-              <Share2 className="w-3.5 h-3.5 text-purple-600" />
-              <span>Broadcast WASSCE Papers:</span>
-            </div>
-            <MockShareButtons
-              basePath="/shs/wassce-past-questions"
-              level="WASSCE (WAEC Past Papers)"
-              variant="header"
-            />
-          </div>
         </div>
 
         {mounted && isTrialActive && !student?.hasFullAccess && (
@@ -421,16 +407,7 @@ export default function WasscePastQuestionsPage() {
                     </button>
                   </div>
 
-                  {/* 1-Tap WhatsApp Share & Link Copy for this WASSCE Past Paper */}
-                  <MockShareButtons
-                    docTitle={doc.title}
-                    subjectName={doc.subjectName}
-                    level={doc.year ? `WASSCE ${doc.year}` : 'WASSCE'}
-                    paperType={doc.paperType}
-                    docId={doc.id}
-                    basePath="/shs/wassce-past-questions"
-                    variant="card"
-                  />
+
                 </div>
               </div>
             ))}
