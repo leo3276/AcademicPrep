@@ -283,7 +283,7 @@ export async function exportTimetablePdf(timetable: PersonalTimetable): Promise<
   y -= (guidelinesBoxHeight + 12);
 
   // Bottom footer watermark
-  page.drawText(sanitize(`* = Priority weak subject. Access quizzes and study notes at academicprep.com/${isShs ? 'shs' : 'jhs'}`), {
+  page.drawText(sanitize(`* = Priority weak subject. Access quizzes and study notes on Academic Prep: acadmicprep.com/${isShs ? 'shs' : 'jhs'}`), {
     x: marginX,
     y: Math.max(y, 25),
     size: 6.5,

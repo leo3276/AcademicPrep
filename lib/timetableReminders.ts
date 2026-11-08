@@ -160,7 +160,7 @@ export function downloadTimetableIcs(timetable: PersonalTimetable): void {
 
   const isShs = timetable.level.startsWith('SHS');
   const examName = isShs ? 'WASSCE' : 'BECE';
-  const portalUrl = isShs ? 'https://academicprep.com/shs' : 'https://academicprep.com/jhs';
+  const portalUrl = isShs ? 'https://acadmicprep.com/shs' : 'https://acadmicprep.com/jhs';
 
   let icsContent = [
     'BEGIN:VCALENDAR',

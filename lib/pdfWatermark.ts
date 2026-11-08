@@ -116,24 +116,46 @@ export async function applyAcademicPrepWatermark(
     // 1. CENTER DIAGONAL WATERMARK (Subtle, transparent, tamper-proof)
     // ─────────────────────────────────────────────────────────────
     if (includeCenterWatermark) {
-      const primaryWatermark = 'ACADEMICPREP.COM';
+      const primaryWatermark = 'Academic Prep';
       const secondaryWatermark = "GHANA'S PREMIER DIGITAL LEARNING HUB";
 
       // Scale font dynamically based on page width
-      const mainFontSize = Math.min(width * 0.085, 46);
+      const mainFontSize = Math.min(width * 0.082, 44);
       const subFontSize = Math.min(width * 0.022, 12);
 
       const mainTextWidth = fontBold.widthOfTextAtSize(primaryWatermark, mainFontSize);
       const subTextWidth = fontBold.widthOfTextAtSize(secondaryWatermark, subFontSize);
 
+      const logoWatermarkSize = mainFontSize * 0.95;
+      const logoSpacing = 10;
+      const totalPrimaryWidth = (embeddedLogo ? logoWatermarkSize + logoSpacing : 0) + mainTextWidth;
+
       // 45-degree angle watermark placed in center
       const centerX = width / 2;
       const centerY = height / 2;
+      const cos45 = 0.7071;
 
-      // Primary Domain Watermark
+      // Draw Logo alongside "Academic Prep" at 45 degrees
+      if (embeddedLogo) {
+        const logoOffset = -totalPrimaryWidth / 2;
+        page.drawImage(embeddedLogo, {
+          x: centerX + logoOffset * cos45,
+          y: centerY + logoOffset * cos45,
+          width: logoWatermarkSize,
+          height: logoWatermarkSize,
+          opacity: centerOpacity * 1.1,
+          rotate: degrees(45),
+        });
+      }
+
+      // Draw "Academic Prep" Brand Text
+      const textOffset = embeddedLogo
+        ? (-totalPrimaryWidth / 2) + logoWatermarkSize + logoSpacing
+        : -mainTextWidth / 2;
+
       page.drawText(primaryWatermark, {
-        x: centerX - (mainTextWidth / 2) * 0.707 + 10,
-        y: centerY - (mainTextWidth / 2) * 0.707 - 10,
+        x: centerX + textOffset * cos45,
+        y: centerY + textOffset * cos45,
         size: mainFontSize,
         font: fontBold,
         color: rgb(0.12, 0.25, 0.55),
@@ -143,8 +165,8 @@ export async function applyAcademicPrepWatermark(
 
       // Secondary Tagline
       page.drawText(secondaryWatermark, {
-        x: centerX - (subTextWidth / 2) * 0.707 - 25,
-        y: centerY - (subTextWidth / 2) * 0.707 - 40,
+        x: centerX - (subTextWidth / 2) * cos45 - 20 * cos45,
+        y: centerY - (subTextWidth / 2) * cos45 - 35 * cos45,
         size: subFontSize,
         font: fontBold,
         color: rgb(0.12, 0.25, 0.55),
@@ -183,7 +205,7 @@ export async function applyAcademicPrepWatermark(
       }
 
       // Brand Text
-      page.drawText('ACADEMICPREP.COM', {
+      page.drawText('Academic Prep', {
         x: 55,
         y: headerY + 1,
         size: 8,
@@ -251,7 +273,7 @@ export async function applyAcademicPrepWatermark(
       }
 
       // Download Notice
-      const noticeText = 'Downloaded from academicprep.com — For Student Study & Personal Revision';
+      const noticeText = 'Downloaded from Academic Prep (acadmicprep.com) — For Student Study & Personal Revision';
       page.drawText(noticeText, {
         x: embeddedLogo ? 52 : 36,
         y: footerY + 1,

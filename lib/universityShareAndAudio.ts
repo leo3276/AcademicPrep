@@ -299,7 +299,7 @@ export function generateSlideWhatsAppText(
     text += `🎯 *Likely Exam Question:*\n*Q:* ${slide.activeRecallPrompt.question}\n*A:* ${slide.activeRecallPrompt.answer}\n\n`;
   }
 
-  text += `📖 _Study full slides, AI breakdowns & practice quizzes on AcademicPrep:_\nhttps://academicprep.com/university`;
+  text += `📖 _Study full slides, AI breakdowns & practice quizzes on AcademicPrep:_\nhttps://acadmicprep.com/university`;
   return text;
 }
 
@@ -332,7 +332,7 @@ export function generateDeckWhatsAppText(pkg: CompleteSlideStudyPackage): string
   text += `\n`;
 
   text += `📊 _${pkg.totalSlides} Slides Analyzed • Plain-English Study Studio_\n`;
-  text += `🔗 _Study free with interactive quizzes & flashcards:_\nhttps://academicprep.com/university`;
+  text += `🔗 _Study free with interactive quizzes & flashcards:_\nhttps://acadmicprep.com/university`;
   return text;
 }
 
@@ -410,7 +410,7 @@ export function generateSummaryCardPngBlob(pkg: CompleteSlideStudyPackage): Prom
     // Top Brand Subtitle
     ctx.font = 'bold 18px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
     ctx.fillStyle = '#525252';
-    ctx.fillText('ACADEMICPREP.COM • UNIVERSITY REVISION SHEET', 132, 96);
+    ctx.fillText('ACADEMIC PREP • UNIVERSITY REVISION SHEET', 132, 96);
 
     // Deck Title
     ctx.font = 'bold 38px -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif';
@@ -525,7 +525,7 @@ export function generateSummaryCardPngBlob(pkg: CompleteSlideStudyPackage): Prom
     drawRoundedCard(40, canvas.height - 96, canvas.width - 80, 64, 14, '#171717');
     ctx.font = 'bold 20px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
     ctx.fillStyle = '#FFFFFF';
-    ctx.fillText('academicprep.com', 72, canvas.height - 57);
+    ctx.fillText('acadmicprep.com', 72, canvas.height - 57);
 
     ctx.font = '17px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif';
     ctx.fillStyle = '#A3A3A3';

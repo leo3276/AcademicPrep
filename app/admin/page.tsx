@@ -4723,7 +4723,7 @@ export default function AdminDashboardPage() {
                   *Time:* Today at 7:30 PM GMT Sharp!{'\n'}
                   *Structure:* {OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes} Mins Paper 1 (Objectives) + {OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes} Mins Paper 2 (Comprehension & Summary){'\n\n'}
                   ⚠️ *Strict Proctoring Rule:* Leaving the page or switching tabs will immediately terminate and submit your paper.{'\n\n'}
-                  👉 *Take the exam:* https://academicprep.com/jhs/weekly-exam?mode=scheduled
+                  👉 *Take the exam:* https://acadmicprep.com/jhs/weekly-exam?mode=scheduled
                 </p>
               </div>
 
@@ -4749,7 +4749,7 @@ export default function AdminDashboardPage() {
 
                 <a
                   href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
-                    `📢 *ACADEMICPREP WEEKLY EXAM ALERT* 📖\n\n${OFFICIAL_SCHEDULED_EXAM.level} ${OFFICIAL_SCHEDULED_EXAM.subjectName}: ${OFFICIAL_SCHEDULED_EXAM.topicTitle}\nToday at 7:30 PM GMT Sharp!\n${OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes}m Objs + ${OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes}m Theory\n\nTake Exam: https://academicprep.com/jhs/weekly-exam?mode=scheduled`
+                    `📢 *ACADEMICPREP WEEKLY EXAM ALERT* 📖\n\n${OFFICIAL_SCHEDULED_EXAM.level} ${OFFICIAL_SCHEDULED_EXAM.subjectName}: ${OFFICIAL_SCHEDULED_EXAM.topicTitle}\nToday at 7:30 PM GMT Sharp!\n${OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes}m Objs + ${OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes}m Theory\n\nTake Exam: https://acadmicprep.com/jhs/weekly-exam?mode=scheduled`
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -4979,7 +4979,7 @@ export default function AdminDashboardPage() {
                       *Time:* Starting at 7:30 PM GMT SHARP (In 5 Minutes!){'\n\n'}
                       *Criteria:* {OFFICIAL_SCHEDULED_EXAM.paper1DurationMinutes} Mins Paper 1 (Objs) + {OFFICIAL_SCHEDULED_EXAM.paper2DurationMinutes} Mins Paper 2 (Comprehension & Summary){'\n'}
                       ⚠️ *Proctoring:* Leaving the window triggers a 5-minute penalty lockout!{'\n\n'}
-                      👉 *Enter Hall Now:* https://academicprep.com/jhs/weekly-exam?mode=scheduled
+                      👉 *Enter Hall Now:* https://acadmicprep.com/jhs/weekly-exam?mode=scheduled
                     </p>
                   </div>
                 </div>
@@ -5210,7 +5210,7 @@ export default function AdminDashboardPage() {
 
                             const inviteText = `📢 *ACADEMICPREP WEEKLY EXAM INVITATION* 🔬\n\n` +
                               `Hello ${c.studentName || 'Student'}! The official timed JHS 3 Science Examination is active today (available until 12:00 AM GMT Midnight).\n\n` +
-                              `👉 *Take Your Seat Now:* https://academicprep.com/jhs/weekly-exam?mode=scheduled\n\n` +
+                              `👉 *Take Your Seat Now:* https://acadmicprep.com/jhs/weekly-exam?mode=scheduled\n\n` +
                               `Good luck! 🏆`;
                             const waInviteUrl = `https://api.whatsapp.com/send?phone=233${(c.studentPhone || '').replace(/^0/, '')}&text=${encodeURIComponent(inviteText)}`;
 
