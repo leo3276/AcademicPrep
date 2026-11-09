@@ -58,6 +58,8 @@ import {
   Search, 
   CheckCircle2, 
   Copy, 
+  ChevronLeft,
+  ChevronRight, 
   Lock, 
   ArrowRight, 
   LogOut, 
@@ -330,6 +332,72 @@ export default function AdminDashboardPage() {
   const [examShareCopied, setExamShareCopied] = useState<string | null>(null);
   const [isSending5MinReminder, setIsSending5MinReminder] = useState(false);
   const [reminder5MinFeedback, setReminder5MinFeedback] = useState<{ kind: 'ok' | 'err'; text: string } | null>(null);
+
+  // Tab Bar Horizontal Scroll Engine (Apple macOS style with wheel, drag, & arrow controls)
+  const tabNavRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [isTabDragging, setIsTabDragging] = useState(false);
+  const [dragStartX, setDragStartX] = useState(0);
+  const [dragScrollLeft, setDragScrollLeft] = useState(0);
+
+  const checkTabScroll = useCallback(() => {
+    if (tabNavRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = tabNavRef.current;
+      setCanScrollLeft(scrollLeft > 6);
+      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 6);
+    }
+  }, []);
+
+  const handleTabScroll = (direction: 'left' | 'right') => {
+    if (tabNavRef.current) {
+      tabNavRef.current.scrollBy({
+        left: direction === 'left' ? -320 : 320,
+        behavior: 'smooth',
+      });
+      setTimeout(checkTabScroll, 350);
+    }
+  };
+
+  // Native non-passive wheel interceptor for mouse wheel horizontal scrolling
+  useEffect(() => {
+    const el = tabNavRef.current;
+    if (!el) return;
+    const handleWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) > 0 && Math.abs(e.deltaY) >= Math.abs(e.deltaX)) {
+        e.preventDefault();
+        el.scrollLeft += e.deltaY * 1.3;
+        checkTabScroll();
+      }
+    };
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    return () => el.removeEventListener('wheel', handleWheel);
+  }, [checkTabScroll]);
+
+  // Window resize observer
+  useEffect(() => {
+    checkTabScroll();
+    window.addEventListener('resize', checkTabScroll);
+    return () => window.removeEventListener('resize', checkTabScroll);
+  }, [checkTabScroll]);
+
+  const handleTabMouseDown = (e: React.MouseEvent) => {
+    if (!tabNavRef.current) return;
+    setIsTabDragging(true);
+    setDragStartX(e.pageX - tabNavRef.current.offsetLeft);
+    setDragScrollLeft(tabNavRef.current.scrollLeft);
+  };
+  const handleTabMouseLeaveOrUp = () => {
+    setIsTabDragging(false);
+  };
+  const handleTabMouseMove = (e: React.MouseEvent) => {
+    if (!isTabDragging || !tabNavRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - tabNavRef.current.offsetLeft;
+    const walk = (x - dragStartX) * 1.5;
+    tabNavRef.current.scrollLeft = dragScrollLeft - walk;
+    checkTabScroll();
+  };
 
   const loadWeeklyExamData = useCallback(async (silent = false) => {
     try {
@@ -1682,8 +1750,55 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* APPLE HIG SEGMENTED CONTROL TABS */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 border-t border-slate-100 overflow-x-auto no-scrollbar">
-          <nav className="flex items-center gap-1.5 p-1 bg-slate-100/90 rounded-2xl border border-slate-200/60 min-w-max text-xs font-medium backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 border-t border-slate-100 relative group">
+          {/* Left Gradient Fade Mask */}
+          {canScrollLeft && (
+            <div className="pointer-events-none absolute left-4 sm:left-6 lg:left-8 top-0 bottom-0 w-10 bg-gradient-to-r from-white via-white/90 to-transparent z-10 transition-opacity" />
+          )}
+
+          {/* Left Scroll Button */}
+          {canScrollLeft && (
+            <button
+              type="button"
+              onClick={() => handleTabScroll('left')}
+              className="absolute left-5 sm:left-7 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-white/95 border border-slate-200/90 shadow-md flex items-center justify-center text-slate-700 hover:text-slate-950 hover:scale-105 transition-all active:scale-95 cursor-pointer backdrop-blur-md"
+              title="Scroll tabs left"
+              aria-label="Scroll left"
+            >
+              <ChevronLeft className="w-4 h-4 stroke-[2.5]" />
+            </button>
+          )}
+
+          {/* Right Gradient Fade Mask */}
+          {canScrollRight && (
+            <div className="pointer-events-none absolute right-4 sm:right-6 lg:right-8 top-0 bottom-0 w-10 bg-gradient-to-l from-white via-white/90 to-transparent z-10 transition-opacity" />
+          )}
+
+          {/* Right Scroll Button */}
+          {canScrollRight && (
+            <button
+              type="button"
+              onClick={() => handleTabScroll('right')}
+              className="absolute right-5 sm:right-7 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-white/95 border border-slate-200/90 shadow-md flex items-center justify-center text-slate-700 hover:text-slate-950 hover:scale-105 transition-all active:scale-95 cursor-pointer backdrop-blur-md"
+              title="Scroll tabs right"
+              aria-label="Scroll right"
+            >
+              <ChevronRight className="w-4 h-4 stroke-[2.5]" />
+            </button>
+          )}
+
+          <div
+            ref={tabNavRef}
+            onScroll={checkTabScroll}
+            onMouseDown={handleTabMouseDown}
+            onMouseLeave={handleTabMouseLeaveOrUp}
+            onMouseUp={handleTabMouseLeaveOrUp}
+            onMouseMove={handleTabMouseMove}
+            className={`overflow-x-auto scroll-smooth py-0.5 no-scrollbar select-none ${
+              isTabDragging ? 'cursor-grabbing' : 'cursor-grab'
+            }`}
+          >
+            <nav className="flex items-center gap-1.5 p-1 bg-slate-100/90 rounded-2xl border border-slate-200/60 min-w-max text-xs font-medium backdrop-blur-sm">
             <button
               onClick={() => setActiveTab('traffic')}
               className={`px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 apple-btn-tactile ${
@@ -1856,7 +1971,8 @@ export default function AdminDashboardPage() {
             </button>
           </nav>
         </div>
-      </header>
+      </div>
+    </header>
 
       {/* MAIN CONTAINER */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
