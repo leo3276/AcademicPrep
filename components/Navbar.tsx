@@ -49,7 +49,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full bg-white border-b border-slate-200 shadow-2xs">
+      <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-xl border-b border-slate-200/70 supports-[backdrop-filter]:bg-white/75 shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="flex items-center justify-between h-15 w-full gap-2 sm:gap-4">
             
@@ -64,19 +64,19 @@ export default function Navbar() {
                     AcademicPrep
                   </span>
                   <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium whitespace-nowrap hidden sm:inline">
-                    academicprep.com
+                    Ghana&apos;s Digital Study Hub
                   </span>
                 </div>
               </Link>
 
               {/* Level Switcher (Wide Desktops) */}
               {!isProfilePage && (
-                <div className="hidden 2xl:flex items-center bg-slate-100 p-1 rounded-xl text-xs font-semibold shrink-0">
+                <div className="hidden 2xl:flex items-center bg-slate-200/50 p-1 rounded-full text-xs font-semibold shrink-0 border border-slate-200/60 backdrop-blur-sm">
                   <Link 
                     href="/jhs"
-                    className={`px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 whitespace-nowrap ${
+                    className={`px-3.5 py-1 rounded-full transition-all apple-btn-tactile flex items-center gap-1.5 whitespace-nowrap ${
                       pathname.startsWith('/jhs') || pathname === '/'
-                        ? 'bg-white text-slate-900 shadow-2xs font-bold'
+                        ? 'bg-white text-slate-900 shadow-[0_1px_3px_rgba(0,0,0,0.08)] font-bold'
                         : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
@@ -84,9 +84,9 @@ export default function Navbar() {
                   </Link>
                   <Link 
                     href="/shs"
-                    className={`px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 whitespace-nowrap ${
+                    className={`px-3.5 py-1 rounded-full transition-all apple-btn-tactile flex items-center gap-1.5 whitespace-nowrap ${
                       pathname.startsWith('/shs')
-                        ? 'bg-white text-slate-900 shadow-2xs font-bold'
+                        ? 'bg-white text-slate-900 shadow-[0_1px_3px_rgba(0,0,0,0.08)] font-bold'
                         : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
@@ -94,9 +94,9 @@ export default function Navbar() {
                   </Link>
                   <Link 
                     href="/university"
-                    className={`px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 whitespace-nowrap ${
+                    className={`px-3.5 py-1 rounded-full transition-all apple-btn-tactile flex items-center gap-1.5 whitespace-nowrap ${
                       pathname.startsWith('/university')
-                        ? 'bg-white text-slate-900 shadow-2xs font-bold'
+                        ? 'bg-white text-slate-900 shadow-[0_1px_3px_rgba(0,0,0,0.08)] font-bold'
                         : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >

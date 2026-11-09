@@ -127,7 +127,7 @@ export default function HomePage() {
 
         {/* Live Counters */}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-3.5 sm:p-5 rounded-2xl bg-white/65 backdrop-blur-md border border-white/40 shadow-xl">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-3.5 sm:p-5 rounded-2xl bg-white/80 backdrop-blur-xl border border-white/40 shadow-xl">
             <div className="text-center p-2 sm:p-3">
               <div className="text-xl sm:text-3xl font-black text-slate-900">8,000+</div>
               <div className="text-[11px] sm:text-xs text-slate-600 font-medium mt-1">Community Students</div>
@@ -149,7 +149,7 @@ export default function HomePage() {
 
       {/* Public Announcement: 30-Day Free Trial Notice */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2">
-        <div className="rounded-2xl bg-white/65 backdrop-blur-md border border-neutral-200/70 p-4 sm:p-5 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="rounded-2xl bg-white/80 backdrop-blur-xl border border-neutral-200/70 p-4 sm:p-5 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
             
             <div className="space-y-1">
@@ -196,7 +196,7 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Card 1: JHS (ACTIVE) */}
-          <div id="tour-home-jhs" className="relative rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-4.5 sm:p-6 shadow-xl flex flex-col justify-between overflow-hidden">
+          <div id="tour-home-jhs" className="relative rounded-2xl bg-white/80 backdrop-blur-xl border border-white/50 p-4.5 sm:p-6 shadow-xl flex flex-col justify-between overflow-hidden">
             <div className="absolute top-0 right-0 bg-blue-600 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-1 rounded-bl-xl shadow-xs">
               Active & Live Now
             </div>
@@ -243,7 +243,7 @@ export default function HomePage() {
           </div>
 
           {/* Card 2: SHS Section (Live) */}
-          <div className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-4.5 sm:p-6 flex flex-col justify-between shadow-xl">
+          <div className="rounded-2xl bg-white/80 backdrop-blur-xl border border-white/50 p-4.5 sm:p-6 flex flex-col justify-between shadow-xl">
             <div className="space-y-4">
               <div className="w-11 h-11 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 flex items-center justify-center font-bold">
                 <BookOpenCheck className="w-6 h-6" />
@@ -291,7 +291,7 @@ export default function HomePage() {
           </div>
 
           {/* Card 3: University AI Slide Copilot (Live) */}
-          <div className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-4.5 sm:p-6 flex flex-col justify-between shadow-xl">
+          <div className="rounded-2xl bg-white/80 backdrop-blur-xl border border-white/50 p-4.5 sm:p-6 flex flex-col justify-between shadow-xl">
             <div className="space-y-4">
               <div className="w-11 h-11 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold shadow-xs">
                 <Brain className="w-6 h-6" />
@@ -360,7 +360,7 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* BECE Past Questions Archive Card */}
-          <div id="tour-home-bece" className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 text-slate-900 p-4.5 sm:p-7 shadow-xl flex flex-col justify-between">
+          <div id="tour-home-bece" className="rounded-2xl bg-white/80 backdrop-blur-xl border border-white/50 text-slate-900 p-4.5 sm:p-7 shadow-xl flex flex-col justify-between">
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
                 <FileText className="w-3.5 h-3.5 text-slate-600" />
@@ -403,7 +403,7 @@ export default function HomePage() {
           </div>
 
           {/* BECE Trial & Mock Exam Card */}
-          <div id="tour-home-mocks" className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 text-slate-900 p-4.5 sm:p-7 shadow-xl flex flex-col justify-between">
+          <div id="tour-home-mocks" className="rounded-2xl bg-white/80 backdrop-blur-xl border border-white/50 text-slate-900 p-4.5 sm:p-7 shadow-xl flex flex-col justify-between">
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
                 <Award className="w-3.5 h-3.5 text-slate-600" />
@@ -449,7 +449,7 @@ export default function HomePage() {
 
       {/* Key Innovation: Dynamic Weekly Exam */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div id="tour-home-weekly" className="rounded-2xl bg-white/65 backdrop-blur-md border border-white/50 p-4.5 sm:p-9 text-slate-900 shadow-xl">
+        <div id="tour-home-weekly" className="rounded-2xl bg-white/80 backdrop-blur-xl border border-white/50 p-4.5 sm:p-9 text-slate-900 shadow-xl">
           <div className="max-w-2xl space-y-4">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
               <Clock className="w-3.5 h-3.5 text-slate-600" />
@@ -632,7 +632,7 @@ export default function HomePage() {
 
       {/* Study Journal & WAEC Strategy Articles */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div id="tour-home-blog" className="bg-white/65 backdrop-blur-md rounded-3xl border border-white/50 p-4.5 sm:p-10 shadow-xl space-y-8">
+        <div id="tour-home-blog" className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white/50 p-4.5 sm:p-10 shadow-xl space-y-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-100 pb-6">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-neutral-200 text-neutral-700 text-xs font-semibold mb-2">

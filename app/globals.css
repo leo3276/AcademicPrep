@@ -24,6 +24,56 @@ body {
   color-scheme: light;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ==========================================================================
+   Apple Human Interface Guidelines (HIG) Design Tokens & Utilities
+   ========================================================================== */
+
+/* Liquid Glass / Translucent Frosted Vibrancy */
+.apple-glass {
+  background-color: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(20px) saturate(190%);
+  -webkit-backdrop-filter: blur(20px) saturate(190%);
+  border: 1px solid rgba(226, 232, 240, 0.75);
+}
+
+.apple-glass-dark {
+  background-color: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(20px) saturate(190%);
+  -webkit-backdrop-filter: blur(20px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Apple Squircle Cards with Delicate Elevation */
+.apple-card {
+  border-radius: 1.25rem; /* 20px squircle curvature */
+  background-color: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-card:hover {
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.03);
+}
+
+/* Tactile Active Interaction (Apple Spring Press) */
+.apple-btn-tactile {
+  transition: transform 0.15s cubic-bezier(0.2, 0.9, 0.4, 1), opacity 0.15s ease;
+}
+
+.apple-btn-tactile:active {
+  transform: scale(0.975);
+}
+
+/* Inset Grouped Section (iOS / macOS Settings Style) */
+.apple-inset-group {
+  border-radius: 1.25rem;
+  background-color: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  overflow: hidden;
 }
 
 /* Modern minimal scrollbars (replaces clunky 17px Windows scrollbars) */

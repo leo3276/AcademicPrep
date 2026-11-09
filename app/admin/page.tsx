@@ -1613,7 +1613,7 @@ export default function AdminDashboardPage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans">
       {/* TOP HEADER BAR */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-30">
+      <header className="bg-white/80 backdrop-blur-xl border-b border-slate-200/70 supports-[backdrop-filter]:bg-white/75 sticky top-0 z-30 shadow-[0_1px_3px_rgba(0,0,0,0.03)] transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">
@@ -1681,15 +1681,15 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* CLEAN HORIZONTAL TABS */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-100 overflow-x-auto">
-          <nav className="flex space-x-6 min-w-max text-xs font-medium">
+        {/* APPLE HIG SEGMENTED CONTROL TABS */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 border-t border-slate-100 overflow-x-auto no-scrollbar">
+          <nav className="flex items-center gap-1.5 p-1 bg-slate-100/90 rounded-2xl border border-slate-200/60 min-w-max text-xs font-medium backdrop-blur-sm">
             <button
               onClick={() => setActiveTab('traffic')}
-              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+              className={`px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 apple-btn-tactile ${
                 activeTab === 'traffic'
-                  ? 'border-blue-600 text-blue-900 font-semibold'
-                  : 'border-transparent text-slate-500 hover:text-slate-800'
+                  ? 'bg-white text-slate-900 shadow-[0_1px_3px_rgba(0,0,0,0.08)] font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'
               }`}
             >
               <Activity className="w-4 h-4" />
@@ -1698,10 +1698,10 @@ export default function AdminDashboardPage() {
 
             <button
               onClick={() => setActiveTab('paid_access')}
-              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+              className={`px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 apple-btn-tactile ${
                 activeTab === 'paid_access'
-                  ? 'border-blue-600 text-blue-900 font-semibold'
-                  : 'border-transparent text-slate-500 hover:text-slate-800'
+                  ? 'bg-white text-slate-900 shadow-[0_1px_3px_rgba(0,0,0,0.08)] font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'
               }`}
             >
               <Users className="w-4 h-4" />
@@ -1713,10 +1713,10 @@ export default function AdminDashboardPage() {
 
             <button
               onClick={() => setActiveTab('momo_claims')}
-              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+              className={`px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 apple-btn-tactile ${
                 activeTab === 'momo_claims'
-                  ? 'border-emerald-600 text-emerald-800 font-bold'
-                  : 'border-transparent text-slate-500 hover:text-slate-800'
+                  ? 'bg-white text-emerald-950 shadow-[0_1px_3px_rgba(0,0,0,0.08)] font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'
               }`}
             >
               <Smartphone className="w-4 h-4 text-emerald-600" />
@@ -1734,10 +1734,10 @@ export default function AdminDashboardPage() {
 
             <button
               onClick={() => setActiveTab('completions')}
-              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+              className={`px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 apple-btn-tactile ${
                 activeTab === 'completions'
-                  ? 'border-blue-600 text-blue-900 font-semibold'
-                  : 'border-transparent text-slate-500 hover:text-slate-800'
+                  ? 'bg-white text-slate-900 shadow-[0_1px_3px_rgba(0,0,0,0.08)] font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'
               }`}
             >
               <Award className="w-4 h-4" />
@@ -1749,10 +1749,10 @@ export default function AdminDashboardPage() {
 
             <button
               onClick={() => setActiveTab('trial_mocks')}
-              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+              className={`px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 apple-btn-tactile ${
                 activeTab === 'trial_mocks'
-                  ? 'border-blue-600 text-blue-900 font-semibold'
-                  : 'border-transparent text-slate-500 hover:text-slate-800'
+                  ? 'bg-white text-slate-900 shadow-[0_1px_3px_rgba(0,0,0,0.08)] font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'
               }`}
             >
               <FilePlus className="w-4 h-4" />
@@ -1764,10 +1764,10 @@ export default function AdminDashboardPage() {
 
             <button
               onClick={() => setActiveTab('pins')}
-              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+              className={`px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 apple-btn-tactile ${
                 activeTab === 'pins'
-                  ? 'border-blue-600 text-blue-900 font-semibold'
-                  : 'border-transparent text-slate-500 hover:text-slate-800'
+                  ? 'bg-white text-slate-900 shadow-[0_1px_3px_rgba(0,0,0,0.08)] font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'
               }`}
             >
               <KeyRound className="w-4 h-4" />
@@ -1776,10 +1776,10 @@ export default function AdminDashboardPage() {
 
             <button
               onClick={() => setActiveTab('blog')}
-              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+              className={`px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 apple-btn-tactile ${
                 activeTab === 'blog'
-                  ? 'border-blue-600 text-blue-900 font-semibold'
-                  : 'border-transparent text-slate-500 hover:text-slate-800'
+                  ? 'bg-white text-slate-900 shadow-[0_1px_3px_rgba(0,0,0,0.08)] font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'
               }`}
             >
               <FileText className="w-4 h-4" />
@@ -1791,10 +1791,10 @@ export default function AdminDashboardPage() {
 
             <button
               onClick={() => setActiveTab('comments')}
-              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+              className={`px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 apple-btn-tactile ${
                 activeTab === 'comments'
-                  ? 'border-blue-600 text-blue-900 font-semibold'
-                  : 'border-transparent text-slate-500 hover:text-slate-800'
+                  ? 'bg-white text-slate-900 shadow-[0_1px_3px_rgba(0,0,0,0.08)] font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'
               }`}
             >
               <MessageSquare className="w-4 h-4" />
@@ -1806,10 +1806,10 @@ export default function AdminDashboardPage() {
 
             <button
               onClick={() => setActiveTab('whatsapp')}
-              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+              className={`px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 apple-btn-tactile ${
                 activeTab === 'whatsapp'
-                  ? 'border-blue-600 text-blue-900 font-semibold'
-                  : 'border-transparent text-slate-500 hover:text-slate-800'
+                  ? 'bg-white text-slate-900 shadow-[0_1px_3px_rgba(0,0,0,0.08)] font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'
               }`}
             >
               <MessageCircle className="w-4 h-4" />
@@ -1827,10 +1827,10 @@ export default function AdminDashboardPage() {
 
             <button
               onClick={() => setActiveTab('weekly_exams')}
-              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+              className={`px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 apple-btn-tactile ${
                 activeTab === 'weekly_exams'
-                  ? 'border-blue-600 text-blue-900'
-                  : 'border-transparent text-slate-500 hover:text-slate-800'
+                  ? 'bg-white text-slate-900 shadow-[0_1px_3px_rgba(0,0,0,0.08)] font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'
               }`}
             >
               <FlaskConical className="w-4 h-4 text-neutral-700" />
@@ -1842,10 +1842,10 @@ export default function AdminDashboardPage() {
 
             <button
               onClick={() => setActiveTab('university_slides')}
-              className={`py-3 border-b-2 transition flex items-center gap-2 ${
+              className={`px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 apple-btn-tactile ${
                 activeTab === 'university_slides'
-                  ? 'border-blue-600 text-blue-900'
-                  : 'border-transparent text-slate-500 hover:text-slate-800'
+                  ? 'bg-white text-slate-900 shadow-[0_1px_3px_rgba(0,0,0,0.08)] font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'
               }`}
             >
               <GraduationCap className="w-4 h-4 text-neutral-700" />
