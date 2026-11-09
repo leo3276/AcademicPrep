@@ -166,7 +166,7 @@ export default function TopicQuizPage() {
   // Timer countdown
   useEffect(() => {
     if (!mounted || isSubmitted || timeLeftSeconds <= 0) return;
-    const isLocked = !hasFullAccess;
+    const isLocked = topic ? !canAccessTopic(topic.id).allowed : !hasFullAccess;
     if (isLocked) return;
 
     const timer = setInterval(() => {

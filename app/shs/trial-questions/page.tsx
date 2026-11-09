@@ -219,12 +219,24 @@ export default function ShsTrialQuestionsPage() {
           </div>
         </div>
 
-        {mounted && isTrialActive && !student?.hasFullAccess && (
-          <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200/80 text-xs text-amber-900 flex items-center justify-between shadow-2xs">
-            <span className="flex items-center gap-2 font-semibold">
-              <span className="text-base">🎁</span>
-              <span>30-Day Free Trial: All SHS Trial Mocks and Diagnostic Papers unlocked for viewing &amp; download! ({trialDaysRemaining}d remaining)</span>
-            </span>
+        {mounted && !hasFullAccess && (
+          <div className="p-4 rounded-2xl bg-[#FAFAFC] border border-black/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-xl bg-white border border-black/[0.08] flex items-center justify-center shrink-0 text-[#1D1D1F]">
+                <Lock className="w-3.5 h-3.5" />
+              </div>
+              <div>
+                <div className="text-xs font-semibold text-[#1D1D1F]">Full Pass Required for SHS Trial Mocks</div>
+                <div className="text-[11.5px] text-[#86868B]">Activate a Full Pass via Mobile Money to view and download all SHS trial mocks and marking schemes.</div>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsPinModalOpen(true)}
+              className="px-4 py-2 rounded-xl bg-[#1D1D1F] hover:bg-black text-white font-medium text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto"
+            >
+              Unlock Full Pass
+            </button>
           </div>
         )}
 

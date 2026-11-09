@@ -15,15 +15,33 @@ const MANIFEST_FILE_NAME = 'documents_manifest.json';
 const DOCUMENTS_BUCKET = 'documents';
 
 async function getStoredDocuments(): Promise<UploadedPdfDocument[]> {
+  const mergedMap = new Map<string, UploadedPdfDocument>();
+
+  const addDocs = (list: unknown) => {
+    if (!Array.isArray(list)) return;
+    for (const item of list) {
+      if (item && typeof item === 'object' && item.id) {
+        const existing = mergedMap.get(item.id);
+        if (!existing) {
+          mergedMap.set(item.id, item as UploadedPdfDocument);
+        } else if (
+          existing.fileUrl?.includes('supabase.co') &&
+          item.fileUrl &&
+          !item.fileUrl.includes('supabase.co')
+        ) {
+          mergedMap.set(item.id, item as UploadedPdfDocument);
+        }
+      }
+    }
+  };
+
   // 1. Primary: Fetch from Cloudflare R2 CDN with cache-buster
   if (isR2Configured || R2_PUBLIC_URL) {
     try {
       const res = await fetch(`${R2_PUBLIC_URL}/${MANIFEST_FILE_NAME}?t=${Date.now()}`, { cache: 'no-store' });
       if (res.ok) {
         const parsed = await res.json();
-        if (Array.isArray(parsed)) {
-          return parsed;
-        }
+        addDocs(parsed);
       }
     } catch (err) {
       console.warn('Cloudflare R2 manifest fetch note:', err);
@@ -40,13 +58,17 @@ async function getStoredDocuments(): Promise<UploadedPdfDocument[]> {
       const res = await fetch(`${pubData.publicUrl}?t=${Date.now()}`, { cache: 'no-store' });
       if (res.ok) {
         const parsed = await res.json();
-        if (Array.isArray(parsed)) {
-          return parsed;
-        }
+        addDocs(parsed);
       }
     }
   } catch (err) {
     console.warn('Supabase storage CDN manifest fetch note:', err);
+  }
+
+  if (mergedMap.size > 0) {
+    return Array.from(mergedMap.values()).sort(
+      (a, b) => new Date(b.uploadedAt || 0).getTime() - new Date(a.uploadedAt || 0).getTime()
+    );
   }
 
   // 3. Tertiary: Direct download from Supabase Storage API
@@ -58,7 +80,7 @@ async function getStoredDocuments(): Promise<UploadedPdfDocument[]> {
     if (!error && data) {
       const text = await data.text();
       const parsed = JSON.parse(text);
-      if (Array.isArray(parsed)) {
+      if (Array.isArray(parsed) && parsed.length > 0) {
         return parsed;
       }
     }
@@ -166,6 +188,27 @@ export async function POST(request: NextRequest) {
         );
       }
 
+      let finalFileUrl = String(fileUrl);
+      if (isR2Configured && finalFileUrl.includes('supabase.co')) {
+        try {
+          const objectKey = finalFileUrl.split('/').pop()?.split('?')[0];
+          if (objectKey) {
+            const tempRes = await fetch(finalFileUrl);
+            if (tempRes.ok) {
+              const tempBuf = Buffer.from(await tempRes.arrayBuffer());
+              finalFileUrl = await uploadToR2(
+                objectKey,
+                tempBuf,
+                tempRes.headers.get('content-type') || 'application/pdf'
+              );
+              await supabaseAdmin.storage.from(DOCUMENTS_BUCKET).remove([objectKey]).catch(() => {});
+            }
+          }
+        } catch (transferErr) {
+          console.warn('Note: R2 transfer from signed upload fallback:', transferErr);
+        }
+      }
+
       const timestamp = Date.now();
       const docId = `doc_${timestamp}_${Math.random().toString(36).slice(2, 7)}`;
 
@@ -179,7 +222,7 @@ export async function POST(request: NextRequest) {
         level: level ? (level as any) : undefined,
         paperType: paperType || 'Full Exam Paper',
         fileName: fileName || 'document.pdf',
-        fileUrl,
+        fileUrl: finalFileUrl,
         fileSizeBytes: Number(fileSizeBytes) || 0,
         uploadedAt: new Date().toISOString(),
       };

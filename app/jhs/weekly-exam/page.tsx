@@ -222,7 +222,7 @@ export default function WeeklyExamPage() {
       if (urlMode === 'scheduled') {
         setIsScheduledMode(true);
         effectiveLevel = 'JHS 3';
-        if (!pastSched || pastSched.status !== 'completed') {
+        if ((hasFullAccess || urlAdmin || isAdmin) && (!pastSched || pastSched.status !== 'completed')) {
           setIsBriefingModalOpen(true);
         }
       }
@@ -245,6 +245,10 @@ export default function WeeklyExamPage() {
 
   // Launch Scheduled Examination (Atomic Structure)
   const handleStartScheduledExam = () => {
+    if (!hasFullAccess && !isAdminPreviewMode) {
+      setIsPinModalOpen(true);
+      return;
+    }
     const remLockout = getRemainingPenaltyLockoutSeconds();
     if (remLockout > 0) {
       setPenaltyLockoutRemaining(remLockout);
@@ -375,6 +379,10 @@ export default function WeeklyExamPage() {
 
   // Launch Past Examination Practice (Self-paced, no strict penalty lockout)
   const handlePracticePastExam = (pastExam: ArchivedWeeklyExam) => {
+    if (!hasFullAccess && !isAdminPreviewMode) {
+      setIsPinModalOpen(true);
+      return;
+    }
     setIsScheduledMode(false);
     setIsPastExamPractice(true);
     setActivePastExamId(pastExam.id);
@@ -568,6 +576,10 @@ export default function WeeklyExamPage() {
 
   // Start Adaptive General Exam (Non-scheduled practice)
   const handleStartExam = () => {
+    if (!hasFullAccess && !isAdminPreviewMode) {
+      setIsPinModalOpen(true);
+      return;
+    }
     setIsScheduledMode(false);
     const pkg = generateAdaptiveWeeklyExam(currentLevel);
     setExamPackage(pkg);
@@ -1137,47 +1149,32 @@ export default function WeeklyExamPage() {
               </p>
             </div>
 
-            {/* Free Trial / VIP Lock Notice */}
-            {mounted && isTrialActive && !student?.hasFullAccess ? (
-              <div className="mt-4 p-4 rounded-2xl bg-white border border-neutral-200 text-neutral-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+            {/* Minimalist Apple Lock Notice */}
+            {mounted && !hasFullAccess && (
+              <div className="mt-4 p-4 rounded-2xl bg-[#FAFAFC] border border-black/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-neutral-100 text-neutral-700 flex items-center justify-center shrink-0">
-                    <span className="text-lg">🎁</span>
+                  <div className="w-9 h-9 rounded-xl bg-white border border-black/[0.08] text-[#1D1D1F] flex items-center justify-center shrink-0">
+                    <Lock className="w-4 h-4" />
                   </div>
                   <div className="space-y-0.5">
-                    <p className="text-xs font-bold text-blue-950">
-                      30-Day Free Trial: Full CBT Adaptive Weekly Exam Unlocked!
+                    <p className="text-xs font-semibold text-[#1D1D1F]">
+                      Full Pass Required for Weekly Examinations
                     </p>
-                    <p className="text-[11px] text-blue-800">
-                      You have full access to timed objectives and theory marking rubrics ({trialDaysRemaining} days remaining of free trial).
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ) : mounted && !hasFullAccess && !isTrialActive ? (
-              <div className="mt-4 p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-950 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
-                    <Lock className="w-5 h-5" />
-                  </div>
-                  <div className="space-y-0.5">
-                    <p className="text-xs font-bold text-amber-950">
-                      Free Trial Ended • Weekly Adaptive Examination Requires VIP Pass
-                    </p>
-                    <p className="text-[11px] text-amber-800">
-                      Your 30-day free trial has expired. An Access PIN unlocks full CBT weekly examinations featuring timed objectives and theory marking rubrics.
+                    <p className="text-[11.5px] text-[#86868B]">
+                      Activate a Full Pass via Mobile Money to take timed Paper 1 (Objectives) and Paper 2 (Theory) weekly exams with WAEC grading rubrics.
                     </p>
                   </div>
                 </div>
                 <button
+                  type="button"
                   onClick={() => setIsPinModalOpen(true)}
-                  className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shrink-0 transition shadow-xs flex items-center justify-center gap-1.5"
+                  className="px-4 py-2 rounded-xl bg-[#1D1D1F] hover:bg-black text-white font-medium text-xs shrink-0 transition flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  <KeyRound className="w-3.5 h-3.5" />
-                  <span>Enter PIN to Unlock</span>
+                  <Lock className="w-3.5 h-3.5" />
+                  <span>Unlock Weekly Exams</span>
                 </button>
               </div>
-            ) : null}
+            )}
 
             {/* Exam Launch CTA */}
             <div className="mt-6 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">

@@ -114,15 +114,32 @@ function sanitizeSlideList(list: UniversitySlide[]): UniversitySlide[] {
  * Fetch all university slides with Cloud storage + local file fallback
  */
 export async function getStoredUniversitySlides(): Promise<UniversitySlide[]> {
+  const mergedMap = new Map<string, UniversitySlide>();
+  const addSlides = (list: unknown) => {
+    if (!Array.isArray(list)) return;
+    for (const item of list) {
+      if (item && typeof item === 'object' && item.id) {
+        const existing = mergedMap.get(item.id);
+        if (!existing) {
+          mergedMap.set(item.id, item as UniversitySlide);
+        } else if (
+          existing.fileUrl?.includes('supabase.co') &&
+          item.fileUrl &&
+          !item.fileUrl.includes('supabase.co')
+        ) {
+          mergedMap.set(item.id, item as UniversitySlide);
+        }
+      }
+    }
+  };
+
   // 1. Primary: Cloudflare R2
   if (isR2Configured || R2_PUBLIC_URL) {
     try {
       const res = await fetch(`${R2_PUBLIC_URL}/${MANIFEST_FILE_NAME}?t=${Date.now()}`, { cache: 'no-store' });
       if (res.ok) {
         const parsed = await res.json();
-        if (Array.isArray(parsed)) {
-          return sanitizeSlideList(parsed);
-        }
+        addSlides(parsed);
       }
     } catch (err) {
       console.warn('[universitySlideStore] R2 fetch note:', err);
@@ -139,13 +156,18 @@ export async function getStoredUniversitySlides(): Promise<UniversitySlide[]> {
       const res = await fetch(`${pubData.publicUrl}?t=${Date.now()}`, { cache: 'no-store' });
       if (res.ok) {
         const parsed = await res.json();
-        if (Array.isArray(parsed)) {
-          return sanitizeSlideList(parsed);
-        }
+        addSlides(parsed);
       }
     }
   } catch (err) {
     console.warn('[universitySlideStore] Supabase CDN fetch note:', err);
+  }
+
+  if (mergedMap.size > 0) {
+    const mergedList = Array.from(mergedMap.values()).sort(
+      (a, b) => new Date(b.uploadedAt || 0).getTime() - new Date(a.uploadedAt || 0).getTime()
+    );
+    return sanitizeSlideList(mergedList);
   }
 
   // 3. Fallback: local data/university_slides.json

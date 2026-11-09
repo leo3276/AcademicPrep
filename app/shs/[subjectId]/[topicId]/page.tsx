@@ -75,9 +75,62 @@ export default function ShsDetailedTopicLessonPage() {
   }
 
   const isCompleted = mounted && topicProgress[topic.id]?.completed;
-  const isLocked = mounted && !hasFullAccess;
+  const isFreeTopic = currentTopicIndex >= 0 && currentTopicIndex < 3;
+  const isLocked = mounted && !hasFullAccess && !isFreeTopic;
   const detailedNotes = topic.detailedNotes;
   const examTips = detailedNotes?.wassceExamTips || detailedNotes?.examTips || detailedNotes?.beceExamTips;
+
+  if (isLocked) {
+    return (
+      <div className="max-w-xl mx-auto px-4 py-16 text-center space-y-6">
+        <div className="p-8 rounded-[24px] bg-white border border-black/[0.08] shadow-xs space-y-5">
+          <div className="w-12 h-12 rounded-2xl bg-[#F5F5F7] text-[#1D1D1F] border border-black/[0.06] flex items-center justify-center mx-auto">
+            <Lock className="w-5 h-5" />
+          </div>
+
+          <div className="space-y-2">
+            <span className="text-[11px] font-medium uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#F5F5F7] text-[#515154]">
+              Full Pass Required
+            </span>
+            <h1 className="text-xl font-semibold text-[#1D1D1F] tracking-tight">
+              {topic.title}
+            </h1>
+            <p className="text-[13px] text-[#86868B] max-w-md mx-auto leading-relaxed">
+              Free accounts include the first 3 topics per subject. Activate a Full Pass via Mobile Money to unlock all SHS curriculum topics, WASSCE past papers, and trial mocks.
+            </p>
+          </div>
+
+          <div className="pt-2">
+            <button
+              type="button"
+              onClick={() => setShowPaymentModal(true)}
+              className="w-full sm:w-auto px-6 h-11 rounded-[14px] bg-[#1D1D1F] hover:bg-black text-white font-medium text-[14px] transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <Lock className="w-3.5 h-3.5" />
+              <span>Unlock Full Pass</span>
+            </button>
+          </div>
+
+          <div className="pt-4 border-t border-black/[0.06] flex items-center justify-center gap-4 text-xs font-medium">
+            <Link
+              href={`/shs/${subject.id}?level=${encodeURIComponent(topic.level)}`}
+              className="text-[#515154] hover:text-[#1D1D1F] flex items-center gap-1"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              Return to Subject Topics
+            </Link>
+          </div>
+        </div>
+
+        <PaystackPaymentModal
+          isOpen={showPaymentModal}
+          onClose={() => setShowPaymentModal(false)}
+          defaultTab={modalTab}
+          featureName={`SHS Lesson: ${topic.title}`}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">

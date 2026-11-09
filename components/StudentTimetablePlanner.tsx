@@ -15,8 +15,11 @@ import {
   Bell,
   BellRing,
   Smartphone,
-  AlertCircle
+  AlertCircle,
+  Lock
 } from 'lucide-react';
+import { useAuth } from '@/lib/authContext';
+import PaystackPaymentModal from './PaystackPaymentModal';
 import { EducationLevel } from '@/lib/types';
 import { CURRICULUM_SUBJECTS } from '@/lib/curriculumData';
 import { CurriculumService } from '@/lib/curriculumService';
@@ -55,6 +58,8 @@ export default function StudentTimetablePlanner({
   initialWeakSubjects = [],
   initialWeakTopics = [],
 }: StudentTimetablePlannerProps) {
+  const { hasFullAccess } = useAuth();
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [timetable, setTimetable] = useState<PersonalTimetable | null>(null);
   const [isSurveyOpen, setIsSurveyOpen] = useState(false);
   const [selectedDayTab, setSelectedDayTab] = useState<string>('ALL');
@@ -226,6 +231,42 @@ export default function StudentTimetablePlanner({
     }
     return [[selectedDayTab, timetable.weeklySchedule[selectedDayTab] || []]] as [string, TimetableSession[]][];
   }, [timetable, selectedDayTab]);
+
+  if (!hasFullAccess) {
+    return (
+      <div className="bg-white border border-black/[0.08] rounded-[24px] p-8 text-center space-y-5 shadow-2xs">
+        <div className="w-12 h-12 rounded-2xl bg-[#F5F5F7] border border-black/[0.06] flex items-center justify-center mx-auto text-[#1D1D1F]">
+          <Lock className="w-5 h-5" />
+        </div>
+        <div className="space-y-1.5 max-w-md mx-auto">
+          <span className="text-[11px] font-medium uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#F5F5F7] text-[#515154]">
+            Full Pass Feature
+          </span>
+          <h2 className="text-lg font-semibold text-[#1D1D1F] tracking-tight">
+            Personal Study Timetable Planner
+          </h2>
+          <p className="text-[13px] text-[#86868B] leading-relaxed">
+            Generate a tailored daily revision schedule mapped to your syllabus, weak topics, and printable PDF export with a Full Pass.
+          </p>
+        </div>
+        <div>
+          <button
+            type="button"
+            onClick={() => setShowPaymentModal(true)}
+            className="px-6 h-11 rounded-[14px] bg-[#1D1D1F] hover:bg-black text-white text-[14px] font-medium inline-flex items-center justify-center gap-2 transition-all cursor-pointer"
+          >
+            <Lock className="w-3.5 h-3.5" />
+            <span>Unlock Study Timetable</span>
+          </button>
+        </div>
+        <PaystackPaymentModal
+          isOpen={showPaymentModal}
+          onClose={() => setShowPaymentModal(false)}
+          featureName="Personal Study Timetable Planner"
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-5">

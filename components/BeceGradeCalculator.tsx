@@ -22,9 +22,12 @@ import {
   MapPin,
   Users,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Lock
 } from 'lucide-react';
 import { CURRICULUM_SUBJECTS, JHS_CURRICULUM_TOPICS } from '@/lib/curriculumData';
+import { useAuth } from '@/lib/authContext';
+import PaystackPaymentModal from './PaystackPaymentModal';
 
 export interface SubjectScore {
   id: string;
@@ -188,6 +191,8 @@ interface BeceGradeCalculatorProps {
 }
 
 export default function BeceGradeCalculator({ topicProgress = {}, studentName = 'Student' }: BeceGradeCalculatorProps) {
+  const { hasFullAccess } = useAuth();
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const initialSubjects: SubjectScore[] = useMemo(() => [
     { id: 'english', name: 'English Language', code: 'ENG', isCore: true, score: 75 },
     { id: 'math', name: 'Mathematics', code: 'MATH', isCore: true, score: 72 },
@@ -402,6 +407,42 @@ export default function BeceGradeCalculator({ topicProgress = {}, studentName = 
       return true;
     });
   }, [calculationResult.qualifiedSchools, schoolTypeFilter, schoolSearchQuery]);
+
+  if (!hasFullAccess) {
+    return (
+      <div className="bg-white border border-black/[0.08] rounded-[24px] p-8 text-center space-y-5 shadow-2xs">
+        <div className="w-12 h-12 rounded-2xl bg-[#F5F5F7] border border-black/[0.06] flex items-center justify-center mx-auto text-[#1D1D1F]">
+          <Lock className="w-5 h-5" />
+        </div>
+        <div className="space-y-1.5 max-w-md mx-auto">
+          <span className="text-[11px] font-medium uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#F5F5F7] text-[#515154]">
+            Full Pass Feature
+          </span>
+          <h2 className="text-lg font-semibold text-[#1D1D1F] tracking-tight">
+            BECE Aggregate &amp; SHS School Checker
+          </h2>
+          <p className="text-[13px] text-[#86868B] leading-relaxed">
+            Calculate your official WAEC BECE 6-subject aggregate and check your CSSPS placement eligibility across Category A, B, C, and TVET Senior High Schools with a Full Pass.
+          </p>
+        </div>
+        <div>
+          <button
+            type="button"
+            onClick={() => setShowPaymentModal(true)}
+            className="px-6 h-11 rounded-[14px] bg-[#1D1D1F] hover:bg-black text-white text-[14px] font-medium inline-flex items-center justify-center gap-2 transition-all cursor-pointer"
+          >
+            <Lock className="w-3.5 h-3.5" />
+            <span>Unlock School Checker</span>
+          </button>
+        </div>
+        <PaystackPaymentModal
+          isOpen={showPaymentModal}
+          onClose={() => setShowPaymentModal(false)}
+          featureName="BECE Aggregate & SHS School Checker"
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 space-y-5">

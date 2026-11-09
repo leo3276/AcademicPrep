@@ -174,7 +174,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
 
         // 1. INSTANT HYDRATION: Read local cached student, progress, and exams synchronously (0ms)
-        const cachedStudent = readLocalStorage<Student | null>(STORAGE_KEYS.CURRENT_STUDENT, null);
+        let cachedStudent = readLocalStorage<Student | null>(STORAGE_KEYS.CURRENT_STUDENT, null);
+        if (cachedStudent && typeof window !== 'undefined') {
+          const resetDone = window.localStorage.getItem('academicprep_paid_reset_v2') === '1';
+          if (!resetDone || !getSessionToken()) {
+            cachedStudent = {
+              ...cachedStudent,
+              hasFullAccess: false,
+              accessType: 'Free Trial',
+              accessExpiresAt: undefined,
+            };
+            writeLocalStorage(STORAGE_KEYS.CURRENT_STUDENT, cachedStudent);
+            window.localStorage.setItem('academicprep_paid_reset_v2', '1');
+          }
+        }
         if (cachedStudent && isMounted) {
           setStudent(cachedStudent);
           const phone = cachedStudent.phoneNumber;
@@ -451,13 +464,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
   }, [student]);
 
-  const hasFullAccess = Boolean(isPaidVip || isTrialActive);
+  const hasFullAccess = Boolean(isPaidVip);
 
   const effectiveStudent: Student | null = student
     ? {
         ...student,
-        hasFullAccess: isPaidVip || isTrialActive,
-        accessType: isPaidVip ? 'Full Pass' : (isTrialActive ? 'Free Trial' : 'Expired'),
+        hasFullAccess: isPaidVip,
+        accessType: isPaidVip ? 'Full Pass' : 'Free Trial',
       }
     : null;
 
@@ -469,13 +482,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return { allowed: true, topicsUsed, maxFreeTopics: 999 };
     }
 
-    if (completedIds.includes(topicId)) {
-      return { allowed: true, topicsUsed, maxFreeTopics: 3 };
+    const allCurriculumTopics = [...JHS_CURRICULUM_TOPICS, ...SHS_CURRICULUM_TOPICS];
+    const targetTopic = allCurriculumTopics.find((t) => t.id === topicId);
+    if (targetTopic) {
+      const siblingTopics = allCurriculumTopics.filter(
+        (t) => t.subjectId === targetTopic.subjectId && t.level === targetTopic.level
+      );
+      const idx = siblingTopics.findIndex((t) => t.id === topicId);
+      if (idx >= 0 && idx < 3) {
+        return { allowed: true, topicsUsed, maxFreeTopics: 3 };
+      }
     }
 
     return {
       allowed: false,
-      reason: 'Your 30-Day Free Trial has ended. To unlock unlimited learning, please enter or buy an Access PIN.',
+      reason: 'Free accounts include the first 3 topics per subject. Activate a Full Pass via Mobile Money to unlock all topics, past questions, and exams.',
       topicsUsed,
       maxFreeTopics: 3,
     };

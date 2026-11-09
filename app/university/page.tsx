@@ -54,8 +54,10 @@ import {
   ImageIcon,
   Video as VideoIcon,
   Columns,
-  ExternalLink
+  ExternalLink,
+  Lock
 } from 'lucide-react';
+import PaystackPaymentModal from '@/components/PaystackPaymentModal';
 import { parseVideoUrl } from '@/lib/mediaUtils';
 import {
   generateSlideWhatsAppText,
@@ -189,8 +191,9 @@ async function getPdfJsLib(): Promise<any> {
 
 export default function UniversityPortalPage() {
   const router = useRouter();
-  const { student, isLoading: authLoading, logoutStudent } = useAuth();
+  const { student, isLoading: authLoading, logoutStudent, hasFullAccess } = useAuth();
   const [mounted, setMounted] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const [activePackage, setActivePackage] = useState<CompleteSlideStudyPackage | null>(null);
   const [selectedSlideIndex, setSelectedSlideIndex] = useState(0);
@@ -1097,7 +1100,7 @@ export default function UniversityPortalPage() {
       const data = await res.json();
       if (data.success && data.package) {
         setActivePackage(data.package);
-        const initialLessonIndex = data.package.lessonStartPage 
+        const initialLessonIndex = hasFullAccess && data.package.lessonStartPage 
           ? data.package.slides.findIndex((s: SlideAnalysis) => s.pageNumber === data.package.lessonStartPage)
           : 0;
         setSelectedSlideIndex(initialLessonIndex >= 0 ? initialLessonIndex : 0);
@@ -1142,6 +1145,9 @@ export default function UniversityPortalPage() {
   }, [activePackage, filterHighYieldOnly, searchQuery]);
 
   const currentSlide = filteredSlides[selectedSlideIndex] || activePackage?.slides[0];
+  const isSlidePageLocked = Boolean(
+    !hasFullAccess && (selectedSlideIndex >= 2 || (currentSlide && currentSlide.pageNumber > 2))
+  );
 
   const condensedSummaries: CondensedSlideGroup[] = useMemo(() => {
     if (!activePackage || !activePackage.slides || activePackage.slides.length === 0) return [];
@@ -1263,6 +1269,10 @@ export default function UniversityPortalPage() {
 
   // Ask AI Tutor Handler
   const handleAskTutor = async (questionText: string) => {
+    if (!hasFullAccess) {
+      setShowPaymentModal(true);
+      return;
+    }
     if (!currentSlide || !questionText.trim() || isTutorLoading) return;
     const cleanQ = questionText.trim();
     const currentSlideNum = currentSlide.pageNumber;
@@ -2149,11 +2159,17 @@ export default function UniversityPortalPage() {
 
                   <button
                     type="button"
-                    onClick={() => setShowCourseRequestModal(true)}
-                    className="px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition shrink-0 cursor-pointer shadow-xs"
+                    onClick={() => {
+                      if (!hasFullAccess) {
+                        setShowPaymentModal(true);
+                        return;
+                      }
+                      setShowCourseRequestModal(true);
+                    }}
+                    className="px-3.5 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-medium flex items-center justify-center gap-1.5 transition shrink-0 cursor-pointer shadow-2xs"
                     title="Request slides for a course not yet in the catalog"
                   >
-                    <Plus className="w-3.5 h-3.5" />
+                    {!hasFullAccess ? <Lock className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
                     <span>Request Course</span>
                   </button>
                 </div>
@@ -2227,13 +2243,17 @@ export default function UniversityPortalPage() {
                   <div className="pt-2">
                     <button
                       onClick={() => {
+                        if (!hasFullAccess) {
+                          setShowPaymentModal(true);
+                          return;
+                        }
                         setReqCourseCode(slideCatalogSearch.toUpperCase().trim());
                         setShowCourseRequestModal(true);
                       }}
-                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition cursor-pointer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-medium shadow-2xs transition cursor-pointer"
                     >
-                      <Plus className="w-3.5 h-3.5" />
-                      <span>Request "{slideCatalogSearch || 'Your Course'}" Slides</span>
+                      {!hasFullAccess ? <Lock className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+                      <span>Request &ldquo;{slideCatalogSearch || 'Your Course'}&rdquo; Slides</span>
                     </button>
                   </div>
                   <button
@@ -2341,6 +2361,10 @@ export default function UniversityPortalPage() {
                           <button
                             type="button"
                             onClick={() => {
+                              if (!hasFullAccess) {
+                                setShowPaymentModal(true);
+                                return;
+                              }
                               openPdfDocumentCached({
                                 id: slide.id,
                                 fileUrl: slide.fileUrl,
@@ -2348,9 +2372,9 @@ export default function UniversityPortalPage() {
                               });
                             }}
                             className="col-span-4 py-2 px-2 rounded-lg border border-neutral-200 hover:bg-neutral-50 text-neutral-700 text-xs font-medium flex items-center justify-center gap-1.5 transition cursor-pointer"
-                            title="View Watermarked Slide PDF"
+                            title={!hasFullAccess ? 'Full Pass required to view complete PDF' : 'View Watermarked Slide PDF'}
                           >
-                            <FileText className="w-3.5 h-3.5 text-neutral-500" />
+                            {!hasFullAccess ? <Lock className="w-3.5 h-3.5 text-neutral-400" /> : <FileText className="w-3.5 h-3.5 text-neutral-500" />}
                             <span>View PDF</span>
                           </button>
                         </div>
@@ -2477,6 +2501,10 @@ export default function UniversityPortalPage() {
                           <button
                             type="button"
                             onClick={() => {
+                              if (!hasFullAccess) {
+                                setShowPaymentModal(true);
+                                return;
+                              }
                               openPdfDocumentCached({
                                 id: slide.id,
                                 fileUrl: slide.fileUrl,
@@ -2484,9 +2512,9 @@ export default function UniversityPortalPage() {
                               });
                             }}
                             className="col-span-4 py-2 px-2 rounded-lg border border-neutral-200 hover:bg-neutral-50 text-neutral-700 text-xs font-medium flex items-center justify-center gap-1.5 transition cursor-pointer"
-                            title="View Watermarked Slide PDF"
+                            title={!hasFullAccess ? 'Full Pass required to view complete PDF' : 'View Watermarked Slide PDF'}
                           >
-                            <FileText className="w-3.5 h-3.5 text-neutral-500" />
+                            {!hasFullAccess ? <Lock className="w-3.5 h-3.5 text-neutral-400" /> : <FileText className="w-3.5 h-3.5 text-neutral-500" />}
                             <span>View PDF</span>
                           </button>
                         </div>
@@ -3055,6 +3083,25 @@ export default function UniversityPortalPage() {
 
           {/* TAB 2: CUSTOM PRIVATE SLIDE UPLOADER */}
           {portalMode === 'custom_upload' && (
+            !hasFullAccess ? (
+              <div className="max-w-lg mx-auto my-8 bg-white border border-neutral-200/80 rounded-3xl p-8 text-center shadow-2xs">
+                <div className="w-11 h-11 rounded-2xl bg-neutral-100 border border-neutral-200/70 flex items-center justify-center mx-auto mb-4">
+                  <Lock className="w-4 h-4 text-neutral-700" />
+                </div>
+                <h2 className="text-lg font-semibold text-neutral-900 tracking-tight mb-2">
+                  AI Study Buddy Locked
+                </h2>
+                <p className="text-xs text-neutral-500 leading-relaxed mb-6">
+                  Personal slide uploads and interactive AI Study Buddy breakdowns require an active Full Pass.
+                </p>
+                <button
+                  onClick={() => setShowPaymentModal(true)}
+                  className="w-full py-2.5 px-5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-medium transition cursor-pointer"
+                >
+                  Unlock Full Pass
+                </button>
+              </div>
+            ) : (
             <div className="max-w-3xl mx-auto space-y-6">
               <div className="space-y-1 text-center">
                 <h2 className="text-lg font-bold text-neutral-900">Upload Your Private Lecture Slides</h2>
@@ -3170,6 +3217,7 @@ export default function UniversityPortalPage() {
                 </button>
               </div>
             </div>
+            )
           )}
         </main>
       )}
@@ -3486,13 +3534,34 @@ export default function UniversityPortalPage() {
                       </div>
                     )}
 
-                    {!pdfDoc && !isRenderingCanvas && (
+                    {!pdfDoc && !isRenderingCanvas && !isSlidePageLocked && (
                       <div className="text-center p-8 space-y-2 text-xs text-neutral-400">
                         <Eye className="w-6 h-6 mx-auto text-neutral-300" />
                         <p className="font-medium text-neutral-700">Slide Preview Ready</p>
                         <p className="text-[11px] max-w-xs mx-auto">
                           Viewing slide {currentSlide?.pageNumber || 1} text analysis. Upload or drop PDF to activate visual canvas.
                         </p>
+                      </div>
+                    )}
+
+                    {isSlidePageLocked && (
+                      <div className="absolute inset-0 bg-white/95 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center z-20">
+                        <div className="w-10 h-10 rounded-2xl bg-neutral-100 border border-neutral-200/70 flex items-center justify-center mb-3">
+                          <Lock className="w-4 h-4 text-neutral-700" />
+                        </div>
+                        <h4 className="text-sm font-semibold text-neutral-900 tracking-tight mb-1">
+                          Slide {currentSlide?.pageNumber} Locked
+                        </h4>
+                        <p className="text-xs text-neutral-500 max-w-xs leading-relaxed mb-4">
+                          Free accounts can preview the first 2 slides of each course. Unlock a Full Pass to access all slides.
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => setShowPaymentModal(true)}
+                          className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-medium transition cursor-pointer"
+                        >
+                          Unlock Full Pass
+                        </button>
                       </div>
                     )}
                   </div>
@@ -3563,7 +3632,11 @@ export default function UniversityPortalPage() {
                             title={`Slide ${slide.pageNumber}: ${slide.title}`}
                           >
                             <span>{String(slide.pageNumber).padStart(2, '0')}</span>
-                            {isMastered && <Check className="w-2.5 h-2.5 shrink-0" />}
+                            {!hasFullAccess && (idx >= 2 || slide.pageNumber > 2) ? (
+                              <Lock className="w-2.5 h-2.5 shrink-0 opacity-70" />
+                            ) : (
+                              isMastered && <Check className="w-2.5 h-2.5 shrink-0" />
+                            )}
                           </button>
                         );
                       })}
@@ -3576,6 +3649,29 @@ export default function UniversityPortalPage() {
                 ───────────────────────────────────────────────────────── */}
                 <div className={`lg:col-span-6 lg:h-[640px] ${mobileStudioView === 'canvas' ? 'hidden lg:flex' : 'flex'} border border-neutral-200 rounded-2xl bg-white shadow-xs flex-col overflow-hidden`}>
                   {currentSlide ? (
+                    isSlidePageLocked ? (
+                      <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
+                        <div className="w-11 h-11 rounded-2xl bg-neutral-100 border border-neutral-200/70 flex items-center justify-center mb-4">
+                          <Lock className="w-4 h-4 text-neutral-700" />
+                        </div>
+                        <p className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 mb-1">
+                          Slide {String(currentSlide.pageNumber).padStart(2, '0')} • Free Preview Limit Reached
+                        </p>
+                        <h3 className="text-base font-semibold text-neutral-900 tracking-tight mb-2 max-w-sm">
+                          {currentSlide.title}
+                        </h3>
+                        <p className="text-xs text-neutral-500 max-w-xs leading-relaxed mb-6">
+                          Free accounts include access to the first 2 slides per course. Unlock a Full Pass to view all lecture slides, simplified breakdowns, and exam notes.
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => setShowPaymentModal(true)}
+                          className="px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-medium transition cursor-pointer"
+                        >
+                          Unlock Full Pass
+                        </button>
+                      </div>
+                    ) : (
                     <>
                       {/* Pinned Header: Title & Actions (Never scroll away, never clip, no scrollbar collision) */}
                       <div className="p-4 sm:p-5 border-b border-neutral-100 bg-white shrink-0 space-y-3">
@@ -3894,6 +3990,26 @@ export default function UniversityPortalPage() {
                       </div>
 
                       {/* 7. Ask a Question */}
+                      {!hasFullAccess ? (
+                        <div className="border border-neutral-200/80 rounded-xl p-4 bg-neutral-50/70 flex items-center justify-between gap-3">
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            <div className="w-7 h-7 rounded-lg bg-white border border-neutral-200/80 flex items-center justify-center shrink-0">
+                              <Lock className="w-3.5 h-3.5 text-neutral-600" />
+                            </div>
+                            <div className="min-w-0">
+                              <p className="text-xs font-semibold text-neutral-900">Study Buddy Locked</p>
+                              <p className="text-[11px] text-neutral-500 truncate">Interactive slide Q&amp;A requires a Full Pass.</p>
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setShowPaymentModal(true)}
+                            className="px-3 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-medium transition shrink-0 cursor-pointer"
+                          >
+                            Unlock
+                          </button>
+                        </div>
+                      ) : (
                       <div className="border border-neutral-200 rounded-xl p-4 space-y-3.5 bg-white">
                         <div className="flex items-center justify-between">
                           <span className="text-xs font-semibold text-neutral-900">
@@ -4006,6 +4122,7 @@ export default function UniversityPortalPage() {
                           </button>
                         </form>
                       </div>
+                      )}
 
                       {/* Slide Flip Bottom Navigation */}
                       <div className="pt-2 border-t border-neutral-100 flex items-center justify-between text-xs text-neutral-500">
@@ -4029,6 +4146,7 @@ export default function UniversityPortalPage() {
                       </div>
                     </div>
                   </>
+                    )
                   ) : (
                     <div className="p-12 text-center text-xs text-neutral-400">
                       Select a slide from the index.
@@ -5366,6 +5484,12 @@ export default function UniversityPortalPage() {
           </div>
         </div>
       )}
+
+      <PaystackPaymentModal
+        isOpen={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        featureName="University Full Pass"
+      />
     </div>
   );
 }

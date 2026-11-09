@@ -3,9 +3,16 @@ import path from 'path';
 import { supabaseAdmin } from './supabaseClient';
 import { adminGrantAccess, adminRevokeAccess, findStudentByPhone } from './dbService';
 import { normalizePhone } from './serverAuth';
+import { uploadToR2, isR2Configured, R2_PUBLIC_URL } from './r2Client';
+import {
+  OFFICIAL_MOMO_DETAILS,
+  PRICING_PLANS,
+  resolvePlanByAmount,
+  validateMomoTransactionId,
+  MomoClaim,
+} from './momoConfig';
 
-import { OFFICIAL_MOMO_DETAILS, MomoClaim } from './momoConfig';
-export { OFFICIAL_MOMO_DETAILS };
+export { OFFICIAL_MOMO_DETAILS, PRICING_PLANS, resolvePlanByAmount, validateMomoTransactionId };
 export type { MomoClaim };
 
 const DATA_FILE = path.join(process.cwd(), 'data', 'momo_claims.json');
@@ -13,7 +20,24 @@ const MANIFEST_FILE_NAME = 'momo_claims_manifest.json';
 const DOCUMENTS_BUCKET = 'documents';
 
 export async function getStoredMomoClaims(): Promise<MomoClaim[]> {
-  // 1. Primary: Download from Supabase Storage
+  // 1. Primary: Fetch from Cloudflare R2
+  if (isR2Configured || R2_PUBLIC_URL) {
+    try {
+      const res = await fetch(`${R2_PUBLIC_URL}/${MANIFEST_FILE_NAME}?t=${Date.now()}`, {
+        cache: 'no-store',
+      });
+      if (res.ok) {
+        const parsed = await res.json();
+        if (Array.isArray(parsed)) {
+          return parsed;
+        }
+      }
+    } catch (err) {
+      console.warn('Cloudflare R2 momo claims fetch note:', err);
+    }
+  }
+
+  // 2. Secondary: Download from Supabase Storage
   try {
     const { data, error } = await supabaseAdmin.storage
       .from(DOCUMENTS_BUCKET)
@@ -30,7 +54,7 @@ export async function getStoredMomoClaims(): Promise<MomoClaim[]> {
     console.warn('Supabase storage momo claims download note:', err);
   }
 
-  // 2. Secondary: Read from local data/momo_claims.json
+  // 3. Fallback: Read from local data/momo_claims.json
   try {
     if (fs.existsSync(DATA_FILE)) {
       const raw = fs.readFileSync(DATA_FILE, 'utf8');
@@ -47,11 +71,22 @@ export async function getStoredMomoClaims(): Promise<MomoClaim[]> {
 }
 
 export async function saveStoredMomoClaims(claims: MomoClaim[]): Promise<void> {
-  // 1. Primary: Save to Supabase Storage
+  const payload = JSON.stringify(claims, null, 2);
+
+  // 1. Primary: Save to Cloudflare R2
+  if (isR2Configured) {
+    try {
+      await uploadToR2(MANIFEST_FILE_NAME, Buffer.from(payload), 'application/json', '0');
+    } catch (err: any) {
+      console.warn('Failed to upload momo claims to Cloudflare R2:', err?.message || err);
+    }
+  }
+
+  // 2. Secondary: Save to Supabase Storage
   try {
     const { error } = await supabaseAdmin.storage
       .from(DOCUMENTS_BUCKET)
-      .upload(MANIFEST_FILE_NAME, JSON.stringify(claims, null, 2), {
+      .upload(MANIFEST_FILE_NAME, payload, {
         upsert: true,
         contentType: 'application/json',
         cacheControl: '0',
@@ -63,13 +98,13 @@ export async function saveStoredMomoClaims(claims: MomoClaim[]): Promise<void> {
     console.warn('Failed to upload momo claims to Supabase storage:', err?.message || err);
   }
 
-  // 2. Secondary: Save to local disk
+  // 3. Tertiary: Save to local disk
   try {
     const dir = path.dirname(DATA_FILE);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
-    fs.writeFileSync(DATA_FILE, JSON.stringify(claims, null, 2), 'utf8');
+    fs.writeFileSync(DATA_FILE, payload, 'utf8');
   } catch {
     // Expected on serverless
   }
@@ -86,37 +121,59 @@ export async function createMomoClaim(input: {
   const cleanSenderPhone = input.senderPhone ? normalizePhone(input.senderPhone) : cleanPhone;
 
   if (!cleanPhone || cleanPhone.length < 10) {
-    return { success: false, error: 'Please enter a valid phone number (e.g. 0241234567).' };
+    return { success: false, error: 'Please enter a valid 10-digit phone number (e.g. 0241234567).' };
   }
+
+  // Validate Transaction ID
+  const txValidation = validateMomoTransactionId(input.transactionId);
+  if (!txValidation.valid) {
+    return {
+      success: false,
+      error: txValidation.error || 'Please enter a valid Mobile Money Transaction ID.',
+    };
+  }
+  const txRef = txValidation.cleanedId;
 
   // Check if student account exists in DB
   const student = await findStudentByPhone(cleanPhone);
   if (!student) {
     return {
       success: false,
-      error: 'No registered student account was found with this phone number. Please register or sign in on the app first so your VIP pass can be attached.',
-    };
-  }
-
-  // 1. Immediately grant 30-day VIP pass in database!
-  const grantResult = await adminGrantAccess(cleanPhone, OFFICIAL_MOMO_DETAILS.validityDays);
-  if (!grantResult.success) {
-    return {
-      success: false,
-      error: grantResult.error || 'Failed to activate VIP pass in database.',
+      error:
+        'No registered student account was found with this phone number. Please register or sign in first so your pass can be attached.',
     };
   }
 
   const existingClaims = await getStoredMomoClaims();
-  const txRef = (input.transactionId || '').trim() || `MOMO-${cleanPhone.slice(-4)}-${Date.now().toString().slice(-4)}`;
+
+  // Reject duplicate Transaction ID reuse
+  const duplicate = existingClaims.find(
+    (c) =>
+      c.transactionId &&
+      c.transactionId.toLowerCase() === txRef.toLowerCase() &&
+      c.status !== 'REJECTED'
+  );
+  if (duplicate) {
+    return {
+      success: false,
+      error: 'This Transaction ID has already been submitted and used.',
+    };
+  }
+
+  const plan = resolvePlanByAmount(input.amountGhs);
+
+  // Immediately grant pass in database for the plan's duration
+  const grantResult = await adminGrantAccess(cleanPhone, plan.validityDays);
+  if (!grantResult.success) {
+    return {
+      success: false,
+      error: grantResult.error || 'Failed to activate pass in database.',
+    };
+  }
 
   let resolvedName = (input.studentName || '').trim();
   if (!resolvedName) {
-    if (student?.full_name) {
-      resolvedName = student.full_name;
-    } else {
-      resolvedName = `Student ${cleanPhone.slice(-4)}`;
-    }
+    resolvedName = student?.full_name || `Student ${cleanPhone.slice(-4)}`;
   }
 
   const newClaim: MomoClaim = {
@@ -125,8 +182,11 @@ export async function createMomoClaim(input: {
     senderPhone: cleanSenderPhone,
     studentName: resolvedName,
     transactionId: txRef,
-    amountGhs: input.amountGhs || OFFICIAL_MOMO_DETAILS.amountGhs,
-    status: 'PENDING', // PENDING = Instant VIP Active, awaiting MoMo audit
+    planId: plan.id,
+    planLabel: plan.label,
+    validityDays: plan.validityDays,
+    amountGhs: plan.amountGhs,
+    status: 'PENDING', // Instant access active, awaiting Admin audit
     instantGranted: true,
     recipientNumber: OFFICIAL_MOMO_DETAILS.number,
     recipientName: OFFICIAL_MOMO_DETAILS.name,
@@ -140,7 +200,9 @@ export async function createMomoClaim(input: {
   return { success: true, claim: newClaim };
 }
 
-export async function approveMomoClaim(claimId: string): Promise<{ success: boolean; claim?: MomoClaim; error?: string }> {
+export async function approveMomoClaim(
+  claimId: string
+): Promise<{ success: boolean; claim?: MomoClaim; error?: string }> {
   const claims = await getStoredMomoClaims();
   const index = claims.findIndex((c) => c.id === claimId);
 
@@ -149,13 +211,17 @@ export async function approveMomoClaim(claimId: string): Promise<{ success: bool
   }
 
   const claim = claims[index];
+  const plan = resolvePlanByAmount(claim.amountGhs);
 
-  // Ensure 30-day VIP access is active for student
-  await adminGrantAccess(claim.studentPhone, OFFICIAL_MOMO_DETAILS.validityDays);
+  // Only re-grant if not already granted or if previously rejected
+  if (!claim.instantGranted || claim.status === 'REJECTED') {
+    await adminGrantAccess(claim.studentPhone, claim.validityDays || plan.validityDays);
+  }
 
   const approvedClaim: MomoClaim = {
     ...claim,
     status: 'APPROVED',
+    instantGranted: true,
     approvedAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };

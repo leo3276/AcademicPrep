@@ -99,8 +99,8 @@ export async function uploadPdfDocument(formData: FormData): Promise<UploadedPdf
   const level = formData.get('level') as any;
   const paperType = formData.get('paperType') as PdfPaperType | null;
 
-  // 1. Direct-to-Cloud Upload (Bypasses Vercel 4.5MB serverless body limit)
-  if (file && typeof file !== 'string') {
+  // 1. Direct-to-Cloud Upload for large files (> 4MB) to bypass Vercel 4.5MB serverless body limit
+  if (file && typeof file !== 'string' && file.size > 4 * 1024 * 1024) {
     try {
       // Step A: Request a signed upload authorization (< 1 KB request)
       const signRes = await fetch('/api/documents/upload-url', {
