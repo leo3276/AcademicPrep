@@ -16,7 +16,7 @@ const DOCUMENTS_BUCKET = 'documents';
 
 async function getStoredDocuments(): Promise<UploadedPdfDocument[]> {
   // 1. Primary: Fetch from Cloudflare R2 CDN with cache-buster
-  if (isR2Configured) {
+  if (isR2Configured || R2_PUBLIC_URL) {
     try {
       const res = await fetch(`${R2_PUBLIC_URL}/${MANIFEST_FILE_NAME}?t=${Date.now()}`, { cache: 'no-store' });
       if (res.ok) {

@@ -115,7 +115,7 @@ function sanitizeSlideList(list: UniversitySlide[]): UniversitySlide[] {
  */
 export async function getStoredUniversitySlides(): Promise<UniversitySlide[]> {
   // 1. Primary: Cloudflare R2
-  if (isR2Configured) {
+  if (isR2Configured || R2_PUBLIC_URL) {
     try {
       const res = await fetch(`${R2_PUBLIC_URL}/${MANIFEST_FILE_NAME}?t=${Date.now()}`, { cache: 'no-store' });
       if (res.ok) {
@@ -283,7 +283,7 @@ export async function deleteUniversitySlide(id: string): Promise<boolean> {
  */
 export async function getStoredUniversityVideos(): Promise<UniversityVideo[]> {
   // 1. Primary: Cloudflare R2
-  if (isR2Configured) {
+  if (isR2Configured || R2_PUBLIC_URL) {
     try {
       const res = await fetch(`${R2_PUBLIC_URL}/${VIDEO_MANIFEST_FILE_NAME}?t=${Date.now()}`, { cache: 'no-store' });
       if (res.ok) {
