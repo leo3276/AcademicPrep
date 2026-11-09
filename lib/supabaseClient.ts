@@ -12,8 +12,34 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
  * tokens and admin keys before touching the database.
  */
 
-const supabaseUrl = process.env.SUPABASE_URL || '';
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+function cleanVal(v: string | undefined): string {
+  if (!v) return '';
+  return v.replace(/^["']|["']$/g, '').trim();
+}
+
+function resolveEnv(...names: string[]): string {
+  for (const name of names) {
+    const val = cleanVal(process.env[name]);
+    if (val) return val;
+    // Check if key was accidentally pasted into Vercel as KEY=VALUE inside the name field
+    for (const [k, v] of Object.entries(process.env)) {
+      if (k.startsWith(`${name}=`)) {
+        const extracted = cleanVal(k.slice(name.length + 1) || v);
+        if (extracted) return extracted;
+      }
+    }
+  }
+  return '';
+}
+
+const supabaseUrl = resolveEnv('SUPABASE_URL', 'NEXT_PUBLIC_SUPABASE_URL');
+const supabaseServiceKey = resolveEnv(
+  'SUPABASE_SERVICE_ROLE_KEY',
+  'SUPABASE_SERVICE_KEY',
+  'SUPABASE_SECRET_KEY',
+  'SUPABASE_KEY',
+  'NEXT_PUBLIC_SUPABASE_ANON_KEY'
+);
 
 /**
  * True only when both the project URL and the service_role key are present in
