@@ -977,6 +977,24 @@ export default function AdminDashboardPage() {
     setMomoActionMsg({ kind: 'ok', text: `Successfully granted 30-day VIP pass to ${phone}!` });
   };
 
+  const handleClearAllMomoClaims = async () => {
+    if (!confirm('Clear all MoMo payment claims from the list?')) return;
+    setLoadingClaims(true);
+    setMomoActionMsg(null);
+    try {
+      const res = await fetch('/api/momo/claim', { method: 'DELETE' });
+      const data = await res.json();
+      if (data?.success) {
+        setMomoClaims([]);
+        setMomoActionMsg({ kind: 'ok', text: 'Cleared all MoMo payment claims.' });
+      }
+    } catch (e: any) {
+      setMomoActionMsg({ kind: 'bad', text: e?.message || 'Failed to clear claims.' });
+    } finally {
+      setLoadingClaims(false);
+    }
+  };
+
   const resetBlogForm = () => {
     setEditingPostId(null);
     setBlogTitle('');
@@ -1507,6 +1525,12 @@ export default function AdminDashboardPage() {
 
   // Metrics
   const metrics = getAdminMetrics();
+  const approvedMomoClaims = momoClaims.filter((c) => c.status === 'APPROVED');
+  const confirmedMomoRevenueGhs = approvedMomoClaims.reduce(
+    (sum, c) => sum + (Number(c.amountGhs) || 0),
+    0
+  );
+  const totalConfirmedRevenueGhs = metrics.totalCashFlowGhs + confirmedMomoRevenueGhs;
   const jhs3TopicsCount = JHS_CURRICULUM_TOPICS.filter(t => t.level === 'JHS 3').length;
   const totalTopicsAvailable = JHS_CURRICULUM_TOPICS.length;
   const activePaidStudentsCount = students.filter(s => s.accessType === 'Full Pass').length;
@@ -1704,7 +1728,7 @@ export default function AdminDashboardPage() {
               <span>•</span>
               <span><b>{activePaidStudentsCount}</b> subscribers</span>
               <span>•</span>
-              <span className="font-semibold text-slate-900">GH₵ {metrics.totalCashFlowGhs.toFixed(2)}</span>
+              <span className="font-semibold text-slate-900">GH₵ {totalConfirmedRevenueGhs.toFixed(2)}</span>
             </div>
 
             <button
@@ -2457,6 +2481,17 @@ export default function AdminDashboardPage() {
               </div>
 
               <div className="flex items-center gap-2">
+                {momoClaims.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={handleClearAllMomoClaims}
+                    disabled={loadingClaims}
+                    className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 hover:bg-rose-50 hover:border-rose-200 text-slate-600 hover:text-rose-700 text-xs font-semibold shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Clear All</span>
+                  </button>
+                )}
                 <button
                   type="button"
                   onClick={() => loadMomoClaims()}
@@ -2523,13 +2558,15 @@ export default function AdminDashboardPage() {
 
               <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs space-y-1">
                 <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
-                  Confirmed &amp; Verified
+                  Confirmed Revenue
                 </span>
                 <div className="flex items-baseline gap-2">
                   <span className="text-2xl font-black text-emerald-600 font-mono">
-                    {momoClaims.filter((c) => c.status === 'APPROVED').length}
+                    GH₵ {confirmedMomoRevenueGhs.toFixed(0)}
                   </span>
-                  <span className="text-xs text-slate-500">funds verified</span>
+                  <span className="text-xs text-slate-500">
+                    ({approvedMomoClaims.length} verified)
+                  </span>
                 </div>
               </div>
 
@@ -2648,7 +2685,7 @@ export default function AdminDashboardPage() {
                   <Smartphone className="w-8 h-8 text-slate-300 mx-auto" />
                   <p className="font-semibold text-slate-700">No payment claims recorded yet.</p>
                   <p className="text-slate-400 max-w-sm mx-auto">
-                    When students transfer GH₵ 25 on MTN MoMo to {OFFICIAL_MOMO_DETAILS.name} ({OFFICIAL_MOMO_DETAILS.number}) and enter their sender number, their instant VIP pass activations will appear here.
+                    When students transfer GH₵ 30, GH₵ 75, or GH₵ 299 on MTN MoMo to {OFFICIAL_MOMO_DETAILS.name} ({OFFICIAL_MOMO_DETAILS.number}) and submit their Transaction ID, their activations will appear here.
                   </p>
                 </div>
               ) : (
@@ -2657,7 +2694,7 @@ export default function AdminDashboardPage() {
                     <thead className="bg-slate-50/75 text-slate-500 font-medium uppercase tracking-wider border-b border-slate-200/80">
                       <tr>
                         <th className="px-4 py-3">Student Details</th>
-                        <th className="px-4 py-3">MoMo Sender Number</th>
+                        <th className="px-4 py-3">Transaction ID &amp; Plan</th>
                         <th className="px-4 py-3">Amount</th>
                         <th className="px-4 py-3">Activated At</th>
                         <th className="px-4 py-3">VIP Pass Status</th>
@@ -2705,22 +2742,29 @@ export default function AdminDashboardPage() {
                               </td>
 
                               <td className="px-4 py-3">
-                                <div className="flex items-center gap-1.5">
-                                  <span className="font-mono font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded border border-slate-200 select-all">
-                                    {senderNumber}
-                                  </span>
-                                  <button
-                                    type="button"
-                                    onClick={() => {
-                                      if (typeof navigator !== 'undefined') {
-                                        navigator.clipboard.writeText(senderNumber);
-                                      }
-                                    }}
-                                    className="p-1 text-slate-400 hover:text-slate-700 rounded transition cursor-pointer"
-                                    title="Copy MoMo Sender Number"
-                                  >
-                                    <Copy className="w-3.5 h-3.5" />
-                                  </button>
+                                <div className="space-y-1">
+                                  <div className="flex items-center gap-1.5">
+                                    <span className="font-mono font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded border border-slate-200 select-all">
+                                      {claim.transactionId || senderNumber}
+                                    </span>
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        if (typeof navigator !== 'undefined') {
+                                          navigator.clipboard.writeText(claim.transactionId || senderNumber);
+                                        }
+                                      }}
+                                      className="p-1 text-slate-400 hover:text-slate-700 rounded transition cursor-pointer"
+                                      title="Copy Transaction ID"
+                                    >
+                                      <Copy className="w-3.5 h-3.5" />
+                                    </button>
+                                  </div>
+                                  {claim.planLabel && (
+                                    <span className="text-[10px] text-slate-500 block">
+                                      {claim.planLabel} ({claim.validityDays || 30}d)
+                                    </span>
+                                  )}
                                 </div>
                               </td>
 
@@ -3596,9 +3640,11 @@ export default function AdminDashboardPage() {
               <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
                 <span className="text-xs text-slate-500 font-medium">Total Cash Flow Collected</span>
                 <span className="text-2xl font-semibold text-slate-900 font-mono mt-1 block">
-                  GH₵ {metrics.totalCashFlowGhs.toFixed(2)}
+                  GH₵ {totalConfirmedRevenueGhs.toFixed(2)}
                 </span>
-                <span className="text-[11px] text-slate-500 mt-1 block">MoMo and scratch-card retail</span>
+                <span className="text-[11px] text-slate-500 mt-1 block">
+                  Confirmed MoMo (GH₵ {confirmedMomoRevenueGhs.toFixed(0)}) + Vouchers (GH₵ {metrics.totalCashFlowGhs.toFixed(0)})
+                </span>
               </div>
 
               <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm">
@@ -3738,6 +3784,18 @@ export default function AdminDashboardPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 font-mono">
+                    {approvedMomoClaims.map((claim) => (
+                      <tr key={`momo-${claim.id}`} className="hover:bg-slate-50/60 transition">
+                        <td className="px-4 py-2.5 font-medium text-slate-900">{claim.transactionId || claim.id}</td>
+                        <td className="px-4 py-2.5 text-slate-600">{claim.studentPhone}</td>
+                        <td className="px-4 py-2.5 font-sans text-slate-700">MTN Mobile Money (Confirmed)</td>
+                        <td className="px-4 py-2.5 font-sans text-slate-600">{claim.planLabel || 'Full Pass'}</td>
+                        <td className="px-4 py-2.5 text-emerald-700 font-semibold">GH₵ {Number(claim.amountGhs).toFixed(2)}</td>
+                        <td className="px-4 py-2.5 text-right text-slate-400">
+                          {new Date(claim.approvedAt || claim.createdAt).toLocaleDateString()}
+                        </td>
+                      </tr>
+                    ))}
                     {transactions.map((tx) => (
                       <tr key={tx.id} className="hover:bg-slate-50/60 transition">
                         <td className="px-4 py-2.5 font-medium text-slate-900">{tx.reference}</td>

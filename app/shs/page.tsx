@@ -194,26 +194,20 @@ export default function ShsPortalPage() {
         </div>
       )}
 
-      {/* Free Trial Banner with Live Countdown (Minimalist) */}
-      {mounted && isTrialActive && (
-        <TrialCountdownBanner
-          variant="full"
-          title="Senior High (SHS / WASSCE) 30-Day Free Trial"
-          subtitle="Full unrestricted access to all 4 Core Subjects and 5 Elective Programme Strands with zero payment required."
-        />
-      )}
-      {mounted && student && !hasFullAccess && !isTrialActive && (
-        <div className="p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200/80 text-xs text-amber-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
-          <div className="flex items-center gap-2">
-            <Crown className="w-4 h-4 text-amber-600 shrink-0" />
-            <span>Your 30-day free trial has expired. Upgrade to VIP to unlock all SHS Core &amp; Elective lesson notes and quizzes.</span>
+      {mounted && student && !hasFullAccess && (
+        <div className="p-3.5 rounded-2xl bg-white border border-neutral-200/80 text-xs text-neutral-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-lg bg-neutral-100 border border-neutral-200/70 flex items-center justify-center shrink-0">
+              <Crown className="w-3.5 h-3.5 text-neutral-700" />
+            </div>
+            <span>Free Account • First 3 topics per subject are open. Unlock a Full Pass for all topics, past questions, trial mocks, and study timetable.</span>
           </div>
           <button
             type="button"
             onClick={() => setShowPaymentModal(true)}
-            className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto shadow-sm"
+            className="px-3.5 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-medium text-xs transition cursor-pointer whitespace-nowrap self-start sm:self-auto"
           >
-            Unlock VIP (GH₵ 25)
+            Unlock Full Pass
           </button>
         </div>
       )}

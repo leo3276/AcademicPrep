@@ -1,10 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getStoredMomoClaims, createMomoClaim, OFFICIAL_MOMO_DETAILS } from '@/lib/momoClaimsStore';
+import { getStoredMomoClaims, createMomoClaim, clearAllMomoClaims, OFFICIAL_MOMO_DETAILS } from '@/lib/momoClaimsStore';
 import { requireAdmin } from '@/lib/adminAuth';
 import { normalizePhone } from '@/lib/serverAuth';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+
+export async function DELETE(req: NextRequest) {
+  if (!requireAdmin(req)) {
+    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+  }
+  await clearAllMomoClaims();
+  return NextResponse.json({ success: true, claims: [] });
+}
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);

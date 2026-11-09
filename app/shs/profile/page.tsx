@@ -328,17 +328,13 @@ function ShsProfileContent() {
                 <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-700">
                   {student.currentLevel}
                 </span>
-                {isTrialActive ? (
-                  <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-blue-50 text-blue-800 border border-neutral-200/80">
-                    Free Trial ({trialDaysRemaining}d remaining)
-                  </span>
-                ) : student.hasFullAccess ? (
+                {student.hasFullAccess ? (
                   <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
-                    VIP Active
+                    Full Pass Active
                   </span>
                 ) : (
-                  <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
-                    Trial Expired
+                  <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-neutral-100 text-neutral-700 border border-neutral-200">
+                    Free Account
                   </span>
                 )}
               </div>
@@ -687,14 +683,14 @@ function ShsProfileContent() {
                 </p>
               </div>
 
-              {!isTrialActive && !student?.hasFullAccess && (
+                  {!student?.hasFullAccess && (
                 <button
                   type="button"
                   onClick={() => setShowBuyModal(true)}
-                  className="py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer self-start sm:self-auto shrink-0 shadow-xs"
+                  className="py-2.5 px-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-medium text-xs transition flex items-center justify-center gap-1.5 cursor-pointer self-start sm:self-auto shrink-0"
                 >
-                  <Crown className="w-3.5 h-3.5" />
-                  <span>Buy VIP Pass (GH₵ 25)</span>
+                  <Lock className="w-3.5 h-3.5" />
+                  <span>Unlock Full Pass</span>
                 </button>
               )}
             </div>

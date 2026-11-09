@@ -19,6 +19,14 @@ const DATA_FILE = path.join(process.cwd(), 'data', 'momo_claims.json');
 const MANIFEST_FILE_NAME = 'momo_claims_manifest.json';
 const DOCUMENTS_BUCKET = 'documents';
 
+function filterValidClaims(raw: unknown): MomoClaim[] {
+  if (!Array.isArray(raw)) return [];
+  // Filter out legacy GH₵ 25 claims from before the 3-tier pricing scheme
+  return (raw as MomoClaim[]).filter(
+    (c) => Boolean(c && c.planId && Number(c.amountGhs) !== 25)
+  );
+}
+
 export async function getStoredMomoClaims(): Promise<MomoClaim[]> {
   // 1. Primary: Fetch from Cloudflare R2
   if (isR2Configured || R2_PUBLIC_URL) {
@@ -29,7 +37,7 @@ export async function getStoredMomoClaims(): Promise<MomoClaim[]> {
       if (res.ok) {
         const parsed = await res.json();
         if (Array.isArray(parsed)) {
-          return parsed;
+          return filterValidClaims(parsed);
         }
       }
     } catch (err) {
@@ -47,7 +55,7 @@ export async function getStoredMomoClaims(): Promise<MomoClaim[]> {
       const text = await data.text();
       const parsed = JSON.parse(text);
       if (Array.isArray(parsed)) {
-        return parsed;
+        return filterValidClaims(parsed);
       }
     }
   } catch (err) {
@@ -60,7 +68,7 @@ export async function getStoredMomoClaims(): Promise<MomoClaim[]> {
       const raw = fs.readFileSync(DATA_FILE, 'utf8');
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed)) {
-        return parsed;
+        return filterValidClaims(parsed);
       }
     }
   } catch (err) {
@@ -68,6 +76,10 @@ export async function getStoredMomoClaims(): Promise<MomoClaim[]> {
   }
 
   return [];
+}
+
+export async function clearAllMomoClaims(): Promise<void> {
+  await saveStoredMomoClaims([]);
 }
 
 export async function saveStoredMomoClaims(claims: MomoClaim[]): Promise<void> {

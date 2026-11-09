@@ -139,9 +139,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [student, setStudent] = useState<Student | null>(null);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [trialDaysRemaining, setTrialDaysRemaining] = useState<number>(30);
-  const [trialExpiresAt, setTrialExpiresAt] = useState<string | null>(null);
-  const [isTrialActive, setIsTrialActive] = useState<boolean>(true);
+  const [trialDaysRemaining] = useState<number>(0);
+  const [trialExpiresAt] = useState<string | null>(null);
+  const [isTrialActive] = useState<boolean>(false);
   const [topicProgress, setTopicProgress] = useState<Record<string, StudentTopicProgress>>({});
   const [pins, setPins] = useState<AccessPin[]>([]);
   const [transactions, setTransactions] = useState<CashFlowTransaction[]>([]);
@@ -155,22 +155,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (typeof window !== 'undefined') {
           RETIRED_STORAGE_KEYS.forEach((key) => window.localStorage.removeItem(key));
           window.sessionStorage.removeItem('academicprep_is_admin');
-
-          let trialStarted = window.localStorage.getItem(STORAGE_KEYS.TRIAL_STARTED_AT);
-          let trialExpires = window.localStorage.getItem(STORAGE_KEYS.TRIAL_EXPIRES_AT);
-          if (!trialStarted || !trialExpires) {
-            trialStarted = new Date().toISOString();
-            trialExpires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
-            window.localStorage.setItem(STORAGE_KEYS.TRIAL_STARTED_AT, trialStarted);
-            window.localStorage.setItem(STORAGE_KEYS.TRIAL_EXPIRES_AT, trialExpires);
-          }
-          const diff = new Date(trialExpires).getTime() - Date.now();
-          const daysLeft = Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
-          if (isMounted) {
-            setTrialExpiresAt(trialExpires);
-            setTrialDaysRemaining(daysLeft);
-            setIsTrialActive(daysLeft > 0);
-          }
+          window.localStorage.removeItem(STORAGE_KEYS.TRIAL_STARTED_AT);
+          window.localStorage.removeItem(STORAGE_KEYS.TRIAL_EXPIRES_AT);
         }
 
         // 1. INSTANT HYDRATION: Read local cached student, progress, and exams synchronously (0ms)

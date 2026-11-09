@@ -253,21 +253,18 @@ export default function JhsPortalPage() {
             </div>
           )}
 
-          {mounted && isTrialActive && (
-            <TrialCountdownBanner variant="compact" />
-          )}
-          {mounted && !hasFullAccess && !isTrialActive && (
-            <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200/80 text-[11px] text-amber-900 flex items-center justify-between">
-              <span className="flex items-center gap-1.5">
-                <KeyRound className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                <span>Free Trial Ended. Upgrade to VIP to unlock all curriculum topics.</span>
-              </span>
+          {mounted && !hasFullAccess && (
+            <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-200/80 text-xs text-neutral-700 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2 min-w-0">
+                <Lock className="w-3.5 h-3.5 text-neutral-500 shrink-0" />
+                <span className="truncate">Free Account • First 3 topics per subject included.</span>
+              </div>
               <button
                 type="button"
                 onClick={() => setShowPaymentModal(true)}
-                className="font-bold underline text-amber-800 hover:text-amber-950 shrink-0 cursor-pointer"
+                className="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-[11px] font-medium shrink-0 transition cursor-pointer"
               >
-                Unlock VIP
+                Unlock Full Pass
               </button>
             </div>
           )}
