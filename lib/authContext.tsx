@@ -115,19 +115,19 @@ function writeLocalStorage(key: string, value: unknown): void {
   }
 }
 
-/** Derive the cash-flow ledger from redeemed vouchers and Paystack payments. */
+/** Derive the cash-flow ledger from redeemed vouchers and Mobile Money payments. */
 function deriveTransactions(pinRows: AccessPin[]): CashFlowTransaction[] {
   return pinRows
     .filter((pin) => pin.status === 'REDEEMED')
     .map((pin) => {
-      const isPaystack = pin.batchId === 'BATCH-PAYSTACK-MOMO' || pin.pinCode.includes('MOMO');
+      const isMomo = pin.batchId === 'BATCH-PAYSTACK-MOMO' || pin.pinCode.includes('MOMO');
       return {
         id: `tx-${pin.id}`,
         reference: pin.pinCode,
         studentPhone: pin.redeemedByStudentId || 'Verified Student',
-        amountGhs: Number(pin.priceGhs) || 25,
+        amountGhs: Number(pin.priceGhs) || 30,
         transactionType: 'PIN_PURCHASE' as const,
-        paymentMethod: isPaystack ? 'Paystack Mobile Money' : 'Scratch-Card / PIN Voucher',
+        paymentMethod: isMomo ? 'Direct Mobile Money' : 'Scratch-Card / PIN Voucher',
         pinCodeUsed: pin.pinCode,
         description: `${pin.validityDays || 30}-Day Full Access Pass`,
         createdAt: pin.redeemedAt || pin.createdAt,

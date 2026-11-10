@@ -65,9 +65,9 @@ export const HOMEPAGE_TOUR_STEPS: TourStep[] = [
     id: 'nav-vip',
     targetId: 'tour-nav-vip',
     stepNumber: 8,
-    title: 'VIP Pass & Full Syllabus Access',
-    text: 'Upgrade to VIP for GHS 25/month via Mobile Money (MTN, Telecel, AT) or an Access Voucher PIN to unlock unlimited quizzes, mock exams, and analytics.',
-    tip: 'Instant activation via Paystack MoMo or scratch card PIN.',
+    title: 'Full Pass & Syllabus Access',
+    text: 'Unlock a Full Pass from GH₵ 30/month via Direct MTN Mobile Money or an Access Voucher PIN to access all topics, past questions, trial mocks, and weekly exams.',
+    tip: 'Simple activation via Direct MTN MoMo or scratch card PIN.',
   },
 ];
 

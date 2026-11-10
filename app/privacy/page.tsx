@@ -79,7 +79,7 @@ export default function PrivacyPage() {
               <li><strong>Student Name &amp; Academic Level:</strong> e.g., JHS 1, JHS 2, JHS 3 / BECE, SHS 1-3 / WASSCE.</li>
               <li><strong>Contact Information:</strong> Phone number (used for WhatsApp and SMS curriculum updates, mock alerts, and account access).</li>
               <li><strong>Academic Progress &amp; Quiz Results:</strong> Mock examination scores and curriculum topic performance to provide personalized study feedback.</li>
-              <li><strong>Payment Records:</strong> Transaction confirmation identifiers processed securely through Paystack (we do not store credit card or Mobile Money PINs).</li>
+              <li><strong>Payment Records:</strong> Mobile Money sender phone numbers and Access PIN voucher redemptions used to verify student passes (we never store Mobile Money PINs).</li>
             </ul>
           </div>
         </section>
