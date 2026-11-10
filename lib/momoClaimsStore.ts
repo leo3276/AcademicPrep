@@ -22,9 +22,15 @@ const DOCUMENTS_BUCKET = 'documents';
 
 function filterValidClaims(raw: unknown): MomoClaim[] {
   if (!Array.isArray(raw)) return [];
-  // Filter out legacy GH₵ 25 claims from before the 3-tier pricing scheme
+  // Keep only verified Paystack transactions; purge all legacy manual MoMo claims
   return (raw as MomoClaim[]).filter(
-    (c) => Boolean(c && c.planId && Number(c.amountGhs) !== 25)
+    (c) =>
+      Boolean(
+        c &&
+          c.planId &&
+          Number(c.amountGhs) !== 25 &&
+          (c.recipientNumber === 'PAYSTACK' || String(c.id || '').startsWith('PAYSTACK-'))
+      )
   );
 }
 
