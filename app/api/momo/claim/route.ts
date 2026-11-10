@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: '30-Day VIP Pass granted immediately! Admin will audit your payment on MTN MoMo.',
+      message: 'Payment submitted! Admin will confirm your MoMo transfer and unlock your pass.',
       claim: result.claim,
     });
   } catch (err: any) {

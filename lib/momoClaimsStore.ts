@@ -37,7 +37,11 @@ export async function getStoredMomoClaims(): Promise<MomoClaim[]> {
       if (res.ok) {
         const parsed = await res.json();
         if (Array.isArray(parsed)) {
-          return filterValidClaims(parsed);
+          const valid = filterValidClaims(parsed);
+          if (valid.length !== parsed.length) {
+            await saveStoredMomoClaims(valid);
+          }
+          return valid;
         }
       }
     } catch (err) {
@@ -55,7 +59,11 @@ export async function getStoredMomoClaims(): Promise<MomoClaim[]> {
       const text = await data.text();
       const parsed = JSON.parse(text);
       if (Array.isArray(parsed)) {
-        return filterValidClaims(parsed);
+        const valid = filterValidClaims(parsed);
+        if (valid.length !== parsed.length) {
+          await saveStoredMomoClaims(valid);
+        }
+        return valid;
       }
     }
   } catch (err) {
@@ -133,18 +141,15 @@ export async function createMomoClaim(input: {
   const cleanSenderPhone = input.senderPhone ? normalizePhone(input.senderPhone) : cleanPhone;
 
   if (!cleanPhone || cleanPhone.length < 10) {
-    return { success: false, error: 'Please enter a valid 10-digit phone number (e.g. 0241234567).' };
+    return { success: false, error: 'Please enter your valid 10-digit account phone number (e.g. 0241234567).' };
   }
 
-  // Validate Transaction ID
-  const txValidation = validateMomoTransactionId(input.transactionId);
-  if (!txValidation.valid) {
+  if (!cleanSenderPhone || !/^0[235]\d{8}$/.test(cleanSenderPhone)) {
     return {
       success: false,
-      error: txValidation.error || 'Please enter a valid Mobile Money Transaction ID.',
+      error: 'Please enter the 10-digit Mobile Money number used to send the payment (e.g. 0241234567).',
     };
   }
-  const txRef = txValidation.cleanedId;
 
   // Check if student account exists in DB
   const student = await findStudentByPhone(cleanPhone);
@@ -157,35 +162,38 @@ export async function createMomoClaim(input: {
   }
 
   const existingClaims = await getStoredMomoClaims();
-
-  // Reject duplicate Transaction ID reuse
-  const duplicate = existingClaims.find(
-    (c) =>
-      c.transactionId &&
-      c.transactionId.toLowerCase() === txRef.toLowerCase() &&
-      c.status !== 'REJECTED'
-  );
-  if (duplicate) {
-    return {
-      success: false,
-      error: 'This Transaction ID has already been submitted and used.',
-    };
-  }
-
   const plan = resolvePlanByAmount(input.amountGhs);
 
-  // Immediately grant pass in database for the plan's duration
-  const grantResult = await adminGrantAccess(cleanPhone, plan.validityDays);
-  if (!grantResult.success) {
-    return {
-      success: false,
-      error: grantResult.error || 'Failed to activate pass in database.',
-    };
-  }
+  // If student already has a pending claim for the same sender phone and plan, update & return it instead of duplicating
+  const existingPendingIndex = existingClaims.findIndex(
+    (c) =>
+      c.studentPhone === cleanPhone &&
+      c.status === 'PENDING' &&
+      c.planId === plan.id
+  );
 
   let resolvedName = (input.studentName || '').trim();
   if (!resolvedName) {
     resolvedName = student?.full_name || `Student ${cleanPhone.slice(-4)}`;
+  }
+
+  const txRef = (input.transactionId || '').trim() || `MOMO-${cleanSenderPhone}`;
+
+  if (existingPendingIndex !== -1) {
+    const updatedPending: MomoClaim = {
+      ...existingClaims[existingPendingIndex],
+      senderPhone: cleanSenderPhone,
+      studentName: resolvedName,
+      transactionId: txRef,
+      amountGhs: plan.amountGhs,
+      planId: plan.id,
+      planLabel: plan.label,
+      validityDays: plan.validityDays,
+      updatedAt: new Date().toISOString(),
+    };
+    existingClaims[existingPendingIndex] = updatedPending;
+    await saveStoredMomoClaims(existingClaims);
+    return { success: true, claim: updatedPending };
   }
 
   const newClaim: MomoClaim = {
@@ -198,8 +206,8 @@ export async function createMomoClaim(input: {
     planLabel: plan.label,
     validityDays: plan.validityDays,
     amountGhs: plan.amountGhs,
-    status: 'PENDING', // Instant access active, awaiting Admin audit
-    instantGranted: true,
+    status: 'PENDING', // Held until Admin confirms payment in Admin Panel (0% fake unlocks)
+    instantGranted: false,
     recipientNumber: OFFICIAL_MOMO_DETAILS.number,
     recipientName: OFFICIAL_MOMO_DETAILS.name,
     createdAt: new Date().toISOString(),
@@ -225,9 +233,13 @@ export async function approveMomoClaim(
   const claim = claims[index];
   const plan = resolvePlanByAmount(claim.amountGhs);
 
-  // Only re-grant if not already granted or if previously rejected
-  if (!claim.instantGranted || claim.status === 'REJECTED') {
-    await adminGrantAccess(claim.studentPhone, claim.validityDays || plan.validityDays);
+  // Grant student pass in database upon Admin confirmation
+  const grantResult = await adminGrantAccess(claim.studentPhone, claim.validityDays || plan.validityDays);
+  if (!grantResult.success) {
+    return {
+      success: false,
+      error: grantResult.error || 'Failed to activate student pass in database.',
+    };
   }
 
   const approvedClaim: MomoClaim = {

@@ -91,10 +91,8 @@ function LoginFormContent() {
               </span>
               <span>
                 {student.accessType === 'Full Pass'
-                  ? '🟢 VIP Pass'
-                  : isTrialActive
-                  ? `🎁 30-Day Free Trial (${trialDaysRemaining}d left)`
-                  : '🟡 Trial Expired'}
+                  ? 'Full Pass Active'
+                  : 'Free Account'}
               </span>
             </div>
           </div>
@@ -490,21 +488,21 @@ function LoginFormContent() {
             {/* Access PIN (Optional) */}
             <div id="guide-step-access" className="pt-2 border-t border-slate-100 space-y-1.5">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
-                  <KeyRound className="w-3.5 h-3.5 text-amber-600" />
+                <label className="text-xs font-bold uppercase tracking-wider text-neutral-700 flex items-center gap-1.5">
+                  <KeyRound className="w-3.5 h-3.5 text-neutral-600" />
                   <span>Access PIN Code (Optional)</span>
                 </label>
-                <span className="text-[10px] text-slate-500 font-medium">Leave blank for 30-Day Free Trial</span>
+                <span className="text-[10px] text-slate-500 font-medium">Leave blank for Free Account</span>
               </div>
               <input
                 type="text"
                 placeholder="e.g. PREP-XXXX-XXXX"
                 value={regAccessPin}
                 onChange={(e) => setRegAccessPin(e.target.value.toUpperCase())}
-                className="w-full px-3 py-2.5 rounded-xl border border-amber-300 bg-amber-50/40 text-xs font-mono tracking-wider text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500 uppercase placeholder:normal-case placeholder:font-sans"
+                className="w-full px-3 py-2.5 rounded-xl border border-neutral-300 bg-neutral-50/40 text-xs font-mono tracking-wider text-slate-900 focus:outline-none focus:ring-2 focus:ring-neutral-900 uppercase placeholder:normal-case placeholder:font-sans"
               />
               <p className="text-[11px] text-slate-500 leading-normal">
-                If you have an Access Pass, enter it for instant permanent VIP access. Otherwise, leave it blank to start right away with your 30-day unrestricted free trial!
+                Have an Access PIN? Enter it now to unlock a Full Pass, or leave blank to register a Free Account (includes the first 3 topics per subject) and unlock anytime via Mobile Money.
               </p>
             </div>
 

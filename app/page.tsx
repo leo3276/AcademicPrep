@@ -147,22 +147,21 @@ export default function HomePage() {
           </div>
         </div>
 
-      {/* Public Announcement: 30-Day Free Trial Notice */}
+      {/* Public Announcement: Academic Pass & Free Preview */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2">
         <div className="rounded-2xl bg-white/80 backdrop-blur-xl border border-neutral-200/70 p-4 sm:p-5 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
-            
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-800 bg-neutral-100 px-2 py-0.5 rounded">
-                  Special Promotion
+                  Student Access
                 </span>
                 <h3 className="text-sm font-bold text-slate-900">
-                  30 Day Free Trial: All Topics, Quizzes &amp; Offline Tools Unlocked
+                  Free Preview Available • Full Pass Unlocks All Topics, Past Questions &amp; Exams
                 </h3>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed max-w-3xl">
-                Every newly registered student enjoys a <b>complimentary 30-Day Free Trial</b> with full unrestricted access to all JHS &amp; SHS lesson notes, diagnostic quizzes, past papers, and timetables. <b>Zero payment required.</b>
+                Free accounts include the <b>first 3 curriculum topics per subject</b> (and first 2 slides per University course). Unlock a Full Pass from <b>GH₵ 30/month</b> for all topics, WAEC past questions, trial mocks, weekly exams, timetables, and AI Study Buddy.
               </p>
             </div>
           </div>
@@ -170,9 +169,9 @@ export default function HomePage() {
           <div className="flex items-center gap-2 shrink-0 self-end md:self-center">
             <Link
               href="/login"
-              className="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
+              className="px-3.5 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
             >
-              <span>Start Free Trial</span>
+              <span>Get Started</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>

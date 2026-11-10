@@ -108,19 +108,12 @@ export default function AccountPage() {
               {hasFullAccess ? (
                 <>
                   <ShieldCheck className="w-4 h-4 text-blue-600" />
-                  <span className="font-semibold text-slate-800">VIP Pass Active</span>
-                </>
-              ) : isTrialActive ? (
-                <>
-                  <Sparkles className="w-4 h-4 text-blue-600" />
-                  <span className="font-semibold text-slate-800">
-                    Free Trial ({trialDaysRemaining}d remaining)
-                  </span>
+                  <span className="font-semibold text-slate-800">Full Pass Active</span>
                 </>
               ) : (
                 <>
-                  <AlertCircle className="w-4 h-4 text-amber-600" />
-                  <span className="font-semibold text-amber-900">Pass Expired</span>
+                  <AlertCircle className="w-4 h-4 text-neutral-500" />
+                  <span className="font-semibold text-neutral-800">Free Account</span>
                 </>
               )}
             </div>

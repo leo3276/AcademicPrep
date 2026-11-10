@@ -42,14 +42,22 @@ export interface SafeStudent {
   createdAt: string;
 }
 
+// Passes granted before the 2026-11-10 pricing rollout (expiry < 2026-12-10T06:50:00Z)
+// are legacy unverified unlocks and are reset to Free Account status.
+const LEGACY_PASS_EXPIRY_CUTOFF_ISO = '2026-12-10T06:50:00.000Z';
+const LEGACY_PASS_EXPIRY_CUTOFF_MS = new Date(LEGACY_PASS_EXPIRY_CUTOFF_ISO).getTime();
+
 /**
  * Convert a database row to the client-facing shape, deriving live access
  * state from access_expires_at so a lapsed subscription never reports as VIP.
  */
 export function toSafeStudent(row: Record<string, any>): SafeStudent {
-  const expiresAt = row.access_expires_at || null;
-  const isExpired = expiresAt ? new Date(expiresAt).getTime() <= Date.now() : false;
-  const hasFullAccess = Boolean(row.has_full_access) && !isExpired;
+  const rawExpiresAt = row.access_expires_at || null;
+  const expiryMs = rawExpiresAt ? new Date(rawExpiresAt).getTime() : 0;
+  const isLegacyUnverified = !rawExpiresAt || expiryMs < LEGACY_PASS_EXPIRY_CUTOFF_MS;
+  const expiresAt = isLegacyUnverified ? null : rawExpiresAt;
+  const isExpired = expiresAt ? expiryMs <= Date.now() : false;
+  const hasFullAccess = !isLegacyUnverified && Boolean(row.has_full_access) && !isExpired;
 
   return {
     id: row.id,
@@ -57,7 +65,11 @@ export function toSafeStudent(row: Record<string, any>): SafeStudent {
     fullName: row.full_name,
     currentLevel: row.current_level || 'JHS 1',
     hasFullAccess,
-    accessType: isExpired ? 'Expired' : row.access_type || (hasFullAccess ? 'Full Pass' : 'Free Trial'),
+    accessType: isLegacyUnverified
+      ? 'Free Trial'
+      : isExpired
+      ? 'Expired'
+      : row.access_type || (hasFullAccess ? 'Full Pass' : 'Free Trial'),
     accessExpiresAt: expiresAt,
     completedTopicIds: row.completed_topic_ids || [],
     topicsCompletedCount: row.topics_completed_count || 0,
@@ -177,6 +189,20 @@ export async function fetchStudentsForAdmin(): Promise<any[]> {
     return [];
   }
 
+  // Clean up any legacy pre-pricing-rollout Full Pass / Expired rows in Supabase
+  try {
+    await supabaseAdmin
+      .from('students')
+      .update({
+        has_full_access: false,
+        access_type: 'Free Trial',
+        access_expires_at: null,
+      })
+      .lt('access_expires_at', LEGACY_PASS_EXPIRY_CUTOFF_ISO);
+  } catch (cleanupErr) {
+    console.warn('[dbService] Legacy pass cleanup skipped:', cleanupErr);
+  }
+
   // Paginate through Supabase in chunks of 1000 to bypass PostgREST's default 1000 row cap
   const allRows: any[] = [];
   const batchSize = 1000;
@@ -210,19 +236,23 @@ export async function fetchStudentsForAdmin(): Promise<any[]> {
     from += batchSize;
   }
 
-  return allRows.map((s: any) => ({
-    id: s.id,
-    phone: s.phone_number,
-    name: s.full_name,
-    level: s.current_level,
-    accessType: s.access_type,
-    accessExpiresAt: s.access_expires_at,
-    lastActive: s.last_active_at,
-    topicsCompleted: s.topics_completed_count || 0,
-    completedTopicIds: s.completed_topic_ids || [],
-    avgScorePercentage: s.avg_score_percentage || 0,
-    registeredAt: s.created_at,
-  }));
+  return allRows.map((s: any) => {
+    const rawExpires = s.access_expires_at || null;
+    const isLegacy = !rawExpires || new Date(rawExpires).getTime() < LEGACY_PASS_EXPIRY_CUTOFF_MS;
+    return {
+      id: s.id,
+      phone: s.phone_number,
+      name: s.full_name,
+      level: s.current_level,
+      accessType: isLegacy ? 'Free Trial' : s.access_type,
+      accessExpiresAt: isLegacy ? null : rawExpires,
+      lastActive: s.last_active_at,
+      topicsCompleted: s.topics_completed_count || 0,
+      completedTopicIds: s.completed_topic_ids || [],
+      avgScorePercentage: s.avg_score_percentage || 0,
+      registeredAt: s.created_at,
+    };
+  });
 }
 
 export async function findStudentByPhone(phone: string): Promise<Record<string, any> | null> {

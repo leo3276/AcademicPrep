@@ -2476,7 +2476,7 @@ export default function AdminDashboardPage() {
                   Direct MoMo Verifications &amp; Pass Management
                 </h2>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Students get instant 30-day VIP access upon entering their sender number. Cross-check your MTN MoMo SIM (<b>{OFFICIAL_MOMO_DETAILS.name} - {OFFICIAL_MOMO_DETAILS.number}</b>). If payment was not received, click <b>Revoke Pass</b> to cancel access immediately.
+                  Students submit the MoMo number used to pay (<b>{OFFICIAL_MOMO_DETAILS.name} - {OFFICIAL_MOMO_DETAILS.number}</b>). Passes stay locked until you verify your MTN MoMo SIM and click <b>Confirm &amp; Unlock</b>.
                 </p>
               </div>
 
@@ -2546,13 +2546,13 @@ export default function AdminDashboardPage() {
 
               <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs space-y-1">
                 <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
-                  Instant VIPs (Needs Audit)
+                  Awaiting Confirmation
                 </span>
                 <div className="flex items-baseline gap-2">
                   <span className="text-2xl font-black text-amber-600 font-mono">
                     {momoClaims.filter((c) => c.status === 'PENDING').length}
                   </span>
-                  <span className="text-xs text-slate-500">active, check MoMo</span>
+                  <span className="text-xs text-slate-500">locked, check MoMo</span>
                 </div>
               </div>
 
@@ -2685,7 +2685,7 @@ export default function AdminDashboardPage() {
                   <Smartphone className="w-8 h-8 text-slate-300 mx-auto" />
                   <p className="font-semibold text-slate-700">No payment claims recorded yet.</p>
                   <p className="text-slate-400 max-w-sm mx-auto">
-                    When students transfer GH₵ 30, GH₵ 75, or GH₵ 299 on MTN MoMo to {OFFICIAL_MOMO_DETAILS.name} ({OFFICIAL_MOMO_DETAILS.number}) and submit their Transaction ID, their activations will appear here.
+                    When students transfer GH₵ 30, GH₵ 75, or GH₵ 299 on MTN MoMo to {OFFICIAL_MOMO_DETAILS.name} ({OFFICIAL_MOMO_DETAILS.number}) and submit the MoMo number used to pay, their requests will appear here.
                   </p>
                 </div>
               ) : (
@@ -2694,10 +2694,10 @@ export default function AdminDashboardPage() {
                     <thead className="bg-slate-50/75 text-slate-500 font-medium uppercase tracking-wider border-b border-slate-200/80">
                       <tr>
                         <th className="px-4 py-3">Student Details</th>
-                        <th className="px-4 py-3">Transaction ID &amp; Plan</th>
+                        <th className="px-4 py-3">MoMo Number Used &amp; Plan</th>
                         <th className="px-4 py-3">Amount</th>
-                        <th className="px-4 py-3">Activated At</th>
-                        <th className="px-4 py-3">VIP Pass Status</th>
+                        <th className="px-4 py-3">Submitted At</th>
+                        <th className="px-4 py-3">Pass Status</th>
                         <th className="px-4 py-3 text-right">Actions</th>
                       </tr>
                     </thead>
@@ -2745,17 +2745,17 @@ export default function AdminDashboardPage() {
                                 <div className="space-y-1">
                                   <div className="flex items-center gap-1.5">
                                     <span className="font-mono font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded border border-slate-200 select-all">
-                                      {claim.transactionId || senderNumber}
+                                      {senderNumber}
                                     </span>
                                     <button
                                       type="button"
                                       onClick={() => {
                                         if (typeof navigator !== 'undefined') {
-                                          navigator.clipboard.writeText(claim.transactionId || senderNumber);
+                                          navigator.clipboard.writeText(senderNumber);
                                         }
                                       }}
                                       className="p-1 text-slate-400 hover:text-slate-700 rounded transition cursor-pointer"
-                                      title="Copy Transaction ID"
+                                      title="Copy MoMo Number"
                                     >
                                       <Copy className="w-3.5 h-3.5" />
                                     </button>
@@ -2780,19 +2780,19 @@ export default function AdminDashboardPage() {
                                 {claim.status === 'PENDING' && (
                                   <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-white text-amber-900 border border-neutral-200/90 shadow-2xs">
                                     <span className="w-1.5 h-1.5 rounded-full bg-amber-600" />
-                                    <span>VIP ACTIVE (CHECK MOMO)</span>
+                                    <span>AWAITING CONFIRMATION (LOCKED)</span>
                                   </span>
                                 )}
                                 {claim.status === 'APPROVED' && (
                                   <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-white text-emerald-800 border border-neutral-200/90 shadow-2xs">
                                     <CheckCircle2 className="w-3 h-3" />
-                                    <span>PAYMENT CONFIRMED</span>
+                                    <span>CONFIRMED &amp; UNLOCKED</span>
                                   </span>
                                 )}
                                 {claim.status === 'REJECTED' && (
                                   <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-white text-rose-800 border border-neutral-200/90 shadow-2xs">
                                     <XCircle className="w-3 h-3" />
-                                    <span>PASS REVOKED</span>
+                                    <span>DECLINED / REVOKED</span>
                                   </span>
                                 )}
                               </td>
@@ -2805,10 +2805,10 @@ export default function AdminDashboardPage() {
                                       disabled={isProcessing}
                                       onClick={() => handleApproveMomoClaim(claim.id)}
                                       className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-300 text-white font-bold text-xs transition shadow-xs flex items-center gap-1 cursor-pointer"
-                                      title="Confirmed payment arrived in MoMo"
+                                      title="Confirm payment arrived in MoMo and unlock pass"
                                     >
                                       <CheckCircle2 className="w-3.5 h-3.5" />
-                                      <span>{isProcessing ? 'Saving...' : 'Confirm Payment'}</span>
+                                      <span>{isProcessing ? 'Saving...' : 'Confirm & Unlock'}</span>
                                     </button>
 
                                     <button
@@ -2816,10 +2816,10 @@ export default function AdminDashboardPage() {
                                       disabled={isProcessing}
                                       onClick={() => handleRejectMomoClaim(claim.id)}
                                       className="px-2.5 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 font-bold text-xs transition cursor-pointer flex items-center gap-1"
-                                      title="No payment found on MoMo - revoke VIP immediately"
+                                      title="No payment found on MoMo - decline claim"
                                     >
                                       <XCircle className="w-3.5 h-3.5 text-rose-600" />
-                                      <span>Revoke Pass</span>
+                                      <span>Decline</span>
                                     </button>
                                   </div>
                                 ) : claim.status === 'APPROVED' ? (
