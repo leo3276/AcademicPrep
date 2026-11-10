@@ -35,12 +35,18 @@ export const PRICING_PLANS: PricingPlan[] = [
 ];
 
 export const OFFICIAL_MOMO_DETAILS = {
-  number: '0553906598',
-  name: 'EMMANUEL KWEKU OSEI',
+  number: '0593119669',
+  name: 'NATHANIEL CALEB MAWUNYO DEKU',
   network: 'MTN Mobile Money',
   amountGhs: 30,
   validityDays: 30,
 };
+
+export function resolvePlanById(planId?: string): PricingPlan {
+  if (planId === 'annual') return PRICING_PLANS[2];
+  if (planId === 'term') return PRICING_PLANS[1];
+  return PRICING_PLANS[0];
+}
 
 export function resolvePlanByAmount(amountGhs?: number): PricingPlan {
   if (amountGhs === 299) return PRICING_PLANS[2];

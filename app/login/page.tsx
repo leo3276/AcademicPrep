@@ -485,27 +485,6 @@ function LoginFormContent() {
               </div>
             </div>
 
-            {/* Access PIN (Optional) */}
-            <div id="guide-step-access" className="pt-2 border-t border-slate-100 space-y-1.5">
-              <div className="flex items-center justify-between">
-                <label className="text-xs font-bold uppercase tracking-wider text-neutral-700 flex items-center gap-1.5">
-                  <KeyRound className="w-3.5 h-3.5 text-neutral-600" />
-                  <span>Access PIN Code (Optional)</span>
-                </label>
-                <span className="text-[10px] text-slate-500 font-medium">Leave blank for Free Account</span>
-              </div>
-              <input
-                type="text"
-                placeholder="e.g. PREP-XXXX-XXXX"
-                value={regAccessPin}
-                onChange={(e) => setRegAccessPin(e.target.value.toUpperCase())}
-                className="w-full px-3 py-2.5 rounded-xl border border-neutral-300 bg-neutral-50/40 text-xs font-mono tracking-wider text-slate-900 focus:outline-none focus:ring-2 focus:ring-neutral-900 uppercase placeholder:normal-case placeholder:font-sans"
-              />
-              <p className="text-[11px] text-slate-500 leading-normal">
-                Have an Access PIN? Enter it now to unlock a Full Pass, or leave blank to register a Free Account (includes the first 3 topics per subject) and unlock anytime via Mobile Money.
-              </p>
-            </div>
-
             {regError && (
               <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium space-y-1">
                 <p>{regError}</p>

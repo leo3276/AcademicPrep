@@ -8,11 +8,12 @@ import {
   OFFICIAL_MOMO_DETAILS,
   PRICING_PLANS,
   resolvePlanByAmount,
+  resolvePlanById,
   validateMomoTransactionId,
   MomoClaim,
 } from './momoConfig';
 
-export { OFFICIAL_MOMO_DETAILS, PRICING_PLANS, resolvePlanByAmount, validateMomoTransactionId };
+export { OFFICIAL_MOMO_DETAILS, PRICING_PLANS, resolvePlanByAmount, resolvePlanById, validateMomoTransactionId };
 export type { MomoClaim };
 
 const DATA_FILE = path.join(process.cwd(), 'data', 'momo_claims.json');
@@ -288,3 +289,68 @@ export async function rejectMomoClaim(
 
   return { success: true, claim: rejectedClaim };
 }
+
+/**
+ * Record a Paystack-verified payment as an APPROVED pass claim and activate
+ * the student's Full Pass in Supabase. Idempotent on `reference`.
+ */
+export async function recordVerifiedPaystackPayment(params: {
+  reference: string;
+  studentPhone: string;
+  studentName?: string;
+  amountGhs: number;
+  planId?: 'monthly' | 'term' | 'annual';
+  validityDays?: number;
+}): Promise<{ granted: boolean; alreadyProcessed: boolean; claim?: MomoClaim }> {
+  const cleanPhone = normalizePhone(params.studentPhone);
+  const claims = await getStoredMomoClaims();
+  const existing = claims.find(
+    (c) => c.transactionId && c.transactionId.toLowerCase() === params.reference.toLowerCase()
+  );
+
+  if (existing && existing.status === 'APPROVED') {
+    return { granted: true, alreadyProcessed: true, claim: existing };
+  }
+
+  const plan = params.planId ? resolvePlanById(params.planId) : resolvePlanByAmount(params.amountGhs);
+  const validityDays = params.validityDays || plan.validityDays;
+  const amountGhs = params.amountGhs || plan.amountGhs;
+
+  const studentRow = await findStudentByPhone(cleanPhone);
+  const resolvedName =
+    params.studentName?.trim() ||
+    (studentRow?.full_name ? String(studentRow.full_name) : 'Verified Student');
+
+  // Ensure student pass is unlocked in Supabase
+  await adminGrantAccess(cleanPhone, validityDays);
+
+  const now = new Date().toISOString();
+  const approvedClaim: MomoClaim = {
+    id: `PAYSTACK-${Date.now()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`,
+    studentPhone: cleanPhone,
+    studentName: resolvedName,
+    senderPhone: cleanPhone,
+    transactionId: params.reference,
+    planId: plan.id,
+    planLabel: `${plan.label} (Paystack)`,
+    validityDays,
+    amountGhs,
+    recipientNumber: 'PAYSTACK',
+    recipientName: 'Paystack Ghana',
+    status: 'APPROVED',
+    instantGranted: true,
+    createdAt: now,
+    updatedAt: now,
+    approvedAt: now,
+  };
+
+  // Remove any pending claim for the same student + plan so Admin stays clean
+  const filtered = claims.filter(
+    (c) => !(c.studentPhone === cleanPhone && c.status === 'PENDING')
+  );
+  filtered.unshift(approvedClaim);
+  await saveStoredMomoClaims(filtered);
+
+  return { granted: true, alreadyProcessed: false, claim: approvedClaim };
+}
+

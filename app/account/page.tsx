@@ -33,11 +33,16 @@ export default function AccountPage() {
 
   useEffect(() => {
     setMounted(true);
+    if (typeof window !== 'undefined' && window.location.search.includes('renew=1')) {
+      setPinModalOpen(true);
+    }
   }, []);
 
-  // If JHS or SHS student, redirect to their dedicated profile
+  // If JHS or SHS student, redirect to their dedicated profile (unless opening renewal link)
   useEffect(() => {
     if (mounted && student) {
+      const isRenew = typeof window !== 'undefined' && window.location.search.includes('renew=1');
+      if (isRenew) return;
       if (student.currentLevel?.startsWith('SHS')) {
         router.replace('/shs/profile');
       } else if (student.currentLevel?.startsWith('JHS')) {

@@ -3,391 +3,646 @@
 import React, { useState, useEffect } from 'react';
 import {
   X,
-  Copy,
   Check,
-  ShieldCheck,
   Loader2,
   ArrowRight,
-  Clock,
-  MessageCircle,
+  Smartphone,
+  AlertCircle,
   RefreshCw,
+  Lock,
 } from 'lucide-react';
 import { useAuth } from '@/lib/authContext';
-import {
-  OFFICIAL_MOMO_DETAILS,
-  PRICING_PLANS,
-  PricingPlan,
-} from '@/lib/momoConfig';
+import { PRICING_PLANS, PricingPlan } from '@/lib/momoConfig';
+import { getSessionToken } from '@/lib/apiClient';
 import { EducationLevel } from '@/lib/types';
 
 interface PaystackPaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess?: (pinCode: string) => void;
+  onSuccess?: (reference: string) => void;
   initialView?: 'momo_transfer' | 'redeem_pin';
   defaultTab?: 'momo' | 'pin' | string;
   featureName?: string;
 }
 
+type MomoNetworkOption = {
+  id: 'mtn' | 'vod' | 'atl';
+  label: string;
+  sub: string;
+};
+
+const NETWORKS: MomoNetworkOption[] = [
+  { id: 'mtn', label: 'MTN MoMo', sub: '024 / 054 / 055 / 059' },
+  { id: 'vod', label: 'Telecel', sub: '020 / 050' },
+  { id: 'atl', label: 'AirtelTigo', sub: '027 / 057 / 026' },
+];
+
+function detectNetworkFromPhone(phone: string): 'mtn' | 'vod' | 'atl' {
+  const digits = phone.replace(/\D/g, '');
+  if (/^0(20|50)/.test(digits)) return 'vod';
+  if (/^0(26|56|27|57)/.test(digits)) return 'atl';
+  return 'mtn';
+}
+
+const POLL_INTERVAL_MS = 3000;
+const TIMEOUT_SECONDS = 150; // 2.5 minutes
+
 export default function PaystackPaymentModal({
   isOpen,
   onClose,
   onSuccess,
-  initialView = 'momo_transfer',
-  defaultTab,
+  featureName,
 }: PaystackPaymentModalProps) {
-  const { student, hasFullAccess, loginStudent, redeemPin, refreshStudent } = useAuth();
+  const { student, signInStudent, registerStudent, refreshStudent } = useAuth();
 
-  const [mode, setMode] = useState<'momo' | 'pin'>(
-    initialView === 'redeem_pin' || defaultTab === 'pin' ? 'pin' : 'momo'
-  );
-  const [selectedPlan, setSelectedPlan] = useState<PricingPlan>(PRICING_PLANS[0]); // Default to Monthly Pass (GH₵ 30) for kids
-  const [phone, setPhone] = useState(student?.phoneNumber || '');
-  const [senderPhone, setSenderPhone] = useState(student?.phoneNumber || '');
-  const [fullName, setFullName] = useState(student?.fullName || '');
-  const [level, setLevel] = useState<EducationLevel>(student?.currentLevel || 'JHS 3');
-  const [pinInput, setPinInput] = useState('');
+  const [selectedPlan, setSelectedPlan] = useState<PricingPlan>(PRICING_PLANS[0]);
+  const [network, setNetwork] = useState<'mtn' | 'vod' | 'atl'>('mtn');
+  const [momoPhone, setMomoPhone] = useState(student?.phoneNumber || '');
 
-  const [copiedNumber, setCopiedNumber] = useState(false);
+  // Inline quick auth state when student is not signed in yet
+  const [authMode, setAuthMode] = useState<'signin' | 'register'>('signin');
+  const [authPhone, setAuthPhone] = useState('');
+  const [authPassword, setAuthPassword] = useState('');
+  const [authName, setAuthName] = useState('');
+  const [authLevel, setAuthLevel] = useState<EducationLevel>('JHS 3');
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+  // Payment flow state
+  const [stage, setStage] = useState<'form' | 'send_otp' | 'waiting_pin' | 'success' | 'failed'>('form');
+  const [reference, setReference] = useState('');
+  const [promptMessage, setPromptMessage] = useState('');
+  const [otpInput, setOtpInput] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isCheckingStatus, setIsCheckingStatus] = useState(false);
+  const [secondsLeft, setSecondsLeft] = useState(TIMEOUT_SECONDS);
   const [error, setError] = useState('');
-  const [awaitingApproval, setAwaitingApproval] = useState(false);
-  const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
-    if (student?.phoneNumber) {
-      if (!phone) setPhone(student.phoneNumber);
-      if (!senderPhone) setSenderPhone(student.phoneNumber);
+    if (student?.phoneNumber && !momoPhone) {
+      setMomoPhone(student.phoneNumber);
+      setNetwork(detectNetworkFromPhone(student.phoneNumber));
     }
-    if (student?.fullName && !fullName) setFullName(student.fullName);
-    if (student?.currentLevel) setLevel(student.currentLevel);
-  }, [student, phone, senderPhone, fullName]);
+  }, [student, momoPhone]);
 
   useEffect(() => {
     if (isOpen) {
-      setMode(initialView === 'redeem_pin' || defaultTab === 'pin' ? 'pin' : 'momo');
+      setStage('form');
+      setReference('');
+      setPromptMessage('');
+      setOtpInput('');
       setError('');
-      setCompleted(false);
+      setSecondsLeft(TIMEOUT_SECONDS);
     }
-  }, [isOpen, initialView, defaultTab]);
+  }, [isOpen]);
 
-  // Auto-check every 8 seconds while waiting for Admin confirmation
+  // Poll payment status every 3 seconds while waiting for MoMo PIN approval
   useEffect(() => {
-    if (!isOpen || !awaitingApproval || completed) return;
-    const interval = setInterval(async () => {
-      const updated = await refreshStudent();
-      if (updated?.hasFullAccess && updated.accessType === 'Full Pass') {
-        setAwaitingApproval(false);
-        setCompleted(true);
+    if (!isOpen || stage !== 'waiting_pin' || !reference) return;
+
+    let cancelled = false;
+    const startedAt = Date.now();
+
+    const countdownInterval = setInterval(() => {
+      const elapsedSec = Math.floor((Date.now() - startedAt) / 1000);
+      const remaining = Math.max(0, TIMEOUT_SECONDS - elapsedSec);
+      setSecondsLeft(remaining);
+    }, 1000);
+
+    const pollStatus = async (isTimeoutCheck = false) => {
+      try {
+        const token = getSessionToken();
+        const url = `/api/paystack/status?reference=${encodeURIComponent(reference)}${
+          isTimeoutCheck ? '&timeout=1' : ''
+        }`;
+        const res = await fetch(url, {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+          cache: 'no-store',
+        });
+        const data = await res.json().catch(() => null);
+        if (cancelled || !data) return;
+
+        if (data.status === 'success') {
+          await refreshStudent();
+          if (!cancelled) {
+            setStage('success');
+            if (onSuccess) onSuccess(reference);
+          }
+          return;
+        }
+
+        if (data.status === 'failed' || data.status === 'expired') {
+          if (!cancelled) {
+            setError(
+              data.failureReason ||
+                (data.status === 'expired'
+                  ? 'Payment timed out before MoMo PIN approval. Please try again.'
+                  : 'Payment was declined or cancelled.')
+            );
+            setStage('failed');
+          }
+        }
+      } catch {
+        // Keep polling until timeout
       }
-    }, 8000);
-    return () => clearInterval(interval);
-  }, [isOpen, awaitingApproval, completed, refreshStudent]);
+    };
 
-  useEffect(() => {
-    if (awaitingApproval && hasFullAccess) {
-      setAwaitingApproval(false);
-      setCompleted(true);
-    }
-  }, [awaitingApproval, hasFullAccess]);
+    const pollInterval = setInterval(() => {
+      const elapsedMs = Date.now() - startedAt;
+      if (elapsedMs >= TIMEOUT_SECONDS * 1000) {
+        clearInterval(pollInterval);
+        void pollStatus(true);
+      } else {
+        void pollStatus(false);
+      }
+    }, POLL_INTERVAL_MS);
+
+    return () => {
+      cancelled = true;
+      clearInterval(pollInterval);
+      clearInterval(countdownInterval);
+    };
+  }, [isOpen, stage, reference, refreshStudent, onSuccess]);
 
   if (!isOpen) return null;
 
-  const handleCopyNumber = () => {
-    navigator.clipboard.writeText(OFFICIAL_MOMO_DETAILS.number);
-    setCopiedNumber(true);
-    setTimeout(() => setCopiedNumber(false), 2000);
-  };
-
-  const handleCheckConfirmation = async () => {
-    setIsCheckingStatus(true);
-    setError('');
-    try {
-      const updated = await refreshStudent();
-      if (updated?.hasFullAccess && updated.accessType === 'Full Pass') {
-        setAwaitingApproval(false);
-        setCompleted(true);
-      } else {
-        setError('Still awaiting Admin confirmation on MTN MoMo. Tap WhatsApp below for instant verification.');
-      }
-    } finally {
-      setIsCheckingStatus(false);
-    }
-  };
-
-  const handleMomoSubmit = async (e: React.FormEvent) => {
+  const handleQuickAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
-    const cleanStudentPhone = (student?.phoneNumber || phone).replace(/\D/g, '');
-    const cleanSenderPhone = senderPhone.replace(/\D/g, '');
-
-    if (!cleanStudentPhone || cleanStudentPhone.length < 10) {
-      setError('Please enter your 10-digit student phone number (e.g. 0241234567).');
+    const cleanPhone = authPhone.trim().replace(/\s+/g, '');
+    if (!/^0[235]\d{8}$/.test(cleanPhone)) {
+      setError('Enter a valid 10-digit Ghana phone number (e.g. 0241234567).');
+      return;
+    }
+    if (!authPassword.trim() || authPassword.trim().length < 4) {
+      setError('Enter your password or 4-digit PIN.');
       return;
     }
 
-    if (!cleanSenderPhone || !/^0[235]\d{8}$/.test(cleanSenderPhone)) {
-      setError('Please enter the 10-digit MoMo number used to send the money (e.g. 0241234567).');
+    setIsAuthenticating(true);
+    try {
+      if (authMode === 'signin') {
+        const res = await signInStudent(cleanPhone, authPassword.trim());
+        if (!res.success) {
+          setError(res.error || 'Incorrect phone number or password.');
+          return;
+        }
+      } else {
+        if (!authName.trim()) {
+          setError('Please enter your full name.');
+          return;
+        }
+        const res = await registerStudent({
+          phoneNumber: cleanPhone,
+          fullName: authName.trim(),
+          currentLevel: authLevel,
+          password: authPassword.trim(),
+        });
+        if (!res.success) {
+          setError(res.error || 'Could not create account.');
+          return;
+        }
+      }
+      setMomoPhone(cleanPhone);
+      setNetwork(detectNetworkFromPhone(cleanPhone));
+    } finally {
+      setIsAuthenticating(false);
+    }
+  };
+
+  const handleStartCharge = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    const cleanMomo = momoPhone.trim().replace(/\s+/g, '');
+    if (!/^0[235]\d{8}$/.test(cleanMomo)) {
+      setError('Enter a valid 10-digit Ghana Mobile Money number (e.g. 0241234567).');
+      return;
+    }
+
+    const token = getSessionToken();
+    if (!student || !token) {
+      setError('Please sign in to your account first.');
       return;
     }
 
     setIsSubmitting(true);
     try {
-      if (!student) {
-        const resolvedName = fullName.trim() || `Student ${cleanStudentPhone.slice(-4)}`;
-        const authRes = await loginStudent(cleanStudentPhone, resolvedName, level);
-        if (!authRes.success) {
-          setError(
-            authRes.error ||
-              'Could not verify your student account. Please sign in first, then submit your payment.'
-          );
-          setIsSubmitting(false);
-          return;
-        }
-      }
-
-      const res = await fetch('/api/momo/claim', {
+      const res = await fetch('/api/paystack/charge', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({
-          studentPhone: cleanStudentPhone,
-          studentName: student?.fullName || fullName.trim() || `Student ${cleanStudentPhone.slice(-4)}`,
-          senderPhone: cleanSenderPhone,
-          transactionId: `MOMO-${cleanSenderPhone}`,
-          amountGhs: selectedPlan.amountGhs,
+          phone: cleanMomo,
+          network,
+          planId: selectedPlan.id,
         }),
       });
 
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        setError(data.error || 'Could not submit your payment right now. Please try again.');
-        setIsSubmitting(false);
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.success) {
+        setError(data?.message || 'Could not initiate Mobile Money prompt. Please try again.');
         return;
       }
 
-      setAwaitingApproval(true);
-      if (onSuccess) onSuccess(`MOMO-${cleanSenderPhone}`);
+      setReference(data.reference);
+      setPromptMessage(
+        data.message || 'Check your phone and enter your MoMo PIN to approve the payment.'
+      );
+      setSecondsLeft(TIMEOUT_SECONDS);
+
+      if (data.status === 'send_otp') {
+        setStage('send_otp');
+      } else {
+        setStage('waiting_pin');
+      }
     } catch {
-      setError('Network error. Please check your connection and try again.');
+      setError('Network error starting Mobile Money charge. Please check your connection.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handlePinSubmit = async (e: React.FormEvent) => {
+  const handleSubmitOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
-    const cleanedPin = pinInput.trim().toUpperCase();
-    if (cleanedPin.length < 6) {
-      setError('Enter a valid access PIN code.');
+    const cleanOtp = otpInput.trim().replace(/\s+/g, '');
+    if (!cleanOtp) {
+      setError('Please enter the OTP code sent to your phone.');
       return;
     }
 
+    const token = getSessionToken();
     setIsSubmitting(true);
     try {
-      if (!student) {
-        const cleanPhone = phone.replace(/\D/g, '');
-        if (!cleanPhone || cleanPhone.length < 10) {
-          setError('Enter your 10-digit phone number.');
-          setIsSubmitting(false);
-          return;
-        }
-        const loginRes = await loginStudent(
-          cleanPhone,
-          fullName.trim() || `Student ${cleanPhone.slice(-4)}`,
-          level,
-          cleanedPin
-        );
-        if (!loginRes.success) {
-          setError(loginRes.error || 'Invalid access PIN.');
-          setIsSubmitting(false);
-          return;
-        }
-      } else {
-        const result = await redeemPin(cleanedPin);
-        if (!result.success) {
-          setError(result.message || 'Invalid or already used PIN.');
-          setIsSubmitting(false);
-          return;
-        }
+      const res = await fetch('/api/paystack/submit-otp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({
+          reference,
+          otp: cleanOtp,
+        }),
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.success) {
+        setError(data?.message || 'Invalid OTP. Please check and try again.');
+        return;
       }
 
-      await refreshStudent();
-      setCompleted(true);
-      if (onSuccess) onSuccess(cleanedPin);
+      setPromptMessage(
+        data.message || 'Check your phone and enter your MoMo PIN to complete payment.'
+      );
+      setSecondsLeft(TIMEOUT_SECONDS);
+      setStage('waiting_pin');
     } catch {
-      setError('Could not verify access PIN right now.');
+      setError('Network error submitting OTP. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const cleanStudentPhoneForWa = (student?.phoneNumber || phone).replace(/\D/g, '');
-  const cleanSenderPhoneForWa = senderPhone.replace(/\D/g, '');
-  const adminWhatsAppUrl = `https://wa.me/233${OFFICIAL_MOMO_DETAILS.number.replace(/^0/, '')}?text=${encodeURIComponent(
-    `Hello Admin, I just sent GH₵ ${selectedPlan.amountGhs} (${selectedPlan.label}) on MTN MoMo for AcademicPrep.\n\n• Student Name: ${student?.fullName || fullName || 'Student'}\n• Student Account Phone: ${cleanStudentPhoneForWa}\n• MoMo Number Used to Pay: ${cleanSenderPhoneForWa}\n\nPlease confirm and unlock my pass!`
-  )}`;
-
-  const parentShareWhatsAppUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
-    `Hi Mum/Dad, please help me pay GH₵ ${selectedPlan.amountGhs} (${selectedPlan.label}) for my AcademicPrep study account.\n\nMTN MoMo Number: ${OFFICIAL_MOMO_DETAILS.number}\nName: ${OFFICIAL_MOMO_DETAILS.name}\nAmount: GH₵ ${selectedPlan.amountGhs}\n\nAfter sending, let me know the MoMo number you used so I can enter it!`
-  )}`;
+  const formatTimer = (sec: number) => {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  };
 
   return (
-    <div
-      className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-md p-0 sm:p-4 animate-fade-in"
-      onClick={onClose}
-    >
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4 overflow-y-auto">
       <div
-        className="w-full sm:max-w-[450px] bg-white rounded-t-[28px] sm:rounded-[24px] border border-black/[0.08] shadow-[0_24px_60px_-15px_rgba(0,0,0,0.22)] overflow-hidden max-h-[92vh] flex flex-col"
+        className="relative w-full max-w-md rounded-2xl bg-white border border-neutral-200/90 shadow-2xl overflow-hidden my-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Minimalist Apple Header */}
-        <div className="px-6 pt-5 pb-4 flex items-center justify-between border-b border-black/[0.06]">
+        {/* Header */}
+        <div className="px-6 pt-6 pb-4 border-b border-neutral-100 flex items-start justify-between gap-4">
           <div>
-            <h2 className="text-[18px] font-semibold tracking-tight text-[#1D1D1F]">
-              {completed
-                ? 'Full Pass Unlocked'
-                : awaitingApproval
-                ? 'Confirming Your Payment'
-                : mode === 'momo'
-                ? 'Unlock Full Pass'
-                : 'Redeem Access PIN'}
-            </h2>
-            <p className="text-[12.5px] text-[#86868B] mt-0.5">
-              {completed
-                ? 'All subjects, past papers, mocks & study tools are open.'
-                : awaitingApproval
-                ? 'Your pass unlocks as soon as Admin confirms your MoMo.'
-                : 'Simple 2-step Mobile Money activation.'}
+            <p className="text-[11px] font-medium uppercase tracking-wider text-neutral-400">
+              {featureName || 'AcademicPrep Pass'}
             </p>
+            <h2 className="text-lg font-semibold text-neutral-950 tracking-tight mt-0.5">
+              Unlock Full Access
+            </h2>
           </div>
           <button
-            type="button"
             onClick={onClose}
+            className="w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center text-neutral-500 hover:text-neutral-900 transition cursor-pointer shrink-0"
             aria-label="Close"
-            className="w-8 h-8 rounded-full bg-[#F5F5F7] hover:bg-[#E8E8ED] flex items-center justify-center text-[#515154] transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        <div className="p-6 overflow-y-auto space-y-5">
-          {completed ? (
-            <div className="py-4 text-center space-y-5">
-              <div className="w-14 h-14 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mx-auto text-emerald-600">
-                <ShieldCheck className="w-7 h-7" />
+        {/* Body */}
+        <div className="p-6">
+          {stage === 'success' ? (
+            <div className="py-4 text-center space-y-4">
+              <div className="w-12 h-12 rounded-full bg-neutral-950 text-white flex items-center justify-center mx-auto">
+                <Check className="w-6 h-6" />
               </div>
-              <div className="space-y-1.5">
-                <h3 className="text-[17px] font-semibold text-[#1D1D1F]">
-                  {selectedPlan.label} Active
+              <div className="space-y-1">
+                <h3 className="text-base font-semibold text-neutral-950">
+                  Pass Unlocked ({selectedPlan.label})
                 </h3>
-                <p className="text-[13px] text-[#86868B] max-w-xs mx-auto leading-relaxed">
-                  Your payment has been confirmed and your account now has full access.
+                <p className="text-xs text-neutral-500 max-w-xs mx-auto leading-relaxed">
+                  Your Mobile Money payment is confirmed. Full access is now active across all curriculum topics, past questions, trial mocks, weekly exams, and study tools.
                 </p>
               </div>
               <button
-                type="button"
                 onClick={onClose}
-                className="w-full h-11 rounded-[14px] bg-[#1D1D1F] hover:bg-black text-white text-[14px] font-medium transition-all active:scale-[0.99]"
+                className="w-full py-3 rounded-xl bg-neutral-950 hover:bg-neutral-800 text-white font-medium text-xs transition cursor-pointer"
               >
-                Start Studying
+                Continue Studying
               </button>
             </div>
-          ) : awaitingApproval ? (
-            <div className="py-2 space-y-4">
-              <div className="p-4 rounded-[16px] bg-[#F5F5F7] border border-black/[0.06] text-center space-y-2.5">
-                <div className="w-11 h-11 rounded-2xl bg-white border border-black/[0.08] flex items-center justify-center mx-auto text-[#1D1D1F]">
-                  <Clock className="w-5 h-5" />
-                </div>
-                <div className="space-y-1">
-                  <p className="text-[15px] font-semibold text-[#1D1D1F]">
-                    Waiting for Admin Confirmation
-                  </p>
-                  <p className="text-[12.5px] text-[#86868B] leading-relaxed">
-                    We received your request for <strong className="text-[#1D1D1F]">GH₵ {selectedPlan.amountGhs} ({selectedPlan.label})</strong> from MoMo number <strong className="font-mono text-[#1D1D1F]">{cleanSenderPhoneForWa}</strong>.
-                  </p>
-                </div>
+          ) : stage === 'waiting_pin' ? (
+            <div className="py-4 text-center space-y-4">
+              <div className="w-12 h-12 rounded-full bg-neutral-100 text-neutral-900 flex items-center justify-center mx-auto">
+                <Loader2 className="w-6 h-6 animate-spin" />
               </div>
 
-              {error && (
-                <div className="p-3 rounded-[12px] bg-amber-50 border border-amber-200/80 text-[12px] text-amber-900 text-center">
-                  {error}
-                </div>
-              )}
+              <div className="space-y-1.5">
+                <h3 className="text-base font-semibold text-neutral-950">
+                  Check your phone and enter your MoMo PIN
+                </h3>
+                <p className="text-xs text-neutral-500 leading-relaxed max-w-xs mx-auto">
+                  {promptMessage ||
+                    `A payment prompt for GH₵ ${selectedPlan.amountGhs} has been sent to ${momoPhone}. Enter your Mobile Money PIN on your phone to unlock immediately.`}
+                </p>
+              </div>
 
-              <div className="space-y-2.5">
-                <button
-                  type="button"
-                  onClick={handleCheckConfirmation}
-                  disabled={isCheckingStatus}
-                  className="w-full h-11 rounded-[14px] bg-[#1D1D1F] hover:bg-black disabled:opacity-50 text-white text-[14px] font-medium flex items-center justify-center gap-2 transition-all cursor-pointer"
-                >
-                  <RefreshCw className={`w-4 h-4 ${isCheckingStatus ? 'animate-spin' : ''}`} />
-                  <span>{isCheckingStatus ? 'Checking Status...' : 'Check If Confirmed'}</span>
-                </button>
-
-                <a
-                  href={adminWhatsAppUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full h-11 rounded-[14px] bg-[#FAFAFC] hover:bg-[#F5F5F7] border border-black/[0.1] text-[#1D1D1F] text-[13.5px] font-medium flex items-center justify-center gap-2 transition-all"
-                >
-                  <MessageCircle className="w-4 h-4 text-emerald-600" />
-                  <span>Notify Admin on WhatsApp for Fast Unlock</span>
-                </a>
+              <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-200/80 text-[11px] text-neutral-600 space-y-1">
+                <p className="font-medium text-neutral-900">
+                  Waiting for confirmation • {formatTimer(secondsLeft)}
+                </p>
+                <p className="text-neutral-500">
+                  {network === 'mtn'
+                    ? 'Didn’t see the popup? Dial *170# → Option 6 (My Wallet) → Option 3 (My Approvals).'
+                    : 'Approve the Mobile Money prompt on your handset to complete payment.'}
+                </p>
               </div>
 
               <button
                 type="button"
                 onClick={() => {
-                  setAwaitingApproval(false);
+                  setStage('form');
                   setError('');
                 }}
-                className="w-full text-center text-[12px] text-[#86868B] hover:text-[#1D1D1F] pt-1"
+                className="w-full py-2 text-xs font-medium text-neutral-500 hover:text-neutral-900 transition cursor-pointer"
               >
-                ← Change MoMo number or plan
+                Cancel or change number
               </button>
             </div>
-          ) : mode === 'momo' ? (
-            <form onSubmit={handleMomoSubmit} className="space-y-4">
-              {/* 1. Plan Selector */}
+          ) : stage === 'send_otp' ? (
+            <form onSubmit={handleSubmitOtp} className="space-y-4">
+              <div className="space-y-1">
+                <h3 className="text-sm font-semibold text-neutral-950">
+                  Enter Verification Code
+                </h3>
+                <p className="text-xs text-neutral-500 leading-relaxed">
+                  {promptMessage || `Enter the verification code sent to ${momoPhone} to trigger your MoMo PIN prompt.`}
+                </p>
+              </div>
+
+              <input
+                type="text"
+                inputMode="numeric"
+                value={otpInput}
+                onChange={(e) => setOtpInput(e.target.value)}
+                placeholder="Enter code sent via SMS"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-50 border border-neutral-200 text-sm font-mono tracking-widest text-center text-neutral-950 focus:outline-none focus:border-neutral-900 focus:bg-white transition"
+                required
+              />
+
+              {error && (
+                <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs">
+                  {error}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full py-3 rounded-xl bg-neutral-950 hover:bg-neutral-800 disabled:bg-neutral-300 text-white font-medium text-xs transition flex items-center justify-center gap-2 cursor-pointer"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Verifying...</span>
+                  </>
+                ) : (
+                  <span>Continue to MoMo PIN Prompt</span>
+                )}
+              </button>
+            </form>
+          ) : stage === 'failed' ? (
+            <div className="py-4 text-center space-y-4">
+              <div className="w-12 h-12 rounded-full bg-red-50 border border-red-200 text-red-600 flex items-center justify-center mx-auto">
+                <AlertCircle className="w-6 h-6" />
+              </div>
+              <div className="space-y-1">
+                <h3 className="text-base font-semibold text-neutral-950">
+                  Payment Not Completed
+                </h3>
+                <p className="text-xs text-neutral-500 max-w-xs mx-auto leading-relaxed">
+                  {error || 'The Mobile Money prompt was not approved in time.'}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setError('');
+                  setStage('form');
+                }}
+                className="w-full py-3 rounded-xl bg-neutral-950 hover:bg-neutral-800 text-white font-medium text-xs transition flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <RefreshCw className="w-3.5 h-3.5" />
+                <span>Try Again</span>
+              </button>
+            </div>
+          ) : !student ? (
+            /* Step 0: Require Authentication First */
+            <form onSubmit={handleQuickAuth} className="space-y-4">
+              <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-200/80 flex items-center gap-2.5 text-xs text-neutral-700">
+                <Lock className="w-4 h-4 text-neutral-500 shrink-0" />
+                <span>Sign in or create your student account first so your pass is linked to you.</span>
+              </div>
+
+              <div className="grid grid-cols-2 p-1 rounded-xl bg-neutral-100 text-xs font-medium">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAuthMode('signin');
+                    setError('');
+                  }}
+                  className={`py-2 rounded-lg transition cursor-pointer ${
+                    authMode === 'signin'
+                      ? 'bg-white text-neutral-950 shadow-2xs'
+                      : 'text-neutral-500 hover:text-neutral-900'
+                  }`}
+                >
+                  Sign In
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAuthMode('register');
+                    setError('');
+                  }}
+                  className={`py-2 rounded-lg transition cursor-pointer ${
+                    authMode === 'register'
+                      ? 'bg-white text-neutral-950 shadow-2xs'
+                      : 'text-neutral-500 hover:text-neutral-900'
+                  }`}
+                >
+                  Create Account
+                </button>
+              </div>
+
+              {authMode === 'register' && (
+                <div className="space-y-1">
+                  <label className="text-[11px] font-medium text-neutral-600">Full Name</label>
+                  <input
+                    type="text"
+                    value={authName}
+                    onChange={(e) => setAuthName(e.target.value)}
+                    placeholder="e.g. Kwame Mensah"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-50 border border-neutral-200 text-xs text-neutral-950 focus:outline-none focus:border-neutral-900 focus:bg-white transition"
+                    required
+                  />
+                </div>
+              )}
+
+              <div className="space-y-1">
+                <label className="text-[11px] font-medium text-neutral-600">
+                  Student Phone Number
+                </label>
+                <input
+                  type="tel"
+                  value={authPhone}
+                  onChange={(e) => setAuthPhone(e.target.value)}
+                  placeholder="e.g. 0241234567"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-50 border border-neutral-200 text-xs font-mono text-neutral-950 focus:outline-none focus:border-neutral-900 focus:bg-white transition"
+                  required
+                />
+              </div>
+
+              {authMode === 'register' && (
+                <div className="space-y-1">
+                  <label className="text-[11px] font-medium text-neutral-600">Class Level</label>
+                  <select
+                    value={authLevel}
+                    onChange={(e) => setAuthLevel(e.target.value as EducationLevel)}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-50 border border-neutral-200 text-xs text-neutral-950 focus:outline-none focus:border-neutral-900 focus:bg-white transition"
+                  >
+                    <option value="JHS 1">JHS 1</option>
+                    <option value="JHS 2">JHS 2</option>
+                    <option value="JHS 3">JHS 3 (BECE)</option>
+                    <option value="SHS 1">SHS 1</option>
+                    <option value="SHS 2">SHS 2</option>
+                    <option value="SHS 3">SHS 3 (WASSCE)</option>
+                    <option value="UNIVERSITY">University</option>
+                  </select>
+                </div>
+              )}
+
+              <div className="space-y-1">
+                <label className="text-[11px] font-medium text-neutral-600">
+                  Password or 4-Digit PIN
+                </label>
+                <input
+                  type="password"
+                  value={authPassword}
+                  onChange={(e) => setAuthPassword(e.target.value)}
+                  placeholder="Enter password / PIN"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-50 border border-neutral-200 text-xs text-neutral-950 focus:outline-none focus:border-neutral-900 focus:bg-white transition"
+                  required
+                />
+              </div>
+
+              {error && (
+                <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs">
+                  {error}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={isAuthenticating}
+                className="w-full py-3 rounded-xl bg-neutral-950 hover:bg-neutral-800 disabled:bg-neutral-300 text-white font-medium text-xs transition flex items-center justify-center gap-2 cursor-pointer"
+              >
+                {isAuthenticating ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Signing in...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Continue to Mobile Money Payment</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </>
+                )}
+              </button>
+            </form>
+          ) : (
+            /* Authenticated Direct MoMo Charge Form */
+            <form onSubmit={handleStartCharge} className="space-y-4">
+              {/* 1. Plan Picker */}
               <div className="space-y-1.5">
-                <label className="block text-[11.5px] font-medium text-[#86868B] uppercase tracking-wider">
-                  Step 1 • Choose Pass
+                <label className="text-[11px] font-medium text-neutral-500">
+                  1. Choose Pass
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   {PRICING_PLANS.map((plan) => {
-                    const active = selectedPlan.id === plan.id;
+                    const isSelected = selectedPlan.id === plan.id;
                     return (
                       <button
                         key={plan.id}
                         type="button"
                         onClick={() => setSelectedPlan(plan)}
-                        className={`relative text-left p-3 rounded-[14px] border transition-all cursor-pointer ${
-                          active
-                            ? 'border-[#1D1D1F] bg-[#1D1D1F] text-white shadow-xs'
-                            : 'border-black/[0.1] bg-[#FAFAFC] hover:border-black/25 text-[#1D1D1F]'
+                        className={`p-3 rounded-xl border text-left transition cursor-pointer flex flex-col justify-between ${
+                          isSelected
+                            ? 'border-neutral-950 bg-neutral-950 text-white'
+                            : 'border-neutral-200 bg-white text-neutral-900 hover:border-neutral-300'
                         }`}
                       >
-                        <div className="text-[11px] font-medium opacity-75">
-                          {plan.id === 'monthly'
-                            ? '30 Days'
-                            : plan.id === 'term'
-                            ? '90 Days'
-                            : '1 Year'}
+                        <div className="flex items-center justify-between gap-1">
+                          <span
+                            className={`text-[10px] font-medium ${
+                              isSelected ? 'text-neutral-300' : 'text-neutral-500'
+                            }`}
+                          >
+                            {plan.id === 'monthly'
+                              ? 'Monthly'
+                              : plan.id === 'term'
+                              ? 'Term'
+                              : 'Annual'}
+                          </span>
+                          {plan.recommended && (
+                            <span
+                              className={`text-[9px] px-1.5 py-0.5 rounded font-medium ${
+                                isSelected
+                                  ? 'bg-white/15 text-white'
+                                  : 'bg-neutral-100 text-neutral-700'
+                              }`}
+                            >
+                              Best
+                            </span>
+                          )}
                         </div>
-                        <div className="text-[17px] font-semibold tracking-tight mt-0.5">
-                          GH₵ {plan.amountGhs}
-                        </div>
-                        <div
-                          className={`text-[11px] mt-0.5 truncate ${
-                            active ? 'text-white/80' : 'text-[#86868B]'
-                          }`}
-                        >
-                          {plan.label.replace(' Pass', '')}
+                        <div className="mt-1.5">
+                          <span className="text-sm font-semibold tracking-tight block">
+                            GH₵ {plan.amountGhs}
+                          </span>
+                          <span
+                            className={`text-[10px] block mt-0.5 ${
+                              isSelected ? 'text-neutral-300' : 'text-neutral-400'
+                            }`}
+                          >
+                            {plan.validityDays} days
+                          </span>
                         </div>
                       </button>
                     );
@@ -395,175 +650,73 @@ export default function PaystackPaymentModal({
                 </div>
               </div>
 
-              {/* 2. Official MoMo Recipient Card */}
+              {/* 2. Network Picker */}
               <div className="space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <label className="text-[11.5px] font-medium text-[#86868B] uppercase tracking-wider">
-                    Step 2 • Send GH₵ {selectedPlan.amountGhs} on MTN MoMo
-                  </label>
-                  <a
-                    href={parentShareWhatsAppUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[11.5px] font-medium text-[#1D1D1F] hover:underline flex items-center gap-1"
-                  >
-                    <MessageCircle className="w-3 h-3 text-emerald-600" />
-                    <span>Ask Parent on WhatsApp</span>
-                  </a>
-                </div>
-                <div className="rounded-[16px] bg-[#F5F5F7] border border-black/[0.06] p-3.5 space-y-2.5">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="text-[11px] text-[#86868B] font-medium">
-                        {OFFICIAL_MOMO_DETAILS.network} Number
-                      </div>
-                      <div className="text-[20px] font-semibold tracking-tight text-[#1D1D1F] font-mono mt-0.5">
-                        {OFFICIAL_MOMO_DETAILS.number}
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={handleCopyNumber}
-                      className="h-9 px-3.5 rounded-[10px] bg-white border border-black/[0.08] hover:border-black/20 text-[13px] font-medium text-[#1D1D1F] flex items-center gap-1.5 transition-all active:scale-[0.98] cursor-pointer"
-                    >
-                      {copiedNumber ? (
-                        <>
-                          <Check className="w-3.5 h-3.5 text-emerald-600" />
-                          <span>Copied</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3.5 h-3.5 text-[#86868B]" />
-                          <span>Copy Number</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
-                  <div className="pt-2 border-t border-black/[0.06] flex items-center justify-between text-[12px]">
-                    <span className="text-[#86868B]">Name on MoMo</span>
-                    <span className="font-semibold text-[#1D1D1F]">{OFFICIAL_MOMO_DETAILS.name}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* 3. Simple Kid-Friendly Phone Input (No 11-digit TxID required) */}
-              <div className="space-y-2.5">
-                <label className="block text-[11.5px] font-medium text-[#86868B] uppercase tracking-wider">
-                  Step 3 • Enter MoMo Number Used to Pay
+                <label className="text-[11px] font-medium text-neutral-500">
+                  2. Select Mobile Money Network
                 </label>
-
-                {!student && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <input
-                      type="text"
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      placeholder="Your Name"
-                      required
-                      className="w-full h-11 px-3.5 rounded-[12px] bg-[#FAFAFC] border border-black/[0.12] focus:border-[#1D1D1F] focus:bg-white focus:outline-none text-[13.5px] text-[#1D1D1F] placeholder:text-[#86868B]"
-                    />
-                    <input
-                      type="tel"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      placeholder="Your Student Phone (024...)"
-                      required
-                      className="w-full h-11 px-3.5 rounded-[12px] bg-[#FAFAFC] border border-black/[0.12] focus:border-[#1D1D1F] focus:bg-white focus:outline-none text-[13.5px] text-[#1D1D1F] placeholder:text-[#86868B]"
-                    />
-                  </div>
-                )}
-
-                <div>
-                  <input
-                    type="tel"
-                    value={senderPhone}
-                    onChange={(e) => setSenderPhone(e.target.value)}
-                    placeholder="MoMo number that sent the money (e.g. 0241234567)"
-                    required
-                    className="w-full h-11 px-3.5 rounded-[12px] bg-[#FAFAFC] border border-black/[0.12] focus:border-[#1D1D1F] focus:bg-white focus:outline-none text-[14px] font-mono text-[#1D1D1F] placeholder:font-sans placeholder:text-[#86868B] transition-colors"
-                  />
-                  <p className="text-[11px] text-[#86868B] mt-1 leading-snug">
-                    If your parent or guardian paid for you, enter their MoMo phone number here.
-                  </p>
+                <div className="grid grid-cols-3 gap-2">
+                  {NETWORKS.map((net) => {
+                    const isSelected = network === net.id;
+                    return (
+                      <button
+                        key={net.id}
+                        type="button"
+                        onClick={() => setNetwork(net.id)}
+                        className={`p-2.5 rounded-xl border text-left transition cursor-pointer ${
+                          isSelected
+                            ? 'border-neutral-950 bg-neutral-100 text-neutral-950 font-semibold'
+                            : 'border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300'
+                        }`}
+                      >
+                        <span className="text-xs block">{net.label}</span>
+                        <span className="text-[10px] text-neutral-400 font-normal block mt-0.5">
+                          {net.sub}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
-              {error && (
-                <div className="p-3 rounded-[12px] bg-red-50 border border-red-200/80 text-[12.5px] text-red-700">
-                  {error}
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full h-11 rounded-[14px] bg-[#1D1D1F] hover:bg-black disabled:opacity-50 text-white text-[14px] font-medium flex items-center justify-center gap-2 transition-all active:scale-[0.99] cursor-pointer"
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Submitting...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>I Have Sent GH₵ {selectedPlan.amountGhs}</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </>
-                )}
-              </button>
-
-              <div className="pt-0.5 text-center">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setError('');
-                    setMode('pin');
-                  }}
-                  className="text-[12.5px] text-[#86868B] hover:text-[#1D1D1F] transition-colors cursor-pointer"
-                >
-                  Have a scratch-card Access PIN instead?
-                </button>
-              </div>
-            </form>
-          ) : (
-            <form onSubmit={handlePinSubmit} className="space-y-4">
-              {!student && (
-                <div className="space-y-2.5">
-                  <input
-                    type="text"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    placeholder="Your Full Name"
-                    required
-                    className="w-full h-11 px-3.5 rounded-[12px] bg-[#FAFAFC] border border-black/[0.12] focus:border-[#1D1D1F] focus:bg-white focus:outline-none text-[14px] text-[#1D1D1F]"
-                  />
-                  <input
-                    type="tel"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="Your 10-Digit Phone Number"
-                    required
-                    className="w-full h-11 px-3.5 rounded-[12px] bg-[#FAFAFC] border border-black/[0.12] focus:border-[#1D1D1F] focus:bg-white focus:outline-none text-[14px] text-[#1D1D1F]"
-                  />
-                </div>
-              )}
-
-              <div>
-                <label className="block text-[11.5px] font-medium text-[#86868B] uppercase tracking-wider mb-1.5">
-                  Access PIN
+              {/* 3. MoMo Phone Number */}
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-medium text-neutral-500">
+                  3. Mobile Money Phone Number
                 </label>
                 <input
-                  type="text"
-                  value={pinInput}
-                  onChange={(e) => setPinInput(e.target.value.toUpperCase())}
-                  placeholder="Enter PIN Code"
+                  type="tel"
+                  value={momoPhone}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setMomoPhone(val);
+                    if (val.replace(/\D/g, '').length >= 3) {
+                      setNetwork(detectNetworkFromPhone(val));
+                    }
+                  }}
+                  placeholder="e.g. 0241234567"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-50 border border-neutral-200 text-xs font-mono text-neutral-950 focus:outline-none focus:border-neutral-900 focus:bg-white transition"
                   required
-                  className="w-full h-11 px-4 rounded-[12px] bg-[#FAFAFC] border border-black/[0.12] focus:border-[#1D1D1F] focus:bg-white focus:outline-none text-[15px] font-mono tracking-wider uppercase text-[#1D1D1F]"
                 />
               </div>
 
+              {/* Summary Row */}
+              <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-200/80 flex items-center justify-between text-xs">
+                <div>
+                  <span className="font-medium text-neutral-900 block">
+                    {selectedPlan.label} ({selectedPlan.validityDays} days)
+                  </span>
+                  <span className="text-[11px] text-neutral-500">
+                    Account: {student.fullName} ({student.phoneNumber})
+                  </span>
+                </div>
+                <span className="text-sm font-semibold text-neutral-950 font-mono">
+                  GH₵ {selectedPlan.amountGhs}
+                </span>
+              </div>
+
               {error && (
-                <div className="p-3 rounded-[12px] bg-red-50 border border-red-200/80 text-[12.5px] text-red-700">
+                <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs">
                   {error}
                 </div>
               )}
@@ -571,30 +724,25 @@ export default function PaystackPaymentModal({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-11 rounded-[14px] bg-[#1D1D1F] hover:bg-black disabled:opacity-50 text-white text-[14px] font-medium flex items-center justify-center gap-2 transition-all cursor-pointer"
+                className="w-full py-3.5 rounded-xl bg-neutral-950 hover:bg-neutral-800 disabled:bg-neutral-300 text-white font-medium text-xs transition flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Redeeming...</span>
+                    <span>Sending MoMo Prompt...</span>
                   </>
                 ) : (
-                  <span>Redeem Access PIN</span>
+                  <>
+                    <Smartphone className="w-4 h-4" />
+                    <span>Pay GH₵ {selectedPlan.amountGhs}</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </>
                 )}
               </button>
 
-              <div className="pt-0.5 text-center">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setError('');
-                    setMode('momo');
-                  }}
-                  className="text-[12.5px] text-[#86868B] hover:text-[#1D1D1F] transition-colors cursor-pointer"
-                >
-                  ← Back to Mobile Money transfer
-                </button>
-              </div>
+              <p className="text-[11px] text-neutral-400 text-center">
+                You will receive a prompt on your phone to enter your MoMo PIN.
+              </p>
             </form>
           )}
         </div>
