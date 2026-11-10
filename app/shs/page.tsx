@@ -173,7 +173,7 @@ export default function ShsPortalPage() {
             <div>
               <p className="font-semibold text-slate-900">Create a Free SHS Account</p>
               <p className="text-slate-500 text-[11px]">
-                Track your WASSCE topics, save quiz scores, and activate 30 days of free trial.
+                Track your WASSCE topics, save quiz scores, and access the first 3 topics per subject free.
               </p>
             </div>
           </div>

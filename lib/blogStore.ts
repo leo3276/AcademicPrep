@@ -237,7 +237,14 @@ export const INITIAL_BLOG_POSTS: BlogPost[] = [
   }
 ];
 
-const BLOG_LOCAL_STORAGE_KEY = 'academicprep_blog_posts_v1';
+const BLOG_LOCAL_STORAGE_KEY = 'academicprep_blog_posts_v2';
+
+function ensureOfficialAnnouncementClient(posts: BlogPost[]): BlogPost[] {
+  const official = INITIAL_BLOG_POSTS[0];
+  if (!official) return posts;
+  if (posts.some((p) => p.id === official.id)) return posts;
+  return [official, ...posts];
+}
 
 let inMemoryBlogCache: BlogPost[] | null = null;
 let activeBlogFetchPromise: Promise<BlogPost[]> | null = null;
@@ -280,13 +287,14 @@ export async function fetchBlogPosts(category?: string): Promise<BlogPost[]> {
         if (res.ok) {
           const data = await res.json();
           if (Array.isArray(data) && data.length > 0) {
-            inMemoryBlogCache = data;
-            if (typeof window !== 'undefined') {
-              try {
-                localStorage.setItem(BLOG_LOCAL_STORAGE_KEY, JSON.stringify(data));
-              } catch {}
-            }
-            return data;
+          const merged = ensureOfficialAnnouncementClient(data);
+          inMemoryBlogCache = merged;
+          if (typeof window !== 'undefined') {
+            try {
+              localStorage.setItem(BLOG_LOCAL_STORAGE_KEY, JSON.stringify(merged));
+            } catch {}
+          }
+          return merged;
           }
         }
       } catch (err) {

@@ -105,7 +105,7 @@ export default function NewBlogNotificationToast({ initialPosts }: NewBlogNotifi
             <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-[10px] font-bold uppercase tracking-wider">
               <BookOpen className="w-2.5 h-2.5 text-amber-600" />
-              New Study Guide
+              {latestPost.category === 'Announcements' ? 'Official Announcement' : 'New Study Guide'}
             </span>
             <span className="text-[11px] text-slate-500 font-medium">
               {latestPost.category}

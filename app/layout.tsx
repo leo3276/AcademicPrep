@@ -7,6 +7,7 @@ import TrafficTracker from '@/components/TrafficTracker';
 import OfflineAccessGuard from '@/components/OfflineAccessGuard';
 import MobileBottomNav from '@/components/MobileBottomNav';
 import PortalAuthGuard from '@/components/PortalAuthGuard';
+import PaidPassAnnouncementModal from '@/components/PaidPassAnnouncementModal';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.acadmicprep.com';
 
@@ -185,6 +186,7 @@ export default function RootLayout({
         <AuthProvider>
           <OfflineAccessGuard />
           <PortalAuthGuard />
+          <PaidPassAnnouncementModal />
           <TrafficTracker />
           <Navbar />
           <main className="flex-1 w-full max-w-full overflow-x-hidden pb-16 xl:pb-0">

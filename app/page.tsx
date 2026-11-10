@@ -98,7 +98,9 @@ export default function HomePage() {
                   className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 hover:border-amber-300 text-amber-200 text-xs font-medium backdrop-blur-sm transition-all group max-w-full shadow-sm"
                 >
                   <span className="flex h-2 w-2 rounded-full bg-amber-400 animate-ping shrink-0" />
-                  <span className="px-1.5 py-0.5 rounded bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 text-[10px] font-black uppercase tracking-wider">NEW BLOG</span>
+                  <span className="px-1.5 py-0.5 rounded bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 text-[10px] font-black uppercase tracking-wider">
+                    {latestPost.category === 'Announcements' ? 'ANNOUNCEMENT' : 'NEW BLOG'}
+                  </span>
                   <span className="truncate max-w-[200px] sm:max-w-xs md:max-w-sm text-white font-medium">{latestPost.title}</span>
                   <ArrowRight className="w-3.5 h-3.5 text-amber-300 group-hover:translate-x-0.5 transition-transform shrink-0" />
                 </Link>
@@ -153,15 +155,15 @@ export default function HomePage() {
           <div className="flex items-start gap-3.5">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-800 bg-neutral-100 px-2 py-0.5 rounded">
-                  Student Access
+                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 bg-amber-100 border border-amber-200 px-2 py-0.5 rounded">
+                  Official Announcement
                 </span>
                 <h3 className="text-sm font-bold text-slate-900">
-                  Free Preview Available • Full Pass Unlocks All Topics, Past Questions &amp; Exams
+                  AcademicPrep Full Access Passes Are Now Live • Free Preview Includes First 3 Topics
                 </h3>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed max-w-3xl">
-                Free accounts include the <b>first 3 curriculum topics per subject</b> (and first 2 slides per University course). Unlock a Full Pass from <b>GH₵ 30/month</b> for all topics, WAEC past questions, trial mocks, weekly exams, timetables, and AI Study Buddy.
+                Free accounts include the <b>first 3 curriculum topics per subject</b> (and first 2 slides per University course). Unlock a Full Pass via Mobile Money (<b>GH₵ 30 Monthly</b> • <b>GH₵ 60 Term</b> • <b>GH₵ 180 Annual</b>) for unlimited access to all topics, WAEC past questions, trial mocks, weekly exams, and study timetables.
               </p>
             </div>
           </div>
