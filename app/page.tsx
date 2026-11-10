@@ -155,15 +155,12 @@ export default function HomePage() {
           <div className="flex items-start gap-3.5">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 bg-amber-100 border border-amber-200 px-2 py-0.5 rounded">
-                  Official Announcement
-                </span>
-                <h3 className="text-sm font-bold text-slate-900">
-                  AcademicPrep Full Access Passes Are Now Live • Free Preview Includes First 3 Topics
+                <h3 className="text-sm font-semibold text-slate-900">
+                  Full Access Passes Are Now Active • First 3 Topics Free per Subject
                 </h3>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed max-w-3xl">
-                Free accounts include the <b>first 3 curriculum topics per subject</b> (and first 2 slides per University course). Unlock a Full Pass via Mobile Money (<b>GH₵ 30 Monthly</b> • <b>GH₵ 60 Term</b> • <b>GH₵ 180 Annual</b>) for unlimited access to all topics, WAEC past questions, trial mocks, weekly exams, and study timetables.
+                Free accounts include the first 3 curriculum topics per subject (and first 2 slides per University course). Unlock a Full Pass via Mobile Money (GH₵ 30 Monthly, GH₵ 60 Term, or GH₵ 180 Annual) for all topics, WAEC past questions, trial mocks, weekly exams, and study timetables.
               </p>
             </div>
           </div>

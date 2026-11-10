@@ -20,13 +20,12 @@ import PaystackPaymentModal from './PaystackPaymentModal';
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { student, logoutStudent, hasFullAccess } = useAuth();
+  const { student, logoutStudent } = useAuth();
   
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [pinModalOpen, setPinModalOpen] = useState(false);
   const [modalTab, setModalTab] = useState<'momo' | 'pin'>('momo');
   const [mounted, setMounted] = useState(false);
-  const [noticeDismissed, setNoticeDismissed] = useState(false);
 
   const isUniversityStudent = student?.currentLevel === 'UNIVERSITY';
   const isShsStudent = Boolean(student?.currentLevel?.startsWith('SHS'));
@@ -51,40 +50,6 @@ export default function Navbar() {
   return (
     <>
       <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-xl border-b border-slate-200/70 supports-[backdrop-filter]:bg-white/75 shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition-colors">
-        {mounted && !hasFullAccess && !noticeDismissed && !pathname.startsWith('/admin') && (
-          <div className="bg-slate-900 text-white border-b border-slate-800">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between gap-3 text-xs">
-              <div className="flex items-center gap-2 min-w-0">
-                <span className="px-1.5 py-0.5 rounded bg-amber-400 text-slate-950 text-[10px] font-bold uppercase tracking-wider shrink-0">
-                  Notice
-                </span>
-                <p className="text-slate-200 truncate sm:whitespace-normal">
-                  <span className="font-semibold text-white">Full Access Passes are now active:</span> Free accounts include the first 3 topics per subject. Unlock all topics, past questions &amp; mocks via Mobile Money (<span className="font-semibold text-white">GH₵ 30</span> Monthly • <span className="font-semibold text-white">GH₵ 60</span> Term • <span className="font-semibold text-white">GH₵ 180</span> Annual).
-                </p>
-              </div>
-              <div className="flex items-center gap-2 shrink-0">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setModalTab('momo');
-                    setPinModalOpen(true);
-                  }}
-                  className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-900 font-bold text-[11px] transition cursor-pointer"
-                >
-                  Unlock Pass
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setNoticeDismissed(true)}
-                  className="p-1 text-slate-400 hover:text-white transition cursor-pointer"
-                  aria-label="Dismiss announcement"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="flex items-center justify-between h-15 w-full gap-2 sm:gap-4">
             
