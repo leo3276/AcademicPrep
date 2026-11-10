@@ -16,6 +16,16 @@ let memoryCache: BlogPost[] | null = null;
 let lastCacheTime = 0;
 const CACHE_TTL_MS = 60 * 1000; // 60s memory cache
 
+function ensureCoreAnnouncements(posts: BlogPost[]): { merged: BlogPost[]; changed: boolean } {
+  const officialAnnouncement = INITIAL_BLOG_POSTS.find(
+    (p) => p.id === 'post-paid-pass-announcement-2026'
+  );
+  if (!officialAnnouncement) return { merged: posts, changed: false };
+  const exists = posts.some((p) => p.id === officialAnnouncement.id);
+  if (exists) return { merged: posts, changed: false };
+  return { merged: [officialAnnouncement, ...posts], changed: true };
+}
+
 async function getStoredBlogPosts(): Promise<BlogPost[]> {
   // Return in-memory cache if within 60s window (0ms response)
   if (memoryCache && Date.now() - lastCacheTime < CACHE_TTL_MS) {
@@ -33,9 +43,13 @@ async function getStoredBlogPosts(): Promise<BlogPost[]> {
       if (res.ok) {
         const parsed = await res.json();
         if (Array.isArray(parsed) && parsed.length > 0) {
-          memoryCache = parsed;
+          const { merged, changed } = ensureCoreAnnouncements(parsed);
+          if (changed) {
+            await saveStoredBlogPosts(merged);
+          }
+          memoryCache = merged;
           lastCacheTime = Date.now();
-          return parsed;
+          return merged;
         }
       }
     }
@@ -53,7 +67,11 @@ async function getStoredBlogPosts(): Promise<BlogPost[]> {
       const text = await data.text();
       const parsed = JSON.parse(text);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
+        const { merged, changed } = ensureCoreAnnouncements(parsed);
+        if (changed) {
+          await saveStoredBlogPosts(merged);
+        }
+        return merged;
       }
     }
   } catch (err) {
@@ -66,7 +84,8 @@ async function getStoredBlogPosts(): Promise<BlogPost[]> {
       const raw = fs.readFileSync(DATA_FILE, 'utf8');
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
+        const { merged } = ensureCoreAnnouncements(parsed);
+        return merged;
       }
     }
   } catch (err) {
