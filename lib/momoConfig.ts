@@ -28,8 +28,8 @@ export const PRICING_PLANS: PricingPlan[] = [
   {
     id: 'annual',
     label: 'Annual Pass',
-    sublabel: '365 days • Save GH₵ 80',
-    amountGhs: 280,
+    sublabel: '365 days • Save GH₵ 180',
+    amountGhs: 180,
     validityDays: 365,
   },
 ];
@@ -49,7 +49,7 @@ export function resolvePlanById(planId?: string): PricingPlan {
 }
 
 export function resolvePlanByAmount(amountGhs?: number): PricingPlan {
-  if (amountGhs === 280 || amountGhs === 299) return PRICING_PLANS[2];
+  if (amountGhs === 180 || amountGhs === 280 || amountGhs === 299) return PRICING_PLANS[2];
   if (amountGhs === 60 || amountGhs === 75) return PRICING_PLANS[1];
   return PRICING_PLANS[0];
 }

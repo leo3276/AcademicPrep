@@ -30,8 +30,8 @@ function resolveTierFromPaystack(paystackData: any): {
   const amountPesewas = Number(paystackData?.amount || 0);
   const metaPlan = paystackData?.metadata?.plan_id;
 
-  if (metaPlan === 'annual' || amountPesewas >= 28000) {
-    return { planId: 'annual', amountGhs: 280, validityDays: 365 };
+  if (metaPlan === 'annual' || amountPesewas >= 18000) {
+    return { planId: 'annual', amountGhs: 180, validityDays: 365 };
   }
   if (metaPlan === 'term' || amountPesewas >= 6000) {
     return { planId: 'term', amountGhs: 60, validityDays: 90 };

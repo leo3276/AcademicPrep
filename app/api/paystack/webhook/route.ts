@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
     const phone = normalizePhone(customPhone || data?.customer?.phone || '');
     const metaPlan = data?.metadata?.plan_id;
     const planId: 'monthly' | 'term' | 'annual' =
-      metaPlan === 'annual' || amountPesewas >= 28000
+      metaPlan === 'annual' || amountPesewas >= 18000
         ? 'annual'
         : metaPlan === 'term' || amountPesewas >= 6000
         ? 'term'
