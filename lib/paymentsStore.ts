@@ -242,9 +242,9 @@ export async function markPaymentSuccess(params: {
   const resolvedPlanId =
     existing?.planId ||
     params.planId ||
-    (params.amountPesewas && params.amountPesewas >= 29900
+    (params.amountPesewas && params.amountPesewas >= 28000
       ? 'annual'
-      : params.amountPesewas && params.amountPesewas >= 7500
+      : params.amountPesewas && params.amountPesewas >= 6000
       ? 'term'
       : 'monthly');
   const plan = resolvePlanById(resolvedPlanId);

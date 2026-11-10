@@ -697,7 +697,7 @@ export default function StudentProfilePage() {
                   </span>
                 </div>
                 <p className="text-xs text-neutral-500 leading-relaxed">
-                  Your free account includes the first 3 topics of every subject. Unlock a Full Pass via Mobile Money (GH₵ 30 Monthly, GH₵ 75 Term, or GH₵ 299 Annual) or redeem an Access PIN to access all topics, past questions, trial questions, weekly exams, timetable, and school checker.
+                  Your free account includes the first 3 topics of every subject. Unlock a Full Pass via Mobile Money (GH₵ 30 Monthly, GH₵ 60 Term, or GH₵ 280 Annual) to access all topics, past questions, trial questions, weekly exams, timetable, and school checker.
                 </p>
                 <button
                   type="button"

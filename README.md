@@ -52,5 +52,5 @@ https://www.acadmicprep.com/api/paystack/webhook
 ### 4. Testing in Paystack Test Mode
 
 1. Switch your Paystack Dashboard toggle to **Test Mode** and copy your `sk_test_...` and `pk_test_...` keys into `.env.local`.
-2. Sign in to a student account on `http://localhost:3000`, click **Unlock Full Pass**, choose a pass (`Monthly GH₵ 30`, `Term GH₵ 75`, or `Annual GH₵ 299`), select a network, and enter a test Ghana MoMo number (e.g., `0551234987`).
+2. Sign in to a student account on `http://localhost:3000`, click **Unlock Full Pass**, choose a pass (`Monthly GH₵ 30`, `Term GH₵ 60`, or `Annual GH₵ 280`), select a network, and enter a test Ghana MoMo number (e.g., `0551234987`).
 3. Paystack Test Mode automatically simulates the charge response, and `/api/paystack/status?reference=...` (polled every 3 seconds) verifies the transaction and unlocks the student's pass immediately.
