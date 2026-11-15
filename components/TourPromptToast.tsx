@@ -18,10 +18,13 @@ export default function TourPromptToast({ onStartTour }: TourPromptToastProps) {
     const completed = localStorage.getItem('academicprep_account_tour_completed');
 
     if (!dismissed && !completed) {
-      // Delay prompt slightly so user first sees the loaded page
+      // Delay prompt smoothly so user first sees the loaded page
       const timer = setTimeout(() => {
-        setVisible(true);
-      }, 1400);
+        const announcementActive = sessionStorage.getItem('academicprep_announcement_active');
+        if (!announcementActive) {
+          setVisible(true);
+        }
+      }, 1800);
       return () => clearTimeout(timer);
     }
   }, []);
@@ -47,7 +50,7 @@ export default function TourPromptToast({ onStartTour }: TourPromptToastProps) {
 
   return (
     <div className="fixed bottom-5 right-4 sm:right-6 z-40 max-w-sm w-[calc(100vw-32px)] sm:w-96 animate-in slide-in-from-bottom-5 fade-in duration-300">
-      <div className="relative bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-md">
+      <div className="relative bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-xl">
         {/* Close Button */}
         <button
           type="button"
@@ -61,7 +64,7 @@ export default function TourPromptToast({ onStartTour }: TourPromptToastProps) {
 
         <div className="flex items-start gap-3 sm:gap-3.5 pr-6">
           <div className="relative w-10 h-10 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 flex items-center justify-center shrink-0">
-            <Compass className="w-5 h-5" />
+            <Compass className="w-5 h-5 text-blue-600" />
             <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>

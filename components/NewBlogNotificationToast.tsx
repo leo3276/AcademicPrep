@@ -41,11 +41,12 @@ export default function NewBlogNotificationToast({ initialPosts }: NewBlogNotifi
           return;
         }
 
-        // Check if tour prompt is currently active for first-time visitors
-        // Never clash or overlap with the tour prompt!
+        // Check if tour prompt or pricing announcement is currently active
+        // Never clash or overlap with other modals or toasts!
         const tourDismissed = localStorage.getItem('academicprep_tour_prompt_dismissed');
         const tourCompleted = localStorage.getItem('academicprep_account_tour_completed');
-        if (!tourDismissed && !tourCompleted) {
+        const announcementActive = sessionStorage.getItem('academicprep_announcement_active');
+        if ((!tourDismissed && !tourCompleted) || announcementActive) {
           return;
         }
 
@@ -63,18 +64,20 @@ export default function NewBlogNotificationToast({ initialPosts }: NewBlogNotifi
 
     checkLatestPost();
 
-    // Listen for tour dismissal event so blog toast can appear afterwards if appropriate
-    const handleTourDismissed = () => {
+    // Listen for tour and announcement dismissal events so blog toast can appear afterwards if appropriate
+    const handleDismissal = () => {
       setTimeout(() => {
         if (isMounted) checkLatestPost();
       }, 3000);
     };
 
-    window.addEventListener('academicprep_tour_dismissed', handleTourDismissed);
+    window.addEventListener('academicprep_tour_dismissed', handleDismissal);
+    window.addEventListener('academicprep_announcement_dismissed', handleDismissal);
 
     return () => {
       isMounted = false;
-      window.removeEventListener('academicprep_tour_dismissed', handleTourDismissed);
+      window.removeEventListener('academicprep_tour_dismissed', handleDismissal);
+      window.removeEventListener('academicprep_announcement_dismissed', handleDismissal);
     };
   }, [initialPosts]);
 
