@@ -531,7 +531,7 @@ export default function AdminDashboardPage() {
 
   // PIN Generator Form State
   const [pinCount, setPinCount] = useState(10);
-  const [pinPrice, setPinPrice] = useState(25);
+  const [pinPrice, setPinPrice] = useState(30);
   const [pinValidity, setPinValidity] = useState(30);
   const [newlyGenerated, setNewlyGenerated] = useState<AccessPin[]>([]);
   const [copiedPin, setCopiedPin] = useState<string | null>(null);
@@ -2329,8 +2329,28 @@ export default function AdminDashboardPage() {
                               </span>
                             )}
                           </td>
-                          <td className="px-4 py-3 font-mono text-slate-500">
-                            {st.accessExpiresAt ? new Date(st.accessExpiresAt).toLocaleDateString() : '—'}
+                          <td className="px-4 py-3 font-mono text-slate-600">
+                            {st.accessExpiresAt ? (() => {
+                              const ms = new Date(st.accessExpiresAt).getTime() - Date.now();
+                              const days = Math.ceil(ms / (1000 * 60 * 60 * 24));
+                              if (days <= 0) {
+                                return (
+                                  <span className="text-rose-500 font-sans text-xs">
+                                    Expired ({new Date(st.accessExpiresAt).toLocaleDateString()})
+                                  </span>
+                                );
+                              }
+                              return (
+                                <div>
+                                  <span className="font-semibold text-emerald-700 font-sans text-xs block">
+                                    {days} days left {days >= 80 ? '(Term/3 Mos)' : days >= 25 ? '(1 Month)' : ''}
+                                  </span>
+                                  <span className="text-[10px] text-slate-400 block">
+                                    Until {new Date(st.accessExpiresAt).toLocaleDateString()}
+                                  </span>
+                                </div>
+                              );
+                            })() : '—'}
                           </td>
                           <td className="px-4 py-3 font-medium text-slate-800">{st.topicsCompleted}</td>
                           <td className="px-4 py-3 font-mono font-medium text-slate-800">{st.avgScorePercentage}%</td>
@@ -2395,20 +2415,31 @@ export default function AdminDashboardPage() {
                   )}
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-700 mb-1.5">Access Term</label>
+                    <label className="block text-xs font-medium text-slate-700 mb-1.5">Access Term / Plan</label>
                     <div className="grid grid-cols-3 gap-2">
-                      {[30, 60, 90].map((days) => (
+                      {[
+                        { days: 30, label: 'Monthly', sub: '30 Days (GH₵ 30)' },
+                        { days: 90, label: 'Term Pass', sub: '90 Days / 3 Mos (GH₵ 60)' },
+                        { days: 365, label: 'Annual Pass', sub: '365 Days / 1 Yr (GH₵ 180)' },
+                      ].map((tier) => (
                         <button
-                          key={days}
+                          key={tier.days}
                           type="button"
-                          onClick={() => setGrantDurationDays(days)}
-                          className={`py-2 rounded-lg text-xs font-medium border transition ${
-                            grantDurationDays === days
-                              ? 'bg-blue-600 text-white border-blue-600'
+                          onClick={() => setGrantDurationDays(tier.days)}
+                          className={`py-2 px-1 rounded-lg text-xs font-medium border text-center transition ${
+                            grantDurationDays === tier.days
+                              ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
                               : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
                           }`}
                         >
-                          {days} Days
+                          <div className="font-semibold">{tier.label}</div>
+                          <div
+                            className={`text-[10px] mt-0.5 ${
+                              grantDurationDays === tier.days ? 'text-blue-100' : 'text-slate-400'
+                            }`}
+                          >
+                            {tier.sub}
+                          </div>
                         </button>
                       ))}
                     </div>
@@ -3285,15 +3316,21 @@ export default function AdminDashboardPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-700 mb-1">Validity Period</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1">Validity Period / Plan Tier</label>
                   <select
                     value={pinValidity}
-                    onChange={(e) => setPinValidity(Number(e.target.value))}
+                    onChange={(e) => {
+                      const val = Number(e.target.value);
+                      setPinValidity(val);
+                      if (val === 30) setPinPrice(30);
+                      else if (val === 90) setPinPrice(60);
+                      else if (val === 365) setPinPrice(180);
+                    }}
                     className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   >
-                    <option value={30}>30 Days Full Pass</option>
-                    <option value={60}>60 Days Full Pass</option>
-                    <option value={90}>90 Days Term Pass</option>
+                    <option value={30}>30 Days (Monthly Pass — GH₵ 30)</option>
+                    <option value={90}>90 Days (Term Pass / 3 Months — GH₵ 60)</option>
+                    <option value={365}>365 Days (Annual Pass / 1 Year — GH₵ 180)</option>
                   </select>
                 </div>
 
