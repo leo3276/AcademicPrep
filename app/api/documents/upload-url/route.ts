@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabaseClient';
 import { requireAdmin } from '@/lib/adminAuth';
+import { isR2Configured, createR2PresignedUploadUrl } from '@/lib/r2Client';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -20,8 +21,28 @@ export async function POST(request: NextRequest) {
     const cleanName = rawName.replace(/[^a-zA-Z0-9._-]/g, '_');
     const timestamp = Date.now();
     const uniqueFileName = `${timestamp}_${cleanName}`;
+    const contentType = body.contentType || 'application/pdf';
 
-    // Create 10-minute signed upload URL from Supabase Storage
+    // 1. Primary: Direct signed upload to Cloudflare R2 ($0 egress forever)
+    if (isR2Configured) {
+      try {
+        const { signedUrl, publicUrl } = await createR2PresignedUploadUrl(
+          uniqueFileName,
+          contentType
+        );
+
+        return NextResponse.json({
+          signedUrl,
+          uniqueFileName,
+          publicUrl,
+          provider: 'cloudflare_r2',
+        });
+      } catch (r2Err: any) {
+        console.error('Cloudflare R2 signed URL generation failed, falling back:', r2Err);
+      }
+    }
+
+    // 2. Secondary Fallback: Supabase Storage
     const { data, error } = await supabaseAdmin.storage
       .from(DOCUMENTS_BUCKET)
       .createSignedUploadUrl(uniqueFileName);
@@ -44,6 +65,7 @@ export async function POST(request: NextRequest) {
       path: data.path,
       uniqueFileName,
       publicUrl: pubData.publicUrl,
+      provider: 'supabase',
     });
   } catch (err: any) {
     console.error('Upload URL generation error:', err);

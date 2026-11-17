@@ -1,4 +1,5 @@
 import { S3Client, PutObjectCommand, DeleteObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 function cleanEnv(v: string | undefined): string {
   if (!v) return '';
@@ -84,4 +85,30 @@ export async function deleteFromR2(key: string): Promise<void> {
   } catch (err) {
     console.warn(`Failed to delete ${key} from R2:`, err);
   }
+}
+
+/**
+ * Generate a direct signed upload PUT URL for Cloudflare R2
+ * This allows the client browser to stream files directly into Cloudflare R2
+ * without passing through Vercel serverless functions or Supabase ($0 egress forever).
+ */
+export async function createR2PresignedUploadUrl(
+  key: string,
+  contentType: string = 'application/pdf',
+  expiresInSeconds: number = 900
+): Promise<{ signedUrl: string; publicUrl: string }> {
+  if (!isR2Configured) {
+    throw new Error('Cloudflare R2 write credentials are not configured.');
+  }
+
+  const command = new PutObjectCommand({
+    Bucket: R2_BUCKET_NAME,
+    Key: key,
+    ContentType: contentType,
+  });
+
+  const signedUrl = await getSignedUrl(r2Client, command, { expiresIn: expiresInSeconds });
+  const publicUrl = `${R2_PUBLIC_URL}/${key}`;
+
+  return { signedUrl, publicUrl };
 }

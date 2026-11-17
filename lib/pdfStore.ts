@@ -99,8 +99,8 @@ export async function uploadPdfDocument(formData: FormData): Promise<UploadedPdf
   const level = formData.get('level') as any;
   const paperType = formData.get('paperType') as PdfPaperType | null;
 
-  // 1. Direct-to-Cloud Upload for large files (> 4MB) to bypass Vercel 4.5MB serverless body limit
-  if (file && typeof file !== 'string' && file.size > 4 * 1024 * 1024) {
+  // 1. Direct-to-Cloud Upload (Streams directly to Cloudflare R2 for $0 egress and zero payload limits)
+  if (file && typeof file !== 'string') {
     try {
       // Step A: Request a signed upload authorization (< 1 KB request)
       const signRes = await fetch('/api/documents/upload-url', {
@@ -112,7 +112,7 @@ export async function uploadPdfDocument(formData: FormData): Promise<UploadedPdf
       if (signRes.ok) {
         const signData = await signRes.json();
         if (signData.signedUrl && signData.publicUrl) {
-          // Step B: Stream file directly to Supabase Storage CDN (No 4.5MB Vercel limit!)
+          // Step B: Stream file directly to Cloudflare R2 / Cloud Storage CDN
           const uploadRes = await fetch(signData.signedUrl, {
             method: 'PUT',
             headers: {
