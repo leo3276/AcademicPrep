@@ -99,69 +99,102 @@ export async function uploadPdfDocument(formData: FormData): Promise<UploadedPdf
   const level = formData.get('level') as any;
   const paperType = formData.get('paperType') as PdfPaperType | null;
 
-  // 1. Direct-to-Cloud Upload (Streams directly to Cloudflare R2 for $0 egress and zero payload limits)
+  // 1. Chunked Upload to Cloudflare R2 (Bypasses Vercel 4.5MB limit, bypasses browser CORS, $0 egress forever)
   if (file && typeof file !== 'string') {
     try {
-      // Step A: Request a signed upload authorization (< 1 KB request)
-      const signRes = await fetch('/api/documents/upload-url', {
+      // Step A: Initiate multipart upload on server
+      const initRes = await fetch('/api/documents/upload-chunk', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fileName: file.name, contentType: file.type }),
+        body: JSON.stringify({
+          action: 'initiate',
+          fileName: file.name,
+          contentType: file.type || 'application/pdf',
+        }),
       });
 
-      if (signRes.ok) {
-        const signData = await signRes.json();
-        if (signData.signedUrl && signData.publicUrl) {
-          // Step B: Stream file directly to Cloudflare R2 / Cloud Storage CDN
-          const uploadRes = await fetch(signData.signedUrl, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': file.type || 'application/pdf',
-            },
-            body: file,
-          });
+      if (initRes.ok) {
+        const { key, uploadId } = await initRes.json();
+        const CHUNK_SIZE = 3 * 1024 * 1024; // 3 MB chunks (comfortably below Vercel 4.5MB limit)
+        const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
+        const parts: Array<{ PartNumber: number; ETag: string }> = [];
 
-          if (!uploadRes.ok) {
-            throw new Error(`Direct cloud storage upload failed (HTTP ${uploadRes.status})`);
-          }
+        for (let i = 0; i < totalChunks; i++) {
+          const start = i * CHUNK_SIZE;
+          const end = Math.min(start + CHUNK_SIZE, file.size);
+          const chunkBlob = file.slice(start, end);
+          const partNumber = i + 1;
 
-          // Step C: Register document metadata on the server (< 1 KB request)
-          const metaRes = await fetch('/api/documents', {
+          const partForm = new FormData();
+          partForm.append('action', 'upload_part');
+          partForm.append('key', key);
+          partForm.append('uploadId', uploadId);
+          partForm.append('partNumber', String(partNumber));
+          partForm.append('chunk', chunkBlob, file.name);
+
+          const partRes = await fetch('/api/documents/upload-chunk', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              title: title ? title.trim() : file.name,
-              category,
-              subjectId,
-              subjectName: subjectName || subjectId,
-              year,
-              level,
-              paperType: paperType || 'Full Exam Paper',
-              fileName: file.name,
-              fileUrl: signData.publicUrl,
-              fileSizeBytes: file.size,
-            }),
+            body: partForm,
           });
 
-          if (metaRes.ok) {
-            const created: UploadedPdfDocument = await metaRes.json();
-            // Sync with local cache
-            if (typeof window !== 'undefined') {
-              try {
-                const existing = await fetchUploadedDocuments();
-                const updated = [created, ...existing.filter((d) => d.id !== created.id)];
-                localStorage.setItem(PDF_LOCAL_STORAGE_KEY, JSON.stringify(updated));
-              } catch {}
-            }
-            return created;
-          } else {
-            const errData = await metaRes.json().catch(() => ({}));
-            throw new Error(errData.error || 'Failed to register document metadata');
+          if (!partRes.ok) {
+            const errData = await partRes.json().catch(() => ({}));
+            // Abort the multipart upload
+            await fetch('/api/documents/upload-chunk', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ action: 'abort', key, uploadId }),
+            }).catch(() => {});
+            throw new Error(errData.error || `Failed to upload chunk ${partNumber} of ${totalChunks}`);
           }
+
+          const { etag } = await partRes.json();
+          parts.push({ PartNumber: partNumber, ETag: etag });
+        }
+
+        // Step C: Complete multipart upload and register document metadata
+        const compRes = await fetch('/api/documents/upload-chunk', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'complete',
+            key,
+            uploadId,
+            parts,
+            title: title ? title.trim() : file.name,
+            category,
+            subjectId,
+            subjectName: subjectName || subjectId,
+            year,
+            level,
+            paperType: paperType || 'Full Exam Paper',
+            fileName: file.name,
+            fileSizeBytes: file.size,
+          }),
+        });
+
+        if (compRes.ok) {
+          const created: UploadedPdfDocument = await compRes.json();
+          // Sync with local cache
+          if (typeof window !== 'undefined') {
+            try {
+              const existing = await fetchUploadedDocuments();
+              const updated = [created, ...existing.filter((d) => d.id !== created.id)];
+              localStorage.setItem(PDF_LOCAL_STORAGE_KEY, JSON.stringify(updated));
+            } catch {}
+          }
+          return created;
+        } else {
+          const errData = await compRes.json().catch(() => ({}));
+          throw new Error(errData.error || 'Failed to complete document upload');
         }
       }
-    } catch (directErr: any) {
-      console.warn('Direct upload warning, attempting multipart fallback:', directErr?.message || directErr);
+    } catch (chunkErr: any) {
+      console.warn('Chunked R2 upload error, attempting multipart fallback:', chunkErr?.message || chunkErr);
+      if (file.size > 4 * 1024 * 1024) {
+        // Don't fall back to standard POST if file > 4MB since Vercel will reject it with 413
+        throw chunkErr;
+      }
     }
   }
 

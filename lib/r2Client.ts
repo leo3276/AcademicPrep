@@ -1,4 +1,13 @@
-import { S3Client, PutObjectCommand, DeleteObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import {
+  S3Client,
+  PutObjectCommand,
+  DeleteObjectCommand,
+  GetObjectCommand,
+  CreateMultipartUploadCommand,
+  UploadPartCommand,
+  CompleteMultipartUploadCommand,
+  AbortMultipartUploadCommand,
+} from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 function cleanEnv(v: string | undefined): string {
@@ -111,4 +120,107 @@ export async function createR2PresignedUploadUrl(
   const publicUrl = `${R2_PUBLIC_URL}/${key}`;
 
   return { signedUrl, publicUrl };
+}
+
+/**
+ * Initiate S3 Multipart Upload on Cloudflare R2
+ */
+export async function initiateR2MultipartUpload(
+  key: string,
+  contentType: string = 'application/pdf'
+): Promise<string> {
+  if (!isR2Configured) {
+    throw new Error('Cloudflare R2 write credentials are not configured.');
+  }
+
+  const res = await r2Client.send(
+    new CreateMultipartUploadCommand({
+      Bucket: R2_BUCKET_NAME,
+      Key: key,
+      ContentType: contentType,
+    })
+  );
+
+  if (!res.UploadId) {
+    throw new Error('Failed to obtain UploadId from Cloudflare R2');
+  }
+
+  return res.UploadId;
+}
+
+/**
+ * Upload a chunk part to Cloudflare R2 Multipart Upload
+ */
+export async function uploadR2Part(
+  key: string,
+  uploadId: string,
+  partNumber: number,
+  buffer: Buffer
+): Promise<string> {
+  if (!isR2Configured) {
+    throw new Error('Cloudflare R2 write credentials are not configured.');
+  }
+
+  const res = await r2Client.send(
+    new UploadPartCommand({
+      Bucket: R2_BUCKET_NAME,
+      Key: key,
+      UploadId: uploadId,
+      PartNumber: partNumber,
+      Body: buffer,
+    })
+  );
+
+  if (!res.ETag) {
+    throw new Error(`Failed to upload part ${partNumber} to Cloudflare R2`);
+  }
+
+  return res.ETag;
+}
+
+/**
+ * Complete S3 Multipart Upload on Cloudflare R2
+ */
+export async function completeR2MultipartUpload(
+  key: string,
+  uploadId: string,
+  parts: Array<{ PartNumber: number; ETag: string }>
+): Promise<string> {
+  if (!isR2Configured) {
+    throw new Error('Cloudflare R2 write credentials are not configured.');
+  }
+
+  // Ensure parts are sorted strictly ascending by PartNumber
+  const sortedParts = [...parts].sort((a, b) => a.PartNumber - b.PartNumber);
+
+  await r2Client.send(
+    new CompleteMultipartUploadCommand({
+      Bucket: R2_BUCKET_NAME,
+      Key: key,
+      UploadId: uploadId,
+      MultipartUpload: {
+        Parts: sortedParts,
+      },
+    })
+  );
+
+  return `${R2_PUBLIC_URL}/${key}`;
+}
+
+/**
+ * Abort S3 Multipart Upload on Cloudflare R2
+ */
+export async function abortR2MultipartUpload(key: string, uploadId: string): Promise<void> {
+  if (!isR2Configured) return;
+  try {
+    await r2Client.send(
+      new AbortMultipartUploadCommand({
+        Bucket: R2_BUCKET_NAME,
+        Key: key,
+        UploadId: uploadId,
+      })
+    );
+  } catch (err) {
+    console.warn(`Failed to abort multipart upload ${uploadId}:`, err);
+  }
 }

@@ -14,7 +14,7 @@ const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads', 'documents');
 const MANIFEST_FILE_NAME = 'documents_manifest.json';
 const DOCUMENTS_BUCKET = 'documents';
 
-async function getStoredDocuments(): Promise<UploadedPdfDocument[]> {
+export async function getStoredDocuments(): Promise<UploadedPdfDocument[]> {
   const mergedMap = new Map<string, UploadedPdfDocument>();
 
   const addDocs = (list: unknown) => {
@@ -104,7 +104,7 @@ async function getStoredDocuments(): Promise<UploadedPdfDocument[]> {
   return [];
 }
 
-async function saveStoredDocuments(docs: UploadedPdfDocument[]): Promise<void> {
+export async function saveStoredDocuments(docs: UploadedPdfDocument[]): Promise<void> {
   const payload = JSON.stringify(docs, null, 2);
 
   // 1. Primary: Save to Cloudflare R2
